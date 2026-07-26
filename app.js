@@ -7,6 +7,7 @@ const 字素分段器 = new Intl.Segmenter('zh-CN', { granularity: 'grapheme' })
 const 词组分段器 = new Intl.Segmenter('zh-CN', { granularity: 'word' });
 const 西文字素模式 =
   /^(?:[\u0020-\u007e\u00a0]|\p{Script=Latin}|\p{Number}|\p{Mark})+$/u;
+const 西文单词模式 = /\s*\S+|\s+$/gu;
 const 正文测量上下文 = document.createElement('canvas').getContext('2d');
 if (!正文测量上下文) {
   throw new Error('当前浏览器无法创建正文测量画布');
@@ -887,6 +888,20 @@ function 应用文本(原始文本, 文件名) {
         continue;
       }
 
+      const 码 = 全文.charCodeAt(idx);
+      if (
+        码 !== 0x3002 &&
+        码 !== 0xff01 &&
+        码 !== 0xff1f &&
+        码 !== 0x21 &&
+        码 !== 0x3f &&
+        码 !== 0x2026 &&
+        !(码 === 0x2e && 全文.startsWith('...', idx))
+      ) {
+        idx += 1;
+        continue;
+      }
+
       const 标点终点 = 读取句末标点终点(idx);
       if (标点终点 === -1) {
         idx += 1;
@@ -960,21 +975,31 @@ function 创建行索引(文本, 排版) {
   const 起点数组 = [];
   const 终点数组 = [];
   const 西文宽度缓存 = new Map();
+  const 文本长度 = 文本.length;
+  正文测量上下文.font = 排版.西文字体;
+  正文测量上下文.fontKerning = 'normal';
   let 行起点 = 0;
   let 当前行宽度 = 0;
   let 当前行是句首 = true;
   let 当前行有内容 = false;
   let 物理行有内容 = false;
   let 西文片段起点 = -1;
-  let 西文片段文本 = '';
+  let 字起点 = 0;
 
-  for (const 字素信息 of 字素分段器.segment(文本)) {
-    const 字 = 字素信息.segment;
-    const 字起点 = 字素信息.index;
-    const 字终点 = 字起点 + 字.length;
+  while (字起点 < 文本长度) {
+    const 码 = 文本.charCodeAt(字起点);
+    let 字终点;
+    if (
+      是安全字素码(码) &&
+      (字起点 + 1 >= 文本长度 || 是安全字素码(文本.charCodeAt(字起点 + 1)))
+    ) {
+      字终点 = 字起点 + 1;
+    } else {
+      字终点 = 查找字素终点(文本, 字起点);
+    }
 
-    if (字 === '\n') {
-      提交西文片段();
+    if (码 === 0x0a && 字终点 === 字起点 + 1) {
+      提交西文片段(字起点);
       if (当前行有内容) {
         添加行(行起点, 字起点);
       } else if (!物理行有内容) {
@@ -986,21 +1011,23 @@ function 创建行索引(文本, 排版) {
       当前行是句首 = true;
       当前行有内容 = false;
       物理行有内容 = false;
+      字起点 = 字终点;
       continue;
     }
 
-    if (是西文字素(字)) {
+    if (是西文范围(文本, 字起点, 字终点)) {
       if (西文片段起点 === -1) {
         西文片段起点 = 字起点;
       }
-      西文片段文本 += 字;
+      字起点 = 字终点;
       continue;
     }
 
-    提交西文片段();
-    添加排版片段(字, 字起点, false);
+    提交西文片段(字起点);
+    添加排版片段(字起点, 字终点, false, null);
+    字起点 = 字终点;
   }
-  提交西文片段();
+  提交西文片段(文本长度);
 
   if (当前行有内容 || 起点数组.length === 0) {
     添加行(行起点, 文本.length);
@@ -1018,21 +1045,21 @@ function 创建行索引(文本, 排版) {
     总高度,
   };
 
-  function 提交西文片段() {
+  function 提交西文片段(片段终点) {
     if (西文片段起点 === -1) {
       return;
     }
 
-    const 单词模式 = /\s*\S+|\s+$/gu;
-    for (const 匹配 of 西文片段文本.matchAll(单词模式)) {
-      添加排版片段(匹配[0], 西文片段起点 + 匹配.index, true);
+    const 西文片段文本 = 文本.slice(西文片段起点, 片段终点);
+    for (const 匹配 of 西文片段文本.matchAll(西文单词模式)) {
+      const 单词起点 = 西文片段起点 + 匹配.index;
+      添加排版片段(单词起点, 单词起点 + 匹配[0].length, true, 匹配[0]);
     }
     西文片段起点 = -1;
-    西文片段文本 = '';
   }
 
-  function 添加排版片段(片段文本, 片段起点, 是西文) {
-    const 片段宽度 = 测量片段(片段文本, 是西文);
+  function 添加排版片段(片段起点, 片段终点, 是西文, 已知文本) {
+    const 片段宽度 = 测量范围(片段起点, 片段终点, 是西文, 已知文本);
     const 本行内容宽度 = 排版.内容宽度 - (当前行是句首 ? 排版.句首缩进 : 0);
     if (片段宽度 <= 本行内容宽度 + 0.01) {
       if (当前行有内容 && 当前行宽度 + 片段宽度 > 本行内容宽度 + 0.01) {
@@ -1047,7 +1074,7 @@ function 创建行索引(文本, 排版) {
     if (当前行有内容) {
       完成自动行(片段起点);
     }
-    添加超长片段(片段文本, 片段起点, 是西文);
+    添加超长片段(已知文本 ?? 文本.slice(片段起点, 片段终点), 片段起点, 是西文);
   }
 
   function 添加超长片段(片段文本, 片段起点, 是西文) {
@@ -1102,6 +1129,19 @@ function 创建行索引(文本, 排版) {
     当前行有内容 = false;
   }
 
+  function 测量范围(片段起点, 片段终点, 是西文, 已知文本) {
+    if (!是西文) {
+      if (片段终点 - 片段起点 === 1) {
+        const 码 = 文本.charCodeAt(片段起点);
+        if (码 === 0x201c || 码 === 0x201d) {
+          return 排版.正文字号 * 0.78;
+        }
+      }
+      return 排版.正文字号;
+    }
+    return 测量片段(已知文本 ?? 文本.slice(片段起点, 片段终点), true);
+  }
+
   function 测量片段(片段文本, 是西文) {
     if (!是西文) {
       return 片段文本 === '“' || 片段文本 === '”'
@@ -1113,8 +1153,6 @@ function 创建行索引(文本, 排版) {
     if (缓存宽度 !== undefined) {
       return 缓存宽度;
     }
-    正文测量上下文.font = 排版.西文字体;
-    正文测量上下文.fontKerning = 'normal';
     const 宽度 = 正文测量上下文.measureText(片段文本).width;
     西文宽度缓存.set(片段文本, 宽度);
     return 宽度;
@@ -1217,7 +1255,69 @@ function 读取正文排版() {
 }
 
 function 是西文字素(字素) {
-  return 西文字素模式.test(字素);
+  return 是西文范围(字素, 0, 字素.length);
+}
+
+function 是西文范围(文本, 起点, 终点) {
+  for (let idx = 起点; idx < 终点; idx += 1) {
+    const 码 = 文本.charCodeAt(idx);
+    if (
+      (码 >= 0x20 && 码 <= 0x7e) ||
+      码 === 0xa0 ||
+      (码 >= 0xff10 && 码 <= 0xff19) ||
+      (码 >= 0xff21 && 码 <= 0xff3a) ||
+      (码 >= 0xff41 && 码 <= 0xff5a)
+    ) {
+      continue;
+    }
+    if (
+      (码 >= 0x4e00 && 码 <= 0x9fff) ||
+      (码 >= 0xff01 && 码 <= 0xff5e) ||
+      (码 >= 0x3000 && 码 <= 0x3020 && 码 !== 0x3007) ||
+      (码 >= 0x2018 && 码 <= 0x201d) ||
+      码 === 0x0a ||
+      码 === 0x2013 ||
+      码 === 0x2014 ||
+      码 === 0x2026
+    ) {
+      return false;
+    }
+    return 西文字素模式.test(
+      起点 === 0 && 终点 === 文本.length ? 文本 : 文本.slice(起点, 终点),
+    );
+  }
+  return 终点 > 起点;
+}
+
+function 是安全字素码(码) {
+  return (
+    (码 >= 0x4e00 && 码 <= 0x9fff) ||
+    (码 >= 0x20 && 码 <= 0x7e) ||
+    (码 >= 0xff01 && 码 <= 0xff5e) ||
+    (码 >= 0x3000 && 码 <= 0x3029) ||
+    (码 >= 0x3030 && 码 <= 0x303f) ||
+    (码 >= 0x2018 && 码 <= 0x201d) ||
+    码 === 0x0a ||
+    码 === 0xa0 ||
+    码 === 0x2013 ||
+    码 === 0x2014 ||
+    码 === 0x2026
+  );
+}
+
+function 查找字素终点(文本, 起点) {
+  let 窗口长度 = 64;
+  while (true) {
+    const 窗口终点 = Math.min(文本.length, 起点 + 窗口长度);
+    for (const 字素信息 of 字素分段器.segment(文本.slice(起点, 窗口终点))) {
+      const 终点 = 起点 + 字素信息.segment.length;
+      if (终点 < 窗口终点 || 窗口终点 === 文本.length) {
+        return 终点;
+      }
+      break;
+    }
+    窗口长度 *= 2;
+  }
 }
 
 function 渲染可见行(强制渲染 = false) {
@@ -1474,19 +1574,39 @@ function 渲染可见行(强制渲染 = false) {
 
   function 收集片段边界(行起点, 行终点, 行文本, 关键词游标列表) {
     const 边界集合 = new Set([行起点, 行终点]);
+    const 行长度 = 行文本.length;
     let 上一字素是西文 = null;
-    for (const 字素信息 of 字素分段器.segment(行文本)) {
-      const 字起点 = 行起点 + 字素信息.index;
-      const 字终点 = 字起点 + 字素信息.segment.length;
-      const 当前字素是西文 = 是西文字素(字素信息.segment);
-      if (上一字素是西文 !== null && 当前字素是西文 !== 上一字素是西文) {
-        边界集合.add(字起点);
+    let 字素起点 = 0;
+    while (字素起点 < 行长度) {
+      const 码 = 行文本.charCodeAt(字素起点);
+      let 字素终点;
+      if (
+        是安全字素码(码) &&
+        (字素起点 + 1 >= 行长度 ||
+          是安全字素码(行文本.charCodeAt(字素起点 + 1)))
+      ) {
+        字素终点 = 字素起点 + 1;
+      } else {
+        字素终点 = 查找字素终点(行文本, 字素起点);
       }
-      if (/[的了“”‘’「」『』]/u.test(字素信息.segment)) {
-        边界集合.add(字起点);
-        边界集合.add(字终点);
+      const 当前字素是西文 = 是西文范围(行文本, 字素起点, 字素终点);
+      if (上一字素是西文 !== null && 当前字素是西文 !== 上一字素是西文) {
+        边界集合.add(行起点 + 字素起点);
+      }
+      if (
+        码 === 0x7684 ||
+        码 === 0x4e86 ||
+        码 === 0x201c ||
+        码 === 0x201d ||
+        码 === 0x2018 ||
+        码 === 0x2019 ||
+        (码 >= 0x300c && 码 <= 0x300f)
+      ) {
+        边界集合.add(行起点 + 字素起点);
+        边界集合.add(行起点 + 字素终点);
       }
       上一字素是西文 = 当前字素是西文;
+      字素起点 = 字素终点;
     }
 
     let 检查引文idx = 查找首个未结束引文(行起点);
@@ -2027,12 +2147,16 @@ function 二分查找精确命中(关键词, 文本偏移) {
 }
 
 function 更新文档标题() {
-  const 标题 = 状态.文本
-    .split('\n')
-    .find(function 找到标题(行) {
-      return 行.trim();
-    })
-    ?.trim();
+  let 标题 = '';
+  let 行起点 = 0;
+  while (行起点 < 状态.文本.length && !标题) {
+    let 行终点 = 状态.文本.indexOf('\n', 行起点);
+    if (行终点 === -1) {
+      行终点 = 状态.文本.length;
+    }
+    标题 = 状态.文本.slice(行起点, 行终点).trim();
+    行起点 = 行终点 + 1;
+  }
   document.title = `${标题 || 状态.文件名.replace(/\.txt$/i, '')} · 原文阅读器`;
 }
 

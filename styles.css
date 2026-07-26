@@ -91,6 +91,7 @@ body {
   height: var(--行高);
   padding: 0;
   overflow: hidden;
+  contain: content;
   color: var(--墨色);
   font-family: var(--正文字体);
   font-size: var(--正文字号);
