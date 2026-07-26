@@ -1,0 +1,607 @@
+:root {
+  --背景色: #edf0ee;
+  --纸张色: #ffffff;
+  --墨色: #202522;
+  --次要墨色: #6a726d;
+  --边线色: #d7ddd9;
+  --强调色: #df5a40;
+  --选中色: #176d67;
+  --高亮色: #f6d768;
+  --引文底色: oklch(95.5% 0.025 238);
+  --引文墨色: oklch(35% 0.065 238);
+  --正文字号: 30px;
+  --正文字体: 'Songti SC', 'STSong', 'Noto Serif CJK SC', serif;
+  --西文字体: 'Iowan Old Style', 'Times New Roman', serif;
+  --西文字号: 0.96em;
+  --行高: 58px;
+  color: var(--墨色);
+  font-family: 'Avenir Next', 'PingFang SC', sans-serif;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  margin: 0;
+  overflow: hidden;
+  background: var(--背景色);
+}
+
+.滚动容器:focus-visible {
+  outline: 2px solid var(--选中色);
+  outline-offset: 2px;
+}
+
+.阅读区域 {
+  min-height: 0;
+}
+
+.滚动容器 {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--背景色);
+  scrollbar-color: #aab3ad transparent;
+  scrollbar-width: thin;
+  scroll-padding-block: 30vh;
+}
+
+.滚动容器::-webkit-scrollbar {
+  width: 10px;
+}
+
+.滚动容器::-webkit-scrollbar-thumb {
+  background: #aab3ad;
+  border: 3px solid var(--背景色);
+  border-radius: 0;
+}
+
+.虚拟画布 {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--纸张色);
+  border-right: 1px solid var(--边线色);
+  border-left: 1px solid var(--边线色);
+  box-shadow: 0 16px 44px rgb(32 37 34 / 8%);
+}
+
+.可见内容 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.正文行 {
+  height: var(--行高);
+  padding: 0;
+  overflow: hidden;
+  color: var(--墨色);
+  font-family: var(--正文字体);
+  font-size: var(--正文字号);
+  font-weight: 400;
+  font-kerning: normal;
+  line-height: var(--行高);
+  letter-spacing: 0;
+  white-space: pre;
+}
+
+.正文行.句首行 {
+  padding-left: 2em;
+}
+
+.字 {
+  position: relative;
+}
+
+.字.西文 {
+  font-family: var(--西文字体);
+  font-size: var(--西文字号);
+  font-kerning: normal;
+  font-variant-numeric: proportional-nums lining-nums;
+}
+
+.特殊字形 {
+  display: inline-block;
+  transform: scale(0.68);
+  transform-origin: left bottom;
+}
+
+.字.中文引号 {
+  display: inline-block;
+  width: 0.78em;
+  overflow: visible;
+  font-family: var(--正文字体);
+  font-size: 1em;
+  font-feature-settings: 'palt';
+  vertical-align: top;
+}
+
+.字.左引号 {
+  text-align: right;
+}
+
+.字.右引号 {
+  text-align: left;
+}
+
+.字.引文内容 {
+  color: var(--引文墨色);
+  background: var(--引文底色);
+}
+
+.字.引文起点 {
+  border-radius: 4px 0 0 4px;
+}
+
+.字.引文终点 {
+  border-radius: 0 4px 4px 0;
+}
+
+.字.引文引号 {
+  color: var(--引文墨色);
+  font-weight: 700;
+}
+
+.字::selection {
+  color: #ffffff;
+  background: var(--选中色);
+}
+
+.字.命中 {
+  margin: 0 -1px;
+  padding: 0 1px 2px;
+  color: #171a18;
+  cursor: pointer;
+  background-color: var(--命中背景, var(--高亮色));
+  box-shadow: inset 0 -1px 0 rgb(117 88 0 / 22%);
+}
+
+.字.命中.全文唯一 {
+  text-decoration-color: oklch(58% 0.22 28);
+  text-decoration-line: line-through;
+  text-decoration-skip-ink: none;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 3px;
+}
+
+.字.命中起点 {
+  border-radius: 3px 0 0 3px;
+}
+
+.字.命中终点 {
+  border-radius: 0 3px 3px 0;
+}
+
+.字.命中起点.命中终点 {
+  border-radius: 3px;
+}
+
+.字.命中.同组悬停 {
+  background-color: color-mix(
+    in srgb,
+    var(--命中背景, var(--高亮色)) 62%,
+    var(--命中当前色, var(--强调色))
+  );
+  background-image: none;
+  box-shadow: inset 0 -2px 0
+    color-mix(in srgb, var(--命中当前色, var(--强调色)) 58%, transparent);
+}
+
+.字.命中.当前关键词组 {
+  padding-bottom: 3px;
+  color: var(--纸张色);
+  background-color: var(--墨色);
+  background-image: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.字.命中:is(.当前命中, .当前关键词组.悬停命中)[data-hit-position]::after {
+  position: absolute;
+  right: -3px;
+  bottom: -7px;
+  z-index: 2;
+  min-width: 18px;
+  padding: 1px 2px;
+  color: var(--纸张色);
+  font-family: 'Avenir Next', 'PingFang SC', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 10px;
+  text-align: center;
+  letter-spacing: 0;
+  content: attr(data-hit-position);
+  background: var(--墨色);
+  border: 1px solid var(--纸张色);
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+.字.命中.当前关键词组[data-group-start] {
+  border-radius: 14px 0 0 14px;
+}
+
+.字.命中.当前关键词组[data-group-end] {
+  z-index: 1;
+  border-radius: 0 14px 14px 0;
+}
+
+.字.命中.当前关键词组[data-group-start][data-group-end] {
+  border-radius: 14px;
+}
+
+.字.命中.当前命中 {
+  z-index: 1;
+  color: var(--纸张色);
+  background-color: var(--墨色);
+  background-image: none;
+  border-radius: 0;
+  box-shadow:
+    inset 0 0 0 2px var(--纸张色),
+    0 0 0 3px var(--命中背景, var(--高亮色));
+}
+
+.字.命中.当前命中.跳转闪烁 {
+  animation: 命中闪烁 520ms steps(1, end);
+}
+
+@keyframes 命中闪烁 {
+  0%,
+  50% {
+    color: var(--墨色);
+    background-color: var(--纸张色);
+  }
+
+  25%,
+  75%,
+  100% {
+    color: var(--纸张色);
+    background-color: var(--墨色);
+  }
+}
+
+.滚动容器.边框跳转中 .字.命中.当前命中 {
+  box-shadow: none;
+}
+
+.跳转边框 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  border-radius: 0;
+  box-shadow:
+    inset 0 0 0 2px var(--纸张色),
+    0 0 0 3px var(--命中背景, var(--高亮色));
+  pointer-events: none;
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.跳转边框[hidden] {
+  display: none;
+}
+
+.查找弹窗 {
+  width: min(420px, calc(100vw - 32px));
+  margin: 24px auto auto;
+  padding: 0;
+  color: var(--墨色);
+  background: var(--纸张色);
+  border: 1px solid #cbd2ce;
+  border-radius: 6px;
+  box-shadow: 0 12px 34px rgb(32 37 34 / 18%);
+}
+
+.查找弹窗::backdrop {
+  background: rgb(32 37 34 / 8%);
+}
+
+.查找弹窗[open] {
+  animation: 查找弹窗进入 140ms ease-out;
+}
+
+.查找表单 {
+  padding: 16px;
+}
+
+.查找标题栏,
+.查找输入行 {
+  display: flex;
+  align-items: center;
+}
+
+.查找标题栏 {
+  justify-content: space-between;
+  min-height: 28px;
+  margin-bottom: 12px;
+}
+
+.查找标题栏 label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.关闭查找按钮 {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  color: var(--次要墨色);
+  font:
+    22px/1 'Avenir Next',
+    'PingFang SC',
+    sans-serif;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.关闭查找按钮:hover {
+  color: var(--墨色);
+  background: var(--背景色);
+}
+
+.查找输入行 {
+  gap: 8px;
+}
+
+.查找输入框,
+.提交查找按钮,
+.分析按钮 {
+  height: 42px;
+  font:
+    15px/1 'Avenir Next',
+    'PingFang SC',
+    sans-serif;
+}
+
+.查找输入框 {
+  min-width: 0;
+  flex: 1;
+  padding: 0 12px;
+  color: var(--墨色);
+  background: #f8f9f8;
+  border: 1px solid #b9c2bc;
+  border-radius: 4px;
+  outline: 0;
+}
+
+.查找输入框:focus {
+  background: var(--纸张色);
+  border-color: var(--选中色);
+  box-shadow: 0 0 0 2px rgb(23 109 103 / 16%);
+}
+
+.查找输入框[aria-invalid='true'] {
+  border-color: #b74837;
+  box-shadow: 0 0 0 2px rgb(183 72 55 / 14%);
+}
+
+.提交查找按钮 {
+  flex: 0 0 auto;
+  padding: 0 17px;
+  color: #ffffff;
+  font-weight: 700;
+  background: var(--选中色);
+  border: 1px solid var(--选中色);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.提交查找按钮:hover {
+  background: #115b56;
+  border-color: #115b56;
+}
+
+.分析按钮 {
+  flex: 0 0 auto;
+  width: 72px;
+  padding: 0 8px;
+  color: var(--墨色);
+  font-weight: 700;
+  background: var(--纸张色);
+  border: 1px solid #aeb8b2;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.分析按钮:hover {
+  background: var(--背景色);
+  border-color: #89958e;
+}
+
+.分析按钮:disabled {
+  color: var(--次要墨色);
+  cursor: wait;
+  background: var(--背景色);
+}
+
+.关闭查找按钮:focus-visible,
+.提交查找按钮:focus-visible,
+.分析按钮:focus-visible {
+  outline: 2px solid var(--选中色);
+  outline-offset: 2px;
+}
+
+.查找反馈 {
+  min-height: 18px;
+  margin: 6px 0 -4px;
+  color: #9f3526;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.分析结果[hidden] {
+  display: none;
+}
+
+.分析结果 {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--边线色);
+}
+
+.分析结果摘要 {
+  margin: 0 0 8px;
+  color: var(--次要墨色);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  line-height: 18px;
+}
+
+.分析表格容器 {
+  max-height: min(340px, calc(100dvh - 220px));
+  overflow: auto;
+  border-top: 1px solid var(--边线色);
+  border-bottom: 1px solid var(--边线色);
+  scrollbar-color: #aab3ad transparent;
+  scrollbar-width: thin;
+}
+
+.分析表格 {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 13px;
+}
+
+.分析表格 th,
+.分析表格 td {
+  height: 34px;
+  padding: 6px 8px;
+  text-align: left;
+  border-bottom: 1px solid #e4e8e5;
+}
+
+.分析表格 th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  color: var(--次要墨色);
+  font-size: 11px;
+  font-weight: 700;
+  background: #f5f7f5;
+}
+
+.分析表格 th:last-child,
+.分析表格 td:last-child {
+  width: 72px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.分析表格 td:first-child {
+  overflow-wrap: anywhere;
+}
+
+.分析表格 tbody tr:hover {
+  background: #f8f9f8;
+}
+
+.分析表格 tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+@keyframes 查找弹窗进入 {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.载入状态 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: min(360px, calc(100vw - 48px));
+  color: var(--次要墨色);
+  text-align: center;
+  transform: translate(-50%, -38%);
+}
+
+.载入状态[hidden] {
+  display: none;
+}
+
+.载入状态 p {
+  max-width: 100%;
+  margin: 15px 0 0;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+}
+
+.载入状态.错误 {
+  color: #9f3526;
+}
+
+.载入线 {
+  display: block;
+  width: 92px;
+  height: 3px;
+  overflow: hidden;
+  background: #d7ddd9;
+}
+
+.载入线::after {
+  display: block;
+  width: 44px;
+  height: 100%;
+  content: '';
+  background: var(--强调色);
+  animation: 载入移动 850ms ease-in-out infinite alternate;
+}
+
+@keyframes 载入移动 {
+  from {
+    transform: translateX(-14px);
+  }
+  to {
+    transform: translateX(63px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .载入线::after,
+  .查找弹窗[open] {
+    animation: none;
+  }
+}
+
+@media (max-width: 620px) {
+  :root {
+    --正文字号: 28.5px;
+    --行高: 55.5px;
+  }
+
+  .虚拟画布 {
+    width: 100%;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .查找弹窗 {
+    margin-top: 12px;
+  }
+}
