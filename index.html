@@ -6,7 +6,12 @@
     <meta name="color-scheme" content="light" />
     <title>原文阅读器</title>
     <link rel="icon" href="./icon.svg" type="image/svg+xml" />
-    <link rel="preload" href="./txt/白鹿原.txt" as="fetch" crossorigin="anonymous" />
+    <link
+      rel="preload"
+      href="./txt/白鹿原.txt"
+      as="fetch"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="./styles.css?v=20260727-2" />
   </head>
   <body>
@@ -26,6 +31,12 @@
         </div>
       </div>
     </main>
+    <canvas
+      id="关键词指示器"
+      class="关键词指示器"
+      aria-hidden="true"
+      hidden
+    ></canvas>
     <div id="跳转边框" class="跳转边框" aria-hidden="true" hidden></div>
     <div id="跳转迸发" class="跳转迸发" aria-hidden="true" hidden></div>
 

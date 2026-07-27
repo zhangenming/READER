@@ -14,6 +14,8 @@
   --西文字体: 'Iowan Old Style', 'Times New Roman', serif;
   --西文字号: 0.96em;
   --行高: 58px;
+  --滚动条宽度: 15px;
+  --指示器宽度: 8px;
   color: var(--墨色);
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-synthesis: none;
@@ -53,19 +55,42 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   background: var(--背景色);
-  scrollbar-color: #aab3ad transparent;
-  scrollbar-width: thin;
+  /* 不用 scrollbar-width: thin，它会让 Chrome 忽略下面的 ::-webkit-scrollbar 尺寸 */
+  scrollbar-color: #aab3ad var(--背景色);
   scroll-padding-block: 30vh;
 }
 
 .滚动容器::-webkit-scrollbar {
-  width: 10px;
+  width: var(--滚动条宽度);
 }
 
+.滚动容器::-webkit-scrollbar-track {
+  background: var(--背景色);
+}
+
+/* 滑块靠右，让出左侧的关键词指示器轨道 */
 .滚动容器::-webkit-scrollbar-thumb {
   background: #aab3ad;
-  border: 3px solid var(--背景色);
+  background-clip: padding-box;
+  border: solid transparent;
+  border-width: 0 3px 0 var(--指示器宽度);
   border-radius: 0;
+}
+
+/* canvas 是替换元素，必须显式给高，top/bottom 不会把它拉满 */
+.关键词指示器 {
+  position: fixed;
+  top: 0;
+  right: calc(var(--滚动条宽度) - var(--指示器宽度));
+  z-index: 2;
+  display: block;
+  width: var(--指示器宽度);
+  height: 100%;
+  pointer-events: none;
+}
+
+.关键词指示器[hidden] {
+  display: none;
 }
 
 .虚拟画布 {
@@ -249,14 +274,45 @@ body {
 }
 
 .字.命中.当前命中 {
+  --命中环色: var(--命中背景, var(--高亮色));
+  --命中左环: 0 0 0 0 transparent;
+  --命中右环: 0 0 0 0 transparent;
   z-index: 1;
   color: var(--纸张色);
   background-color: var(--墨色);
   background-image: none;
   border-radius: 0;
   box-shadow:
+    var(--命中左环),
+    var(--命中右环),
+    inset 0 2px 0 var(--纸张色),
+    inset 0 -2px 0 var(--纸张色),
+    0 -3px 0 var(--命中环色),
+    0 3px 0 var(--命中环色);
+}
+
+.字.命中.当前命中.当前命中起点 {
+  --命中左环:
+    inset 2px 0 0 var(--纸张色), -3px 0 0 var(--命中环色),
+    -3px -3px 0 var(--命中环色), -3px 3px 0 var(--命中环色);
+}
+
+.字.命中.当前命中.当前命中终点 {
+  --命中右环:
+    inset -2px 0 0 var(--纸张色), 3px 0 0 var(--命中环色),
+    3px -3px 0 var(--命中环色), 3px 3px 0 var(--命中环色);
+}
+
+.字.命中.当前命中.逐字环 {
+  box-shadow:
     inset 0 0 0 2px var(--纸张色),
-    0 0 0 3px var(--命中背景, var(--高亮色));
+    0 0 0 3px var(--命中环色);
+}
+
+.字.命中.当前命中[data-group-start],
+.字.命中.当前命中[data-group-end],
+.字.命中.当前命中[data-group-start][data-group-end] {
+  border-radius: 0;
 }
 
 .滚动容器.边框跳转中 .字.命中.当前命中 {

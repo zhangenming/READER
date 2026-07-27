@@ -17,6 +17,9 @@ const 迸发粒子数 = 18;
 const 迸发起跳留白 = 3; // 火花从命中边框外侧起跳，避免压住字
 const 迸发横向射程 = 22;
 const 迸发纵向射程 = 11; // 纵向收着走，免得溅到相邻行
+const 指示器刻度高度 = 3;
+const 指示器标记高度 = 7;
+const 指示器标记留白 = 2;
 const 高亮配色 = [
   { 浅色: '#f6d768', 深色: '#9a6614' },
   { 浅色: '#8bd4cb', 深色: '#176d67' },
@@ -37,6 +40,7 @@ const 状态 = {
   渲染终点: -1,
   滚动帧: 0,
   滚动动画帧: 0,
+  滚动动画目标: null,
   尺寸计时器: 0,
   保存计时器: 0,
   迸发计时器: 0,
@@ -48,6 +52,7 @@ const 状态 = {
   悬停命中idx: null,
   下一个关键词id: 1,
   跳转起点: null,
+  指示器缓存: null,
 };
 
 const 元素 = {
@@ -66,7 +71,13 @@ const 元素 = {
   分析结果摘要: document.querySelector('#分析结果摘要'),
   分析结果列表: document.querySelector('#分析结果列表'),
   关闭查找按钮: document.querySelector('#关闭查找按钮'),
+  关键词指示器: document.querySelector('#关键词指示器'),
 };
+
+const 指示器上下文 = 元素.关键词指示器.getContext('2d');
+if (!指示器上下文) {
+  throw new Error('当前浏览器无法创建关键词指示器画布');
+}
 
 元素.跳转迸发.append(
   ...Array.from({ length: 迸发粒子数 }, function 造火花() {
@@ -139,6 +150,7 @@ function 启动() {
       try {
         刷新画布尺寸(新排版);
         渲染可见行(true);
+        更新关键词指示器();
       } catch (错误) {
         显示文本处理错误(错误);
       }
@@ -341,6 +353,7 @@ function 绑定事件() {
       状态.当前关键词id = null;
     }
     渲染可见行(true);
+    更新关键词指示器();
     安排保存持久化状态();
     const 已启用边框动画 = 动画滚动到(
       计算阅读位置(跳转起点),
@@ -494,6 +507,7 @@ function 绑定事件() {
     关键词.当前命中idx = 点击命中idx;
     if (目标命中idx === 点击命中idx) {
       渲染可见行(true);
+      更新关键词指示器();
       安排保存持久化状态();
       console.info('[阅读器] 当前命中无需跳转', {
         关键词: 关键词.文本,
@@ -531,10 +545,11 @@ function 绑定事件() {
 
     const 新字元素 = 事件.relatedTarget?.closest?.('.字.命中');
     if (新字元素) {
-      切换同组高亮(
-        Number(新字元素.dataset.keywordId),
-        Number(新字元素.dataset.hitIndex),
-      );
+      const 新关键词id = Number(新字元素.dataset.keywordId);
+      const 新命中idx = Number(新字元素.dataset.hitIndex);
+      if (新关键词id !== 状态.悬停关键词id || 新命中idx !== 状态.悬停命中idx) {
+        切换同组高亮(新关键词id, 新命中idx);
+      }
     } else {
       切换同组高亮(null, null);
     }
@@ -551,6 +566,7 @@ function 绑定事件() {
         是悬停关键词 && Number(命中元素.dataset.hitIndex) === 命中idx,
       );
     }
+    更新关键词指示器();
   }
 
   function 打开查找弹窗() {
@@ -753,9 +769,11 @@ function 应用文本(原始文本, 文件名) {
   状态.当前关键词id = null;
   状态.下一个关键词id = 1;
   状态.跳转起点 = null;
+  取消滚动动画();
   提交行索引(行索引);
   恢复持久化状态();
   渲染可见行(true);
+  更新关键词指示器();
   更新文档标题();
   元素.载入状态.hidden = true;
 
@@ -969,13 +987,15 @@ function 应用文本(原始文本, 文件名) {
 }
 
 function 重建行索引(排版 = 读取正文排版()) {
-  const 顶部行idx = Math.floor(元素.滚动容器.scrollTop / 状态.行高);
+  const 顶部行idx = Math.floor(获取静止滚动位置() / 状态.行高);
   const 顶部偏移 = 状态.行起点列表[顶部行idx] ?? 0;
+  取消滚动动画();
   const 行索引 = 创建行索引(状态.文本, 排版);
   提交行索引(行索引);
   const 新行idx = 查找偏移所在行(顶部偏移);
   元素.滚动容器.scrollTop = 新行idx * 状态.行高;
   渲染可见行(true);
+  更新关键词指示器();
 
   console.info('[阅读器] 虚拟布局已重建', {
     正文宽度: Math.round(排版.内容宽度),
@@ -1302,6 +1322,42 @@ function 是西文范围(文本, 起点, 终点) {
   return 终点 > 起点;
 }
 
+function 是方块字素码(码) {
+  return (
+    (码 >= 0x4e00 && 码 <= 0x9fff) ||
+    (码 >= 0x3400 && 码 <= 0x4dbf) ||
+    (码 >= 0xf900 && 码 <= 0xfaff) ||
+    (码 >= 0x3000 && 码 <= 0x303f) ||
+    (码 >= 0xff01 && 码 <= 0xff5e) ||
+    (码 >= 0x2018 && 码 <= 0x201d) ||
+    码 === 0x2013 ||
+    码 === 0x2014 ||
+    码 === 0x2026
+  );
+}
+
+function 是混合盒命中(命中起点, 命中终点) {
+  let 有西文 = false;
+  let 有方块 = false;
+  for (let idx = 命中起点; idx < 命中终点; idx += 1) {
+    const 码 = 状态.文本.charCodeAt(idx);
+    if (码 === 0x201c || 码 === 0x201d) {
+      return true;
+    }
+    if (是西文范围(状态.文本, idx, idx + 1)) {
+      有西文 = true;
+    } else if (是方块字素码(码)) {
+      有方块 = true;
+    } else {
+      return true;
+    }
+    if (有西文 && 有方块) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function 是安全字素码(码) {
   return (
     (码 >= 0x4e00 && 码 <= 0x9fff) ||
@@ -1536,6 +1592,20 @@ function 渲染可见行(强制渲染 = false) {
           );
           字元素.classList.toggle('当前关键词组', Boolean(当前关键词命中));
           字元素.classList.toggle('当前命中', Boolean(当前项命中));
+          if (当前项命中) {
+            字元素.classList.toggle(
+              '当前命中起点',
+              当前项命中.命中起点 === 字起点,
+            );
+            字元素.classList.toggle(
+              '当前命中终点',
+              当前项命中.命中终点 === 字终点,
+            );
+            字元素.classList.toggle(
+              '逐字环',
+              是混合盒命中(当前项命中.命中起点, 当前项命中.命中终点),
+            );
+          }
           字元素.classList.toggle(
             '同组悬停',
             点击命中.关键词.id === 状态.悬停关键词id,
@@ -1586,10 +1656,11 @@ function 渲染可见行(强制渲染 = false) {
   }
 
   function 收集片段边界(行起点, 行终点, 行文本, 关键词游标列表) {
-    const 边界集合 = new Set([行起点, 行终点]);
+    const 边界列表 = [行起点];
     const 行长度 = 行文本.length;
-    let 上一字素是西文 = null;
     let 字素起点 = 0;
+    let 聚合片段起点 = -1;
+    let 聚合片段是西文 = false;
     while (字素起点 < 行长度) {
       const 码 = 行文本.charCodeAt(字素起点);
       let 字素终点;
@@ -1602,59 +1673,61 @@ function 渲染可见行(强制渲染 = false) {
       } else {
         字素终点 = 查找字素终点(行文本, 字素起点);
       }
-      const 当前字素是西文 = 是西文范围(行文本, 字素起点, 字素终点);
-      if (上一字素是西文 !== null && 当前字素是西文 !== 上一字素是西文) {
-        边界集合.add(行起点 + 字素起点);
+      const 当前是西文 = 是西文范围(行文本, 字素起点, 字素终点);
+      if (!当前是西文 && 是方块字素码(码)) {
+        提交聚合片段(字素起点);
+        边界列表.push(行起点 + 字素终点);
+      } else if (聚合片段起点 === -1) {
+        聚合片段起点 = 字素起点;
+        聚合片段是西文 = 当前是西文;
+      } else if (聚合片段是西文 !== 当前是西文) {
+        提交聚合片段(字素起点);
+        聚合片段起点 = 字素起点;
+        聚合片段是西文 = 当前是西文;
       }
-      if (
-        码 === 0x7684 ||
-        码 === 0x4e86 ||
-        码 === 0x201c ||
-        码 === 0x201d ||
-        码 === 0x2018 ||
-        码 === 0x2019 ||
-        (码 >= 0x300c && 码 <= 0x300f)
-      ) {
-        边界集合.add(行起点 + 字素起点);
-        边界集合.add(行起点 + 字素终点);
-      }
-      上一字素是西文 = 当前字素是西文;
       字素起点 = 字素终点;
     }
+    提交聚合片段(行长度);
+    return 边界列表;
 
-    let 检查引文idx = 查找首个未结束引文(行起点);
-    while (
-      检查引文idx < 状态.引文边界列表.length &&
-      状态.引文边界列表[检查引文idx] < 行终点
-    ) {
-      const 引文起点 = 状态.引文边界列表[检查引文idx];
-      const 引文终点 = 状态.引文边界列表[检查引文idx + 1];
-      if (行起点 < 引文起点 && 引文起点 < 行终点) {
-        边界集合.add(引文起点);
+    function 提交聚合片段(片段终点) {
+      if (聚合片段起点 === -1) {
+        return;
       }
-      if (行起点 < 引文终点 && 引文终点 < 行终点) {
-        边界集合.add(引文终点);
-      }
-      检查引文idx += 2;
-    }
+      const 片段绝对起点 = 行起点 + 聚合片段起点;
+      const 片段绝对终点 = 行起点 + 片段终点;
+      聚合片段起点 = -1;
 
-    for (const 关键词游标 of 关键词游标列表) {
-      const { 关键词 } = 关键词游标;
-      let 检查命中idx = 关键词游标.idx;
-      while (
-        检查命中idx < 关键词.命中位置.length &&
-        关键词.命中位置[检查命中idx] < 行终点
-      ) {
-        const 命中起点 = 关键词.命中位置[检查命中idx];
-        const 命中终点 = 命中起点 + 关键词.文本.length;
-        if (命中终点 > 行起点) {
-          边界集合.add(Math.max(行起点, 命中起点));
-          边界集合.add(Math.min(行终点, 命中终点));
+      let 命中切分列表 = null;
+      for (const 关键词游标 of 关键词游标列表) {
+        const { 关键词 } = 关键词游标;
+        for (
+          let 检查命中idx = 关键词游标.idx;
+          检查命中idx < 关键词.命中位置.length &&
+          关键词.命中位置[检查命中idx] < 片段绝对终点;
+          检查命中idx += 1
+        ) {
+          const 命中起点 = 关键词.命中位置[检查命中idx];
+          const 命中终点 = 命中起点 + 关键词.文本.length;
+          if (命中起点 > 片段绝对起点) {
+            (命中切分列表 ??= []).push(命中起点);
+          }
+          if (命中终点 > 片段绝对起点 && 命中终点 < 片段绝对终点) {
+            (命中切分列表 ??= []).push(命中终点);
+          }
         }
-        检查命中idx += 1;
       }
+
+      if (命中切分列表) {
+        命中切分列表.sort((左切分, 右切分) => 左切分 - 右切分);
+        for (const 切分 of 命中切分列表) {
+          if (切分 !== 边界列表[边界列表.length - 1]) {
+            边界列表.push(切分);
+          }
+        }
+      }
+      边界列表.push(片段绝对终点);
     }
-    return [...边界集合].sort((左边界, 右边界) => 左边界 - 右边界);
   }
 
   function 创建高亮色带(关键词列表) {
@@ -1800,6 +1873,7 @@ function 添加关键词标记(关键词文本, 选择位置) {
     关键词.当前命中idx = 二分查找精确命中(关键词, 选择位置);
   }
   渲染可见行(true);
+  更新关键词指示器();
   安排保存持久化状态();
 
   console.info('[阅读器] 关键词标记已更新', {
@@ -1862,6 +1936,7 @@ function 删除关键词标记(关键词id) {
     状态.当前关键词id = 接替关键词?.id ?? null;
   }
   渲染可见行(true);
+  更新关键词指示器();
   安排保存持久化状态();
 
   console.info('[阅读器] 关键词标记已删除', {
@@ -1878,6 +1953,210 @@ function 查找关键词(关键词id) {
 
 function 获取关键词配色(关键词) {
   return 高亮配色[关键词.配色idx];
+}
+
+function 更新关键词指示器() {
+  const 画布 = 元素.关键词指示器;
+  const 轨道高度 = 元素.滚动容器.clientHeight;
+  const 滚动高度 = 元素.滚动容器.scrollHeight;
+  const 主命中 = 获取指示器主命中();
+  if (!主命中 || !状态.行起点列表.length || 滚动高度 <= 轨道高度) {
+    画布.hidden = true;
+    状态.指示器缓存 = null;
+    return;
+  }
+
+  画布.hidden = false;
+  const 像素比 = Math.min(3, window.devicePixelRatio || 1);
+  const 画布宽 = Math.max(1, Math.round(画布.clientWidth * 像素比));
+  const 画布高 = Math.max(1, Math.round(画布.clientHeight * 像素比));
+  if (画布.width !== 画布宽 || 画布.height !== 画布高) {
+    画布.width = 画布宽;
+    画布.height = 画布高;
+    状态.指示器缓存 = null;
+  }
+
+  // 关键词 id 不会在同一次会话里复用，所以刻度缓存不必随关键词增删失效
+  const 布局键 = [状态.排版键, 画布宽, 画布高, 滚动高度].join('|');
+  const 底图键 = `${布局键}|${主命中.关键词.id}`;
+
+  if (状态.指示器缓存?.布局键 !== 布局键) {
+    状态.指示器缓存 = {
+      布局键,
+      底图键: '',
+      底图: null,
+      段缓存: new Map(),
+      墨色: getComputedStyle(document.documentElement)
+        .getPropertyValue('--墨色')
+        .trim(),
+    };
+  }
+  if (状态.指示器缓存.底图键 !== 底图键) {
+    const 开始时间 = performance.now();
+    const 原刻度缓存数 = 状态.指示器缓存.段缓存.size;
+    状态.指示器缓存.底图 = 创建指示器底图(
+      画布宽,
+      画布高,
+      滚动高度,
+      像素比,
+      主命中.关键词,
+    );
+    状态.指示器缓存.底图键 = 底图键;
+    // 只在真正重算过刻度时记一笔，切换主关键词时不刷屏
+    if (状态.指示器缓存.段缓存.size !== 原刻度缓存数) {
+      console.info('[阅读器] 关键词指示器已重建', {
+        关键词: 主命中.关键词.文本,
+        命中数: 主命中.关键词.命中位置.length,
+        轨道像素高: 画布高,
+        耗时毫秒: Math.round(performance.now() - 开始时间),
+      });
+    }
+  }
+
+  指示器上下文.clearRect(0, 0, 画布宽, 画布高);
+  指示器上下文.drawImage(状态.指示器缓存.底图, 0, 0);
+  绘制主命中标记(画布宽, 画布高, 滚动高度, 像素比, 主命中);
+}
+
+/* 指示器优先展示鼠标悬停的关键词，其次才是当前关键词。 */
+function 获取指示器主命中() {
+  const 悬停关键词 = 查找关键词(状态.悬停关键词id);
+  if (悬停关键词?.命中位置.length) {
+    return { 关键词: 悬停关键词, 命中idx: 状态.悬停命中idx ?? -1 };
+  }
+
+  const 当前关键词 = 查找关键词(状态.当前关键词id);
+  if (当前关键词?.命中位置.length) {
+    return { 关键词: 当前关键词, 命中idx: 当前关键词.当前命中idx };
+  }
+  return null;
+}
+
+function 创建指示器底图(画布宽, 画布高, 滚动高度, 像素比, 主关键词) {
+  const 底图 = document.createElement('canvas');
+  底图.width = 画布宽;
+  底图.height = 画布高;
+  const 底图上下文 = 底图.getContext('2d');
+  if (!底图上下文) {
+    throw new Error('无法创建关键词指示器底图');
+  }
+
+  const 最小刻度高度 = Math.max(1, Math.round(指示器刻度高度 * 像素比));
+  const 段列表 = 读取指示器段列表(主关键词, 画布高, 滚动高度, 最小刻度高度);
+  底图上下文.fillStyle = 获取关键词配色(主关键词).深色;
+  for (let idx = 0; idx < 段列表.length; idx += 2) {
+    底图上下文.fillRect(0, 段列表[idx], 画布宽, 段列表[idx + 1] - 段列表[idx]);
+  }
+  return 底图;
+}
+
+/* 刻度只跟版面与命中有关，与谁是主关键词无关，可以跨悬停切换复用。 */
+function 读取指示器段列表(关键词, 画布高, 滚动高度, 最小刻度高度) {
+  const 段缓存 = 状态.指示器缓存.段缓存;
+  let 段列表 = 段缓存.get(关键词.id);
+  if (!段列表) {
+    段列表 = 创建指示器段列表(关键词, 画布高, 滚动高度, 最小刻度高度);
+    段缓存.set(关键词.id, 段列表);
+  }
+  return 段列表;
+}
+
+/* 逐轨道像素反查命中，代价只与轨道高度相关，与命中数量无关。 */
+function 创建指示器段列表(关键词, 画布高, 滚动高度, 最小刻度高度) {
+  const 总行数 = 状态.行起点列表.length;
+  const 每像素行数 = 滚动高度 / (状态.行高 * 画布高);
+  const 段数组 = [];
+  let 段起点 = -1;
+  let 像素idx = 0;
+
+  for (; 像素idx < 画布高; 像素idx += 1) {
+    const 行起点idx = Math.floor(像素idx * 每像素行数);
+    if (行起点idx >= 总行数) {
+      break;
+    }
+
+    const 行终点idx = Math.min(
+      总行数,
+      Math.max(Math.floor((像素idx + 1) * 每像素行数), 行起点idx + 1),
+    );
+    const 命中idx = 查找首个相交命中(关键词, 状态.行起点列表[行起点idx]);
+    const 像素终点偏移 =
+      行终点idx < 总行数 ? 状态.行起点列表[行终点idx] : 状态.文本.length;
+    const 有命中 =
+      命中idx < 关键词.命中位置.length &&
+      关键词.命中位置[命中idx] < 像素终点偏移;
+
+    if (有命中) {
+      if (段起点 < 0) {
+        段起点 = 像素idx;
+      }
+    } else if (段起点 >= 0) {
+      段数组.push(段起点, 像素idx);
+      段起点 = -1;
+    }
+  }
+  if (段起点 >= 0) {
+    段数组.push(段起点, 像素idx);
+  }
+
+  return 展开最小刻度(段数组, 画布高, 最小刻度高度);
+}
+
+function 展开最小刻度(段数组, 画布高, 最小刻度高度) {
+  const 刻度列表 = [];
+  for (let idx = 0; idx < 段数组.length; idx += 2) {
+    let 起点 = 段数组[idx];
+    let 终点 = 段数组[idx + 1];
+    if (终点 - 起点 < 最小刻度高度) {
+      起点 = Math.round((起点 + 终点 - 最小刻度高度) / 2);
+      终点 = 起点 + 最小刻度高度;
+      if (起点 < 0) {
+        起点 = 0;
+        终点 = Math.min(画布高, 最小刻度高度);
+      }
+      if (终点 > 画布高) {
+        终点 = 画布高;
+        起点 = Math.max(0, 画布高 - 最小刻度高度);
+      }
+    }
+
+    if (刻度列表.length && 起点 <= 刻度列表[刻度列表.length - 1]) {
+      刻度列表[刻度列表.length - 1] = Math.max(
+        刻度列表[刻度列表.length - 1],
+        终点,
+      );
+    } else {
+      刻度列表.push(起点, 终点);
+    }
+  }
+  return 刻度列表;
+}
+
+function 绘制主命中标记(画布宽, 画布高, 滚动高度, 像素比, 主命中) {
+  if (
+    !主命中 ||
+    主命中.命中idx < 0 ||
+    主命中.命中idx >= 主命中.关键词.命中位置.length
+  ) {
+    return;
+  }
+
+  const 行idx = 查找偏移所在行(主命中.关键词.命中位置[主命中.命中idx]);
+  const 标记高度 = Math.max(1, Math.round(指示器标记高度 * 像素比));
+  const 标记留白 = Math.max(1, Math.round(指示器标记留白 * 像素比));
+  const 标记中心 = (((行idx + 0.5) * 状态.行高) / 滚动高度) * 画布高;
+  const 标记顶部 = Math.min(
+    画布高 - 标记高度,
+    Math.max(0, Math.round(标记中心 - 标记高度 / 2)),
+  );
+  指示器上下文.clearRect(
+    0,
+    标记顶部 - 标记留白,
+    画布宽,
+    标记高度 + 标记留白 * 2,
+  );
+  指示器上下文.fillStyle = 状态.指示器缓存.墨色;
+  指示器上下文.fillRect(0, 标记顶部, 画布宽, 标记高度);
 }
 
 function 跳到命中(
@@ -1908,6 +2187,7 @@ function 跳到命中(
   const 目标行位置 = Number.isFinite(原始行位置) ? 原始行位置 : 默认行位置;
   const 目标滚动位置 = 行idx * 状态.行高 - 目标行位置;
   渲染可见行(true);
+  更新关键词指示器();
   安排保存持久化状态();
   const 已启用边框动画 = 动画滚动到(
     目标滚动位置,
@@ -1935,6 +2215,14 @@ function 获取当前命中行位置(关键词) {
   if (关键词.当前命中idx < 0 || 关键词.id !== 状态.当前关键词id) {
     return null;
   }
+  if (状态.滚动动画目标) {
+    const 行位置 =
+      查找偏移所在行(关键词.命中位置[关键词.当前命中idx]) * 状态.行高 -
+      获取静止滚动位置();
+    const 在静止视口内 =
+      行位置 > -状态.行高 && 行位置 < 元素.滚动容器.clientHeight;
+    return 在静止视口内 ? 行位置 : null;
+  }
   const 当前元素 = 元素.可见内容.querySelector(
     `.字.当前命中[data-keyword-id="${关键词.id}"]`,
   );
@@ -1945,10 +2233,39 @@ function 获取当前命中边框(关键词) {
   if (关键词.当前命中idx < 0 || 关键词.id !== 状态.当前关键词id) {
     return null;
   }
+  if (状态.滚动动画目标) {
+    return 获取动画中边框(状态.滚动动画目标);
+  }
   const 当前元素 = 元素.可见内容.querySelector(
     `.字.当前命中[data-keyword-id="${关键词.id}"][data-hit-index="${关键词.当前命中idx}"]`,
   );
   return 当前元素 ? 获取元素命中边框(当前元素) : null;
+}
+
+function 获取动画中边框(动画目标) {
+  const 边框动画 = 动画目标.边框动画;
+  if (!边框动画) {
+    return null;
+  }
+  const 进度 = 动画目标.缓动进度;
+  return {
+    左侧: 边框动画.起点.左侧 + (边框动画.终点.左侧 - 边框动画.起点.左侧) * 进度,
+    顶部: 边框动画.起点.顶部,
+    宽度: 边框动画.起点.宽度 + (边框动画.终点.宽度 - 边框动画.起点.宽度) * 进度,
+    高度: 边框动画.起点.高度,
+    颜色: 边框动画.终点.颜色,
+  };
+}
+
+function 获取静止滚动位置() {
+  if (!状态.滚动动画目标) {
+    return 元素.滚动容器.scrollTop;
+  }
+  const 最大滚动位置 = Math.max(
+    0,
+    元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight,
+  );
+  return Math.min(最大滚动位置, 状态.滚动动画目标.终点);
 }
 
 function 获取元素命中边框(字元素) {
@@ -2014,12 +2331,15 @@ function 动画滚动到(目标位置, 边框跳转 = null) {
       ? 220
       : Math.min(720, Math.max(300, Math.sqrt(Math.abs(距离)) * 12));
   const 开始时间 = performance.now();
+  const 动画目标 = { 终点, 边框动画, 缓动进度: 0 };
+  状态.滚动动画目标 = 动画目标;
   if (边框动画) {
     显示跳转边框(边框动画.起点);
   }
   状态.滚动动画帧 = requestAnimationFrame(function 执行动画(当前时间) {
     const 进度 = Math.min(1, (当前时间 - 开始时间) / 时长);
     const 缓动进度 = 进度 ** 2;
+    动画目标.缓动进度 = 缓动进度;
     元素.滚动容器.scrollTop = 起点 + 距离 * 缓动进度;
     if (边框动画) {
       更新跳转边框(边框动画, 缓动进度);
@@ -2028,6 +2348,7 @@ function 动画滚动到(目标位置, 边框跳转 = null) {
       状态.滚动动画帧 = requestAnimationFrame(执行动画);
     } else {
       状态.滚动动画帧 = 0;
+      状态.滚动动画目标 = null;
       元素.滚动容器.scrollTop = 终点;
       渲染可见行(true);
       隐藏跳转边框();
@@ -2085,7 +2406,6 @@ function 动画滚动到(目标位置, 边框跳转 = null) {
     const 横向缩放 = 1 + (动画.终点.宽度 / 动画.起点.宽度 - 1) * 进度;
     元素.跳转边框.style.transform = `translate3d(${左侧}px, ${动画.起点.顶部}px, 0) scaleX(${横向缩放})`;
   }
-
 }
 
 function 取消滚动动画() {
@@ -2094,6 +2414,7 @@ function 取消滚动动画() {
     cancelAnimationFrame(状态.滚动动画帧);
     状态.滚动动画帧 = 0;
   }
+  状态.滚动动画目标 = null;
   隐藏跳转边框();
   隐藏跳转迸发();
   if (正在播放) {
@@ -2234,7 +2555,7 @@ function 保存持久化状态() {
 }
 
 function 读取阅读位置() {
-  const 行位置 = 元素.滚动容器.scrollTop / 状态.行高;
+  const 行位置 = 获取静止滚动位置() / 状态.行高;
   const 顶部行idx = Math.min(状态.行起点列表.length - 1, Math.floor(行位置));
   return {
     阅读偏移: 状态.行起点列表[顶部行idx],
