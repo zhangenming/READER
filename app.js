@@ -1,6 +1,6 @@
 'use strict';
 
-const 默认文本地址 = './txt/白鹿原.txt';
+const 默认文本地址 = './txt/嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt';
 const 持久化键 = '原文阅读器:阅读状态:v1';
 const 最大虚拟高度 = 30_000_000;
 const 字素分段器 = new Intl.Segmenter('zh-CN', { granularity: 'grapheme' });
@@ -108,7 +108,7 @@ function 启动() {
     } catch (错误) {
       if (本次载入序号 === 状态.载入序号) {
         显示错误(
-          '文本载入失败，请确认本地服务与 txt/白鹿原.txt 可访问。',
+          '文本载入失败，请确认本地服务与 txt/嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt 可访问。',
           错误,
         );
       }
@@ -123,12 +123,12 @@ function 启动() {
     try {
       文本 = new TextDecoder('utf-8', { fatal: true }).decode(数据);
     } catch (错误) {
-      显示错误('txt/白鹿原.txt 不是有效的 UTF-8 文本。', 错误);
+      显示错误('txt/嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt 不是有效的 UTF-8 文本。', 错误);
       return;
     }
 
     try {
-      应用文本(文本, '白鹿原.txt');
+      应用文本(文本, '嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt');
     } catch (错误) {
       显示文本处理错误(错误);
     }
