@@ -383,7 +383,7 @@ function 绑定事件() {
         1,
         Math.floor(元素.滚动容器.clientHeight / 状态.行高),
       );
-      const 滚动行数 = Math.max(1, 可见完整行数 - 1);
+      const 滚动行数 = 可见完整行数;
       const 当前行idx = Math.round(元素.滚动容器.scrollTop / 状态.行高);
       const 最大顶部行idx = Math.round(
         (元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight) / 状态.行高,
