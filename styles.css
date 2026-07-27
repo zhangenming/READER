@@ -14,8 +14,7 @@
   --西文字体: 'Iowan Old Style', 'Times New Roman', serif;
   --西文字号: 0.96em;
   --行高: 58px;
-  --滚动条宽度: 15px;
-  --指示器宽度: 8px;
+  --滚动条宽度: 18px;
   color: var(--墨色);
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-synthesis: none;
@@ -46,6 +45,7 @@ body {
 
 .阅读区域 {
   min-height: 0;
+  padding-right: var(--滚动条宽度);
 }
 
 .滚动容器 {
@@ -55,42 +55,92 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   background: var(--背景色);
-  /* 不用 scrollbar-width: thin，它会让 Chrome 忽略下面的 ::-webkit-scrollbar 尺寸 */
-  scrollbar-color: #aab3ad var(--背景色);
+  scrollbar-width: none;
   scroll-padding-block: 30vh;
 }
 
 .滚动容器::-webkit-scrollbar {
+  display: none;
+}
+
+.自定义滚动条 {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 6;
   width: var(--滚动条宽度);
-}
-
-.滚动容器::-webkit-scrollbar-track {
+  height: 100%;
+  overflow: hidden;
   background: var(--背景色);
+  cursor: default;
+  touch-action: none;
+  user-select: none;
 }
 
-/* 滑块靠右，让出左侧的关键词指示器轨道 */
-.滚动容器::-webkit-scrollbar-thumb {
-  background: #aab3ad;
-  background-clip: padding-box;
-  border: solid transparent;
-  border-width: 0 3px 0 var(--指示器宽度);
-  border-radius: 0;
+.自定义滚动条[hidden] {
+  display: none;
 }
 
 /* canvas 是替换元素，必须显式给高，top/bottom 不会把它拉满 */
 .关键词指示器 {
-  position: fixed;
+  position: absolute;
   top: 0;
-  right: calc(var(--滚动条宽度) - var(--指示器宽度));
-  z-index: 2;
+  left: 0;
   display: block;
-  width: var(--指示器宽度);
+  width: 100%;
   height: 100%;
   pointer-events: none;
 }
 
 .关键词指示器[hidden] {
   display: none;
+}
+
+.滚动块 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 32px;
+  color: #f7f9f8;
+  font-size: 8px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  background: #52605a;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px #3f4b45;
+  cursor: grab;
+  transform: translateY(0);
+  will-change: transform;
+}
+
+.滚动块:hover {
+  background: #3f4c46;
+}
+
+.自定义滚动条.拖动中 .滚动块 {
+  background: var(--墨色);
+  cursor: grabbing;
+}
+
+.自定义滚动条:focus-visible {
+  outline: 0;
+}
+
+.自定义滚动条:focus-visible .滚动块 {
+  outline: 2px solid var(--选中色);
+  outline-offset: -2px;
+}
+
+.滚动进度 {
+  max-width: 100%;
+  overflow: hidden;
+  text-align: center;
 }
 
 .虚拟画布 {

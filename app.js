@@ -25,8 +25,6 @@ const 迸发重力位移 = 24;
 const 迸发最小尺寸 = 4;
 const 迸发尺寸差 = 5;
 const 指示器刻度高度 = 3;
-const 指示器标记高度 = 7;
-const 指示器标记留白 = 2;
 const 高亮配色 = [
   { 浅色: '#f6d768', 深色: '#9a6614' },
   { 浅色: '#8bd4cb', 深色: '#176d67' },
@@ -79,6 +77,9 @@ const 元素 = {
   分析结果摘要: document.querySelector('#分析结果摘要'),
   分析结果列表: document.querySelector('#分析结果列表'),
   关闭查找按钮: document.querySelector('#关闭查找按钮'),
+  自定义滚动条: document.querySelector('#自定义滚动条'),
+  滚动块: document.querySelector('#滚动块'),
+  滚动进度: document.querySelector('#滚动进度'),
   关键词指示器: document.querySelector('#关键词指示器'),
 };
 
@@ -167,6 +168,7 @@ function 启动() {
 }
 function 绑定事件() {
   let Alt按键状态 = null;
+  let 滚动块拖动状态 = null;
   元素.滚动容器.addEventListener('scroll', 处理滚动, { passive: true });
   元素.滚动容器.addEventListener('wheel', 处理手动滚动, { passive: true });
   元素.滚动容器.addEventListener('touchstart', 取消滚动动画, { passive: true });
@@ -183,6 +185,14 @@ function 绑定事件() {
   元素.分析按钮.addEventListener('click', 处理词组分析);
   元素.关闭查找按钮.addEventListener('click', 关闭查找弹窗);
   元素.查找弹窗.addEventListener('click', 处理查找弹窗点击);
+  元素.自定义滚动条.addEventListener('pointerdown', 处理滚动条按下);
+  元素.自定义滚动条.addEventListener('pointermove', 处理滚动条拖动);
+  元素.自定义滚动条.addEventListener('pointerup', 结束滚动条拖动);
+  元素.自定义滚动条.addEventListener('pointercancel', 结束滚动条拖动);
+  元素.自定义滚动条.addEventListener('wheel', 处理滚动条滚轮, {
+    passive: false,
+  });
+  元素.自定义滚动条.addEventListener('keydown', 处理滚动条键盘);
   window.addEventListener('mouseup', 处理鼠标选择结束);
   window.addEventListener('blur', 取消交互状态);
   window.addEventListener('keydown', 处理键盘按下);
@@ -204,6 +214,7 @@ function 绑定事件() {
 
     状态.滚动帧 = requestAnimationFrame(function 更新滚动状态() {
       状态.滚动帧 = 0;
+      更新滚动块();
       渲染可见行();
       安排保存持久化状态();
     });
@@ -267,6 +278,103 @@ function 绑定事件() {
   function 取消交互状态() {
     状态.拖选状态 = null;
     Alt按键状态 = null;
+    滚动块拖动状态 = null;
+    元素.自定义滚动条.classList.remove('拖动中');
+  }
+
+  function 处理滚动条按下(事件) {
+    if (事件.button !== 0) {
+      return;
+    }
+    事件.preventDefault();
+    取消滚动动画();
+    结束跳转会话('拖动滚动条');
+
+    const 滚动块边框 = 元素.滚动块.getBoundingClientRect();
+    const 点在滚动块内 = 元素.滚动块.contains(事件.target);
+    滚动块拖动状态 = {
+      pointerId: 事件.pointerId,
+      块内偏移: 点在滚动块内
+        ? 事件.clientY - 滚动块边框.top
+        : 滚动块边框.height / 2,
+    };
+    元素.自定义滚动条.setPointerCapture(事件.pointerId);
+    元素.自定义滚动条.classList.add('拖动中');
+    根据指针滚动(事件.clientY);
+  }
+
+  function 处理滚动条拖动(事件) {
+    if (滚动块拖动状态?.pointerId !== 事件.pointerId) {
+      return;
+    }
+    事件.preventDefault();
+    根据指针滚动(事件.clientY);
+  }
+
+  function 结束滚动条拖动(事件) {
+    if (滚动块拖动状态?.pointerId !== 事件.pointerId) {
+      return;
+    }
+    滚动块拖动状态 = null;
+    元素.自定义滚动条.classList.remove('拖动中');
+    if (元素.自定义滚动条.hasPointerCapture(事件.pointerId)) {
+      元素.自定义滚动条.releasePointerCapture(事件.pointerId);
+    }
+  }
+
+  function 处理滚动条滚轮(事件) {
+    事件.preventDefault();
+    取消滚动动画();
+    结束跳转会话('滚轮滚动');
+    const 滚动单位 =
+      事件.deltaMode === WheelEvent.DOM_DELTA_LINE
+        ? 状态.行高
+        : 事件.deltaMode === WheelEvent.DOM_DELTA_PAGE
+          ? 元素.滚动容器.clientHeight
+          : 1;
+    元素.滚动容器.scrollTop += 事件.deltaY * 滚动单位;
+  }
+
+  function 处理滚动条键盘(事件) {
+    const 最大滚动位置 =
+      元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
+    const 键盘滚动表 = {
+      ArrowUp: -状态.行高,
+      ArrowDown: 状态.行高,
+      PageUp: -元素.滚动容器.clientHeight,
+      PageDown: 元素.滚动容器.clientHeight,
+      Home: -Infinity,
+      End: Infinity,
+    };
+    const 滚动量 = 键盘滚动表[事件.key];
+    if (滚动量 === undefined) {
+      return;
+    }
+    事件.preventDefault();
+    取消滚动动画();
+    结束跳转会话('滚动条键盘滚动');
+    元素.滚动容器.scrollTop =
+      滚动量 === -Infinity
+        ? 0
+        : 滚动量 === Infinity
+          ? 最大滚动位置
+          : 元素.滚动容器.scrollTop + 滚动量;
+  }
+
+  function 根据指针滚动(指针Y) {
+    const 轨道边框 = 元素.自定义滚动条.getBoundingClientRect();
+    const 滚动块高度 = 元素.滚动块.offsetHeight;
+    const 最大块偏移 = 轨道边框.height - 滚动块高度;
+    const 最大滚动位置 =
+      元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
+    if (最大块偏移 <= 0 || 最大滚动位置 <= 0) {
+      return;
+    }
+    const 块偏移 = Math.min(
+      最大块偏移,
+      Math.max(0, 指针Y - 轨道边框.top - 滚动块拖动状态.块内偏移),
+    );
+    元素.滚动容器.scrollTop = (块偏移 / 最大块偏移) * 最大滚动位置;
   }
 
   function 处理正文键盘选择(事件) {
@@ -1952,6 +2060,7 @@ function 获取关键词配色(关键词) {
 }
 
 function 更新关键词指示器() {
+  更新滚动块();
   const 画布 = 元素.关键词指示器;
   const 轨道高度 = 元素.滚动容器.clientHeight;
   const 滚动高度 = 元素.滚动容器.scrollHeight;
@@ -1982,9 +2091,6 @@ function 更新关键词指示器() {
       底图键: '',
       底图: null,
       段缓存: new Map(),
-      墨色: getComputedStyle(document.documentElement)
-        .getPropertyValue('--墨色')
-        .trim(),
     };
   }
   if (状态.指示器缓存.底图键 !== 底图键) {
@@ -2011,7 +2117,34 @@ function 更新关键词指示器() {
 
   指示器上下文.clearRect(0, 0, 画布宽, 画布高);
   指示器上下文.drawImage(状态.指示器缓存.底图, 0, 0);
-  绘制主命中标记(画布宽, 画布高, 滚动高度, 像素比, 主命中);
+}
+
+function 更新滚动块() {
+  const 轨道 = 元素.自定义滚动条;
+  轨道.hidden = false;
+  const 轨道高度 = 轨道.clientHeight;
+  const 容器高度 = 元素.滚动容器.clientHeight;
+  const 滚动高度 = 元素.滚动容器.scrollHeight;
+  const 最大滚动位置 = 滚动高度 - 容器高度;
+  if (轨道高度 <= 0 || 最大滚动位置 <= 0) {
+    轨道.hidden = true;
+    return;
+  }
+
+  const 滚动块高度 = Math.min(
+    轨道高度,
+    Math.max(32, (容器高度 / 滚动高度) * 轨道高度),
+  );
+  const 进度 = Math.min(1, Math.max(0, 元素.滚动容器.scrollTop / 最大滚动位置));
+  const 百分比 = Math.round(进度 * 100);
+  const 滚动块偏移 = 进度 * (轨道高度 - 滚动块高度);
+
+  元素.滚动块.style.height = `${滚动块高度}px`;
+  元素.滚动块.style.transform = `translateY(${滚动块偏移}px)`;
+  元素.滚动进度.textContent = String(百分比);
+  元素.滚动块.title = `阅读进度 ${百分比}%`;
+  轨道.setAttribute('aria-valuenow', String(百分比));
+  轨道.setAttribute('aria-valuetext', `阅读进度 ${百分比}%`);
 }
 
 /* 指示器优先展示鼠标悬停的关键词，其次才是当前关键词。 */
@@ -2126,33 +2259,6 @@ function 展开最小刻度(段数组, 画布高, 最小刻度高度) {
     }
   }
   return 刻度列表;
-}
-
-function 绘制主命中标记(画布宽, 画布高, 滚动高度, 像素比, 主命中) {
-  if (
-    !主命中 ||
-    主命中.命中idx < 0 ||
-    主命中.命中idx >= 主命中.关键词.命中位置.length
-  ) {
-    return;
-  }
-
-  const 行idx = 查找偏移所在行(主命中.关键词.命中位置[主命中.命中idx]);
-  const 标记高度 = Math.max(1, Math.round(指示器标记高度 * 像素比));
-  const 标记留白 = Math.max(1, Math.round(指示器标记留白 * 像素比));
-  const 标记中心 = (((行idx + 0.5) * 状态.行高) / 滚动高度) * 画布高;
-  const 标记顶部 = Math.min(
-    画布高 - 标记高度,
-    Math.max(0, Math.round(标记中心 - 标记高度 / 2)),
-  );
-  指示器上下文.clearRect(
-    0,
-    标记顶部 - 标记留白,
-    画布宽,
-    标记高度 + 标记留白 * 2,
-  );
-  指示器上下文.fillStyle = 状态.指示器缓存.墨色;
-  指示器上下文.fillRect(0, 标记顶部, 画布宽, 标记高度);
 }
 
 function 跳到命中(
