@@ -309,12 +309,6 @@ body {
     0 0 0 3px var(--命中环色);
 }
 
-.字.命中.当前命中[data-group-start],
-.字.命中.当前命中[data-group-end],
-.字.命中.当前命中[data-group-start][data-group-end] {
-  border-radius: 0;
-}
-
 .滚动容器.边框跳转中 .字.命中.当前命中 {
   box-shadow: none;
 }
