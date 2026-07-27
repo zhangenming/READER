@@ -1469,10 +1469,6 @@ function 渲染可见行(强制渲染 = false) {
       const 行文本 = 状态.文本.slice(行起点, 行终点);
       const 行元素 = document.createElement('div');
       行元素.className = '正文行';
-      行元素.classList.toggle(
-        '句首行',
-        行起点 === 0 || 状态.文本[行起点 - 1] === '\n',
-      );
       行元素.dataset.start = String(行起点);
       行元素.dataset.end = String(行终点);
       行元素.setAttribute('aria-label', 行文本 || '空行');
