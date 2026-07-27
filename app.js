@@ -1,6 +1,10 @@
 'use strict';
 
-const 默认文本地址 = './txt/嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt';
+const 默认文本预加载 = document.querySelector('#默认文本预加载');
+if (!(默认文本预加载 instanceof HTMLLinkElement)) {
+  throw new Error('缺少默认文本预加载链接');
+}
+const 默认文本地址 = 默认文本预加载.href;
 const 持久化键 = '原文阅读器:阅读状态:v1';
 const 最大虚拟高度 = 30_000_000;
 const 字素分段器 = new Intl.Segmenter('zh-CN', { granularity: 'grapheme' });
