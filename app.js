@@ -389,36 +389,10 @@ function 绑定事件() {
       const 最大顶部行idx = Math.round(
         (元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight) / 状态.行高,
       );
-      let 目标行idx = Math.min(
+      const 目标行idx = Math.min(
         最大顶部行idx,
         Math.max(0, 当前行idx + (向上 ? -滚动行数 : 滚动行数)),
       );
-      let 底部短段落行数 = null;
-
-      if (!向上) {
-        let 底部内容行idx = Math.min(
-          状态.行起点列表.length - 1,
-          当前行idx + 可见完整行数 - 1,
-        );
-        while (
-          底部内容行idx >= 当前行idx &&
-          状态.行起点列表[底部内容行idx] === 状态.行终点列表[底部内容行idx]
-        ) {
-          底部内容行idx -= 1;
-        }
-
-        if (底部内容行idx >= 当前行idx) {
-          const 底部段落起始偏移 =
-            状态.文本.lastIndexOf('\n', 状态.行起点列表[底部内容行idx] - 1) + 1;
-          const 底部段落起始行idx = 查找偏移所在行(底部段落起始偏移);
-          const 显示行数 =
-            底部内容行idx - Math.max(当前行idx, 底部段落起始行idx) + 1;
-          if (底部段落起始行idx > 当前行idx && 显示行数 < 6) {
-            目标行idx = 底部段落起始行idx;
-            底部短段落行数 = 显示行数;
-          }
-        }
-      }
 
       元素.滚动容器.scrollTop = 目标行idx * 状态.行高;
       渲染可见行(true);
@@ -428,7 +402,6 @@ function 绑定事件() {
         起始行: 当前行idx,
         目标行: 目标行idx,
         滚动行数: Math.abs(目标行idx - 当前行idx),
-        底部短段落行数,
       });
     }
   }
