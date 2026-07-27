@@ -259,25 +259,6 @@ body {
     0 0 0 3px var(--命中背景, var(--高亮色));
 }
 
-.字.命中.当前命中.跳转闪烁 {
-  animation: 命中闪烁 520ms steps(1, end);
-}
-
-@keyframes 命中闪烁 {
-  0%,
-  50% {
-    color: var(--墨色);
-    background-color: var(--纸张色);
-  }
-
-  25%,
-  75%,
-  100% {
-    color: var(--纸张色);
-    background-color: var(--墨色);
-  }
-}
-
 .滚动容器.边框跳转中 .字.命中.当前命中 {
   box-shadow: none;
 }
@@ -298,6 +279,58 @@ body {
 
 .跳转边框[hidden] {
   display: none;
+}
+
+/* 跳转落位时从命中四周溅出一小簇火花，命中自身的边框全程不动 */
+.跳转迸发 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.跳转迸发[hidden] {
+  display: none;
+}
+
+.跳转迸发 i {
+  position: absolute;
+  top: -4.5px;
+  left: -1.5px;
+  width: 3px;
+  height: 9px;
+  background-color: var(--迸发色, var(--墨色));
+  border-radius: 2px;
+  /* 描一圈纸色，火花飞过邻字时也看得清 */
+  box-shadow:
+    0 0 0 1px var(--纸张色),
+    0 0 4px var(--迸发色, var(--墨色));
+  opacity: 0;
+}
+
+.跳转迸发.跳转迸发播放中 i {
+  animation: 跳转迸发 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes 跳转迸发 {
+  0% {
+    transform: translate(var(--起x), var(--起y)) rotate(var(--转角)) scale(0.7);
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  68% {
+    opacity: 0.88;
+  }
+
+  100% {
+    transform: translate(var(--止x), var(--止y)) rotate(var(--转角)) scale(0.35);
+    opacity: 0;
+  }
 }
 
 .查找弹窗 {

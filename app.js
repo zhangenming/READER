@@ -12,6 +12,11 @@ const 正文测量上下文 = document.createElement('canvas').getContext('2d');
 if (!正文测量上下文) {
   throw new Error('当前浏览器无法创建正文测量画布');
 }
+const 跳转迸发时长 = 600; // 与 styles.css 的 @keyframes 跳转迸发 保持一致
+const 迸发粒子数 = 12;
+const 迸发起跳留白 = 3; // 火花从命中边框外侧起跳，避免压住字
+const 迸发横向射程 = 22;
+const 迸发纵向射程 = 11; // 纵向收着走，免得溅到相邻行
 const 高亮配色 = [
   { 浅色: '#f6d768', 深色: '#9a6614' },
   { 浅色: '#8bd4cb', 深色: '#176d67' },
@@ -34,6 +39,7 @@ const 状态 = {
   滚动动画帧: 0,
   尺寸计时器: 0,
   保存计时器: 0,
+  迸发计时器: 0,
   载入序号: 0,
   拖选状态: null,
   关键词列表: [],
@@ -50,6 +56,7 @@ const 元素 = {
   可见内容: document.querySelector('#可见内容'),
   载入状态: document.querySelector('#载入状态'),
   跳转边框: document.querySelector('#跳转边框'),
+  跳转迸发: document.querySelector('#跳转迸发'),
   查找弹窗: document.querySelector('#查找弹窗'),
   查找表单: document.querySelector('#查找表单'),
   查找输入框: document.querySelector('#查找输入框'),
@@ -60,6 +67,12 @@ const 元素 = {
   分析结果列表: document.querySelector('#分析结果列表'),
   关闭查找按钮: document.querySelector('#关闭查找按钮'),
 };
+
+元素.跳转迸发.append(
+  ...Array.from({ length: 迸发粒子数 }, function 造火花() {
+    return document.createElement('i');
+  }),
+);
 
 启动();
 
@@ -1960,12 +1973,14 @@ function 获取元素命中边框(字元素) {
   const 顶部 = Math.min(...矩形列表.map((矩形) => 矩形.top));
   const 右侧 = Math.max(...矩形列表.map((矩形) => 矩形.right));
   const 底部 = Math.max(...矩形列表.map((矩形) => 矩形.bottom));
+  const 字样式 = getComputedStyle(字元素);
   return {
     左侧,
     顶部,
     宽度: 右侧 - 左侧,
     高度: 底部 - 顶部,
-    颜色: getComputedStyle(字元素).getPropertyValue('--命中背景').trim(),
+    颜色: 字样式.getPropertyValue('--命中背景').trim(),
+    深色: 字样式.getPropertyValue('--命中当前色').trim(),
   };
 }
 
@@ -2018,7 +2033,7 @@ function 动画滚动到(目标位置, 边框跳转 = null) {
       渲染可见行(true);
       隐藏跳转边框();
       if (边框动画) {
-        闪烁目标命中();
+        播放跳转迸发(边框动画.终点);
       }
     }
   });
@@ -2072,25 +2087,6 @@ function 动画滚动到(目标位置, 边框跳转 = null) {
     元素.跳转边框.style.transform = `translate3d(${左侧}px, ${动画.起点.顶部}px, 0) scaleX(${横向缩放})`;
   }
 
-  function 闪烁目标命中() {
-    const 目标元素列表 = 元素.可见内容.querySelectorAll(
-      `.字.当前命中[data-keyword-id="${边框跳转.关键词.id}"][data-hit-index="${边框跳转.命中idx}"]`,
-    );
-    if (!目标元素列表.length) {
-      throw new Error('动画结束时缺少当前命中元素');
-    }
-
-    for (const 目标元素 of 目标元素列表) {
-      目标元素.classList.add('跳转闪烁');
-      目标元素.addEventListener(
-        'animationend',
-        function 清理闪烁状态() {
-          目标元素.classList.remove('跳转闪烁');
-        },
-        { once: true },
-      );
-    }
-  }
 }
 
 function 取消滚动动画() {
@@ -2100,6 +2096,7 @@ function 取消滚动动画() {
     状态.滚动动画帧 = 0;
   }
   隐藏跳转边框();
+  隐藏跳转迸发();
   if (正在播放) {
     console.info('[阅读器] 跳转动画已中断', {
       滚动位置: Math.round(元素.滚动容器.scrollTop),
@@ -2111,6 +2108,53 @@ function 隐藏跳转边框() {
   元素.滚动容器.classList.remove('边框跳转中');
   元素.跳转边框.hidden = true;
   元素.跳转边框.removeAttribute('style');
+}
+
+function 播放跳转迸发(边框) {
+  隐藏跳转迸发();
+  元素.跳转迸发.style.left = `${边框.左侧 + 边框.宽度 / 2}px`;
+  元素.跳转迸发.style.top = `${边框.顶部 + 边框.高度 / 2}px`;
+  元素.跳转迸发.style.setProperty('--迸发色', 边框.深色);
+  布置迸发火花(边框.宽度 / 2 + 迸发起跳留白, 边框.高度 / 2 + 迸发起跳留白);
+  元素.跳转迸发.hidden = false;
+  void 元素.跳转迸发.offsetWidth; // 连续跳转时强制回流，让同名动画能重新起播
+  元素.跳转迸发.classList.add('跳转迸发播放中');
+  元素.跳转迸发.addEventListener('animationend', 隐藏跳转迸发, { once: true });
+  // 页面切到后台时 CSS 动画会冻结，animationend 迟迟不来，用计时器兜底收走火花
+  状态.迸发计时器 = window.setTimeout(隐藏跳转迸发, 跳转迸发时长 + 80);
+
+  // 火花沿椭圆从命中四周起跳，再朝各自方向飞一小段：横向放得开，纵向收着走
+  function 布置迸发火花(起跳半宽, 起跳半高) {
+    const 火花列表 = 元素.跳转迸发.children;
+    for (let 序 = 0; 序 < 火花列表.length; 序 += 1) {
+      const 弧度 = ((序 + 0.5) / 火花列表.length) * Math.PI * 2;
+      const 横 = Math.cos(弧度);
+      const 纵 = Math.sin(弧度);
+      const 起x = 起跳半宽 * 横;
+      const 起y = 起跳半高 * 纵;
+      const 止x = 起x + 迸发横向射程 * 横;
+      const 止y = 起y + 迸发纵向射程 * 纵;
+      const 火花 = 火花列表[序];
+      火花.style.setProperty('--起x', `${起x.toFixed(1)}px`);
+      火花.style.setProperty('--起y', `${起y.toFixed(1)}px`);
+      火花.style.setProperty('--止x', `${止x.toFixed(1)}px`);
+      火花.style.setProperty('--止y', `${止y.toFixed(1)}px`);
+      // 火花本身竖着画，转到实际飞行方向上，看起来才是从中心溅出去的
+      const 转角 = (Math.atan2(止y - 起y, 止x - 起x) * 180) / Math.PI + 90;
+      火花.style.setProperty('--转角', `${转角.toFixed(1)}deg`);
+    }
+  }
+}
+
+function 隐藏跳转迸发() {
+  window.clearTimeout(状态.迸发计时器);
+  状态.迸发计时器 = 0;
+  元素.跳转迸发.removeEventListener('animationend', 隐藏跳转迸发);
+  元素.跳转迸发.classList.remove('跳转迸发播放中');
+  元素.跳转迸发.hidden = true;
+  元素.跳转迸发.style.removeProperty('left');
+  元素.跳转迸发.style.removeProperty('top');
+  元素.跳转迸发.style.removeProperty('--迸发色');
 }
 
 function 查找首个相交命中(关键词, 文本偏移) {
