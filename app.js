@@ -13,7 +13,7 @@ if (!正文测量上下文) {
   throw new Error('当前浏览器无法创建正文测量画布');
 }
 const 跳转迸发时长 = 600; // 与 styles.css 的 @keyframes 跳转迸发 保持一致
-const 迸发粒子数 = 12;
+const 迸发粒子数 = 18;
 const 迸发起跳留白 = 3; // 火花从命中边框外侧起跳，避免压住字
 const 迸发横向射程 = 22;
 const 迸发纵向射程 = 11; // 纵向收着走，免得溅到相邻行
@@ -1980,7 +1980,6 @@ function 获取元素命中边框(字元素) {
     宽度: 右侧 - 左侧,
     高度: 底部 - 顶部,
     颜色: 字样式.getPropertyValue('--命中背景').trim(),
-    深色: 字样式.getPropertyValue('--命中当前色').trim(),
   };
 }
 
@@ -2114,7 +2113,6 @@ function 播放跳转迸发(边框) {
   隐藏跳转迸发();
   元素.跳转迸发.style.left = `${边框.左侧 + 边框.宽度 / 2}px`;
   元素.跳转迸发.style.top = `${边框.顶部 + 边框.高度 / 2}px`;
-  元素.跳转迸发.style.setProperty('--迸发色', 边框.深色);
   布置迸发火花(边框.宽度 / 2 + 迸发起跳留白, 边框.高度 / 2 + 迸发起跳留白);
   元素.跳转迸发.hidden = false;
   void 元素.跳转迸发.offsetWidth; // 连续跳转时强制回流，让同名动画能重新起播
@@ -2154,7 +2152,6 @@ function 隐藏跳转迸发() {
   元素.跳转迸发.hidden = true;
   元素.跳转迸发.style.removeProperty('left');
   元素.跳转迸发.style.removeProperty('top');
-  元素.跳转迸发.style.removeProperty('--迸发色');
 }
 
 function 查找首个相交命中(关键词, 文本偏移) {

@@ -300,13 +300,20 @@ body {
   left: -1.5px;
   width: 3px;
   height: 9px;
-  background-color: var(--迸发色, var(--墨色));
+  background-color: #111311;
   border-radius: 2px;
   /* 描一圈纸色，火花飞过邻字时也看得清 */
   box-shadow:
     0 0 0 1px var(--纸张色),
-    0 0 4px var(--迸发色, var(--墨色));
+    0 0 4px #111311;
   opacity: 0;
+}
+
+.跳转迸发 i:nth-child(3n + 1) {
+  top: -6.5px;
+  left: -2px;
+  width: 4px;
+  height: 13px;
 }
 
 .跳转迸发.跳转迸发播放中 i {
