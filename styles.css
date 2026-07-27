@@ -127,6 +127,10 @@ body {
   white-space: pre;
 }
 
+.正文行.换行缩进行 {
+  padding-left: 2em;
+}
+
 .字 {
   position: relative;
 }
