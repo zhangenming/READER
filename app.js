@@ -14,9 +14,10 @@ if (!正文测量上下文) {
 }
 const 跳转迸发时长 = 680; // 与 styles.css 的 @keyframes 跳转迸发 保持一致
 const 迸发粒子数 = 18;
-const 迸发最短射程 = 18;
-const 迸发射程差 = 28;
-const 迸发重力位移 = 18;
+const 迸发起跳留白 = 3;
+const 迸发最短射程 = 32;
+const 迸发射程差 = 36;
+const 迸发重力位移 = 24;
 const 迸发最小尺寸 = 4;
 const 迸发尺寸差 = 5;
 const 指示器刻度高度 = 3;
@@ -903,7 +904,7 @@ function 应用文本(原始文本, 文件名) {
     let 引文终点 = 原引文边界列表[引文idx + 1];
     let 引文包含句末标点 = false;
 
-    for (let idx = 0; idx < 全文.length;) {
+    for (let idx = 0; idx < 全文.length; ) {
       if (idx === 引文起点) {
         引文边界列表.push(idx + 新增换行数);
         引文包含句末标点 = false;
@@ -2436,7 +2437,7 @@ function 播放跳转迸发(边框) {
   隐藏跳转迸发();
   元素.跳转迸发.style.left = `${边框.左侧 + 边框.宽度 / 2}px`;
   元素.跳转迸发.style.top = `${边框.顶部 + 边框.高度 / 2}px`;
-  布置迸发粒子();
+  布置迸发粒子(边框.宽度 / 2, 边框.高度 / 2);
   元素.跳转迸发.hidden = false;
   void 元素.跳转迸发.offsetWidth; // 连续跳转时强制回流，让同名动画能重新起播
   元素.跳转迸发.classList.add('跳转迸发播放中');
@@ -2444,18 +2445,26 @@ function 播放跳转迸发(边框) {
   // 页面切到后台时 CSS 动画会冻结，animationend 迟迟不来，用计时器兜底收走火花
   状态.迸发计时器 = window.setTimeout(隐藏跳转迸发, 跳转迸发时长 + 80);
 
-  function 布置迸发粒子() {
+  function 布置迸发粒子(字体半宽, 字体半高) {
     for (const 粒子 of 元素.跳转迸发.children) {
       const 弧度 = Math.random() * Math.PI * 2;
-      const 射程 = 迸发最短射程 + Math.random() * 迸发射程差;
-      const 水平位移 = Math.cos(弧度) * 射程;
-      const 竖直位移 = Math.sin(弧度) * 射程;
-      // 该二次曲线等价于匀速横移叠加垂直重力加速度
-      粒子.style.offsetPath = `path("M 0 0 Q ${(水平位移 / 2).toFixed(1)} ${(竖直位移 / 2).toFixed(1)} ${水平位移.toFixed(1)} ${(竖直位移 + 迸发重力位移).toFixed(1)}")`;
-      粒子.style.setProperty(
-        '--粒子尺寸',
-        `${(迸发最小尺寸 + Math.random() * 迸发尺寸差).toFixed(1)}px`,
+      const 水平分量 = Math.cos(弧度);
+      const 竖直分量 = Math.sin(弧度);
+      const 粒子尺寸 = 迸发最小尺寸 + Math.random() * 迸发尺寸差;
+      const 起跳半宽 = 字体半宽 + 迸发起跳留白 + 粒子尺寸 / 2;
+      const 起跳半高 = 字体半高 + 迸发起跳留白 + 粒子尺寸 / 2;
+      const 起跳距离 = Math.min(
+        起跳半宽 / Math.abs(水平分量),
+        起跳半高 / Math.abs(竖直分量),
       );
+      const 起x = 水平分量 * 起跳距离;
+      const 起y = 竖直分量 * 起跳距离;
+      const 射程 = 迸发最短射程 + Math.random() * 迸发射程差;
+      const 水平位移 = 水平分量 * 射程;
+      const 竖直位移 = 竖直分量 * 射程;
+      // 该二次曲线等价于匀速横移叠加垂直重力加速度
+      粒子.style.offsetPath = `path("M ${起x.toFixed(1)} ${起y.toFixed(1)} Q ${(起x + 水平位移 / 2).toFixed(1)} ${(起y + 竖直位移 / 2).toFixed(1)} ${(起x + 水平位移).toFixed(1)} ${(起y + 竖直位移 + 迸发重力位移).toFixed(1)}")`;
+      粒子.style.setProperty('--粒子尺寸', `${粒子尺寸.toFixed(1)}px`);
     }
   }
 }

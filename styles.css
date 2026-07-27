@@ -337,7 +337,7 @@ body {
   display: none;
 }
 
-/* 跳转落位时从命中四周溅出一小簇火花，命中自身的边框全程不动 */
+/* 跳转落位时从命中轮廓外溅出一簇粒子，命中自身的边框全程不动 */
 .跳转迸发 {
   position: fixed;
   top: 0;
@@ -358,7 +358,7 @@ body {
   height: var(--粒子尺寸);
   margin-top: calc(var(--粒子尺寸) / -2);
   margin-left: calc(var(--粒子尺寸) / -2);
-  background-color: #111311;
+  background-color: oklch(56% 0.22 25);
   border-radius: 50%;
   offset-anchor: center;
   offset-rotate: 0deg;
