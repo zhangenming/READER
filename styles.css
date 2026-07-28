@@ -142,6 +142,56 @@ body {
   text-align: center;
 }
 
+.自动滚动按钮 {
+  position: fixed;
+  position-anchor: --关键词按钮;
+  top: anchor(top);
+  right: anchor(left);
+  z-index: 5;
+  height: 26px;
+  padding: 0 10px;
+  margin-right: 6px;
+  color: var(--次要墨色);
+  font-family: 'Avenir Next', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--纸张色);
+  border: 1px solid var(--边线色);
+  border-radius: 13px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgb(32 37 34 / 8%);
+}
+
+body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
+  display: none;
+}
+
+.关键词面板开关 {
+  anchor-name: --关键词按钮;
+}
+
+.自动滚动按钮:hover {
+  color: var(--墨色);
+  border-color: #aeb8b2;
+}
+
+.自动滚动按钮[aria-pressed='true'] {
+  color: var(--纸张色);
+  background: var(--选中色);
+  border-color: var(--选中色);
+}
+
+.自动滚动按钮[aria-pressed='true']:hover {
+  color: var(--纸张色);
+  background: #125b56;
+  border-color: #125b56;
+}
+
+.自动滚动按钮:focus-visible {
+  outline: 2px solid var(--选中色);
+  outline-offset: 1px;
+}
+
 .虚拟画布 {
   position: relative;
   width: 100%;

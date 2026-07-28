@@ -81,6 +81,7 @@ const 元素 = {
   滚动块: document.querySelector('#滚动块'),
   滚动进度: document.querySelector('#滚动进度'),
   关键词指示器: document.querySelector('#关键词指示器'),
+  自动滚动按钮: document.querySelector('#自动滚动按钮'),
 };
 
 const 指示器上下文 = 元素.关键词指示器.getContext('2d');
@@ -169,6 +170,7 @@ function 启动() {
 function 绑定事件() {
   let Alt按键状态 = null;
   let 滚动块拖动状态 = null;
+  let 自动滚动状态 = null;
   元素.滚动容器.addEventListener('scroll', 处理滚动, { passive: true });
   元素.滚动容器.addEventListener('wheel', 处理手动滚动, { passive: true });
   元素.滚动容器.addEventListener('touchstart', 取消滚动动画, { passive: true });
@@ -180,6 +182,7 @@ function 绑定事件() {
   元素.滚动容器.addEventListener('pointerout', 处理高亮移出);
   元素.滚动容器.addEventListener('contextmenu', 处理高亮上下文点击);
   元素.滚动容器.addEventListener('keyup', 处理正文键盘选择);
+  元素.自动滚动按钮.addEventListener('click', 处理自动滚动按钮点击);
   元素.查找表单.addEventListener('submit', 处理查找提交);
   元素.查找输入框.addEventListener('input', 处理查找输入);
   元素.分析按钮.addEventListener('click', 处理词组分析);
@@ -194,6 +197,11 @@ function 绑定事件() {
   });
   元素.自定义滚动条.addEventListener('keydown', 处理滚动条键盘);
   window.addEventListener('mouseup', 处理鼠标选择结束);
+  window.addEventListener('mousemove', 处理鼠标移动, { passive: true });
+  window.addEventListener('wheel', 处理自动滚动滚轮, {
+    capture: true,
+    passive: false,
+  });
   window.addEventListener('blur', 取消交互状态);
   window.addEventListener('keydown', 处理键盘按下);
   window.addEventListener('keyup', 处理键盘松开);
@@ -276,6 +284,7 @@ function 绑定事件() {
   }
 
   function 取消交互状态() {
+    停止自动滚动('窗口失去焦点');
     状态.拖选状态 = null;
     Alt按键状态 = null;
     滚动块拖动状态 = null;
@@ -825,6 +834,107 @@ function 绑定事件() {
   function 清除查找错误() {
     元素.查找反馈.textContent = '';
     元素.查找输入框.removeAttribute('aria-invalid');
+  }
+
+  function 处理自动滚动按钮点击(事件) {
+    if (自动滚动状态) {
+      停止自动滚动('再次点击按钮');
+      return;
+    }
+
+    const 最大滚动位置 =
+      元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
+    if (元素.滚动容器.scrollTop >= 最大滚动位置 - 0.5) {
+      console.info('[阅读器] 自动滚动未启动', { 原因: '已到文末' });
+      return;
+    }
+
+    取消滚动动画();
+    结束跳转会话('自动滚动');
+    自动滚动状态 = {
+      帧: 0,
+      上帧时间: performance.now(),
+      速度: 36,
+      鼠标X: 事件.clientX,
+      鼠标Y: 事件.clientY,
+    };
+    自动滚动状态.帧 = requestAnimationFrame(执行自动滚动);
+    更新自动滚动按钮(true);
+    console.info('[阅读器] 自动滚动已启动', {
+      速度: 自动滚动状态.速度,
+    });
+  }
+
+  function 处理自动滚动滚轮(事件) {
+    if (!自动滚动状态) {
+      return;
+    }
+
+    事件.preventDefault();
+    事件.stopPropagation();
+    const 滚轮像素 =
+      事件.deltaMode === WheelEvent.DOM_DELTA_LINE
+        ? 事件.deltaY * 40
+        : 事件.deltaMode === WheelEvent.DOM_DELTA_PAGE
+          ? Math.sign(事件.deltaY) * 元素.滚动容器.clientHeight
+          : 事件.deltaY;
+    const 调整量 = Math.max(-100, Math.min(100, 滚轮像素)) * 0.2;
+    自动滚动状态.速度 = Math.max(8, Math.min(600, 自动滚动状态.速度 + 调整量));
+    console.info('[阅读器] 自动滚动速度已调整', {
+      速度: Math.round(自动滚动状态.速度),
+    });
+  }
+
+  function 处理鼠标移动(事件) {
+    if (
+      !自动滚动状态 ||
+      (事件.clientX === 自动滚动状态.鼠标X &&
+        事件.clientY === 自动滚动状态.鼠标Y)
+    ) {
+      return;
+    }
+    停止自动滚动('鼠标移动');
+  }
+
+  function 执行自动滚动(当前时间) {
+    const 本次滚动 = 自动滚动状态;
+    if (!本次滚动) {
+      return;
+    }
+
+    const 最大滚动位置 =
+      元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
+    const 经过毫秒 = Math.min(100, 当前时间 - 本次滚动.上帧时间);
+    const 新位置 = Math.min(
+      最大滚动位置,
+      元素.滚动容器.scrollTop + (本次滚动.速度 * 经过毫秒) / 1000,
+    );
+    本次滚动.上帧时间 = 当前时间;
+    元素.滚动容器.scrollTop = 新位置;
+    if (新位置 >= 最大滚动位置 - 0.5) {
+      停止自动滚动('已到文末');
+      return;
+    }
+    本次滚动.帧 = requestAnimationFrame(执行自动滚动);
+  }
+
+  function 停止自动滚动(原因) {
+    if (!自动滚动状态) {
+      return;
+    }
+
+    cancelAnimationFrame(自动滚动状态.帧);
+    自动滚动状态 = null;
+    更新自动滚动按钮(false);
+    console.info('[阅读器] 自动滚动已停止', {
+      原因,
+      滚动位置: Math.round(元素.滚动容器.scrollTop),
+    });
+  }
+
+  function 更新自动滚动按钮(正在滚动) {
+    元素.自动滚动按钮.setAttribute('aria-pressed', String(正在滚动));
+    元素.自动滚动按钮.title = 正在滚动 ? '停止自动滚动' : '开始自动滚动';
   }
 
   function 处理手动滚动() {
