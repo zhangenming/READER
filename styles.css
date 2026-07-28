@@ -54,6 +54,7 @@ body {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  overflow-anchor: none;
   background: var(--背景色);
   scrollbar-width: none;
   scroll-padding-block: 30vh;
