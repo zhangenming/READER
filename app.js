@@ -2312,7 +2312,10 @@ function 更新关键词指示器() {
   const 轨道高度 = 元素.滚动容器.clientHeight;
   const 滚动高度 = 元素.滚动容器.scrollHeight;
   const 当前关键词 = 查找关键词(状态.当前关键词id);
-  const 悬停关键词 = 查找关键词(状态.悬停关键词id);
+  const 悬停关键词 =
+    状态.悬停关键词id === 状态.当前关键词id
+      ? null
+      : 查找关键词(状态.悬停关键词id);
   const 可绘制 = 状态.行起点列表.length && 滚动高度 > 轨道高度;
 
   if (
