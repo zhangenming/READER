@@ -14,7 +14,7 @@
   --西文字体: 'Iowan Old Style', 'Times New Roman', serif;
   --西文字号: 0.96em;
   --行高: 58px;
-  --滚动条宽度: 18px;
+  --滚动条宽度: 20px;
   color: var(--墨色);
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-synthesis: none;
@@ -99,14 +99,14 @@ body {
 .滚动块 {
   position: absolute;
   top: 0;
-  left: 2px;
+  left: 4px;
   z-index: 1;
   display: grid;
   place-items: center;
-  width: calc(100% - 4px);
+  width: calc(100% - 8px);
   min-height: 32px;
   color: #f7f9f8;
-  font-size: 8px;
+  font-size: 7px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   line-height: 1;
