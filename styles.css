@@ -102,8 +102,7 @@ body {
   right: calc(var(--滚动条宽度) + 6px);
   left: auto;
   z-index: 6;
-  width: 5ch;
-  font-size: 13px;
+  width: var(--滚动条宽度);
 }
 
 .滚动进度:not([hidden]) ~ .关键词面板 {
