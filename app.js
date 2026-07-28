@@ -1030,9 +1030,6 @@ function 绑定事件() {
 
   function 更新自动滚动按钮(正在滚动) {
     元素.自动滚动按钮.setAttribute('aria-pressed', String(正在滚动));
-    元素.自动滚动按钮.title = 正在滚动
-      ? '正在自动滚动；点击切换全屏'
-      : '悬停后自动滚动；点击切换全屏';
   }
 
   function 处理手动滚动() {
