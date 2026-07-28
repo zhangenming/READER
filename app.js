@@ -2232,12 +2232,14 @@ function 更新关键词指示器() {
 function 更新滚动块() {
   const 轨道 = 元素.自定义滚动条;
   轨道.hidden = false;
+  元素.滚动进度.hidden = false;
   const 轨道高度 = 轨道.clientHeight;
   const 容器高度 = 元素.滚动容器.clientHeight;
   const 滚动高度 = 元素.滚动容器.scrollHeight;
   const 最大滚动位置 = 滚动高度 - 容器高度;
   if (轨道高度 <= 0 || 最大滚动位置 <= 0) {
     轨道.hidden = true;
+    元素.滚动进度.hidden = true;
     return;
   }
 
@@ -2246,14 +2248,16 @@ function 更新滚动块() {
     Math.max(32, (容器高度 / 滚动高度) * 轨道高度),
   );
   const 进度 = Math.min(1, Math.max(0, 元素.滚动容器.scrollTop / 最大滚动位置));
-  const 百分比 = Math.round(进度 * 100);
+  const 百分比 = (进度 * 100).toFixed(1);
   const 滚动块偏移 = 进度 * (轨道高度 - 滚动块高度);
 
   元素.滚动块.style.height = `${滚动块高度}px`;
   元素.滚动块.style.transform = `translateY(${滚动块偏移}px)`;
-  元素.滚动进度.textContent = String(百分比);
+  元素.滚动进度.style.height = `${滚动块高度}px`;
+  元素.滚动进度.style.transform = `translateY(${滚动块偏移}px)`;
+  元素.滚动进度.textContent = `${百分比}%`;
   元素.滚动块.title = `阅读进度 ${百分比}%`;
-  轨道.setAttribute('aria-valuenow', String(百分比));
+  轨道.setAttribute('aria-valuenow', 百分比);
   轨道.setAttribute('aria-valuetext', `阅读进度 ${百分比}%`);
 }
 

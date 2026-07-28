@@ -101,15 +101,8 @@ body {
   top: 0;
   left: 4px;
   z-index: 1;
-  display: grid;
-  place-items: center;
   width: calc(100% - 8px);
   min-height: 32px;
-  color: #f7f9f8;
-  font-size: 7px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
   background: var(--墨色);
   border: 0;
   border-radius: 3px;
@@ -137,9 +130,29 @@ body {
 }
 
 .滚动进度 {
-  max-width: 100%;
-  overflow: hidden;
-  text-align: center;
+  position: fixed;
+  top: 0;
+  right: calc(var(--滚动条宽度) + 6px);
+  z-index: 6;
+  display: grid;
+  width: 5ch;
+  place-items: center end;
+  color: #111;
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  pointer-events: none;
+  transform: translateY(0);
+  will-change: transform;
+}
+
+.滚动进度[hidden] {
+  display: none;
+}
+
+.滚动进度:not([hidden]) ~ .关键词面板 {
+  right: calc(var(--滚动条宽度) + 60px);
 }
 
 .自动滚动按钮 {
