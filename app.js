@@ -411,6 +411,11 @@ function 绑定事件() {
     const 是可编辑目标 =
       目标 instanceof HTMLElement &&
       (目标.isContentEditable || 目标.matches('input, textarea'));
+    const 可快速前进自动滚动 =
+      !(目标 instanceof HTMLElement) ||
+      目标 === 元素.自动滚动按钮 ||
+      (!目标.isContentEditable &&
+        !目标.matches('input, textarea, button, select'));
 
     if (
       事件.key.toLowerCase() === 'f' &&
@@ -419,6 +424,21 @@ function 绑定事件() {
     ) {
       事件.preventDefault();
       打开查找弹窗();
+      return;
+    }
+
+    if (
+      事件.code === 'Space' &&
+      !事件.altKey &&
+      !事件.ctrlKey &&
+      !事件.metaKey &&
+      可快速前进自动滚动 &&
+      自动滚动状态
+    ) {
+      事件.preventDefault();
+      if (!事件.repeat) {
+        快速前进自动滚动();
+      }
       return;
     }
 
@@ -870,6 +890,7 @@ function 绑定事件() {
       上次界面时间: 0,
       当前速度: 0,
       浮点位置: 元素.滚动容器.scrollTop,
+      快速滚动终点: null,
     };
     自动滚动状态.帧 = requestAnimationFrame(执行自动滚动);
     更新自动滚动按钮(true);
@@ -888,14 +909,35 @@ function 绑定事件() {
     }
   }
 
-  async function 切换全屏模式() {
-    if (document.fullscreenElement) {
-      await document.exitFullscreen();
-      console.info('[阅读器] 已退出全屏');
+  async function 切换全屏模式(事件) {
+    const 正在退出 = Boolean(document.fullscreenElement);
+    const 全屏操作 = 正在退出
+      ? document.exitFullscreen()
+      : document.documentElement.requestFullscreen();
+    if (事件.detail > 0) {
+      元素.自动滚动按钮.blur();
+    }
+    await 全屏操作;
+    console.info(`[阅读器] 已${正在退出 ? '退出' : '进入'}全屏`);
+  }
+
+  function 快速前进自动滚动() {
+    const 本次滚动 = 自动滚动状态;
+    if (!本次滚动) {
       return;
     }
-    await document.documentElement.requestFullscreen();
-    console.info('[阅读器] 已进入全屏');
+
+    const 最大滚动位置 =
+      元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
+    本次滚动.快速滚动终点 = Math.min(
+      最大滚动位置,
+      本次滚动.浮点位置 + 元素.滚动容器.clientHeight * 0.9,
+    );
+    本次滚动.当前速度 = 自动滚动最高速度;
+    console.info('[阅读器] 自动滚动开始快速前进', {
+      原速度: Math.round(状态.自动滚动速度),
+      目标位置: Math.round(本次滚动.快速滚动终点),
+    });
   }
 
   function 处理自动滚动滚轮(事件) {
@@ -940,9 +982,21 @@ function 绑定事件() {
       元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
     const 经过毫秒 = Math.min(50, 当前时间 - 本次滚动.上帧时间);
     const 缓动比例 = 1 - Math.exp(-经过毫秒 / 自动滚动缓动时长);
-    本次滚动.当前速度 += (状态.自动滚动速度 - 本次滚动.当前速度) * 缓动比例;
+    const 目标速度 =
+      本次滚动.快速滚动终点 === null ? 状态.自动滚动速度 : 自动滚动最高速度;
+    本次滚动.当前速度 += (目标速度 - 本次滚动.当前速度) * 缓动比例;
     本次滚动.浮点位置 += (本次滚动.当前速度 * 经过毫秒) / 1000;
-    const 新位置 = Math.min(最大滚动位置, 本次滚动.浮点位置);
+    let 新位置 = Math.min(最大滚动位置, 本次滚动.浮点位置);
+    if (本次滚动.快速滚动终点 !== null && 新位置 >= 本次滚动.快速滚动终点) {
+      新位置 = 本次滚动.快速滚动终点;
+      本次滚动.浮点位置 = 新位置;
+      本次滚动.快速滚动终点 = null;
+      本次滚动.当前速度 = 状态.自动滚动速度;
+      console.info('[阅读器] 自动滚动快速前进已完成', {
+        恢复速度: Math.round(状态.自动滚动速度),
+        滚动位置: Math.round(新位置),
+      });
+    }
     本次滚动.上帧时间 = 当前时间;
     元素.滚动容器.scrollTop = 新位置;
     if (当前时间 - 本次滚动.上次界面时间 >= 自动滚动界面间隔) {
