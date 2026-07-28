@@ -25,6 +25,9 @@ const 迸发重力位移 = 24;
 const 迸发最小尺寸 = 4;
 const 迸发尺寸差 = 5;
 const 指示器刻度高度 = 3;
+const 自动滚动默认速度 = 36;
+const 自动滚动最低速度 = 1;
+const 自动滚动最高速度 = 600;
 const 自动滚动缓动时长 = 140;
 const 自动滚动界面间隔 = 50;
 const 高亮配色 = [
@@ -61,6 +64,7 @@ const 状态 = {
   下一个关键词id: 1,
   跳转起点: null,
   指示器缓存: null,
+  自动滚动速度: 自动滚动默认速度,
 };
 
 const 元素 = {
@@ -174,7 +178,6 @@ function 绑定事件() {
   let Alt按键状态 = null;
   let 滚动块拖动状态 = null;
   let 自动滚动状态 = null;
-  let 自动滚动速度 = 36;
   元素.滚动容器.addEventListener('scroll', 处理滚动, { passive: true });
   元素.滚动容器.addEventListener('wheel', 处理手动滚动, { passive: true });
   元素.滚动容器.addEventListener('touchstart', 取消滚动动画, { passive: true });
@@ -870,7 +873,7 @@ function 绑定事件() {
     自动滚动状态.帧 = requestAnimationFrame(执行自动滚动);
     更新自动滚动按钮(true);
     console.info('[阅读器] 自动滚动已启动', {
-      速度: 自动滚动速度,
+      速度: 状态.自动滚动速度,
     });
   }
 
@@ -898,10 +901,14 @@ function 绑定事件() {
           ? Math.sign(事件.deltaY) * 元素.滚动容器.clientHeight
           : 事件.deltaY;
     const 调整量 = Math.max(-100, Math.min(100, 滚轮像素)) * 0.2;
-    自动滚动速度 = Math.max(8, Math.min(600, 自动滚动速度 + 调整量));
+    状态.自动滚动速度 = Math.max(
+      自动滚动最低速度,
+      Math.min(自动滚动最高速度, 状态.自动滚动速度 + 调整量),
+    );
     更新自动滚动速度();
+    安排保存持久化状态();
     console.info('[阅读器] 自动滚动速度已调整', {
-      速度: Math.round(自动滚动速度),
+      速度: Math.round(状态.自动滚动速度),
     });
   }
 
@@ -922,7 +929,7 @@ function 绑定事件() {
       元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
     const 经过毫秒 = Math.min(50, 当前时间 - 本次滚动.上帧时间);
     const 缓动比例 = 1 - Math.exp(-经过毫秒 / 自动滚动缓动时长);
-    本次滚动.当前速度 += (自动滚动速度 - 本次滚动.当前速度) * 缓动比例;
+    本次滚动.当前速度 += (状态.自动滚动速度 - 本次滚动.当前速度) * 缓动比例;
     本次滚动.浮点位置 += (本次滚动.当前速度 * 经过毫秒) / 1000;
     const 新位置 = Math.min(最大滚动位置, 本次滚动.浮点位置);
     本次滚动.上帧时间 = 当前时间;
@@ -961,12 +968,6 @@ function 绑定事件() {
     元素.自动滚动按钮.title = 正在滚动 ? '正在自动滚动' : '悬停后自动滚动';
   }
 
-  function 更新自动滚动速度() {
-    const 显示速度 = String(Math.round(自动滚动速度));
-    元素.自动滚动速度.textContent = 显示速度;
-    元素.自动滚动按钮.setAttribute('aria-label', `滚动，速度 ${显示速度}`);
-  }
-
   function 处理手动滚动() {
     取消滚动动画();
     结束跳转会话('手动滚动');
@@ -980,6 +981,12 @@ function 绑定事件() {
     console.info('[阅读器] 已结束跳转会话', { 原因 });
   }
 }
+function 更新自动滚动速度() {
+  const 显示速度 = String(Math.round(状态.自动滚动速度));
+  元素.自动滚动速度.textContent = 显示速度;
+  元素.自动滚动按钮.setAttribute('aria-label', `滚动，速度 ${显示速度}`);
+}
+
 function 应用文本(原始文本, 文件名) {
   const 开始时间 = performance.now();
   const 规范文本 = 原始文本.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
@@ -1003,6 +1010,7 @@ function 应用文本(原始文本, 文件名) {
   取消滚动动画();
   提交行索引(行索引);
   恢复持久化状态();
+  更新自动滚动速度();
   渲染可见行(true);
   更新关键词指示器();
   更新文档标题();
@@ -1032,6 +1040,21 @@ function 应用文本(原始文本, 文件名) {
     }
 
     const 持久化状态 = JSON.parse(原始状态);
+    if (持久化状态.自动滚动速度 !== undefined) {
+      if (
+        typeof 持久化状态.自动滚动速度 !== 'number' ||
+        !Number.isFinite(持久化状态.自动滚动速度)
+      ) {
+        throw new TypeError('持久化的自动滚动速度格式无效');
+      }
+      if (
+        持久化状态.自动滚动速度 < 自动滚动最低速度 ||
+        持久化状态.自动滚动速度 > 自动滚动最高速度
+      ) {
+        throw new RangeError('持久化的自动滚动速度超出有效范围');
+      }
+      状态.自动滚动速度 = 持久化状态.自动滚动速度;
+    }
     if (
       持久化状态.文件名 !== 状态.文件名 ||
       持久化状态.文本长度 !== 状态.文本.length
@@ -2789,6 +2812,7 @@ function 保存持久化状态() {
       文本长度: 状态.文本.length,
       ...阅读位置,
       当前关键词id: 状态.当前关键词id,
+      自动滚动速度: 状态.自动滚动速度,
       关键词列表: 状态.关键词列表.map(function 序列化关键词(关键词) {
         return {
           id: 关键词.id,
