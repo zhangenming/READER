@@ -191,6 +191,7 @@ function 绑定事件() {
   元素.滚动容器.addEventListener('keyup', 处理正文键盘选择);
   元素.自动滚动按钮.addEventListener('mouseenter', 开始自动滚动);
   元素.自动滚动按钮.addEventListener('focus', 开始自动滚动);
+  元素.自动滚动按钮.addEventListener('click', 切换全屏模式);
   元素.自动滚动按钮.addEventListener('mouseleave', 处理自动滚动按钮移出);
   元素.自动滚动按钮.addEventListener('blur', 处理自动滚动按钮失焦);
   元素.查找表单.addEventListener('submit', 处理查找提交);
@@ -887,6 +888,16 @@ function 绑定事件() {
     }
   }
 
+  async function 切换全屏模式() {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+      console.info('[阅读器] 已退出全屏');
+      return;
+    }
+    await document.documentElement.requestFullscreen();
+    console.info('[阅读器] 已进入全屏');
+  }
+
   function 处理自动滚动滚轮(事件) {
     if (!自动滚动状态) {
       return;
@@ -900,7 +911,7 @@ function 绑定事件() {
         : 事件.deltaMode === WheelEvent.DOM_DELTA_PAGE
           ? Math.sign(事件.deltaY) * 元素.滚动容器.clientHeight
           : 事件.deltaY;
-    const 调整量 = Math.max(-100, Math.min(100, 滚轮像素)) * 0.2;
+    const 调整量 = Math.max(-100, Math.min(100, 滚轮像素)) * -0.2;
     状态.自动滚动速度 = Math.max(
       自动滚动最低速度,
       Math.min(自动滚动最高速度, 状态.自动滚动速度 + 调整量),
@@ -965,7 +976,9 @@ function 绑定事件() {
 
   function 更新自动滚动按钮(正在滚动) {
     元素.自动滚动按钮.setAttribute('aria-pressed', String(正在滚动));
-    元素.自动滚动按钮.title = 正在滚动 ? '正在自动滚动' : '悬停后自动滚动';
+    元素.自动滚动按钮.title = 正在滚动
+      ? '正在自动滚动；点击切换全屏'
+      : '悬停后自动滚动；点击切换全屏';
   }
 
   function 处理手动滚动() {
@@ -984,7 +997,10 @@ function 绑定事件() {
 function 更新自动滚动速度() {
   const 显示速度 = String(Math.round(状态.自动滚动速度));
   元素.自动滚动速度.textContent = 显示速度;
-  元素.自动滚动按钮.setAttribute('aria-label', `滚动，速度 ${显示速度}`);
+  元素.自动滚动按钮.setAttribute(
+    'aria-label',
+    `滚动，速度 ${显示速度}，点击切换全屏`,
+  );
 }
 
 function 应用文本(原始文本, 文件名) {
