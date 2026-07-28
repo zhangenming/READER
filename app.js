@@ -86,15 +86,16 @@ const 元素 = {
   关闭查找按钮: document.querySelector('#关闭查找按钮'),
   自定义滚动条: document.querySelector('#自定义滚动条'),
   滚动块: document.querySelector('#滚动块'),
-  滚动进度: document.querySelector('#滚动进度'),
   关键词指示器: document.querySelector('#关键词指示器'),
+  悬停关键词指示器: document.querySelector('#悬停关键词指示器'),
   自动滚动按钮: document.querySelector('#自动滚动按钮'),
   自动滚动速度: document.querySelector('#自动滚动速度'),
 };
 
-const 指示器上下文 = 元素.关键词指示器.getContext('2d');
-if (!指示器上下文) {
-  throw new Error('当前浏览器无法创建关键词指示器画布');
+const 当前指示器上下文 = 元素.关键词指示器.getContext('2d');
+const 悬停指示器上下文 = 元素.悬停关键词指示器.getContext('2d');
+if (!当前指示器上下文 || !悬停指示器上下文) {
+  throw new Error('当前浏览器无法创建关键词指示器画布上下文');
 }
 
 元素.跳转迸发.append(
@@ -303,7 +304,6 @@ function 绑定事件() {
     状态.拖选状态 = null;
     Alt按键状态 = null;
     滚动块拖动状态 = null;
-    元素.自定义滚动条.classList.remove('拖动中');
   }
 
   function 处理滚动条按下(事件) {
@@ -314,16 +314,11 @@ function 绑定事件() {
     取消滚动动画();
     结束跳转会话('拖动滚动条');
 
-    const 滚动块边框 = 元素.滚动块.getBoundingClientRect();
-    const 点在滚动块内 = 元素.滚动块.contains(事件.target);
     滚动块拖动状态 = {
       pointerId: 事件.pointerId,
-      块内偏移: 点在滚动块内
-        ? 事件.clientY - 滚动块边框.top
-        : 滚动块边框.height / 2,
+      块内偏移: 元素.滚动块.offsetHeight / 2,
     };
     元素.自定义滚动条.setPointerCapture(事件.pointerId);
-    元素.自定义滚动条.classList.add('拖动中');
     根据指针滚动(事件.clientY);
   }
 
@@ -340,7 +335,6 @@ function 绑定事件() {
       return;
     }
     滚动块拖动状态 = null;
-    元素.自定义滚动条.classList.remove('拖动中');
     if (元素.自定义滚动条.hasPointerCapture(事件.pointerId)) {
       元素.自定义滚动条.releasePointerCapture(事件.pointerId);
     }
@@ -2292,75 +2286,82 @@ function 获取关键词配色(关键词) {
 
 function 更新关键词指示器() {
   更新滚动块();
-  const 画布 = 元素.关键词指示器;
   const 轨道高度 = 元素.滚动容器.clientHeight;
   const 滚动高度 = 元素.滚动容器.scrollHeight;
-  const 主命中 = 获取指示器主命中();
-  if (!主命中 || !状态.行起点列表.length || 滚动高度 <= 轨道高度) {
-    画布.hidden = true;
+  const 当前关键词 = 查找关键词(状态.当前关键词id);
+  const 悬停关键词 = 查找关键词(状态.悬停关键词id);
+  const 可绘制 = 状态.行起点列表.length && 滚动高度 > 轨道高度;
+
+  if (
+    !可绘制 ||
+    (!当前关键词?.命中位置.length && !悬停关键词?.命中位置.length)
+  ) {
+    元素.关键词指示器.hidden = true;
+    元素.悬停关键词指示器.hidden = true;
     状态.指示器缓存 = null;
     return;
   }
 
-  画布.hidden = false;
   const 像素比 = Math.min(3, window.devicePixelRatio || 1);
-  const 画布宽 = Math.max(1, Math.round(画布.clientWidth * 像素比));
-  const 画布高 = Math.max(1, Math.round(画布.clientHeight * 像素比));
-  if (画布.width !== 画布宽 || 画布.height !== 画布高) {
-    画布.width = 画布宽;
-    画布.height = 画布高;
-    状态.指示器缓存 = null;
-  }
-
-  // 关键词 id 不会在同一次会话里复用，所以刻度缓存不必随关键词增删失效
-  const 布局键 = [状态.排版键, 画布宽, 画布高, 滚动高度].join('|');
-  const 底图键 = `${布局键}|${主命中.关键词.id}`;
+  const 画布高 = Math.max(1, Math.round(轨道高度 * 像素比));
+  const 布局键 = [状态.排版键, 画布高, 滚动高度, 像素比].join('|');
 
   if (状态.指示器缓存?.布局键 !== 布局键) {
     状态.指示器缓存 = {
       布局键,
-      底图键: '',
-      底图: null,
+      底图缓存: new Map(),
       段缓存: new Map(),
     };
   }
-  if (状态.指示器缓存.底图键 !== 底图键) {
-    const 开始时间 = performance.now();
-    const 原刻度缓存数 = 状态.指示器缓存.段缓存.size;
-    状态.指示器缓存.底图 = 创建指示器底图(
-      画布宽,
-      画布高,
-      滚动高度,
-      像素比,
-      主命中.关键词,
-    );
-    状态.指示器缓存.底图键 = 底图键;
-    // 只在真正重算过刻度时记一笔，切换主关键词时不刷屏
-    if (状态.指示器缓存.段缓存.size !== 原刻度缓存数) {
-      console.info('[阅读器] 关键词指示器已重建', {
-        关键词: 主命中.关键词.文本,
-        命中数: 主命中.关键词.命中位置.length,
-        轨道像素高: 画布高,
-        耗时毫秒: Math.round(performance.now() - 开始时间),
-      });
-    }
-  }
 
-  指示器上下文.clearRect(0, 0, 画布宽, 画布高);
-  指示器上下文.drawImage(状态.指示器缓存.底图, 0, 0);
+  绘制单列指示器(元素.关键词指示器, 当前指示器上下文, 当前关键词, '当前');
+  绘制单列指示器(元素.悬停关键词指示器, 悬停指示器上下文, 悬停关键词, '悬停');
+
+  function 绘制单列指示器(画布, 上下文, 关键词, 类型) {
+    if (!关键词?.命中位置.length) {
+      画布.hidden = true;
+      return;
+    }
+
+    画布.hidden = false;
+    const 画布宽 = Math.max(1, Math.round(画布.clientWidth * 像素比));
+    if (画布.width !== 画布宽 || 画布.height !== 画布高) {
+      画布.width = 画布宽;
+      画布.height = 画布高;
+    }
+
+    const 底图键 = `${关键词.id}|${画布宽}`;
+    let 底图 = 状态.指示器缓存.底图缓存.get(底图键);
+    if (!底图) {
+      const 开始时间 = performance.now();
+      const 原刻度缓存数 = 状态.指示器缓存.段缓存.size;
+      底图 = 创建指示器底图(画布宽, 画布高, 滚动高度, 像素比, 关键词);
+      状态.指示器缓存.底图缓存.set(底图键, 底图);
+      if (状态.指示器缓存.段缓存.size !== 原刻度缓存数) {
+        console.info('[阅读器] 关键词指示器已重建', {
+          类型,
+          关键词: 关键词.文本,
+          命中数: 关键词.命中位置.length,
+          轨道像素高: 画布高,
+          耗时毫秒: Math.round(performance.now() - 开始时间),
+        });
+      }
+    }
+
+    上下文.clearRect(0, 0, 画布宽, 画布高);
+    上下文.drawImage(底图, 0, 0);
+  }
 }
 
 function 更新滚动块() {
   const 轨道 = 元素.自定义滚动条;
   轨道.hidden = false;
-  元素.滚动进度.hidden = false;
   const 轨道高度 = 轨道.clientHeight;
   const 容器高度 = 元素.滚动容器.clientHeight;
   const 滚动高度 = 元素.滚动容器.scrollHeight;
   const 最大滚动位置 = 滚动高度 - 容器高度;
   if (轨道高度 <= 0 || 最大滚动位置 <= 0) {
     轨道.hidden = true;
-    元素.滚动进度.hidden = true;
     return;
   }
 
@@ -2374,26 +2375,8 @@ function 更新滚动块() {
 
   元素.滚动块.style.height = `${滚动块高度}px`;
   元素.滚动块.style.transform = `translateY(${滚动块偏移}px)`;
-  元素.滚动进度.style.height = `${滚动块高度}px`;
-  元素.滚动进度.style.transform = `translateY(${滚动块偏移}px)`;
-  元素.滚动进度.textContent = `${百分比}%`;
-  元素.滚动块.title = `阅读进度 ${百分比}%`;
   轨道.setAttribute('aria-valuenow', 百分比);
   轨道.setAttribute('aria-valuetext', `阅读进度 ${百分比}%`);
-}
-
-/* 指示器优先展示鼠标悬停的关键词，其次才是当前关键词。 */
-function 获取指示器主命中() {
-  const 悬停关键词 = 查找关键词(状态.悬停关键词id);
-  if (悬停关键词?.命中位置.length) {
-    return { 关键词: 悬停关键词, 命中idx: 状态.悬停命中idx ?? -1 };
-  }
-
-  const 当前关键词 = 查找关键词(状态.当前关键词id);
-  if (当前关键词?.命中位置.length) {
-    return { 关键词: 当前关键词, 命中idx: 当前关键词.当前命中idx };
-  }
-  return null;
 }
 
 function 创建指示器底图(画布宽, 画布高, 滚动高度, 像素比, 主关键词) {

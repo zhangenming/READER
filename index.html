@@ -13,7 +13,7 @@
       as="fetch"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260728-6" />
+    <link rel="stylesheet" href="./styles.css?v=20260728-7" />
   </head>
   <body>
     <main class="阅读区域">
@@ -51,9 +51,14 @@
         aria-hidden="true"
         hidden
       ></canvas>
-      <div id="滚动块" class="滚动块"></div>
+      <div id="滚动块" class="滚动块" aria-hidden="true"></div>
     </div>
-    <span id="滚动进度" class="滚动进度" aria-hidden="true" hidden>0.0%</span>
+    <canvas
+      id="悬停关键词指示器"
+      class="关键词指示器 悬停关键词指示器"
+      aria-hidden="true"
+      hidden
+    ></canvas>
     <button
       id="自动滚动按钮"
       class="自动滚动按钮"
@@ -111,6 +116,6 @@
       </form>
     </dialog>
 
-    <script src="./app.js?v=20260728-8" defer></script>
+    <script src="./app.js?v=20260728-9" defer></script>
   </body>
 </html>
