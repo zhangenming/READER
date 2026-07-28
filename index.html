@@ -13,7 +13,7 @@
       as="fetch"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260728-5" />
+    <link rel="stylesheet" href="./styles.css?v=20260728-6" />
   </head>
   <body>
     <main class="阅读区域">
@@ -59,9 +59,10 @@
       class="自动滚动按钮"
       type="button"
       aria-pressed="false"
-      title="开始自动滚动"
+      title="悬停后自动滚动"
     >
-      滚动
+      <span>滚动</span>
+      <span id="自动滚动速度" class="自动滚动速度">36</span>
     </button>
     <div id="跳转边框" class="跳转边框" aria-hidden="true" hidden></div>
     <div id="跳转迸发" class="跳转迸发" aria-hidden="true" hidden></div>
@@ -111,6 +112,6 @@
       </form>
     </dialog>
 
-    <script src="./app.js?v=20260728-2" defer></script>
+    <script src="./app.js?v=20260728-3" defer></script>
   </body>
 </html>

@@ -161,7 +161,10 @@ body {
   top: anchor(top);
   right: anchor(left);
   z-index: 5;
+  display: inline-flex;
   height: 26px;
+  align-items: center;
+  gap: 6px;
   padding: 0 10px;
   margin-right: 6px;
   color: var(--次要墨色);
@@ -173,6 +176,12 @@ body {
   border-radius: 13px;
   cursor: pointer;
   box-shadow: 0 2px 8px rgb(32 37 34 / 8%);
+}
+
+.自动滚动速度 {
+  min-width: 3ch;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
 }
 
 body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
