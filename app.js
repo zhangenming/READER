@@ -86,6 +86,7 @@ const 元素 = {
   关闭查找按钮: document.querySelector('#关闭查找按钮'),
   自定义滚动条: document.querySelector('#自定义滚动条'),
   滚动块: document.querySelector('#滚动块'),
+  滚动进度: document.querySelector('#滚动进度'),
   关键词指示器: document.querySelector('#关键词指示器'),
   悬停关键词指示器: document.querySelector('#悬停关键词指示器'),
   自动滚动按钮: document.querySelector('#自动滚动按钮'),
@@ -304,6 +305,7 @@ function 绑定事件() {
     状态.拖选状态 = null;
     Alt按键状态 = null;
     滚动块拖动状态 = null;
+    元素.自定义滚动条.classList.remove('拖动中');
   }
 
   function 处理滚动条按下(事件) {
@@ -314,11 +316,16 @@ function 绑定事件() {
     取消滚动动画();
     结束跳转会话('拖动滚动条');
 
+    const 滚动块边框 = 元素.滚动块.getBoundingClientRect();
+    const 点在滚动块内 = 元素.滚动块.contains(事件.target);
     滚动块拖动状态 = {
       pointerId: 事件.pointerId,
-      块内偏移: 元素.滚动块.offsetHeight / 2,
+      块内偏移: 点在滚动块内
+        ? 事件.clientY - 滚动块边框.top
+        : 滚动块边框.height / 2,
     };
     元素.自定义滚动条.setPointerCapture(事件.pointerId);
+    元素.自定义滚动条.classList.add('拖动中');
     根据指针滚动(事件.clientY);
   }
 
@@ -335,6 +342,7 @@ function 绑定事件() {
       return;
     }
     滚动块拖动状态 = null;
+    元素.自定义滚动条.classList.remove('拖动中');
     if (元素.自定义滚动条.hasPointerCapture(事件.pointerId)) {
       元素.自定义滚动条.releasePointerCapture(事件.pointerId);
     }
@@ -2356,12 +2364,14 @@ function 更新关键词指示器() {
 function 更新滚动块() {
   const 轨道 = 元素.自定义滚动条;
   轨道.hidden = false;
+  元素.滚动进度.hidden = false;
   const 轨道高度 = 轨道.clientHeight;
   const 容器高度 = 元素.滚动容器.clientHeight;
   const 滚动高度 = 元素.滚动容器.scrollHeight;
   const 最大滚动位置 = 滚动高度 - 容器高度;
   if (轨道高度 <= 0 || 最大滚动位置 <= 0) {
     轨道.hidden = true;
+    元素.滚动进度.hidden = true;
     return;
   }
 
@@ -2375,6 +2385,10 @@ function 更新滚动块() {
 
   元素.滚动块.style.height = `${滚动块高度}px`;
   元素.滚动块.style.transform = `translateY(${滚动块偏移}px)`;
+  元素.滚动进度.style.height = `${滚动块高度}px`;
+  元素.滚动进度.style.transform = `translateY(${滚动块偏移}px)`;
+  元素.滚动进度.textContent = `${百分比}%`;
+  元素.滚动块.title = `阅读进度 ${百分比}%`;
   轨道.setAttribute('aria-valuenow', 百分比);
   轨道.setAttribute('aria-valuetext', `阅读进度 ${百分比}%`);
 }
