@@ -1847,9 +1847,9 @@ function 渲染可见行(强制渲染 = false) {
             ) {
               字元素.dataset.groupEnd = '';
             }
-            if (当前关键词命中.命中终点 === 字终点) {
-              字元素.dataset.hitPosition = `${当前命中idx + 1}/${最后命中idx + 1}`;
-            }
+          }
+          if (点击命中.命中终点 === 字终点) {
+            字元素.dataset.hitPosition = `${点击命中.命中idx + 1}/${点击命中.关键词.命中位置.length}`;
           }
           字元素.dataset.keywordId = String(点击命中.关键词.id);
           字元素.dataset.hitIndex = String(点击命中.命中idx);

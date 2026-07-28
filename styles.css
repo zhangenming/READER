@@ -337,7 +337,7 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   box-shadow: none;
 }
 
-.字.命中:is(.当前命中, .当前关键词组.悬停命中)[data-hit-position]::after {
+.字.命中:is(.当前命中, .悬停命中)[data-hit-position]::after {
   position: absolute;
   right: -3px;
   bottom: -7px;
