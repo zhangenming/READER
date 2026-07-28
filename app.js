@@ -9,6 +9,12 @@ const 持久化键 = '原文阅读器:阅读状态:v1';
 const 最大虚拟高度 = 30_000_000;
 const 字素分段器 = new Intl.Segmenter('zh-CN', { granularity: 'grapheme' });
 const 词组分段器 = new Intl.Segmenter('zh-CN', { granularity: 'word' });
+const 时间格式器 = new Intl.DateTimeFormat('zh-CN', {
+  hourCycle: 'h23',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+});
 const 西文字素模式 =
   /^(?:[\u0020-\u007e\u00a0]|\p{Script=Latin}|\p{Number}|\p{Mark})+$/u;
 const 西文单词模式 = /\s*\S+|\s+$/gu;
@@ -91,6 +97,7 @@ const 元素 = {
   悬停关键词指示器: document.querySelector('#悬停关键词指示器'),
   自动滚动按钮: document.querySelector('#自动滚动按钮'),
   自动滚动速度: document.querySelector('#自动滚动速度'),
+  当前时间: document.querySelector('#当前时间'),
 };
 
 const 当前指示器上下文 = 元素.关键词指示器.getContext('2d');
@@ -109,8 +116,16 @@ if (!当前指示器上下文 || !悬停指示器上下文) {
 
 function 启动() {
   绑定事件();
+  更新当前时间();
+  window.setInterval(更新当前时间, 1000);
   new ResizeObserver(处理尺寸变化).observe(元素.滚动容器);
   void 载入默认文本();
+
+  function 更新当前时间() {
+    const 现在 = new Date();
+    元素.当前时间.dateTime = 现在.toISOString();
+    元素.当前时间.textContent = 时间格式器.format(现在);
+  }
 
   async function 载入默认文本() {
     const 本次载入序号 = ++状态.载入序号;

@@ -199,6 +199,22 @@ body:has(.悬停关键词指示器:not([hidden])) .滚动进度 {
   text-align: right;
 }
 
+.当前时间 {
+  position: fixed;
+  right: calc(var(--滚动条宽度) + 12px);
+  bottom: 10px;
+  z-index: 5;
+  min-width: 8ch;
+  color: var(--次要墨色);
+  font-family: 'Avenir Next', 'PingFang SC', sans-serif;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  line-height: 1;
+  text-align: right;
+  pointer-events: none;
+}
+
 body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   display: none;
 }
