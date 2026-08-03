@@ -346,7 +346,9 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   color: #171a18;
   cursor: pointer;
   background-color: var(--命中背景, var(--高亮色));
-  box-shadow: inset 0 -1px 0 rgb(117 88 0 / 22%);
+  box-shadow:
+    0 2px 5px rgb(32 37 34 / 20%),
+    inset 0 -1px 0 rgb(117 88 0 / 22%);
 }
 
 .字.命中.全文唯一 {
@@ -386,7 +388,9 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   background-color: var(--墨色);
   background-image: none;
   border-radius: 0;
-  box-shadow: none;
+  box-shadow:
+    0 5px 15px rgb(0 0 0 / 58%),
+    0 0 18px color-mix(in srgb, var(--强调色) 72%, transparent);
 }
 
 .字.命中:is(.当前命中, .悬停命中)[data-hit-position]::after {
@@ -434,30 +438,32 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   background-image: none;
   border-radius: 0;
   box-shadow:
+    0 3px 10px rgb(0 0 0 / 70%),
     var(--命中左环),
     var(--命中右环),
-    inset 0 2px 0 var(--纸张色),
-    inset 0 -2px 0 var(--纸张色),
+    inset 0 3px 0 var(--纸张色),
+    inset 0 -3px 0 var(--纸张色),
     0 -3px 0 var(--命中环色),
     0 3px 0 var(--命中环色);
 }
 
 .字.命中.当前命中.当前命中起点 {
   --命中左环:
-    inset 2px 0 0 var(--纸张色), -3px 0 0 var(--命中环色),
+    inset 3px 0 0 var(--纸张色), -3px 0 0 var(--命中环色),
     -3px -3px 0 var(--命中环色), -3px 3px 0 var(--命中环色);
 }
 
 .字.命中.当前命中.当前命中终点 {
   --命中右环:
-    inset -2px 0 0 var(--纸张色), 3px 0 0 var(--命中环色),
+    inset -3px 0 0 var(--纸张色), 3px 0 0 var(--命中环色),
     3px -3px 0 var(--命中环色), 3px 3px 0 var(--命中环色);
 }
 
 .字.命中.当前命中.逐字环 {
   box-shadow:
-    inset 0 2px 0 var(--纸张色),
-    inset 0 -2px 0 var(--纸张色),
+    0 3px 10px rgb(0 0 0 / 70%),
+    inset 0 3px 0 var(--纸张色),
+    inset 0 -3px 0 var(--纸张色),
     0 0 0 3px var(--命中环色);
 }
 
