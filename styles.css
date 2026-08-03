@@ -436,12 +436,6 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   background-color: var(--墨色);
   background-image: none;
   border-radius: 0;
-  text-decoration-color: var(--当前命中色);
-  text-decoration-line: underline;
-  text-decoration-skip-ink: none;
-  text-decoration-style: solid;
-  text-decoration-thickness: 4px;
-  text-underline-offset: 5px;
   /* 当前命中只保留整组外框，避免每个字符各自描边产生中间竖线 */
   box-shadow:
     0 4px 0 var(--强调色),
