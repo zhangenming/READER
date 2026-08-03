@@ -437,32 +437,34 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   background-image: none;
   border-radius: 0;
   box-shadow:
-    0 4px 10px -2px rgb(0 0 0 / 74%),
+    0 4px 0 rgb(0 0 0 / 48%),
+    0 9px 16px -3px rgb(0 0 0 / 84%),
     var(--命中左环),
     var(--命中右环),
-    inset 0 3px 0 var(--纸张色),
-    inset 0 -3px 0 var(--纸张色),
+    inset 0 4px 0 var(--纸张色),
+    inset 0 -4px 0 var(--纸张色),
     0 -3px 0 var(--命中环色),
     0 3px 0 var(--命中环色);
 }
 
 .字.命中.当前命中.当前命中起点 {
   --命中左环:
-    inset 3px 0 0 var(--纸张色), -3px 0 0 var(--命中环色),
+    inset 4px 0 0 var(--纸张色), -3px 0 0 var(--命中环色),
     -3px -3px 0 var(--命中环色), -3px 3px 0 var(--命中环色);
 }
 
 .字.命中.当前命中.当前命中终点 {
   --命中右环:
-    inset -3px 0 0 var(--纸张色), 3px 0 0 var(--命中环色),
+    inset -4px 0 0 var(--纸张色), 3px 0 0 var(--命中环色),
     3px -3px 0 var(--命中环色), 3px 3px 0 var(--命中环色);
 }
 
 .字.命中.当前命中.逐字环 {
   box-shadow:
-    0 4px 10px -2px rgb(0 0 0 / 74%),
-    inset 0 3px 0 var(--纸张色),
-    inset 0 -3px 0 var(--纸张色),
+    0 4px 0 rgb(0 0 0 / 48%),
+    0 9px 16px -3px rgb(0 0 0 / 84%),
+    inset 0 4px 0 var(--纸张色),
+    inset 0 -4px 0 var(--纸张色),
     0 0 0 3px var(--命中环色);
 }
 
