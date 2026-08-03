@@ -433,7 +433,7 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   --命中右环: 0 0 0 0 transparent;
   z-index: 1;
   color: var(--纸张色);
-  background-color: var(--墨色);
+  background-color: var(--强调色);
   background-image: none;
   border-radius: 0;
   box-shadow:
