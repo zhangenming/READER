@@ -456,7 +456,8 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
 
 .字.命中.当前命中.逐字环 {
   box-shadow:
-    inset 0 0 0 2px var(--纸张色),
+    inset 0 2px 0 var(--纸张色),
+    inset 0 -2px 0 var(--纸张色),
     0 0 0 3px var(--命中环色);
 }
 
