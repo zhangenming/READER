@@ -437,7 +437,7 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   background-image: none;
   border-radius: 0;
   box-shadow:
-    0 4px 0 rgb(0 0 0 / 48%),
+    0 4px 0 var(--强调色),
     0 9px 16px -3px rgb(0 0 0 / 84%),
     var(--命中左环),
     var(--命中右环),
