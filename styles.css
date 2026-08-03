@@ -408,7 +408,7 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   text-align: center;
   letter-spacing: 0;
   content: attr(data-hit-position);
-  background: #0b1118;
+  background: #241b15;
   border: 0;
   border-radius: 3px;
   box-shadow: 0 2px 7px rgb(0 0 0 / 42%);
@@ -428,19 +428,77 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   border-radius: 14px;
 }
 
+/* 当前跳转命中：旧铜墨色渐变 + 强辉光脉冲 + 顶部浮动指示三角，
+   与黑底的「当前关键词组」形成强对比，密集文本中也能一眼定位。
+   不使用实心描边环，避免相邻字之间叠出竖线。 */
 .字.命中.当前命中 {
-  --当前命中色: #4d8fca;
-  z-index: 1;
+  --当前命中色: #b37735;
+  z-index: 2;
   color: #fff;
-  background: #000;
+  background: linear-gradient(180deg, #b9823d 0%, #70431f 100%);
   border-radius: 0;
   font-weight: 700;
-  text-shadow:
-    0 0 0.08em rgb(255 255 255 / 92%),
-    0 0 0.34em color-mix(in srgb, var(--当前命中色) 88%, transparent);
+  text-shadow: 0 1px 1px rgb(48 25 7 / 62%);
   box-shadow:
-    0 0 14px 2px color-mix(in srgb, var(--当前命中色) 68%, transparent),
-    0 8px 16px -4px rgb(0 0 0 / 90%);
+    0 0 12px 2px color-mix(in srgb, var(--当前命中色) 65%, transparent),
+    0 8px 16px -4px rgb(0 0 0 / 55%);
+  animation: 当前命中脉冲 1.2s ease-in-out infinite;
+}
+
+@keyframes 当前命中脉冲 {
+  0%,
+  100% {
+    filter: brightness(1);
+    box-shadow:
+      0 0 8px 1px color-mix(in srgb, var(--当前命中色) 45%, transparent),
+      0 8px 16px -4px rgb(0 0 0 / 55%);
+  }
+
+  50% {
+    filter: brightness(1.28);
+    box-shadow:
+      0 0 30px 10px color-mix(in srgb, var(--当前命中色) 95%, transparent),
+      0 8px 16px -4px rgb(0 0 0 / 55%);
+  }
+}
+
+/* 顶部浮动指示三角：挂在命中首字上方，持续上下浮动，
+   即使辉光处于脉冲低谷也能凭标记快速定位 */
+.字.命中.当前命中.当前命中起点::before {
+  position: absolute;
+  top: -0.72em;
+  left: 50%;
+  z-index: 3;
+  width: 0;
+  height: 0;
+  border-right: 0.26em solid transparent;
+  border-left: 0.26em solid transparent;
+  border-top: 0.34em solid var(--当前命中色);
+  content: '';
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 40%));
+  animation: 当前命中指示浮动 1.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes 当前命中指示浮动 {
+  0%,
+  100% {
+    transform: translate(-50%, -0.08em);
+  }
+
+  50% {
+    transform: translate(-50%, 0.1em);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .字.命中.当前命中 {
+    animation: none;
+  }
+
+  .字.命中.当前命中.当前命中起点::before {
+    animation: none;
+  }
 }
 
 .字.命中.当前命中.当前命中起点 {
@@ -457,12 +515,18 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
 
 .字.命中.当前命中.逐字环 {
   box-shadow:
-    0 0 14px 2px color-mix(in srgb, var(--当前命中色) 68%, transparent),
-    0 8px 16px -4px rgb(0 0 0 / 90%);
+    0 0 12px 2px color-mix(in srgb, var(--当前命中色) 65%, transparent),
+    0 8px 16px -4px rgb(0 0 0 / 55%);
 }
 
+/* 边框跳转动画期间：停掉脉冲与指示三角、去掉辉光，避免与移动中的跳转边框互相干扰 */
 .滚动容器.边框跳转中 .字.命中.当前命中 {
-  box-shadow: 0 8px 16px -4px rgb(0 0 0 / 90%);
+  animation: none;
+  box-shadow: 0 8px 16px -4px rgb(0 0 0 / 55%);
+}
+
+.滚动容器.边框跳转中 .字.命中.当前命中.当前命中起点::before {
+  content: none;
 }
 
 .跳转边框 {
