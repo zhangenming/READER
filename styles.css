@@ -441,8 +441,6 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
     0 9px 16px -3px rgb(0 0 0 / 84%),
     var(--命中左环),
     var(--命中右环),
-    inset 0 4px 0 var(--纸张色),
-    inset 0 -4px 0 var(--纸张色),
     0 -3px 0 var(--命中环色),
     0 3px 0 var(--命中环色);
 }
@@ -463,8 +461,6 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   box-shadow:
     0 4px 0 rgb(0 0 0 / 48%),
     0 9px 16px -3px rgb(0 0 0 / 84%),
-    inset 0 4px 0 var(--纸张色),
-    inset 0 -4px 0 var(--纸张色),
     0 0 0 3px var(--命中环色);
 }
 
