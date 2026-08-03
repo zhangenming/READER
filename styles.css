@@ -436,7 +436,7 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   background-color: var(--墨色);
   background-image: none;
   border-radius: 0;
-  text-decoration-color: var(--强调色);
+  text-decoration-color: var(--当前命中色);
   text-decoration-line: underline;
   text-decoration-skip-ink: none;
   text-decoration-style: solid;
