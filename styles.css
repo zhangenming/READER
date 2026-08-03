@@ -428,12 +428,12 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
 }
 
 .字.命中.当前命中 {
-  --命中环色: var(--命中背景, var(--高亮色));
+  --命中环色: var(--强调色);
   --命中左环: 0 0 0 0 transparent;
   --命中右环: 0 0 0 0 transparent;
   z-index: 1;
   color: var(--纸张色);
-  background-color: var(--强调色);
+  background-color: var(--墨色);
   background-image: none;
   border-radius: 0;
   box-shadow:
