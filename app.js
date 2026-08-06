@@ -642,6 +642,15 @@ function 绑定事件() {
 
     const 点击命中idx = Number(字元素.dataset.hitIndex);
     const 原始行位置 = 获取元素行位置(字元素);
+    if (
+      (事件.ctrlKey || 事件.metaKey) &&
+      typeof Ctrl按键状态 !== 'undefined'
+    ) {
+      Ctrl按键状态 = null;
+      if (typeof 待导航参数 !== 'undefined') {
+        待导航参数 = null;
+      }
+    }
     const 原始边框 = 获取元素命中边框(字元素);
     let 目标命中idx;
     if (事件.ctrlKey || 事件.metaKey) {
