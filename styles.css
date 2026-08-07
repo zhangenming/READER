@@ -384,13 +384,17 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
 
 .字.命中.当前关键词组 {
   padding-bottom: 2px;
-  color: var(--命中当前色, var(--选中色));
+  color: var(--选中色);
   background-color: color-mix(
-    in srgb,
-    var(--命中背景, var(--高亮色)) 38%,
-    transparent
+    in oklab,
+    var(--选中色) 14%,
+    var(--纸张色)
   );
+  background-image: none;
   border-radius: 3px;
+  box-shadow:
+    inset 0 -2px 0 color-mix(in oklab, var(--选中色) 84%, var(--纸张色)),
+    0 1px 0 color-mix(in oklab, var(--选中色) 20%, transparent);
 }
 
 .字.命中:is(.当前命中, .悬停命中)[data-hit-position]::after {
@@ -429,17 +433,19 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   border-radius: 4px;
 }
 
-/* 当前跳转命中：在纸面上加深一层蓝墨色，保留阅读文字本身的形状。 */
+/* 当前跳转命中：深墨绿实底 + 纸色文字，和当前关键词组形成明确的两级层次。 */
 .字.命中.当前命中 {
-  --当前命中色: var(--命中当前色, oklch(42% 0.08 245));
+  --当前命中色: var(--选中色);
   z-index: 2;
-  color: var(--墨色);
-  background-color: color-mix(in srgb, var(--当前命中色) 14%, var(--纸张色));
+  color: var(--纸张色);
+  background-color: var(--当前命中色);
+  background-image: none;
   border-radius: 3px;
   font-weight: 700;
   box-shadow:
-    0 2px 0 -1px var(--当前命中色),
-    0 4px 9px -7px color-mix(in srgb, var(--当前命中色) 60%, transparent);
+    inset 0 2px 0 color-mix(in oklab, var(--纸张色) 86%, transparent),
+    inset 0 -2px 0 color-mix(in oklab, var(--墨色) 46%, transparent),
+    0 3px 8px -4px color-mix(in oklab, var(--当前命中色) 58%, transparent);
 }
 
 /* 顶部静态圆点：只提供位置提示，不把正文抬高或变成装饰性徽章。 */
