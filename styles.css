@@ -383,20 +383,21 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
 }
 
 .字.命中.当前关键词组 {
-  padding-bottom: 3px;
-  color: var(--纸张色);
-  background-color: var(--墨色);
-  background-image: none;
-  border-radius: 0;
-  box-shadow: none;
+  padding-bottom: 2px;
+  color: var(--命中当前色, var(--选中色));
+  background-color: color-mix(
+    in srgb,
+    var(--命中背景, var(--高亮色)) 38%,
+    transparent
+  );
+  border-radius: 3px;
 }
 
-.字.命中 .命中徽标 {
+.字.命中:is(.当前命中, .悬停命中)[data-hit-position]::after {
   position: absolute;
-  bottom: -2px;
   right: -3px;
+  bottom: -7px;
   z-index: 2;
-  display: none;
   min-width: 18px;
   padding: 1px 2px;
   color: var(--纸张色);
@@ -407,26 +408,12 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   line-height: 10px;
   text-align: center;
   letter-spacing: 0;
+  content: attr(data-hit-position);
   background: #241b15;
   border: 0;
   border-radius: 3px;
   box-shadow: 0 2px 7px rgb(0 0 0 / 42%);
   pointer-events: none;
-  animation: 命中徽标淡出 0.35s 1s forwards;
-}
-
-.字.命中:is(.当前命中, .悬停命中) .命中徽标 {
-  display: block;
-}
-
-@keyframes 命中徽标淡出 {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
 }
 
 .字.命中.当前关键词组[data-group-start] {
@@ -442,66 +429,54 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   border-radius: 4px;
 }
 
-/* 当前跳转命中：黑底白字，首尾外溢的轮廓与上下横线组成「井」形端角。 */
+/* 当前跳转命中：在纸面上加深一层蓝墨色，保留阅读文字本身的形状。 */
 .字.命中.当前命中 {
   --当前命中色: var(--命中当前色, oklch(42% 0.08 245));
   z-index: 2;
-  color: var(--纸张色);
-  background-color: var(--墨色);
+  color: var(--墨色);
+  background-color: color-mix(in srgb, var(--当前命中色) 14%, var(--纸张色));
   border-radius: 3px;
   font-weight: 700;
   box-shadow:
-    inset 0 2px 0 var(--当前命中色),
-    inset 0 -2px 0 var(--当前命中色);
+    0 2px 0 -1px var(--当前命中色),
+    0 4px 9px -7px color-mix(in srgb, var(--当前命中色) 60%, transparent);
 }
 
-/* 左端的三条外溢线：只画左侧，不给相邻字留下内部竖线。 */
+/* 顶部静态圆点：只提供位置提示，不把正文抬高或变成装饰性徽章。 */
 .字.命中.当前命中.当前命中起点::before {
   position: absolute;
-  top: -6px;
-  bottom: -6px;
-  left: -6px;
-  width: 6px;
+  top: -0.45em;
+  left: 50%;
+  z-index: 3;
+  width: 0.28em;
+  height: 0.28em;
+  background: var(--当前命中色);
+  border: 0;
+  border-radius: 50%;
   content: '';
-  border-top: 2px solid var(--当前命中色);
-  border-bottom: 2px solid var(--当前命中色);
-  border-left: 2px solid var(--当前命中色);
-  pointer-events: none;
-}
-
-/* 右端的三条外溢线：与左端形成不参与排版的完整包围。 */
-.字.命中.当前命中.当前命中终点::after {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  bottom: -6px;
-  width: 6px;
-  content: '';
-  border-top: 2px solid var(--当前命中色);
-  border-right: 2px solid var(--当前命中色);
-  border-bottom: 2px solid var(--当前命中色);
+  box-shadow: 0 0 0 2px var(--纸张色);
+  transform: translateX(-50%);
   pointer-events: none;
 }
 
 .字.命中.当前命中.当前命中起点 {
-  border-radius: 2px 0 0 2px;
+  border-radius: 4px 0 0 4px;
 }
 
 .字.命中.当前命中.当前命中终点 {
-  border-radius: 0 2px 2px 0;
+  border-radius: 0 4px 4px 0;
 }
 
 .字.命中.当前命中.当前命中起点.当前命中终点 {
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
-/* 边框跳转动画期间：隐藏端角和横线，避免与移动中的跳转边框重复提示。 */
+/* 边框跳转动画期间：隐藏圆点，避免与移动中的跳转边框重复提示。 */
 .滚动容器.边框跳转中 .字.命中.当前命中 {
   box-shadow: none;
 }
 
-.滚动容器.边框跳转中 .字.命中.当前命中.当前命中起点::before,
-.滚动容器.边框跳转中 .字.命中.当前命中.当前命中终点::after {
+.滚动容器.边框跳转中 .字.命中.当前命中.当前命中起点::before {
   content: none;
 }
 
