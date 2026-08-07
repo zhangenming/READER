@@ -418,6 +418,18 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   border-radius: 3px;
   box-shadow: 0 2px 7px rgb(0 0 0 / 42%);
   pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 180ms ease,
+    visibility 0s linear 180ms;
+}
+
+body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after,
+.字.命中.悬停命中[data-hit-position]::after {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .字.命中.当前关键词组[data-group-start] {
