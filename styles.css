@@ -383,13 +383,14 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
 }
 
 .字.命中.当前关键词组 {
-  padding-bottom: 3px;
-  color: var(--纸张色);
-  background-color: var(--墨色);
-  background-image: none;
-  border-radius: 0;
-  box-shadow:
-    0 5px 15px -3px rgb(0 0 0 / 62%);
+  padding-bottom: 2px;
+  color: var(--命中当前色, var(--选中色));
+  background-color: color-mix(
+    in srgb,
+    var(--命中背景, var(--高亮色)) 38%,
+    transparent
+  );
+  border-radius: 3px;
 }
 
 .字.命中:is(.当前命中, .悬停命中)[data-hit-position]::after {
@@ -416,89 +417,46 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
 }
 
 .字.命中.当前关键词组[data-group-start] {
-  border-radius: 14px 0 0 14px;
+  border-radius: 4px 0 0 4px;
 }
 
 .字.命中.当前关键词组[data-group-end] {
   z-index: 1;
-  border-radius: 0 14px 14px 0;
+  border-radius: 0 4px 4px 0;
 }
 
 .字.命中.当前关键词组[data-group-start][data-group-end] {
-  border-radius: 14px;
+  border-radius: 4px;
 }
 
-/* 当前跳转命中：旧铜墨色渐变 + 强辉光脉冲 + 顶部浮动指示三角，
-   与黑底的「当前关键词组」形成强对比，密集文本中也能一眼定位。
-   不使用实心描边环，避免相邻字之间叠出竖线。 */
+/* 当前跳转命中：在纸面上加深一层蓝墨色，保留阅读文字本身的形状。 */
 .字.命中.当前命中 {
-  --当前命中色: #b37735;
+  --当前命中色: var(--命中当前色, oklch(42% 0.08 245));
   z-index: 2;
-  color: #fff;
-  background: linear-gradient(180deg, #b9823d 0%, #70431f 100%);
-  border-radius: 0;
+  color: var(--墨色);
+  background-color: color-mix(in srgb, var(--当前命中色) 14%, var(--纸张色));
+  border-radius: 3px;
   font-weight: 700;
-  text-shadow: 0 1px 1px rgb(48 25 7 / 62%);
   box-shadow:
-    0 0 12px 2px color-mix(in srgb, var(--当前命中色) 65%, transparent),
-    0 8px 16px -4px rgb(0 0 0 / 55%);
-  animation: 当前命中脉冲 1.2s ease-in-out infinite;
+    0 2px 0 -1px var(--当前命中色),
+    0 4px 9px -7px color-mix(in srgb, var(--当前命中色) 60%, transparent);
 }
 
-@keyframes 当前命中脉冲 {
-  0%,
-  100% {
-    filter: brightness(1);
-    box-shadow:
-      0 0 8px 1px color-mix(in srgb, var(--当前命中色) 45%, transparent),
-      0 8px 16px -4px rgb(0 0 0 / 55%);
-  }
-
-  50% {
-    filter: brightness(1.28);
-    box-shadow:
-      0 0 30px 10px color-mix(in srgb, var(--当前命中色) 95%, transparent),
-      0 8px 16px -4px rgb(0 0 0 / 55%);
-  }
-}
-
-/* 顶部浮动指示三角：挂在命中首字上方，持续上下浮动，
-   即使辉光处于脉冲低谷也能凭标记快速定位 */
+/* 顶部静态圆点：只提供位置提示，不把正文抬高或变成装饰性徽章。 */
 .字.命中.当前命中.当前命中起点::before {
   position: absolute;
-  top: -0.72em;
+  top: -0.45em;
   left: 50%;
   z-index: 3;
-  width: 0;
-  height: 0;
-  border-right: 0.26em solid transparent;
-  border-left: 0.26em solid transparent;
-  border-top: 0.34em solid var(--当前命中色);
+  width: 0.28em;
+  height: 0.28em;
+  background: var(--当前命中色);
+  border: 0;
+  border-radius: 50%;
   content: '';
-  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 40%));
-  animation: 当前命中指示浮动 1.2s ease-in-out infinite;
+  box-shadow: 0 0 0 2px var(--纸张色);
+  transform: translateX(-50%);
   pointer-events: none;
-}
-
-@keyframes 当前命中指示浮动 {
-  0%,
-  100% {
-    transform: translate(-50%, -0.08em);
-  }
-
-  50% {
-    transform: translate(-50%, 0.1em);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .字.命中.当前命中 {
-    animation: none;
-  }
-
-  .字.命中.当前命中.当前命中起点::before {
-    animation: none;
-  }
 }
 
 .字.命中.当前命中.当前命中起点 {
@@ -513,16 +471,9 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   border-radius: 4px;
 }
 
-.字.命中.当前命中.逐字环 {
-  box-shadow:
-    0 0 12px 2px color-mix(in srgb, var(--当前命中色) 65%, transparent),
-    0 8px 16px -4px rgb(0 0 0 / 55%);
-}
-
-/* 边框跳转动画期间：停掉脉冲与指示三角、去掉辉光，避免与移动中的跳转边框互相干扰 */
+/* 边框跳转动画期间：隐藏圆点，避免与移动中的跳转边框重复提示。 */
 .滚动容器.边框跳转中 .字.命中.当前命中 {
-  animation: none;
-  box-shadow: 0 8px 16px -4px rgb(0 0 0 / 55%);
+  box-shadow: none;
 }
 
 .滚动容器.边框跳转中 .字.命中.当前命中.当前命中起点::before {
