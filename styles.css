@@ -457,18 +457,24 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 .字.命中.当前命中 {
   --当前命中色: var(--选中色);
   --当前准星色: color-mix(in oklab, var(--当前命中色) 82%, var(--墨色));
-  --当前准星内线色: color-mix(in oklab, var(--纸张色) 88%, var(--当前命中色));
   --当前准星延伸: 0.2em;
   z-index: 2;
   color: var(--纸张色);
   background-color: var(--当前命中色);
-  background-image: none;
+  background-image:
+    linear-gradient(var(--当前准星色), var(--当前准星色)),
+    linear-gradient(var(--当前准星色), var(--当前准星色));
+  background-position:
+    0 var(--当前准星延伸),
+    0 calc(100% - var(--当前准星延伸));
+  background-size:
+    100% 1.5px,
+    100% 1.5px;
+  background-repeat: no-repeat;
   border-radius: 3px;
   font-weight: 700;
-  box-shadow:
-    inset 0 1.5px 0 var(--当前准星内线色),
-    inset 0 -1.5px 0 var(--当前准星内线色),
-    0 3px 8px -4px color-mix(in oklab, var(--当前命中色) 58%, transparent);
+  box-shadow: 0 3px 8px -4px
+    color-mix(in oklab, var(--当前命中色) 58%, transparent);
 }
 
 /* 当前命中准星：上下线贯穿命中词，首尾竖线向外延伸，形成“井”字。 */
@@ -481,9 +487,9 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   content: '';
   background:
     linear-gradient(var(--当前准星色), var(--当前准星色)) 0
-      var(--当前准星延伸) / 100% 1.5px no-repeat,
+      calc(var(--当前准星延伸) * 2) / 100% 1.5px no-repeat,
     linear-gradient(var(--当前准星色), var(--当前准星色)) 0
-      calc(100% - var(--当前准星延伸)) / 100% 1.5px no-repeat,
+      calc(100% - var(--当前准星延伸) * 2) / 100% 1.5px no-repeat,
     linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 1.5px 100%
       no-repeat;
   pointer-events: none;
@@ -498,8 +504,8 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   right: calc(var(--当前准星延伸) * -1);
   width: var(--当前准星延伸);
   background-position:
-    100% var(--当前准星延伸),
-    100% calc(100% - var(--当前准星延伸)),
+    100% calc(var(--当前准星延伸) * 2),
+    100% calc(100% - var(--当前准星延伸) * 2),
     100% 0;
 }
 
@@ -510,9 +516,9 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   height: auto;
   background:
     linear-gradient(var(--当前准星色), var(--当前准星色)) 0
-      var(--当前准星延伸) / 100% 1.5px no-repeat,
+      calc(var(--当前准星延伸) * 2) / 100% 1.5px no-repeat,
     linear-gradient(var(--当前准星色), var(--当前准星色)) 0
-      calc(100% - var(--当前准星延伸)) / 100% 1.5px no-repeat,
+      calc(100% - var(--当前准星延伸) * 2) / 100% 1.5px no-repeat,
     linear-gradient(var(--当前准星色), var(--当前准星色)) var(--当前准星延伸)
       0 / 1.5px 100% no-repeat,
     linear-gradient(var(--当前准星色), var(--当前准星色))
@@ -533,6 +539,7 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 
 /* 边框跳转动画期间：隐藏准星，避免与移动中的跳转边框重复提示。 */
 .滚动容器.边框跳转中 .字.命中.当前命中 {
+  background-image: none;
   box-shadow: none;
 }
 
