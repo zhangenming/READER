@@ -278,6 +278,14 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   white-space: pre;
 }
 
+/* 悬停命中项的 x/y 徽标会溢出行底，避免被相邻行裁掉。 */
+.正文行:has(.悬停命中) {
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+  contain: layout style;
+}
+
 .正文行.换行缩进行 {
   padding-left: 2em;
 }
