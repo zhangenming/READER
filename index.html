@@ -25,6 +25,7 @@
             role="document"
             aria-label="文本内容"
           ></div>
+          <div id="衔接线" class="衔接线" aria-hidden="true" hidden></div>
         </div>
         <div id="载入状态" class="载入状态" role="status">
           <span class="载入线" aria-hidden="true"></span>
@@ -60,6 +61,16 @@
       hidden
     ></canvas>
     <span id="滚动进度" class="滚动进度" aria-hidden="true" hidden>0.0%</span>
+    <aside id="关键词面板" class="关键词面板" aria-label="关键词管理" hidden>
+      <button
+        id="关键词面板开关"
+        class="关键词面板开关"
+        type="button"
+        aria-expanded="false"
+        aria-controls="关键词列表容器"
+      ></button>
+      <div id="关键词列表容器" class="关键词列表容器" hidden></div>
+    </aside>
     <button
       id="自动滚动按钮"
       class="自动滚动按钮"
@@ -70,6 +81,35 @@
       <span id="自动滚动速度" class="自动滚动速度">36</span>
     </button>
     <time id="当前时间" class="当前时间">00:00:00</time>
+    <div id="字号控制" class="字号控制" role="group" aria-label="字号调节">
+      <button
+        id="字号缩小"
+        class="字号按钮"
+        type="button"
+        aria-label="缩小字号"
+        title="缩小字号"
+      >
+        −
+      </button>
+      <button
+        id="字号值"
+        class="字号值"
+        type="button"
+        aria-label="当前字号 30，点击恢复默认"
+        title="点击恢复默认字号"
+      >
+        30
+      </button>
+      <button
+        id="字号放大"
+        class="字号按钮"
+        type="button"
+        aria-label="放大字号"
+        title="放大字号"
+      >
+        ＋
+      </button>
+    </div>
     <div id="跳转边框" class="跳转边框" aria-hidden="true" hidden></div>
     <div id="跳转迸发" class="跳转迸发" aria-hidden="true" hidden></div>
 
@@ -118,6 +158,118 @@
       </form>
     </dialog>
 
-    <script src="./app.js?v=20260728-11" defer></script>
+    <dialog id="上下文弹窗" class="上下文弹窗" aria-labelledby="上下文标题">
+      <div class="上下文标题栏">
+        <p id="上下文标题" class="上下文标题"></p>
+        <button
+          id="关闭上下文按钮"
+          class="关闭查找按钮"
+          type="button"
+          aria-label="关闭上下文列表"
+          title="关闭"
+        >
+          ×
+        </button>
+      </div>
+      <div id="上下文列表" class="上下文列表"></div>
+    </dialog>
+
+    <div id="字体遮罩" class="字体遮罩" hidden></div>
+    <div
+      id="字体弹窗"
+      class="字体弹窗"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="字体标题"
+      hidden
+    >
+      <div class="字体标题栏">
+        <h2 id="字体标题" class="字体标题">字体设置</h2>
+        <button
+          id="关闭字体按钮"
+          class="关闭字体按钮"
+          type="button"
+          aria-label="关闭字体设置"
+          title="关闭"
+        >
+          ×
+        </button>
+      </div>
+      <div class="字体标签栏" role="tablist" aria-label="字体设置区域">
+        <button
+          id="字体标签引号内"
+          class="字体标签"
+          role="tab"
+          aria-selected="true"
+          type="button"
+        >
+          引号内（spk 内）
+        </button>
+        <button
+          id="字体标签引号外"
+          class="字体标签"
+          role="tab"
+          aria-selected="false"
+          type="button"
+        >
+          引号外（spk 外）
+        </button>
+        <button
+          id="字体标签全部"
+          class="字体标签"
+          role="tab"
+          aria-selected="false"
+          type="button"
+        >
+          全部
+        </button>
+      </div>
+      <div class="字体分组列表">
+        <div id="字体选项列表" class="字体选项列表"></div>
+      </div>
+      <div class="字体弹窗底部">
+        <button id="字体重置按钮" class="字体重置按钮" type="button">
+          恢复默认
+        </button>
+        <button
+          id="字体关闭底部按钮"
+          class="字体关闭底部按钮"
+          type="button"
+        >
+          关闭
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // 关闭字体弹窗的兜底脚本：即使主脚本事件绑定失败，也能关闭弹窗。
+      (function () {
+        function 取弹窗() {
+          return document.getElementById('字体弹窗');
+        }
+        function 取遮罩() {
+          return document.getElementById('字体遮罩');
+        }
+        function 关闭() {
+          const 弹窗 = 取弹窗();
+          const 遮罩 = 取遮罩();
+          if (弹窗) 弹窗.hidden = true;
+          if (遮罩) 遮罩.hidden = true;
+        }
+        const 弹窗 = 取弹窗();
+        if (!弹窗) return;
+        const 关闭按钮 = document.getElementById('关闭字体按钮');
+        const 底部关闭 = document.getElementById('字体关闭底部按钮');
+        const 遮罩 = 取遮罩();
+        if (关闭按钮) 关闭按钮.addEventListener('click', 关闭);
+        if (底部关闭) 底部关闭.addEventListener('click', 关闭);
+        if (遮罩) 遮罩.addEventListener('click', 关闭);
+        document.addEventListener('keydown', function (事件) {
+          if (事件.key === 'Escape' && !弹窗.hidden) 关闭();
+        });
+      })();
+    </script>
+    <script src="./app.js?v=20260806-05" defer></script>
+    <script src="./语音订阅.js?v=20260808-01" defer></script>
   </body>
 </html>

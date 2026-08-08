@@ -9,12 +9,14 @@ const 持久化键 = '原文阅读器:阅读状态:v1';
 const 最大虚拟高度 = 30_000_000;
 const 字素分段器 = new Intl.Segmenter('zh-CN', { granularity: 'grapheme' });
 const 词组分段器 = new Intl.Segmenter('zh-CN', { granularity: 'word' });
+const 拼音排序器 = new Intl.Collator('zh-Hans-CN-u-co-pinyin');
 const 时间格式器 = new Intl.DateTimeFormat('zh-CN', {
   hourCycle: 'h23',
   hour: '2-digit',
   minute: '2-digit',
   second: '2-digit',
 });
+const 关键词排序方式列表 = ['数量', '位置', '拼音'];
 const 西文字素模式 =
   /^(?:[\u0020-\u007e\u00a0]|\p{Script=Latin}|\p{Number}|\p{Mark})+$/u;
 const 西文单词模式 = /\s*\S+|\s+$/gu;
@@ -31,20 +33,84 @@ const 迸发重力位移 = 24;
 const 迸发最小尺寸 = 4;
 const 迸发尺寸差 = 5;
 const 指示器刻度高度 = 3;
+const 指示器基础透明度 = 0.45;
 const 当前命中位置提示时长 = 1000;
+const 上下文分块行数 = 200;
+const 上下文最大初始行数 = 2000;
+const 上下文前文字数 = 24;
+const 上下文后文字数 = 30;
 const 自动滚动默认速度 = 36;
 const 自动滚动最低速度 = 1;
 const 自动滚动最高速度 = 600;
 const 自动滚动快速速度 = 2400;
 const 自动滚动缓动时长 = 140;
 const 自动滚动界面间隔 = 50;
-const 高亮配色 = [
-  { 浅色: '#f6d768', 深色: '#9a6614' },
-  { 浅色: '#8bd4cb', 深色: '#176d67' },
-  { 浅色: '#f1aaa1', 深色: '#a83f50' },
-  { 浅色: '#9fcceb', 深色: '#326c9b' },
-  { 浅色: '#b9d98f', 深色: '#587535' },
-  { 浅色: '#efb07d', 深色: '#a9512f' },
+const 默认字号 = 30;
+const 最小字号 = 16;
+const 最大字号 = 72;
+const 字号步进 = 2;
+const 自动滚动滚轮灵敏系数 = 0.1; // 每格指数强度；越小越柔和、节奏越慢
+const 自动滚动滚轮死区 = 3; // 像素；过滤触控板/鼠标的细微抖动，避免速度剧烈跳变
+const 自动滚动滚轮归一化 = 120; // 像素；单格滚轮对应的归一化基准，用于把 deltaY 映射到 [-1, 1]
+const 衔接线停留时长 = 700; // 方案 D：快速前进到位后停留毫秒数
+const 衔接线播放时长 = 1200; // 与 styles.css 的 @keyframes 衔接线淡出 保持一致
+const 双击判定延迟 = 150; // 纯单击前进的延迟；双击会清空挂起项，因此两者不冲突。取 150ms：比 180 跟手，需快双点击间隔稳定 < 150ms 才不竞态；若双击偶发「前进一格再跳」回升到 180（干净双击的硬下限）
+const shift双击中阈值 = 350; // 双击 Shift 启动自动滚动的时间窗口（毫秒）：两次「干净」的 Shift 松开间隔小于此值即判定为双击
+// 统一配色：所有关键词不再按词区分颜色，背景一律浅蓝（选中/当前关键词在 CSS 中另作黑色+白边处理）。
+const 高亮配色 = [{ 浅色: '#c5d9f0', 深色: '#1e4a7a' }];
+
+// 字体选择：引号内（spk 内）/ 引号外（spk 外）两块独立。
+// 值为 null 表示“跟随该区域 CSS 默认”，写入时清空内联变量以回退到 :root。
+const 字体设置 = { 引号内: null, 引号外: null };
+let 当前字体标签 = '引号内';
+const 可选字体列表 = [
+  {
+    名称: 'TogeGothic荆棘黑 SemiLight',
+    值: "'TogeGothic-SemiLight-Local', 'TogeGothicJingJiHei-SemiLight', 'TogeGothic', 'PingFang SC', 'Microsoft YaHei', sans-serif",
+  },
+  {
+    名称: 'TogeGothic荆棘黑 纤细',
+    值: "'TogeGothic-ExtraLight-Local', 'TogeGothicJingJiHei-ExtraLight', 'TogeGothic', 'PingFang SC', 'Microsoft YaHei', sans-serif",
+  },
+  {
+    名称: '破碎零号字',
+    值: "'LingKOSHIKKU-Local', 'LingKOSHIKKU', 'PoSuiLingHaoZi', 'PingFang SC', 'Microsoft YaHei', sans-serif",
+  },
+  {
+    名称: '思源黑体旧字形 ExtraLight',
+    值: "'SourceHanSansOLD-ExtraLight-Local', 'SourceHanSansOLD-ExtraLight', '思源黑体旧字形', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif",
+  },
+  { 名称: '默认（跟随正文）', 值: null },
+  {
+    名称: '字魂白鸽天行体',
+    值: "'ZiHunBaiGeTianXingTi-Local', '字魂白鸽天行体', 'zihun50hao-baigetianxingti', 'Songti SC', 'STSong', 'Noto Serif CJK SC', serif",
+  },
+  {
+    名称: '宋体（Songti SC）',
+    值: "'Songti SC', 'STSong', 'Noto Serif CJK SC', serif",
+  },
+  {
+    名称: '思源宋体（Noto Serif CJK SC）',
+    值: "'Noto Serif CJK SC', 'Songti SC', serif",
+  },
+  { 名称: '楷体（KaiTi）', 值: "'KaiTi', 'STKaiti', 'Kaiti SC', serif" },
+  { 名称: '华文楷体（STKaiti）', 值: "'STKaiti', 'KaiTi', serif" },
+  { 名称: '黑体（Heiti SC）', 值: "'Heiti SC', 'SimHei', sans-serif" },
+  {
+    名称: '苹方（PingFang SC）',
+    值: "'PingFang SC', 'Hiragino Sans GB', sans-serif",
+  },
+  {
+    名称: '微软雅黑（Microsoft YaHei）',
+    值: "'Microsoft YaHei', 'PingFang SC', sans-serif",
+  },
+  {
+    名称: '思源黑体（Noto Sans CJK SC）',
+    值: "'Noto Sans CJK SC', 'PingFang SC', sans-serif",
+  },
+  { 名称: '仿宋（FangSong）', 值: "'FangSong', 'STFangsong', serif" },
+  { 名称: '系统衬线（serif）', 值: 'serif' },
+  { 名称: '系统无衬线（sans-serif）', 值: 'sans-serif' },
 ];
 const 状态 = {
   文本: '',
@@ -63,6 +129,7 @@ const 状态 = {
   尺寸计时器: 0,
   保存计时器: 0,
   迸发计时器: 0,
+  衔接线计时器: 0,
   载入序号: 0,
   拖选状态: null,
   关键词列表: [],
@@ -73,7 +140,12 @@ const 状态 = {
   跳转起点: null,
   指示器缓存: null,
   当前命中位置计时器: 0,
+  关键词面板展开: false,
+  关键词面板签名: '',
+  关键词排序: '数量',
+  上下文视图: null,
   自动滚动速度: 自动滚动默认速度,
+  字号: 默认字号,
 };
 
 const 元素 = {
@@ -83,6 +155,7 @@ const 元素 = {
   载入状态: document.querySelector('#载入状态'),
   跳转边框: document.querySelector('#跳转边框'),
   跳转迸发: document.querySelector('#跳转迸发'),
+  衔接线: document.querySelector('#衔接线'),
   查找弹窗: document.querySelector('#查找弹窗'),
   查找表单: document.querySelector('#查找表单'),
   查找输入框: document.querySelector('#查找输入框'),
@@ -100,6 +173,26 @@ const 元素 = {
   自动滚动按钮: document.querySelector('#自动滚动按钮'),
   自动滚动速度: document.querySelector('#自动滚动速度'),
   当前时间: document.querySelector('#当前时间'),
+  字号控制: document.querySelector('#字号控制'),
+  字号缩小: document.querySelector('#字号缩小'),
+  字号值: document.querySelector('#字号值'),
+  字号放大: document.querySelector('#字号放大'),
+  关键词面板: document.querySelector('#关键词面板'),
+  关键词面板开关: document.querySelector('#关键词面板开关'),
+  关键词列表容器: document.querySelector('#关键词列表容器'),
+  上下文弹窗: document.querySelector('#上下文弹窗'),
+  上下文标题: document.querySelector('#上下文标题'),
+  上下文列表: document.querySelector('#上下文列表'),
+  关闭上下文按钮: document.querySelector('#关闭上下文按钮'),
+  字体弹窗: document.querySelector('#字体弹窗'),
+  字体遮罩: document.querySelector('#字体遮罩'),
+  关闭字体按钮: document.querySelector('#关闭字体按钮'),
+  字体重置按钮: document.querySelector('#字体重置按钮'),
+  字体关闭底部按钮: document.querySelector('#字体关闭底部按钮'),
+  字体标签引号内: document.querySelector('#字体标签引号内'),
+  字体标签引号外: document.querySelector('#字体标签引号外'),
+  字体标签全部: document.querySelector('#字体标签全部'),
+  字体选项列表: document.querySelector('#字体选项列表'),
 };
 
 const 当前指示器上下文 = 元素.关键词指示器.getContext('2d');
@@ -156,12 +249,18 @@ function 启动() {
     try {
       文本 = new TextDecoder('utf-8', { fatal: true }).decode(数据);
     } catch (错误) {
-      显示错误('txt/嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt 不是有效的 UTF-8 文本。', 错误);
+      显示错误(
+        'txt/嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt 不是有效的 UTF-8 文本。',
+        错误,
+      );
       return;
     }
 
     try {
-      应用文本(文本, '嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt');
+      应用文本(
+        文本,
+        '嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt',
+      );
     } catch (错误) {
       显示文本处理错误(错误);
     }
@@ -195,9 +294,75 @@ function 启动() {
   }
 }
 function 绑定事件() {
-  let Alt按键状态 = null;
+  // ===== 右下角控件：默认隐藏，仅在鼠标靠近 / 触摸 / 聚焦 / 自动滚动时显示 =====
+  // 时间（#当前时间）固定显示，不受影响。隐藏时 opacity:0 + pointer-events:none，
+  // 既不遮挡正文，也不拦截文本选择。
+  let 右下悬停 = false;
+  let 右下聚焦 = false;
+  let 右下强制 = false;
+  let 右下触摸 = false;
+  let 右下悬停帧 = 0;
+  let 右下悬停X = 0;
+  let 右下悬停Y = 0;
+  let 右下触摸计时器 = 0;
+
+  function 刷新右下控件可见性() {
+    document.body.classList.toggle(
+      '右下控件显示',
+      右下悬停 || 右下聚焦 || 右下强制 || 右下触摸,
+    );
+  }
+
+  // 鼠标靠近右下角热区（右 240px / 底 130px 以内）即显示，离开则隐藏。
+  // 用 rAF 节流，避免每次 mousemove 都同步刷新。
+  function 处理右下控件悬停(事件) {
+    右下悬停X = 事件.clientX;
+    右下悬停Y = 事件.clientY;
+    if (右下悬停帧) {
+      return;
+    }
+    右下悬停帧 = requestAnimationFrame(function 计算下方热区() {
+      右下悬停帧 = 0;
+      const 在热区 =
+        右下悬停X > window.innerWidth - 240 &&
+        右下悬停Y > window.innerHeight - 130;
+      右下悬停 = 在热区;
+      刷新右下控件可见性();
+    });
+  }
+
+  // 触摸设备无 hover：点击右下角热区后短暂显示 3 秒，给触摸用户一个入口，
+  // 超时后自动隐藏，避免长期遮挡正文。
+  function 处理右下控件触摸(事件) {
+    const 触点 = 事件.touches[0];
+    if (!触点) {
+      return;
+    }
+    if (
+      触点.clientX > window.innerWidth - 240 &&
+      触点.clientY > window.innerHeight - 130
+    ) {
+      右下触摸 = true;
+      刷新右下控件可见性();
+      window.clearTimeout(右下触摸计时器);
+      右下触摸计时器 = window.setTimeout(function 结束触摸显示() {
+        右下触摸 = false;
+        刷新右下控件可见性();
+      }, 3000);
+    }
+  }
+
+  let Ctrl按键状态 = null;
+  let 双击待定 = false;
+  let 待定单击列表 = []; // 每次单击各自排一个计时器；双击时统一清空，确保单击不抢先在双击前前进
   let 滚动块拖动状态 = null;
+  let 滚动进度拖动状态 = null;
   let 自动滚动状态 = null;
+  // 「关键词手势」状态：单击=该词下一个 / 双击=该词上一个 / 向上拖=该词第一个 / 向下拖=该词最后一个
+  let 关键词手势 = null; // { 关键词, 命中idx, 起点Y, 起点X, 方向: null|'上'|'下' }
+  let 点击抑制 = false; // 拖拽手势触发后抑制紧随的 click，避免重复跳转
+  const 拖拽阈值 = 24; // 触发跳转所需的最小垂直位移（px）
+  const 拖拽死区 = 10; // 小于此位移视为未拖动（横向容差，避免轻微抖动误判）
   元素.滚动容器.addEventListener('scroll', 处理滚动, { passive: true });
   元素.滚动容器.addEventListener('wheel', 处理手动滚动, { passive: true });
   元素.滚动容器.addEventListener('touchstart', 取消滚动动画, { passive: true });
@@ -205,6 +370,7 @@ function 绑定事件() {
   元素.滚动容器.addEventListener('mousedown', 处理正文按下);
   元素.滚动容器.addEventListener('pointerup', 处理非鼠标选择结束);
   元素.滚动容器.addEventListener('click', 处理高亮点击);
+  元素.滚动容器.addEventListener('dblclick', 处理高亮双击);
   元素.滚动容器.addEventListener('pointerover', 处理高亮移入);
   元素.滚动容器.addEventListener('pointerout', 处理高亮移出);
   元素.滚动容器.addEventListener('contextmenu', 处理高亮上下文点击);
@@ -219,6 +385,26 @@ function 绑定事件() {
   元素.分析按钮.addEventListener('click', 处理词组分析);
   元素.关闭查找按钮.addEventListener('click', 关闭查找弹窗);
   元素.查找弹窗.addEventListener('click', 处理查找弹窗点击);
+  元素.关键词面板开关.addEventListener('click', 处理面板开关);
+  元素.关键词列表容器.addEventListener('click', 处理面板操作);
+  元素.关闭上下文按钮.addEventListener('click', 关闭上下文弹窗);
+  元素.上下文弹窗.addEventListener('click', 处理上下文弹窗点击);
+  元素.上下文弹窗.addEventListener('close', 处理上下文弹窗关闭);
+  元素.上下文列表.addEventListener('click', 处理上下文行点击);
+  元素.上下文列表.addEventListener('scroll', 处理上下文滚动, {
+    passive: true,
+  });
+  元素.关闭字体按钮.addEventListener('click', 关闭字体弹窗);
+  元素.字体遮罩.addEventListener('click', 关闭字体弹窗);
+  元素.字体关闭底部按钮.addEventListener('click', 关闭字体弹窗);
+  元素.字体重置按钮.addEventListener('click', 重置字体设置);
+  元素.字号缩小.addEventListener('click', () => 调整字号(状态.字号 - 字号步进));
+  元素.字号放大.addEventListener('click', () => 调整字号(状态.字号 + 字号步进));
+  元素.字号值.addEventListener('click', () => 调整字号(默认字号));
+  元素.字体标签引号内.addEventListener('click', () => 切换字体标签('引号内'));
+  元素.字体标签引号外.addEventListener('click', () => 切换字体标签('引号外'));
+  元素.字体标签全部.addEventListener('click', () => 切换字体标签('全部'));
+  元素.字体选项列表.addEventListener('click', 处理字体选项点击);
   元素.自定义滚动条.addEventListener('pointerdown', 处理滚动条按下);
   元素.自定义滚动条.addEventListener('pointermove', 处理滚动条拖动);
   元素.自定义滚动条.addEventListener('pointerup', 结束滚动条拖动);
@@ -227,6 +413,10 @@ function 绑定事件() {
     passive: false,
   });
   元素.自定义滚动条.addEventListener('keydown', 处理滚动条键盘);
+  元素.滚动进度.addEventListener('pointerdown', 处理滚动进度按下);
+  元素.滚动进度.addEventListener('pointermove', 处理滚动进度拖动);
+  元素.滚动进度.addEventListener('pointerup', 结束滚动进度拖动);
+  元素.滚动进度.addEventListener('pointercancel', 结束滚动进度拖动);
   window.addEventListener('mouseup', 处理鼠标选择结束);
   window.addEventListener('mousemove', 处理鼠标移动, { passive: true });
   window.addEventListener('wheel', 处理自动滚动滚轮, {
@@ -236,7 +426,45 @@ function 绑定事件() {
   window.addEventListener('blur', 取消交互状态);
   window.addEventListener('keydown', 处理键盘按下);
   window.addEventListener('keyup', 处理键盘松开);
+  // Shift 按住期间发生鼠标按下（如 Shift+点击命中词）→ 标记为组合，松开时不切换自动滚动
+  window.addEventListener('mousedown', () => {
+    if (shift按住中) {
+      shift期间有其他交互 = true;
+    }
+  });
   window.addEventListener('pagehide', 保存持久化状态);
+
+  // 右下角控件悬停热区（鼠标 / 触摸）与键盘聚焦时显示
+  window.addEventListener('mousemove', 处理右下控件悬停, { passive: true });
+  window.addEventListener('touchstart', 处理右下控件触摸, { passive: true });
+  for (const 控件 of [元素.字号控制, 元素.自动滚动按钮, 元素.关键词面板开关]) {
+    if (!控件) {
+      continue;
+    }
+    控件.addEventListener('focus', function () {
+      右下聚焦 = true;
+      刷新右下控件可见性();
+    });
+    控件.addEventListener('blur', function () {
+      右下聚焦 = false;
+      刷新右下控件可见性();
+    });
+  }
+
+  // 「关键词手势」：单击/双击/上下拖拽（pointer 统一鼠标/触摸/笔）
+  // 单击=下一个 / 双击=上一个 / 向上拖=第一个 / 向下拖=最后一个
+  元素.滚动容器.addEventListener('pointerdown', 处理关键词手势开始);
+  window.addEventListener('pointermove', 处理关键词手势移动, {
+    passive: false,
+  });
+  元素.滚动容器.addEventListener('touchmove', 处理关键词触摸移动, {
+    passive: false,
+  });
+  document.addEventListener('selectstart', 处理关键词选择阻止, {
+    passive: false,
+  });
+  window.addEventListener('pointerup', 处理关键词手势松开);
+  window.addEventListener('pointercancel', 处理关键词手势取消);
 
   function 处理滚动() {
     if (状态.拖选状态) {
@@ -264,6 +492,7 @@ function 绑定事件() {
 
   function 处理正文按下(事件) {
     取消滚动动画();
+    双击待定 = 事件.detail >= 2; // 第二次按下属于双击序列，mouseup 时放弃建关键词
     const 字元素 = 事件.target.closest('.字');
     if (!字元素 || 事件.button !== 0) {
       if (事件.button === 0 && 事件.target === 元素.滚动容器) {
@@ -273,11 +502,18 @@ function 绑定事件() {
     }
     if (
       字元素.classList.contains('命中') &&
-      (事件.shiftKey || 事件.ctrlKey || 事件.metaKey)
+      (事件.shiftKey || 事件.altKey || 事件.metaKey || 事件.ctrlKey)
     ) {
       事件.preventDefault();
       window.getSelection()?.removeAllRanges();
       return;
+    }
+
+    // 双击命中词时阻止原生整词选中：双击用于「跳到上一个」，不应选中文本。
+    // 仅对第二/三次按下（detail>1）拦截默认行为，单击与拖选不受影响。
+    if (字元素.classList.contains('命中') && 事件.detail > 1) {
+      事件.preventDefault();
+      window.getSelection()?.removeAllRanges();
     }
 
     状态.拖选状态 = {
@@ -301,6 +537,14 @@ function 绑定事件() {
         return;
       }
 
+      if (双击待定) {
+        // 双击：不把选区当作新关键词，仅清除选区并收尾
+        双击待定 = false;
+        window.getSelection()?.removeAllRanges();
+        状态.拖选状态 = null;
+        return;
+      }
+
       读取选择关键词();
       状态.拖选状态 = null;
       if (本次拖选.已阻止滚动) {
@@ -320,9 +564,13 @@ function 绑定事件() {
   function 取消交互状态() {
     停止自动滚动('窗口失去焦点');
     状态.拖选状态 = null;
-    Alt按键状态 = null;
+    关键词手势 = null;
+    document.body.classList.remove('关键词手势中');
+    Ctrl按键状态 = null;
     滚动块拖动状态 = null;
     元素.自定义滚动条.classList.remove('拖动中');
+    滚动进度拖动状态 = null;
+    元素.滚动进度.classList.remove('拖动中');
   }
 
   function 处理滚动条按下(事件) {
@@ -362,6 +610,43 @@ function 绑定事件() {
     元素.自定义滚动条.classList.remove('拖动中');
     if (元素.自定义滚动条.hasPointerCapture(事件.pointerId)) {
       元素.自定义滚动条.releasePointerCapture(事件.pointerId);
+    }
+  }
+
+  function 处理滚动进度按下(事件) {
+    if (事件.button !== 0) {
+      return;
+    }
+    事件.preventDefault();
+    取消滚动动画();
+    结束跳转会话('拖动进度');
+
+    const 进度边框 = 元素.滚动进度.getBoundingClientRect();
+    滚动进度拖动状态 = {
+      pointerId: 事件.pointerId,
+      块内偏移: 事件.clientY - 进度边框.top,
+    };
+    元素.滚动进度.setPointerCapture(事件.pointerId);
+    元素.滚动进度.classList.add('拖动中');
+    根据指针滚动(事件.clientY);
+  }
+
+  function 处理滚动进度拖动(事件) {
+    if (滚动进度拖动状态?.pointerId !== 事件.pointerId) {
+      return;
+    }
+    事件.preventDefault();
+    根据指针滚动(事件.clientY);
+  }
+
+  function 结束滚动进度拖动(事件) {
+    if (滚动进度拖动状态?.pointerId !== 事件.pointerId) {
+      return;
+    }
+    滚动进度拖动状态 = null;
+    元素.滚动进度.classList.remove('拖动中');
+    if (元素.滚动进度.hasPointerCapture(事件.pointerId)) {
+      元素.滚动进度.releasePointerCapture(事件.pointerId);
     }
   }
 
@@ -405,6 +690,8 @@ function 绑定事件() {
   }
 
   function 根据指针滚动(指针Y) {
+    const 块内偏移 =
+      滚动块拖动状态?.块内偏移 ?? 滚动进度拖动状态?.块内偏移 ?? 0;
     const 轨道边框 = 元素.自定义滚动条.getBoundingClientRect();
     const 滚动块高度 = 元素.滚动块.offsetHeight;
     const 最大块偏移 = 轨道边框.height - 滚动块高度;
@@ -415,7 +702,7 @@ function 绑定事件() {
     }
     const 块偏移 = Math.min(
       最大块偏移,
-      Math.max(0, 指针Y - 轨道边框.top - 滚动块拖动状态.块内偏移),
+      Math.max(0, 指针Y - 轨道边框.top - 块内偏移),
     );
     元素.滚动容器.scrollTop = (块偏移 / 最大块偏移) * 最大滚动位置;
   }
@@ -426,11 +713,48 @@ function 绑定事件() {
     }
   }
 
+  let shift按住中 = false; // 当前是否处于「Shift 被按住」状态
+  let shift期间有其他交互 = false; // Shift 按住期间是否出现过其它按键或鼠标点击（区分单独 Shift 与组合）
+  let shift最后松开时间 = 0; // 最近一次「干净」Shift 松开的时间戳（performance.now），用于双击判定
+  let 待导航参数 = null; // Ctrl 导航待执行参数：Ctrl 先于其它修饰键松开时，推迟到「全部松开」再跳转
+
   function 处理键盘按下(事件) {
+    // Esc 关闭字体设置弹窗（div 弹窗无原生 close，需手动处理）
+    if (事件.key === 'Escape' && !元素.字体弹窗.hidden) {
+      事件.preventDefault();
+      关闭字体弹窗();
+      return;
+    }
+    // Shift 仅记录"按住"状态，不在按下时判断；真正切换放到松开(keyup)时，
+    // 以区分「单独 Shift（单次仅记录时间戳）」与「Shift+点击 / Shift+其它键」组合，
+    // 并在 keyup 用两次「干净」松开的间隔判定双击，避免误触发自动滚动。
+    if (事件.key === 'Shift' && !事件.repeat && !事件.altKey) {
+      if (!shift按住中) {
+        shift按住中 = true;
+        shift期间有其他交互 = false;
+      }
+      // Shift 与 Ctrl/Meta 组合（Ctrl+Shift 跳到上一个关键词）：
+      // 1) 标记「期间有其他交互」→ 松开不触发自动滚动；
+      // 2) 若 Ctrl 导航已激活（Ctrl 先按），把方向改为「向上」（上一个）。
+      // 注：本机 Ctrl↔Win 对调，物理 Ctrl 以 Meta 形式送达，故同时检查 ctrlKey/metaKey。
+      if (事件.ctrlKey || 事件.metaKey) {
+        shift期间有其他交互 = true;
+        if (Ctrl按键状态) {
+          Ctrl按键状态.向上 = true;
+        }
+      }
+      return;
+    }
+    // Shift 按住期间出现其它按键（排除 Shift 自身的自动重复）→ 标记为组合操作，松开时不切换
+    if (shift按住中 && 事件.key !== 'Shift') {
+      shift期间有其他交互 = true;
+    }
+
     const 目标 = 事件.target;
-    const 是可编辑目标 =
+    const 是交互目标 =
       目标 instanceof HTMLElement &&
-      (目标.isContentEditable || 目标.matches('input, textarea'));
+      (目标.isContentEditable ||
+        目标.matches('input, textarea, button, select'));
     const 可快速前进自动滚动 =
       !(目标 instanceof HTMLElement) ||
       目标 === 元素.自动滚动按钮 ||
@@ -439,11 +763,50 @@ function 绑定事件() {
 
     if (
       事件.key.toLowerCase() === 'f' &&
-      (事件.ctrlKey || 事件.metaKey) &&
-      !事件.altKey
+      (事件.ctrlKey || 事件.metaKey || 事件.altKey) &&
+      !事件.shiftKey
     ) {
       事件.preventDefault();
+      // 取消可能由 Meta/OS 触发键建立的「待导航」状态，避免 Ctrl↔Win 对调环境下
+      // Ctrl+F 被同时当作「Ctrl 触发键 + F」而额外跳转到下一个关键词。
+      Ctrl按键状态 = null;
       打开查找弹窗();
+      return;
+    }
+
+    // Ctrl + D（macOS 亦可按 Command + D）：开始 / 停止自动滚动。
+    // 同时覆盖 Ctrl↔Win 对调环境（物理 Ctrl 以 Meta 送达），ctrlKey 与 metaKey 都判定。
+    if (
+      事件.key.toLowerCase() === 'd' &&
+      (事件.ctrlKey || 事件.metaKey) &&
+      !事件.altKey &&
+      !事件.shiftKey
+    ) {
+      事件.preventDefault();
+      Ctrl按键状态 = null; // 取消待导航，避免与 Ctrl 触发键组合时误跳转
+      if (自动滚动状态) {
+        停止自动滚动('Ctrl + D 切换');
+      } else {
+        开始自动滚动();
+      }
+      return;
+    }
+
+    // Ctrl + S（macOS 亦可按 Command + S）：打开字体选择（引号内 / 引号外 独立）。
+    if (
+      事件.key.toLowerCase() === 's' &&
+      (事件.ctrlKey || 事件.metaKey) &&
+      !事件.altKey &&
+      !事件.shiftKey
+    ) {
+      事件.preventDefault();
+      // 取消可能已建立的 Ctrl 导航待执行状态，避免与触发键组合时误跳转
+      Ctrl按键状态 = null;
+      if (!元素.字体弹窗.hidden) {
+        关闭字体弹窗();
+      } else {
+        打开字体弹窗();
+      }
       return;
     }
 
@@ -467,35 +830,53 @@ function 绑定事件() {
       !事件.altKey &&
       !事件.ctrlKey &&
       !事件.metaKey &&
-      !是可编辑目标 &&
+      !是交互目标 &&
+      !有弹窗打开() &&
       状态.行起点列表.length
     ) {
       事件.preventDefault();
+      document.body.classList.add('自动滚动中');
       按整页滚动(事件.shiftKey);
       return;
     }
 
-    if (事件.key === 'Alt') {
+    // 触发键：Meta / OS（即系统里的 Win 键）。
+    // 用户系统把 Ctrl 与 Win 对调时，其物理 Ctrl 会被系统当作 Meta/OS 送达页面，
+    // 因此用 Meta/OS 作为触发键才能让「Ctrl 键」生效；物理 Win 键（送达为 Control）不会触发。
+    if (事件.key === 'Meta' || 事件.key === 'OS') {
       if (!事件.repeat) {
-        Alt按键状态 =
-          事件.ctrlKey || 是可编辑目标
+        if (shift按住中) {
+          // Shift 已先按住 → 这是 Ctrl+Shift 组合，松开 Shift 时不触发自动滚动
+          shift期间有其他交互 = true;
+        }
+        Ctrl按键状态 =
+          是交互目标 || 有弹窗打开()
             ? null
             : {
-                向上: 事件.shiftKey,
-                Command已按下: 事件.metaKey,
+                // Shift 先按（shift按住中）或后按（事件.shiftKey）都算「向上/上一个」
+                向上: 事件.shiftKey || shift按住中,
+                // 物理 Win(ctrlKey) 或 Alt 都作为「跳到全文首/末」组合键
+                Command已按下: 事件.ctrlKey || 事件.altKey,
                 已与其他键组合: false,
+                // Ctrl 导航只在「当前关键词」自身的命中序列内循环跳转，
+                // 不会串到其它关键词的出现处（即「跳到下一个一致的关键词」）。
+                仅当前关键词: true,
               };
       }
       return;
     }
 
-    if (Alt按键状态 && 事件.altKey) {
+    if (Ctrl按键状态 && (事件.metaKey || 事件.ctrlKey)) {
       if (事件.key === 'Shift') {
-        Alt按键状态.向上 = true;
-      } else if (事件.key === 'Meta') {
-        Alt按键状态.Command已按下 = true;
+        Ctrl按键状态.向上 = true;
+      } else if (事件.key === 'Control' || 事件.key === 'OS') {
+        // 物理 Win 键（对调环境下送达为 Control）作为「跳到首/末」组合
+        Ctrl按键状态.Command已按下 = true;
+      } else if (事件.key === 'Alt') {
+        // Ctrl+Alt = 跳到全文首/末（替代别扭的物理 Win 组合）；配合 Shift 决定首/末
+        Ctrl按键状态.Command已按下 = true;
       } else {
-        Alt按键状态.已与其他键组合 = true;
+        Ctrl按键状态.已与其他键组合 = true;
       }
     }
 
@@ -506,7 +887,8 @@ function 绑定事件() {
       事件.ctrlKey ||
       事件.metaKey ||
       事件.shiftKey ||
-      是可编辑目标
+      是交互目标 ||
+      有弹窗打开()
     ) {
       return;
     }
@@ -556,11 +938,10 @@ function 绑定事件() {
     function 按整页滚动(向上) {
       取消滚动动画();
       结束跳转会话('Space 翻页');
-      const 可见完整行数 = Math.max(
+      const 滚动行数 = Math.max(
         1,
-        Math.floor(元素.滚动容器.clientHeight / 状态.行高),
+        Math.ceil(元素.滚动容器.clientHeight / 状态.行高),
       );
-      const 滚动行数 = 可见完整行数;
       const 当前行idx = Math.round(元素.滚动容器.scrollTop / 状态.行高);
       const 最大顶部行idx = Math.round(
         (元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight) / 状态.行高,
@@ -583,54 +964,158 @@ function 绑定事件() {
   }
 
   function 处理键盘松开(事件) {
-    if (事件.key !== 'Alt') {
+    // 若上一轮 Ctrl 已先松开、当前正松开的是最后一个修饰键，则此刻才真正跳转
+    尝试执行待导航(事件);
+
+    // 双击 Shift（两次连续、各自「干净」的按下-松开，间隔在窗口内）→ 切换自动滚动。
+    // 单次 Shift 松开只记录时间戳，不触发，避免误触；第二次在阈值内松开才启动/停止。
+    if (事件.key === 'Shift' && !事件.altKey) {
+      if (shift按住中 && !shift期间有其他交互) {
+        const 现在 = performance.now();
+        if (现在 - shift最后松开时间 <= shift双击中阈值) {
+          if (自动滚动状态) {
+            停止自动滚动('双击 Shift 切换');
+          } else {
+            开始自动滚动();
+          }
+          shift最后松开时间 = 0; // 复位，避免三连击误判为新的双击
+        } else {
+          shift最后松开时间 = 现在;
+        }
+      }
+      shift按住中 = false;
+      shift期间有其他交互 = false;
       return;
     }
 
-    const 本次按键状态 = Alt按键状态;
-    Alt按键状态 = null;
+    if (事件.key !== 'Meta' && 事件.key !== 'OS') {
+      return;
+    }
+
+    const 本次按键状态 = Ctrl按键状态;
+    Ctrl按键状态 = null;
     if (!本次按键状态 || 本次按键状态.已与其他键组合) {
       return;
     }
 
-    const 关键词 = 查找关键词(状态.当前关键词id);
-    if (
-      !关键词?.命中位置.length ||
-      关键词.当前命中idx < 0 ||
-      关键词.当前命中idx >= 关键词.命中位置.length
-    ) {
+    // 若松开 Ctrl 时仍有其它修饰键（Shift / 物理 Win / Alt）按住，
+    // 暂不跳转，等「全部松开」的那一刻再生效（避免先放开 Ctrl 就提前跳）。
+    if (事件.shiftKey || 事件.ctrlKey || 事件.altKey) {
+      待导航参数 = 本次按键状态;
       return;
     }
 
-    事件.preventDefault();
-    let 目标命中idx;
-    if (本次按键状态.Command已按下) {
-      目标命中idx = 本次按键状态.向上 ? 0 : 关键词.命中位置.length - 1;
-    } else {
-      const 方向 = 本次按键状态.向上 ? -1 : 1;
-      目标命中idx =
-        (关键词.当前命中idx + 方向 + 关键词.命中位置.length) %
-        关键词.命中位置.length;
+    执行导航跳转(本次按键状态);
+  }
+
+  function 执行导航跳转(按键状态, 选项 = {}) {
+    const 当前词 = 查找关键词(状态.当前关键词id);
+
+    // 「仅当前关键词」导航：在当前关键词自身命中序列内循环前进。
+    // 显式首/末个（Win/Alt 组合、或上下拖拽手势）仍允许直达极端位置。
+    // 当尚无当前关键词（或当前关键词无命中）时，落到下面的全局逻辑。
+    if (按键状态.仅当前关键词 && 当前词?.命中位置.length) {
+      const 命中数 = 当前词.命中位置.length;
+      let 目标idx;
+      if (当前词.当前命中idx < 0) {
+        // 尚无有效当前命中（如首次）：直接落到序列首/末
+        目标idx = 按键状态.向上 ? 命中数 - 1 : 0;
+      } else if (按键状态.Command已按下) {
+        // 显式首/末个：允许直达极端
+        目标idx = 按键状态.向上 ? 0 : 命中数 - 1;
+      } else {
+        // 普通下一个 / 上一个：沿当前关键词的命中序列循环前进
+        const 方向 = 按键状态.向上 ? -1 : 1;
+        目标idx = (当前词.当前命中idx + 方向 + 命中数) % 命中数;
+      }
+      // 选项.原始行位置 / 原始边框 来自「被点击的词的真实视口位置」；
+      // 必须透传，不能用 获取当前命中行位置 兜底——此时 DOM 尚未重绘，
+      // 兜底会取到「旧当前命中」的位置，导致下一个命中落到错误的视口高度。
+      跳到命中(
+        当前词,
+        目标idx,
+        选项.原始行位置,
+        选项.原始边框,
+        选项.最小前行距离,
+      );
+      return;
     }
-    if (目标命中idx === 关键词.当前命中idx) {
+
+    // 全局阅读顺序跳转（兜底）：收集全文所有关键词的命中，按全局偏移排序后跨关键词循环。
+    // 仅当「仅当前关键词」为真、但当前关键词尚无有效命中（例如 Ctrl 导航尚未选中任何关键词）时落在这里；
+    // 单击 / 双击 / 上下拖拽手势现在都按「该关键词自身的命中序列」循环（见上方 仅当前关键词 分支）。
+    const 全部命中 = [];
+    for (const k of 状态.关键词列表) {
+      for (let i = 0; i < k.命中位置.length; i++) {
+        全部命中.push({ 关键词: k, 命中idx: i, 偏移: k.命中位置[i] });
+      }
+    }
+    if (!全部命中.length) {
+      return; // 全文没有任何关键词命中可跳转
+    }
+    全部命中.sort((甲, 乙) => 甲.偏移 - 乙.偏移);
+
+    // 当前所在命中序号（无则视为「尚未选中」）
+    let 当前序号 = -1;
+    if (
+      当前词 &&
+      当前词.当前命中idx >= 0 &&
+      当前词.当前命中idx < 当前词.命中位置.length
+    ) {
+      当前序号 = 全部命中.findIndex(
+        (h) => h.关键词.id === 当前词.id && h.命中idx === 当前词.当前命中idx,
+      );
+    }
+
+    let 目标序号;
+    if (当前序号 < 0) {
+      // 尚未选中任何命中：向前→第一个，向后→最后一个
+      目标序号 = 按键状态.向上 ? 全部命中.length - 1 : 0;
+    } else if (按键状态.Command已按下) {
+      // ⌘/Ctrl 组合：直接跳到全文首/末个命中
+      目标序号 = 按键状态.向上 ? 0 : 全部命中.length - 1;
+    } else {
+      const 方向 = 按键状态.向上 ? -1 : 1;
+      目标序号 = (当前序号 + 方向 + 全部命中.length) % 全部命中.length;
+    }
+
+    const 目标命中 = 全部命中[目标序号];
+    if (!目标命中 || (目标序号 === 当前序号 && 全部命中.length === 1)) {
       console.info('[阅读器] 当前命中无需跳转', {
-        关键词: 关键词.文本,
-        当前项: 关键词.当前命中idx + 1,
+        关键词: 目标命中?.关键词.文本 ?? null,
       });
       return;
     }
 
-    跳到命中(关键词, 目标命中idx);
+    跳到命中(目标命中.关键词, 目标命中.命中idx);
+  }
+
+  // 当「全部修饰键都已松开」时，执行此前暂存的 Ctrl 导航（Ctrl 先于其它键松开的情况）
+  function 尝试执行待导航(事件) {
+    if (!待导航参数) {
+      return;
+    }
+    // 被松开的那个键自身在事件中已为 false，故只需检查其余修饰键是否还有按住
+    if (事件.shiftKey || 事件.ctrlKey || 事件.altKey || 事件.metaKey) {
+      return;
+    }
+    执行导航跳转(待导航参数);
+    待导航参数 = null;
   }
 
   function 处理高亮上下文点击(事件) {
-    if (事件.ctrlKey || 事件.metaKey) {
+    if (事件.altKey || 事件.metaKey || 事件.ctrlKey) {
       事件.preventDefault();
       处理高亮点击(事件);
     }
   }
 
   function 处理高亮点击(事件) {
+    // 拖拽手势已触发跳转，抑制随后派发的 click，避免再前进一格
+    if (点击抑制) {
+      点击抑制 = false;
+      return;
+    }
     const 字元素 = 事件.target.closest('.字.命中');
     const 选择 = window.getSelection();
     if (!字元素 || (选择 && !选择.isCollapsed)) {
@@ -645,39 +1130,138 @@ function 绑定事件() {
 
     const 点击命中idx = Number(字元素.dataset.hitIndex);
     const 原始行位置 = 获取元素行位置(字元素);
-    if (
-      (事件.ctrlKey || 事件.metaKey) &&
-      typeof Ctrl按键状态 !== 'undefined'
-    ) {
+    if ((事件.ctrlKey || 事件.metaKey) && typeof Ctrl按键状态 !== 'undefined') {
       Ctrl按键状态 = null;
       if (typeof 待导航参数 !== 'undefined') {
         待导航参数 = null;
       }
     }
-    const 原始边框 = 获取元素命中边框(字元素);
-    let 目标命中idx;
-    if (事件.ctrlKey || 事件.metaKey) {
-      目标命中idx = 事件.shiftKey ? 关键词.命中位置.length - 1 : 0;
-    } else if (事件.shiftKey) {
-      目标命中idx =
-        (点击命中idx - 1 + 关键词.命中位置.length) % 关键词.命中位置.length;
-    } else {
-      目标命中idx = (点击命中idx + 1) % 关键词.命中位置.length;
+    const 原始边框 = 安全获取命中边框(字元素);
+
+    // 修饰键行为保持即时，不参与单击/双击判定
+    if (事件.altKey || 事件.metaKey || 事件.ctrlKey || 事件.shiftKey) {
+      const 是Ctrl点击 = 事件.ctrlKey || 事件.metaKey;
+      let 目标命中idx;
+      if (事件.altKey || 是Ctrl点击) {
+        目标命中idx = 事件.shiftKey ? 关键词.命中位置.length - 1 : 0;
+      } else {
+        目标命中idx =
+          (点击命中idx - 1 + 关键词.命中位置.length) % 关键词.命中位置.length;
+      }
+      状态.当前关键词id = 关键词.id;
+      关键词.当前命中idx = 点击命中idx;
+      if (目标命中idx === 点击命中idx) {
+        渲染可见行(true);
+        更新关键词指示器();
+        安排保存持久化状态();
+        return;
+      }
+      跳到命中(关键词, 目标命中idx, 原始行位置, 原始边框);
+      return;
     }
 
-    状态.当前关键词id = 关键词.id;
-    关键词.当前命中idx = 点击命中idx;
-    if (目标命中idx === 点击命中idx) {
-      渲染可见行(true);
-      更新关键词指示器();
-      安排保存持久化状态();
-      console.info('[阅读器] 当前命中无需跳转', {
-        关键词: 关键词.文本,
-        当前项: 点击命中idx + 1,
+    // 双击的第二次点击：浏览器已选中整词，detail>=2，这里直接放弃，
+    // 不排计时器，留待 dblclick 统一跳到首/末项并清空挂起项。
+    if (事件.detail >= 2) {
+      return;
+    }
+
+    // 纯单击：延迟 双击判定延迟 执行，每次单击各自排一个计时器（连点不吞）。
+    // 若在延迟内被判定为双击，dblclick 会统一清空挂起项，单击不会抢先前进一格。
+    const 待定数据 = {
+      关键词id: 关键词.id,
+      点击命中idx,
+      原始行位置,
+      原始边框,
+    };
+    const 本项 = {
+      计时器: window.setTimeout(function 执行待定单击() {
+        待定单击列表 = 待定单击列表.filter((项) => 项 !== 本项);
+        执行单击前进(待定数据);
+      }, 双击判定延迟),
+    };
+    待定单击列表.push(本项);
+  }
+
+  /* 清空所有挂起的单击计时器（双击判定成功时调用），避免单击抢先前进。 */
+  function 清空待定单击() {
+    for (const 项 of 待定单击列表) {
+      window.clearTimeout(项.计时器);
+    }
+    待定单击列表 = [];
+  }
+
+  /* 单击延迟到期后的前进逻辑：以被点击的词为基准，跳到该关键词命中序列中的下一个出现并循环。 */
+  function 执行单击前进(数据) {
+    const 关键词 = 查找关键词(数据.关键词id);
+    if (!关键词?.命中位置.length) {
+      console.info('[阅读器] 单击前进：关键词无效或无命中', {
+        关键词id: 数据.关键词id,
       });
       return;
     }
-    跳到命中(关键词, 目标命中idx, 原始行位置, 原始边框);
+    状态.当前关键词id = 关键词.id;
+    关键词.当前命中idx = Math.max(
+      0,
+      Math.min(数据.点击命中idx, 关键词.命中位置.length - 1),
+    );
+    console.info('[阅读器] 单击前进', {
+      关键词: 关键词.文本,
+      点击命中: 数据.点击命中idx + 1,
+      当前命中: 关键词.当前命中idx + 1,
+      总命中数: 关键词.命中位置.length,
+    });
+    // 透传被点击词的真实视口位置，保证下一个命中锚定到同一相对高度，
+    // 滚动距离即为「两个词之间的距离」（符合需求）；不传则落到旧当前命中位置。
+    执行导航跳转(
+      { 向上: false, Command已按下: false, 仅当前关键词: true },
+      {
+        最小前行距离: 状态.行高,
+        原始行位置: 数据.原始行位置,
+        原始边框: 数据.原始边框,
+      },
+    );
+  }
+
+  /* 命中边框计算针对「当前命中」元素，点到非当前命中项时会取不到，
+     这里兜底为 null，保证单击导航不被异常中断（边框动画退化为无横向位移）。 */
+  function 安全获取命中边框(字元素) {
+    try {
+      return 获取元素命中边框(字元素);
+    } catch {
+      return null;
+    }
+  }
+
+  /* 双击跳转：以被双击的词为基准，跳到该关键词命中序列中的上一个出现（到开头则回到末个，循环）。
+     注意：因单击已延迟执行，双击判定期间挂起的单击会被 清空待定单击 取消，
+     此处直接以双击位置为基准重设当前命中，无需撤销单击的前进。 */
+  function 处理双击跳转(关键词, 命中idx) {
+    状态.当前关键词id = 关键词.id;
+    关键词.当前命中idx = Math.max(
+      0,
+      Math.min(命中idx, 关键词.命中位置.length - 1),
+    );
+    执行导航跳转({ 向上: true, Command已按下: false, 仅当前关键词: true });
+  }
+
+  /* 双击：跳到上一个（见 处理双击跳转），并清理选区与拖选状态，
+     确保绝不触发新建关键词（见 处理鼠标选择结束 的拦截）。 */
+  function 处理高亮双击(事件) {
+    双击待定 = false;
+    清空待定单击(); // 取消可能挂起的单击前进，保证干净跳到上一个
+    window.getSelection()?.removeAllRanges();
+    状态.拖选状态 = null;
+
+    const 字元素 = 事件.target.closest('.字.命中');
+    if (!字元素) {
+      return;
+    }
+    const 关键词 = 查找关键词(Number(字元素.dataset.keywordId));
+    if (!关键词?.命中位置.length) {
+      return;
+    }
+    处理双击跳转(关键词, Number(字元素.dataset.hitIndex));
   }
 
   function 处理高亮移入(事件) {
@@ -718,6 +1302,7 @@ function 绑定事件() {
   }
 
   function 切换同组高亮(关键词id, 命中idx) {
+    const 旧悬停id = 状态.悬停关键词id;
     状态.悬停关键词id = 关键词id;
     状态.悬停命中idx = 命中idx;
     for (const 命中元素 of 元素.可见内容.querySelectorAll('.字.命中')) {
@@ -728,7 +1313,20 @@ function 绑定事件() {
         是悬停关键词 && Number(命中元素.dataset.hitIndex) === 命中idx,
       );
     }
-    更新关键词指示器();
+    // 关键词指示器的悬停列只在该关键词“非当前关键词”时才出现：
+    // 悬停当前关键词或移出命中都不改变指示器，无需重绘，跳过冗余的画布与面板刷新。
+    if (
+      悬停影响指示器(旧悬停id) !== 悬停影响指示器(关键词id) ||
+      (悬停影响指示器(旧悬停id) &&
+        悬停影响指示器(关键词id) &&
+        旧悬停id !== 关键词id)
+    ) {
+      更新关键词指示器();
+    }
+  }
+
+  function 悬停影响指示器(悬停id) {
+    return 悬停id !== null && 悬停id !== 状态.当前关键词id;
   }
 
   function 打开查找弹窗() {
@@ -921,9 +1519,13 @@ function 绑定事件() {
       当前速度: 0,
       浮点位置: 元素.滚动容器.scrollTop,
       快速滚动终点: null,
+      衔接位置: null,
+      停留结束时间: 0,
+      衔接线已淡出: false,
     };
     自动滚动状态.帧 = requestAnimationFrame(执行自动滚动);
     更新自动滚动按钮(true);
+    document.body.classList.add('自动滚动中');
     console.info('[阅读器] 自动滚动已启动', {
       速度: 状态.自动滚动速度,
     });
@@ -963,7 +1565,18 @@ function 绑定事件() {
       最大滚动位置,
       本次滚动.浮点位置 + 元素.滚动容器.clientHeight * 0.9,
     );
+    本次滚动.衔接位置 = Math.min(
+      元素.滚动容器.scrollHeight,
+      本次滚动.浮点位置 + 元素.滚动容器.clientHeight,
+    );
+    本次滚动.衔接线已淡出 = false;
     本次滚动.当前速度 = 自动滚动快速速度;
+    if (
+      本次滚动.衔接位置 <
+      本次滚动.快速滚动终点 + 元素.滚动容器.clientHeight
+    ) {
+      显示衔接线(本次滚动.衔接位置);
+    }
     console.info('[阅读器] 自动滚动开始快速前进', {
       原速度: Math.round(状态.自动滚动速度),
       目标位置: Math.round(本次滚动.快速滚动终点),
@@ -983,10 +1596,18 @@ function 绑定事件() {
         : 事件.deltaMode === WheelEvent.DOM_DELTA_PAGE
           ? Math.sign(事件.deltaY) * 元素.滚动容器.clientHeight
           : 事件.deltaY;
-    const 调整量 = Math.max(-100, Math.min(100, 滚轮像素)) * -0.2;
+
+    // 非线性（指数曲线）映射：调整幅度与当前速度成正比，微小输入影响极小，
+    // 避免滚轮抖动导致速度剧烈跳变；整体灵敏度较旧线性方案更低、节奏更慢。
+    if (Math.abs(滚轮像素) < 自动滚动滚轮死区) {
+      return;
+    }
+    const 归一化输入 = Math.max(-1, Math.min(1, 滚轮像素 / 自动滚动滚轮归一化));
+    // 上滚（deltaY<0）→ 速度因子 >1 加速；下滚 → 因子 <1 减速
+    const 速度因子 = Math.exp(自动滚动滚轮灵敏系数 * -归一化输入);
     状态.自动滚动速度 = Math.max(
       自动滚动最低速度,
-      Math.min(自动滚动最高速度, 状态.自动滚动速度 + 调整量),
+      Math.min(自动滚动最高速度, 状态.自动滚动速度 * 速度因子),
     );
     更新自动滚动速度();
     安排保存持久化状态();
@@ -996,10 +1617,113 @@ function 绑定事件() {
   }
 
   function 处理鼠标移动() {
-    if (!自动滚动状态 || 元素.自动滚动按钮.matches(':hover')) {
+    if (自动滚动状态) {
+      if (!元素.自动滚动按钮.matches(':hover')) {
+        停止自动滚动('鼠标移动');
+      }
       return;
     }
-    停止自动滚动('鼠标移动');
+    // 非自动滚动时，移除空格翻页触发的光标隐藏
+    document.body.classList.remove('自动滚动中');
+  }
+
+  // ===== 「关键词手势」 =====
+  // 单击命中词 → 跳到该词的下一个出现；双击 → 跳到该词的上一个出现；
+  // 向上拖拽 → 跳到该词的第一个出现；向下拖拽 → 跳到该词的最后一个出现
+  // （普通前进不回绕，到首/末个即停；上下拖拽直达首/末个）。
+  // 拖拽期间通过 CSS（body.关键词手势中 的 user-select:none）+
+  // 阻止 touchmove/pointermove 默认行为 + 阻止 selectstart，确保绝不选中文字。
+  function 处理关键词手势开始(事件) {
+    关键词手势 = null; // 每次新按下先清空，避免上一轮残留
+    document.body.classList.remove('关键词手势中');
+    if (事件.button !== 0) {
+      return;
+    }
+    const 字元素 = 事件.target.closest?.('.字');
+    if (!字元素 || !字元素.classList.contains('命中')) {
+      return;
+    }
+    if (事件.shiftKey || 事件.altKey || 事件.metaKey || 事件.ctrlKey) {
+      return; // 修饰键组合交给既有逻辑，不介入
+    }
+    点击抑制 = false;
+    关键词手势 = {
+      关键词: 查找关键词(Number(字元素.dataset.keywordId)),
+      命中idx: Number(字元素.dataset.hitIndex),
+      起点Y: 事件.clientY,
+      起点X: 事件.clientX,
+      方向: null, // null=尚未拖动；'上'=第一个；'下'=最后一个
+    };
+  }
+
+  function 处理关键词手势移动(事件) {
+    if (!关键词手势 || 关键词手势.方向) {
+      return;
+    }
+    const 偏移Y = 事件.clientY - 关键词手势.起点Y;
+    const 偏移X = 事件.clientX - 关键词手势.起点X;
+    // 横向拖动或位移过小 → 视为普通点击/双击，不进入手势
+    if (Math.abs(偏移X) > Math.abs(偏移Y) || Math.abs(偏移Y) < 拖拽死区) {
+      return;
+    }
+    关键词手势.方向 = 偏移Y < 0 ? '上' : '下';
+    document.body.classList.add('关键词手势中');
+    window.getSelection()?.removeAllRanges();
+    if (事件.cancelable) {
+      事件.preventDefault(); // 阻止滚动与文本选择
+    }
+    状态.拖选状态 = null; // 避免与向下拖选的滚动钉死逻辑竞争
+  }
+
+  function 处理关键词触摸移动(事件) {
+    // 触摸场景下仅手势进行中阻止滚动/选择（不影响正常触摸滚动）
+    if (关键词手势?.方向 && 事件.cancelable) {
+      事件.preventDefault();
+    }
+  }
+
+  function 处理关键词选择阻止(事件) {
+    if (关键词手势?.方向 && 事件.cancelable) {
+      事件.preventDefault();
+    }
+  }
+
+  function 处理关键词手势松开(事件) {
+    if (!关键词手势) {
+      return;
+    }
+    const 手势 = 关键词手势;
+    关键词手势 = null;
+    document.body.classList.remove('关键词手势中');
+    if (!手势.方向 || !手势.关键词?.命中位置.length) {
+      return; // 无方向 = 普通点击/双击，交还给 click/dblclick 处理
+    }
+    // 抑制紧随的 click（避免 处理高亮点击 再前进一格），并清掉选区
+    点击抑制 = true;
+    setTimeout(function 解除点击抑制() {
+      点击抑制 = false;
+    }, 0);
+    window.getSelection()?.removeAllRanges();
+    状态.拖选状态 = null;
+    if (事件.cancelable) {
+      事件.preventDefault();
+    }
+    // 向下拖 → 全文最后一个；向上拖 → 全文第一个
+    状态.当前关键词id = 手势.关键词.id;
+    手势.关键词.当前命中idx = Math.max(
+      0,
+      Math.min(手势.命中idx, 手势.关键词.命中位置.length - 1),
+    );
+    执行导航跳转({
+      向上: 手势.方向 === '上',
+      Command已按下: true,
+      仅当前关键词: true,
+    });
+  }
+
+  function 处理关键词手势取消() {
+    关键词手势 = null;
+    document.body.classList.remove('关键词手势中');
   }
 
   function 执行自动滚动(当前时间) {
@@ -1012,16 +1736,32 @@ function 绑定事件() {
       元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
     const 经过毫秒 = Math.min(50, 当前时间 - 本次滚动.上帧时间);
     const 缓动比例 = 1 - Math.exp(-经过毫秒 / 自动滚动缓动时长);
-    const 目标速度 =
-      本次滚动.快速滚动终点 === null ? 状态.自动滚动速度 : 自动滚动快速速度;
+    const 快速滚动中 = 本次滚动.快速滚动终点 !== null;
+    const 停留中 = !快速滚动中 && 当前时间 < 本次滚动.停留结束时间;
+    const 目标速度 = 快速滚动中
+      ? 自动滚动快速速度
+      : 停留中
+        ? 0
+        : 状态.自动滚动速度;
+    // 快速前进的停留结束（恢复常速）后，淡出衔接线
+    if (
+      !快速滚动中 &&
+      !停留中 &&
+      本次滚动.停留结束时间 !== 0 &&
+      !本次滚动.衔接线已淡出
+    ) {
+      本次滚动.衔接线已淡出 = true;
+      隐藏衔接线();
+    }
     本次滚动.当前速度 += (目标速度 - 本次滚动.当前速度) * 缓动比例;
     本次滚动.浮点位置 += (本次滚动.当前速度 * 经过毫秒) / 1000;
     let 新位置 = Math.min(最大滚动位置, 本次滚动.浮点位置);
-    if (本次滚动.快速滚动终点 !== null && 新位置 >= 本次滚动.快速滚动终点) {
+    if (快速滚动中 && 新位置 >= 本次滚动.快速滚动终点) {
       新位置 = 本次滚动.快速滚动终点;
       本次滚动.浮点位置 = 新位置;
       本次滚动.快速滚动终点 = null;
       本次滚动.当前速度 = 状态.自动滚动速度;
+      本次滚动.停留结束时间 = 当前时间 + 衔接线停留时长;
       console.info('[阅读器] 自动滚动快速前进已完成', {
         恢复速度: Math.round(状态.自动滚动速度),
         滚动位置: Math.round(新位置),
@@ -1052,6 +1792,8 @@ function 绑定事件() {
     渲染可见行();
     安排保存持久化状态();
     更新自动滚动按钮(false);
+    隐藏衔接线();
+    document.body.classList.remove('自动滚动中');
     console.info('[阅读器] 自动滚动已停止', {
       原因,
       滚动位置: Math.round(元素.滚动容器.scrollTop),
@@ -1060,11 +1802,102 @@ function 绑定事件() {
 
   function 更新自动滚动按钮(正在滚动) {
     元素.自动滚动按钮.setAttribute('aria-pressed', String(正在滚动));
+    // 自动滚动进行中：强制显示右下角控件（尤其是自动滚动按钮本身）
+    右下强制 = 正在滚动;
+    刷新右下控件可见性();
   }
 
   function 处理手动滚动() {
     取消滚动动画();
     结束跳转会话('手动滚动');
+  }
+
+  function 处理面板开关() {
+    状态.关键词面板展开 = !状态.关键词面板展开;
+    渲染关键词面板();
+  }
+
+  function 处理面板操作(事件) {
+    const 排序按钮 = 事件.target.closest('button[data-sort]');
+    if (排序按钮) {
+      切换关键词排序(排序按钮.dataset.sort);
+      return;
+    }
+
+    const 操作按钮 = 事件.target.closest('button[data-action]');
+    const 关键词项 = 操作按钮?.closest('.关键词项');
+    const 关键词 = 关键词项
+      ? 查找关键词(Number(关键词项.dataset.keywordId))
+      : null;
+    if (!关键词) {
+      return;
+    }
+
+    switch (操作按钮.dataset.action) {
+      case '删除':
+        删除关键词标记(关键词.id);
+        break;
+      case '上下文':
+        打开上下文弹窗(关键词);
+        break;
+      case '选中': {
+        // 面板点击始终循环前进：末位 → 首位
+        const 排序列表 = 排序后的关键词列表();
+        if (排序列表.length <= 1) {
+          // 只有一个词时无法前进，仅选中
+          状态.当前关键词id = 关键词.id;
+          渲染可见行(true);
+        } else {
+          const 当前idx = 排序列表.findIndex((k) => k.id === 关键词.id);
+          const 下一个 = 排序列表[(当前idx + 1) % 排序列表.length];
+          跳到命中(下一个, 0);
+        }
+        更新关键词指示器();
+        安排保存持久化状态();
+        console.info('[阅读器] 面板点击循环前进', {
+          关键词: 查找关键词(状态.当前关键词id)?.文本,
+        });
+        break;
+      }
+    }
+  }
+
+  function 处理上下文弹窗点击(事件) {
+    if (事件.target === 元素.上下文弹窗) {
+      关闭上下文弹窗();
+    }
+  }
+
+  function 处理上下文弹窗关闭() {
+    状态.上下文视图 = null;
+    元素.上下文列表.replaceChildren();
+    元素.滚动容器.focus({ preventScroll: true });
+  }
+
+  function 处理上下文行点击(事件) {
+    const 行元素 = 事件.target.closest('.上下文行');
+    const 视图 = 状态.上下文视图;
+    const 关键词 = 视图 ? 查找关键词(视图.关键词id) : null;
+    if (!行元素 || !关键词) {
+      return;
+    }
+
+    const 命中idx = Number(行元素.dataset.hitIndex);
+    if (命中idx < 0 || 命中idx >= 关键词.命中位置.length) {
+      return;
+    }
+    关闭上下文弹窗();
+    跳到命中(关键词, 命中idx);
+  }
+
+  function 处理上下文滚动() {
+    const 列表 = 元素.上下文列表;
+    if (
+      状态.上下文视图 &&
+      列表.scrollTop + 列表.clientHeight > 列表.scrollHeight - 300
+    ) {
+      追加上下文行块();
+    }
   }
 
   function 结束跳转会话(原因) {
@@ -1075,6 +1908,137 @@ function 绑定事件() {
     console.info('[阅读器] 已结束跳转会话', { 原因 });
   }
 }
+
+function 打开字体弹窗() {
+  if (!元素.字体弹窗.hidden) {
+    return;
+  }
+  元素.字体遮罩.hidden = false;
+  元素.字体弹窗.hidden = false;
+  渲染字体标签();
+  渲染字体选项();
+  requestAnimationFrame(function 聚焦字体选项() {
+    const 首项 = 元素.字体弹窗.querySelector('.字体选项.选中');
+    首项?.focus();
+  });
+}
+
+function 关闭字体弹窗() {
+  if (元素.字体弹窗.hidden) {
+    return;
+  }
+  元素.字体遮罩.hidden = true;
+  元素.字体弹窗.hidden = true;
+  元素.滚动容器.focus({ preventScroll: true });
+}
+
+function 切换字体标签(标签) {
+  当前字体标签 = 标签;
+  渲染字体标签();
+  渲染字体选项();
+}
+
+function 处理字体选项点击(事件) {
+  const 选项 = 事件.target.closest('.字体选项');
+  if (!选项) {
+    return;
+  }
+  const 原始值 = 选项.dataset.字体值;
+  const 值 = 原始值 === '' ? null : 原始值;
+  if (当前字体标签 === '全部') {
+    // 「全部」tab：一次点击同时设置引号内/引号外；首次设置静默，
+    // 避免渲染一次「引号内已变、引号外未变」的中间态。
+    设置区域字体('引号内', 值, { 静默: true });
+    设置区域字体('引号外', 值);
+    return;
+  }
+  设置区域字体(当前字体标签, 值);
+}
+
+function 设置区域字体(区域, 值, 选项 = {}) {
+  const 变量名 = 区域 === '引号内' ? '--引文字体' : '--正文字体';
+  字体设置[区域] = 值;
+  if (值 === null) {
+    document.documentElement.style.removeProperty(变量名);
+  } else {
+    document.documentElement.style.setProperty(变量名, 值);
+  }
+  if (!选项.静默) {
+    渲染字体选项();
+    安排保存持久化状态();
+  }
+  console.info('[阅读器] 已设置区域字体', { 区域, 值: 值 ?? '默认' });
+}
+
+function 重置字体设置() {
+  if (当前字体标签 === '全部') {
+    设置区域字体('引号内', null, { 静默: true });
+    设置区域字体('引号外', null);
+    return;
+  }
+  设置区域字体(当前字体标签, null);
+}
+
+function 渲染字体标签() {
+  const 标签列表 = [
+    { 元素: 元素.字体标签引号内, 名称: '引号内' },
+    { 元素: 元素.字体标签引号外, 名称: '引号外' },
+    { 元素: 元素.字体标签全部, 名称: '全部' },
+  ];
+  for (const { 元素: 标签元素, 名称 } of 标签列表) {
+    const 是当前 = 当前字体标签 === 名称;
+    标签元素.classList.toggle('当前', 是当前);
+    标签元素.setAttribute('aria-selected', String(是当前));
+  }
+}
+
+function 渲染字体选项() {
+  const 区域 = 当前字体标签;
+  const 容器 = 元素.字体选项列表;
+  const 片段 = document.createDocumentFragment();
+  const 是全部 = 区域 === '全部';
+  // 「全部」tab：仅当引号内/引号外的字体值完全一致时才视为「当前选中」；
+  // 不一致（例如分区域选过）时不预选项，避免误以为已统一设置。
+  const 当前值 = 是全部
+    ? 字体设置.引号内 === 字体设置.引号外
+      ? 字体设置.引号内
+      : undefined
+    : 字体设置[区域];
+  const 变量名 = 区域 === '引号内' ? '--引文字体' : '--正文字体';
+  const 选项区名 = 是全部
+    ? '引号内/外统一字体'
+    : 区域 === '引号内'
+      ? '引号内字体'
+      : '引号外字体';
+  for (const 字体 of 可选字体列表) {
+    const 选项 = document.createElement('button');
+    选项.type = 'button';
+    选项.className = '字体选项';
+    选项.dataset.字体值 = 字体.值 ?? '';
+    const 选中 = 字体.值 === 当前值;
+    选项.classList.toggle('选中', 选中);
+    选项.setAttribute('aria-checked', String(选中));
+    选项.setAttribute('aria-pressed', String(选中));
+    选项.setAttribute('aria-label', `${选项区名}：${字体.名称}`);
+
+    const 名称 = document.createElement('div');
+    名称.className = '字体选项名';
+    名称.textContent = 字体.名称;
+
+    const 预览 = document.createElement('div');
+    预览.className = '字体选项预览';
+    预览.textContent = '阅读字体预览 · 永和九年岁在癸丑 · The quick 123';
+    // 「全部」tab 预览用字体值本身，让用户直接看到该字体外观；
+    // null（跟随默认）时回退到 inherit，沿用弹窗当前生效字体。
+    预览.style.fontFamily =
+      字体.值 === null ? 'inherit' : 是全部 ? 字体.值 : 字体.值;
+
+    选项.append(名称, 预览);
+    片段.append(选项);
+  }
+  容器.replaceChildren(片段);
+}
+
 function 更新自动滚动速度() {
   const 显示速度 = String(Math.round(状态.自动滚动速度));
   元素.自动滚动速度.textContent = 显示速度;
@@ -1082,6 +2046,55 @@ function 更新自动滚动速度() {
     'aria-label',
     `滚动，速度 ${显示速度}，点击切换全屏`,
   );
+}
+
+function 调整字号(目标值) {
+  const 新值 = Math.max(最小字号, Math.min(最大字号, Math.round(目标值)));
+  if (新值 === 状态.字号) {
+    return;
+  }
+  状态.字号 = 新值;
+  document.documentElement.style.setProperty('--正文字号', 新值 + 'px');
+  更新字号显示();
+  // 字号影响排版键（正文字号纳入键），变化后按「尺寸变化」逻辑重排：
+  // 排版键改变则重建行索引，否则仅刷新画布高度并重绘。
+  const 新排版 = 读取正文排版();
+  if (新排版.键 !== 状态.排版键) {
+    重建行索引(新排版);
+  } else {
+    刷新画布尺寸(新排版);
+    渲染可见行(true);
+    更新关键词指示器();
+  }
+  安排保存持久化状态();
+  console.info('[阅读器] 字号已调整', { 字号: 新值 });
+}
+
+function 更新字号显示() {
+  元素.字号值.textContent = String(状态.字号);
+  元素.字号值.setAttribute('aria-label', `当前字号 ${状态.字号}，点击恢复默认`);
+}
+
+function 读取持久化字号() {
+  const 原始 = localStorage.getItem(持久化键);
+  if (!原始) {
+    return null;
+  }
+  try {
+    const 数据 = JSON.parse(原始);
+    const 值 = 数据.字号;
+    if (
+      typeof 值 === 'number' &&
+      Number.isFinite(值) &&
+      值 >= 最小字号 &&
+      值 <= 最大字号
+    ) {
+      return 值;
+    }
+  } catch {
+    /* 持久化格式损坏时忽略，回退默认 */
+  }
+  return null;
 }
 
 function 应用文本(原始文本, 文件名) {
@@ -1093,10 +2106,27 @@ function 应用文本(原始文本, 文件名) {
   const 句子整理耗时 = performance.now() - 句子整理开始时间;
   const 文本 = 句子整理结果.文本;
   const 缩进起点集合 = new Set(句子整理结果.缩进起点列表);
+
+  // 在排版计算前恢复持久化的字号，使行索引按用户设定字号建立；
+  // 无持久化值时回退到 CSS（含移动端 28.5px 媒体查询），并同步状态与显示。
+  const 根计算样式 = getComputedStyle(document.documentElement);
+  const 计算字号 = Number.parseFloat(根计算样式.getPropertyValue('--正文字号'));
+  const 基础字号 =
+    Number.isFinite(计算字号) && 计算字号 > 0 ? 计算字号 : 默认字号;
+  const 持久化字号 = 读取持久化字号();
+  if (持久化字号 !== null) {
+    状态.字号 = 持久化字号;
+    document.documentElement.style.setProperty('--正文字号', 持久化字号 + 'px');
+  } else {
+    状态.字号 = 基础字号;
+  }
+  更新字号显示();
+
   const 排版 = 读取正文排版();
   const 行索引 = 创建行索引(文本, 排版, 缩进起点集合);
 
   状态.文本 = 文本;
+  状态.指示器缓存 = null;
   状态.文件名 = 文件名;
   状态.引文边界列表 = 句子整理结果.引文边界列表;
   状态.缩进起点集合 = 缩进起点集合;
@@ -1105,6 +2135,7 @@ function 应用文本(原始文本, 文件名) {
   状态.下一个关键词id = 1;
   状态.跳转起点 = null;
   取消滚动动画();
+  隐藏衔接线();
   提交行索引(行索引);
   恢复持久化状态();
   更新自动滚动速度();
@@ -1175,10 +2206,13 @@ function 应用文本(原始文本, 文件名) {
             持久化关键词.当前命中idx < 命中位置.length
               ? 持久化关键词.当前命中idx
               : -1,
-          配色idx: 持久化关键词.配色idx,
+          配色idx: 持久化关键词.配色idx % 高亮配色.length,
         };
       },
     );
+    if (关键词排序方式列表.includes(持久化状态.关键词排序)) {
+      状态.关键词排序 = 持久化状态.关键词排序;
+    }
     状态.当前关键词id = 状态.关键词列表.some(function 是当前关键词(关键词) {
       return 关键词.id === 持久化状态.当前关键词id;
     })
@@ -1192,7 +2226,25 @@ function 应用文本(原始文本, 文件名) {
         }),
       ) + 1;
 
+    恢复字体设置(持久化状态.字体);
     元素.滚动容器.scrollTop = 计算阅读位置(持久化状态);
+  }
+
+  function 恢复字体设置(持久化字体) {
+    if (!持久化字体 || typeof 持久化字体 !== 'object') {
+      return;
+    }
+    for (const 区域 of ['引号内', '引号外']) {
+      const 值 = 持久化字体[区域];
+      const 变量名 = 区域 === '引号内' ? '--引文字体' : '--正文字体';
+      if (typeof 值 === 'string' && 值) {
+        字体设置[区域] = 值;
+        document.documentElement.style.setProperty(变量名, 值);
+      } else {
+        字体设置[区域] = null;
+        document.documentElement.style.removeProperty(变量名);
+      }
+    }
   }
 
   function 创建引文索引(全文) {
@@ -1254,7 +2306,7 @@ function 应用文本(原始文本, 文件名) {
     let 引文终点 = 原引文边界列表[引文idx + 1];
     let 引文包含句末标点 = false;
 
-    for (let idx = 0; idx < 全文.length; ) {
+    for (let idx = 0; idx < 全文.length;) {
       if (
         全文[idx] === '\n' &&
         idx > 0 &&
@@ -1354,6 +2406,7 @@ function 重建行索引(排版 = 读取正文排版()) {
   const 顶部行idx = Math.floor(获取静止滚动位置() / 状态.行高);
   const 顶部偏移 = 状态.行起点列表[顶部行idx] ?? 0;
   取消滚动动画();
+  隐藏衔接线();
   const 行索引 = 创建行索引(状态.文本, 排版, 状态.缩进起点集合);
   提交行索引(行索引);
   const 新行idx = 查找偏移所在行(顶部偏移);
@@ -1617,20 +2670,44 @@ function 读取正文排版() {
   const 画布宽度 =
     元素.虚拟画布.clientWidth || Math.min(940, window.innerWidth);
   const 根样式 = getComputedStyle(document.documentElement);
-  const 正文字号 = Number.parseFloat(根样式.getPropertyValue('--正文字号'));
-  const 行高 = Number.parseFloat(根样式.getPropertyValue('--行高'));
-  const 西文字号比例 = Number.parseFloat(根样式.getPropertyValue('--西文字号'));
-  const 正文字体 = 根样式.getPropertyValue('--正文字体').trim();
-  const 西文字体 = 根样式.getPropertyValue('--西文字体').trim();
-  if (
-    ![正文字号, 行高, 西文字号比例].every(Number.isFinite) ||
-    正文字号 <= 0 ||
-    行高 <= 0 ||
-    西文字号比例 <= 0 ||
-    !正文字体 ||
-    !西文字体
-  ) {
-    throw new TypeError('正文排版 CSS 变量无效');
+
+  // 取 CSS 变量，解析失败或无效时回退到默认值，避免样式表加载异常导致整个应用崩溃
+  const 读取数字变量 = (变量名, 默认值) => {
+    const 原始值 = 根样式.getPropertyValue(变量名);
+    const 数值 = Number.parseFloat(原始值);
+    return Number.isFinite(数值) && 数值 > 0 ? 数值 : 默认值;
+  };
+  const 读取字体变量 = (变量名, 默认值) => {
+    const 原始值 = 根样式.getPropertyValue(变量名).trim();
+    return 原始值 || 默认值;
+  };
+
+  const 默认正文字号 = 30;
+  const 默认行高 = 58;
+  const 默认西文字号比例 = 0.96;
+  const 默认正文字体 = "'Songti SC', 'STSong', 'Noto Serif CJK SC', serif";
+  const 默认西文字体 = "'Iowan Old Style', 'Times New Roman', serif";
+
+  const 正文字号 = 读取数字变量('--正文字号', 默认正文字号);
+  const 行高 = 读取数字变量('--行高', 默认行高);
+  const 西文字号比例 = 读取数字变量('--西文字号', 默认西文字号比例);
+  const 正文字体 = 读取字体变量('--正文字体', 默认正文字体);
+  const 西文字体 = 读取字体变量('--西文字体', 默认西文字体);
+
+  const css回退 =
+    正文字号 === 默认正文字号 ||
+    行高 === 默认行高 ||
+    西文字号比例 === 默认西文字号比例 ||
+    正文字体 === 默认正文字体 ||
+    西文字体 === 默认西文字体;
+  if (css回退) {
+    console.warn('[阅读器] 部分正文排版 CSS 变量未生效，已使用默认值', {
+      正文字号,
+      行高,
+      西文字号比例,
+      正文字体,
+      西文字体,
+    });
   }
 
   const 内容宽度 = Math.max(正文字号, 画布宽度);
@@ -1653,6 +2730,14 @@ function 读取正文排版() {
 
 function 是西文字素(字素) {
   return 是西文范围(字素, 0, 字素.length);
+}
+
+// 数字（0-9、零~九、〇、十百千万亿，含小数点）：整段字素全部为数字字符时才判定为数字，
+// 连续西文数字（如 "1984"）会被聚合成一个片段，故需按整段匹配；
+// 允许小数点，使 "3.14" 这类小数整体作为数字高亮。
+const 数字字素模式 = /^[0-9〇零一二三四五六七八九.十百千万亿]+$/u;
+function 是数字字素(字素) {
+  return 数字字素模式.test(字素);
 }
 
 function 是西文范围(文本, 起点, 终点) {
@@ -1830,10 +2915,7 @@ function 渲染可见行(强制渲染 = false) {
       const 行文本 = 状态.文本.slice(行起点, 行终点);
       const 行元素 = document.createElement('div');
       行元素.className = '正文行';
-      行元素.classList.toggle(
-        '换行缩进行',
-        状态.缩进起点集合.has(行起点),
-      );
+      行元素.classList.toggle('换行缩进行', 状态.缩进起点集合.has(行起点));
       行元素.dataset.start = String(行起点);
       行元素.dataset.end = String(行终点);
       行元素.setAttribute('aria-label', 行文本 || '空行');
@@ -1858,6 +2940,7 @@ function 渲染可见行(强制渲染 = false) {
         const 字元素 = document.createElement('span');
         字元素.className = '字';
         字元素.classList.toggle('西文', 是西文字素(字文本));
+        字元素.classList.toggle('数字', 是数字字素(字文本));
         if (字文本 === '“') {
           字元素.classList.add('中文引号', '左引号');
         } else if (字文本 === '”') {
@@ -1873,6 +2956,16 @@ function 渲染可见行(强制渲染 = false) {
           字元素.append(特殊字形);
         } else {
           字元素.textContent = 字文本;
+        }
+
+        // 「不」字：叠加浅黑色 ✕ 遮罩（见 .字.否定叉 样式）
+        if (字文本 === '不') {
+          字元素.classList.add('否定叉');
+        }
+
+        // 「我」字：明显的文字阴影（见 .字.我字 样式），便于一眼定位第一人称视角
+        if (字文本 === '我') {
+          字元素.classList.add('我字');
         }
 
         while (
@@ -2300,6 +3393,7 @@ function 删除关键词标记(关键词id) {
     const 接替关键词 = 状态.关键词列表[删除idx] || 状态.关键词列表[删除idx - 1];
     状态.当前关键词id = 接替关键词?.id ?? null;
   }
+  状态.指示器缓存 = null;
   渲染可见行(true);
   更新关键词指示器();
   安排保存持久化状态();
@@ -2317,10 +3411,271 @@ function 查找关键词(关键词id) {
 }
 
 function 获取关键词配色(关键词) {
-  return 高亮配色[关键词.配色idx];
+  return 高亮配色[关键词.配色idx % 高亮配色.length];
+}
+
+function 有弹窗打开() {
+  return 元素.查找弹窗.open || 元素.上下文弹窗.open || !元素.字体弹窗.hidden;
+}
+
+function 切换关键词排序(排序方式) {
+  if (!关键词排序方式列表.includes(排序方式) || 状态.关键词排序 === 排序方式) {
+    return;
+  }
+  状态.关键词排序 = 排序方式;
+  渲染关键词面板();
+  安排保存持久化状态();
+
+  console.info('[阅读器] 已切换关键词排序', { 排序方式 });
+}
+
+/* 排序只影响面板展示顺序，不改动关键词的原始添加顺序。 */
+function 排序后的关键词列表() {
+  const 列表 = [...状态.关键词列表];
+  switch (状态.关键词排序) {
+    case '数量':
+      列表.sort(function 按数量排序(左, 右) {
+        return (
+          右.命中位置.length - 左.命中位置.length ||
+          (左.命中位置[0] ?? 0) - (右.命中位置[0] ?? 0)
+        );
+      });
+      break;
+    case '位置':
+      列表.sort(function 按位置排序(左, 右) {
+        return (左.命中位置[0] ?? 0) - (右.命中位置[0] ?? 0);
+      });
+      break;
+    case '拼音':
+      列表.sort(function 按拼音排序(左, 右) {
+        return 拼音排序器.compare(左.文本, 右.文本);
+      });
+      break;
+  }
+  return 列表;
+}
+
+/* 面板只在关键词状态真正变化时重建 DOM，悬停、滚动引发的调用都会被签名拦下。 */
+function 渲染关键词面板() {
+  const 面板可见 = Boolean(状态.文件名) && 状态.关键词列表.length > 0;
+  // 面板展开时，关键词面板开关需保持可见（即使鼠标不在热区），便于收起面板
+  document.body.classList.toggle(
+    '右下面板展开',
+    面板可见 && 状态.关键词面板展开,
+  );
+  if (!面板可见) {
+    元素.关键词面板.hidden = true;
+    状态.关键词面板签名 = '';
+    return;
+  }
+
+  const 签名 = [
+    状态.当前关键词id,
+    状态.关键词面板展开 ? 1 : 0,
+    状态.关键词排序,
+    ...状态.关键词列表.map(function 读取关键词签名(关键词) {
+      return `${关键词.id}:${关键词.命中位置.length}:${关键词.当前命中idx}`;
+    }),
+  ].join('|');
+  if (!元素.关键词面板.hidden && 签名 === 状态.关键词面板签名) {
+    return;
+  }
+  状态.关键词面板签名 = 签名;
+
+  元素.关键词面板.hidden = false;
+  元素.关键词面板开关.textContent = `关键词 ${状态.关键词列表.length}`;
+  元素.关键词面板开关.setAttribute(
+    'aria-expanded',
+    String(状态.关键词面板展开),
+  );
+  元素.关键词列表容器.hidden = !状态.关键词面板展开;
+  if (!状态.关键词面板展开) {
+    元素.关键词列表容器.replaceChildren();
+    return;
+  }
+
+  const 片段 = document.createDocumentFragment();
+  片段.append(创建排序栏());
+  for (const 关键词 of 排序后的关键词列表()) {
+    const 配色 = 获取关键词配色(关键词);
+    const 是当前 = 关键词.id === 状态.当前关键词id;
+    const 项 = document.createElement('div');
+    项.className = '关键词项';
+    项.classList.toggle('当前', 是当前);
+    项.dataset.keywordId = String(关键词.id);
+    项.style.setProperty('--关键词浅色', 配色.浅色);
+    项.style.setProperty('--关键词深色', 配色.深色);
+
+    const 主钮 = document.createElement('button');
+    主钮.type = 'button';
+    主钮.className = '关键词主钮';
+    主钮.dataset.action = '选中';
+    主钮.title = '设为当前关键词';
+    const 色点 = document.createElement('i');
+    色点.className = '关键词色点';
+    const 文字 = document.createElement('span');
+    文字.className = '关键词文字';
+    文字.textContent = 关键词.文本;
+    const 计数 = document.createElement('span');
+    计数.className = '关键词计数';
+    计数.textContent =
+      是当前 && 关键词.当前命中idx >= 0
+        ? `${(关键词.当前命中idx + 1).toLocaleString('zh-CN')}/${关键词.命中位置.length.toLocaleString('zh-CN')}`
+        : 关键词.命中位置.length.toLocaleString('zh-CN');
+    主钮.append(色点, 文字, 计数);
+
+    项.append(
+      主钮,
+      创建面板操作钮('上下文', '≡', '上下文列表'),
+      创建面板操作钮('删除', '×', '删除标记'),
+    );
+    片段.append(项);
+  }
+  元素.关键词列表容器.replaceChildren(片段);
+
+  function 创建排序栏() {
+    const 排序栏 = document.createElement('div');
+    排序栏.className = '关键词排序栏';
+    const 标签 = document.createElement('span');
+    标签.className = '关键词排序标签';
+    标签.textContent = '排序';
+    排序栏.append(标签);
+    const 提示表 = {
+      数量: '按命中数量排序',
+      位置: '按首次出现位置排序',
+      拼音: '按首字母拼音排序',
+    };
+    for (const 排序方式 of 关键词排序方式列表) {
+      const 按钮 = document.createElement('button');
+      按钮.type = 'button';
+      按钮.className = '关键词排序钮';
+      按钮.dataset.sort = 排序方式;
+      按钮.textContent = 排序方式;
+      按钮.title = 提示表[排序方式];
+      按钮.setAttribute('aria-pressed', String(状态.关键词排序 === 排序方式));
+      排序栏.append(按钮);
+    }
+    return 排序栏;
+  }
+
+  function 创建面板操作钮(操作, 文字, 提示) {
+    const 按钮 = document.createElement('button');
+    按钮.type = 'button';
+    按钮.className = '关键词操作钮';
+    按钮.dataset.action = 操作;
+    按钮.textContent = 文字;
+    按钮.title = 提示;
+    按钮.setAttribute('aria-label', 提示);
+    return 按钮;
+  }
+}
+
+function 打开上下文弹窗(关键词) {
+  const 开始时间 = performance.now();
+  状态.上下文视图 = { 关键词id: 关键词.id, 已渲染数: 0 };
+  元素.上下文标题.textContent = `${关键词.文本} · ${关键词.命中位置.length.toLocaleString('zh-CN')} 处`;
+  元素.上下文列表.replaceChildren();
+  元素.上下文列表.scrollTop = 0;
+
+  // 当前命中靠前时直接渲染到那一块并居中；太靠后则只渲染首块，避免一次性建海量 DOM
+  const 居中命中idx =
+    关键词.id === 状态.当前关键词id &&
+    关键词.当前命中idx >= 0 &&
+    关键词.当前命中idx < 上下文最大初始行数
+      ? 关键词.当前命中idx
+      : -1;
+  do {
+    追加上下文行块();
+  } while (状态.上下文视图.已渲染数 <= 居中命中idx);
+
+  if (!元素.上下文弹窗.open) {
+    元素.上下文弹窗.showModal();
+  }
+  if (居中命中idx >= 0) {
+    元素.上下文列表
+      .querySelector('.上下文行.当前')
+      ?.scrollIntoView({ block: 'center' });
+  }
+
+  console.info('[阅读器] 已打开上下文列表', {
+    关键词: 关键词.文本,
+    命中数: 关键词.命中位置.length,
+    首批行数: 状态.上下文视图.已渲染数,
+    耗时毫秒: Math.round(performance.now() - 开始时间),
+  });
+}
+
+function 追加上下文行块() {
+  const 视图 = 状态.上下文视图;
+  const 关键词 = 视图 ? 查找关键词(视图.关键词id) : null;
+  if (!关键词) {
+    return;
+  }
+
+  const 起点 = 视图.已渲染数;
+  const 终点 = Math.min(关键词.命中位置.length, 起点 + 上下文分块行数);
+  if (起点 >= 终点) {
+    return;
+  }
+
+  const 配色 = 获取关键词配色(关键词);
+  const 片段 = document.createDocumentFragment();
+  for (let idx = 起点; idx < 终点; idx += 1) {
+    const 命中起点 = 关键词.命中位置[idx];
+    const 命中终点 = 命中起点 + 关键词.文本.length;
+    const 行 = document.createElement('button');
+    行.type = 'button';
+    行.className = '上下文行';
+    行.classList.toggle(
+      '当前',
+      关键词.id === 状态.当前关键词id && idx === 关键词.当前命中idx,
+    );
+    行.dataset.hitIndex = String(idx);
+
+    const 序号 = document.createElement('span');
+    序号.className = '上下文序号';
+    序号.textContent = String(idx + 1);
+    const 前文 = document.createElement('span');
+    前文.className = '上下文前文';
+    前文.textContent = 读取上下文片段(命中起点 - 上下文前文字数, 命中起点);
+    const 命中 = document.createElement('span');
+    命中.className = '上下文命中';
+    命中.textContent = 关键词.文本;
+    命中.style.setProperty('--命中背景', 配色.浅色);
+    const 后文 = document.createElement('span');
+    后文.className = '上下文后文';
+    后文.textContent = 读取上下文片段(命中终点, 命中终点 + 上下文后文字数);
+
+    行.append(序号, 前文, 命中, 后文);
+    片段.append(行);
+  }
+  视图.已渲染数 = 终点;
+  元素.上下文列表.append(片段);
+}
+
+/* 截取上下文时绕开被切断的代理对，换行压成空格。 */
+function 读取上下文片段(起点, 终点) {
+  let 起 = Math.max(0, 起点);
+  let 止 = Math.min(状态.文本.length, 终点);
+  const 首码 = 状态.文本.charCodeAt(起);
+  if (首码 >= 0xdc00 && 首码 <= 0xdfff) {
+    起 += 1;
+  }
+  const 尾码 = 状态.文本.charCodeAt(止 - 1);
+  if (尾码 >= 0xd800 && 尾码 <= 0xdbff) {
+    止 -= 1;
+  }
+  return 状态.文本.slice(起, 止).replace(/\n+/g, ' ');
+}
+
+function 关闭上下文弹窗() {
+  if (元素.上下文弹窗.open) {
+    元素.上下文弹窗.close();
+  }
 }
 
 function 更新关键词指示器() {
+  渲染关键词面板();
   更新滚动块();
   const 轨道高度 = 元素.滚动容器.clientHeight;
   const 滚动高度 = 元素.滚动容器.scrollHeight;
@@ -2434,30 +3789,51 @@ function 创建指示器底图(画布宽, 画布高, 滚动高度, 像素比, �
   }
 
   const 最小刻度高度 = Math.max(1, Math.round(指示器刻度高度 * 像素比));
-  const 段列表 = 读取指示器段列表(主关键词, 画布高, 滚动高度, 最小刻度高度);
+  const 刻度 = 读取指示器刻度(主关键词, 画布高, 滚动高度, 最小刻度高度);
   底图上下文.fillStyle = 获取关键词配色(主关键词).深色;
+
+  // 先以基础透明度铺出所有刻度，保证稀疏命中也可见
+  const 段列表 = 刻度.刻度列表;
+  底图上下文.globalAlpha = 指示器基础透明度;
   for (let idx = 0; idx < 段列表.length; idx += 2) {
     底图上下文.fillRect(0, 段列表[idx], 画布宽, 段列表[idx + 1] - 段列表[idx]);
   }
+
+  // 再按逐像素命中密度叠加颜色，密集段越深，一眼可见分布重心
+  if (刻度.最大密度 > 0) {
+    for (let 像素idx = 0; 像素idx < 刻度.密度列表.length; 像素idx += 1) {
+      const 密度 = 刻度.密度列表[像素idx];
+      if (!密度) {
+        continue;
+      }
+      底图上下文.globalAlpha =
+        指示器基础透明度 +
+        (1 - 指示器基础透明度) * Math.sqrt(密度 / 刻度.最大密度);
+      底图上下文.fillRect(0, 像素idx, 画布宽, 1);
+    }
+  }
+  底图上下文.globalAlpha = 1;
   return 底图;
 }
 
-/* 刻度只跟版面与命中有关，与谁是主关键词无关，可以跨悬停切换复用。 */
-function 读取指示器段列表(关键词, 画布高, 滚动高度, 最小刻度高度) {
+/* 刻度与密度只跟版面与命中有关，与谁是主关键词无关，可以跨悬停切换复用。 */
+function 读取指示器刻度(关键词, 画布高, 滚动高度, 最小刻度高度) {
   const 段缓存 = 状态.指示器缓存.段缓存;
-  let 段列表 = 段缓存.get(关键词.id);
-  if (!段列表) {
-    段列表 = 创建指示器段列表(关键词, 画布高, 滚动高度, 最小刻度高度);
-    段缓存.set(关键词.id, 段列表);
+  let 刻度 = 段缓存.get(关键词.id);
+  if (!刻度) {
+    刻度 = 创建指示器刻度(关键词, 画布高, 滚动高度, 最小刻度高度);
+    段缓存.set(关键词.id, 刻度);
   }
-  return 段列表;
+  return 刻度;
 }
 
 /* 逐轨道像素反查命中，代价只与轨道高度相关，与命中数量无关。 */
-function 创建指示器段列表(关键词, 画布高, 滚动高度, 最小刻度高度) {
+function 创建指示器刻度(关键词, 画布高, 滚动高度, 最小刻度高度) {
   const 总行数 = 状态.行起点列表.length;
   const 每像素行数 = 滚动高度 / (状态.行高 * 画布高);
   const 段数组 = [];
+  const 密度列表 = new Uint32Array(画布高);
+  let 最大密度 = 0;
   let 段起点 = -1;
   let 像素idx = 0;
 
@@ -2471,12 +3847,21 @@ function 创建指示器段列表(关键词, 画布高, 滚动高度, 最小刻�
       总行数,
       Math.max(Math.floor((像素idx + 1) * 每像素行数), 行起点idx + 1),
     );
-    const 命中idx = 查找首个相交命中(关键词, 状态.行起点列表[行起点idx]);
+    const 像素起点偏移 = 状态.行起点列表[行起点idx];
+    const 命中idx = 查找首个相交命中(关键词, 像素起点偏移);
     const 像素终点偏移 =
       行终点idx < 总行数 ? 状态.行起点列表[行终点idx] : 状态.文本.length;
     const 有命中 =
       命中idx < 关键词.命中位置.length &&
       关键词.命中位置[命中idx] < 像素终点偏移;
+
+    const 密度 =
+      查找首个不小于的命中(关键词, 像素终点偏移) -
+      查找首个不小于的命中(关键词, 像素起点偏移);
+    密度列表[像素idx] = 密度;
+    if (密度 > 最大密度) {
+      最大密度 = 密度;
+    }
 
     if (有命中) {
       if (段起点 < 0) {
@@ -2491,7 +3876,11 @@ function 创建指示器段列表(关键词, 画布高, 滚动高度, 最小刻�
     段数组.push(段起点, 像素idx);
   }
 
-  return 展开最小刻度(段数组, 画布高, 最小刻度高度);
+  return {
+    刻度列表: 展开最小刻度(段数组, 画布高, 最小刻度高度),
+    密度列表,
+    最大密度,
+  };
 }
 
 function 展开最小刻度(段数组, 画布高, 最小刻度高度) {
@@ -2529,6 +3918,7 @@ function 跳到命中(
   命中idx,
   原始行位置 = 获取当前命中行位置(关键词),
   原始边框 = 获取当前命中边框(关键词),
+  最小前行距离 = 0,
 ) {
   const 是首次跳转 = !状态.跳转起点;
   if (是首次跳转) {
@@ -2550,7 +3940,19 @@ function 跳到命中(
   const 行idx = 查找偏移所在行(文本偏移);
   const 默认行位置 = (元素.滚动容器.clientHeight - 状态.行高) / 2;
   const 目标行位置 = Number.isFinite(原始行位置) ? 原始行位置 : 默认行位置;
-  const 目标滚动位置 = 行idx * 状态.行高 - 目标行位置;
+  let 目标滚动位置 = 行idx * 状态.行高 - 目标行位置;
+  // 仅对顺序向下跳转保留最小前行距离；首尾回绕时必须允许滚动方向反转。
+  if (最小前行距离 > 0 && 目标滚动位置 >= 元素.滚动容器.scrollTop) {
+    const 当前滚动位置 = 元素.滚动容器.scrollTop;
+    const 最大滚动位置 = Math.max(
+      0,
+      元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight,
+    );
+    目标滚动位置 = Math.min(
+      最大滚动位置,
+      Math.max(目标滚动位置, 当前滚动位置 + 最小前行距离),
+    );
+  }
   渲染可见行(true);
   更新关键词指示器();
   显示当前命中位置提示();
@@ -2800,6 +4202,9 @@ function 取消滚动动画() {
 }
 
 function 隐藏跳转边框() {
+  if (元素.跳转边框.hidden) {
+    return;
+  }
   元素.滚动容器.classList.remove('边框跳转中');
   元素.跳转边框.hidden = true;
   元素.跳转边框.removeAttribute('style');
@@ -2842,6 +4247,9 @@ function 播放跳转迸发(边框) {
 }
 
 function 隐藏跳转迸发() {
+  if (元素.跳转迸发.hidden && !状态.迸发计时器) {
+    return;
+  }
   window.clearTimeout(状态.迸发计时器);
   状态.迸发计时器 = 0;
   元素.跳转迸发.removeEventListener('animationend', 隐藏跳转迸发);
@@ -2849,6 +4257,39 @@ function 隐藏跳转迸发() {
   元素.跳转迸发.hidden = true;
   元素.跳转迸发.style.removeProperty('left');
   元素.跳转迸发.style.removeProperty('top');
+}
+
+/* 快速前进（按空格）开始时，在「上一屏底边界」对应的行边界处画一条线，
+   随内容滚动扫到顶部，标明衔接位置；停留结束后再淡出。
+   衔接线位于虚拟画布内（文档坐标），随内容滚动，天然落在新旧内容交界处。 */
+function 显示衔接线(滚动位置) {
+  取消衔接线淡出();
+  if (!状态.行高) {
+    return;
+  }
+  const 行对齐位置 = Math.round(滚动位置 / 状态.行高) * 状态.行高;
+  元素.衔接线.style.top = `${行对齐位置}px`;
+  元素.衔接线.hidden = false;
+}
+
+function 隐藏衔接线() {
+  if (元素.衔接线.hidden) {
+    return;
+  }
+  元素.衔接线.classList.add('播放中'); // 播放 衔接线淡出（opacity 1 → 0）
+  元素.衔接线.addEventListener('animationend', 收起衔接线, { once: true });
+  状态.衔接线计时器 = window.setTimeout(收起衔接线, 衔接线播放时长 + 80);
+}
+
+function 取消衔接线淡出() {
+  window.clearTimeout(状态.衔接线计时器);
+  元素.衔接线.classList.remove('播放中');
+  元素.衔接线.removeEventListener('animationend', 收起衔接线);
+}
+
+function 收起衔接线() {
+  元素.衔接线.hidden = true;
+  取消衔接线淡出();
 }
 
 function 查找首个相交命中(关键词, 文本偏移) {
@@ -2918,7 +4359,10 @@ function 保存持久化状态() {
       文本长度: 状态.文本.length,
       ...阅读位置,
       当前关键词id: 状态.当前关键词id,
+      关键词排序: 状态.关键词排序,
       自动滚动速度: 状态.自动滚动速度,
+      字号: 状态.字号,
+      字体: { 引号内: 字体设置.引号内, 引号外: 字体设置.引号外 },
       关键词列表: 状态.关键词列表.map(function 序列化关键词(关键词) {
         return {
           id: 关键词.id,
