@@ -1,12 +1,14 @@
 // 语音转录订阅：把声音远程服务器广播的每条信息打印到浏览器控制台
-// 连接：wss://localhost:3000（声音远程服务器，自签名证书，需已在浏览器信任 https://localhost:3000）
+// 连接：wss://localhost:15941（声音远程服务器，自签名证书，需已在浏览器信任 https://localhost:15941）
+// 地址可被 URL 参数 ?ws= 覆盖（如 ?ws=wss://localhost:3000），改端口时无需改本文件
 // 房间：默认 main，可用 URL 参数 ?room=xxx 覆盖
 // 独立性：不依赖 app.js，页面其余功能不受影响；服务器未启动时仅控制台提示，不打扰阅读
 'use strict';
 
 (function () {
-  const 房间 = new URLSearchParams(location.search).get('room') || 'main';
-  const 地址 = 'wss://localhost:3000';
+  const 参数 = new URLSearchParams(location.search);
+  const 房间 = 参数.get('room') || 'main';
+  const 地址 = 参数.get('ws') || 'wss://localhost:15941';
   let 重试次数 = 0;
   let 连接 = null;
 
