@@ -13,7 +13,7 @@
       as="fetch"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260811-05" />
+    <link rel="stylesheet" href="./styles.css?v=20260811-06" />
   </head>
   <body>
     <main class="阅读区域">
@@ -267,28 +267,35 @@
           六字
         </button>
       </div>
-      <div
-        id="单字列表切换"
-        class="单字列表切换"
-        role="group"
-        aria-label="单字列表排序"
-      >
-        <button
-          class="当前"
-          type="button"
-          aria-pressed="true"
-          data-单字列表="倒序"
-        >
-          频次倒序
-        </button>
-        <button type="button" aria-pressed="false" data-单字列表="正序">
-          频次正序
-        </button>
-        <button type="button" aria-pressed="false" data-单字列表="一次">
-          只出现一次
-        </button>
+      <div id="单字双列表" class="单字双列表">
+        <table class="词频表格">
+          <thead>
+            <tr>
+              <th class="单字列表标题" colspan="3">频次倒序</th>
+            </tr>
+            <tr>
+              <th scope="col">排名</th>
+              <th scope="col">字词</th>
+              <th scope="col">频次</th>
+            </tr>
+          </thead>
+          <tbody id="单字重复列表"></tbody>
+        </table>
+        <table class="词频表格">
+          <thead>
+            <tr>
+              <th class="单字列表标题" colspan="3">只出现一次</th>
+            </tr>
+            <tr>
+              <th scope="col">排名</th>
+              <th scope="col">字词</th>
+              <th scope="col">频次</th>
+            </tr>
+          </thead>
+          <tbody id="单字一次列表"></tbody>
+        </table>
       </div>
-      <div id="词频表格容器" class="词频表格容器">
+      <div id="词频表格容器" class="词频表格容器" hidden>
         <table class="词频表格">
           <thead>
             <tr>
@@ -416,7 +423,7 @@
         });
       })();
     </script>
-    <script src="./app.js?v=20260811-04" defer></script>
+    <script src="./app.js?v=20260811-06" defer></script>
     <script src="./语音订阅.js?v=20260811-01" defer></script>
   </body>
 </html>

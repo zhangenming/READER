@@ -199,7 +199,9 @@ const 元素 = {
   词频弹窗: document.querySelector('#词频弹窗'),
   词频摘要: document.querySelector('#词频摘要'),
   词频标签栏: document.querySelector('#词频标签栏'),
-  单字列表切换: document.querySelector('#单字列表切换'),
+  单字双列表: document.querySelector('#单字双列表'),
+  单字重复列表: document.querySelector('#单字重复列表'),
+  单字一次列表: document.querySelector('#单字一次列表'),
   词频表格容器: document.querySelector('#词频表格容器'),
   词频列表: document.querySelector('#词频列表'),
   词频分页: document.querySelector('#词频分页'),
@@ -382,7 +384,6 @@ function 绑定事件() {
   let 滚动进度拖动状态 = null;
   let 自动滚动状态 = null;
   let 当前词频字数 = 1;
-  let 当前单字列表 = '倒序';
   let 当前词频页码 = 1;
   const 每页词频数 = 200;
   // 「关键词手势」状态：单击=该词下一个 / 双击=该词上一个 / 向上拖=该词第一个 / 向下拖=该词最后一个
@@ -425,7 +426,6 @@ function 绑定事件() {
   元素.词频弹窗.addEventListener('click', 处理词频弹窗点击);
   元素.词频标签栏.addEventListener('click', 处理词频标签点击);
   元素.词频标签栏.addEventListener('keydown', 处理词频标签键盘);
-  元素.单字列表切换.addEventListener('click', 处理单字列表切换);
   元素.词频上一页.addEventListener('click', function 显示上一页词频() {
     当前词频页码 -= 1;
     渲染词频页();
@@ -1469,6 +1469,8 @@ function 绑定事件() {
 
     元素.词频摘要.textContent = '正在统计全文';
     元素.词频列表.replaceChildren();
+    元素.单字重复列表.replaceChildren();
+    元素.单字一次列表.replaceChildren();
     元素.词频分页.hidden = true;
     requestAnimationFrame(function 分析全文词频() {
       const 开始时间 = performance.now();
@@ -1531,7 +1533,8 @@ function 绑定事件() {
   function 切换词频字数(字数) {
     当前词频字数 = 字数;
     当前词频页码 = 1;
-    元素.单字列表切换.hidden = 字数 !== 1;
+    元素.单字双列表.hidden = 字数 !== 1;
+    元素.词频表格容器.hidden = 字数 === 1;
     for (const 标签 of 元素.词频标签栏.querySelectorAll('.词频标签')) {
       const 是当前 = Number(标签.dataset.字数) === 字数;
       标签.classList.toggle('当前', 是当前);
@@ -1541,60 +1544,55 @@ function 绑定事件() {
     渲染词频页();
   }
 
-  function 处理单字列表切换(事件) {
-    const 按钮 = 事件.target.closest('[data-单字列表]');
-    if (!(按钮 instanceof HTMLButtonElement)) {
-      return;
-    }
-    当前单字列表 = 按钮.dataset.单字列表;
-    当前词频页码 = 1;
-    for (const 列表按钮 of 元素.单字列表切换.querySelectorAll('button')) {
-      const 是当前 = 列表按钮 === 按钮;
-      列表按钮.classList.toggle('当前', 是当前);
-      列表按钮.setAttribute('aria-pressed', String(是当前));
-    }
-    渲染词频页();
-  }
-
   function 渲染词频页() {
     const 分析 = 状态.词频分析;
     if (!分析) {
       return;
     }
-    const 统计列表 =
-      当前词频字数 === 1
-        ? 分析.单字列表[当前单字列表]
-        : 分析.列表[当前词频字数];
-    const 总页数 = Math.max(1, Math.ceil(统计列表.length / 每页词频数));
+    const 是单字 = 当前词频字数 === 1;
+    const 统计列表 = 是单字 ? 分析.单字列表.重复 : 分析.列表[当前词频字数];
+    const 最长列表数 = 是单字
+      ? Math.max(统计列表.length, 分析.单字列表.一次.length)
+      : 统计列表.length;
+    const 总页数 = Math.max(1, Math.ceil(最长列表数 / 每页词频数));
     当前词频页码 = Math.min(总页数, Math.max(1, 当前词频页码));
     const 起点 = (当前词频页码 - 1) * 每页词频数;
-    const 本页列表 = 统计列表.slice(起点, 起点 + 每页词频数);
-    const 表格片段 = document.createDocumentFragment();
-    for (const [idx, 统计项] of 本页列表.entries()) {
-      const 行 = document.createElement('tr');
-      const 排名单元格 = document.createElement('td');
-      const 字词单元格 = document.createElement('td');
-      const 频次单元格 = document.createElement('td');
-      排名单元格.textContent = (起点 + idx + 1).toLocaleString('zh-CN');
-      字词单元格.textContent = 统计项.文本;
-      频次单元格.textContent = 统计项.数量.toLocaleString('zh-CN');
-      行.append(排名单元格, 字词单元格, 频次单元格);
-      表格片段.append(行);
+    if (是单字) {
+      元素.单字重复列表.replaceChildren(创建词频表格片段(统计列表, 起点));
+      元素.单字一次列表.replaceChildren(
+        创建词频表格片段(分析.单字列表.一次, 起点),
+      );
+    } else {
+      元素.词频列表.replaceChildren(创建词频表格片段(统计列表, 起点));
     }
 
-    let 类型名称;
-    if (当前词频字数 === 1) {
-      类型名称 = 当前单字列表 === '一次' ? '只出现一次的单字' : '单字';
-    } else {
-      类型名称 = `${['二', '三', '四', '五', '六'][当前词频字数 - 2]}字组合`;
-    }
-    元素.词频摘要.textContent = `${分析.汉字数.toLocaleString('zh-CN')} 个汉字 · ${统计列表.length.toLocaleString('zh-CN')} 种${类型名称}`;
-    元素.词频列表.replaceChildren(表格片段);
+    const 统计种数 = 是单字 ? 分析.列表[1].length : 统计列表.length;
+    const 类型名称 = 是单字
+      ? '单字'
+      : `${['二', '三', '四', '五', '六'][当前词频字数 - 2]}字组合`;
+    元素.词频摘要.textContent = `${分析.汉字数.toLocaleString('zh-CN')} 个汉字 · ${统计种数.toLocaleString('zh-CN')} 种${类型名称}`;
     元素.词频页码.textContent = `${当前词频页码.toLocaleString('zh-CN')} / ${总页数.toLocaleString('zh-CN')}`;
     元素.词频上一页.disabled = 当前词频页码 === 1;
     元素.词频下一页.disabled = 当前词频页码 === 总页数;
     元素.词频分页.hidden = 总页数 === 1;
-    元素.词频表格容器.scrollTop = 0;
+    (是单字 ? 元素.单字双列表 : 元素.词频表格容器).scrollTop = 0;
+
+    function 创建词频表格片段(列表, 起点) {
+      const 表格片段 = document.createDocumentFragment();
+      const 本页列表 = 列表.slice(起点, 起点 + 每页词频数);
+      for (const [idx, 统计项] of 本页列表.entries()) {
+        const 行 = document.createElement('tr');
+        const 排名单元格 = document.createElement('td');
+        const 字词单元格 = document.createElement('td');
+        const 频次单元格 = document.createElement('td');
+        排名单元格.textContent = (起点 + idx + 1).toLocaleString('zh-CN');
+        字词单元格.textContent = 统计项.文本;
+        频次单元格.textContent = 统计项.数量.toLocaleString('zh-CN');
+        行.append(排名单元格, 字词单元格, 频次单元格);
+        表格片段.append(行);
+      }
+      return 表格片段;
+    }
   }
 
   function 统计全文词频(全文) {
@@ -1643,9 +1641,8 @@ function 绑定事件() {
         });
     }
     const 单字列表 = {
-      倒序: 列表[1],
-      正序: [...列表[1]].sort(function 单字频次正序(左项, 右项) {
-        return 左项.数量 - 右项.数量 || 左项.首次位置 - 右项.首次位置;
+      重复: 列表[1].filter(function 筛选重复单字(项) {
+        return 项.数量 > 1;
       }),
       一次: 列表[1].filter(function 筛选只出现一次的单字(项) {
         return 项.数量 === 1;

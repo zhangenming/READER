@@ -1517,58 +1517,56 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 }
 
 .词频标签:focus-visible,
-.单字列表切换 button:focus-visible,
 .词频分页 button:focus-visible {
   outline: 2px solid var(--选中色);
   outline-offset: -2px;
 }
 
-.单字列表切换 {
-  display: flex;
-  width: max-content;
-  gap: 2px;
-  padding: 2px;
-  margin: 8px 16px;
-  background: var(--背景色);
-  border: 1px solid var(--边线色);
-  border-radius: 4px;
-}
-
-.单字列表切换[hidden] {
-  display: none;
-}
-
-.单字列表切换 button {
-  height: 28px;
-  padding: 0 10px;
-  color: var(--次要墨色);
-  font:
-    12px/1 'Avenir Next',
-    'PingFang SC',
-    sans-serif;
-  font-weight: 600;
-  background: transparent;
-  border: 0;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.单字列表切换 button:hover {
-  color: var(--墨色);
-}
-
-.单字列表切换 button.当前 {
-  color: var(--墨色);
-  background: var(--纸张色);
-  box-shadow: 0 0 0 1px #cbd2ce;
-}
-
+.单字双列表,
 .词频表格容器 {
   min-height: 220px;
   max-height: calc(100dvh - 224px);
   overflow: auto;
   scrollbar-color: #aab3ad transparent;
   scrollbar-width: thin;
+}
+
+.单字双列表 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.单字双列表[hidden],
+.词频表格容器[hidden] {
+  display: none;
+}
+
+.单字双列表 > .词频表格 + .词频表格 {
+  border-left: 1px solid var(--边线色);
+}
+
+.单字双列表 .词频表格 th,
+.单字双列表 .词频表格 td {
+  padding-inline: 8px;
+}
+
+.单字双列表 .词频表格 thead tr:last-child th:first-child,
+.单字双列表 .词频表格 tbody td:first-child,
+.单字双列表 .词频表格 thead tr:last-child th:last-child,
+.单字双列表 .词频表格 tbody td:last-child {
+  width: 54px;
+}
+
+.单字双列表 .词频表格 thead tr:first-child th {
+  top: 0;
+  height: 34px;
+  color: var(--墨色);
+  font-size: 12px;
+  text-align: center;
+}
+
+.单字双列表 .词频表格 thead tr:last-child th {
+  top: 34px;
 }
 
 .词频表格 {
@@ -1851,13 +1849,15 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
     margin: 12px auto;
   }
 
+  .单字双列表,
   .词频表格容器 {
     min-height: 120px;
     max-height: calc(100dvh - 200px);
   }
 
-  .单字列表切换 {
-    margin-inline: 12px;
+  .单字双列表 .词频表格 th,
+  .单字双列表 .词频表格 td {
+    padding-inline: 5px;
   }
 
   .上下文行 {
