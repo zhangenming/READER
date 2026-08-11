@@ -10,6 +10,7 @@ const 最大虚拟高度 = 30_000_000;
 const 字素分段器 = new Intl.Segmenter('zh-CN', { granularity: 'grapheme' });
 const 词组分段器 = new Intl.Segmenter('zh-CN', { granularity: 'word' });
 const 拼音排序器 = new Intl.Collator('zh-Hans-CN-u-co-pinyin');
+const 汉字模式 = /^\p{Script=Han}$/u;
 const 时间格式器 = new Intl.DateTimeFormat('zh-CN', {
   hourCycle: 'h23',
   hour: '2-digit',
@@ -154,6 +155,7 @@ const 状态 = {
   上下文视图: null,
   自动滚动速度: 自动滚动默认速度,
   字号: 默认字号,
+  词频分析: null,
 };
 
 const 元素 = {
@@ -194,6 +196,16 @@ const 元素 = {
   上下文标题: document.querySelector('#上下文标题'),
   上下文列表: document.querySelector('#上下文列表'),
   关闭上下文按钮: document.querySelector('#关闭上下文按钮'),
+  词频弹窗: document.querySelector('#词频弹窗'),
+  词频摘要: document.querySelector('#词频摘要'),
+  词频标签栏: document.querySelector('#词频标签栏'),
+  词频表格容器: document.querySelector('#词频表格容器'),
+  词频列表: document.querySelector('#词频列表'),
+  词频分页: document.querySelector('#词频分页'),
+  词频上一页: document.querySelector('#词频上一页'),
+  词频页码: document.querySelector('#词频页码'),
+  词频下一页: document.querySelector('#词频下一页'),
+  关闭词频按钮: document.querySelector('#关闭词频按钮'),
   字体弹窗: document.querySelector('#字体弹窗'),
   字体遮罩: document.querySelector('#字体遮罩'),
   关闭字体按钮: document.querySelector('#关闭字体按钮'),
@@ -368,6 +380,9 @@ function 绑定事件() {
   let 滚动块拖动状态 = null;
   let 滚动进度拖动状态 = null;
   let 自动滚动状态 = null;
+  let 当前词频字数 = 1;
+  let 当前词频页码 = 1;
+  const 每页词频数 = 200;
   // 「关键词手势」状态：单击=该词下一个 / 双击=该词上一个 / 向上拖=该词第一个 / 向下拖=该词最后一个
   let 关键词手势 = null; // { 关键词, 命中idx, 起点Y, 起点X, 方向: null|'上'|'下' }
   let 点击抑制 = false; // 拖拽手势触发后抑制紧随的 click，避免重复跳转
@@ -403,6 +418,18 @@ function 绑定事件() {
   元素.上下文列表.addEventListener('click', 处理上下文行点击);
   元素.上下文列表.addEventListener('scroll', 处理上下文滚动, {
     passive: true,
+  });
+  元素.关闭词频按钮.addEventListener('click', 关闭词频弹窗);
+  元素.词频弹窗.addEventListener('click', 处理词频弹窗点击);
+  元素.词频标签栏.addEventListener('click', 处理词频标签点击);
+  元素.词频标签栏.addEventListener('keydown', 处理词频标签键盘);
+  元素.词频上一页.addEventListener('click', function 显示上一页词频() {
+    当前词频页码 -= 1;
+    渲染词频页();
+  });
+  元素.词频下一页.addEventListener('click', function 显示下一页词频() {
+    当前词频页码 += 1;
+    渲染词频页();
   });
   元素.关闭字体按钮.addEventListener('click', 关闭字体弹窗);
   元素.字体遮罩.addEventListener('click', 关闭字体弹窗);
@@ -836,11 +863,27 @@ function 绑定事件() {
       目标 instanceof HTMLElement &&
       (目标.isContentEditable ||
         目标.matches('input, textarea, button, select'));
+    const 是可编辑目标 =
+      目标 instanceof HTMLElement &&
+      (目标.isContentEditable || 目标.matches('input, textarea'));
     const 可快速前进自动滚动 =
       !(目标 instanceof HTMLElement) ||
       目标 === 元素.自动滚动按钮 ||
       (!目标.isContentEditable &&
         !目标.matches('input, textarea, button, select'));
+
+    if (
+      事件.key.toLowerCase() === 'a' &&
+      (事件.ctrlKey || 事件.metaKey) &&
+      !事件.altKey &&
+      !事件.shiftKey &&
+      !是可编辑目标
+    ) {
+      事件.preventDefault();
+      Ctrl按键状态 = null;
+      打开词频弹窗();
+      return;
+    }
 
     if (
       事件.key.toLowerCase() === 'f' &&
@@ -1405,6 +1448,173 @@ function 绑定事件() {
   function 处理查找弹窗点击(事件) {
     if (事件.target === 元素.查找弹窗) {
       关闭查找弹窗();
+    }
+  }
+
+  function 打开词频弹窗() {
+    if (!元素.词频弹窗.open) {
+      元素.词频弹窗.showModal();
+    }
+    if (状态.词频分析) {
+      渲染词频页();
+      return;
+    }
+    if (!状态.文件名) {
+      元素.词频摘要.textContent = '正文尚未载入';
+      return;
+    }
+
+    元素.词频摘要.textContent = '正在统计全文';
+    元素.词频列表.replaceChildren();
+    元素.词频分页.hidden = true;
+    requestAnimationFrame(function 分析全文词频() {
+      const 开始时间 = performance.now();
+      状态.词频分析 = 统计全文词频(状态.文本);
+      当前词频页码 = 1;
+      渲染词频页();
+      console.info('[阅读器] 词频分析完成', {
+        汉字数: 状态.词频分析.汉字数,
+        单字种数: 状态.词频分析.列表[1].length,
+        二字种数: 状态.词频分析.列表[2].length,
+        三字种数: 状态.词频分析.列表[3].length,
+        耗时毫秒: Math.round(performance.now() - 开始时间),
+      });
+    });
+  }
+
+  function 关闭词频弹窗() {
+    if (!元素.词频弹窗.open) {
+      return;
+    }
+    元素.词频弹窗.close();
+    元素.滚动容器.focus({ preventScroll: true });
+  }
+
+  function 处理词频弹窗点击(事件) {
+    if (事件.target === 元素.词频弹窗) {
+      关闭词频弹窗();
+    }
+  }
+
+  function 处理词频标签点击(事件) {
+    const 标签 = 事件.target.closest('.词频标签');
+    if (!(标签 instanceof HTMLButtonElement)) {
+      return;
+    }
+    切换词频字数(Number(标签.dataset.字数));
+  }
+
+  function 处理词频标签键盘(事件) {
+    if (事件.key !== 'ArrowLeft' && 事件.key !== 'ArrowRight') {
+      return;
+    }
+    const 标签列表 = [...元素.词频标签栏.querySelectorAll('.词频标签')];
+    const 当前idx = 标签列表.indexOf(事件.target);
+    if (当前idx === -1) {
+      return;
+    }
+    事件.preventDefault();
+    const 步进 = 事件.key === 'ArrowRight' ? 1 : -1;
+    const 目标标签 =
+      标签列表[(当前idx + 步进 + 标签列表.length) % 标签列表.length];
+    切换词频字数(Number(目标标签.dataset.字数));
+    目标标签.focus();
+  }
+
+  function 切换词频字数(字数) {
+    当前词频字数 = 字数;
+    当前词频页码 = 1;
+    for (const 标签 of 元素.词频标签栏.querySelectorAll('.词频标签')) {
+      const 是当前 = Number(标签.dataset.字数) === 字数;
+      标签.classList.toggle('当前', 是当前);
+      标签.setAttribute('aria-selected', String(是当前));
+      标签.tabIndex = 是当前 ? 0 : -1;
+    }
+    渲染词频页();
+  }
+
+  function 渲染词频页() {
+    const 分析 = 状态.词频分析;
+    if (!分析) {
+      return;
+    }
+    const 统计列表 = 分析.列表[当前词频字数];
+    const 总页数 = Math.max(1, Math.ceil(统计列表.length / 每页词频数));
+    当前词频页码 = Math.min(总页数, Math.max(1, 当前词频页码));
+    const 起点 = (当前词频页码 - 1) * 每页词频数;
+    const 本页列表 = 统计列表.slice(起点, 起点 + 每页词频数);
+    const 表格片段 = document.createDocumentFragment();
+    for (const [idx, 统计项] of 本页列表.entries()) {
+      const 行 = document.createElement('tr');
+      const 排名单元格 = document.createElement('td');
+      const 字词单元格 = document.createElement('td');
+      const 频次单元格 = document.createElement('td');
+      排名单元格.textContent = (起点 + idx + 1).toLocaleString('zh-CN');
+      字词单元格.textContent = 统计项.文本;
+      频次单元格.textContent = 统计项.数量.toLocaleString('zh-CN');
+      行.append(排名单元格, 字词单元格, 频次单元格);
+      表格片段.append(行);
+    }
+
+    const 类型名称 = ['单字', '二字组合', '三字组合'][当前词频字数 - 1];
+    元素.词频摘要.textContent = `${分析.汉字数.toLocaleString('zh-CN')} 个汉字 · ${统计列表.length.toLocaleString('zh-CN')} 种${类型名称}`;
+    元素.词频列表.replaceChildren(表格片段);
+    元素.词频页码.textContent = `${当前词频页码.toLocaleString('zh-CN')} / ${总页数.toLocaleString('zh-CN')}`;
+    元素.词频上一页.disabled = 当前词频页码 === 1;
+    元素.词频下一页.disabled = 当前词频页码 === 总页数;
+    元素.词频分页.hidden = 总页数 === 1;
+    元素.词频表格容器.scrollTop = 0;
+  }
+
+  function 统计全文词频(全文) {
+    const 词频映射 = { 1: new Map(), 2: new Map(), 3: new Map() };
+    const 连续汉字 = [];
+    let 汉字数 = 0;
+    let 文本位置 = 0;
+
+    for (const 字 of 全文) {
+      if (!汉字模式.test(字)) {
+        连续汉字.length = 0;
+        文本位置 += 字.length;
+        continue;
+      }
+      汉字数 += 1;
+      连续汉字.push({ 字, 位置: 文本位置 });
+      if (连续汉字.length > 3) {
+        连续汉字.shift();
+      }
+      for (let 字数 = 1; 字数 <= 连续汉字.length; 字数 += 1) {
+        const 起点 = 连续汉字.length - 字数;
+        const 字词 = 连续汉字
+          .slice(起点)
+          .map(function 读取汉字(项) {
+            return 项.字;
+          })
+          .join('');
+        记录词频(词频映射[字数], 字词, 连续汉字[起点].位置);
+      }
+      文本位置 += 字.length;
+    }
+
+    const 列表 = {};
+    for (const 字数 of [1, 2, 3]) {
+      列表[字数] = [...词频映射[字数]]
+        .map(function 转换词频项([文本, 统计]) {
+          return { 文本, 数量: 统计.数量, 首次位置: 统计.首次位置 };
+        })
+        .sort(function 排序词频(左项, 右项) {
+          return 右项.数量 - 左项.数量 || 左项.首次位置 - 右项.首次位置;
+        });
+    }
+    return { 汉字数, 列表 };
+
+    function 记录词频(映射, 字词, 首次位置) {
+      const 已有统计 = 映射.get(字词);
+      if (已有统计) {
+        已有统计.数量 += 1;
+        return;
+      }
+      映射.set(字词, { 数量: 1, 首次位置 });
     }
   }
 
@@ -2284,6 +2494,7 @@ function 应用文本(原始文本, 文件名) {
 
   状态.文本 = 文本;
   状态.指示器缓存 = null;
+  状态.词频分析 = null;
   状态.文件名 = 文件名;
   状态.引文边界列表 = 句子整理结果.引文边界列表;
   状态.缩进起点集合 = 缩进起点集合;
@@ -3605,7 +3816,12 @@ function 获取关键词配色(关键词) {
 }
 
 function 有弹窗打开() {
-  return 元素.查找弹窗.open || 元素.上下文弹窗.open || !元素.字体弹窗.hidden;
+  return (
+    元素.查找弹窗.open ||
+    元素.上下文弹窗.open ||
+    元素.词频弹窗.open ||
+    !元素.字体弹窗.hidden
+  );
 }
 
 function 切换关键词排序(排序方式) {

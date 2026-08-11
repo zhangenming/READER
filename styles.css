@@ -1433,6 +1433,195 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   animation: 查找弹窗进入 140ms ease-out;
 }
 
+.词频弹窗 {
+  width: min(620px, calc(100vw - 32px));
+  max-height: calc(100dvh - 48px);
+  margin: 24px auto;
+  padding: 0;
+  overflow: hidden;
+  color: var(--墨色);
+  font-family: 'Avenir Next', 'PingFang SC', sans-serif;
+  background: var(--纸张色);
+  border: 1px solid #cbd2ce;
+  border-radius: 6px;
+  box-shadow: 0 12px 34px rgb(32 37 34 / 18%);
+}
+
+.词频弹窗::backdrop {
+  background: rgb(32 37 34 / 8%);
+}
+
+.词频弹窗[open] {
+  display: flex;
+  flex-direction: column;
+  animation: 查找弹窗进入 140ms ease-out;
+}
+
+.词频标题栏 {
+  display: flex;
+  min-height: 66px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--边线色);
+}
+
+.词频标题 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+.词频摘要 {
+  margin: 1px 0 0;
+  color: var(--次要墨色);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  line-height: 18px;
+}
+
+.词频标签栏 {
+  display: flex;
+  gap: 4px;
+  padding: 10px 16px 0;
+  border-bottom: 1px solid var(--边线色);
+}
+
+.词频标签 {
+  padding: 8px 16px;
+  color: var(--次要墨色);
+  font:
+    13px/1 'Avenir Next',
+    'PingFang SC',
+    sans-serif;
+  font-weight: 600;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.词频标签:hover {
+  color: var(--墨色);
+  background: rgb(32 37 34 / 4%);
+}
+
+.词频标签.当前 {
+  color: var(--墨色);
+  border-bottom-color: var(--选中色);
+}
+
+.词频标签:focus-visible,
+.词频分页 button:focus-visible {
+  outline: 2px solid var(--选中色);
+  outline-offset: -2px;
+}
+
+.词频表格容器 {
+  min-height: 220px;
+  max-height: calc(100dvh - 224px);
+  overflow: auto;
+  scrollbar-color: #aab3ad transparent;
+  scrollbar-width: thin;
+}
+
+.词频表格 {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 13px;
+}
+
+.词频表格 th,
+.词频表格 td {
+  height: 34px;
+  padding: 6px 16px;
+  border-bottom: 1px solid #e4e8e5;
+}
+
+.词频表格 th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  color: var(--次要墨色);
+  font-size: 11px;
+  font-weight: 700;
+  text-align: left;
+  background: #f5f7f5;
+}
+
+.词频表格 th:first-child,
+.词频表格 td:first-child {
+  width: 92px;
+  color: var(--次要墨色);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.词频表格 th:nth-child(2),
+.词频表格 td:nth-child(2) {
+  text-align: center;
+}
+
+.词频表格 th:last-child,
+.词频表格 td:last-child {
+  width: 112px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.词频表格 tbody tr:hover {
+  background: #f8f9f8;
+}
+
+.词频分页 {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border-top: 1px solid var(--边线色);
+}
+
+.词频分页[hidden] {
+  display: none;
+}
+
+.词频分页 button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  padding: 0;
+  color: var(--墨色);
+  font:
+    22px/1 'Avenir Next',
+    sans-serif;
+  background: transparent;
+  border: 1px solid var(--边线色);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.词频分页 button:hover:not(:disabled) {
+  background: var(--背景色);
+  border-color: #aeb8b2;
+}
+
+.词频分页 button:disabled {
+  color: var(--边线色);
+  cursor: default;
+}
+
+.词频分页 output {
+  min-width: 9ch;
+  color: var(--次要墨色);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
 .上下文标题栏 {
   display: flex;
   align-items: center;
@@ -1581,7 +1770,8 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 @media (prefers-reduced-motion: reduce) {
   .载入线::after,
   .查找弹窗[open],
-  .上下文弹窗[open] {
+  .上下文弹窗[open],
+  .词频弹窗[open] {
     animation: none;
   }
 
@@ -1608,6 +1798,17 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 
   .上下文弹窗 {
     margin-top: 12px;
+  }
+
+  .词频弹窗 {
+    width: calc(100vw - 24px);
+    max-height: calc(100dvh - 24px);
+    margin: 12px auto;
+  }
+
+  .词频表格容器 {
+    min-height: 120px;
+    max-height: calc(100dvh - 200px);
   }
 
   .上下文行 {

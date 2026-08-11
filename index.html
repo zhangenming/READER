@@ -185,6 +185,91 @@
       <div id="上下文列表" class="上下文列表"></div>
     </dialog>
 
+    <dialog id="词频弹窗" class="词频弹窗" aria-labelledby="词频标题">
+      <div class="词频标题栏">
+        <div>
+          <h2 id="词频标题" class="词频标题">词频分析</h2>
+          <p id="词频摘要" class="词频摘要" aria-live="polite">正在统计全文</p>
+        </div>
+        <button
+          id="关闭词频按钮"
+          class="关闭查找按钮"
+          type="button"
+          aria-label="关闭词频分析"
+          title="关闭"
+        >
+          ×
+        </button>
+      </div>
+      <div
+        id="词频标签栏"
+        class="词频标签栏"
+        role="tablist"
+        aria-label="词频字数"
+      >
+        <button
+          class="词频标签 当前"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          data-字数="1"
+        >
+          单字
+        </button>
+        <button
+          class="词频标签"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          tabindex="-1"
+          data-字数="2"
+        >
+          二字
+        </button>
+        <button
+          class="词频标签"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          tabindex="-1"
+          data-字数="3"
+        >
+          三字
+        </button>
+      </div>
+      <div id="词频表格容器" class="词频表格容器">
+        <table class="词频表格">
+          <thead>
+            <tr>
+              <th scope="col">排名</th>
+              <th scope="col">字词</th>
+              <th scope="col">频次</th>
+            </tr>
+          </thead>
+          <tbody id="词频列表"></tbody>
+        </table>
+      </div>
+      <div id="词频分页" class="词频分页" hidden>
+        <button
+          id="词频上一页"
+          type="button"
+          aria-label="上一页"
+          title="上一页"
+        >
+          ‹
+        </button>
+        <output id="词频页码">1 / 1</output>
+        <button
+          id="词频下一页"
+          type="button"
+          aria-label="下一页"
+          title="下一页"
+        >
+          ›
+        </button>
+      </div>
+    </dialog>
+
     <div id="字体遮罩" class="字体遮罩" hidden></div>
     <div
       id="字体弹窗"
