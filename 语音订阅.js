@@ -96,6 +96,14 @@
     return 余.length === 0;
   }
 
+  function 仅英文单词指令(文本, 单词) {
+    const 规范文本 = 文本
+      .trim()
+      .toLowerCase()
+      .replace(/[，。、,.!?；;：:"'（）()\[\]【】「」『』""''~～—]/g, '');
+    return 规范文本 === 单词;
+  }
+
   function 识别指令(文本) {
     if (!文本) {
       return null;
@@ -125,6 +133,9 @@
       return '上一页';
     }
     if (有下 && 仅单字指令(文本, '下')) {
+      return '下一页';
+    }
+    if (仅英文单词指令(文本, 'down')) {
       return '下一页';
     }
     return null;
