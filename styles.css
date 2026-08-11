@@ -1516,9 +1516,50 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 }
 
 .词频标签:focus-visible,
+.单字列表切换 button:focus-visible,
 .词频分页 button:focus-visible {
   outline: 2px solid var(--选中色);
   outline-offset: -2px;
+}
+
+.单字列表切换 {
+  display: flex;
+  width: max-content;
+  gap: 2px;
+  padding: 2px;
+  margin: 8px 16px;
+  background: var(--背景色);
+  border: 1px solid var(--边线色);
+  border-radius: 4px;
+}
+
+.单字列表切换[hidden] {
+  display: none;
+}
+
+.单字列表切换 button {
+  height: 28px;
+  padding: 0 10px;
+  color: var(--次要墨色);
+  font:
+    12px/1 'Avenir Next',
+    'PingFang SC',
+    sans-serif;
+  font-weight: 600;
+  background: transparent;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.单字列表切换 button:hover {
+  color: var(--墨色);
+}
+
+.单字列表切换 button.当前 {
+  color: var(--墨色);
+  background: var(--纸张色);
+  box-shadow: 0 0 0 1px #cbd2ce;
 }
 
 .词频表格容器 {
@@ -1812,6 +1853,10 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   .词频表格容器 {
     min-height: 120px;
     max-height: calc(100dvh - 200px);
+  }
+
+  .单字列表切换 {
+    margin-inline: 12px;
   }
 
   .上下文行 {
