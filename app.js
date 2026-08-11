@@ -109,14 +109,6 @@ const 可选字体列表 = [
     名称: '苹方（PingFang SC）',
     值: "'PingFang SC', 'Hiragino Sans GB', sans-serif",
   },
-  {
-    名称: '微软雅黑（Microsoft YaHei）',
-    值: "'Microsoft YaHei', 'PingFang SC', sans-serif",
-  },
-  {
-    名称: '思源黑体（Noto Sans CJK SC）',
-    值: "'Noto Sans CJK SC', 'PingFang SC', sans-serif",
-  },
   { 名称: '仿宋（FangSong）', 值: "'FangSong', 'STFangsong', serif" },
   { 名称: '系统衬线（serif）', 值: 'serif' },
   { 名称: '系统无衬线（sans-serif）', 值: 'sans-serif' },
