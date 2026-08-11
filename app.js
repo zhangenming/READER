@@ -49,6 +49,14 @@ const 默认字号 = 30;
 const 最小字号 = 16;
 const 最大字号 = 72;
 const 字号步进 = 2;
+const 默认行高 = 30; // 与 CSS --行高 默认值（=正文字号）一致
+const 最小行高硬下限 = 16;
+const 最大行高 = 240;
+const 行高步进 = 2;
+// 行高不应低于当前字号，否则相邻行字身会重叠；下限随字号联动。
+function 计算最小行高() {
+  return Math.max(最小行高硬下限, Math.round(状态.字号));
+}
 const 自动滚动滚轮灵敏系数 = 0.1; // 每格指数强度；越小越柔和、节奏越慢
 const 自动滚动滚轮死区 = 3; // 像素；过滤触控板/鼠标的细微抖动，避免速度剧烈跳变
 const 自动滚动滚轮归一化 = 120; // 像素；单格滚轮对应的归一化基准，用于把 deltaY 映射到 [-1, 1]
@@ -177,6 +185,8 @@ const 元素 = {
   字号缩小: document.querySelector('#字号缩小'),
   字号值: document.querySelector('#字号值'),
   字号放大: document.querySelector('#字号放大'),
+  行距控制: document.querySelector('#行距控制'),
+  行距值: document.querySelector('#行距值'),
   关键词面板: document.querySelector('#关键词面板'),
   关键词面板开关: document.querySelector('#关键词面板开关'),
   关键词列表容器: document.querySelector('#关键词列表容器'),
@@ -401,6 +411,11 @@ function 绑定事件() {
   元素.字号缩小.addEventListener('click', () => 调整字号(状态.字号 - 字号步进));
   元素.字号放大.addEventListener('click', () => 调整字号(状态.字号 + 字号步进));
   元素.字号值.addEventListener('click', () => 调整字号(默认字号));
+  元素.行距控制.addEventListener('wheel', 处理行距滚轮, { passive: false });
+  // 点击恢复默认行距（= 当前字号，即 1.0 倍行距）
+  元素.行距控制.addEventListener('click', () => 调整行高(状态.字号));
+  元素.行距控制.addEventListener('mouseenter', 进入行距调节);
+  元素.行距控制.addEventListener('mouseleave', 离开行距调节);
   元素.字体标签引号内.addEventListener('click', () => 切换字体标签('引号内'));
   元素.字体标签引号外.addEventListener('click', () => 切换字体标签('引号外'));
   元素.字体标签全部.addEventListener('click', () => 切换字体标签('全部'));
@@ -437,7 +452,7 @@ function 绑定事件() {
   // 右下角控件悬停热区（鼠标 / 触摸）与键盘聚焦时显示
   window.addEventListener('mousemove', 处理右下控件悬停, { passive: true });
   window.addEventListener('touchstart', 处理右下控件触摸, { passive: true });
-  for (const 控件 of [元素.字号控制, 元素.自动滚动按钮, 元素.关键词面板开关]) {
+  for (const 控件 of [元素.字号控制, 元素.自动滚动按钮, 元素.关键词面板开关, 元素.行距控制]) {
     if (!控件) {
       continue;
     }
@@ -718,6 +733,72 @@ function 绑定事件() {
   let shift最后松开时间 = 0; // 最近一次「干净」Shift 松开的时间戳（performance.now），用于双击判定
   let 待导航参数 = null; // Ctrl 导航待执行参数：Ctrl 先于其它修饰键松开时，推迟到「全部松开」再跳转
 
+  // ===== 语音翻页：监听「语音翻页」语义事件（由 语音订阅.js 在识别到
+  // 「上一页 / 下一页」指令时派发），立即同步翻页，无需任何手动确认。
+  // 映射：上一页 → 向后翻（回到上一屏）；下一页 → 向前翻（下一屏）。
+  function 翻页整屏(向上) {
+    取消滚动动画();
+    结束跳转会话('语音翻页');
+    const 滚动行数 = Math.max(
+      1,
+      Math.ceil(元素.滚动容器.clientHeight / 状态.行高),
+    );
+    const 当前行idx = Math.round(元素.滚动容器.scrollTop / 状态.行高);
+    const 最大顶部行idx = Math.round(
+      (元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight) / 状态.行高,
+    );
+    const 目标行idx = Math.min(
+      最大顶部行idx,
+      Math.max(0, 当前行idx + (向上 ? -滚动行数 : 滚动行数)),
+    );
+    元素.滚动容器.scrollTop = 目标行idx * 状态.行高;
+    渲染可见行(true);
+    安排保存持久化状态();
+    console.info('[阅读器] 已按整页翻动', {
+      指令: 向上 ? '上一页（向后翻）' : '下一页（向前翻）',
+      起始行: 当前行idx,
+      目标行: 目标行idx,
+      滚动行数: Math.abs(目标行idx - 当前行idx),
+    });
+  }
+
+  function 处理语音翻页(事件) {
+    const 指令 = 事件.detail && 事件.detail.指令;
+    if (指令 !== '上一页' && 指令 !== '下一页') {
+      return;
+    }
+    if (!状态.行起点列表.length) {
+      // 正文尚未载入时不执行翻页，避免给出错误反馈
+      console.info('[阅读器] 语音翻页被忽略', { 原因: '正文未载入', 指令 });
+      return;
+    }
+    // 上一页 = 向后翻（回到上一屏，向上）；下一页 = 向前翻（下一屏，向下）
+    翻页整屏(指令 === '上一页');
+    // 回传当前页码，确保语音指令与导航状态一致、可见
+    try {
+      const 视口行数 = Math.max(
+        1,
+        Math.ceil(元素.滚动容器.clientHeight / 状态.行高),
+      );
+      const 当前行idx = Math.round(元素.滚动容器.scrollTop / 状态.行高);
+      const 最大顶部行idx = Math.round(
+        (元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight) /
+          状态.行高,
+      );
+      const 当前页 = Math.floor(当前行idx / 视口行数) + 1;
+      const 总页 = Math.max(1, Math.floor(最大顶部行idx / 视口行数) + 1);
+      window.dispatchEvent(
+        new CustomEvent('语音翻页完成', {
+          detail: { 指令, 当前页, 总页 },
+        }),
+      );
+    } catch {
+      /* 回传失败不影响翻页 */
+    }
+  }
+
+  window.addEventListener('语音翻页', 处理语音翻页);
+
   function 处理键盘按下(事件) {
     // Esc 关闭字体设置弹窗（div 弹窗无原生 close，需手动处理）
     if (事件.key === 'Escape' && !元素.字体弹窗.hidden) {
@@ -836,7 +917,7 @@ function 绑定事件() {
     ) {
       事件.preventDefault();
       document.body.classList.add('自动滚动中');
-      按整页滚动(事件.shiftKey);
+      翻页整屏(事件.shiftKey);
       return;
     }
 
@@ -934,33 +1015,6 @@ function 绑定事件() {
       阅读偏移: 跳转起点.阅读偏移,
       边框动画: 已启用边框动画,
     });
-
-    function 按整页滚动(向上) {
-      取消滚动动画();
-      结束跳转会话('Space 翻页');
-      const 滚动行数 = Math.max(
-        1,
-        Math.ceil(元素.滚动容器.clientHeight / 状态.行高),
-      );
-      const 当前行idx = Math.round(元素.滚动容器.scrollTop / 状态.行高);
-      const 最大顶部行idx = Math.round(
-        (元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight) / 状态.行高,
-      );
-      const 目标行idx = Math.min(
-        最大顶部行idx,
-        Math.max(0, 当前行idx + (向上 ? -滚动行数 : 滚动行数)),
-      );
-
-      元素.滚动容器.scrollTop = 目标行idx * 状态.行高;
-      渲染可见行(true);
-      安排保存持久化状态();
-      console.info('[阅读器] 已按整页滚动', {
-        方向: 向上 ? '向上' : '向下',
-        起始行: 当前行idx,
-        目标行: 目标行idx,
-        滚动行数: Math.abs(目标行idx - 当前行idx),
-      });
-    }
   }
 
   function 处理键盘松开(事件) {
@@ -1584,6 +1638,10 @@ function 绑定事件() {
   }
 
   function 处理自动滚动滚轮(事件) {
+    // 滚轮发生在行距控件上时，交给行距滚轮处理（调整行距），不干扰自动滚动速度
+    if (元素.行距控制 && 元素.行距控制.contains(事件.target)) {
+      return;
+    }
     if (!自动滚动状态) {
       return;
     }
@@ -2075,6 +2133,89 @@ function 更新字号显示() {
   元素.字号值.setAttribute('aria-label', `当前字号 ${状态.字号}，点击恢复默认`);
 }
 
+/* ===== 行距（行间距）控制 =====
+   行距仅影响垂直间距与滚动定位，不改变横向换行逻辑，因此调整时无需重建行索引：
+   直接同步 CSS 变量与 状态.行高，按当前阅读位置比例缩放 scrollTop 以保持视觉稳定，
+   再重算画布高度并重绘可见行即可。后续任意「尺寸变化」路径会基于最新的 --行高
+   重新建立一致的排版键，行为自洽。 */
+function 调整行高(目标值) {
+  const 下限 = 计算最小行高();
+  const 新值 = Math.max(下限, Math.min(最大行高, Math.round(目标值)));
+  if (新值 === 状态.行高) {
+    return;
+  }
+  const 旧行高 = 状态.行高;
+  状态.行高 = 新值;
+  document.documentElement.style.setProperty('--行高', 新值 + 'px');
+  // 保持当前文本行在屏幕上的视觉位置稳定：按比例缩放滚动偏移
+  const 比例 = 新值 / 旧行高;
+  元素.滚动容器.scrollTop = 元素.滚动容器.scrollTop * 比例;
+  设置画布高度(状态.行起点列表.length * 新值);
+  渲染可见行(true);
+  更新关键词指示器();
+  更新行高显示();
+  安排保存持久化状态();
+  console.info('[阅读器] 行距已调整', { 行高: 新值 });
+}
+
+function 更新行高显示() {
+  const 值 = Math.round(状态.行高);
+  元素.行距值.textContent = String(值);
+  const 倍数 = 状态.字号 > 0 ? 值 / 状态.字号 : 0;
+  元素.行距控制.setAttribute(
+    'aria-label',
+    `当前行距 ${值} 像素，约 ${倍数.toFixed(2)} 倍字号，悬停滚轮调节，点击恢复默认`,
+  );
+}
+
+// 悬停行距控件时滚轮实时调整行距：上滚（deltaY<0）增大间距，下滚减小。
+function 处理行距滚轮(事件) {
+  事件.preventDefault();
+  事件.stopPropagation();
+  let 增量 = 事件.deltaY;
+  if (事件.deltaMode === WheelEvent.DOM_DELTA_LINE) {
+    增量 *= 16;
+  } else if (事件.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
+    增量 *= 元素.滚动容器.clientHeight;
+  }
+  const 步数 = Math.sign(增量) || 0;
+  if (步数 === 0) {
+    return;
+  }
+  调整行高(状态.行高 + 步数 * 行高步进);
+}
+
+// 悬停期间给按钮加高亮态，提示「滚轮可调节」
+function 进入行距调节() {
+  元素.行距控制.classList.add('滚轮调节中');
+}
+
+function 离开行距调节() {
+  元素.行距控制.classList.remove('滚轮调节中');
+}
+
+function 读取持久化行高() {
+  const 原始 = localStorage.getItem(持久化键);
+  if (!原始) {
+    return null;
+  }
+  try {
+    const 数据 = JSON.parse(原始);
+    const 值 = 数据.行高;
+    if (
+      typeof 值 === 'number' &&
+      Number.isFinite(值) &&
+      值 >= 最小行高硬下限 &&
+      值 <= 最大行高
+    ) {
+      return 值;
+    }
+  } catch {
+    /* 持久化格式损坏时忽略，回退默认 */
+  }
+  return null;
+}
+
 function 读取持久化字号() {
   const 原始 = localStorage.getItem(持久化键);
   if (!原始) {
@@ -2121,6 +2262,22 @@ function 应用文本(原始文本, 文件名) {
     状态.字号 = 基础字号;
   }
   更新字号显示();
+
+  // 在排版计算前恢复持久化的行距，使行索引按用户设定行高建立（与字号同理）；
+  // 无持久化值时回退到 CSS（--行高 默认 = 正文字号），并同步状态与显示。
+  const 根计算样式行高 = getComputedStyle(document.documentElement);
+  const 计算行高 = Number.parseFloat(根计算样式行高.getPropertyValue('--行高'));
+  const 基础行高 =
+    Number.isFinite(计算行高) && 计算行高 > 0 ? 计算行高 : 默认行高;
+  const 持久化行高 = 读取持久化行高();
+  if (持久化行高 !== null) {
+    状态.行高 = 持久化行高;
+    document.documentElement.style.setProperty('--行高', 持久化行高 + 'px');
+  } else {
+    状态.行高 = 基础行高;
+    document.documentElement.style.setProperty('--行高', 基础行高 + 'px');
+  }
+  更新行高显示();
 
   const 排版 = 读取正文排版();
   const 行索引 = 创建行索引(文本, 排版, 缩进起点集合);
@@ -2182,6 +2339,19 @@ function 应用文本(原始文本, 文件名) {
         throw new RangeError('持久化的自动滚动速度超出有效范围');
       }
       状态.自动滚动速度 = 持久化状态.自动滚动速度;
+    }
+    // 行距恢复：仅在数值合法且在有效范围内时应用，避免损坏的持久化数据导致崩溃；
+    // 此处先更新 状态.行高 与 --行高，使后续 计算阅读位置 按用户设定行高定位。
+    if (
+      持久化状态.行高 !== undefined &&
+      typeof 持久化状态.行高 === 'number' &&
+      Number.isFinite(持久化状态.行高) &&
+      持久化状态.行高 >= 计算最小行高() &&
+      持久化状态.行高 <= 最大行高
+    ) {
+      状态.行高 = 持久化状态.行高;
+      document.documentElement.style.setProperty('--行高', 持久化状态.行高 + 'px');
+      更新行高显示();
     }
     if (
       持久化状态.文件名 !== 状态.文件名 ||
@@ -4362,6 +4532,7 @@ function 保存持久化状态() {
       关键词排序: 状态.关键词排序,
       自动滚动速度: 状态.自动滚动速度,
       字号: 状态.字号,
+      行高: 状态.行高,
       字体: { 引号内: 字体设置.引号内, 引号外: 字体设置.引号外 },
       关键词列表: 状态.关键词列表.map(function 序列化关键词(关键词) {
         return {

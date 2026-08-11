@@ -1,14 +1,25 @@
-// 语音转录订阅：把声音远程服务器广播的每条信息打印到浏览器控制台
+// 语音转录订阅 + 语音翻页指令识别（无界面后台版）
+// ------------------------------------------------------------
 // 连接：wss://localhost:15941（声音远程服务器，自签名证书，需已在浏览器信任 https://localhost:15941）
 // 地址可被 URL 参数 ?ws= 覆盖（如 ?ws=wss://localhost:3000），改端口时无需改本文件
 // 房间：默认 main，可用 URL 参数 ?room=xxx 覆盖
-// 独立性：不依赖 app.js，页面其余功能不受影响；服务器未启动时仅控制台提示，不打扰阅读
+// 独立性：不依赖 app.js，本脚本只负责“识别语音指令”并派发 window
+//   事件「语音翻页」（detail: {指令:'上一页'|'下一页'}）；翻页动作由 app.js 监听后执行。
+//   识别到指令后立即派发，阅读器同步翻页，无需任何手动确认。
+// 不创建任何 DOM 与样式，识别在后台静默进行；所有日志仅输出到控制台。
 'use strict';
 
 (function () {
   const 参数 = new URLSearchParams(location.search);
   const 房间 = 参数.get('room') || 'main';
   const 地址 = 参数.get('ws') || 'wss://localhost:15941';
+
+  // 触发冷却：避免流式转写把同一句话反复推送导致连续狂翻页
+  const 冷却毫秒 = 900;
+  let 上次触发时间 = 0;
+  let 上次触发指令 = null;
+  let 最近文本 = '';
+
   let 重试次数 = 0;
   let 连接 = null;
 
@@ -20,11 +31,141 @@
     console.log(`[语音转录 ${时间戳()}] ${消息.type}`, 消息);
   }
 
+  // ===== 转写文本提取（兼容多种服务器报文结构）=====
+  function 提取文本(消息) {
+    if (!消息 || typeof 消息 !== 'object') {
+      return '';
+    }
+    const 候选 = [
+      'text',
+      'transcript',
+      'result',
+      'final',
+      'data',
+      'content',
+      'message',
+      'recognized',
+      'recognizedText',
+      'bestAlternative',
+      'alternatives',
+    ];
+    for (const 键 of 候选) {
+      const 值 = 消息[键];
+      if (typeof 值 === 'string' && 值.trim()) {
+        return 值;
+      }
+      if (值 && typeof 值 === 'object') {
+        if (typeof 值.text === 'string' && 值.text.trim()) {
+          return 值.text;
+        }
+        const 候选数组 = Array.isArray(值) ? 值 : 值.alternatives;
+        if (Array.isArray(候选数组) && 候选数组[0] && 候选数组[0].text) {
+          return 候选数组[0].text;
+        }
+      }
+    }
+    return '';
+  }
+
+  // 判定报文是否代表“最终/稳定”结果：true=最终，false=中间结果，null=未知（按默认策略处理）
+  function 判定最终性(消息) {
+    if (!消息 || typeof 消息 !== 'object') {
+      return null;
+    }
+    const 类型 = String(消息.type || '').toLowerCase();
+    if (/(final|result|complete|sentence|utterance|speech\.?end|done|stop|recognition)/.test(类型)) {
+      return true;
+    }
+    if (/(partial|interim|hypothesis|temp|speaking|alt)/.test(类型)) {
+      return false;
+    }
+    if (消息.isFinal === true || 消息.final === true) {
+      return true;
+    }
+    if (消息.isPartial === true || 消息.partial === true) {
+      return false;
+    }
+    return null;
+  }
+
+  function 仅单字指令(文本, 字) {
+    // 去掉目标字与常见标点/空白后若为空，说明整句基本只有该字，可作为单独指令
+    const 余 = 文本
+      .replace(new RegExp(字, 'g'), '')
+      .replace(/[\s，。、,.!?；;：:"'（）()\[\]【】「」『』""''~～—]/g, '');
+    return 余.length === 0;
+  }
+
+  function 识别指令(文本) {
+    if (!文本) {
+      return null;
+    }
+    // 优先匹配完整指令
+    const 有上一页 = 文本.includes('上一页');
+    const 有下一页 = 文本.includes('下一页');
+    if (有上一页 && 有下一页) {
+      // 同一句同时出现，取先出现的那个
+      return 文本.indexOf('上一页') <= 文本.indexOf('下一页') ? '上一页' : '下一页';
+    }
+    if (有上一页) {
+      return '上一页';
+    }
+    if (有下一页) {
+      return '下一页';
+    }
+
+    // 同时适配单字指令「上 / 下」（分别等同上一页 / 下一页）。
+    // 仅当整句基本只有该字（可含标点/空白）时才触发，避免“上午好 / 下面”等误触。
+    const 有上 = 文本.includes('上');
+    const 有下 = 文本.includes('下');
+    if (有上 && 有下 && 仅单字指令(文本, '上') && 仅单字指令(文本, '下')) {
+      return 文本.indexOf('上') <= 文本.indexOf('下') ? '上一页' : '下一页';
+    }
+    if (有上 && 仅单字指令(文本, '上')) {
+      return '上一页';
+    }
+    if (有下 && 仅单字指令(文本, '下')) {
+      return '下一页';
+    }
+    return null;
+  }
+
+  function 触发翻页(指令) {
+    window.dispatchEvent(
+      new CustomEvent('语音翻页', { detail: { 指令, 原文: 最近文本 } }),
+    );
+  }
+
+  function 处理转录消息(消息) {
+    打印收到的信息(消息);
+    最近文本 = 提取文本(消息);
+    if (!最近文本) {
+      return;
+    }
+    const 指令 = 识别指令(最近文本);
+    if (!指令) {
+      return;
+    }
+    const 最终性 = 判定最终性(消息);
+    if (最终性 === false) {
+      // 明确的中间结果：不触发翻页（避免半句误触）
+      return;
+    }
+    // 冷却：同一指令在冷却期内不重复触发（流式转写可能多次推送同一句）
+    const 现在 = performance.now();
+    if (现在 - 上次触发时间 < 冷却毫秒 && 指令 === 上次触发指令) {
+      return;
+    }
+    上次触发时间 = 现在;
+    上次触发指令 = 指令;
+    触发翻页(指令);
+  }
+
   function 连接服务器() {
     if (
       连接 &&
       (连接.readyState === WebSocket.OPEN ||
-       连接.readyState === WebSocket.CONNECTING)
+        连接.readyState === WebSocket.CONNECTING)
     ) {
       return;
     }
@@ -47,7 +188,7 @@
       } catch {
         return;
       }
-      打印收到的信息(消息);
+      处理转录消息(消息);
     };
     连接.onclose = () => {
       const 间隔 = Math.min(1000 * Math.pow(2, 重试次数), 10000);

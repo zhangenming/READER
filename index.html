@@ -13,7 +13,7 @@
       as="fetch"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260807-01" />
+    <link rel="stylesheet" href="./styles.css?v=20260808-01" />
   </head>
   <body>
     <main class="阅读区域">
@@ -110,6 +110,17 @@
         ＋
       </button>
     </div>
+    <button
+      id="行距控制"
+      class="行距控制"
+      type="button"
+      aria-label="当前行距 30 像素，悬停滚轮调节，点击恢复默认"
+      title="悬停滚轮调节行距 · 点击恢复默认"
+    >
+      <span class="行距标签">行距</span>
+      <span id="行距值" class="行距值">30</span>
+      <span class="行距单位">px</span>
+    </button>
     <div id="跳转边框" class="跳转边框" aria-hidden="true" hidden></div>
     <div id="跳转迸发" class="跳转迸发" aria-hidden="true" hidden></div>
 
@@ -269,7 +280,7 @@
         });
       })();
     </script>
-    <script src="./app.js?v=20260806-05" defer></script>
-    <script src="./语音订阅.js?v=20260808-02" defer></script>
+    <script src="./app.js?v=20260808-02" defer></script>
+    <script src="./语音订阅.js?v=20260808-05" defer></script>
   </body>
 </html>
