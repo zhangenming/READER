@@ -715,7 +715,7 @@ body.右下面板展开 .关键词面板开关 {
   contain: layout style;
 }
 
-/* 悬停命中项的 x/y 徽标会溢出行底，避免被相邻行裁掉。 */
+/* 悬停命中项的 x/y 徽标会溢出行顶，避免被相邻行裁掉。 */
 .正文行:has(.悬停命中) {
   position: relative;
   z-index: 2;
@@ -929,8 +929,8 @@ body.右下面板展开 .关键词面板开关 {
 
 .字.命中:is(.当前命中, .悬停命中)[data-hit-position]::after {
   position: absolute;
+  top: -7px;
   right: -3px;
-  bottom: -7px;
   z-index: 2;
   min-width: 18px;
   padding: 1px 2px;
