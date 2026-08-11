@@ -1477,6 +1477,9 @@ function 绑定事件() {
         单字种数: 状态.词频分析.列表[1].length,
         二字种数: 状态.词频分析.列表[2].length,
         三字种数: 状态.词频分析.列表[3].length,
+        四字种数: 状态.词频分析.列表[4].length,
+        五字种数: 状态.词频分析.列表[5].length,
+        六字种数: 状态.词频分析.列表[6].length,
         耗时毫秒: Math.round(performance.now() - 开始时间),
       });
     });
@@ -1556,7 +1559,10 @@ function 绑定事件() {
       表格片段.append(行);
     }
 
-    const 类型名称 = ['单字', '二字组合', '三字组合'][当前词频字数 - 1];
+    const 类型名称 =
+      当前词频字数 === 1
+        ? '单字'
+        : `${['二', '三', '四', '五', '六'][当前词频字数 - 2]}字组合`;
     元素.词频摘要.textContent = `${分析.汉字数.toLocaleString('zh-CN')} 个汉字 · ${统计列表.length.toLocaleString('zh-CN')} 种${类型名称}`;
     元素.词频列表.replaceChildren(表格片段);
     元素.词频页码.textContent = `${当前词频页码.toLocaleString('zh-CN')} / ${总页数.toLocaleString('zh-CN')}`;
@@ -1567,7 +1573,9 @@ function 绑定事件() {
   }
 
   function 统计全文词频(全文) {
-    const 词频映射 = { 1: new Map(), 2: new Map(), 3: new Map() };
+    const 词频映射 = Array.from({ length: 7 }, function 创建词频映射() {
+      return new Map();
+    });
     const 连续汉字 = [];
     let 汉字数 = 0;
     let 文本位置 = 0;
@@ -1580,7 +1588,7 @@ function 绑定事件() {
       }
       汉字数 += 1;
       连续汉字.push({ 字, 位置: 文本位置 });
-      if (连续汉字.length > 3) {
+      if (连续汉字.length > 6) {
         连续汉字.shift();
       }
       for (let 字数 = 1; 字数 <= 连续汉字.length; 字数 += 1) {
@@ -1597,7 +1605,7 @@ function 绑定事件() {
     }
 
     const 列表 = {};
-    for (const 字数 of [1, 2, 3]) {
+    for (const 字数 of [1, 2, 3, 4, 5, 6]) {
       列表[字数] = [...词频映射[字数]]
         .map(function 转换词频项([文本, 统计]) {
           return { 文本, 数量: 统计.数量, 首次位置: 统计.首次位置 };
