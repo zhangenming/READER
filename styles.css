@@ -1483,6 +1483,7 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 
 .词频标签栏 {
   display: flex;
+  flex-shrink: 0;
   gap: 4px;
   overflow-x: auto;
   padding: 10px 16px 0;
