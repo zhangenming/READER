@@ -237,9 +237,11 @@ body.关键词手势中 .滚动容器 {
   top: 0;
   right: calc(var(--滚动条宽度) + 6px);
   z-index: 6;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
   width: 5ch;
-  place-items: center end;
   color: #111;
   font-size: 15px;
   font-weight: 700;
@@ -251,6 +253,19 @@ body.关键词手势中 .滚动容器 {
   touch-action: none;
   transform: translateY(0);
   will-change: transform;
+}
+
+/* 剩余滚动时间：仅自动滚动开启时显示（JS 控制 hidden），
+   位于百分比正下方，灰色小字，保持视觉层级。 */
+.剩余滚动时间 {
+  margin-top: 3px;
+  color: #6c757d;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.剩余滚动时间[hidden] {
+  display: none;
 }
 
 .滚动进度.拖动中 {

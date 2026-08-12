@@ -187,6 +187,8 @@ const 元素 = {
   自定义滚动条: document.querySelector('#自定义滚动条'),
   滚动块: document.querySelector('#滚动块'),
   滚动进度: document.querySelector('#滚动进度'),
+  滚动百分比: document.querySelector('#滚动百分比'),
+  剩余滚动时间: document.querySelector('#剩余滚动时间'),
   关键词指示器: document.querySelector('#关键词指示器'),
   悬停关键词指示器: document.querySelector('#悬停关键词指示器'),
   自动滚动按钮: document.querySelector('#自动滚动按钮'),
@@ -2222,6 +2224,8 @@ function 绑定事件() {
 
   function 更新自动滚动按钮(正在滚动) {
     元素.自动滚动按钮.setAttribute('aria-pressed', String(正在滚动));
+    // 剩余滚动时间仅在自动滚动进行中显示
+    元素.剩余滚动时间.hidden = !正在滚动;
     // 自动滚动进行中：强制显示右下角控件（尤其是自动滚动按钮本身）
     右下强制 = 正在滚动;
     刷新右下控件可见性();
@@ -4468,6 +4472,16 @@ function 更新关键词指示器() {
   }
 }
 
+// 将剩余秒数格式化为 MM:SS（超过 1 小时时为 H:MM:SS）
+function 格式化剩余滚动时间(秒数) {
+  const 总秒 = Math.max(0, Math.round(Number.isFinite(秒数) ? 秒数 : 0));
+  const 时 = Math.floor(总秒 / 3600);
+  const 分 = Math.floor((总秒 % 3600) / 60);
+  const 秒 = 总秒 % 60;
+  const 补零 = (值) => String(值).padStart(2, '0');
+  return 时 > 0 ? `${时}:${补零(分)}:${补零(秒)}` : `${补零(分)}:${补零(秒)}`;
+}
+
 function 更新滚动块() {
   const 轨道 = 元素.自定义滚动条;
   轨道.hidden = false;
@@ -4494,7 +4508,13 @@ function 更新滚动块() {
   元素.滚动块.style.transform = `translateY(${滚动块偏移}px)`;
   元素.滚动进度.style.height = `${滚动块高度}px`;
   元素.滚动进度.style.transform = `translateY(${滚动块偏移}px)`;
-  元素.滚动进度.textContent = `${百分比}%`;
+  元素.滚动百分比.textContent = `${百分比}%`;
+  // 剩余时间 = 剩余距离 ÷ 当前自动滚动速度（像素/秒）；
+  // 元素仅在自动滚动开启时可见（见 更新自动滚动按钮），此处始终刷新文本即可。
+  const 剩余距离 = Math.max(0, 最大滚动位置 - 元素.滚动容器.scrollTop);
+  元素.剩余滚动时间.textContent = 格式化剩余滚动时间(
+    剩余距离 / Math.max(自动滚动最低速度, 状态.自动滚动速度),
+  );
   元素.滚动块.title = `阅读进度 ${百分比}%`;
   轨道.setAttribute('aria-valuenow', 百分比);
   轨道.setAttribute('aria-valuetext', `阅读进度 ${百分比}%`);
