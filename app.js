@@ -830,6 +830,16 @@ function 绑定事件() {
 
   window.addEventListener('语音翻页', 处理语音翻页);
 
+  function 处理语音自动滚动(事件) {
+    const 指令 = 事件.detail && 事件.detail.指令;
+    if (指令 !== '快' && 指令 !== '慢') {
+      return;
+    }
+    执行自动滚动翻页(指令 === '慢', `语音“${指令}”`);
+  }
+
+  window.addEventListener('语音自动滚动', 处理语音自动滚动);
+
   function 处理键盘按下(事件) {
     // Esc 关闭字体设置弹窗（div 弹窗无原生 close，需手动处理）
     if (事件.key === 'Escape' && !元素.字体弹窗.hidden) {
@@ -948,13 +958,10 @@ function 绑定事件() {
     ) {
       事件.preventDefault();
       if (!事件.repeat) {
-        if (事件.shiftKey) {
-          调整自动滚动速度(0.9, 'Shift + Space');
-          向上翻半页并暂停自动滚动();
-        } else {
-          调整自动滚动速度(1.1, 'Space');
-          快速前进自动滚动();
-        }
+        执行自动滚动翻页(
+          事件.shiftKey,
+          事件.shiftKey ? 'Shift + Space' : 'Space',
+        );
       }
       return;
     }
@@ -1914,6 +1921,23 @@ function 绑定事件() {
       原速度: Math.round(状态.自动滚动速度),
       目标位置: Math.round(本次滚动.快速滚动终点),
     });
+  }
+
+  function 执行自动滚动翻页(向上, 来源) {
+    if (!自动滚动状态) {
+      console.info('[阅读器] 自动滚动指令被忽略', {
+        原因: '自动滚动未运行',
+        来源,
+      });
+      return;
+    }
+    if (向上) {
+      调整自动滚动速度(0.9, 来源);
+      向上翻半页并暂停自动滚动();
+      return;
+    }
+    调整自动滚动速度(1.1, 来源);
+    快速前进自动滚动();
   }
 
   function 向上翻半页并暂停自动滚动() {
