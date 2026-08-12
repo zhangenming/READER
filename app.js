@@ -446,6 +446,9 @@ function 绑定事件() {
   元素.字体标签引号外.addEventListener('click', () => 切换字体标签('引号外'));
   元素.字体标签全部.addEventListener('click', () => 切换字体标签('全部'));
   元素.字体粗细按钮.addEventListener('click', 处理字体粗细按钮点击);
+  元素.字体粗细按钮.addEventListener('wheel', 处理字体粗细滚轮, {
+    passive: false,
+  });
   元素.字体选项列表.addEventListener('click', 处理字体选项点击);
   元素.自定义滚动条.addEventListener('pointerdown', 处理滚动条按下);
   元素.自定义滚动条.addEventListener('pointermove', 处理滚动条拖动);
@@ -2294,6 +2297,31 @@ function 处理字体粗细按钮点击() {
   }
   设置区域粗细('引号内', 下一个值, { 静默: true });
   设置区域粗细('引号外', 下一个值);
+}
+
+function 处理字体粗细滚轮(事件) {
+  事件.preventDefault();
+  事件.stopPropagation();
+  const 方向 = Math.sign(事件.deltaY) * -1;
+  if (方向 === 0) {
+    return;
+  }
+  if (当前字体标签 === '全部') {
+    设置区域粗细('引号内', 调整值('引号内'), { 静默: true });
+    设置区域粗细('引号外', 调整值('引号外'));
+    return;
+  }
+  设置区域粗细(当前字体标签, 调整值(当前字体标签));
+
+  function 调整值(区域) {
+    const 当前值 = 读取有效字体粗细(区域);
+    const 当前idx = 字体粗细列表.indexOf(当前值);
+    const 目标idx = Math.max(
+      0,
+      Math.min(字体粗细列表.length - 1, 当前idx + 方向),
+    );
+    return 字体粗细列表[目标idx];
+  }
 }
 
 function 设置区域字体(区域, 值, 选项 = {}) {
