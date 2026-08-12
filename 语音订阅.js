@@ -4,7 +4,7 @@
 // 地址可被 URL 参数 ?ws= 覆盖（如 ?ws=wss://localhost:3000），改端口时无需改本文件
 // 房间：默认 main，可用 URL 参数 ?room=xxx 覆盖
 // 独立性：不依赖 app.js，本脚本只负责“识别语音指令”并派发 window
-//   识别到「more」后派发事件「语音翻页」（detail: {指令:'下一页'}）；翻页动作由 app.js 监听后执行。
+//   识别到「上 / more」后派发事件「语音翻页」；翻页动作由 app.js 监听后执行。
 //   识别到指令后立即派发，阅读器同步翻页，无需任何手动确认。
 // 不创建任何 DOM 与样式，识别在后台静默进行；所有日志仅输出到控制台。
 'use strict';
@@ -92,18 +92,17 @@
     if (!文本) {
       return null;
     }
-    if (是More指令(文本)) {
+    const 规范文本 = 文本
+      .trim()
+      .toLowerCase()
+      .replace(/[，。、,.!?！？；;：:"'（）()\[\]【】「」『』""''~～—]/g, '');
+    if (规范文本 === '上') {
+      return '上一页';
+    }
+    if (规范文本 === 'more') {
       return '下一页';
     }
     return null;
-
-    function 是More指令(原文) {
-      const 规范文本 = 原文
-        .trim()
-        .toLowerCase()
-        .replace(/[，。、,.!?；;：:"'（）()\[\]【】「」『』""''~～—]/g, '');
-      return 规范文本 === 'more';
-    }
   }
 
   function 触发翻页(指令) {
