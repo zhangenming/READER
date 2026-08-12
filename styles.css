@@ -83,6 +83,8 @@
     'ZiHunBaiGeTianXingTi-Local', '字魂白鸽天行体',
     'zihun50hao-baigetianxingti', 'Songti SC', 'STSong', 'Noto Serif CJK SC',
     serif;
+  --正文粗细: 100;
+  --引文粗细: 900;
   --西文字号: 0.96em;
   /* 行高度 = 字号：让每一行的实际高度与字符本身高度一致，截图里 .字 30×30 的状态。 */
   --行高: var(--正文字号);
@@ -309,21 +311,18 @@ body:has(.悬停关键词指示器:not([hidden])) .滚动进度 {
   pointer-events: none;
 }
 
-/* ===== 字号调节（右下角，位于时间左侧） ===== */
+/* ===== 字号调节（字体设置标题栏） ===== */
 .字号控制 {
-  position: fixed;
-  right: calc(var(--滚动条宽度) + 92px);
-  bottom: 10px;
-  z-index: 5;
   display: inline-flex;
   align-items: center;
   height: 26px;
   padding: 2px;
   gap: 2px;
-  background: var(--纸张色);
+  margin-left: 24px;
+  margin-right: auto;
+  background: var(--背景色);
   border: 1px solid var(--边线色);
-  border-radius: 13px;
-  box-shadow: 0 2px 8px rgb(32 37 34 / 8%);
+  border-radius: 4px;
 }
 
 .字号按钮 {
@@ -383,10 +382,10 @@ body:has(.悬停关键词指示器:not([hidden])) .滚动进度 {
   outline-offset: 1px;
 }
 
-/* ===== 行距控制（右下角，位于字号控件左侧） ===== */
+/* ===== 行距控制（右下角，位于时间左侧） ===== */
 .行距控制 {
   position: fixed;
-  right: calc(var(--滚动条宽度) + 194px);
+  right: calc(var(--滚动条宽度) + 92px);
   bottom: 10px;
   z-index: 5;
   display: inline-flex;
@@ -470,7 +469,6 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
 
 /* ===== 右下角控件：默认隐藏，仅在鼠标靠近 / 触摸 / 聚焦 / 自动滚动时显示 =====
    时间（.当前时间）固定显示，不在此列；隐藏时 pointer-events:none 不遮挡正文选择。 */
-.字号控制,
 .自动滚动按钮,
 .关键词面板开关,
 .行距控制 {
@@ -479,7 +477,6 @@ body:not(:has(.关键词面板:not([hidden]))) > .自动滚动按钮 {
   transition: opacity 180ms ease;
 }
 
-body.右下控件显示 .字号控制,
 body.右下控件显示 .自动滚动按钮,
 body.右下控件显示 .关键词面板开关,
 body.右下控件显示 .行距控制,
@@ -699,7 +696,8 @@ body.右下面板展开 .关键词面板开关 {
   color: var(--正文字色);
   font-family: var(--正文字体);
   font-size: var(--正文字号);
-  font-weight: 100;
+  font-weight: var(--正文粗细);
+  font-synthesis: weight;
   font-kerning: normal;
   line-height: var(--行高);
   letter-spacing: 0;
@@ -735,7 +733,7 @@ body.右下面板展开 .关键词面板开关 {
 /* 引号内（spk 内）：引文内容使用独立字体，与引号外正文分开选择 */
 .字.引文内容 {
   font-family: var(--引文字体);
-  font-weight: 900;
+  font-weight: var(--引文粗细);
 }
 
 .字.西文 {
@@ -861,7 +859,7 @@ body.右下面板展开 .关键词面板开关 {
 
 .字.引文引号 {
   color: var(--引文墨色);
-  font-weight: 900;
+  font-weight: var(--引文粗细);
 }
 
 .字::selection {
@@ -1951,6 +1949,37 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   overflow-y: auto;
   scrollbar-color: #aab3ad transparent;
   scrollbar-width: thin;
+}
+
+.字体设置工具栏 {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.字体粗细按钮 {
+  min-width: 132px;
+  padding: 6px 10px;
+  font:
+    12px/1.2 'Avenir Next',
+    'PingFang SC',
+    sans-serif;
+  font-weight: 600;
+  color: var(--墨色);
+  background: var(--纸张色);
+  border: 1px solid var(--边线色);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.字体粗细按钮:hover {
+  border-color: #aeb8b2;
+  background: rgb(32 37 34 / 4%);
+}
+
+.字体粗细按钮:focus-visible {
+  outline: 2px solid var(--选中色);
+  outline-offset: 1px;
 }
 
 .字体选项列表 {

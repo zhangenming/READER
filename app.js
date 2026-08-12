@@ -71,7 +71,10 @@ const 高亮配色 = [{ 浅色: '#c5d9f0', 深色: '#1e4a7a' }];
 // 字体选择：引号内（spk 内）/ 引号外（spk 外）两块独立。
 // 值为 null 表示“跟随该区域 CSS 默认”，写入时清空内联变量以回退到 :root。
 const 字体设置 = { 引号内: null, 引号外: null };
+const 字体粗细设置 = { 引号内: null, 引号外: null };
 let 当前字体标签 = '引号内';
+const 字体粗细列表 = [100, 200, 300, 400, 500, 600, 700, 800, 900];
+const 默认字体粗细 = { 引号内: 900, 引号外: 100 };
 const 可选字体列表 = [
   {
     名称: 'TogeGothic荆棘黑 SemiLight',
@@ -209,6 +212,7 @@ const 元素 = {
   字体标签引号内: document.querySelector('#字体标签引号内'),
   字体标签引号外: document.querySelector('#字体标签引号外'),
   字体标签全部: document.querySelector('#字体标签全部'),
+  字体粗细按钮: document.querySelector('#字体粗细按钮'),
   字体选项列表: document.querySelector('#字体选项列表'),
 };
 
@@ -441,6 +445,7 @@ function 绑定事件() {
   元素.字体标签引号内.addEventListener('click', () => 切换字体标签('引号内'));
   元素.字体标签引号外.addEventListener('click', () => 切换字体标签('引号外'));
   元素.字体标签全部.addEventListener('click', () => 切换字体标签('全部'));
+  元素.字体粗细按钮.addEventListener('click', 处理字体粗细按钮点击);
   元素.字体选项列表.addEventListener('click', 处理字体选项点击);
   元素.自定义滚动条.addEventListener('pointerdown', 处理滚动条按下);
   元素.自定义滚动条.addEventListener('pointermove', 处理滚动条拖动);
@@ -474,7 +479,7 @@ function 绑定事件() {
   // 右下角控件悬停热区（鼠标 / 触摸）与键盘聚焦时显示
   window.addEventListener('mousemove', 处理右下控件悬停, { passive: true });
   window.addEventListener('touchstart', 处理右下控件触摸, { passive: true });
-  for (const 控件 of [元素.字号控制, 元素.自动滚动按钮, 元素.关键词面板开关, 元素.行距控制]) {
+  for (const 控件 of [元素.自动滚动按钮, 元素.关键词面板开关, 元素.行距控制]) {
     if (!控件) {
       continue;
     }
@@ -804,8 +809,7 @@ function 绑定事件() {
       );
       const 当前行idx = Math.round(元素.滚动容器.scrollTop / 状态.行高);
       const 最大顶部行idx = Math.round(
-        (元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight) /
-          状态.行高,
+        (元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight) / 状态.行高,
       );
       const 当前页 = Math.floor(当前行idx / 视口行数) + 1;
       const 总页 = Math.max(1, Math.floor(最大顶部行idx / 视口行数) + 1);
@@ -2275,6 +2279,23 @@ function 处理字体选项点击(事件) {
   设置区域字体(当前字体标签, 值);
 }
 
+function 处理字体粗细按钮点击() {
+  const 当前区域 = 当前字体标签 === '全部' ? null : 当前字体标签;
+  const 当前值 = 当前区域
+    ? 读取有效字体粗细(当前区域)
+    : 读取有效字体粗细('引号内') === 读取有效字体粗细('引号外')
+      ? 读取有效字体粗细('引号内')
+      : null;
+  const 当前idx = 字体粗细列表.indexOf(当前值);
+  const 下一个值 = 字体粗细列表[(当前idx + 1) % 字体粗细列表.length];
+  if (当前区域) {
+    设置区域粗细(当前区域, 下一个值);
+    return;
+  }
+  设置区域粗细('引号内', 下一个值, { 静默: true });
+  设置区域粗细('引号外', 下一个值);
+}
+
 function 设置区域字体(区域, 值, 选项 = {}) {
   const 变量名 = 区域 === '引号内' ? '--引文字体' : '--正文字体';
   字体设置[区域] = 值;
@@ -2290,20 +2311,39 @@ function 设置区域字体(区域, 值, 选项 = {}) {
   console.info('[阅读器] 已设置区域字体', { 区域, 值: 值 ?? '默认' });
 }
 
+function 设置区域粗细(区域, 值, 选项 = {}) {
+  const 变量名 = 区域 === '引号内' ? '--引文粗细' : '--正文粗细';
+  字体粗细设置[区域] = 值;
+  if (值 === null) {
+    document.documentElement.style.removeProperty(变量名);
+  } else {
+    document.documentElement.style.setProperty(变量名, String(值));
+  }
+  if (!选项.静默) {
+    刷新字体粗细排版();
+    渲染字体粗细按钮();
+    安排保存持久化状态();
+  }
+  console.info('[阅读器] 已设置区域字体粗细', { 区域, 值: 值 ?? '默认' });
+}
+
 function 重置字体设置() {
   if (当前字体标签 === '全部') {
     设置区域字体('引号内', null, { 静默: true });
     设置区域字体('引号外', null);
+    设置区域粗细('引号内', null, { 静默: true });
+    设置区域粗细('引号外', null);
     return;
   }
   设置区域字体(当前字体标签, null);
+  设置区域粗细(当前字体标签, null);
 }
 
 function 渲染字体标签() {
   const 标签列表 = [
+    { 元素: 元素.字体标签全部, 名称: '全部' },
     { 元素: 元素.字体标签引号内, 名称: '引号内' },
     { 元素: 元素.字体标签引号外, 名称: '引号外' },
-    { 元素: 元素.字体标签全部, 名称: '全部' },
   ];
   for (const { 元素: 标签元素, 名称 } of 标签列表) {
     const 是当前 = 当前字体标签 === 名称;
@@ -2324,7 +2364,6 @@ function 渲染字体选项() {
       ? 字体设置.引号内
       : undefined
     : 字体设置[区域];
-  const 变量名 = 区域 === '引号内' ? '--引文字体' : '--正文字体';
   const 选项区名 = 是全部
     ? '引号内/外统一字体'
     : 区域 === '引号内'
@@ -2350,13 +2389,56 @@ function 渲染字体选项() {
     预览.textContent = '阅读字体预览 · 永和九年岁在癸丑 · The quick 123';
     // 「全部」tab 预览用字体值本身，让用户直接看到该字体外观；
     // null（跟随默认）时回退到 inherit，沿用弹窗当前生效字体。
-    预览.style.fontFamily =
-      字体.值 === null ? 'inherit' : 是全部 ? 字体.值 : 字体.值;
+    预览.style.fontFamily = 字体.值 === null ? 'inherit' : 字体.值;
 
     选项.append(名称, 预览);
     片段.append(选项);
   }
   容器.replaceChildren(片段);
+  渲染字体粗细按钮();
+}
+
+function 渲染字体粗细按钮() {
+  const 是全部统一 =
+    当前字体标签 !== '全部' ||
+    读取有效字体粗细('引号内') === 读取有效字体粗细('引号外');
+  const 当前值 =
+    当前字体标签 === '全部'
+      ? 是全部统一
+        ? 读取有效字体粗细('引号内')
+        : null
+      : 读取有效字体粗细(当前字体标签);
+  const 显示值 = 是全部统一
+    ? 当前值 === null
+      ? '默认'
+      : String(当前值)
+    : '混合';
+  元素.字体粗细按钮.textContent = `字体粗细：${显示值}`;
+  元素.字体粗细按钮.setAttribute(
+    'aria-label',
+    `当前${当前字体标签}字体粗细：${显示值}，点击切换`,
+  );
+  const 预览粗细 = 当前值 ?? 400;
+  for (const 预览 of 元素.字体选项列表.querySelectorAll('.字体选项预览')) {
+    预览.style.fontWeight = String(预览粗细);
+  }
+}
+
+function 读取有效字体粗细(区域) {
+  return 字体粗细设置[区域] ?? 默认字体粗细[区域];
+}
+
+function 刷新字体粗细排版() {
+  if (!状态.文件名) {
+    return;
+  }
+  const 新排版 = 读取正文排版();
+  if (新排版.键 !== 状态.排版键) {
+    重建行索引(新排版);
+    return;
+  }
+  渲染可见行(true);
+  更新关键词指示器();
 }
 
 function 更新自动滚动速度() {
@@ -2613,7 +2695,10 @@ function 应用文本(原始文本, 文件名) {
       持久化状态.行高 <= 最大行高
     ) {
       状态.行高 = 持久化状态.行高;
-      document.documentElement.style.setProperty('--行高', 持久化状态.行高 + 'px');
+      document.documentElement.style.setProperty(
+        '--行高',
+        持久化状态.行高 + 'px',
+      );
       更新行高显示();
     }
     if (
@@ -2660,6 +2745,8 @@ function 应用文本(原始文本, 文件名) {
       ) + 1;
 
     恢复字体设置(持久化状态.字体);
+    恢复字体粗细设置(持久化状态.字体粗细);
+    刷新字体粗细排版();
     元素.滚动容器.scrollTop = 计算阅读位置(持久化状态);
   }
 
@@ -2675,6 +2762,27 @@ function 应用文本(原始文本, 文件名) {
         document.documentElement.style.setProperty(变量名, 值);
       } else {
         字体设置[区域] = null;
+        document.documentElement.style.removeProperty(变量名);
+      }
+    }
+  }
+
+  function 恢复字体粗细设置(持久化粗细) {
+    if (!持久化粗细 || typeof 持久化粗细 !== 'object') {
+      return;
+    }
+    for (const 区域 of ['引号内', '引号外']) {
+      const 值 = 持久化粗细[区域];
+      const 变量名 = 区域 === '引号内' ? '--引文粗细' : '--正文粗细';
+      if (
+        typeof 值 === 'number' &&
+        Number.isInteger(值) &&
+        字体粗细列表.includes(值)
+      ) {
+        字体粗细设置[区域] = 值;
+        document.documentElement.style.setProperty(变量名, String(值));
+      } else {
+        字体粗细设置[区域] = null;
         document.documentElement.style.removeProperty(变量名);
       }
     }
@@ -2739,7 +2847,7 @@ function 应用文本(原始文本, 文件名) {
     let 引文终点 = 原引文边界列表[引文idx + 1];
     let 引文包含句末标点 = false;
 
-    for (let idx = 0; idx < 全文.length;) {
+    for (let idx = 0; idx < 全文.length; ) {
       if (
         全文[idx] === '\n' &&
         idx > 0 &&
@@ -3126,6 +3234,8 @@ function 读取正文排版() {
   const 西文字号比例 = 读取数字变量('--西文字号', 默认西文字号比例);
   const 正文字体 = 读取字体变量('--正文字体', 默认正文字体);
   const 西文字体 = 读取字体变量('--西文字体', 默认西文字体);
+  const 正文粗细 = 读取数字变量('--正文粗细', 100);
+  const 引文粗细 = 读取数字变量('--引文粗细', 900);
 
   const css回退 =
     正文字号 === 默认正文字号 ||
@@ -3140,6 +3250,8 @@ function 读取正文排版() {
       西文字号比例,
       正文字体,
       西文字体,
+      正文粗细,
+      引文粗细,
     });
   }
 
@@ -3152,12 +3264,14 @@ function 读取正文排版() {
       正文字体,
       西文字体,
       西文字号比例,
+      正文粗细,
+      引文粗细,
     ].join('|'),
     内容宽度,
     正文字号,
     句首缩进: 正文字号 * 2,
     行高,
-    西文字体: `400 ${正文字号 * 西文字号比例}px ${西文字体}`,
+    西文字体: `${正文粗细} ${正文字号 * 西文字号比例}px ${西文字体}`,
   };
 }
 
@@ -4824,6 +4938,10 @@ function 保存持久化状态() {
       字号: 状态.字号,
       行高: 状态.行高,
       字体: { 引号内: 字体设置.引号内, 引号外: 字体设置.引号外 },
+      字体粗细: {
+        引号内: 字体粗细设置.引号内,
+        引号外: 字体粗细设置.引号外,
+      },
       关键词列表: 状态.关键词列表.map(function 序列化关键词(关键词) {
         return {
           id: 关键词.id,
