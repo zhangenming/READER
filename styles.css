@@ -268,6 +268,19 @@ body.关键词手势中 .滚动容器 {
   display: none;
 }
 
+/* 基础/实际速度：仅自动滚动开启时显示（JS 控制 hidden），
+   位于剩余时间下方，灰色小字，与剩余时间同一视觉层级。 */
+.速度显示 {
+  margin-top: 3px;
+  color: #6c757d;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.速度显示[hidden] {
+  display: none;
+}
+
 .滚动进度.拖动中 {
   cursor: grabbing;
 }
