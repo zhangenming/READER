@@ -750,7 +750,24 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .正文行.换行缩进行 {
-  padding-left: 2em;
+  padding-left: 0;
+}
+
+/* 原文自带的单个换行：用轻量段首标记保留段落边界，不再推开整段正文。 */
+.正文行.换行缩进行::before {
+  display: inline-block;
+  width: 1em;
+  margin-right: 0.2em;
+  color: var(--选中色);
+  font-family: 'Avenir Next', 'PingFang SC', sans-serif;
+  font-size: 0.78em;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  vertical-align: 0.04em;
+  opacity: 0.68;
+  content: '›';
+  pointer-events: none;
 }
 
 .字 {
