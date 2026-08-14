@@ -230,7 +230,6 @@ const 元素 = {
   关键词指示器: document.querySelector('#关键词指示器'),
   悬停关键词指示器: document.querySelector('#悬停关键词指示器'),
   自动滚动按钮: document.querySelector('#自动滚动按钮'),
-  自动滚动速度: document.querySelector('#自动滚动速度'),
   当前时间: document.querySelector('#当前时间'),
   字号控制: document.querySelector('#字号控制'),
   字号值: document.querySelector('#字号值'),
@@ -2360,9 +2359,8 @@ function 绑定事件() {
 
   function 更新自动滚动按钮(正在滚动) {
     元素.自动滚动按钮.setAttribute('aria-pressed', String(正在滚动));
-    // 剩余滚动时间与基础/实际速度仅在自动滚动进行中显示
+    // 剩余滚动时间与实际速度仅在自动滚动进行中显示
     元素.剩余滚动时间.hidden = !正在滚动;
-    元素.基础速度显示.hidden = !正在滚动;
     元素.实际速度显示.hidden = !正在滚动;
     // 自动滚动进行中：强制显示右下角控件（尤其是自动滚动按钮本身）
     右下强制 = 正在滚动;
@@ -2903,7 +2901,7 @@ function 刷新字体粗细排版() {
 
 function 更新自动滚动速度() {
   const 显示速度 = String(Math.round(状态.自动滚动速度));
-  元素.自动滚动速度.textContent = 显示速度;
+  元素.基础速度显示.textContent = `基 ${显示速度}`;
   元素.自动滚动按钮.setAttribute(
     'aria-label',
     `滚动，基准速度 ${显示速度}，自动适配内容密度，点击切换全屏`,

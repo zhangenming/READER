@@ -255,29 +255,23 @@ body.关键词手势中 .滚动容器 {
   will-change: transform;
 }
 
-/* 剩余滚动时间：仅自动滚动开启时显示（JS 控制 hidden），
-   位于百分比正下方，灰色小字，保持视觉层级。 */
 .剩余滚动时间 {
-  margin-top: 3px;
+  position: fixed;
+  right: calc(var(--滚动条宽度) + 12px);
+  bottom: 28px;
+  z-index: 5;
+  min-width: 8ch;
   color: #6c757d;
+  font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-size: 11px;
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-align: right;
+  pointer-events: none;
 }
 
 .剩余滚动时间[hidden] {
-  display: none;
-}
-
-/* 基础/实际速度：仅自动滚动开启时显示（JS 控制 hidden），
-   位于剩余时间下方，灰色小字，与剩余时间同一视觉层级。 */
-.速度显示 {
-  margin-top: 3px;
-  color: #6c757d;
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.速度显示[hidden] {
   display: none;
 }
 
@@ -297,13 +291,16 @@ body:has(.悬停关键词指示器:not([hidden])) .滚动进度 {
 .自动滚动按钮 {
   position: fixed;
   position-anchor: --关键词按钮;
+  anchor-name: --滚动按钮;
   /* 没有关键词面板时没有可供锚定的按钮，使用独立的底部位置作为回退。 */
   bottom: anchor(bottom, 10px);
   right: anchor(left, calc(var(--滚动条宽度) + 180px));
   z-index: 5;
   display: inline-flex;
+  width: 136px;
   height: 26px;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   padding: 0 10px;
   margin-right: 6px;
@@ -319,9 +316,13 @@ body:has(.悬停关键词指示器:not([hidden])) .滚动进度 {
 }
 
 .自动滚动速度 {
-  min-width: 3ch;
+  min-width: 4ch;
   font-variant-numeric: tabular-nums;
   text-align: right;
+}
+
+.自动滚动速度[hidden] {
+  display: none;
 }
 
 .当前时间 {
@@ -408,7 +409,8 @@ body:has(.悬停关键词指示器:not([hidden])) .滚动进度 {
 
 .内容选择按钮 {
   position: fixed;
-  right: calc(var(--滚动条宽度) + 256px);
+  position-anchor: --滚动按钮;
+  right: anchor(left, calc(var(--滚动条宽度) + 322px));
   bottom: 10px;
   z-index: 5;
   display: inline-flex;
