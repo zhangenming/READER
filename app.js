@@ -2616,7 +2616,7 @@ function 绑定事件() {
           ? '正在统计'
           : 统计字数 === null
             ? '统计失败'
-            : `${整数格式器.format(统计字数)} 字`;
+            : `${(统计字数 / 10_000).toFixed(1)} 万字`;
 
       const 文本信息 = document.createElement('span');
       文本信息.className = '内容选项信息';
