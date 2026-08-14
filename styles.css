@@ -330,7 +330,7 @@ body:has(.悬停关键词指示器:not([hidden])) .滚动进度 {
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-size: 12px;
   font-weight: 700;
-  background: #263238;
+  background: var(--纸张色);
   border: 1px solid var(--边线色);
   border-radius: 13px;
   cursor: pointer;
