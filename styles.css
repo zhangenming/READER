@@ -206,30 +206,19 @@ body.关键词手势中 .滚动容器 {
   z-index: 1;
   width: calc(100% - 8px);
   min-height: 32px;
-  background: var(--墨色);
+  background: transparent;
   border: 0;
-  border-radius: 3px;
   cursor: grab;
   transform: translateY(0);
   will-change: transform;
 }
 
-.滚动块:hover {
-  background: #151a17;
-}
-
 .自定义滚动条.拖动中 .滚动块 {
-  background: #0d100e;
   cursor: grabbing;
 }
 
 .自定义滚动条:focus-visible {
   outline: 0;
-}
-
-.自定义滚动条:focus-visible .滚动块 {
-  outline: 2px solid var(--选中色);
-  outline-offset: -2px;
 }
 
 .滚动进度 {
@@ -253,6 +242,39 @@ body.关键词手势中 .滚动容器 {
   touch-action: none;
   transform: translateY(0);
   will-change: transform;
+}
+
+#滚动百分比 {
+  position: relative;
+}
+
+#滚动百分比::before {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 11px;
+  height: 2px;
+  background: currentColor;
+  content: '';
+  transform: translateY(-50%);
+}
+
+#滚动百分比::after {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 11px);
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 5px solid currentColor;
+  content: '';
+  transform: translateY(-50%);
+}
+
+.自定义滚动条:focus-visible ~ .滚动进度 #滚动百分比 {
+  outline: 2px solid var(--选中色);
+  outline-offset: 2px;
 }
 
 .剩余滚动时间 {
