@@ -13,7 +13,7 @@
       as="fetch"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260814-04" />
+    <link rel="stylesheet" href="./styles.css?v=20260814-05" />
   </head>
   <body>
     <main class="阅读区域">
@@ -359,40 +359,17 @@
       <div class="字体标题栏">
         <h2 id="字体标题" class="字体标题">字体设置</h2>
         <div class="排版控制">
-          <div
+          <button
             id="字号控制"
             class="字号控制"
-            role="group"
-            aria-label="字号调节"
+            type="button"
+            aria-label="当前字号 30 像素，悬停滚轮调节，点击恢复默认"
+            title="悬停滚轮调节字号 · 点击恢复默认"
           >
-            <button
-              id="字号缩小"
-              class="字号按钮"
-              type="button"
-              aria-label="缩小字号"
-              title="缩小字号"
-            >
-              −
-            </button>
-            <button
-              id="字号值"
-              class="字号值"
-              type="button"
-              aria-label="当前字号 30，点击恢复默认"
-              title="点击恢复默认字号"
-            >
-              30
-            </button>
-            <button
-              id="字号放大"
-              class="字号按钮"
-              type="button"
-              aria-label="放大字号"
-              title="放大字号"
-            >
-              ＋
-            </button>
-          </div>
+            <span class="字号标签">字号</span>
+            <span id="字号值" class="字号值">30</span>
+            <span class="字号单位">px</span>
+          </button>
           <button
             id="行距控制"
             class="行距控制"
@@ -493,7 +470,7 @@
         });
       })();
     </script>
-    <script src="./app.js?v=20260814-04" defer></script>
+    <script src="./app.js?v=20260814-05" defer></script>
     <script src="./语音订阅.js?v=20260812-03" defer></script>
   </body>
 </html>

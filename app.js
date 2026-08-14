@@ -232,9 +232,7 @@ const 元素 = {
   自动滚动速度: document.querySelector('#自动滚动速度'),
   当前时间: document.querySelector('#当前时间'),
   字号控制: document.querySelector('#字号控制'),
-  字号缩小: document.querySelector('#字号缩小'),
   字号值: document.querySelector('#字号值'),
-  字号放大: document.querySelector('#字号放大'),
   行距控制: document.querySelector('#行距控制'),
   行距值: document.querySelector('#行距值'),
   内容选择按钮: document.querySelector('#内容选择按钮'),
@@ -525,9 +523,10 @@ function 绑定事件() {
   元素.字体遮罩.addEventListener('click', 关闭字体弹窗);
   元素.字体关闭底部按钮.addEventListener('click', 关闭字体弹窗);
   元素.字体重置按钮.addEventListener('click', 重置字体设置);
-  元素.字号缩小.addEventListener('click', () => 调整字号(状态.字号 - 字号步进));
-  元素.字号放大.addEventListener('click', () => 调整字号(状态.字号 + 字号步进));
-  元素.字号值.addEventListener('click', () => 调整字号(默认字号));
+  元素.字号控制.addEventListener('wheel', 处理字号滚轮, { passive: false });
+  元素.字号控制.addEventListener('click', () => 调整字号(默认字号));
+  元素.字号控制.addEventListener('mouseenter', 进入字号调节);
+  元素.字号控制.addEventListener('mouseleave', 离开字号调节);
   元素.行距控制.addEventListener('wheel', 处理行距滚轮, { passive: false });
   // 点击恢复默认行距（= 当前字号，即 1.0 倍行距）
   元素.行距控制.addEventListener('click', () => 调整行高(状态.字号));
@@ -2944,7 +2943,34 @@ function 调整字号(目标值) {
 
 function 更新字号显示() {
   元素.字号值.textContent = String(状态.字号);
-  元素.字号值.setAttribute('aria-label', `当前字号 ${状态.字号}，点击恢复默认`);
+  元素.字号控制.setAttribute(
+    'aria-label',
+    `当前字号 ${状态.字号} 像素，悬停滚轮调节，点击恢复默认`,
+  );
+}
+
+function 处理字号滚轮(事件) {
+  事件.preventDefault();
+  事件.stopPropagation();
+  let 增量 = 事件.deltaY;
+  if (事件.deltaMode === WheelEvent.DOM_DELTA_LINE) {
+    增量 *= 16;
+  } else if (事件.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
+    增量 *= 元素.滚动容器.clientHeight;
+  }
+  const 步数 = Math.sign(增量) || 0;
+  if (步数 === 0) {
+    return;
+  }
+  调整字号(状态.字号 + 步数 * 字号步进);
+}
+
+function 进入字号调节() {
+  元素.字号控制.classList.add('滚轮调节中');
+}
+
+function 离开字号调节() {
+  元素.字号控制.classList.remove('滚轮调节中');
 }
 
 /* ===== 行距（行间距）控制 =====

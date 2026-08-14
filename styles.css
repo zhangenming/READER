@@ -349,75 +349,8 @@ body:has(.悬停关键词指示器:not([hidden])) .滚动进度 {
   margin-right: auto;
 }
 
-.字号控制 {
-  display: inline-flex;
-  align-items: center;
-  height: 26px;
-  padding: 2px;
-  gap: 2px;
-  background: var(--背景色);
-  border: 1px solid var(--边线色);
-  border-radius: 4px;
-}
-
-.字号按钮 {
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  padding: 0;
-  color: var(--次要墨色);
-  font:
-    18px/1 'Avenir Next',
-    'PingFang SC',
-    sans-serif;
-  font-weight: 700;
-  background: transparent;
-  border: 0;
-  border-radius: 11px;
-  cursor: pointer;
-}
-
-.字号按钮:hover {
-  color: var(--墨色);
-  background: rgb(32 37 34 / 5%);
-}
-
-.字号按钮:active {
-  background: rgb(32 37 34 / 9%);
-}
-
-.字号按钮:focus-visible {
-  outline: 2px solid var(--选中色);
-  outline-offset: 1px;
-}
-
-.字号值 {
-  min-width: 3.4ch;
-  padding: 0 2px;
-  color: var(--次要墨色);
-  font-family: 'Avenir Next', 'PingFang SC', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-  text-align: center;
-  background: transparent;
-  border: 0;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.字号值:hover {
-  color: var(--墨色);
-}
-
-.字号值:focus-visible {
-  outline: 2px solid var(--选中色);
-  outline-offset: 1px;
-}
-
-/* ===== 行距控制（字体设置标题栏） ===== */
+/* ===== 字号与行距控制（字体设置标题栏） ===== */
+.字号控制,
 .行距控制 {
   display: inline-flex;
   align-items: center;
@@ -436,31 +369,37 @@ body:has(.悬停关键词指示器:not([hidden])) .滚动进度 {
   -webkit-user-select: none;
 }
 
+.字号控制:hover,
 .行距控制:hover {
   color: var(--墨色);
   border-color: #aeb8b2;
 }
 
+.字号控制:focus-visible,
 .行距控制:focus-visible {
   outline: 2px solid var(--选中色);
   outline-offset: 1px;
 }
 
+.字号控制.滚轮调节中,
 .行距控制.滚轮调节中 {
   color: var(--墨色);
   border-color: var(--强调色);
 }
 
+.字号标签,
 .行距标签 {
   white-space: nowrap;
 }
 
+.字号值,
 .行距值 {
   min-width: 3ch;
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
 
+.字号单位,
 .行距单位 {
   font-size: 10px;
   font-weight: 700;
