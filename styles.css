@@ -751,11 +751,14 @@ body.右下面板展开 .关键词面板开关 {
 .全文单字标记 {
   position: absolute;
   left: 50%;
-  bottom: -0.13em;
-  width: 0.22em;
-  height: 0.22em;
-  border: max(1px, 0.04em) solid currentColor;
+  bottom: -0.16em;
+  z-index: 1;
+  width: 0.3em;
+  height: 0.3em;
+  box-sizing: border-box;
+  border: 2px solid #263238;
   border-radius: 50%;
+  background: var(--纸张色);
   transform: translateX(-50%);
   pointer-events: none;
   user-select: none;
