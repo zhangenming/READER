@@ -164,6 +164,7 @@ const 状态 = {
   文件名: '',
   行起点列表: new Uint32Array(),
   行终点列表: new Uint32Array(),
+  行逻辑索引: new Uint32Array(),
   引文边界列表: new Uint32Array(),
   缩进起点集合: new Set(),
   排版键: '',
@@ -183,6 +184,7 @@ const 状态 = {
   当前关键词id: null,
   悬停关键词id: null,
   悬停命中idx: null,
+  悬停逻辑行idx: null,
   下一个关键词id: 1,
   跳转起点: null,
   指示器缓存: null,
@@ -482,6 +484,8 @@ function 绑定事件() {
   元素.滚动容器.addEventListener('dblclick', 处理高亮双击);
   元素.滚动容器.addEventListener('pointerover', 处理高亮移入);
   元素.滚动容器.addEventListener('pointerout', 处理高亮移出);
+  元素.滚动容器.addEventListener('pointerover', 处理正文行移入);
+  元素.滚动容器.addEventListener('pointerout', 处理正文行移出);
   元素.滚动容器.addEventListener('contextmenu', 处理高亮上下文点击);
   元素.滚动容器.addEventListener('keyup', 处理正文键盘选择);
   元素.自动滚动按钮.addEventListener('mouseenter', 开始自动滚动);
@@ -1532,6 +1536,45 @@ function 绑定事件() {
       }
     } else {
       切换同组高亮(null, null);
+    }
+  }
+
+  function 处理正文行移入(事件) {
+    if (事件.pointerType && 事件.pointerType !== 'mouse') {
+      return;
+    }
+    const 行元素 = 事件.target.closest('.正文行');
+    if (!行元素 || !元素.可见内容.contains(行元素)) {
+      return;
+    }
+    const 原行元素 = 事件.relatedTarget?.closest?.('.正文行');
+    if (原行元素 === 行元素) {
+      return;
+    }
+    切换逻辑行悬停(Number(行元素.dataset.logicalLine));
+  }
+
+  function 处理正文行移出(事件) {
+    if (事件.pointerType && 事件.pointerType !== 'mouse') {
+      return;
+    }
+    const 行元素 = 事件.target.closest('.正文行');
+    if (!行元素 || !元素.可见内容.contains(行元素)) {
+      return;
+    }
+    if (事件.relatedTarget?.closest?.('.正文行')) {
+      return;
+    }
+    切换逻辑行悬停(null);
+  }
+
+  function 切换逻辑行悬停(逻辑行idx) {
+    状态.悬停逻辑行idx = 逻辑行idx;
+    for (const 行元素 of 元素.可见内容.querySelectorAll('.正文行')) {
+      行元素.classList.toggle(
+        '逻辑行悬停',
+        逻辑行idx !== null && Number(行元素.dataset.logicalLine) === 逻辑行idx,
+      );
     }
   }
 
@@ -3149,6 +3192,7 @@ function 应用文本(原始文本, 文件名) {
   状态.缩进起点集合 = 缩进起点集合;
   状态.关键词列表 = [];
   状态.当前关键词id = null;
+  状态.悬停逻辑行idx = null;
   状态.下一个关键词id = 1;
   状态.关键词面板签名 = '';
   状态.跳转起点 = null;
@@ -3561,6 +3605,7 @@ function 重建行索引(排版 = 读取正文排版()) {
 function 创建行索引(文本, 排版, 缩进起点集合) {
   const 起点数组 = [];
   const 终点数组 = [];
+  const 逻辑行数组 = [];
   const 西文宽度缓存 = new Map();
   const 文本长度 = 文本.length;
   正文测量上下文.font = 排版.西文字体;
@@ -3571,6 +3616,7 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
   let 当前行有内容 = false;
   let 物理行有内容 = false;
   let 西文片段起点 = -1;
+  let 逻辑行idx = 0;
   let 字起点 = 0;
 
   while (字起点 < 文本长度) {
@@ -3598,6 +3644,7 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
       当前行需要缩进 = 缩进起点集合.has(字终点);
       当前行有内容 = false;
       物理行有内容 = false;
+      逻辑行idx += 1;
       字起点 = 字终点;
       continue;
     }
@@ -3627,6 +3674,7 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
   return {
     行起点列表: Uint32Array.from(起点数组),
     行终点列表: Uint32Array.from(终点数组),
+    行逻辑索引: Uint32Array.from(逻辑行数组),
     排版键: 排版.键,
     行高: 排版.行高,
     总高度,
@@ -3748,12 +3796,14 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
   function 添加行(起点, 终点) {
     起点数组.push(起点);
     终点数组.push(终点);
+    逻辑行数组.push(逻辑行idx);
   }
 }
 
 function 提交行索引(行索引) {
   状态.行起点列表 = 行索引.行起点列表;
   状态.行终点列表 = 行索引.行终点列表;
+  状态.行逻辑索引 = 行索引.行逻辑索引;
   状态.排版键 = 行索引.排版键;
   状态.行高 = 行索引.行高;
   状态.渲染起点 = -1;
@@ -4166,6 +4216,12 @@ function 渲染可见行(强制渲染 = false) {
       行元素.classList.toggle('换行缩进行', 状态.缩进起点集合.has(行起点));
       行元素.dataset.start = String(行起点);
       行元素.dataset.end = String(行终点);
+      行元素.dataset.logicalLine = String(状态.行逻辑索引[idx]);
+      行元素.classList.toggle(
+        '逻辑行悬停',
+        状态.悬停逻辑行idx !== null &&
+          状态.行逻辑索引[idx] === 状态.悬停逻辑行idx,
+      );
       行元素.setAttribute('aria-label', 行文本 || '空行');
 
       for (const 关键词游标 of 关键词游标列表) {
