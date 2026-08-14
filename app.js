@@ -865,7 +865,7 @@ function 绑定事件() {
     结束跳转会话('语音翻页');
     const 滚动行数 = Math.max(
       1,
-      Math.ceil(元素.滚动容器.clientHeight / 状态.行高),
+      Math.floor(元素.滚动容器.clientHeight / 状态.行高),
     );
     const 当前行idx = Math.round(元素.滚动容器.scrollTop / 状态.行高);
     const 最大顶部行idx = Math.round(
@@ -903,7 +903,7 @@ function 绑定事件() {
     try {
       const 视口行数 = Math.max(
         1,
-        Math.ceil(元素.滚动容器.clientHeight / 状态.行高),
+        Math.floor(元素.滚动容器.clientHeight / 状态.行高),
       );
       const 当前行idx = Math.round(元素.滚动容器.scrollTop / 状态.行高);
       const 最大顶部行idx = Math.round(
@@ -1041,8 +1041,10 @@ function 绑定事件() {
       return;
     }
 
+    const 是翻页按键 = 事件.code === 'Space' || 事件.key === 'Enter';
+
     if (
-      事件.code === 'Space' &&
+      是翻页按键 &&
       !事件.altKey &&
       !事件.ctrlKey &&
       !事件.metaKey &&
@@ -1053,14 +1055,20 @@ function 绑定事件() {
       if (!事件.repeat) {
         执行自动滚动翻页(
           事件.shiftKey,
-          事件.shiftKey ? 'Shift + Space' : 'Space',
+          事件.shiftKey
+            ? 事件.key === 'Enter'
+              ? 'Shift + Enter'
+              : 'Shift + Space'
+            : 事件.key === 'Enter'
+              ? 'Enter'
+              : 'Space',
         );
       }
       return;
     }
 
     if (
-      事件.code === 'Space' &&
+      是翻页按键 &&
       !事件.altKey &&
       !事件.ctrlKey &&
       !事件.metaKey &&
