@@ -725,6 +725,10 @@ body.右下面板展开 .关键词面板开关 {
   white-space: pre;
 }
 
+.正文行:hover {
+  background-color: color-mix(in oklab, var(--选中色) 7%, var(--纸张色));
+}
+
 /* 当前命中项的 box-shadow 外环与计数徽标会溢出到行外，
    需要放行溢出并提升整行层叠顺序，避免被相邻行遮挡。 */
 .正文行:has(.当前命中) {
