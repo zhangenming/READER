@@ -1624,7 +1624,7 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 .内容选项 {
   display: grid;
   width: 100%;
-  min-height: 58px;
+  min-height: 66px;
   align-items: center;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 14px;
@@ -1636,6 +1636,11 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   border: 0;
   border-bottom: 1px solid #e4e2da;
   cursor: pointer;
+}
+
+.内容选项信息 {
+  display: block;
+  min-width: 0;
 }
 
 .内容选项:last-child {
@@ -1659,6 +1664,7 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 }
 
 .内容选项名称 {
+  display: block;
   overflow: hidden;
   min-width: 0;
   font-size: 13px;
@@ -1666,6 +1672,19 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   line-height: 19px;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.内容选项字数 {
+  display: block;
+  margin-top: 2px;
+  color: var(--次要墨色);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  line-height: 16px;
+}
+
+.内容选项字数:empty {
+  display: none;
 }
 
 .内容选项状态 {

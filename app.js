@@ -22,6 +22,7 @@ const 时间格式器 = new Intl.DateTimeFormat('zh-CN', {
   minute: '2-digit',
   second: '2-digit',
 });
+const 整数格式器 = new Intl.NumberFormat('zh-CN');
 const 关键词排序方式列表 = ['数量', '位置', '拼音'];
 const 西文字素模式 =
   /^(?:[\u0020-\u007e\u00a0]|\p{Script=Latin}|\p{Number}|\p{Mark})+$/u;
@@ -198,6 +199,7 @@ const 状态 = {
   字号: 默认字号,
   词频分析: null,
   文本目录: [],
+  文本字数: new Map(),
 };
 
 const 元素 = {
@@ -354,7 +356,7 @@ async function 载入文本(文件名) {
 
   let 数据;
   try {
-    const 响应 = await fetch(创建文本地址());
+    const 响应 = await fetch(创建文本地址(文件名));
     if (!响应.ok) {
       throw new Error(`HTTP ${响应.status} ${响应.statusText}`);
     }
@@ -384,10 +386,10 @@ async function 载入文本(文件名) {
   } catch (错误) {
     显示文本处理错误(错误);
   }
+}
 
-  function 创建文本地址() {
-    return new URL(encodeURIComponent(文件名), 文本目录地址);
-  }
+function 创建文本地址(文件名) {
+  return new URL(encodeURIComponent(文件名), 文本目录地址);
 }
 
 function 是有效文本文件名(文件名) {
@@ -2472,13 +2474,46 @@ function 绑定事件() {
       if (!元素.内容选择弹窗.open) {
         return;
       }
+      状态.文本字数 = new Map();
       渲染内容选择列表();
+      状态.文本字数 = await 统计文本字数();
+      if (元素.内容选择弹窗.open) {
+        渲染内容选择列表();
+      }
     } catch (错误) {
       元素.内容选择摘要.textContent = '目录读取失败';
       const 提示 = 创建内容载入提示('无法读取 txt 目录');
       提示.classList.add('错误');
       元素.内容选择列表.replaceChildren(提示);
       console.error('[阅读器] 文本目录读取失败', 错误);
+    }
+
+    async function 统计文本字数() {
+      const 统计结果 = await Promise.all(
+        状态.文本目录.map(async function 统计单个文本(文件名) {
+          try {
+            const 响应 = await fetch(创建文本地址(文件名));
+            if (!响应.ok) {
+              throw new Error(`HTTP ${响应.status} ${响应.statusText}`);
+            }
+            const 文本 = new TextDecoder('utf-8', { fatal: true }).decode(
+              await 响应.arrayBuffer(),
+            );
+            const 非空白字符模式 = /\S/u;
+            let 字数 = 0;
+            for (const 字符 of 文本) {
+              if (非空白字符模式.test(字符)) {
+                字数 += 1;
+              }
+            }
+            return [文件名, 字数];
+          } catch (错误) {
+            console.error(`[阅读器] 无法统计文本字数：${文件名}`, 错误);
+            return [文件名, null];
+          }
+        }),
+      );
+      return new Map(统计结果);
     }
   }
 
@@ -2567,6 +2602,20 @@ function 绑定事件() {
       名称.className = '内容选项名称';
       名称.textContent = 文件名.replace(/\.txt$/i, '');
 
+      const 字数 = document.createElement('span');
+      字数.className = '内容选项字数';
+      const 统计字数 = 状态.文本字数.get(文件名);
+      字数.textContent =
+        统计字数 === undefined
+          ? '正在统计'
+          : 统计字数 === null
+            ? '统计失败'
+            : `${整数格式器.format(统计字数)} 字`;
+
+      const 文本信息 = document.createElement('span');
+      文本信息.className = '内容选项信息';
+      文本信息.append(名称, 字数);
+
       const 状态文字 = document.createElement('span');
       状态文字.className = '内容选项状态';
       const 阅读进度 = 计算已保存阅读进度(文本状态);
@@ -2576,7 +2625,7 @@ function 绑定事件() {
           ? `继续 · ${阅读进度}`
           : '加载';
 
-      按钮.append(名称, 状态文字);
+      按钮.append(文本信息, 状态文字);
       片段.append(按钮);
     }
     元素.内容选择列表.replaceChildren(片段);
