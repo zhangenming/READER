@@ -731,6 +731,13 @@ body.右下面板展开 .关键词面板开关 {
   contain: layout style;
 }
 
+.正文行:has(.全文单字标记) {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+  contain: layout style;
+}
+
 .正文行.换行缩进行 {
   padding-left: 2em;
 }
@@ -744,10 +751,10 @@ body.右下面板展开 .关键词面板开关 {
 .全文单字标记 {
   position: absolute;
   left: 50%;
-  bottom: 0.04em;
-  width: 0.18em;
-  height: 0.18em;
-  border: 1px solid currentColor;
+  bottom: -0.13em;
+  width: 0.22em;
+  height: 0.22em;
+  border: max(1px, 0.04em) solid currentColor;
   border-radius: 50%;
   transform: translateX(-50%);
   pointer-events: none;
