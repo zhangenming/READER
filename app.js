@@ -1676,11 +1676,10 @@ function 绑定事件() {
       元素.词频列表.replaceChildren(创建词频表格片段(统计列表, 起点));
     }
 
-    const 统计种数 = 是单字 ? 分析.列表[1].length : 统计列表.length;
-    const 类型名称 = 是单字
-      ? '单字'
-      : `${['二', '三', '四', '五', '六'][当前词频字数 - 2]}字组合`;
-    元素.词频摘要.textContent = `${分析.去重汉字数.toLocaleString('zh-CN')} 个汉字 · ${统计种数.toLocaleString('zh-CN')} 种${类型名称}`;
+    const 统计说明 = 是单字
+      ? `${分析.单字列表.一次.length.toLocaleString('zh-CN')} 个字只出现一次`
+      : `${统计列表.length.toLocaleString('zh-CN')} 种${['二', '三', '四', '五', '六'][当前词频字数 - 2]}字组合`;
+    元素.词频摘要.textContent = `${分析.去重汉字数.toLocaleString('zh-CN')} 个汉字 · ${统计说明}`;
     元素.词频页码.textContent = `${当前词频页码.toLocaleString('zh-CN')} / ${总页数.toLocaleString('zh-CN')}`;
     元素.词频上一页.disabled = 当前词频页码 === 1;
     元素.词频下一页.disabled = 当前词频页码 === 总页数;
