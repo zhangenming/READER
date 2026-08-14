@@ -105,17 +105,6 @@
     </button>
     <time id="当前时间" class="当前时间">00:00:00</time>
     <button
-      id="行距控制"
-      class="行距控制"
-      type="button"
-      aria-label="当前行距 30 像素，悬停滚轮调节，点击恢复默认"
-      title="悬停滚轮调节行距 · 点击恢复默认"
-    >
-      <span class="行距标签">行距</span>
-      <span id="行距值" class="行距值">30</span>
-      <span class="行距单位">px</span>
-    </button>
-    <button
       id="内容选择按钮"
       class="内容选择按钮"
       type="button"
@@ -369,33 +358,51 @@
     >
       <div class="字体标题栏">
         <h2 id="字体标题" class="字体标题">字体设置</h2>
-        <div id="字号控制" class="字号控制" role="group" aria-label="字号调节">
-          <button
-            id="字号缩小"
-            class="字号按钮"
-            type="button"
-            aria-label="缩小字号"
-            title="缩小字号"
+        <div class="排版控制">
+          <div
+            id="字号控制"
+            class="字号控制"
+            role="group"
+            aria-label="字号调节"
           >
-            −
-          </button>
+            <button
+              id="字号缩小"
+              class="字号按钮"
+              type="button"
+              aria-label="缩小字号"
+              title="缩小字号"
+            >
+              −
+            </button>
+            <button
+              id="字号值"
+              class="字号值"
+              type="button"
+              aria-label="当前字号 30，点击恢复默认"
+              title="点击恢复默认字号"
+            >
+              30
+            </button>
+            <button
+              id="字号放大"
+              class="字号按钮"
+              type="button"
+              aria-label="放大字号"
+              title="放大字号"
+            >
+              ＋
+            </button>
+          </div>
           <button
-            id="字号值"
-            class="字号值"
+            id="行距控制"
+            class="行距控制"
             type="button"
-            aria-label="当前字号 30，点击恢复默认"
-            title="点击恢复默认字号"
+            aria-label="当前行距 30 像素，悬停滚轮调节，点击恢复默认"
+            title="悬停滚轮调节行距 · 点击恢复默认"
           >
-            30
-          </button>
-          <button
-            id="字号放大"
-            class="字号按钮"
-            type="button"
-            aria-label="放大字号"
-            title="放大字号"
-          >
-            ＋
+            <span class="行距标签">行距</span>
+            <span id="行距值" class="行距值">30</span>
+            <span class="行距单位">px</span>
           </button>
         </div>
         <button
