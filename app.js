@@ -5,7 +5,12 @@ if (!(默认文本预加载 instanceof HTMLLinkElement)) {
   throw new Error('缺少默认文本预加载链接');
 }
 const 默认文本地址 = 默认文本预加载.href;
-const 持久化键 = '原文阅读器:阅读状态:v1';
+const 文本目录地址 = new URL('./txt/', document.baseURI);
+const 默认文件名 = decodeURIComponent(
+  new URL(默认文本地址).pathname.split('/').pop(),
+);
+const 持久化键 = '原文阅读器:阅读状态:v2';
+const 旧持久化键 = '原文阅读器:阅读状态:v1';
 const 最大虚拟高度 = 30_000_000;
 const 字素分段器 = new Intl.Segmenter('zh-CN', { granularity: 'grapheme' });
 const 词组分段器 = new Intl.Segmenter('zh-CN', { granularity: 'word' });
@@ -86,12 +91,22 @@ const 高亮配色 = [{ 浅色: '#c5d9f0', 深色: '#1e4a7a' }];
 // 因果（因词/果词）、假设（假设词）、递进（递进词）、选择（选择词）、顺接（顺接词）。
 // 注意「既然」末字「然」与「虽然」末字同字，靠首字（既/虽）邻接区分，已无冲突。
 const 关系连词表 = [
-  ['因为', '因词'], ['由于', '因词'], ['既然', '因词'],
-  ['所以', '果词'], ['因此', '果词'], ['于是', '果词'],
-  ['如果', '假设词'], ['只要', '假设词'], ['只有', '假设词'],
-  ['不但', '递进词'], ['而且', '递进词'], ['甚至', '递进词'], ['况且', '递进词'],
+  ['因为', '因词'],
+  ['由于', '因词'],
+  ['既然', '因词'],
+  ['所以', '果词'],
+  ['因此', '果词'],
+  ['于是', '果词'],
+  ['如果', '假设词'],
+  ['只要', '假设词'],
+  ['只有', '假设词'],
+  ['不但', '递进词'],
+  ['而且', '递进词'],
+  ['甚至', '递进词'],
+  ['况且', '递进词'],
   ['或者', '选择词'],
-  ['然后', '顺接词'], ['继续', '顺接词'],
+  ['然后', '顺接词'],
+  ['继续', '顺接词'],
   ['然而', '转折词'],
 ];
 
@@ -182,6 +197,7 @@ const 状态 = {
   全文负担密度: 0, // 负担/像素 = 句段负担总合 ÷ 虚拟总高度；视口期望负担 = 密度 × 视口高度
   字号: 默认字号,
   词频分析: null,
+  文本目录: [],
 };
 
 const 元素 = {
@@ -219,6 +235,11 @@ const 元素 = {
   字号放大: document.querySelector('#字号放大'),
   行距控制: document.querySelector('#行距控制'),
   行距值: document.querySelector('#行距值'),
+  内容选择按钮: document.querySelector('#内容选择按钮'),
+  内容选择弹窗: document.querySelector('#内容选择弹窗'),
+  内容选择摘要: document.querySelector('#内容选择摘要'),
+  内容选择列表: document.querySelector('#内容选择列表'),
+  关闭内容选择按钮: document.querySelector('#关闭内容选择按钮'),
   关键词面板: document.querySelector('#关键词面板'),
   关键词面板开关: document.querySelector('#关键词面板开关'),
   关键词列表容器: document.querySelector('#关键词列表容器'),
@@ -270,56 +291,12 @@ function 启动() {
   更新当前时间();
   window.setInterval(更新当前时间, 1000);
   new ResizeObserver(处理尺寸变化).observe(元素.滚动容器);
-  void 载入默认文本();
+  void 载入文本(读取初始文件名());
 
   function 更新当前时间() {
     const 现在 = new Date();
     元素.当前时间.dateTime = 现在.toISOString();
     元素.当前时间.textContent = 时间格式器.format(现在);
-  }
-
-  async function 载入默认文本() {
-    const 本次载入序号 = ++状态.载入序号;
-    let 数据;
-    try {
-      const 响应 = await fetch(默认文本地址);
-      if (!响应.ok) {
-        throw new Error(`HTTP ${响应.status} ${响应.statusText}`);
-      }
-      数据 = await 响应.arrayBuffer();
-    } catch (错误) {
-      if (本次载入序号 === 状态.载入序号) {
-        显示错误(
-          '文本载入失败，请确认本地服务与 txt/嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt 可访问。',
-          错误,
-        );
-      }
-      return;
-    }
-
-    if (本次载入序号 !== 状态.载入序号) {
-      return;
-    }
-
-    let 文本;
-    try {
-      文本 = new TextDecoder('utf-8', { fatal: true }).decode(数据);
-    } catch (错误) {
-      显示错误(
-        'txt/嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt 不是有效的 UTF-8 文本。',
-        错误,
-      );
-      return;
-    }
-
-    try {
-      应用文本(
-        文本,
-        '嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt',
-      );
-    } catch (错误) {
-      显示文本处理错误(错误);
-    }
   }
 
   function 处理尺寸变化() {
@@ -348,7 +325,80 @@ function 启动() {
       }
     }, 100);
   }
+
+  function 读取初始文件名() {
+    const 持久化数据 = 读取持久化数据();
+    return 是有效文本文件名(持久化数据.当前文件名)
+      ? 持久化数据.当前文件名
+      : 默认文件名;
+  }
 }
+
+async function 载入文本(文件名) {
+  if (!是有效文本文件名(文件名)) {
+    throw new TypeError(`无效的文本文件名：${文件名}`);
+  }
+  if (文件名 === 状态.文件名) {
+    return;
+  }
+  if (状态.文件名) {
+    保存持久化状态();
+  }
+
+  const 本次载入序号 = ++状态.载入序号;
+  元素.载入状态.classList.remove('错误');
+  元素.载入状态.querySelector('.载入线').hidden = false;
+  元素.载入状态.querySelector('p').textContent =
+    `正在打开《${文件名.replace(/\.txt$/i, '')}》`;
+  元素.载入状态.hidden = false;
+
+  let 数据;
+  try {
+    const 响应 = await fetch(创建文本地址());
+    if (!响应.ok) {
+      throw new Error(`HTTP ${响应.status} ${响应.statusText}`);
+    }
+    数据 = await 响应.arrayBuffer();
+  } catch (错误) {
+    if (本次载入序号 === 状态.载入序号) {
+      显示错误(`文本载入失败：txt/${文件名}`, 错误);
+    }
+    return;
+  }
+
+  if (本次载入序号 !== 状态.载入序号) {
+    return;
+  }
+
+  let 文本;
+  try {
+    文本 = new TextDecoder('utf-8', { fatal: true }).decode(数据);
+  } catch (错误) {
+    显示错误(`txt/${文件名} 不是有效的 UTF-8 文本。`, 错误);
+    return;
+  }
+
+  try {
+    应用文本(文本, 文件名);
+    保存持久化状态();
+  } catch (错误) {
+    显示文本处理错误(错误);
+  }
+
+  function 创建文本地址() {
+    return new URL(encodeURIComponent(文件名), 文本目录地址);
+  }
+}
+
+function 是有效文本文件名(文件名) {
+  return (
+    typeof 文件名 === 'string' &&
+    文件名.toLowerCase().endsWith('.txt') &&
+    !文件名.includes('/') &&
+    !文件名.includes('\\')
+  );
+}
+
 function 绑定事件() {
   // ===== 右下角控件：默认隐藏，仅在鼠标靠近 / 触摸 / 聚焦 / 自动滚动时显示 =====
   // 时间（#当前时间）固定显示，不受影响。隐藏时 opacity:0 + pointer-events:none，
@@ -369,7 +419,7 @@ function 绑定事件() {
     );
   }
 
-  // 鼠标靠近右下角热区（右 240px / 底 130px 以内）即显示，离开则隐藏。
+  // 鼠标靠近右下角热区（右 380px / 底 130px 以内）即显示，离开则隐藏。
   // 用 rAF 节流，避免每次 mousemove 都同步刷新。
   function 处理右下控件悬停(事件) {
     右下悬停X = 事件.clientX;
@@ -380,7 +430,7 @@ function 绑定事件() {
     右下悬停帧 = requestAnimationFrame(function 计算下方热区() {
       右下悬停帧 = 0;
       const 在热区 =
-        右下悬停X > window.innerWidth - 240 &&
+        右下悬停X > window.innerWidth - 380 &&
         右下悬停Y > window.innerHeight - 130;
       右下悬停 = 在热区;
       刷新右下控件可见性();
@@ -395,7 +445,7 @@ function 绑定事件() {
       return;
     }
     if (
-      触点.clientX > window.innerWidth - 240 &&
+      触点.clientX > window.innerWidth - 380 &&
       触点.clientY > window.innerHeight - 130
     ) {
       右下触摸 = true;
@@ -439,6 +489,10 @@ function 绑定事件() {
   元素.自动滚动按钮.addEventListener('click', 切换全屏模式);
   元素.自动滚动按钮.addEventListener('mouseleave', 处理自动滚动按钮移出);
   元素.自动滚动按钮.addEventListener('blur', 处理自动滚动按钮失焦);
+  元素.内容选择按钮.addEventListener('click', 打开内容选择弹窗);
+  元素.关闭内容选择按钮.addEventListener('click', 关闭内容选择弹窗);
+  元素.内容选择弹窗.addEventListener('click', 处理内容选择弹窗点击);
+  元素.内容选择列表.addEventListener('click', 处理内容选择列表点击);
   元素.查找表单.addEventListener('submit', 处理查找提交);
   元素.查找输入框.addEventListener('input', 处理查找输入);
   元素.分析按钮.addEventListener('click', 处理词组分析);
@@ -517,7 +571,12 @@ function 绑定事件() {
   // 右下角控件悬停热区（鼠标 / 触摸）与键盘聚焦时显示
   window.addEventListener('mousemove', 处理右下控件悬停, { passive: true });
   window.addEventListener('touchstart', 处理右下控件触摸, { passive: true });
-  for (const 控件 of [元素.自动滚动按钮, 元素.关键词面板开关, 元素.行距控制]) {
+  for (const 控件 of [
+    元素.自动滚动按钮,
+    元素.关键词面板开关,
+    元素.行距控制,
+    元素.内容选择按钮,
+  ]) {
     if (!控件) {
       continue;
     }
@@ -2312,6 +2371,7 @@ function 绑定事件() {
   function 处理面板开关() {
     状态.关键词面板展开 = !状态.关键词面板展开;
     渲染关键词面板();
+    安排保存持久化状态();
   }
 
   function 处理面板操作(事件) {
@@ -2397,6 +2457,154 @@ function 绑定事件() {
     }
   }
 
+  async function 打开内容选择弹窗() {
+    if (元素.内容选择弹窗.open) {
+      return;
+    }
+    停止自动滚动('打开内容选择');
+    保存持久化状态();
+    元素.内容选择摘要.textContent = '正在读取文本目录';
+    元素.内容选择列表.replaceChildren(创建内容载入提示('正在读取'));
+    元素.内容选择弹窗.showModal();
+
+    try {
+      状态.文本目录 = await 读取文本目录();
+      if (!元素.内容选择弹窗.open) {
+        return;
+      }
+      渲染内容选择列表();
+    } catch (错误) {
+      元素.内容选择摘要.textContent = '目录读取失败';
+      const 提示 = 创建内容载入提示('无法读取 txt 目录');
+      提示.classList.add('错误');
+      元素.内容选择列表.replaceChildren(提示);
+      console.error('[阅读器] 文本目录读取失败', 错误);
+    }
+  }
+
+  function 关闭内容选择弹窗() {
+    if (元素.内容选择弹窗.open) {
+      元素.内容选择弹窗.close();
+    }
+  }
+
+  function 处理内容选择弹窗点击(事件) {
+    if (事件.target === 元素.内容选择弹窗) {
+      关闭内容选择弹窗();
+    }
+  }
+
+  function 处理内容选择列表点击(事件) {
+    const 按钮 = 事件.target.closest('button[data-file-name]');
+    if (!按钮) {
+      return;
+    }
+    const 文件名 = 按钮.dataset.fileName;
+    关闭内容选择弹窗();
+    void 载入文本(文件名);
+  }
+
+  async function 读取文本目录() {
+    const 响应 = await fetch(文本目录地址, { cache: 'no-store' });
+    if (!响应.ok) {
+      throw new Error(`HTTP ${响应.status} ${响应.statusText}`);
+    }
+
+    const 目录文档 = new DOMParser().parseFromString(
+      await 响应.text(),
+      'text/html',
+    );
+    const 目录地址 = new URL(响应.url);
+    const 目录路径 = 目录地址.pathname.endsWith('/')
+      ? 目录地址.pathname
+      : 目录地址.pathname + '/';
+    const 文件名集合 = new Set();
+
+    for (const 链接 of 目录文档.querySelectorAll('a[href]')) {
+      const 文件地址 = new URL(链接.getAttribute('href'), 目录地址);
+      if (
+        文件地址.origin !== 目录地址.origin ||
+        !文件地址.pathname.startsWith(目录路径)
+      ) {
+        continue;
+      }
+      const 文件名 = decodeURIComponent(
+        文件地址.pathname.slice(目录路径.length),
+      );
+      if (是有效文本文件名(文件名)) {
+        文件名集合.add(文件名);
+      }
+    }
+
+    const 文件列表 = [...文件名集合].sort(function 按文件名排序(左, 右) {
+      return 拼音排序器.compare(左, 右);
+    });
+    if (!文件列表.length) {
+      throw new Error('txt 目录中没有可读取的 .txt 文件');
+    }
+    return 文件列表;
+  }
+
+  function 渲染内容选择列表() {
+    const 持久化数据 = 读取持久化数据();
+    const 片段 = document.createDocumentFragment();
+    元素.内容选择摘要.textContent = `${状态.文本目录.length} 个文本`;
+
+    for (const 文件名 of 状态.文本目录) {
+      const 文本状态 = 持久化数据.文本状态[文件名];
+      const 是当前文本 = 文件名 === 状态.文件名;
+      const 按钮 = document.createElement('button');
+      按钮.className = '内容选项';
+      按钮.type = 'button';
+      按钮.dataset.fileName = 文件名;
+      按钮.title = 文件名;
+      if (是当前文本) {
+        按钮.classList.add('当前');
+        按钮.setAttribute('aria-current', 'true');
+      }
+
+      const 名称 = document.createElement('span');
+      名称.className = '内容选项名称';
+      名称.textContent = 文件名.replace(/\.txt$/i, '');
+
+      const 状态文字 = document.createElement('span');
+      状态文字.className = '内容选项状态';
+      const 阅读进度 = 计算已保存阅读进度(文本状态);
+      状态文字.textContent = 是当前文本
+        ? `当前 · ${阅读进度}`
+        : 文本状态
+          ? `继续 · ${阅读进度}`
+          : '加载';
+
+      按钮.append(名称, 状态文字);
+      片段.append(按钮);
+    }
+    元素.内容选择列表.replaceChildren(片段);
+  }
+
+  function 创建内容载入提示(文字) {
+    const 提示 = document.createElement('p');
+    提示.className = '内容选择提示';
+    提示.textContent = 文字;
+    return 提示;
+  }
+
+  function 计算已保存阅读进度(文本状态) {
+    if (
+      !文本状态 ||
+      !Number.isFinite(文本状态.文本长度) ||
+      文本状态.文本长度 <= 0 ||
+      !Number.isFinite(文本状态.阅读偏移)
+    ) {
+      return '0%';
+    }
+    const 比例 = Math.min(
+      1,
+      Math.max(0, 文本状态.阅读偏移 / 文本状态.文本长度),
+    );
+    return `${Math.round(比例 * 100)}%`;
+  }
+
   function 结束跳转会话(原因) {
     if (!状态.跳转起点) {
       return;
@@ -2433,6 +2641,7 @@ function 切换字体标签(标签) {
   当前字体标签 = 标签;
   渲染字体标签();
   渲染字体选项();
+  安排保存持久化状态();
 }
 
 function 处理字体选项点击(事件) {
@@ -2660,6 +2869,11 @@ function 调整字号(目标值) {
   }
   状态.字号 = 新值;
   document.documentElement.style.setProperty('--正文字号', 新值 + 'px');
+  if (状态.行高 < 新值) {
+    状态.行高 = 新值;
+    document.documentElement.style.setProperty('--行高', 新值 + 'px');
+    更新行高显示();
+  }
   更新字号显示();
   // 字号影响排版键（正文字号纳入键），变化后按「尺寸变化」逻辑重排：
   // 排版键改变则重建行索引，否则仅刷新画布高度并重绘。
@@ -2741,48 +2955,38 @@ function 离开行距调节() {
   元素.行距控制.classList.remove('滚轮调节中');
 }
 
-function 读取持久化行高() {
-  const 原始 = localStorage.getItem(持久化键);
-  if (!原始) {
-    return null;
-  }
-  try {
-    const 数据 = JSON.parse(原始);
-    const 值 = 数据.行高;
+function 读取持久化数据() {
+  const 原始数据 = localStorage.getItem(持久化键);
+  if (原始数据) {
+    const 数据 = JSON.parse(原始数据);
     if (
-      typeof 值 === 'number' &&
-      Number.isFinite(值) &&
-      值 >= 最小行高硬下限 &&
-      值 <= 最大行高
+      !数据 ||
+      typeof 数据 !== 'object' ||
+      typeof 数据.当前文件名 !== 'string' ||
+      !数据.文本状态 ||
+      typeof 数据.文本状态 !== 'object' ||
+      Array.isArray(数据.文本状态)
     ) {
-      return 值;
+      throw new TypeError('持久化的文本状态数据库格式无效');
     }
-  } catch {
-    /* 持久化格式损坏时忽略，回退默认 */
+    return 数据;
   }
-  return null;
-}
 
-function 读取持久化字号() {
-  const 原始 = localStorage.getItem(持久化键);
-  if (!原始) {
-    return null;
+  const 旧数据 = localStorage.getItem(旧持久化键);
+  if (!旧数据) {
+    return { 当前文件名: '', 文本状态: {} };
   }
-  try {
-    const 数据 = JSON.parse(原始);
-    const 值 = 数据.字号;
-    if (
-      typeof 值 === 'number' &&
-      Number.isFinite(值) &&
-      值 >= 最小字号 &&
-      值 <= 最大字号
-    ) {
-      return 值;
-    }
-  } catch {
-    /* 持久化格式损坏时忽略，回退默认 */
+  const 旧状态 = JSON.parse(旧数据);
+  if (!旧状态 || typeof 旧状态 !== 'object') {
+    throw new TypeError('旧版持久化阅读状态格式无效');
   }
-  return null;
+  if (!是有效文本文件名(旧状态.文件名)) {
+    return { 当前文件名: '', 文本状态: {} };
+  }
+  return {
+    当前文件名: 旧状态.文件名,
+    文本状态: { [旧状态.文件名]: 旧状态 },
+  };
 }
 
 function 应用文本(原始文本, 文件名) {
@@ -2795,36 +2999,8 @@ function 应用文本(原始文本, 文件名) {
   const 文本 = 句子整理结果.文本;
   const 缩进起点集合 = new Set(句子整理结果.缩进起点列表);
 
-  // 在排版计算前恢复持久化的字号，使行索引按用户设定字号建立；
-  // 无持久化值时回退到 CSS（含移动端 28.5px 媒体查询），并同步状态与显示。
-  const 根计算样式 = getComputedStyle(document.documentElement);
-  const 计算字号 = Number.parseFloat(根计算样式.getPropertyValue('--正文字号'));
-  const 基础字号 =
-    Number.isFinite(计算字号) && 计算字号 > 0 ? 计算字号 : 默认字号;
-  const 持久化字号 = 读取持久化字号();
-  if (持久化字号 !== null) {
-    状态.字号 = 持久化字号;
-    document.documentElement.style.setProperty('--正文字号', 持久化字号 + 'px');
-  } else {
-    状态.字号 = 基础字号;
-  }
-  更新字号显示();
-
-  // 在排版计算前恢复持久化的行距，使行索引按用户设定行高建立（与字号同理）；
-  // 无持久化值时回退到 CSS（--行高 默认 = 正文字号），并同步状态与显示。
-  const 根计算样式行高 = getComputedStyle(document.documentElement);
-  const 计算行高 = Number.parseFloat(根计算样式行高.getPropertyValue('--行高'));
-  const 基础行高 =
-    Number.isFinite(计算行高) && 计算行高 > 0 ? 计算行高 : 默认行高;
-  const 持久化行高 = 读取持久化行高();
-  if (持久化行高 !== null) {
-    状态.行高 = 持久化行高;
-    document.documentElement.style.setProperty('--行高', 持久化行高 + 'px');
-  } else {
-    状态.行高 = 基础行高;
-    document.documentElement.style.setProperty('--行高', 基础行高 + 'px');
-  }
-  更新行高显示();
+  const 持久化状态 = 读取持久化数据().文本状态[文件名] ?? null;
+  恢复阅读设置(持久化状态);
 
   const 排版 = 读取正文排版();
   const 行索引 = 创建行索引(文本, 排版, 缩进起点集合);
@@ -2838,11 +3014,12 @@ function 应用文本(原始文本, 文件名) {
   状态.关键词列表 = [];
   状态.当前关键词id = null;
   状态.下一个关键词id = 1;
+  状态.关键词面板签名 = '';
   状态.跳转起点 = null;
   取消滚动动画();
   隐藏衔接线();
   提交行索引(行索引);
-  恢复持久化状态();
+  恢复文本内容状态(持久化状态);
   更新自动滚动速度();
   渲染可见行(true);
   更新关键词指示器();
@@ -2865,54 +3042,178 @@ function 应用文本(原始文本, 文件名) {
     耗时毫秒: Math.round(performance.now() - 开始时间),
   });
 
-  function 恢复持久化状态() {
-    const 原始状态 = localStorage.getItem(持久化键);
-    if (!原始状态) {
-      元素.滚动容器.scrollTop = 0;
-      return;
+  function 恢复阅读设置(持久化状态) {
+    const 根元素 = document.documentElement;
+    for (const 变量名 of [
+      '--正文字号',
+      '--行高',
+      '--引文字体',
+      '--正文字体',
+      '--引文粗细',
+      '--正文粗细',
+    ]) {
+      根元素.style.removeProperty(变量名);
+    }
+    字体设置.引号内 = null;
+    字体设置.引号外 = null;
+    字体粗细设置.引号内 = null;
+    字体粗细设置.引号外 = null;
+    当前字体标签 = '引号内';
+    状态.自动滚动速度 = 自动滚动默认速度;
+    状态.关键词排序 = '数量';
+    状态.关键词面板展开 = false;
+
+    const 根计算样式 = getComputedStyle(根元素);
+    const 计算字号 = Number.parseFloat(
+      根计算样式.getPropertyValue('--正文字号'),
+    );
+    const 计算行高 = Number.parseFloat(根计算样式.getPropertyValue('--行高'));
+    状态.字号 = Number.isFinite(计算字号) && 计算字号 > 0 ? 计算字号 : 默认字号;
+    状态.行高 = Number.isFinite(计算行高) && 计算行高 > 0 ? 计算行高 : 默认行高;
+
+    if (持久化状态) {
+      if (持久化状态.字号 !== undefined) {
+        if (
+          typeof 持久化状态.字号 !== 'number' ||
+          !Number.isFinite(持久化状态.字号)
+        ) {
+          throw new TypeError('持久化的字号格式无效');
+        }
+        if (持久化状态.字号 < 最小字号 || 持久化状态.字号 > 最大字号) {
+          throw new RangeError('持久化的字号超出有效范围');
+        }
+        状态.字号 = 持久化状态.字号;
+      }
+
+      if (持久化状态.行高 !== undefined) {
+        if (
+          typeof 持久化状态.行高 !== 'number' ||
+          !Number.isFinite(持久化状态.行高)
+        ) {
+          throw new TypeError('持久化的行距格式无效');
+        }
+        if (持久化状态.行高 < 最小行高硬下限 || 持久化状态.行高 > 最大行高) {
+          throw new RangeError('持久化的行距超出有效范围');
+        }
+        状态.行高 = Math.max(持久化状态.行高, 状态.字号);
+        if (状态.行高 !== 持久化状态.行高) {
+          console.warn('[阅读器] 已迁移低于字号的旧行距', {
+            文件名,
+            原行距: 持久化状态.行高,
+            新行距: 状态.行高,
+          });
+        }
+      } else {
+        状态.行高 = Math.max(状态.行高, 计算最小行高());
+      }
+
+      if (持久化状态.自动滚动速度 !== undefined) {
+        if (
+          typeof 持久化状态.自动滚动速度 !== 'number' ||
+          !Number.isFinite(持久化状态.自动滚动速度)
+        ) {
+          throw new TypeError('持久化的自动滚动速度格式无效');
+        }
+        if (
+          持久化状态.自动滚动速度 < 自动滚动最低速度 ||
+          持久化状态.自动滚动速度 > 自动滚动最高速度
+        ) {
+          throw new RangeError('持久化的自动滚动速度超出有效范围');
+        }
+        状态.自动滚动速度 = 持久化状态.自动滚动速度;
+      }
+
+      if (持久化状态.关键词排序 !== undefined) {
+        if (!关键词排序方式列表.includes(持久化状态.关键词排序)) {
+          throw new TypeError('持久化的关键词排序方式无效');
+        }
+        状态.关键词排序 = 持久化状态.关键词排序;
+      }
+      if (持久化状态.关键词面板展开 !== undefined) {
+        if (typeof 持久化状态.关键词面板展开 !== 'boolean') {
+          throw new TypeError('持久化的关键词面板状态无效');
+        }
+        状态.关键词面板展开 = 持久化状态.关键词面板展开;
+      }
+      if (持久化状态.当前字体标签 !== undefined) {
+        if (!['全部', '引号内', '引号外'].includes(持久化状态.当前字体标签)) {
+          throw new TypeError('持久化的字体标签状态无效');
+        }
+        当前字体标签 = 持久化状态.当前字体标签;
+      }
+      恢复字体设置(持久化状态.字体);
+      恢复字体粗细设置(持久化状态.字体粗细);
     }
 
-    const 持久化状态 = JSON.parse(原始状态);
-    if (持久化状态.自动滚动速度 !== undefined) {
-      if (
-        typeof 持久化状态.自动滚动速度 !== 'number' ||
-        !Number.isFinite(持久化状态.自动滚动速度)
-      ) {
-        throw new TypeError('持久化的自动滚动速度格式无效');
+    根元素.style.setProperty('--正文字号', 状态.字号 + 'px');
+    根元素.style.setProperty('--行高', 状态.行高 + 'px');
+    更新字号显示();
+    更新行高显示();
+
+    function 恢复字体设置(持久化字体) {
+      if (持久化字体 === undefined) {
+        return;
       }
-      if (
-        持久化状态.自动滚动速度 < 自动滚动最低速度 ||
-        持久化状态.自动滚动速度 > 自动滚动最高速度
-      ) {
-        throw new RangeError('持久化的自动滚动速度超出有效范围');
+      if (!持久化字体 || typeof 持久化字体 !== 'object') {
+        throw new TypeError('持久化的字体设置格式无效');
       }
-      状态.自动滚动速度 = 持久化状态.自动滚动速度;
+      for (const 区域 of ['引号内', '引号外']) {
+        const 值 = 持久化字体[区域];
+        if (
+          值 !== null &&
+          值 !== undefined &&
+          (typeof 值 !== 'string' || !值)
+        ) {
+          throw new TypeError(`持久化的${区域}字体设置格式无效`);
+        }
+        const 变量名 = 区域 === '引号内' ? '--引文字体' : '--正文字体';
+        字体设置[区域] = 值 ?? null;
+        if (字体设置[区域]) {
+          根元素.style.setProperty(变量名, 字体设置[区域]);
+        }
+      }
     }
-    // 行距恢复：仅在数值合法且在有效范围内时应用，避免损坏的持久化数据导致崩溃；
-    // 此处先更新 状态.行高 与 --行高，使后续 计算阅读位置 按用户设定行高定位。
-    if (
-      持久化状态.行高 !== undefined &&
-      typeof 持久化状态.行高 === 'number' &&
-      Number.isFinite(持久化状态.行高) &&
-      持久化状态.行高 >= 计算最小行高() &&
-      持久化状态.行高 <= 最大行高
-    ) {
-      状态.行高 = 持久化状态.行高;
-      document.documentElement.style.setProperty(
-        '--行高',
-        持久化状态.行高 + 'px',
-      );
-      更新行高显示();
+
+    function 恢复字体粗细设置(持久化粗细) {
+      if (持久化粗细 === undefined) {
+        return;
+      }
+      if (!持久化粗细 || typeof 持久化粗细 !== 'object') {
+        throw new TypeError('持久化的字体粗细设置格式无效');
+      }
+      for (const 区域 of ['引号内', '引号外']) {
+        const 值 = 持久化粗细[区域];
+        if (值 !== null && 值 !== undefined && !字体粗细列表.includes(值)) {
+          throw new TypeError(`持久化的${区域}字体粗细设置格式无效`);
+        }
+        const 变量名 = 区域 === '引号内' ? '--引文粗细' : '--正文粗细';
+        字体粗细设置[区域] = 值 ?? null;
+        if (字体粗细设置[区域] !== null) {
+          根元素.style.setProperty(变量名, String(字体粗细设置[区域]));
+        }
+      }
     }
+  }
+
+  function 恢复文本内容状态(持久化状态) {
+    元素.滚动容器.scrollTop = 0;
     if (
+      !持久化状态 ||
       持久化状态.文件名 !== 状态.文件名 ||
       持久化状态.文本长度 !== 状态.文本.length
     ) {
-      元素.滚动容器.scrollTop = 0;
       return;
     }
     if (!Array.isArray(持久化状态.关键词列表)) {
       throw new TypeError('持久化的关键词列表格式无效');
+    }
+    if (
+      typeof 持久化状态.阅读偏移 !== 'number' ||
+      !Number.isFinite(持久化状态.阅读偏移) ||
+      typeof 持久化状态.行内比例 !== 'number' ||
+      !Number.isFinite(持久化状态.行内比例)
+    ) {
+      throw new TypeError('持久化的阅读位置格式无效');
     }
 
     状态.关键词列表 = 持久化状态.关键词列表.map(
@@ -2931,9 +3232,6 @@ function 应用文本(原始文本, 文件名) {
         };
       },
     );
-    if (关键词排序方式列表.includes(持久化状态.关键词排序)) {
-      状态.关键词排序 = 持久化状态.关键词排序;
-    }
     状态.当前关键词id = 状态.关键词列表.some(function 是当前关键词(关键词) {
       return 关键词.id === 持久化状态.当前关键词id;
     })
@@ -2946,49 +3244,7 @@ function 应用文本(原始文本, 文件名) {
           return 关键词.id;
         }),
       ) + 1;
-
-    恢复字体设置(持久化状态.字体);
-    恢复字体粗细设置(持久化状态.字体粗细);
-    刷新字体粗细排版();
     元素.滚动容器.scrollTop = 计算阅读位置(持久化状态);
-  }
-
-  function 恢复字体设置(持久化字体) {
-    if (!持久化字体 || typeof 持久化字体 !== 'object') {
-      return;
-    }
-    for (const 区域 of ['引号内', '引号外']) {
-      const 值 = 持久化字体[区域];
-      const 变量名 = 区域 === '引号内' ? '--引文字体' : '--正文字体';
-      if (typeof 值 === 'string' && 值) {
-        字体设置[区域] = 值;
-        document.documentElement.style.setProperty(变量名, 值);
-      } else {
-        字体设置[区域] = null;
-        document.documentElement.style.removeProperty(变量名);
-      }
-    }
-  }
-
-  function 恢复字体粗细设置(持久化粗细) {
-    if (!持久化粗细 || typeof 持久化粗细 !== 'object') {
-      return;
-    }
-    for (const 区域 of ['引号内', '引号外']) {
-      const 值 = 持久化粗细[区域];
-      const 变量名 = 区域 === '引号内' ? '--引文粗细' : '--正文粗细';
-      if (
-        typeof 值 === 'number' &&
-        Number.isInteger(值) &&
-        字体粗细列表.includes(值)
-      ) {
-        字体粗细设置[区域] = 值;
-        document.documentElement.style.setProperty(变量名, String(值));
-      } else {
-        字体粗细设置[区域] = null;
-        document.documentElement.style.removeProperty(变量名);
-      }
-    }
   }
 
   function 创建引文索引(全文) {
@@ -3460,15 +3716,15 @@ function 是句内停顿码(码) {
     码 === 0x0a || // 换行（物理段落边界）
     (码 >= 0x3000 && 码 <= 0x303f) || // CJK 标点（，。！？；：、…「」《》等）
     (码 >= 0xff00 && 码 <= 0xffef) || // 全角形式（，。！？：；（））
-    (码 === 0x2026) || // …（省略号）
+    码 === 0x2026 || // …（省略号）
     (码 >= 0x2014 && 码 <= 0x2015) || // ——（破折号）
     (码 >= 0x2018 && 码 <= 0x201d) || // ‘’ “”（弯引号）
-    (码 === 0x2c || // ,（西文逗号）
-      码 === 0x2e || // .
-      码 === 0x3b || // ;
-      码 === 0x3a || // :
-      码 === 0x21 || // !
-      码 === 0x3f) // ?
+    码 === 0x2c || // ,（西文逗号）
+    码 === 0x2e || // .
+    码 === 0x3b || // ;
+    码 === 0x3a || // :
+    码 === 0x21 || // !
+    码 === 0x3f // ?
   );
 }
 
@@ -4321,6 +4577,7 @@ function 有弹窗打开() {
     元素.查找弹窗.open ||
     元素.上下文弹窗.open ||
     元素.词频弹窗.open ||
+    元素.内容选择弹窗.open ||
     !元素.字体弹窗.hidden
   );
 }
@@ -5293,32 +5550,34 @@ function 保存持久化状态() {
   window.clearTimeout(状态.保存计时器);
   状态.保存计时器 = 0;
   const 阅读位置 = 读取阅读位置();
-  localStorage.setItem(
-    持久化键,
-    JSON.stringify({
-      文件名: 状态.文件名,
-      文本长度: 状态.文本.length,
-      ...阅读位置,
-      当前关键词id: 状态.当前关键词id,
-      关键词排序: 状态.关键词排序,
-      自动滚动速度: 状态.自动滚动速度,
-      字号: 状态.字号,
-      行高: 状态.行高,
-      字体: { 引号内: 字体设置.引号内, 引号外: 字体设置.引号外 },
-      字体粗细: {
-        引号内: 字体粗细设置.引号内,
-        引号外: 字体粗细设置.引号外,
-      },
-      关键词列表: 状态.关键词列表.map(function 序列化关键词(关键词) {
-        return {
-          id: 关键词.id,
-          文本: 关键词.文本,
-          当前命中idx: 关键词.当前命中idx,
-          配色idx: 关键词.配色idx,
-        };
-      }),
+  const 持久化数据 = 读取持久化数据();
+  持久化数据.当前文件名 = 状态.文件名;
+  持久化数据.文本状态[状态.文件名] = {
+    文件名: 状态.文件名,
+    文本长度: 状态.文本.length,
+    ...阅读位置,
+    当前关键词id: 状态.当前关键词id,
+    关键词排序: 状态.关键词排序,
+    关键词面板展开: 状态.关键词面板展开,
+    自动滚动速度: 状态.自动滚动速度,
+    字号: 状态.字号,
+    行高: 状态.行高,
+    当前字体标签,
+    字体: { 引号内: 字体设置.引号内, 引号外: 字体设置.引号外 },
+    字体粗细: {
+      引号内: 字体粗细设置.引号内,
+      引号外: 字体粗细设置.引号外,
+    },
+    关键词列表: 状态.关键词列表.map(function 序列化关键词(关键词) {
+      return {
+        id: 关键词.id,
+        文本: 关键词.文本,
+        当前命中idx: 关键词.当前命中idx,
+        配色idx: 关键词.配色idx,
+      };
     }),
-  );
+  };
+  localStorage.setItem(持久化键, JSON.stringify(持久化数据));
 }
 
 function 读取阅读位置() {

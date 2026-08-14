@@ -13,7 +13,7 @@
       as="fetch"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260812-03" />
+    <link rel="stylesheet" href="./styles.css?v=20260814-01" />
   </head>
   <body>
     <main class="阅读区域">
@@ -29,7 +29,7 @@
         </div>
         <div id="载入状态" class="载入状态" role="status">
           <span class="载入线" aria-hidden="true"></span>
-          <p>正在打开《香农传》</p>
+          <p>正在载入文本</p>
         </div>
       </div>
     </main>
@@ -62,7 +62,10 @@
     ></canvas>
     <span id="滚动进度" class="滚动进度" aria-hidden="true" hidden>
       <span id="滚动百分比">0.0%</span>
-      <span id="剩余滚动时间" class="剩余滚动时间" hidden
+      <span
+        id="剩余滚动时间"
+        class="剩余滚动时间"
+        hidden
         title="按当前滚动节奏的预计剩余阅读时长"
         >00:00</span
       >
@@ -111,6 +114,17 @@
       <span class="行距标签">行距</span>
       <span id="行距值" class="行距值">30</span>
       <span class="行距单位">px</span>
+    </button>
+    <button
+      id="内容选择按钮"
+      class="内容选择按钮"
+      type="button"
+      aria-haspopup="dialog"
+      aria-controls="内容选择弹窗"
+      title="选择阅读内容"
+    >
+      <span class="内容选择图标" aria-hidden="true">文</span>
+      <span>内容</span>
     </button>
     <div id="跳转边框" class="跳转边框" aria-hidden="true" hidden></div>
     <div id="跳转迸发" class="跳转迸发" aria-hidden="true" hidden></div>
@@ -319,6 +333,31 @@
       </div>
     </dialog>
 
+    <dialog
+      id="内容选择弹窗"
+      class="内容选择弹窗"
+      aria-labelledby="内容选择标题"
+    >
+      <div class="内容选择标题栏">
+        <div>
+          <h2 id="内容选择标题" class="内容选择标题">阅读内容</h2>
+          <p id="内容选择摘要" class="内容选择摘要" role="status">
+            正在读取文本目录
+          </p>
+        </div>
+        <button
+          id="关闭内容选择按钮"
+          class="关闭查找按钮"
+          type="button"
+          aria-label="关闭内容选择"
+          title="关闭"
+        >
+          ×
+        </button>
+      </div>
+      <div id="内容选择列表" class="内容选择列表" aria-live="polite"></div>
+    </dialog>
+
     <div id="字体遮罩" class="字体遮罩" hidden></div>
     <div
       id="字体弹窗"
@@ -447,7 +486,7 @@
         });
       })();
     </script>
-    <script src="./app.js?v=20260812-11" defer></script>
+    <script src="./app.js?v=20260814-01" defer></script>
     <script src="./语音订阅.js?v=20260812-03" defer></script>
   </body>
 </html>
