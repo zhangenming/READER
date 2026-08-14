@@ -933,6 +933,8 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .字.中文引号 {
+  position: relative;
+  z-index: 1;
   display: inline-block;
   width: 0.78em;
   overflow: visible;
