@@ -168,6 +168,7 @@ body.关键词手势中 {
   user-select: none;
   -webkit-user-select: none;
 }
+
 body.关键词手势中 .滚动容器 {
   touch-action: none;
 }
@@ -195,7 +196,7 @@ body.关键词手势中 .滚动容器 {
   width: var(--滚动条宽度);
 }
 
-.滚动进度:not([hidden]) ~ .关键词面板 {
+.滚动进度:not([hidden])~.关键词面板 {
   right: calc(var(--滚动条宽度) + 60px);
 }
 
@@ -261,7 +262,7 @@ body.关键词手势中 .滚动容器 {
   transform: translateY(-50%);
 }
 
-.自定义滚动条:focus-visible ~ .滚动进度 #滚动百分比 {
+.自定义滚动条:focus-visible~.滚动进度 #滚动百分比 {
   outline: 2px solid var(--选中色);
   outline-offset: 2px;
 }
@@ -607,7 +608,7 @@ body.右下面板展开 .关键词面板开关 {
   background: color-mix(in srgb, var(--关键词浅色) 26%, var(--纸张色));
 }
 
-.关键词项 + .关键词项 {
+.关键词项+.关键词项 {
   margin-top: 1px;
 }
 
@@ -758,7 +759,7 @@ body.右下面板展开 .关键词面板开关 {
 
 .正文行:hover::after,
 .正文行.逻辑行悬停::after {
-  width: 2px;
+  width: 10px;
   background: color-mix(in oklab, var(--选中色) 84%, var(--墨色));
 }
 
@@ -907,8 +908,7 @@ body.右下面板展开 .关键词面板开关 {
    可调变量：--我字色（字身主色）、--我字描边色（描边轮廓色）。 */
 .字.人称代词:not(.命中) {
   color: var(--我字色, var(--强调色));
-  -webkit-text-stroke: 0.5px
-    color-mix(in srgb, var(--我字描边色, #7a1d10) 78%, transparent);
+  -webkit-text-stroke: 0.5px color-mix(in srgb, var(--我字描边色, #7a1d10) 78%, transparent);
   text-shadow:
     0 0 6px color-mix(in srgb, var(--强调色) 62%, transparent),
     1.5px 1.5px 0 color-mix(in srgb, var(--强调色) 52%, transparent),
@@ -1078,11 +1078,9 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .字.命中.同组悬停 {
-  --命中实底: color-mix(
-    in srgb,
-    var(--命中背景, var(--高亮色)) 62%,
-    var(--命中当前色, var(--强调色))
-  );
+  --命中实底: color-mix(in srgb,
+      var(--命中背景, var(--高亮色)) 62%,
+      var(--命中当前色, var(--强调色)));
 }
 
 /* 当前关键词组：底部组标记线画进内嵌条底边内。 */
@@ -1092,13 +1090,9 @@ body.右下面板展开 .关键词面板开关 {
   --命中实底: color-mix(in oklab, var(--选中色) 14%, var(--纸张色));
   border-radius: 3px;
   background:
-    linear-gradient(
-        color-mix(in oklab, var(--选中色) 84%, var(--纸张色)),
-        color-mix(in oklab, var(--选中色) 84%, var(--纸张色))
-      )
-      0 calc(var(--命中条顶) + var(--命中条高) - 2px) / 100% 2px no-repeat,
-    linear-gradient(var(--命中实底), var(--命中实底)) 0 var(--命中条顶) / 100%
-      var(--命中条高) no-repeat;
+    linear-gradient(color-mix(in oklab, var(--选中色) 84%, var(--纸张色)),
+      color-mix(in oklab, var(--选中色) 84%, var(--纸张色))) 0 calc(var(--命中条顶) + var(--命中条高) - 2px) / 100% 2px no-repeat,
+    linear-gradient(var(--命中实底), var(--命中实底)) 0 var(--命中条顶) / 100% var(--命中条高) no-repeat;
 }
 
 /* 上面的 background 简写会把衬底重置为透明，spk 内需要更高特异性补回引文底色。 */
@@ -1173,47 +1167,35 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   z-index: 3;
   content: '';
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px
-      no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px no-repeat;
   pointer-events: none;
 }
 
 .字.命中.当前命中.当前命中起点::before {
   left: calc(var(--当前准星延伸) * -1);
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 1.5px 100%
-      no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 1.5px 100% no-repeat;
 }
 
 .字.命中.当前命中.当前命中终点::before {
   right: calc(var(--当前准星延伸) * -1);
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 / 1.5px 100%
-      no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 / 1.5px 100% no-repeat;
 }
 
 /* 单字命中由同一个伪元素绘制完整外框。 */
 .字.命中.当前命中.当前命中起点.当前命中终点::before {
   inset: calc(var(--当前准星延伸) * -1);
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 1.5px 100%
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 / 1.5px 100%
-      no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 1.5px 100% no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 / 1.5px 100% no-repeat;
 }
 
 .字.命中.当前命中.当前命中起点 {
@@ -1882,7 +1864,7 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   display: none;
 }
 
-.单字双列表 > .词频表格 + .词频表格 {
+.单字双列表>.词频表格+.词频表格 {
   border-left: 1px solid var(--边线色);
 }
 
@@ -2146,12 +2128,14 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   from {
     transform: translateX(-14px);
   }
+
   to {
     transform: translateX(63px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .载入线::after,
   .查找弹窗[open],
   .上下文弹窗[open],
