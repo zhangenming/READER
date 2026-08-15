@@ -4216,8 +4216,14 @@ function 渲染可见行(强制渲染 = false) {
       const 行元素 = document.createElement('div');
       行元素.className = '正文行';
       const 段落idx = 状态.行段落索引[idx];
+      const 是段落起始行 = idx === 0 || 状态.行段落索引[idx - 1] !== 段落idx;
+      const 是段落结束行 =
+        idx === 状态.行段落索引.length - 1 ||
+        状态.行段落索引[idx + 1] !== 段落idx;
       行元素.classList.toggle('段落边框一', 段落idx % 2 === 0);
       行元素.classList.toggle('段落边框二', 段落idx % 2 === 1);
+      行元素.classList.toggle('段落起始行', 是段落起始行);
+      行元素.classList.toggle('段落结束行', 是段落结束行);
       行元素.dataset.start = String(行起点);
       行元素.dataset.end = String(行终点);
       行元素.dataset.logicalLine = String(状态.行逻辑索引[idx]);
