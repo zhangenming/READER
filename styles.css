@@ -794,7 +794,7 @@ body.右下面板展开 .关键词面板开关 {
   height: 0.3em;
   box-sizing: border-box;
   border: 2px solid var(--选中色);
-  border-radius: 50%;
+  border-radius: 0;
   background: var(--选中色);
   transform: translateX(-50%);
   pointer-events: none;
