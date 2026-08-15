@@ -1116,7 +1116,8 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 }
 
 .字.命中.当前命中.当前命中起点::before {
-  left: calc(var(--当前准星延伸) * -1);
+  /* 字魂字体部分字形有外伸笔画，竖线再外移一点，避免被首字墨色遮住。 */
+  left: calc(var(--当前准星延伸) * -1 - 2px);
   background:
     linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
       no-repeat,
@@ -1127,7 +1128,7 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 }
 
 .字.命中.当前命中.当前命中终点::before {
-  right: calc(var(--当前准星延伸) * -1);
+  right: calc(var(--当前准星延伸) * -1 - 2px);
   background:
     linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
       no-repeat,
@@ -1139,7 +1140,7 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 
 /* 单字命中由同一个伪元素绘制完整外框。 */
 .字.命中.当前命中.当前命中起点.当前命中终点::before {
-  inset: calc(var(--当前准星延伸) * -1);
+  inset: calc(var(--当前准星延伸) * -1 - 2px);
   background:
     linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
       no-repeat,
