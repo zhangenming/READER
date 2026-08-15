@@ -702,6 +702,17 @@ body.右下面板展开 .关键词面板开关 {
   box-shadow: 0 16px 44px rgb(32 37 34 / 8%);
 }
 
+/* 正文命中背景可能覆盖父元素边框；用独立覆层保证左边界始终可见。 */
+.虚拟画布::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 10;
+  width: 1px;
+  background: var(--边线色);
+  content: '';
+  pointer-events: none;
+}
+
 .可见内容 {
   position: absolute;
   top: 0;
@@ -991,6 +1002,11 @@ body.右下面板展开 .关键词面板开关 {
     inset 0 -1px 0 rgb(30 74 122 / 22%);
 }
 
+/* 行首命中块不能向左溢出，否则会盖住阅读画布的左边框。 */
+.正文行 > .字.命中:first-child {
+  margin-left: 0;
+}
+
 /* 中间字符：去圆角，与相邻字符背景融为一体 */
 .字.命中:not(.命中起点):not(.命中终点) {
   border-radius: 0;
@@ -1116,8 +1132,7 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 }
 
 .字.命中.当前命中.当前命中起点::before {
-  /* 字魂字体部分字形有外伸笔画，竖线再外移一点，避免被首字墨色遮住。 */
-  left: calc(var(--当前准星延伸) * -1 - 2px);
+  left: calc(var(--当前准星延伸) * -1);
   background:
     linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
       no-repeat,
@@ -1128,7 +1143,7 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 }
 
 .字.命中.当前命中.当前命中终点::before {
-  right: calc(var(--当前准星延伸) * -1 - 2px);
+  right: calc(var(--当前准星延伸) * -1);
   background:
     linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
       no-repeat,
@@ -1140,7 +1155,7 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 
 /* 单字命中由同一个伪元素绘制完整外框。 */
 .字.命中.当前命中.当前命中起点.当前命中终点::before {
-  inset: calc(var(--当前准星延伸) * -1 - 2px);
+  inset: calc(var(--当前准星延伸) * -1);
   background:
     linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
       no-repeat,
