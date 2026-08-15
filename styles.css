@@ -1314,6 +1314,11 @@ body:has(.字.命中.同组悬停) .字.命中.当前关键词组:not(.同组悬
   background-color: transparent;
 }
 
+/* hover 已切换到另一组关键词时，收起原当前命中的外框，避免边框悬空。 */
+body:has(.字.命中.同组悬停) .字.命中.当前命中::before {
+  content: none;
+}
+
 /* 收回的引文命中恢复引文底色条（条由 ::before 绘制，沿用基类几何）。 */
 body:has(.字.命中.同组悬停) .字.引文内容.命中.当前关键词组:not(.同组悬停)::before {
   background: var(--当前引文底色);
