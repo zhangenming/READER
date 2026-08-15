@@ -758,7 +758,7 @@ body.右下面板展开 .关键词面板开关 {
 
 .正文行:hover::after,
 .正文行.逻辑行悬停::after {
-  width: 5px;
+  width: 2px;
   background: color-mix(in oklab, var(--选中色) 84%, var(--墨色));
 }
 
