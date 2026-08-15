@@ -73,17 +73,9 @@
   --段落主色二: #b7655a;
   --段落底色一: color-mix(in oklab, var(--段落主色一) 20%, var(--纸张色));
   --段落底色二: color-mix(in oklab, var(--段落主色二) 18%, var(--纸张色));
-  /* 引文底色跟随所在段落色系，并在对应段落底色上加深一级。 */
-  --段落引文底色一: color-mix(
-    in oklab,
-    var(--段落主色一) 18%,
-    var(--段落底色一)
-  );
-  --段落引文底色二: color-mix(
-    in oklab,
-    var(--段落主色二) 18%,
-    var(--段落底色二)
-  );
+  /* 引文底色以当前段落背景为基准，再向墨色混合以压深明度。 */
+  --段落引文底色一: color-mix(in oklab, var(--段落底色一) 86%, var(--墨色) 14%);
+  --段落引文底色二: color-mix(in oklab, var(--段落底色二) 86%, var(--墨色) 14%);
   --当前引文底色: var(--段落引文底色一);
   /* 引号内（spk 内）对话：浓墨近黑但带暖底（约 15:1），比纯黑柔和、比叙述深两级 */
   --引文墨色: #221e16;
@@ -211,7 +203,7 @@ body.关键词手势中 .滚动容器 {
   width: var(--滚动条宽度);
 }
 
-.滚动进度:not([hidden])~.关键词面板 {
+.滚动进度:not([hidden]) ~ .关键词面板 {
   right: calc(var(--滚动条宽度) + 60px);
 }
 
@@ -277,7 +269,7 @@ body.关键词手势中 .滚动容器 {
   transform: translateY(-50%);
 }
 
-.自定义滚动条:focus-visible~.滚动进度 #滚动百分比 {
+.自定义滚动条:focus-visible ~ .滚动进度 #滚动百分比 {
   outline: 2px solid var(--选中色);
   outline-offset: 2px;
 }
@@ -623,7 +615,7 @@ body.右下面板展开 .关键词面板开关 {
   background: color-mix(in srgb, var(--关键词浅色) 26%, var(--纸张色));
 }
 
-.关键词项+.关键词项 {
+.关键词项 + .关键词项 {
   margin-top: 1px;
 }
 
@@ -848,7 +840,7 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 /* 中文字形的 advance width 可能因字面不同而变化；正文按一个字号排版，字盒也必须固定为一个字格。 */
-.字:not(.西文):not(.中文引号) {
+.字:not(.西文) {
   width: 1em;
 }
 
@@ -939,7 +931,8 @@ body.右下面板展开 .关键词面板开关 {
    可调变量：--我字色（字身主色）、--我字描边色（描边轮廓色）。 */
 .字.人称代词:not(.命中) {
   color: var(--我字色, var(--强调色));
-  -webkit-text-stroke: 0.5px color-mix(in srgb, var(--我字描边色, #7a1d10) 78%, transparent);
+  -webkit-text-stroke: 0.5px
+    color-mix(in srgb, var(--我字描边色, #7a1d10) 78%, transparent);
   text-shadow:
     0 0 6px color-mix(in srgb, var(--强调色) 62%, transparent),
     1.5px 1.5px 0 color-mix(in srgb, var(--强调色) 52%, transparent),
@@ -1003,7 +996,7 @@ body.右下面板展开 .关键词面板开关 {
   position: relative;
   z-index: 1;
   display: inline-block;
-  width: 0.78em;
+  width: 0;
   overflow: visible;
   font-family: var(--正文字体);
   font-size: 1em;
@@ -1078,7 +1071,7 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 /* 行首命中块不能向左溢出，否则会盖住阅读画布的左边框。 */
-.正文行>.字.命中:first-child {
+.正文行 > .字.命中:first-child {
   margin-left: 0;
 }
 
@@ -1111,20 +1104,22 @@ body.右下面板展开 .关键词面板开关 {
   color: color-mix(in oklab, var(--命中当前色, #1e4a7a) 82%, var(--墨色));
 }
 
-/* 当前关键词组用四周细边框补充状态，不恢复普通关键词的背景色。
-   边框用 inset box-shadow 绘制，不占布局、不影响字格宽度与行高。
-   组内不设 border-radius：字与字边框直线相接，形成整组连续外框；
-   首尾圆角由 .命中起点/.命中终点 与 [data-group-start]/[data-group-end] 提供。 */
+/* 选中的关键词组用黑底白字实底标记，在整屏命中里一眼可辨。
+   圆角沿用 .命中起点/.命中终点 与 [data-group-start]/[data-group-end] 的既有规则。 */
 .字.命中.当前关键词组 {
-  color: var(--命中当前色, var(--关键词颜色));
-  box-shadow: inset 0 0 0 1.5px
-    color-mix(in oklab, var(--命中当前色, var(--关键词颜色)) 84%, var(--纸张色));
+  color: #ffffff;
+  background-color: #000000;
 }
 
-/* 引文内容（spk 内）需要保留行内居中、--引文条高的引文底色层，
-   与上面的边框互不干扰（box-shadow 与 background 是独立属性）。 */
+/* spk 内命中：background-color 画在 background-image 之下，
+   需移除引文底色层，保证黑块是完整实底。 */
 .字.引文内容.命中.当前关键词组 {
-  background: linear-gradient(var(--当前引文底色), var(--当前引文底色)) 0 50% / 100% var(--引文条高, 0.9em) no-repeat;
+  background-image: none;
+}
+
+/* 「全文唯一」的虚线删除痕在黑底上改近白，否则看不见。 */
+.字.命中.全文唯一:is(.当前关键词组, .悬停命中) {
+  text-decoration-color: rgb(255 255 255 / 85%);
 }
 
 .字.命中:is(.当前命中, .悬停命中)[data-hit-position]::after {
@@ -1199,35 +1194,47 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   z-index: 3;
   content: '';
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
+      no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px
+      no-repeat;
   pointer-events: none;
 }
 
 .字.命中.当前命中.当前命中起点::before {
   left: calc(var(--当前准星延伸) * -1);
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 1.5px 100% no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
+      no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px
+      no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 1.5px 100%
+      no-repeat;
 }
 
 .字.命中.当前命中.当前命中终点::before {
   right: calc(var(--当前准星延伸) * -1);
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 / 1.5px 100% no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
+      no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px
+      no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 / 1.5px 100%
+      no-repeat;
 }
 
 /* 单字命中由同一个伪元素绘制完整外框。 */
 .字.命中.当前命中.当前命中起点.当前命中终点::before {
   inset: calc(var(--当前准星延伸) * -1);
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 1.5px 100% no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 / 1.5px 100% no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
+      no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px
+      no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 1.5px 100%
+      no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 / 1.5px 100%
+      no-repeat;
 }
 
 .字.命中.当前命中.当前命中起点 {
@@ -1249,6 +1256,28 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 
 .滚动容器.边框跳转中 .字.命中.当前命中::before {
   content: none;
+}
+
+/* 悬停命中时：选中组的黑底收回为普通关键词色，
+   只把鼠标下的这一处命中染成黑底白字，让当前悬停位置一眼可辨。
+   悬停样式放在当前命中之后：同一处命中被悬停时优先显示悬停态。 */
+body:has(.字.命中.悬停命中) .字.命中.当前关键词组:not(.悬停命中) {
+  color: color-mix(in oklab, var(--命中当前色, #1e4a7a) 82%, var(--墨色));
+  background-color: transparent;
+}
+
+/* 收回的引文命中恢复引文底色层（位置与条高沿用基类规则）。 */
+body:has(.字.命中.悬停命中) .字.引文内容.命中.当前关键词组:not(.悬停命中) {
+  background-image: linear-gradient(var(--当前引文底色), var(--当前引文底色));
+}
+
+.字.命中.悬停命中 {
+  color: #ffffff;
+  background-color: #000000;
+}
+
+.字.引文内容.命中.悬停命中 {
+  background-image: none;
 }
 
 /* 上下引号只保留排版占位，不显示字形。 */
@@ -1896,7 +1925,7 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   display: none;
 }
 
-.单字双列表>.词频表格+.词频表格 {
+.单字双列表 > .词频表格 + .词频表格 {
   border-left: 1px solid var(--边线色);
 }
 
@@ -2167,7 +2196,6 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   .载入线::after,
   .查找弹窗[open],
   .上下文弹窗[open],
@@ -2338,7 +2366,8 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 }
 
 .引文背景色选项,
-.关键词颜色选项 {
+.关键词颜色选项,
+.字体颜色选项 {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -2351,7 +2380,8 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 }
 
 .引文背景色选项[hidden],
-.关键词颜色选项[hidden] {
+.关键词颜色选项[hidden],
+.字体颜色选项[hidden] {
   display: none;
 }
 
@@ -2372,6 +2402,7 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 }
 
 .关键词颜色选项 input,
+.字体颜色选项 input,
 .奇偶行颜色选项 input {
   width: 28px;
   height: 24px;
@@ -2383,6 +2414,11 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 }
 
 .关键词颜色选项:focus-within {
+  outline: 2px solid var(--选中色);
+  outline-offset: 2px;
+}
+
+.字体颜色选项:focus-within {
   outline: 2px solid var(--选中色);
   outline-offset: 2px;
 }
