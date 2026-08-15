@@ -2833,11 +2833,31 @@ function 设置区域字体(区域, 值, 选项 = {}) {
   } else {
     document.documentElement.style.setProperty(变量名, 值);
   }
+  同步命中条字体适配();
   if (!选项.静默) {
     渲染字体选项();
     安排保存持久化状态();
   }
   console.info('[阅读器] 已设置区域字体', { 区域, 值: 值 ?? '默认' });
+}
+
+/* 命中条几何适配：默认手写体（字魂白鸽天行体）墨迹带 0.044~0.844em，
+   但视觉重心比墨迹中心（≈0.444em）更低，贴 0.44em 居中时高亮看起来偏上；
+   仅在该字体生效的区域注入整体下移的条位置变量（0.09em~0.93em，中心 0.51em），
+   保证条与文字视觉居中；其余字体走 styles.css 的默认值（0.08em~0.96em）。 */
+function 同步命中条字体适配() {
+  const 根元素 = document.documentElement;
+  const 手写体标记 = 'ZiHunBaiGeTianXingTi';
+  const 区域变量表 = {
+    引号外: ['--正文命中条顶', '--正文命中条高'],
+    引号内: ['--引文命中条顶', '--引文命中条高'],
+  };
+  for (const [区域, [条顶变量, 条高变量]] of Object.entries(区域变量表)) {
+    const 用手写体 =
+      字体设置[区域] === null || 字体设置[区域].includes(手写体标记);
+    根元素.style.setProperty(条顶变量, 用手写体 ? '0.09em' : '');
+    根元素.style.setProperty(条高变量, 用手写体 ? '0.84em' : '');
+  }
 }
 
 function 设置区域粗细(区域, 值, 选项 = {}) {
@@ -3330,6 +3350,7 @@ function 应用文本(原始文本, 文件名) {
     根元素.style.setProperty('--行高', 状态.行高 + 'px');
     更新字号显示();
     更新行高显示();
+    同步命中条字体适配();
 
     function 恢复字体设置(持久化字体) {
       if (持久化字体 === undefined) {
