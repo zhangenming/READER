@@ -1045,31 +1045,17 @@ body.右下面板展开 .关键词面板开关 {
   background: var(--选中色);
 }
 
-/* 命中底色统一走 --命中实底 变量：各状态只改颜色，渲染形状统一由这里的内嵌条决定。
-   条垂直居中于行框（background-position: 0 50%）：行内背景绘制区高 = 行高，
-   故条中心恒等于行框中心，与 spk（引文）底色上下留白对称，且天然跟随
-   用户的行距/字号设置自适应，无需写死 em 偏移（手写体墨迹带 ≈0.05~0.85em
-   偏上，若按墨迹居中会在行框下方留白更多，视觉上和 spk 底不对齐）。
-   spk 内的命中上下露出引文底色，不再整块遮盖。 */
+/* 普通关键词只用深蓝字色标记，保留段落与引文底色的连续性。 */
 .字.命中 {
   margin: 0 -1px;
   padding: 0 1px 2px;
-  color: #171a18;
+  color: var(--命中当前色, #1e4a7a);
   cursor: pointer;
-  --命中实底: var(--命中背景, var(--高亮色));
-  --命中条高: var(--正文命中条高, 0.9em);
   background-color: transparent;
-  background-image: linear-gradient(var(--命中实底), var(--命中实底));
-  background-repeat: no-repeat;
-  background-size: 100% var(--命中条高);
-  background-position: 0 50%;
 }
 
-/* spk 内命中：条同样行内居中，仅条高跟随引文区变量；
-   条底下衬对应段落的引文底色——transparent 会盖掉 .字.引文内容 的背景，
-   这里补回来，保证条上下露出的是同段 spk 背景而不是纸色。 */
+/* spk 内命中继续显示所在段落的引文底色。 */
 .字.引文内容.命中 {
-  --命中条高: var(--引文命中条高, 0.9em);
   background-color: var(--当前引文底色);
 }
 
@@ -1104,21 +1090,19 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .字.命中.同组悬停 {
-  --命中实底: color-mix(in srgb,
-      var(--命中背景, var(--高亮色)) 62%,
-      var(--命中当前色, var(--强调色)));
+  color: color-mix(in oklab, var(--命中当前色, #1e4a7a) 82%, var(--墨色));
 }
 
-/* 当前关键词组：底部组标记线画进内嵌条底边内。 */
+/* 当前关键词组用细下划线补充状态，不恢复普通关键词的背景色。 */
 .字.命中.当前关键词组 {
   padding-bottom: 2px;
   color: var(--选中色);
-  --命中实底: color-mix(in oklab, var(--选中色) 14%, var(--纸张色));
   border-radius: 3px;
-  background:
-    linear-gradient(color-mix(in oklab, var(--选中色) 84%, var(--纸张色)),
-      color-mix(in oklab, var(--选中色) 84%, var(--纸张色))) 0 calc(50% + (var(--命中条高) - 2px) / 2) / 100% 2px no-repeat,
-    linear-gradient(var(--命中实底), var(--命中实底)) 0 50% / 100% var(--命中条高) no-repeat;
+  background: linear-gradient(
+      color-mix(in oklab, var(--选中色) 84%, var(--纸张色)),
+      color-mix(in oklab, var(--选中色) 84%, var(--纸张色))
+    )
+    0 calc(50% + 0.45em) / 100% 2px no-repeat;
 }
 
 /* 上面的 background 简写会把衬底重置为透明，spk 内需要更高特异性补回引文底色。 */
@@ -1181,9 +1165,14 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   --当前准星延伸: 0.2em;
   z-index: 2;
   color: var(--纸张色);
-  --命中实底: var(--当前命中色);
+  background-color: var(--当前命中色);
+  background-image: none;
   border-radius: 3px;
   font-weight: 700;
+}
+
+.字.引文内容.命中.当前命中 {
+  background-color: var(--当前命中色);
 }
 
 /* 当前命中准星：上下线移到高亮块外侧，首尾竖线连接成连续外框。 */
