@@ -2970,11 +2970,7 @@ function 读取有效字体粗细(区域) {
 
 function 设置引文背景色(启用, 选项 = {}) {
   引文背景色启用 = 启用;
-  if (启用) {
-    document.documentElement.style.removeProperty('--当前引文底色');
-  } else {
-    document.documentElement.style.setProperty('--当前引文底色', 'transparent');
-  }
+  document.documentElement.classList.toggle('隐藏引文背景色', !启用);
   元素.引文背景色开关.checked = 启用;
   if (!选项.静默) {
     安排保存持久化状态();
@@ -3260,7 +3256,6 @@ function 应用文本(原始文本, 文件名) {
       '--正文字体',
       '--引文粗细',
       '--正文粗细',
-      '--当前引文底色',
     ]) {
       根元素.style.removeProperty(变量名);
     }
@@ -3269,6 +3264,7 @@ function 应用文本(原始文本, 文件名) {
     字体粗细设置.引号内 = null;
     字体粗细设置.引号外 = null;
     引文背景色启用 = true;
+    根元素.classList.remove('隐藏引文背景色');
     元素.引文背景色开关.checked = true;
     当前字体标签 = '引号内';
     状态.自动滚动速度 = 自动滚动默认速度;
