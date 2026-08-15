@@ -735,27 +735,31 @@ body.右下面板展开 .关键词面板开关 {
   line-height: var(--行高);
   letter-spacing: 0;
   white-space: pre;
-  transition:
-    background-color 120ms ease,
-    box-shadow 120ms ease;
 }
 
 .正文行:hover,
 .正文行.逻辑行悬停 {
-  background-color: color-mix(in oklab, var(--选中色) 15%, var(--纸张色));
-  box-shadow: inset 3px 0 0 color-mix(in oklab, var(--选中色) 62%, transparent);
+  background-color: transparent;
 }
 
-/* 命中背景位于正文行子层，不能让它盖住行悬停的左侧标记。 */
-.正文行:hover::after,
-.正文行.逻辑行悬停::after {
+/* 常态保留细边线；悬停时加深并加粗，避免改变正文排版宽度。 */
+.正文行::after {
   position: absolute;
   inset: 0 auto 0 0;
   z-index: 5;
-  width: 3px;
-  background: color-mix(in oklab, var(--选中色) 62%, transparent);
+  width: 1px;
+  background: var(--边线色);
   content: '';
   pointer-events: none;
+  transition:
+    width 160ms ease,
+    background-color 160ms ease;
+}
+
+.正文行:hover::after,
+.正文行.逻辑行悬停::after {
+  width: 5px;
+  background: color-mix(in oklab, var(--选中色) 84%, var(--墨色));
 }
 
 /* 当前命中项的 box-shadow 外环与计数徽标会溢出到行外，
