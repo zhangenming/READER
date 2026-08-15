@@ -1201,6 +1201,11 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   content: none;
 }
 
+/* 上下引号只保留排版占位，不显示字形。 */
+.字.中文引号 {
+  color: transparent;
+}
+
 .跳转边框 {
   position: fixed;
   top: 0;
