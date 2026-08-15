@@ -115,6 +115,7 @@ const 关系连词表 = [
 // 值为 null 表示“跟随该区域 CSS 默认”，写入时清空内联变量以回退到 :root。
 const 字体设置 = { 引号内: null, 引号外: null };
 const 字体粗细设置 = { 引号内: null, 引号外: null };
+let 引文背景色启用 = true;
 let 当前字体标签 = '引号内';
 const 字体粗细列表 = [100, 200, 300, 400, 500, 600, 700, 800, 900];
 const 默认字体粗细 = { 引号内: 900, 引号外: 100 };
@@ -271,6 +272,8 @@ const 元素 = {
   字体标签引号内: document.querySelector('#字体标签引号内'),
   字体标签引号外: document.querySelector('#字体标签引号外'),
   字体标签全部: document.querySelector('#字体标签全部'),
+  引文背景色选项: document.querySelector('#引文背景色选项'),
+  引文背景色开关: document.querySelector('#引文背景色开关'),
   字体粗细按钮: document.querySelector('#字体粗细按钮'),
   字体选项列表: document.querySelector('#字体选项列表'),
 };
@@ -540,6 +543,9 @@ function 绑定事件() {
   元素.字体标签引号内.addEventListener('click', () => 切换字体标签('引号内'));
   元素.字体标签引号外.addEventListener('click', () => 切换字体标签('引号外'));
   元素.字体标签全部.addEventListener('click', () => 切换字体标签('全部'));
+  元素.引文背景色开关.addEventListener('change', function 切换引文背景色() {
+    设置引文背景色(元素.引文背景色开关.checked);
+  });
   元素.字体粗细按钮.addEventListener('click', 处理字体粗细按钮点击);
   元素.字体粗细按钮.addEventListener('wheel', 处理字体粗细滚轮, {
     passive: false,
@@ -2862,10 +2868,14 @@ function 重置字体设置() {
     设置区域字体('引号外', null);
     设置区域粗细('引号内', null, { 静默: true });
     设置区域粗细('引号外', null);
+    设置引文背景色(true);
     return;
   }
   设置区域字体(当前字体标签, null);
   设置区域粗细(当前字体标签, null);
+  if (当前字体标签 === '引号内') {
+    设置引文背景色(true);
+  }
 }
 
 function 渲染字体标签() {
@@ -2879,6 +2889,7 @@ function 渲染字体标签() {
     标签元素.classList.toggle('当前', 是当前);
     标签元素.setAttribute('aria-selected', String(是当前));
   }
+  元素.引文背景色选项.hidden = 当前字体标签 !== '引号内';
 }
 
 function 渲染字体选项() {
@@ -2955,6 +2966,20 @@ function 渲染字体粗细按钮() {
 
 function 读取有效字体粗细(区域) {
   return 字体粗细设置[区域] ?? 默认字体粗细[区域];
+}
+
+function 设置引文背景色(启用, 选项 = {}) {
+  引文背景色启用 = 启用;
+  if (启用) {
+    document.documentElement.style.removeProperty('--当前引文底色');
+  } else {
+    document.documentElement.style.setProperty('--当前引文底色', 'transparent');
+  }
+  元素.引文背景色开关.checked = 启用;
+  if (!选项.静默) {
+    安排保存持久化状态();
+  }
+  console.info('[阅读器] 已设置 spk 背景色', { 启用 });
 }
 
 function 刷新字体粗细排版() {
@@ -3159,6 +3184,7 @@ function 应用文本(原始文本, 文件名) {
           引号内: 字体粗细设置.引号内,
           引号外: 字体粗细设置.引号外,
         },
+        引文背景色启用,
         关键词排序: 状态.关键词排序,
         关键词面板展开: 状态.关键词面板展开,
       }
@@ -3234,6 +3260,7 @@ function 应用文本(原始文本, 文件名) {
       '--正文字体',
       '--引文粗细',
       '--正文粗细',
+      '--当前引文底色',
     ]) {
       根元素.style.removeProperty(变量名);
     }
@@ -3241,6 +3268,8 @@ function 应用文本(原始文本, 文件名) {
     字体设置.引号外 = null;
     字体粗细设置.引号内 = null;
     字体粗细设置.引号外 = null;
+    引文背景色启用 = true;
+    元素.引文背景色开关.checked = true;
     当前字体标签 = '引号内';
     状态.自动滚动速度 = 自动滚动默认速度;
     状态.关键词排序 = '数量';
@@ -3326,6 +3355,7 @@ function 应用文本(原始文本, 文件名) {
       }
       恢复字体设置(持久化状态.字体);
       恢复字体粗细设置(持久化状态.字体粗细);
+      恢复引文背景色设置(持久化状态.引文背景色启用);
     }
 
     根元素.style.setProperty('--正文字号', 状态.字号 + 'px');
@@ -3375,6 +3405,16 @@ function 应用文本(原始文本, 文件名) {
           根元素.style.setProperty(变量名, String(字体粗细设置[区域]));
         }
       }
+    }
+
+    function 恢复引文背景色设置(持久化设置) {
+      if (持久化设置 === undefined) {
+        return;
+      }
+      if (typeof 持久化设置 !== 'boolean') {
+        throw new TypeError('持久化的 spk 背景色设置格式无效');
+      }
+      设置引文背景色(持久化设置, { 静默: true });
     }
   }
 
@@ -5783,6 +5823,7 @@ function 保存持久化状态() {
       引号内: 字体粗细设置.引号内,
       引号外: 字体粗细设置.引号外,
     },
+    引文背景色启用,
     关键词列表: 状态.关键词列表.map(function 序列化关键词(关键词) {
       return {
         id: 关键词.id,

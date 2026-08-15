@@ -73,6 +73,7 @@
   --段落底色二: color-mix(in oklab, var(--强调色) 6%, var(--纸张色));
   /* 引文底色：低饱和暖沙色，与纸面保持同温，并用明确的明度差标出完整对话 */
   --引文底色: oklch(91.5% 0.028 92);
+  --当前引文底色: var(--引文底色);
   /* 引号内（spk 内）对话：浓墨近黑但带暖底（约 15:1），比纯黑柔和、比叙述深两级 */
   --引文墨色: #221e16;
   --正文字号: 30px;
@@ -1006,7 +1007,7 @@ body.右下面板展开 .关键词面板开关 {
 
 .字.引文内容 {
   color: var(--引文墨色);
-  background: var(--引文底色);
+  background: var(--当前引文底色);
 }
 
 .字.引文起点 {
@@ -1052,7 +1053,7 @@ body.右下面板展开 .关键词面板开关 {
    这里补回来，保证条上下露出的是 spk 背景而不是纸色。 */
 .字.引文内容.命中 {
   --命中条高: var(--引文命中条高, 0.9em);
-  background-color: var(--引文底色);
+  background-color: var(--当前引文底色);
 }
 
 /* 行首命中块不能向左溢出，否则会盖住阅读画布的左边框。 */
@@ -1105,7 +1106,7 @@ body.右下面板展开 .关键词面板开关 {
 
 /* 上面的 background 简写会把衬底重置为透明，spk 内需要更高特异性补回引文底色。 */
 .字.引文内容.命中.当前关键词组 {
-  background-color: var(--引文底色);
+  background-color: var(--当前引文底色);
 }
 
 .字.命中:is(.当前命中, .悬停命中)[data-hit-position]::after {
@@ -2305,12 +2306,41 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 
 .字体设置工具栏 {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
   margin-bottom: 8px;
+}
+
+.引文背景色选项 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--墨色);
+  font:
+    12px/1.2 'Avenir Next',
+    'PingFang SC',
+    sans-serif;
+  cursor: pointer;
+}
+
+.引文背景色选项[hidden] {
+  display: none;
+}
+
+.引文背景色选项 input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--选中色);
+}
+
+.引文背景色选项:focus-within {
+  outline: 2px solid var(--选中色);
+  outline-offset: 2px;
 }
 
 .字体粗细按钮 {
   min-width: 132px;
+  margin-left: auto;
   padding: 6px 10px;
   font:
     12px/1.2 'Avenir Next',
