@@ -1060,8 +1060,8 @@ body.右下面板展开 .关键词面板开关 {
 
 /* 普通关键词只用深蓝字色标记，保留段落与引文底色的连续性。 */
 .字.命中 {
-  margin: 0 -1px;
-  padding: 0 1px 2px;
+  margin: 0;
+  padding: 0 0 2px;
   color: var(--命中当前色, #1e4a7a);
   cursor: pointer;
   background-color: transparent;
