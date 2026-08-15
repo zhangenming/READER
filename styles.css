@@ -838,6 +838,11 @@ body.右下面板展开 .关键词面板开关 {
   background: color-mix(in oklab, var(--段落主色二) 72%, transparent);
 }
 
+.隐藏奇偶行左侧边框 .正文行.段落边框一::before,
+.隐藏奇偶行左侧边框 .正文行.段落边框二::before {
+  display: none;
+}
+
 .字 {
   position: relative;
   display: inline-block;
@@ -2438,7 +2443,7 @@ body:has(.字.命中.同组悬停) .字.引文内容.命中.当前关键词组:n
 
 .关键词颜色选项 input,
 .字体颜色选项 input,
-.奇偶行颜色选项 input {
+.奇偶行颜色选项 input[type='color'] {
   width: 28px;
   height: 24px;
   padding: 2px;
@@ -2479,6 +2484,13 @@ body:has(.字.命中.同组悬停) .字.引文内容.命中.当前关键词组:n
 .奇偶行颜色选项 label:focus-within {
   outline: 2px solid var(--选中色);
   outline-offset: 2px;
+}
+
+.奇偶行边框选项 input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--选中色);
 }
 
 .字体粗细按钮 {
