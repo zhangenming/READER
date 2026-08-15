@@ -165,7 +165,6 @@ const 状态 = {
   行起点列表: new Uint32Array(),
   行终点列表: new Uint32Array(),
   行逻辑索引: new Uint32Array(),
-  行句子索引: new Uint32Array(),
   行段落索引: new Uint32Array(),
   引文边界列表: new Uint32Array(),
   缩进起点集合: new Set(),
@@ -3029,7 +3028,7 @@ function 处理字号滚轮(事件) {
   } else if (事件.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
     增量 *= 元素.滚动容器.clientHeight;
   }
-  const 步数 = Math.sign(增量) || 0;
+  const 步数 = (Math.sign(增量) || 0) * -1; // 上滚（deltaY<0）调大，下格调小
   if (步数 === 0) {
     return;
   }
@@ -3089,7 +3088,7 @@ function 处理行距滚轮(事件) {
   } else if (事件.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
     增量 *= 元素.滚动容器.clientHeight;
   }
-  const 步数 = Math.sign(增量) || 0;
+  const 步数 = (Math.sign(增量) || 0) * -1; // 上滚（deltaY<0）调大，下格调小
   if (步数 === 0) {
     return;
   }
@@ -3183,11 +3182,13 @@ function 应用文本(原始文本, 文件名) {
     }
   }
   状态.全文单字 = new Set(
-    [...汉字频次].filter(function 筛选全文单字([, 频次]) {
-      return 频次 === 1;
-    }).map(function 读取全文单字([字]) {
-      return 字;
-    }),
+    [...汉字频次]
+      .filter(function 筛选全文单字([, 频次]) {
+        return 频次 === 1;
+      })
+      .map(function 读取全文单字([字]) {
+        return 字;
+      }),
   );
   状态.文件名 = 文件名;
   状态.引文边界列表 = 句子整理结果.引文边界列表;
@@ -3489,7 +3490,7 @@ function 应用文本(原始文本, 文件名) {
     let 引文终点 = 原引文边界列表[引文idx + 1];
     let 引文包含句末标点 = false;
 
-    for (let idx = 0; idx < 全文.length; ) {
+    for (let idx = 0; idx < 全文.length;) {
       if (
         全文[idx] === '\n' &&
         idx + 1 < 全文.length &&
@@ -3606,7 +3607,6 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
   const 起点数组 = [];
   const 终点数组 = [];
   const 逻辑行数组 = [];
-  const 句子索引数组 = [];
   const 段落索引数组 = [];
   const 西文宽度缓存 = new Map();
   const 文本长度 = 文本.length;
@@ -3618,7 +3618,6 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
   let 物理行有内容 = false;
   let 西文片段起点 = -1;
   let 逻辑行idx = 0;
-  let 句子idx = 0;
   let 段落idx = 0;
   let 字起点 = 0;
 
@@ -3646,9 +3645,6 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
       当前行宽度 = 0;
       if (缩进起点集合.has(字终点)) {
         段落idx += 1;
-      }
-      if (物理行有内容) {
-        句子idx += 1;
       }
       当前行有内容 = false;
       物理行有内容 = false;
@@ -3683,7 +3679,6 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
     行起点列表: Uint32Array.from(起点数组),
     行终点列表: Uint32Array.from(终点数组),
     行逻辑索引: Uint32Array.from(逻辑行数组),
-    行句子索引: Uint32Array.from(句子索引数组),
     行段落索引: Uint32Array.from(段落索引数组),
     排版键: 排版.键,
     行高: 排版.行高,
@@ -3806,7 +3801,6 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
     起点数组.push(起点);
     终点数组.push(终点);
     逻辑行数组.push(逻辑行idx);
-    句子索引数组.push(句子idx);
     段落索引数组.push(段落idx);
   }
 }
@@ -3815,7 +3809,6 @@ function 提交行索引(行索引) {
   状态.行起点列表 = 行索引.行起点列表;
   状态.行终点列表 = 行索引.行终点列表;
   状态.行逻辑索引 = 行索引.行逻辑索引;
-  状态.行句子索引 = 行索引.行句子索引;
   状态.行段落索引 = 行索引.行段落索引;
   状态.排版键 = 行索引.排版键;
   状态.行高 = 行索引.行高;
@@ -4224,12 +4217,10 @@ function 渲染可见行(强制渲染 = false) {
       const 行文本 = 状态.文本.slice(行起点, 行终点);
       const 行元素 = document.createElement('div');
       行元素.className = '正文行';
-      if (行文本) {
-        行元素.classList.add(
-          状态.行句子索引[idx] % 2 === 0 ? '句子底色一' : '句子底色二',
-        );
-      }
       const 段落idx = 状态.行段落索引[idx];
+      if (行文本) {
+        行元素.classList.add(段落idx % 2 === 0 ? '段落底色一' : '段落底色二');
+      }
       const 是段落起始行 = idx === 0 || 状态.行段落索引[idx - 1] !== 段落idx;
       const 是段落结束行 =
         idx === 状态.行段落索引.length - 1 ||
