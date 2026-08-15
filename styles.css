@@ -1239,6 +1239,8 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   inset: calc(var(--当前准星延伸) * -1) 0;
   z-index: 3;
   content: '';
+  height: auto;
+  transform: none;
   background:
     linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100%
       var(--当前准星粗细) no-repeat,
