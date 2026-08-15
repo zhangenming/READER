@@ -69,11 +69,21 @@
   --强调色: #c74e2f;
   --选中色: #2f6a5b;
   --高亮色: #c5d9f0;
-  --段落底色一: color-mix(in oklab, var(--选中色) 7%, var(--纸张色));
-  --段落底色二: color-mix(in oklab, var(--强调色) 6%, var(--纸张色));
+  --段落主色一: #5f7f95;
+  --段落主色二: #a27c49;
+  --段落底色一: color-mix(in oklab, var(--段落主色一) 10%, var(--纸张色));
+  --段落底色二: color-mix(in oklab, var(--段落主色二) 9%, var(--纸张色));
   /* 引文底色跟随所在段落色系，并在对应段落底色上加深一级。 */
-  --段落引文底色一: color-mix(in oklab, var(--选中色) 8%, var(--段落底色一));
-  --段落引文底色二: color-mix(in oklab, var(--强调色) 8%, var(--段落底色二));
+  --段落引文底色一: color-mix(
+    in oklab,
+    var(--段落主色一) 11%,
+    var(--段落底色一)
+  );
+  --段落引文底色二: color-mix(
+    in oklab,
+    var(--段落主色二) 11%,
+    var(--段落底色二)
+  );
   --当前引文底色: var(--段落引文底色一);
   /* 引号内（spk 内）对话：浓墨近黑但带暖底（约 15:1），比纯黑柔和、比叙述深两级 */
   --引文墨色: #221e16;
@@ -824,11 +834,11 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .正文行.段落边框一::before {
-  background: color-mix(in oklab, var(--选中色) 72%, transparent);
+  background: color-mix(in oklab, var(--段落主色一) 72%, transparent);
 }
 
 .正文行.段落边框二::before {
-  background: color-mix(in oklab, var(--强调色) 72%, transparent);
+  background: color-mix(in oklab, var(--段落主色二) 72%, transparent);
 }
 
 .字 {
