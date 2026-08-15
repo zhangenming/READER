@@ -1059,10 +1059,13 @@ body.右下面板展开 .关键词面板开关 {
   background: var(--选中色);
 }
 
-/* 普通关键词只用深蓝字色标记，保留段落与引文底色的连续性。 */
+/* 普通关键词只用深蓝字色标记，保留段落与引文底色的连续性。
+   无 padding：box-sizing: border-box 下若保留 padding-bottom，字盒会比
+   .正文行（height: var(--行高) + overflow: hidden）高出 2px，box-shadow
+   四周边框的底边会落在行外被裁剪；字形位置不依赖该 padding。 */
 .字.命中 {
   margin: 0;
-  padding: 0 0 2px;
+  padding: 0;
   color: var(--命中当前色, #1e4a7a);
   font-weight: var(--关键词粗细, inherit);
   cursor: pointer;
@@ -1109,10 +1112,11 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 /* 当前关键词组用四周细边框补充状态，不恢复普通关键词的背景色。
-   边框用 inset box-shadow 绘制，不占布局、不影响字格宽度与行高。 */
+   边框用 inset box-shadow 绘制，不占布局、不影响字格宽度与行高。
+   组内不设 border-radius：字与字边框直线相接，形成整组连续外框；
+   首尾圆角由 .命中起点/.命中终点 与 [data-group-start]/[data-group-end] 提供。 */
 .字.命中.当前关键词组 {
   color: var(--命中当前色, var(--关键词颜色));
-  border-radius: 3px;
   box-shadow: inset 0 0 0 1.5px
     color-mix(in oklab, var(--命中当前色, var(--关键词颜色)) 84%, var(--纸张色));
 }
