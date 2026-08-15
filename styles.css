@@ -788,19 +788,19 @@ body.右下面板展开 .关键词面板开关 {
   position: absolute;
   inset: 0 auto 0 1px;
   z-index: 5;
-  width: 3px;
+  width: 4px;
   content: '';
   pointer-events: none;
 }
 
 .正文行.段落起始行.段落边框一::before,
 .正文行.段落起始行.段落边框二::before {
-  top: 4px;
+  top: 7px;
 }
 
 .正文行.段落结束行.段落边框一::before,
 .正文行.段落结束行.段落边框二::before {
-  bottom: 4px;
+  bottom: 7px;
 }
 
 .正文行.段落边框一::before {
