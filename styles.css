@@ -1001,28 +1001,47 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 /* 引文底色画成行内居中的内嵌条（与命中条同一几何思路）：
-   行内背景绘制区高 = 行高，background-position: 0 50% 使条中心恒等于
-   行框中心，上下留白对称，并随行距/字号设置自适应；
-   条高由 --引文条高 控制（默认 0.9em）。 */
+   条由 ::before 伪元素绘制，伪元素本身即条的形状（高 = --引文条高、垂直居中），
+   border-radius 因此直接落在条的四个角上——
+   若用 background-image 画条，圆角裁剪的是整个字盒的四角，而条垂直居中时
+   其角落与字盒角落错位，圆角在条上几乎不可见；
+   条高由 --引文条高 控制（默认 0.9em），上下留白对称并随行距/字号自适应。 */
 .字.引文内容 {
   color: var(--引文墨色);
   background-color: transparent;
-  background-image: linear-gradient(var(--当前引文底色), var(--当前引文底色));
-  background-repeat: no-repeat;
-  background-size: 100% var(--引文条高, 0.9em);
-  background-position: 0 50%;
+  /* 伪元素以 z-index: -1 垫在文字下，隔离成独立层序，避免条沉到行底色之下 */
+  isolation: isolate;
+}
+
+.字.引文内容::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  z-index: -1;
+  height: var(--引文条高, 0.9em);
+  background: var(--当前引文底色);
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 :root.隐藏引文背景色 .字.引文内容 {
   --当前引文底色: transparent;
 }
 
-.字.引文起点 {
+/* 圆角只加在整段引文真正的首字左两角与尾字右两角；
+   跨行切分处的行首/行尾字不带起点/终点类，保持直角不处理。 */
+.字.引文起点::before {
   border-radius: 4px 0 0 4px;
 }
 
-.字.引文终点 {
+.字.引文终点::before {
   border-radius: 0 4px 4px 0;
+}
+
+.字.引文起点.引文终点::before {
+  border-radius: 4px;
 }
 
 .字.引文引号 {
@@ -1092,10 +1111,10 @@ body.右下面板展开 .关键词面板开关 {
   background-color: #000000;
 }
 
-/* spk 内命中：background-color 画在 background-image 之下，
-   需移除引文底色层，保证黑块是完整实底。 */
-.字.引文内容.命中.当前关键词组 {
-  background-image: none;
+/* spk 内命中：background-color 画在引文条（::before）之上，
+   需隐藏引文条，保证黑块是完整实底。 */
+.字.引文内容.命中.当前关键词组::before {
+  background: transparent;
 }
 
 /* 「全文唯一」的虚线删除痕在黑底上改近白，否则看不见。 */
@@ -1168,6 +1187,11 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 
 .字.引文内容.命中.当前命中 {
   background-color: var(--当前命中色);
+}
+
+/* 当前命中字带实底色，隐藏其下的引文条，避免条色压在命中色上。 */
+.字.引文内容.命中.当前命中::before {
+  background: transparent;
 }
 
 /* 当前命中准星：上下线移到高亮块外侧，首尾竖线连接成连续外框。 */
@@ -1249,9 +1273,9 @@ body:has(.字.命中.同组悬停) .字.命中.当前关键词组:not(.同组悬
   background-color: transparent;
 }
 
-/* 收回的引文命中恢复引文底色层（位置与条高沿用基类规则）。 */
-body:has(.字.命中.同组悬停) .字.引文内容.命中.当前关键词组:not(.同组悬停) {
-  background-image: linear-gradient(var(--当前引文底色), var(--当前引文底色));
+/* 收回的引文命中恢复引文底色条（条由 ::before 绘制，沿用基类几何）。 */
+body:has(.字.命中.同组悬停) .字.引文内容.命中.当前关键词组:not(.同组悬停)::before {
+  background: var(--当前引文底色);
 }
 
 .字.命中.同组悬停 {
@@ -1259,8 +1283,8 @@ body:has(.字.命中.同组悬停) .字.引文内容.命中.当前关键词组:n
   background-color: #000000;
 }
 
-.字.引文内容.命中.同组悬停 {
-  background-image: none;
+.字.引文内容.命中.同组悬停::before {
+  background: transparent;
 }
 
 /* 上下引号只保留排版占位，不显示字形。 */
