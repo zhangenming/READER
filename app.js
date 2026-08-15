@@ -85,8 +85,9 @@ const 衔接线停留时长 = 700; // 方案 D：快速前进到位后停留毫�
 const 衔接线播放时长 = 1200; // 与 styles.css 的 @keyframes 衔接线淡出 保持一致
 const 双击判定延迟 = 150; // 纯单击前进的延迟；双击会清空挂起项，因此两者不冲突。取 150ms：比 180 跟手，需快双点击间隔稳定 < 150ms 才不竞态；若双击偶发「前进一格再跳」回升到 180（干净双击的硬下限）
 const shift双击中阈值 = 350; // 双击 Shift 启动自动滚动的时间窗口（毫秒）：两次「干净」的 Shift 松开间隔小于此值即判定为双击
-// 统一配色：正文关键词使用深蓝字色，浅色用于面板、上下文与跳转边框。
-const 高亮配色 = [{ 浅色: '#c5d9f0', 深色: '#1e4a7a' }];
+// 关键词深色用于正文与指示器，浅色用于面板、上下文与跳转边框。
+const 默认关键词颜色 = '#1e4a7a';
+const 高亮配色 = [{ 浅色: '#c5d9f0', 深色: 默认关键词颜色 }];
 
 // 关系连词词表（数据驱动，按词着色；2 字词用「首字+邻字」邻接判定）：
 // 因果（因词/果词）、假设（假设词）、递进（递进词）、选择（选择词）、顺接（顺接词）。
@@ -115,6 +116,8 @@ const 关系连词表 = [
 // 值为 null 表示“跟随该区域 CSS 默认”，写入时清空内联变量以回退到 :root。
 const 字体设置 = { 引号内: null, 引号外: null };
 const 字体粗细设置 = { 引号内: null, 引号外: null };
+let 关键词颜色 = 默认关键词颜色;
+let 关键词粗细 = null;
 let 引文背景色启用 = true;
 let 当前字体标签 = '引号内';
 const 字体粗细列表 = [100, 200, 300, 400, 500, 600, 700, 800, 900];
@@ -272,8 +275,11 @@ const 元素 = {
   字体标签引号内: document.querySelector('#字体标签引号内'),
   字体标签引号外: document.querySelector('#字体标签引号外'),
   字体标签全部: document.querySelector('#字体标签全部'),
+  字体标签关键词: document.querySelector('#字体标签关键词'),
   引文背景色选项: document.querySelector('#引文背景色选项'),
   引文背景色开关: document.querySelector('#引文背景色开关'),
+  关键词颜色选项: document.querySelector('#关键词颜色选项'),
+  关键词颜色选择器: document.querySelector('#关键词颜色选择器'),
   字体粗细按钮: document.querySelector('#字体粗细按钮'),
   字体选项列表: document.querySelector('#字体选项列表'),
 };
@@ -543,8 +549,12 @@ function 绑定事件() {
   元素.字体标签引号内.addEventListener('click', () => 切换字体标签('引号内'));
   元素.字体标签引号外.addEventListener('click', () => 切换字体标签('引号外'));
   元素.字体标签全部.addEventListener('click', () => 切换字体标签('全部'));
+  元素.字体标签关键词.addEventListener('click', () => 切换字体标签('关键词'));
   元素.引文背景色开关.addEventListener('change', function 切换引文背景色() {
     设置引文背景色(元素.引文背景色开关.checked);
+  });
+  元素.关键词颜色选择器.addEventListener('input', function 切换关键词颜色() {
+    设置关键词颜色(元素.关键词颜色选择器.value);
   });
   元素.字体粗细按钮.addEventListener('click', 处理字体粗细按钮点击);
   元素.字体粗细按钮.addEventListener('wheel', 处理字体粗细滚轮, {
@@ -2773,6 +2783,9 @@ function 切换字体标签(标签) {
 }
 
 function 处理字体选项点击(事件) {
+  if (当前字体标签 === '关键词') {
+    return;
+  }
   const 选项 = 事件.target.closest('.字体选项');
   if (!选项) {
     return;
@@ -2790,6 +2803,11 @@ function 处理字体选项点击(事件) {
 }
 
 function 处理字体粗细按钮点击() {
+  if (当前字体标签 === '关键词') {
+    const 当前idx = 字体粗细列表.indexOf(关键词粗细);
+    设置关键词粗细(字体粗细列表[(当前idx + 1) % 字体粗细列表.length]);
+    return;
+  }
   const 当前区域 = 当前字体标签 === '全部' ? null : 当前字体标签;
   const 当前值 = 当前区域
     ? 读取有效字体粗细(当前区域)
@@ -2811,6 +2829,14 @@ function 处理字体粗细滚轮(事件) {
   事件.stopPropagation();
   const 方向 = Math.sign(事件.deltaY) * -1;
   if (方向 === 0) {
+    return;
+  }
+  if (当前字体标签 === '关键词') {
+    const 当前idx = 字体粗细列表.indexOf(关键词粗细);
+    const 起始idx = 当前idx === -1 ? (方向 > 0 ? -1 : 0) : 当前idx;
+    const 目标idx =
+      (起始idx + 方向 + 字体粗细列表.length) % 字体粗细列表.length;
+    设置关键词粗细(字体粗细列表[目标idx]);
     return;
   }
   if (当前字体标签 === '全部') {
@@ -2863,6 +2889,11 @@ function 设置区域粗细(区域, 值, 选项 = {}) {
 }
 
 function 重置字体设置() {
+  if (当前字体标签 === '关键词') {
+    设置关键词颜色(默认关键词颜色, { 静默: true });
+    设置关键词粗细(null);
+    return;
+  }
   if (当前字体标签 === '全部') {
     设置区域字体('引号内', null, { 静默: true });
     设置区域字体('引号外', null);
@@ -2883,6 +2914,7 @@ function 渲染字体标签() {
     { 元素: 元素.字体标签全部, 名称: '全部' },
     { 元素: 元素.字体标签引号内, 名称: '引号内' },
     { 元素: 元素.字体标签引号外, 名称: '引号外' },
+    { 元素: 元素.字体标签关键词, 名称: '关键词' },
   ];
   for (const { 元素: 标签元素, 名称 } of 标签列表) {
     const 是当前 = 当前字体标签 === 名称;
@@ -2890,12 +2922,21 @@ function 渲染字体标签() {
     标签元素.setAttribute('aria-selected', String(是当前));
   }
   元素.引文背景色选项.hidden = 当前字体标签 !== '引号内';
+  元素.关键词颜色选项.hidden = 当前字体标签 !== '关键词';
 }
 
 function 渲染字体选项() {
   const 区域 = 当前字体标签;
   const 容器 = 元素.字体选项列表;
   const 片段 = document.createDocumentFragment();
+  if (区域 === '关键词') {
+    const 预览 = document.createElement('div');
+    预览.className = '关键词样式预览';
+    预览.append('在长篇文本中标记', 创建关键词预览文字(), '并快速核对上下文');
+    容器.replaceChildren(预览);
+    渲染字体粗细按钮();
+    return;
+  }
   const 是全部 = 区域 === '全部';
   // 「全部」tab：仅当引号内/引号外的字体值完全一致时才视为「当前选中」；
   // 不一致（例如分区域选过）时不预选项，避免误以为已统一设置。
@@ -2936,9 +2977,24 @@ function 渲染字体选项() {
   }
   容器.replaceChildren(片段);
   渲染字体粗细按钮();
+
+  function 创建关键词预览文字() {
+    const 文字 = document.createElement('span');
+    文字.textContent = '关键词';
+    return 文字;
+  }
 }
 
 function 渲染字体粗细按钮() {
+  if (当前字体标签 === '关键词') {
+    const 显示值 = 关键词粗细 === null ? '默认' : String(关键词粗细);
+    元素.字体粗细按钮.textContent = `关键词粗细：${显示值}`;
+    元素.字体粗细按钮.setAttribute(
+      'aria-label',
+      `当前关键词粗细：${显示值}，点击或滚轮循环调整`,
+    );
+    return;
+  }
   const 是全部统一 =
     当前字体标签 !== '全部' ||
     读取有效字体粗细('引号内') === 读取有效字体粗细('引号外');
@@ -2966,6 +3022,59 @@ function 渲染字体粗细按钮() {
 
 function 读取有效字体粗细(区域) {
   return 字体粗细设置[区域] ?? 默认字体粗细[区域];
+}
+
+function 设置关键词颜色(颜色, 选项 = {}) {
+  if (!/^#[\da-f]{6}$/i.test(颜色)) {
+    throw new TypeError('关键词颜色格式无效');
+  }
+  关键词颜色 = 颜色.toLowerCase();
+  高亮配色[0].深色 = 关键词颜色;
+  高亮配色[0].浅色 =
+    关键词颜色 === 默认关键词颜色 ? '#c5d9f0' : 计算关键词浅色(关键词颜色);
+  document.documentElement.style.setProperty('--关键词颜色', 关键词颜色);
+  元素.关键词颜色选择器.value = 关键词颜色;
+  if (!选项.不渲染) {
+    状态.关键词面板签名 = '';
+    状态.指示器缓存 = null;
+    渲染可见行(true);
+    更新关键词指示器();
+  }
+  if (!选项.静默) {
+    安排保存持久化状态();
+  }
+  console.info('[阅读器] 已设置关键词颜色', { 颜色: 关键词颜色 });
+
+  function 计算关键词浅色(深色) {
+    const 通道 = 深色.match(/[\da-f]{2}/gi).map(function 转为数值(十六进制) {
+      return Number.parseInt(十六进制, 16);
+    });
+    const 纸色 = [248, 245, 237];
+    return `#${通道
+      .map(function 混合通道(值, idx) {
+        return Math.round(值 * 0.24 + 纸色[idx] * 0.76)
+          .toString(16)
+          .padStart(2, '0');
+      })
+      .join('')}`;
+  }
+}
+
+function 设置关键词粗细(值, 选项 = {}) {
+  if (值 !== null && !字体粗细列表.includes(值)) {
+    throw new TypeError('关键词粗细格式无效');
+  }
+  关键词粗细 = 值;
+  if (值 === null) {
+    document.documentElement.style.removeProperty('--关键词粗细');
+  } else {
+    document.documentElement.style.setProperty('--关键词粗细', String(值));
+  }
+  if (!选项.静默) {
+    渲染字体粗细按钮();
+    安排保存持久化状态();
+  }
+  console.info('[阅读器] 已设置关键词粗细', { 值: 值 ?? '默认' });
 }
 
 function 设置引文背景色(启用, 选项 = {}) {
@@ -3180,6 +3289,7 @@ function 应用文本(原始文本, 文件名) {
           引号内: 字体粗细设置.引号内,
           引号外: 字体粗细设置.引号外,
         },
+        关键词样式: { 颜色: 关键词颜色, 粗细: 关键词粗细 },
         引文背景色启用,
         关键词排序: 状态.关键词排序,
         关键词面板展开: 状态.关键词面板展开,
@@ -3256,6 +3366,7 @@ function 应用文本(原始文本, 文件名) {
       '--正文字体',
       '--引文粗细',
       '--正文粗细',
+      '--关键词粗细',
     ]) {
       根元素.style.removeProperty(变量名);
     }
@@ -3263,6 +3374,12 @@ function 应用文本(原始文本, 文件名) {
     字体设置.引号外 = null;
     字体粗细设置.引号内 = null;
     字体粗细设置.引号外 = null;
+    关键词颜色 = 默认关键词颜色;
+    关键词粗细 = null;
+    高亮配色[0].深色 = 默认关键词颜色;
+    高亮配色[0].浅色 = '#c5d9f0';
+    根元素.style.setProperty('--关键词颜色', 默认关键词颜色);
+    元素.关键词颜色选择器.value = 默认关键词颜色;
     引文背景色启用 = true;
     根元素.classList.remove('隐藏引文背景色');
     元素.引文背景色开关.checked = true;
@@ -3344,13 +3461,18 @@ function 应用文本(原始文本, 文件名) {
         状态.关键词面板展开 = 持久化状态.关键词面板展开;
       }
       if (持久化状态.当前字体标签 !== undefined) {
-        if (!['全部', '引号内', '引号外'].includes(持久化状态.当前字体标签)) {
+        if (
+          !['全部', '引号内', '引号外', '关键词'].includes(
+            持久化状态.当前字体标签,
+          )
+        ) {
           throw new TypeError('持久化的字体标签状态无效');
         }
         当前字体标签 = 持久化状态.当前字体标签;
       }
       恢复字体设置(持久化状态.字体);
       恢复字体粗细设置(持久化状态.字体粗细);
+      恢复关键词样式(持久化状态.关键词样式);
       恢复引文背景色设置(持久化状态.引文背景色启用);
     }
 
@@ -3411,6 +3533,17 @@ function 应用文本(原始文本, 文件名) {
         throw new TypeError('持久化的 spk 背景色设置格式无效');
       }
       设置引文背景色(持久化设置, { 静默: true });
+    }
+
+    function 恢复关键词样式(持久化样式) {
+      if (持久化样式 === undefined) {
+        return;
+      }
+      if (!持久化样式 || typeof 持久化样式 !== 'object') {
+        throw new TypeError('持久化的关键词样式格式无效');
+      }
+      设置关键词颜色(持久化样式.颜色, { 静默: true, 不渲染: true });
+      设置关键词粗细(持久化样式.粗细 ?? null, { 静默: true });
     }
   }
 
@@ -5799,6 +5932,7 @@ function 保存持久化状态() {
       引号内: 字体粗细设置.引号内,
       引号外: 字体粗细设置.引号外,
     },
+    关键词样式: { 颜色: 关键词颜色, 粗细: 关键词粗细 },
     引文背景色启用,
     关键词列表: 状态.关键词列表.map(function 序列化关键词(关键词) {
       return {
