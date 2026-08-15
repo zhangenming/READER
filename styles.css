@@ -1002,12 +1002,15 @@ body.右下面板展开 .关键词面板开关 {
   background: var(--选中色);
 }
 
+/* 命中底色统一走 --命中实底 变量：各状态只改颜色，
+   spk 内命中才能把任意状态的底色渲染成「内嵌条」（见 .字.引文内容.命中）。 */
 .字.命中 {
   margin: 0 -1px;
   padding: 0 1px 2px;
   color: #171a18;
   cursor: pointer;
-  background-color: var(--命中背景, var(--高亮色));
+  --命中实底: var(--命中背景, var(--高亮色));
+  background-color: var(--命中实底);
   box-shadow:
     0 2px 5px -2px rgb(32 37 34 / 24%),
     inset 0 -1px 0 rgb(30 74 122 / 22%);
@@ -1044,12 +1047,11 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .字.命中.同组悬停 {
-  background-color: color-mix(
+  --命中实底: color-mix(
     in srgb,
     var(--命中背景, var(--高亮色)) 62%,
     var(--命中当前色, var(--强调色))
   );
-  background-image: none;
   box-shadow: inset 0 -2px 0
     color-mix(in srgb, var(--命中当前色, var(--强调色)) 58%, transparent);
 }
@@ -1057,8 +1059,7 @@ body.右下面板展开 .关键词面板开关 {
 .字.命中.当前关键词组 {
   padding-bottom: 2px;
   color: var(--选中色);
-  background-color: color-mix(in oklab, var(--选中色) 14%, var(--纸张色));
-  background-image: none;
+  --命中实底: color-mix(in oklab, var(--选中色) 14%, var(--纸张色));
   border-radius: 3px;
   box-shadow:
     inset 0 -2px 0 color-mix(in oklab, var(--选中色) 84%, var(--纸张色)),
@@ -1120,8 +1121,7 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   --当前准星延伸: 0.2em;
   z-index: 2;
   color: var(--纸张色);
-  background-color: var(--当前命中色);
-  background-image: none;
+  --命中实底: var(--当前命中色);
   border-radius: 3px;
   font-weight: 700;
   box-shadow: 0 3px 8px -4px
@@ -1188,6 +1188,28 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 
 .字.命中.当前命中.当前命中起点.当前命中终点 {
   border-radius: 4px;
+}
+
+/* spk（引文）内命中：背景不再铺满字块，改为上下内缩的内嵌条，
+   引文底色从上下边缘露出——引文内容整段命中时不会被整块遮盖。
+   --命中内缩 控制条与字块上下边的距离（0.1em ≈ 30px 字号下 3px）。 */
+.字.引文内容.命中 {
+  --命中内缩: 0.1em;
+  background: linear-gradient(var(--命中实底), var(--命中实底)) 0
+      var(--命中内缩) / 100% calc(1em - var(--命中内缩) * 2) no-repeat;
+  box-shadow: none;
+}
+
+/* spk 内「当前关键词组」的底部组标记线画进内嵌条底边，组层次不丢失。 */
+.字.引文内容.命中.当前关键词组 {
+  background:
+    linear-gradient(
+        color-mix(in oklab, var(--选中色) 84%, var(--纸张色)),
+        color-mix(in oklab, var(--选中色) 84%, var(--纸张色))
+      )
+      0 calc(1em - var(--命中内缩) - 2px) / 100% 2px no-repeat,
+    linear-gradient(var(--命中实底), var(--命中实底)) 0 var(--命中内缩) / 100%
+      calc(1em - var(--命中内缩) * 2) no-repeat;
 }
 
 /* 边框跳转动画期间：隐藏准星，避免与移动中的跳转边框重复提示。 */
