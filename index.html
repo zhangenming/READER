@@ -427,6 +427,15 @@
         >
           关键词
         </button>
+        <button
+          id="字体标签奇偶行"
+          class="字体标签"
+          role="tab"
+          aria-selected="false"
+          type="button"
+        >
+          奇偶行
+        </button>
       </div>
       <div class="字体分组列表">
         <div class="字体设置工具栏">
@@ -443,6 +452,26 @@
               aria-label="关键词颜色"
             />
           </label>
+          <div id="奇偶行颜色选项" class="奇偶行颜色选项" hidden>
+            <label>
+              <span>奇数行</span>
+              <input
+                id="奇数行颜色选择器"
+                type="color"
+                value="#d3dde1"
+                aria-label="奇数行颜色"
+              />
+            </label>
+            <label>
+              <span>偶数行</span>
+              <input
+                id="偶数行颜色选择器"
+                type="color"
+                value="#eedbd4"
+                aria-label="偶数行颜色"
+              />
+            </label>
+          </div>
           <button
             id="字体粗细按钮"
             class="字体粗细按钮"

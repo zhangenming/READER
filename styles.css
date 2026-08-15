@@ -2351,6 +2351,10 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   display: none;
 }
 
+.奇偶行颜色选项[hidden] {
+  display: none;
+}
+
 .引文背景色选项 input {
   width: 14px;
   height: 14px;
@@ -2363,7 +2367,8 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   outline-offset: 2px;
 }
 
-.关键词颜色选项 input {
+.关键词颜色选项 input,
+.奇偶行颜色选项 input {
   width: 28px;
   height: 24px;
   padding: 2px;
@@ -2374,6 +2379,29 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 }
 
 .关键词颜色选项:focus-within {
+  outline: 2px solid var(--选中色);
+  outline-offset: 2px;
+}
+
+.奇偶行颜色选项 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.奇偶行颜色选项 label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--墨色);
+  font:
+    12px/1.2 'Avenir Next',
+    'PingFang SC',
+    sans-serif;
+  cursor: pointer;
+}
+
+.奇偶行颜色选项 label:focus-within {
   outline: 2px solid var(--选中色);
   outline-offset: 2px;
 }
@@ -2471,6 +2499,21 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 .关键词样式预览 span {
   color: var(--关键词颜色);
   font-weight: var(--关键词粗细, inherit);
+}
+
+.奇偶行样式预览 {
+  overflow: hidden;
+  color: var(--正文字色);
+  font-family: var(--正文字体);
+  font-size: 20px;
+  line-height: 1.5;
+  text-align: center;
+  border: 1px solid var(--边线色);
+  border-radius: 6px;
+}
+
+.奇偶行样式预览 div {
+  padding: 12px;
 }
 
 .字体弹窗底部 {

@@ -87,6 +87,7 @@ const 双击判定延迟 = 150; // 纯单击前进的延迟；双击会清空挂
 const shift双击中阈值 = 350; // 双击 Shift 启动自动滚动的时间窗口（毫秒）：两次「干净」的 Shift 松开间隔小于此值即判定为双击
 // 关键词深色用于正文与指示器，浅色用于面板、上下文与跳转边框。
 const 默认关键词颜色 = '#1e4a7a';
+const 默认奇偶行颜色 = { 奇数: '#d3dde1', 偶数: '#eedbd4' };
 const 高亮配色 = [{ 浅色: '#c5d9f0', 深色: 默认关键词颜色 }];
 
 // 关系连词词表（数据驱动，按词着色；2 字词用「首字+邻字」邻接判定）：
@@ -118,6 +119,7 @@ const 字体设置 = { 引号内: null, 引号外: null };
 const 字体粗细设置 = { 引号内: null, 引号外: null };
 let 关键词颜色 = 默认关键词颜色;
 let 关键词粗细 = null;
+const 奇偶行颜色 = { ...默认奇偶行颜色 };
 let 引文背景色启用 = true;
 let 当前字体标签 = '引号内';
 const 字体粗细列表 = [100, 200, 300, 400, 500, 600, 700, 800, 900];
@@ -276,10 +278,14 @@ const 元素 = {
   字体标签引号外: document.querySelector('#字体标签引号外'),
   字体标签全部: document.querySelector('#字体标签全部'),
   字体标签关键词: document.querySelector('#字体标签关键词'),
+  字体标签奇偶行: document.querySelector('#字体标签奇偶行'),
   引文背景色选项: document.querySelector('#引文背景色选项'),
   引文背景色开关: document.querySelector('#引文背景色开关'),
   关键词颜色选项: document.querySelector('#关键词颜色选项'),
   关键词颜色选择器: document.querySelector('#关键词颜色选择器'),
+  奇偶行颜色选项: document.querySelector('#奇偶行颜色选项'),
+  奇数行颜色选择器: document.querySelector('#奇数行颜色选择器'),
+  偶数行颜色选择器: document.querySelector('#偶数行颜色选择器'),
   字体粗细按钮: document.querySelector('#字体粗细按钮'),
   字体选项列表: document.querySelector('#字体选项列表'),
 };
@@ -550,11 +556,18 @@ function 绑定事件() {
   元素.字体标签引号外.addEventListener('click', () => 切换字体标签('引号外'));
   元素.字体标签全部.addEventListener('click', () => 切换字体标签('全部'));
   元素.字体标签关键词.addEventListener('click', () => 切换字体标签('关键词'));
+  元素.字体标签奇偶行.addEventListener('click', () => 切换字体标签('奇偶行'));
   元素.引文背景色开关.addEventListener('change', function 切换引文背景色() {
     设置引文背景色(元素.引文背景色开关.checked);
   });
   元素.关键词颜色选择器.addEventListener('input', function 切换关键词颜色() {
     设置关键词颜色(元素.关键词颜色选择器.value);
+  });
+  元素.奇数行颜色选择器.addEventListener('input', function 切换奇数行颜色() {
+    设置奇偶行颜色('奇数', 元素.奇数行颜色选择器.value);
+  });
+  元素.偶数行颜色选择器.addEventListener('input', function 切换偶数行颜色() {
+    设置奇偶行颜色('偶数', 元素.偶数行颜色选择器.value);
   });
   元素.字体粗细按钮.addEventListener('click', 处理字体粗细按钮点击);
   元素.字体粗细按钮.addEventListener('wheel', 处理字体粗细滚轮, {
@@ -2783,7 +2796,7 @@ function 切换字体标签(标签) {
 }
 
 function 处理字体选项点击(事件) {
-  if (当前字体标签 === '关键词') {
+  if (['关键词', '奇偶行'].includes(当前字体标签)) {
     return;
   }
   const 选项 = 事件.target.closest('.字体选项');
@@ -2889,6 +2902,11 @@ function 设置区域粗细(区域, 值, 选项 = {}) {
 }
 
 function 重置字体设置() {
+  if (当前字体标签 === '奇偶行') {
+    设置奇偶行颜色('奇数', 默认奇偶行颜色.奇数, { 静默: true });
+    设置奇偶行颜色('偶数', 默认奇偶行颜色.偶数);
+    return;
+  }
   if (当前字体标签 === '关键词') {
     设置关键词颜色(默认关键词颜色, { 静默: true });
     设置关键词粗细(null);
@@ -2915,6 +2933,7 @@ function 渲染字体标签() {
     { 元素: 元素.字体标签引号内, 名称: '引号内' },
     { 元素: 元素.字体标签引号外, 名称: '引号外' },
     { 元素: 元素.字体标签关键词, 名称: '关键词' },
+    { 元素: 元素.字体标签奇偶行, 名称: '奇偶行' },
   ];
   for (const { 元素: 标签元素, 名称 } of 标签列表) {
     const 是当前 = 当前字体标签 === 名称;
@@ -2923,12 +2942,24 @@ function 渲染字体标签() {
   }
   元素.引文背景色选项.hidden = 当前字体标签 !== '引号内';
   元素.关键词颜色选项.hidden = 当前字体标签 !== '关键词';
+  元素.奇偶行颜色选项.hidden = 当前字体标签 !== '奇偶行';
+  元素.字体粗细按钮.hidden = 当前字体标签 === '奇偶行';
 }
 
 function 渲染字体选项() {
   const 区域 = 当前字体标签;
   const 容器 = 元素.字体选项列表;
   const 片段 = document.createDocumentFragment();
+  if (区域 === '奇偶行') {
+    const 预览 = document.createElement('div');
+    预览.className = '奇偶行样式预览';
+    预览.append(
+      创建行预览('奇数行颜色', '奇数'),
+      创建行预览('偶数行颜色', '偶数'),
+    );
+    容器.replaceChildren(预览);
+    return;
+  }
   if (区域 === '关键词') {
     const 预览 = document.createElement('div');
     预览.className = '关键词样式预览';
@@ -2982,6 +3013,13 @@ function 渲染字体选项() {
     const 文字 = document.createElement('span');
     文字.textContent = '关键词';
     return 文字;
+  }
+
+  function 创建行预览(文字, 类型) {
+    const 行 = document.createElement('div');
+    行.textContent = 文字;
+    行.style.backgroundColor = `var(--段落底色${类型 === '奇数' ? '一' : '二'})`;
+    return 行;
   }
 }
 
@@ -3075,6 +3113,30 @@ function 设置关键词粗细(值, 选项 = {}) {
     安排保存持久化状态();
   }
   console.info('[阅读器] 已设置关键词粗细', { 值: 值 ?? '默认' });
+}
+
+function 设置奇偶行颜色(类型, 颜色, 选项 = {}) {
+  if (!['奇数', '偶数'].includes(类型)) {
+    throw new TypeError('奇偶行颜色类型无效');
+  }
+  if (!/^#[\da-f]{6}$/i.test(颜色)) {
+    throw new TypeError(`${类型}行颜色格式无效`);
+  }
+  const 规范颜色 = 颜色.toLowerCase();
+  const 变量名 = 类型 === '奇数' ? '--段落底色一' : '--段落底色二';
+  const 选择器 =
+    类型 === '奇数' ? 元素.奇数行颜色选择器 : 元素.偶数行颜色选择器;
+  奇偶行颜色[类型] = 规范颜色;
+  选择器.value = 规范颜色;
+  if (规范颜色 === 默认奇偶行颜色[类型]) {
+    document.documentElement.style.removeProperty(变量名);
+  } else {
+    document.documentElement.style.setProperty(变量名, 规范颜色);
+  }
+  if (!选项.静默) {
+    安排保存持久化状态();
+  }
+  console.info('[阅读器] 已设置奇偶行颜色', { 类型, 颜色: 规范颜色 });
 }
 
 function 设置引文背景色(启用, 选项 = {}) {
@@ -3290,6 +3352,7 @@ function 应用文本(原始文本, 文件名) {
           引号外: 字体粗细设置.引号外,
         },
         关键词样式: { 颜色: 关键词颜色, 粗细: 关键词粗细 },
+        奇偶行颜色: { ...奇偶行颜色 },
         引文背景色启用,
         关键词排序: 状态.关键词排序,
         关键词面板展开: 状态.关键词面板展开,
@@ -3367,6 +3430,8 @@ function 应用文本(原始文本, 文件名) {
       '--引文粗细',
       '--正文粗细',
       '--关键词粗细',
+      '--段落底色一',
+      '--段落底色二',
     ]) {
       根元素.style.removeProperty(变量名);
     }
@@ -3380,6 +3445,9 @@ function 应用文本(原始文本, 文件名) {
     高亮配色[0].浅色 = '#c5d9f0';
     根元素.style.setProperty('--关键词颜色', 默认关键词颜色);
     元素.关键词颜色选择器.value = 默认关键词颜色;
+    Object.assign(奇偶行颜色, 默认奇偶行颜色);
+    元素.奇数行颜色选择器.value = 默认奇偶行颜色.奇数;
+    元素.偶数行颜色选择器.value = 默认奇偶行颜色.偶数;
     引文背景色启用 = true;
     根元素.classList.remove('隐藏引文背景色');
     元素.引文背景色开关.checked = true;
@@ -3462,7 +3530,7 @@ function 应用文本(原始文本, 文件名) {
       }
       if (持久化状态.当前字体标签 !== undefined) {
         if (
-          !['全部', '引号内', '引号外', '关键词'].includes(
+          !['全部', '引号内', '引号外', '关键词', '奇偶行'].includes(
             持久化状态.当前字体标签,
           )
         ) {
@@ -3473,6 +3541,7 @@ function 应用文本(原始文本, 文件名) {
       恢复字体设置(持久化状态.字体);
       恢复字体粗细设置(持久化状态.字体粗细);
       恢复关键词样式(持久化状态.关键词样式);
+      恢复奇偶行颜色(持久化状态.奇偶行颜色);
       恢复引文背景色设置(持久化状态.引文背景色启用);
     }
 
@@ -3544,6 +3613,17 @@ function 应用文本(原始文本, 文件名) {
       }
       设置关键词颜色(持久化样式.颜色, { 静默: true, 不渲染: true });
       设置关键词粗细(持久化样式.粗细 ?? null, { 静默: true });
+    }
+
+    function 恢复奇偶行颜色(持久化颜色) {
+      if (持久化颜色 === undefined) {
+        return;
+      }
+      if (!持久化颜色 || typeof 持久化颜色 !== 'object') {
+        throw new TypeError('持久化的奇偶行颜色格式无效');
+      }
+      设置奇偶行颜色('奇数', 持久化颜色.奇数, { 静默: true });
+      设置奇偶行颜色('偶数', 持久化颜色.偶数, { 静默: true });
     }
   }
 
@@ -5933,6 +6013,7 @@ function 保存持久化状态() {
       引号外: 字体粗细设置.引号外,
     },
     关键词样式: { 颜色: 关键词颜色, 粗细: 关键词粗细 },
+    奇偶行颜色: { ...奇偶行颜色 },
     引文背景色启用,
     关键词列表: 状态.关键词列表.map(function 序列化关键词(关键词) {
       return {
