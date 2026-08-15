@@ -21,7 +21,6 @@
   let 上次触发指令 = null;
   let 最近文本 = '';
 
-  let 重试次数 = 0;
   let 连接 = null;
 
   function 时间戳() {
@@ -153,12 +152,11 @@
     try {
       连接 = new WebSocket(地址);
     } catch (错误) {
-      console.warn(`[语音转录 ${时间戳()}] 连接失败：${错误.message}，稍后重试`);
-      setTimeout(连接服务器, Math.min(1000 * Math.pow(2, 重试次数++), 10000));
+      console.warn(`[语音转录 ${时间戳()}] 连接失败：${错误.message}`);
+      连接 = null;
       return;
     }
     连接.onopen = () => {
-      重试次数 = 0;
       console.log(`[语音转录 ${时间戳()}] 已连接 ${地址}，加入房间「${房间}」`);
       连接.send(JSON.stringify({ type: 'join', role: 'display', room: 房间 }));
     };
@@ -172,9 +170,7 @@
       处理转录消息(消息);
     };
     连接.onclose = () => {
-      const 间隔 = Math.min(1000 * Math.pow(2, 重试次数), 10000);
-      console.warn(`[语音转录 ${时间戳()}] 连接断开（服务器未启动？），${间隔 / 1000}s 后重连`);
-      setTimeout(连接服务器, 间隔);
+      console.warn(`[语音转录 ${时间戳()}] 连接断开（服务器未启动？）`);
     };
     连接.onerror = () => 连接.close();
   }
