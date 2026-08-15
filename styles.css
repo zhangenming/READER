@@ -73,9 +73,9 @@
   --段落主色二: #b7655a;
   --段落底色一: color-mix(in oklab, var(--段落主色一) 20%, var(--纸张色));
   --段落底色二: color-mix(in oklab, var(--段落主色二) 18%, var(--纸张色));
-  /* 引文底色以当前段落背景为基准，再向墨色混合以压深明度。 */
-  --段落引文底色一: color-mix(in oklab, var(--段落底色一) 86%, var(--墨色) 14%);
-  --段落引文底色二: color-mix(in oklab, var(--段落底色二) 86%, var(--墨色) 14%);
+  /* 引文底色以当前段落背景为基准，再混入同色系主色以加深并保持色相。 */
+  --段落引文底色一: color-mix(in oklab, var(--段落底色一) 72%, var(--段落主色一) 28%);
+  --段落引文底色二: color-mix(in oklab, var(--段落底色二) 72%, var(--段落主色二) 28%);
   --当前引文底色: var(--段落引文底色一);
   /* 引号内（spk 内）对话：浓墨近黑但带暖底（约 15:1），比纯黑柔和、比叙述深两级 */
   --引文墨色: #221e16;
@@ -939,56 +939,39 @@ body.右下面板展开 .关键词面板开关 {
     3px 3px 7px rgb(32 37 34 / 34%);
 }
 
-/* 让步词（暖色）：虽然 / 尽管 / 即使；转折词（冷色）：但是 / 还是 / 不过。
-   让步是较轻铺垫，转折是更强语义转向；均不改变正文行高。 */
+/* 让步词：虽然 / 尽管 / 即使；转折词：但是 / 还是 / 不过。
+   统一只保留底部 border 下划线，不再给字身上色；均不改变正文行高。 */
 .字.让步词:not(.命中) {
-  color: oklch(55% 0.12 75deg);
-  text-decoration: underline dotted oklch(58% 0.13 75deg / 68%) 1.5px;
-  text-underline-offset: 0.18em;
+  box-shadow: inset 0 -2px 0 oklch(55% 0.12 75deg / 68%);
 }
 
 .字.转折词:not(.命中) {
-  color: oklch(48% 0.07 165deg);
-  -webkit-text-stroke: 0.25px oklch(38% 0.06 165deg / 72%);
   box-shadow: inset 0 -2px 0 oklch(48% 0.07 165deg / 68%);
 }
 
 /* 关系连词：因果 / 假设 / 递进 / 选择 / 顺接。
-   前提·条件·选择类（因词/假设词/选择词）用点状下划线；
-   结论·递进续·顺接类（果词/递进词/顺接词）用内嵌下划线，与「让步/转折」视觉语言一致。 */
+   各类统一只保留底部 border 下划线，仅以色相区分语义类别，不再给字身上色。 */
 .字.因词:not(.命中) {
-  color: oklch(52% 0.13 25deg);
-  text-decoration: underline dotted oklch(55% 0.14 25deg / 70%) 1.5px;
-  text-underline-offset: 0.18em;
+  box-shadow: inset 0 -2px 0 oklch(52% 0.13 25deg / 68%);
 }
 
 .字.果词:not(.命中) {
-  color: oklch(48% 0.11 295deg);
-  -webkit-text-stroke: 0.25px oklch(40% 0.1 295deg / 72%);
   box-shadow: inset 0 -2px 0 oklch(48% 0.11 295deg / 68%);
 }
 
 .字.假设词:not(.命中) {
-  color: oklch(52% 0.12 230deg);
-  text-decoration: underline dotted oklch(55% 0.13 230deg / 70%) 1.5px;
-  text-underline-offset: 0.18em;
+  box-shadow: inset 0 -2px 0 oklch(52% 0.12 230deg / 68%);
 }
 
 .字.递进词:not(.命中) {
-  color: oklch(48% 0.1 140deg);
-  -webkit-text-stroke: 0.25px oklch(38% 0.09 140deg / 72%);
   box-shadow: inset 0 -2px 0 oklch(48% 0.1 140deg / 68%);
 }
 
 .字.选择词:not(.命中) {
-  color: oklch(55% 0.13 330deg);
-  text-decoration: underline dotted oklch(58% 0.14 330deg / 70%) 1.5px;
-  text-underline-offset: 0.18em;
+  box-shadow: inset 0 -2px 0 oklch(55% 0.13 330deg / 68%);
 }
 
 .字.顺接词:not(.命中) {
-  color: oklch(50% 0.09 200deg);
-  -webkit-text-stroke: 0.25px oklch(40% 0.08 200deg / 72%);
   box-shadow: inset 0 -2px 0 oklch(50% 0.09 200deg / 68%);
 }
 
