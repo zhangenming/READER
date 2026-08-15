@@ -1151,13 +1151,15 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   border-radius: 4px;
 }
 
-/* 当前跳转命中：关键词色实底 + 纸色文字，和当前关键词组形成明确的两级层次。 */
+/* 当前跳转命中：与选中组同为黑底白字，靠外侧准星框区分层级；
+   准星线宽由 --当前准星粗细 控制。 */
 .字.命中.当前命中 {
-  --当前命中色: var(--命中当前色, var(--关键词颜色));
-  --当前准星色: color-mix(in oklab, var(--当前命中色) 82%, var(--墨色));
+  --当前命中色: #000000;
+  --当前准星色: #000000;
+  --当前准星粗细: 2.5px;
   --当前准星延伸: 0.2em;
   z-index: 2;
-  color: var(--纸张色);
+  color: #ffffff;
   background-color: var(--当前命中色);
   background-image: none;
   border-radius: 3px;
@@ -1175,47 +1177,47 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
   z-index: 3;
   content: '';
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px
-      no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100%
+      var(--当前准星粗细) no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100%
+      var(--当前准星粗细) no-repeat;
   pointer-events: none;
 }
 
 .字.命中.当前命中.当前命中起点::before {
   left: calc(var(--当前准星延伸) * -1);
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 1.5px 100%
-      no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100%
+      var(--当前准星粗细) no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100%
+      var(--当前准星粗细) no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 /
+      var(--当前准星粗细) 100% no-repeat;
 }
 
 .字.命中.当前命中.当前命中终点::before {
   right: calc(var(--当前准星延伸) * -1);
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 / 1.5px 100%
-      no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100%
+      var(--当前准星粗细) no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100%
+      var(--当前准星粗细) no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 /
+      var(--当前准星粗细) 100% no-repeat;
 }
 
 /* 单字命中由同一个伪元素绘制完整外框。 */
 .字.命中.当前命中.当前命中起点.当前命中终点::before {
   inset: calc(var(--当前准星延伸) * -1);
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% 1.5px
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% 1.5px
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 1.5px 100%
-      no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 / 1.5px 100%
-      no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100%
+      var(--当前准星粗细) no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100%
+      var(--当前准星粗细) no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 /
+      var(--当前准星粗细) 100% no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 /
+      var(--当前准星粗细) 100% no-repeat;
 }
 
 .字.命中.当前命中.当前命中起点 {
