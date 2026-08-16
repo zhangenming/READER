@@ -29,7 +29,7 @@
 ## 运行
 
 ```bash
-python3 -m http.server 15921 --bind 127.0.0.1
+python3 -m http.server 15921 --bind 0.0.0.0
 ```
 
-浏览器打开 `http://127.0.0.1:15921`。
+本机浏览器打开 `http://localhost:15921`；同一局域网内可使用本机的局域网 IP 访问，例如 `http://192.168.0.101:15921`。
