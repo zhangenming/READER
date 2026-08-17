@@ -889,6 +889,15 @@ body.右下面板展开 .关键词面板开关 {
   font-variant-numeric: proportional-nums lining-nums;
 }
 
+/* 西文引文与汉字共用同一行高；顶部对齐，避免 ? 等窄字盒让引文边框产生台阶。 */
+.字.西文.引文内容 {
+  vertical-align: top;
+}
+
+.字.西文.引文内容::before {
+  height: calc(var(--正文字号) * 0.9);
+}
+
 /* 数字（0-9、零~九、〇）醒目样式：强调色干净着色，不加粗、无阴影。
    迭代记录：v1 浅底圆角胶囊+细描边（用户反馈背景色不好）→ v2 彩色光晕+白色浮雕阴影
    （用户反馈不满意）→ v3 干净着色（当前）。
@@ -1095,17 +1104,17 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 /* 窄西文标点（如 ?）的字盒不足以容纳 4px 圆角；收小端点圆角，避免边框拐角塌陷。 */
-.字.西文.引文起点::before {
+.正文行:has(.字.西文.引文起点) .字.西文.引文起点::before {
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
 }
 
-.字.西文.引文终点::before {
+.正文行:has(.字.西文.引文终点) .字.西文.引文终点::before {
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
 }
 
-.字.西文.引文起点.引文终点::before {
+.正文行:has(.字.西文.引文起点.引文终点) .字.西文.引文起点.引文终点::before {
   border-radius: 2px;
 }
 
