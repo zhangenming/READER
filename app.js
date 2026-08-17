@@ -124,6 +124,7 @@ let 关键词粗细 = null;
 const 奇偶行颜色 = { ...默认奇偶行颜色 };
 let 奇偶行左侧边框显示 = 默认奇偶行左侧边框显示;
 let 引文背景色启用 = true;
+let 引文边框启用 = true;
 let 当前字体标签 = '引号内';
 const 字体粗细列表 = [100, 200, 300, 400, 500, 600, 700, 800, 900];
 const 默认字体粗细 = { 引号内: 900, 引号外: 100 };
@@ -284,6 +285,8 @@ const 元素 = {
   字体标签奇偶行: document.querySelector('#字体标签奇偶行'),
   引文背景色选项: document.querySelector('#引文背景色选项'),
   引文背景色开关: document.querySelector('#引文背景色开关'),
+  引文边框选项: document.querySelector('#引文边框选项'),
+  引文边框开关: document.querySelector('#引文边框开关'),
   关键词颜色选项: document.querySelector('#关键词颜色选项'),
   关键词颜色选择器: document.querySelector('#关键词颜色选择器'),
   字体颜色选项: document.querySelector('#字体颜色选项'),
@@ -565,6 +568,9 @@ function 绑定事件() {
   元素.字体标签奇偶行.addEventListener('click', () => 切换字体标签('奇偶行'));
   元素.引文背景色开关.addEventListener('change', function 切换引文背景色() {
     设置引文背景色(元素.引文背景色开关.checked);
+  });
+  元素.引文边框开关.addEventListener('change', function 切换引文边框() {
+    设置引文边框显示(元素.引文边框开关.checked);
   });
   元素.关键词颜色选择器.addEventListener('input', function 切换关键词颜色() {
     设置关键词颜色(元素.关键词颜色选择器.value);
@@ -2979,6 +2985,7 @@ function 渲染字体标签() {
     标签元素.setAttribute('aria-selected', String(是当前));
   }
   元素.引文背景色选项.hidden = 当前字体标签 !== '引号内';
+  元素.引文边框选项.hidden = 当前字体标签 !== '引号内';
   元素.字体颜色选项.hidden = !['全部', '引号内', '引号外'].includes(当前字体标签);
   元素.关键词颜色选项.hidden = 当前字体标签 !== '关键词';
   元素.奇偶行颜色选项.hidden = 当前字体标签 !== '奇偶行';
@@ -3237,6 +3244,16 @@ function 设置引文背景色(启用, 选项 = {}) {
   console.info('[阅读器] 已设置 spk 背景色', { 启用 });
 }
 
+function 设置引文边框显示(启用, 选项 = {}) {
+  引文边框启用 = 启用;
+  document.documentElement.classList.toggle('隐藏引文边框', !启用);
+  元素.引文边框开关.checked = 启用;
+  if (!选项.静默) {
+    安排保存持久化状态();
+  }
+  console.info('[阅读器] 已设置 spk 边框', { 启用 });
+}
+
 function 刷新字体粗细排版() {
   if (!状态.文件名) {
     return;
@@ -3442,6 +3459,7 @@ function 应用文本(原始文本, 文件名) {
         奇偶行颜色: { ...奇偶行颜色 },
         奇偶行左侧边框显示,
         引文背景色启用,
+        引文边框启用,
         关键词排序: 状态.关键词排序,
         关键词面板展开: 状态.关键词面板展开,
       }
@@ -3544,6 +3562,9 @@ function 应用文本(原始文本, 文件名) {
     引文背景色启用 = true;
     根元素.classList.remove('隐藏引文背景色');
     元素.引文背景色开关.checked = true;
+    引文边框启用 = true;
+    根元素.classList.remove('隐藏引文边框');
+    元素.引文边框开关.checked = true;
     当前字体标签 = '引号内';
     状态.自动滚动速度 = 自动滚动默认速度;
     状态.关键词排序 = '数量';
@@ -3638,6 +3659,7 @@ function 应用文本(原始文本, 文件名) {
       恢复奇偶行颜色(持久化状态.奇偶行颜色);
       恢复奇偶行左侧边框显示(持久化状态.奇偶行左侧边框显示);
       恢复引文背景色设置(持久化状态.引文背景色启用);
+      恢复引文边框设置(持久化状态.引文边框启用);
     }
 
     根元素.style.setProperty('--正文字号', 状态.字号 + 'px');
@@ -3711,6 +3733,16 @@ function 应用文本(原始文本, 文件名) {
         throw new TypeError('持久化的 spk 背景色设置格式无效');
       }
       设置引文背景色(持久化设置, { 静默: true });
+    }
+
+    function 恢复引文边框设置(持久化设置) {
+      if (持久化设置 === undefined) {
+        return;
+      }
+      if (typeof 持久化设置 !== 'boolean') {
+        throw new TypeError('持久化的 spk 边框设置格式无效');
+      }
+      设置引文边框显示(持久化设置, { 静默: true });
     }
 
     function 恢复关键词样式(持久化样式) {
@@ -6155,6 +6187,7 @@ function 保存持久化状态() {
     奇偶行颜色: { ...奇偶行颜色 },
     奇偶行左侧边框显示,
     引文背景色启用,
+    引文边框启用,
     关键词列表: 状态.关键词列表.map(function 序列化关键词(关键词) {
       return {
         id: 关键词.id,
