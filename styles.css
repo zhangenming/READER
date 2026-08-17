@@ -1094,6 +1094,21 @@ body.右下面板展开 .关键词面板开关 {
   border-radius: 4px;
 }
 
+/* 窄西文标点（如 ?）的字盒不足以容纳 4px 圆角；收小端点圆角，避免边框拐角塌陷。 */
+.字.西文.引文起点::before {
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+.字.西文.引文终点::before {
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+.字.西文.引文起点.引文终点::before {
+  border-radius: 2px;
+}
+
 .字.引文引号 {
   color: var(--引文墨色);
   font-weight: var(--引文粗细);
