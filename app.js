@@ -1539,15 +1539,23 @@ function 绑定事件() {
     执行导航跳转({ 向上: true, Command已按下: false, 仅当前关键词: true });
   }
 
-  /* 双击：跳到上一个（见 处理双击跳转），并清理选区与拖选状态，
-     确保绝不触发新建关键词（见 处理鼠标选择结束 的拦截）。 */
+  /* 双击：命中词 → 跳到上一个；未命中词但在正文行内 → 选中整行并复制到剪贴板。
+     清理选区与拖选状态，确保绝不触发新建关键词（见 处理鼠标选择结束 的拦截）。 */
   function 处理高亮双击(事件) {
     双击待定 = false;
     清空待定单击(); // 取消可能挂起的单击前进，保证干净跳到上一个
-    window.getSelection()?.removeAllRanges();
     状态.拖选状态 = null;
 
     const 字元素 = 事件.target.closest('.字.命中');
+    const 行元素 = !字元素 && 事件.target.closest('.正文行');
+    if (行元素) {
+      事件.preventDefault();
+      选中并复制行(行元素);
+      return;
+    }
+
+    window.getSelection()?.removeAllRanges();
+
     if (!字元素) {
       return;
     }
@@ -1556,6 +1564,27 @@ function 绑定事件() {
       return;
     }
     处理双击跳转(关键词, Number(字元素.dataset.hitIndex));
+  }
+
+  function 选中并复制行(行元素) {
+    const 行起点 = Number(行元素.dataset.start);
+    const 行终点 = Number(行元素.dataset.end);
+    const 行文本 = 状态.文本.slice(行起点, 行终点);
+    if (!行文本) {
+      return;
+    }
+
+    const 选择 = window.getSelection();
+    if (选择) {
+      const range = document.createRange();
+      range.selectNodeContents(行元素);
+      选择.removeAllRanges();
+      选择.addRange(range);
+    }
+
+    navigator.clipboard.writeText(行文本).catch((错误) => {
+      console.warn('[阅读器] 复制行到剪贴板失败', 错误);
+    });
   }
 
   function 处理高亮移入(事件) {
