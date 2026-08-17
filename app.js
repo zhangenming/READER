@@ -1101,6 +1101,24 @@ function 绑定事件() {
       return;
     }
 
+    // 右方向键：直接开启自动滚动（作为 Space / Shift+Space 整屏翻页之外的另一种启动入口）。
+    if (
+      事件.key === 'ArrowRight' &&
+      !事件.altKey &&
+      !事件.ctrlKey &&
+      !事件.metaKey &&
+      !事件.shiftKey &&
+      !是交互目标 &&
+      !有弹窗打开() &&
+      状态.行起点列表.length
+    ) {
+      事件.preventDefault();
+      if (!自动滚动状态) {
+        开始自动滚动();
+      }
+      return;
+    }
+
     const 是翻页按键 = 事件.code === 'Space' || 事件.key === 'Enter';
 
     if (
