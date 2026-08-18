@@ -960,8 +960,8 @@ body.右下面板展开 .关键词面板开关 {
     3px 3px 7px rgb(32 37 34 / 34%);
 }
 
-/* 内置双字词：在两个字的正中画纯黑实心圆，表示它们是一个词。
-   圆点只画在首字的右侧，不改变正文行高；命中态仍由关键词高亮接管。 */
+/* 内置双字词：在两个字正中画纯黑连接线，表示它们是一个词。
+   连接线只画在首字的右侧，不改变正文行高；命中态仍由关键词高亮接管。 */
 .字.让步词:not(.命中),
 .字.转折词:not(.命中),
 .字.因词:not(.命中),
@@ -985,13 +985,13 @@ body.右下面板展开 .关键词面板开关 {
 .字.时间词:not(.命中):has(+ .字.时间词)::after {
   position: absolute;
   top: 50%;
-  right: -0.12em;
+  right: -0.3em;
   z-index: 2;
-  width: 0.24em;
-  height: 0.24em;
+  width: 0.6em;
+  height: 2px;
   content: '';
   background: #000000;
-  border-radius: 999px;
+  border-radius: 0;
   pointer-events: none;
   transform: translateY(-50%);
 }
