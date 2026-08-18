@@ -960,70 +960,30 @@ body.右下面板展开 .关键词面板开关 {
     3px 3px 7px rgb(32 37 34 / 34%);
 }
 
-/* 内置双字词：把底部 border 改为两个字之间的居中连接符，表示它们是一个词。
-   连接符只画在首字的右侧，不改变正文行高；命中态仍由关键词高亮接管。 */
-.字.让步词:not(.命中),
-.字.转折词:not(.命中),
-.字.因词:not(.命中),
-.字.果词:not(.命中),
-.字.假设词:not(.命中),
-.字.递进词:not(.命中),
-.字.选择词:not(.命中),
-.字.顺接词:not(.命中) {
-  box-shadow: none;
-}
-
-.字.让步词:not(.命中):has(+ .字.让步词)::after,
-.字.转折词:not(.命中):has(+ .字.转折词)::after,
-.字.因词:not(.命中):has(+ .字.因词)::after,
-.字.果词:not(.命中):has(+ .字.果词)::after,
-.字.假设词:not(.命中):has(+ .字.假设词)::after,
-.字.递进词:not(.命中):has(+ .字.递进词)::after,
-.字.选择词:not(.命中):has(+ .字.选择词)::after,
-.字.顺接词:not(.命中):has(+ .字.顺接词)::after {
-  position: absolute;
-  top: 50%;
-  right: -0.18em;
+/* 内置双字词：保持字盒宽度不变，只把两个字的外观向中间挤压。
+   两侧各移动 0.14em，首字向右、次字向左；命中态仍由关键词高亮接管。 */
+.字.让步词:not(.命中):has(+ .字.让步词:not(.命中)),
+.字.转折词:not(.命中):has(+ .字.转折词:not(.命中)),
+.字.因词:not(.命中):has(+ .字.因词:not(.命中)),
+.字.果词:not(.命中):has(+ .字.果词:not(.命中)),
+.字.假设词:not(.命中):has(+ .字.假设词:not(.命中)),
+.字.递进词:not(.命中):has(+ .字.递进词:not(.命中)),
+.字.选择词:not(.命中):has(+ .字.选择词:not(.命中)),
+.字.顺接词:not(.命中):has(+ .字.顺接词:not(.命中)) {
   z-index: 1;
-  width: 0.36em;
-  height: 2px;
-  content: '';
-  background: currentColor;
-  border-radius: 999px;
-  pointer-events: none;
-  transform: translateY(-50%);
+  transform: translateX(0.14em);
 }
 
-.字.让步词:not(.命中):has(+ .字.让步词)::after {
-  background: oklch(55% 0.12 75deg / 68%);
-}
-
-.字.转折词:not(.命中):has(+ .字.转折词)::after {
-  background: oklch(48% 0.07 165deg / 68%);
-}
-
-.字.因词:not(.命中):has(+ .字.因词)::after {
-  background: oklch(52% 0.13 25deg / 68%);
-}
-
-.字.果词:not(.命中):has(+ .字.果词)::after {
-  background: oklch(48% 0.11 295deg / 68%);
-}
-
-.字.假设词:not(.命中):has(+ .字.假设词)::after {
-  background: oklch(52% 0.12 230deg / 68%);
-}
-
-.字.递进词:not(.命中):has(+ .字.递进词)::after {
-  background: oklch(48% 0.1 140deg / 68%);
-}
-
-.字.选择词:not(.命中):has(+ .字.选择词)::after {
-  background: oklch(55% 0.13 330deg / 68%);
-}
-
-.字.顺接词:not(.命中):has(+ .字.顺接词)::after {
-  background: oklch(50% 0.09 200deg / 68%);
+.字.让步词:not(.命中) + .字.让步词:not(.命中),
+.字.转折词:not(.命中) + .字.转折词:not(.命中),
+.字.因词:not(.命中) + .字.因词:not(.命中),
+.字.果词:not(.命中) + .字.果词:not(.命中),
+.字.假设词:not(.命中) + .字.假设词:not(.命中),
+.字.递进词:not(.命中) + .字.递进词:not(.命中),
+.字.选择词:not(.命中) + .字.选择词:not(.命中),
+.字.顺接词:not(.命中) + .字.顺接词:not(.命中) {
+  z-index: 1;
+  transform: translateX(-0.14em);
 }
 
 .字.中文引号 {
