@@ -1021,29 +1021,9 @@ body.右下面板展开 .关键词面板开关 {
   z-index: 10;
 }
 
-.字.中文引号 {
-  position: relative;
-  z-index: 1;
-  display: inline-block;
-  width: 0;
-  overflow: visible;
-  font-family: var(--正文字体);
-  font-size: 1em;
-  font-feature-settings: 'palt';
-  vertical-align: top;
-}
-
 /* 引号边界的引号标记也跟随 spk 内字体，使整段引文字体统一 */
 .字.引文引号 {
   font-family: var(--引文字体);
-}
-
-.字.左引号 {
-  text-align: right;
-}
-
-.字.右引号 {
-  text-align: left;
 }
 
 /* 引文底色画成行内居中的内嵌条（与命中条同一几何思路）：
@@ -1396,11 +1376,6 @@ body:has(.字.命中.同组悬停)
 
 .字.引文内容.命中.同组悬停::before {
   background: transparent;
-}
-
-/* 上下引号只保留排版占位，不显示字形。 */
-.字.中文引号 {
-  color: transparent;
 }
 
 .跳转边框 {

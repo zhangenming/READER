@@ -27,6 +27,7 @@ const 关键词排序方式列表 = ['数量', '位置', '拼音'];
 const 西文字素模式 =
   /^(?:[\u0020-\u007e\u00a0]|\p{Script=Latin}|\p{Number}|\p{Mark})+$/u;
 const 西文单词模式 = /\s*\S+|\s+$/gu;
+const 不渲染引号集合 = new Set(['“', '”']);
 const 正文测量上下文 = document.createElement('canvas').getContext('2d');
 if (!正文测量上下文) {
   throw new Error('当前浏览器无法创建正文测量画布');
@@ -4241,9 +4242,8 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
   function 测量范围(片段起点, 片段终点, 是西文, 已知文本) {
     if (!是西文) {
       if (片段终点 - 片段起点 === 1) {
-        const 码 = 文本.charCodeAt(片段起点);
-        if (码 === 0x201c || 码 === 0x201d) {
-          return 排版.正文字号 * 0.78;
+        if (不渲染引号集合.has(文本[片段起点])) {
+          return 0;
         }
       }
       return 排版.正文字号;
@@ -4253,9 +4253,7 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
 
   function 测量片段(片段文本, 是西文) {
     if (!是西文) {
-      return 片段文本 === '“' || 片段文本 === '”'
-        ? 排版.正文字号 * 0.78
-        : 排版.正文字号;
+      return 不渲染引号集合.has(片段文本) ? 0 : 排版.正文字号;
     }
 
     const 缓存宽度 = 西文宽度缓存.get(片段文本);
@@ -4724,16 +4722,14 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
         const 字起点 = 片段边界[边界idx];
         const 字终点 = 片段边界[边界idx + 1];
         const 字文本 = 状态.文本.slice(字起点, 字终点);
+        if (不渲染引号集合.has(字文本)) {
+          continue;
+        }
         const 字命中详情 = [];
         const 字元素 = document.createElement('span');
         字元素.className = '字';
         字元素.classList.toggle('西文', 是西文字素(字文本));
         字元素.classList.toggle('数字', 是数字字素(字文本));
-        if (字文本 === '“') {
-          字元素.classList.add('中文引号', '左引号');
-        } else if (字文本 === '”') {
-          字元素.classList.add('中文引号', '右引号');
-        }
         字元素.dataset.start = String(字起点);
         字元素.dataset.end = String(字终点);
         字元素.setAttribute('aria-hidden', 'true');
