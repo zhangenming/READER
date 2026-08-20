@@ -963,8 +963,7 @@ body.右下面板展开 .关键词面板开关 {
 /* 内置双字词：在两个字正中画一个细小「+」号，表示它们是一组连词。
    + 只画在首字的右侧、不改变正文行高；命中态仍由关键词高亮接管。
    视觉：
-     - 盒 0.32em × 0.32em，居中跨在首字右缘
-     - 横竖两条等粗（0.08em）的纯黑短线在盒中心十字相交
+     - 在首字右缘用 0.9em 盒承载 0.32em 的独立「+」字形
      - 与原「纯黑实心圆」颜色一致，避免因词类主题色带来额外干扰 */
 .字.让步词:not(.命中),
 .字.转折词:not(.命中),
@@ -989,14 +988,20 @@ body.右下面板展开 .关键词面板开关 {
 .字.时间词:not(.命中):has(+ .字.时间词)::after {
   position: absolute;
   top: 50%;
-  right: -0.16em;
-  z-index: 2;
-  width: 0.32em;
-  height: 0.32em;
-  content: '';
-  background:
-    linear-gradient(#000000, #000000) center / 100% 0.08em no-repeat,
-    linear-gradient(#000000, #000000) center / 0.08em 100% no-repeat;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.9em;
+  height: 0.9em;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  font-size: 0.32em;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  content: '+';
   pointer-events: none;
   transform: translateY(-50%);
 }
@@ -1011,7 +1016,7 @@ body.右下面板展开 .关键词面板开关 {
 .字.选择词:not(.命中):has(+ .字.选择词),
 .字.顺接词:not(.命中):has(+ .字.顺接词),
 .字.时间词:not(.命中):has(+ .字.时间词) {
-  z-index: 1;
+  z-index: 10;
 }
 
 .字.中文引号 {
