@@ -63,6 +63,35 @@
     <span id="滚动进度" class="滚动进度" aria-hidden="true" hidden>
       <span id="滚动百分比">0.0%</span>
     </span>
+    <div class="视觉方案" aria-label="阅读样式">
+      <span class="视觉方案标题">样式</span>
+      <div class="视觉方案选项" role="group" aria-label="选择阅读样式">
+        <button
+          class="视觉方案钮 当前"
+          type="button"
+          data-视觉方案="纸本"
+          aria-pressed="true"
+        >
+          纸本
+        </button>
+        <button
+          class="视觉方案钮"
+          type="button"
+          data-视觉方案="夜读"
+          aria-pressed="false"
+        >
+          夜读
+        </button>
+        <button
+          class="视觉方案钮"
+          type="button"
+          data-视觉方案="蓝图"
+          aria-pressed="false"
+        >
+          蓝图
+        </button>
+      </div>
+    </div>
     <aside id="关键词面板" class="关键词面板" aria-label="关键词管理" hidden>
       <button
         id="关键词面板开关"
@@ -80,17 +109,8 @@
       aria-pressed="false"
     >
       <span>滚动</span>
-      <span
-        id="基础速度显示"
-        class="自动滚动速度"
-        >基 36</span
-      >
-      <span
-        id="实际速度显示"
-        class="自动滚动速度"
-        hidden
-        >实 36</span
-      >
+      <span id="基础速度显示" class="自动滚动速度">基 36</span>
+      <span id="实际速度显示" class="自动滚动速度" hidden>实 36</span>
     </button>
     <span
       id="剩余滚动时间"

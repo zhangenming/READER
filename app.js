@@ -340,6 +340,7 @@ if (!当前指示器上下文 || !悬停指示器上下文) {
 
 function 启动() {
   绑定事件();
+  绑定视觉方案();
   更新当前时间();
   window.setInterval(更新当前时间, 1000);
   new ResizeObserver(处理尺寸变化).observe(元素.滚动容器);
@@ -383,6 +384,34 @@ function 启动() {
     return 是有效文本文件名(持久化数据.当前文件名)
       ? 持久化数据.当前文件名
       : 默认文件名;
+  }
+
+  function 绑定视觉方案() {
+    const 按钮列表 = document.querySelectorAll('.视觉方案钮');
+    const 已保存方案 = localStorage.getItem('原文阅读器:视觉方案');
+    const 初始方案 = ['纸本', '夜读', '蓝图'].includes(已保存方案)
+      ? 已保存方案
+      : '纸本';
+    设置视觉方案(初始方案);
+
+    按钮列表.forEach(function 绑定方案按钮(按钮) {
+      按钮.addEventListener('click', function 切换视觉方案() {
+        设置视觉方案(按钮.dataset.视觉方案);
+      });
+    });
+
+    function 设置视觉方案(方案) {
+      if (!['纸本', '夜读', '蓝图'].includes(方案)) {
+        throw new TypeError(`未知的视觉方案：${方案}`);
+      }
+      document.body.dataset.视觉方案 = 方案;
+      按钮列表.forEach(function 更新方案状态(按钮) {
+        const 当前 = 按钮.dataset.视觉方案 === 方案;
+        按钮.classList.toggle('当前', 当前);
+        按钮.setAttribute('aria-pressed', String(当前));
+      });
+      localStorage.setItem('原文阅读器:视觉方案', 方案);
+    }
   }
 }
 

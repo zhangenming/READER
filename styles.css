@@ -2718,3 +2718,162 @@ body:has(.字.命中.同组悬停)
   font-size: 12px;
   color: var(--次要墨色);
 }
+
+/* ===== 视觉方案探索：只替换颜色与标记层级，不改变正文测量 ===== */
+.视觉方案 {
+  position: fixed;
+  top: 16px;
+  left: 18px;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 6px 5px 10px;
+  color: var(--次要墨色);
+  font-family: 'Avenir Next', 'PingFang SC', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--纸张色) 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--边线色) 82%, transparent);
+  border-radius: 7px;
+  box-shadow: 0 5px 18px rgb(32 37 34 / 8%);
+  backdrop-filter: blur(10px);
+}
+
+.视觉方案标题 {
+  letter-spacing: 0.08em;
+}
+
+.视觉方案选项 {
+  display: flex;
+  gap: 2px;
+}
+
+.视觉方案钮 {
+  min-width: 38px;
+  padding: 4px 7px;
+  color: var(--次要墨色);
+  font: inherit;
+  font-size: 11px;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.视觉方案钮:hover,
+.视觉方案钮:focus-visible {
+  color: var(--墨色);
+  background: color-mix(in srgb, var(--选中色) 10%, transparent);
+}
+
+.视觉方案钮.当前 {
+  color: var(--纸张色);
+  background: var(--选中色);
+}
+
+.视觉方案钮:focus-visible {
+  outline: 2px solid var(--选中色);
+  outline-offset: 1px;
+}
+
+body[data-视觉方案='纸本'] {
+  --背景色: #d9d2c7;
+  --纸张色: #f5f0e7;
+  --墨色: #2d2a26;
+  --正文字色: #5b554c;
+  --次要墨色: #81776b;
+  --边线色: #d8cec0;
+  --强调色: #a95036;
+  --选中色: #486b5c;
+  --高亮色: #e8c79e;
+  --段落主色一: #718c7a;
+  --段落主色二: #b8896b;
+  --关键词颜色: #315a74;
+}
+
+body[data-视觉方案='纸本'] .正文行.段落底色一 {
+  background-color: #f5f0e7;
+}
+
+body[data-视觉方案='纸本'] .正文行.段落底色二 {
+  background-color: #f0e9df;
+}
+
+body[data-视觉方案='纸本'] .正文行::after {
+  width: 2px;
+  background: #d6c6b5;
+}
+
+body[data-视觉方案='夜读'] {
+  --背景色: #111619;
+  --纸张色: #1d2528;
+  --墨色: #e8e0d3;
+  --正文字色: #c5c1b8;
+  --次要墨色: #89938f;
+  --边线色: #354044;
+  --强调色: #d58a5e;
+  --选中色: #7eb19b;
+  --高亮色: #51483a;
+  --段落主色一: #304740;
+  --段落主色二: #493936;
+  --关键词颜色: #a6c8df;
+}
+
+body[data-视觉方案='夜读'] .正文行.段落底色一 {
+  background-color: #1d2528;
+}
+
+body[data-视觉方案='夜读'] .正文行.段落底色二 {
+  background-color: #20292c;
+}
+
+body[data-视觉方案='夜读'] .虚拟画布 {
+  box-shadow: 0 16px 44px rgb(0 0 0 / 30%);
+}
+
+body[data-视觉方案='夜读'] .正文行::after {
+  width: 2px;
+  background: #3a4b4a;
+}
+
+body[data-视觉方案='夜读'] .视觉方案 {
+  box-shadow: 0 5px 20px rgb(0 0 0 / 28%);
+}
+
+body[data-视觉方案='蓝图'] {
+  --背景色: #b9cbd8;
+  --纸张色: #e4edf2;
+  --墨色: #1e2f3b;
+  --正文字色: #355062;
+  --次要墨色: #607886;
+  --边线色: #b4c8d3;
+  --强调色: #c8573f;
+  --选中色: #28647a;
+  --高亮色: #f1c9a2;
+  --段落主色一: #6e9ab0;
+  --段落主色二: #c57d6e;
+  --关键词颜色: #1e5c79;
+}
+
+body[data-视觉方案='蓝图'] .正文行.段落底色一 {
+  background-color: #e4edf2;
+}
+
+body[data-视觉方案='蓝图'] .正文行.段落底色二 {
+  background-color: #dce8ef;
+}
+
+body[data-视觉方案='蓝图'] .正文行::after {
+  width: 2px;
+  background: #a5bdca;
+}
+
+@media (max-width: 640px) {
+  .视觉方案 {
+    top: 10px;
+    left: 10px;
+    transform: scale(0.92);
+    transform-origin: top left;
+  }
+}
