@@ -1049,12 +1049,16 @@ body.右下面板展开 .关键词面板开关 {
   pointer-events: none;
 }
 
-.字.引文内容.引文承接上行::before {
-  top: 0;
+/* 只有仍有下一行的引文向下溢出间隙；末行保持原本的窄条高度。 */
+.正文行:has(.字.引文内容.引文延续下行) {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+  contain: layout style;
 }
 
 .字.引文内容.引文延续下行::before {
-  bottom: 0;
+  bottom: calc((var(--引文条高, 0.9em) - 100%) / 2);
 }
 
 :root.隐藏引文背景色 .字.引文内容 {
