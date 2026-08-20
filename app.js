@@ -4823,6 +4823,8 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
           const 是引文内容 = 引文起点 <= 字起点 && 字终点 <= 引文终点;
           if (是引文内容) {
             字元素.classList.add('引文内容');
+            字元素.classList.toggle('引文承接上行', 引文起点 < 行起点);
+            字元素.classList.toggle('引文延续下行', 引文终点 > 行终点);
             字元素.classList.toggle('引文起点', 字起点 === 引文起点);
             字元素.classList.toggle('引文终点', 字终点 === 引文终点);
           } else if (字终点 === 引文起点 || 字起点 === 引文终点) {
