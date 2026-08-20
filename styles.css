@@ -918,11 +918,16 @@ body.右下面板展开 .关键词面板开关 {
   transform-origin: left bottom;
 }
 
-/* 「不」字特殊样式：浅黑色 ✕ 遮罩覆盖，强调否定 / 排除语义。
-   用两条细线（::before / ::after）拼成叉，线宽细、整体比字大、可稍微溢出字框。
-   长度（width）与线宽（height）可在此微调；--否定叉色 可覆盖颜色。 */
-.字.否定叉::before,
-.字.否定叉::after {
+/* 「不」字特殊样式：独立子层避免与引文底色和关键词共用伪元素。 */
+.否定叉标记 {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.否定叉标记::before,
+.否定叉标记::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -932,17 +937,15 @@ body.右下面板展开 .关键词面板开关 {
   background: var(--否定叉色, rgba(199, 78, 47, 0.62));
   border-radius: 1px;
   transform: translate(-50%, -50%) rotate(45deg);
-  pointer-events: none;
-  z-index: 1;
 }
 
-.字.否定叉::after {
+.否定叉标记::after {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 /* 命中高亮时保留遮罩，并改用略深的红，避免在彩色背景上发灰看不清 */
-.字.否定叉.命中::before,
-.字.否定叉.命中::after {
+.字.否定叉.命中 > .否定叉标记::before,
+.字.否定叉.命中 > .否定叉标记::after {
   background: rgba(176, 42, 26, 0.85);
 }
 
