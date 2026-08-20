@@ -28,6 +28,7 @@ const 西文字素模式 =
   /^(?:[\u0020-\u007e\u00a0]|\p{Script=Latin}|\p{Number}|\p{Mark})+$/u;
 const 西文单词模式 = /\s*\S+|\s+$/gu;
 const 不渲染引号集合 = new Set(['“', '”']);
+const 显示引号过滤模式 = /[“”]/gu;
 const 正文测量上下文 = document.createElement('canvas').getContext('2d');
 if (!正文测量上下文) {
   throw new Error('当前浏览器无法创建正文测量画布');
@@ -4704,7 +4705,10 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
         状态.悬停逻辑行idx !== null &&
           状态.行逻辑索引[idx] === 状态.悬停逻辑行idx,
       );
-      行元素.setAttribute('aria-label', 行文本 || '空行');
+      行元素.setAttribute(
+        'aria-label',
+        行文本.replace(显示引号过滤模式, '') || '空行',
+      );
 
       for (const 关键词游标 of 关键词游标列表) {
         while (
@@ -4721,8 +4725,9 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
       for (let 边界idx = 0; 边界idx < 片段边界.length - 1; 边界idx += 1) {
         const 字起点 = 片段边界[边界idx];
         const 字终点 = 片段边界[边界idx + 1];
-        const 字文本 = 状态.文本.slice(字起点, 字终点);
-        if (不渲染引号集合.has(字文本)) {
+        const 原字文本 = 状态.文本.slice(字起点, 字终点);
+        const 字文本 = 原字文本.replace(显示引号过滤模式, '');
+        if (!字文本) {
           continue;
         }
         const 字命中详情 = [];
