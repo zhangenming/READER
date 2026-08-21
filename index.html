@@ -13,7 +13,7 @@
       as="fetch"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260821-04" />
+    <link rel="stylesheet" href="./styles.css?v=20260821-05" />
   </head>
   <body>
     <main class="阅读区域">
@@ -457,10 +457,30 @@
       </div>
       <div class="字体分组列表">
         <div class="字体设置工具栏">
-          <label id="引文背景色选项" class="引文背景色选项">
-            <input id="引文背景色开关" type="checkbox" checked />
-            <span>背景色</span>
-          </label>
+          <div id="引文背景色选项" class="引文背景色选项">
+            <label>
+              <input id="引文背景色开关" type="checkbox" checked />
+              <span>背景色</span>
+            </label>
+            <label>
+              <span>奇数 spk</span>
+              <input
+                id="奇数引文颜色选择器"
+                type="color"
+                value="#bcc7cc"
+                aria-label="奇数 spk 背景色"
+              />
+            </label>
+            <label>
+              <span>偶数 spk</span>
+              <input
+                id="偶数引文颜色选择器"
+                type="color"
+                value="#d7c5bf"
+                aria-label="偶数 spk 背景色"
+              />
+            </label>
+          </div>
           <label id="引文边框选项" class="引文边框选项">
             <input id="引文边框开关" type="checkbox" checked />
             <span>边框</span>
