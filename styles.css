@@ -1002,7 +1002,8 @@ body.右下面板展开 .关键词面板开关 {
   width: 0.3em;
   height: 0.3em;
   content: '';
-  background: #000000;
+  background: transparent;
+  border: 1.5px solid #ffffff;
   border-radius: 50%;
   pointer-events: none;
   transform: translateY(-50%);
