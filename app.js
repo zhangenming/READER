@@ -3533,7 +3533,10 @@ function 读取持久化数据() {
 
 function 应用文本(原始文本, 文件名) {
   const 开始时间 = performance.now();
-  const 规范文本 = 原始文本.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
+  const 规范文本 = 原始文本
+    .replace(/^\uFEFF/, '')
+    .replace(/\r\n?/g, '\n')
+    .replace(/(?<=\p{Script=Han})\?/gu, '？');
   const 句子整理开始时间 = performance.now();
   const 原引文索引 = 创建引文索引(规范文本);
   const 句子整理结果 = 整理句子换行(规范文本, 原引文索引.边界列表);
