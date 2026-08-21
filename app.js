@@ -4712,6 +4712,7 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
       const 行起点 = 状态.行起点列表[idx];
       const 行终点 = 状态.行终点列表[idx];
       const 行文本 = 状态.文本.slice(行起点, 行终点);
+      const 本行引文跨行状态 = new Map();
       const 行元素 = document.createElement('div');
       行元素.className = '正文行';
       const 段落idx = 状态.行段落索引[idx];
@@ -4854,11 +4855,43 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
           const 引文终点 = 状态.引文边界列表[引文idx + 1];
           const 是引文内容 = 引文起点 <= 字起点 && 字终点 <= 引文终点;
           if (是引文内容) {
+            let 引文跨行状态 = 本行引文跨行状态.get(引文idx);
+            if (!引文跨行状态) {
+              const 上一行起点 = idx > 0 ? 状态.行起点列表[idx - 1] : 行起点;
+              const 上一行终点 = idx > 0 ? 状态.行终点列表[idx - 1] : 行起点;
+              const 下一行起点 =
+                idx + 1 < 状态.行起点列表.length
+                  ? 状态.行起点列表[idx + 1]
+                  : 行终点;
+              const 下一行终点 =
+                idx + 1 < 状态.行终点列表.length
+                  ? 状态.行终点列表[idx + 1]
+                  : 行终点;
+              引文跨行状态 = {
+                承接上行:
+                  idx > 0 &&
+                  引文起点 < 行起点 &&
+                  引文范围含可见内容(
+                    Math.max(引文起点, 上一行起点),
+                    Math.min(引文终点, 上一行终点),
+                  ),
+                延续下行:
+                  idx + 1 < 状态.行起点列表.length &&
+                  引文终点 > 行终点 &&
+                  引文范围含可见内容(
+                    Math.max(引文起点, 下一行起点),
+                    Math.min(引文终点, 下一行终点),
+                  ),
+                首个字元素: null,
+                末个字元素: null,
+              };
+              本行引文跨行状态.set(引文idx, 引文跨行状态);
+            }
             字元素.classList.add('引文内容');
-            字元素.classList.toggle('引文承接上行', 引文起点 < 行起点);
-            字元素.classList.toggle('引文延续下行', 引文终点 > 行终点);
-            字元素.classList.toggle('引文起点', 字起点 === 引文起点);
-            字元素.classList.toggle('引文终点', 字终点 === 引文终点);
+            字元素.classList.toggle('引文承接上行', 引文跨行状态.承接上行);
+            字元素.classList.toggle('引文延续下行', 引文跨行状态.延续下行);
+            引文跨行状态.首个字元素 ??= 字元素;
+            引文跨行状态.末个字元素 = 字元素;
           } else if (字终点 === 引文起点 || 字起点 === 引文终点) {
             字元素.classList.add('引文引号');
           }
@@ -4972,10 +5005,29 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
         行元素.append(字元素);
       }
 
+      for (const 引文跨行状态 of 本行引文跨行状态.values()) {
+        if (!引文跨行状态.承接上行) {
+          引文跨行状态.首个字元素.classList.add('引文起点');
+        }
+        if (!引文跨行状态.延续下行) {
+          引文跨行状态.末个字元素.classList.add('引文终点');
+        }
+      }
+
       片段.append(行元素);
     }
 
     return 片段;
+
+    function 引文范围含可见内容(范围起点, 范围终点) {
+      for (let idx = 范围起点; idx < 范围终点; idx += 1) {
+        const 字 = 状态.文本[idx];
+        if (字 !== '\n' && 字 !== '\r' && !不渲染引号集合.has(字)) {
+          return true;
+        }
+      }
+      return false;
+    }
   }
 
   function 收集片段边界(行起点, 行终点, 行文本, 关键词游标列表) {
