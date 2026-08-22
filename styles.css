@@ -278,23 +278,33 @@ body.关键词手势中 .滚动容器 {
   right: calc(var(--滚动条宽度) + 12px);
   bottom: 10px;
   z-index: 5;
-  display: flex;
-  width: 104px;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 6px;
-  text-align: right;
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: 6px 7px;
   pointer-events: none;
 }
 
-.时间信息 > * {
-  display: block;
-  width: 100%;
-  max-width: none;
-  text-align: right;
+.时间信息行 {
+  display: contents;
+}
+
+.时间信息行[hidden] {
+  display: none;
+}
+
+.累计滚动时间 {
+  grid-column: 2;
+  color: #fff;
+  font-family: 'Avenir Next', 'PingFang SC', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .剩余滚动时间 {
+  grid-column: 1;
   color: #fff;
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-size: 11px;
@@ -303,14 +313,11 @@ body.关键词手势中 .滚动容器 {
   line-height: 1;
   text-align: right;
   white-space: nowrap;
-}
-
-.剩余滚动时间[hidden] {
-  display: none;
 }
 
 /* 自动滚动已持续时长：显示在剩余时长上方一行 */
 .已滚动时间 {
+  grid-column: 1;
   color: #fff;
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-size: 11px;
@@ -319,10 +326,6 @@ body.关键词手势中 .滚动容器 {
   line-height: 1;
   text-align: right;
   white-space: nowrap;
-}
-
-.已滚动时间[hidden] {
-  display: none;
 }
 
 .滚动进度.拖动中 {
@@ -383,6 +386,8 @@ body.关键词手势中 .滚动容器 {
 }
 
 .当前时间 {
+  grid-column: 1;
+  justify-self: end;
   color: #fff;
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-size: 13px;

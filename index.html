@@ -90,8 +90,14 @@
       </button>
     </div>
     <div class="时间信息">
-      <span id="已滚动时间" class="已滚动时间" hidden>0.0分</span>
-      <span id="剩余滚动时间" class="剩余滚动时间" hidden>00:00</span>
+      <div id="已滚动时间行" class="时间信息行" hidden>
+        <span id="已滚动时间" class="已滚动时间">0.0分</span>
+        <span id="今日滚动时间" class="累计滚动时间">（0.0h）</span>
+      </div>
+      <div id="剩余滚动时间行" class="时间信息行" hidden>
+        <span id="剩余滚动时间" class="剩余滚动时间">00:00</span>
+        <span id="本书滚动时间" class="累计滚动时间">（0.0h）</span>
+      </div>
       <time id="当前时间" class="当前时间">00:00:00</time>
     </div>
     <div id="跳转边框" class="跳转边框" aria-hidden="true" hidden></div>
