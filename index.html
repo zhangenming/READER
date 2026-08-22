@@ -6,13 +6,6 @@
     <meta name="color-scheme" content="light" />
     <title>原文阅读器</title>
     <link rel="icon" href="./icon.svg" type="image/svg+xml" />
-    <link
-      id="默认文本预加载"
-      rel="preload"
-      href="./txt/嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt"
-      as="fetch"
-      crossorigin="anonymous"
-    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -90,7 +83,13 @@
       title="按当前滚动节奏的预计剩余阅读时长"
       >00:00</span
     >
-    <span id="已滚动时间" class="已滚动时间" hidden title="本次自动滚动已持续时长">0</span>
+    <span
+      id="已滚动时间"
+      class="已滚动时间"
+      hidden
+      title="本次自动滚动已持续时长"
+      >0</span
+    >
     <time id="当前时间" class="当前时间">00:00:00</time>
     <button
       id="内容选择按钮"

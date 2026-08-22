@@ -1,14 +1,8 @@
 'use strict';
 
-const 默认文本预加载 = document.querySelector('#默认文本预加载');
-if (!(默认文本预加载 instanceof HTMLLinkElement)) {
-  throw new Error('缺少默认文本预加载链接');
-}
-const 默认文本地址 = 默认文本预加载.href;
 const 文本目录地址 = new URL('./txt/', document.baseURI);
-const 默认文件名 = decodeURIComponent(
-  new URL(默认文本地址).pathname.split('/').pop(),
-);
+const 默认文件名 =
+  '嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt';
 const 持久化键 = '原文阅读器:阅读状态:v2';
 const 旧持久化键 = '原文阅读器:阅读状态:v1';
 const 最大虚拟高度 = 30_000_000;
@@ -54,6 +48,7 @@ const 自动滚动最高速度 = 600;
 const 自动滚动快速速度 = 2400;
 const 自动滚动缓动时长 = 140;
 const 自动滚动界面间隔 = 50;
+const 主线程时间片毫秒 = 8;
 const 自动滚动反向翻页停留时长 = 1000;
 const 自动滚动翻页距离比例 = 0.7; // 自动滚动中 Space / Shift+Space 快速翻页距离占视口高度的比例（前者前进、后者回退后暂停）
 // —— 自适应滚动（内容密度驱动）——
@@ -170,6 +165,30 @@ const 关系连词表 = [
   ['肯定', '强调词'],
   ['怎么', '疑问词'],
 ];
+const 关系连词类别映射 = new Map();
+for (const [词, 类] of 关系连词表) {
+  const 类别列表 = 关系连词类别映射.get(词) ?? [];
+  类别列表.push(类);
+  关系连词类别映射.set(词, 类别列表);
+}
+
+function 是汉字(字) {
+  const 码点 = 字.codePointAt(0);
+  return (
+    (码点 >= 0x3400 && 码点 <= 0x4dbf) ||
+    (码点 >= 0x4e00 && 码点 <= 0x9fff) ||
+    (码点 >= 0xf900 && 码点 <= 0xfaff) ||
+    (码点 > 0x7f && 汉字模式.test(字))
+  );
+}
+
+async function 按需让出主线程(时间片开始) {
+  if (performance.now() - 时间片开始 < 主线程时间片毫秒) {
+    return 时间片开始;
+  }
+  await scheduler.yield();
+  return performance.now();
+}
 
 // 字体选择：引号内（spk 内）/ 引号外（spk 外）两块独立。
 // 值为 null 表示“跟随该区域 CSS 默认”，写入时清空内联变量以回退到 :root。
@@ -290,6 +309,7 @@ const 元素 = {
   分析按钮: document.querySelector('#分析按钮'),
   分析结果: document.querySelector('#分析结果'),
   分析结果摘要: document.querySelector('#分析结果摘要'),
+  分析表格容器: document.querySelector('.分析表格容器'),
   分析结果列表: document.querySelector('#分析结果列表'),
   关闭查找按钮: document.querySelector('#关闭查找按钮'),
   自定义滚动条: document.querySelector('#自定义滚动条'),
@@ -469,11 +489,56 @@ async function 载入文本(文件名) {
     return;
   }
 
+  const 全文单字 = await 统计全文单字(文本);
+  if (!全文单字) {
+    return;
+  }
+
   try {
-    应用文本(文本, 文件名);
+    const 已应用 = await 应用文本(
+      文本,
+      文件名,
+      全文单字,
+      function 载入仍然有效() {
+        return 本次载入序号 === 状态.载入序号;
+      },
+    );
+    if (!已应用) {
+      return;
+    }
     保存持久化状态();
   } catch (错误) {
     显示文本处理错误(错误);
+  }
+
+  async function 统计全文单字(全文) {
+    const 汉字频次 = new Map();
+    let 已扫描字符数 = 0;
+    let 时间片开始 = performance.now();
+    for (const 字 of 全文) {
+      if (是汉字(字)) {
+        汉字频次.set(字, (汉字频次.get(字) ?? 0) + 1);
+      }
+      已扫描字符数 += 1;
+      if ((已扫描字符数 & 4095) === 0) {
+        时间片开始 = await 按需让出主线程(时间片开始);
+        if (本次载入序号 !== 状态.载入序号) {
+          return null;
+        }
+      }
+    }
+    if (本次载入序号 !== 状态.载入序号) {
+      return null;
+    }
+    return new Set(
+      [...汉字频次]
+        .filter(function 筛选全文单字([, 频次]) {
+          return 频次 === 1;
+        })
+        .map(function 读取全文单字([字]) {
+          return 字;
+        }),
+    );
   }
 }
 
@@ -558,6 +623,11 @@ function 绑定事件() {
   let 当前词频字数 = 1;
   let 当前词频页码 = 1;
   const 每页词频数 = 200;
+  const 每批分析结果数 = 200;
+  const 文本字数任务 = new Map();
+  let 词频分析任务 = null;
+  let 词组分析序号 = 0;
+  let 分析结果视图 = null;
   // 「关键词手势」状态：单击=该词下一个 / 双击=该词上一个 / 向上拖=该词第一个 / 向下拖=该词最后一个
   let 关键词手势 = null; // { 关键词, 命中idx, 起点Y, 起点X, 方向: null|'上'|'下' }
   let 点击抑制 = false; // 拖拽手势触发后抑制紧随的 click，避免重复跳转
@@ -590,8 +660,12 @@ function 绑定事件() {
   元素.查找表单.addEventListener('submit', 处理查找提交);
   元素.查找输入框.addEventListener('input', 处理查找输入);
   元素.分析按钮.addEventListener('click', 处理词组分析);
+  元素.分析表格容器.addEventListener('scroll', 处理分析结果滚动, {
+    passive: true,
+  });
   元素.关闭查找按钮.addEventListener('click', 关闭查找弹窗);
   元素.查找弹窗.addEventListener('click', 处理查找弹窗点击);
+  元素.查找弹窗.addEventListener('close', 取消词组分析);
   元素.关键词面板开关.addEventListener('click', 处理面板开关);
   元素.关键词列表容器.addEventListener('click', 处理面板操作);
   元素.关闭上下文按钮.addEventListener('click', 关闭上下文弹窗);
@@ -603,6 +677,7 @@ function 绑定事件() {
   });
   元素.关闭词频按钮.addEventListener('click', 关闭词频弹窗);
   元素.词频弹窗.addEventListener('click', 处理词频弹窗点击);
+  元素.词频弹窗.addEventListener('close', 取消词频分析);
   元素.词频标签栏.addEventListener('click', 处理词频标签点击);
   元素.词频标签栏.addEventListener('keydown', 处理词频标签键盘);
   元素.词频上一页.addEventListener('click', function 显示上一页词频() {
@@ -1812,7 +1887,7 @@ function 绑定事件() {
     }
   }
 
-  function 打开词频弹窗() {
+  async function 打开词频弹窗() {
     if (!元素.词频弹窗.open) {
       元素.词频弹窗.showModal();
     }
@@ -1824,30 +1899,55 @@ function 绑定事件() {
       元素.词频摘要.textContent = '正文尚未载入';
       return;
     }
+    if (词频分析任务) {
+      return;
+    }
 
     元素.词频摘要.textContent = '正在统计全文';
     元素.词频列表.replaceChildren();
     元素.单字重复列表.replaceChildren();
     元素.单字一次列表.replaceChildren();
     元素.词频分页.hidden = true;
-    requestAnimationFrame(function 分析全文词频() {
+    const 本次任务 = {
+      载入序号: 状态.载入序号,
+      文本: 状态.文本,
+    };
+    词频分析任务 = 本次任务;
+    await scheduler.yield();
+    try {
       const 开始时间 = performance.now();
-      状态.词频分析 = 统计全文词频(状态.文本);
+      const 分析 = await 统计全文词频(本次任务.文本, 任务仍然有效);
+      if (!分析 || !任务仍然有效()) {
+        return;
+      }
+      状态.词频分析 = 分析;
       当前词频页码 = 1;
       渲染词频页();
       console.info('[阅读器] 词频分析完成', {
-        汉字总数: 状态.词频分析.汉字总数,
-        去重汉字数: 状态.词频分析.去重汉字数,
-        单字种数: 状态.词频分析.列表[1].length,
-        二字种数: 状态.词频分析.列表[2].length,
-        三字种数: 状态.词频分析.列表[3].length,
-        四字种数: 状态.词频分析.列表[4].length,
-        五字种数: 状态.词频分析.列表[5].length,
-        六字种数: 状态.词频分析.列表[6].length,
-        只出现一次单字数: 状态.词频分析.单字列表.一次.length,
+        汉字总数: 分析.汉字总数,
+        去重汉字数: 分析.去重汉字数,
+        单字种数: 分析.列表[1].length,
+        二字种数: 分析.列表[2].length,
+        三字种数: 分析.列表[3].length,
+        四字种数: 分析.列表[4].length,
+        五字种数: 分析.列表[5].length,
+        六字种数: 分析.列表[6].length,
+        只出现一次单字数: 分析.单字列表.一次.length,
         耗时毫秒: Math.round(performance.now() - 开始时间),
       });
-    });
+    } finally {
+      if (词频分析任务 === 本次任务) {
+        词频分析任务 = null;
+      }
+    }
+
+    function 任务仍然有效() {
+      return (
+        词频分析任务 === 本次任务 &&
+        状态.载入序号 === 本次任务.载入序号 &&
+        状态.文本 === 本次任务.文本
+      );
+    }
   }
 
   function 关闭词频弹窗() {
@@ -1856,6 +1956,14 @@ function 绑定事件() {
     }
     元素.词频弹窗.close();
     元素.滚动容器.focus({ preventScroll: true });
+  }
+
+  function 取消词频分析() {
+    if (!词频分析任务) {
+      return;
+    }
+    词频分析任务 = null;
+    元素.词频摘要.textContent = '统计已取消';
   }
 
   function 处理词频弹窗点击(事件) {
@@ -1953,41 +2061,50 @@ function 绑定事件() {
     }
   }
 
-  function 统计全文词频(全文) {
+  async function 统计全文词频(全文, 任务仍然有效) {
     const 词频映射 = Array.from({ length: 7 }, function 创建词频映射() {
       return new Map();
     });
     const 连续汉字 = [];
     let 汉字总数 = 0;
     let 文本位置 = 0;
+    let 已扫描字符数 = 0;
+    let 时间片开始 = performance.now();
 
     for (const 字 of 全文) {
-      if (!汉字模式.test(字)) {
+      if (!是汉字(字)) {
         连续汉字.length = 0;
         文本位置 += 字.length;
-        continue;
+      } else {
+        汉字总数 += 1;
+        连续汉字.push({ 字, 位置: 文本位置 });
+        if (连续汉字.length > 6) {
+          连续汉字.shift();
+        }
+        let 字词 = '';
+        for (
+          let 起点 = 连续汉字.length - 1, 字数 = 1;
+          起点 >= 0;
+          起点 -= 1, 字数 += 1
+        ) {
+          字词 = 连续汉字[起点].字 + 字词;
+          记录词频(词频映射[字数], 字词, 连续汉字[起点].位置);
+        }
+        文本位置 += 字.length;
       }
-      汉字总数 += 1;
-      连续汉字.push({ 字, 位置: 文本位置 });
-      if (连续汉字.length > 6) {
-        连续汉字.shift();
+      已扫描字符数 += 1;
+      if ((已扫描字符数 & 255) === 0) {
+        时间片开始 = await 按需让出主线程(时间片开始);
+        if (!任务仍然有效()) {
+          return null;
+        }
       }
-      for (let 字数 = 1; 字数 <= 连续汉字.length; 字数 += 1) {
-        const 起点 = 连续汉字.length - 字数;
-        const 字词 = 连续汉字
-          .slice(起点)
-          .map(function 读取汉字(项) {
-            return 项.字;
-          })
-          .join('');
-        记录词频(词频映射[字数], 字词, 连续汉字[起点].位置);
-      }
-      文本位置 += 字.length;
     }
 
     const 被更长组合覆盖 = Array.from({ length: 7 }, function 创建覆盖集合() {
       return new Set();
     });
+    let 已检查组合数 = 0;
     for (let 字数 = 2; 字数 <= 5; 字数 += 1) {
       for (const [更长文本, 更长统计] of 词频映射[字数 + 1]) {
         const 更长汉字 = [...更长文本];
@@ -1998,23 +2115,35 @@ function 绑定事件() {
             被更长组合覆盖[字数].add(短文本);
           }
         }
+        已检查组合数 += 1;
+        if ((已检查组合数 & 1023) === 0) {
+          时间片开始 = await 按需让出主线程(时间片开始);
+          if (!任务仍然有效()) {
+            return null;
+          }
+        }
       }
     }
 
     const 列表 = {};
     for (const 字数 of [1, 2, 3, 4, 5, 6]) {
-      列表[字数] = [...词频映射[字数]]
-        .map(function 转换词频项([文本, 统计]) {
-          return { 文本, 数量: 统计.数量, 首次位置: 统计.首次位置 };
-        })
-        .filter(function 筛选重复词组(项) {
-          return (
-            字数 === 1 || (项.数量 > 1 && !被更长组合覆盖[字数].has(项.文本))
-          );
-        })
-        .sort(function 排序词频(左项, 右项) {
-          return 右项.数量 - 左项.数量 || 左项.首次位置 - 右项.首次位置;
-        });
+      const 统计列表 = [];
+      for (const [文本, 统计] of 词频映射[字数]) {
+        if (字数 === 1 || (统计.数量 > 1 && !被更长组合覆盖[字数].has(文本))) {
+          统计列表.push({ 文本, 数量: 统计.数量, 首次位置: 统计.首次位置 });
+        }
+        已检查组合数 += 1;
+        if ((已检查组合数 & 1023) === 0) {
+          时间片开始 = await 按需让出主线程(时间片开始);
+          if (!任务仍然有效()) {
+            return null;
+          }
+        }
+      }
+      统计列表.sort(function 排序词频(左项, 右项) {
+        return 右项.数量 - 左项.数量 || 左项.首次位置 - 右项.首次位置;
+      });
+      列表[字数] = 统计列表;
     }
     const 单字列表 = {
       重复: 列表[1].filter(function 筛选重复单字(项) {
@@ -2068,7 +2197,7 @@ function 绑定事件() {
     跳到命中(关键词, 0);
   }
 
-  function 处理词组分析() {
+  async function 处理词组分析() {
     const 前缀 = 元素.查找输入框.value.trim();
     if (!前缀) {
       清空分析结果();
@@ -2082,49 +2211,67 @@ function 绑定事件() {
     }
 
     清除查找错误();
+    const 本次分析序号 = ++词组分析序号;
+    const 本次载入序号 = 状态.载入序号;
+    const 分析文本 = 状态.文本;
     元素.分析按钮.disabled = true;
     元素.分析按钮.setAttribute('aria-busy', 'true');
     元素.分析按钮.textContent = '分析中';
-    requestAnimationFrame(function 分析正文词组() {
-      const 开始时间 = performance.now();
-      try {
-        const 命中位置 = 查找关键词命中(前缀);
-        if (!命中位置.length) {
-          清空分析结果();
-          显示查找错误('未找到该前缀');
-          console.info('[阅读器] 前缀分析无匹配', { 前缀 });
-          return;
-        }
+    await scheduler.yield();
+    const 开始时间 = performance.now();
+    try {
+      const 命中位置 = 查找关键词命中(前缀);
+      if (!分析仍然有效()) {
+        return;
+      }
+      if (!命中位置.length) {
+        清空分析结果();
+        显示查找错误('未找到该前缀');
+        console.info('[阅读器] 前缀分析无匹配', { 前缀 });
+        return;
+      }
 
-        const 词组数量 = new Map();
-        for (const 文本偏移 of 命中位置) {
-          const 词组 = 提取词组(文本偏移);
-          词组数量.set(词组, (词组数量.get(词组) ?? 0) + 1);
+      const 词组数量 = new Map();
+      let 已分析命中数 = 0;
+      let 时间片开始 = performance.now();
+      for (const 文本偏移 of 命中位置) {
+        const 词组 = 提取词组(文本偏移);
+        词组数量.set(词组, (词组数量.get(词组) ?? 0) + 1);
+        已分析命中数 += 1;
+        if ((已分析命中数 & 255) === 0) {
+          时间片开始 = await 按需让出主线程(时间片开始);
+          if (!分析仍然有效()) {
+            return;
+          }
         }
-        const 统计列表 = [...词组数量]
-          .map(function 转换统计项([词组, 数量]) {
-            return { 词组, 数量 };
-          })
-          .sort(function 排序统计项(左项, 右项) {
-            return (
-              右项.数量 - 左项.数量 ||
-              左项.词组.localeCompare(右项.词组, 'zh-CN')
-            );
-          });
-        渲染分析结果(统计列表, 命中位置.length);
-
-        console.info('[阅读器] 前缀分析完成', {
-          前缀,
-          词组数: 统计列表.length,
-          命中数: 命中位置.length,
-          耗时毫秒: Math.round(performance.now() - 开始时间),
+      }
+      const 统计列表 = [...词组数量]
+        .map(function 转换统计项([词组, 数量]) {
+          return { 词组, 数量 };
+        })
+        .sort(function 排序统计项(左项, 右项) {
+          return (
+            右项.数量 - 左项.数量 || 左项.词组.localeCompare(右项.词组, 'zh-CN')
+          );
         });
-      } finally {
+      if (!分析仍然有效()) {
+        return;
+      }
+      渲染分析结果(统计列表, 命中位置.length);
+
+      console.info('[阅读器] 前缀分析完成', {
+        前缀,
+        词组数: 统计列表.length,
+        命中数: 命中位置.length,
+        耗时毫秒: Math.round(performance.now() - 开始时间),
+      });
+    } finally {
+      if (词组分析序号 === 本次分析序号) {
         元素.分析按钮.disabled = false;
         元素.分析按钮.removeAttribute('aria-busy');
         元素.分析按钮.textContent = '分析';
       }
-    });
+    }
 
     function 提取词组(文本偏移) {
       const 上下文 = 状态.文本.slice(文本偏移, 文本偏移 + 前缀.length + 64);
@@ -2147,25 +2294,68 @@ function 绑定事件() {
     }
 
     function 渲染分析结果(统计列表, 命中总数) {
-      const 表格片段 = document.createDocumentFragment();
-      for (const 统计项 of 统计列表) {
-        const 行 = document.createElement('tr');
-        const 词组单元格 = document.createElement('td');
-        const 数量单元格 = document.createElement('td');
-        词组单元格.textContent = 统计项.词组;
-        数量单元格.textContent = 统计项.数量.toLocaleString('zh-CN');
-        行.append(词组单元格, 数量单元格);
-        表格片段.append(行);
-      }
+      分析结果视图 = { 统计列表, 已渲染数: 0 };
       元素.分析结果摘要.textContent = `${统计列表.length} 个词组 · ${命中总数.toLocaleString('zh-CN')} 次出现`;
-      元素.分析结果列表.replaceChildren(表格片段);
+      元素.分析结果列表.replaceChildren();
+      元素.分析表格容器.scrollTop = 0;
+      追加分析结果行();
       元素.分析结果.hidden = false;
+    }
+
+    function 分析仍然有效() {
+      return (
+        词组分析序号 === 本次分析序号 &&
+        状态.载入序号 === 本次载入序号 &&
+        状态.文本 === 分析文本 &&
+        元素.查找输入框.value.trim() === 前缀
+      );
     }
   }
 
   function 处理查找输入() {
+    取消词组分析();
     清除查找错误();
     清空分析结果();
+  }
+
+  function 处理分析结果滚动() {
+    if (
+      分析结果视图 &&
+      元素.分析表格容器.scrollTop + 元素.分析表格容器.clientHeight >
+        元素.分析表格容器.scrollHeight - 200
+    ) {
+      追加分析结果行();
+    }
+  }
+
+  function 追加分析结果行() {
+    if (!分析结果视图) {
+      return;
+    }
+    const 终点 = Math.min(
+      分析结果视图.统计列表.length,
+      分析结果视图.已渲染数 + 每批分析结果数,
+    );
+    const 表格片段 = document.createDocumentFragment();
+    for (let idx = 分析结果视图.已渲染数; idx < 终点; idx += 1) {
+      const 统计项 = 分析结果视图.统计列表[idx];
+      const 行 = document.createElement('tr');
+      const 词组单元格 = document.createElement('td');
+      const 数量单元格 = document.createElement('td');
+      词组单元格.textContent = 统计项.词组;
+      数量单元格.textContent = 统计项.数量.toLocaleString('zh-CN');
+      行.append(词组单元格, 数量单元格);
+      表格片段.append(行);
+    }
+    分析结果视图.已渲染数 = 终点;
+    元素.分析结果列表.append(表格片段);
+  }
+
+  function 取消词组分析() {
+    词组分析序号 += 1;
+    元素.分析按钮.disabled = false;
+    元素.分析按钮.removeAttribute('aria-busy');
+    元素.分析按钮.textContent = '分析';
   }
 
   function 显示查找错误(文字) {
@@ -2175,6 +2365,7 @@ function 绑定事件() {
   }
 
   function 清空分析结果() {
+    分析结果视图 = null;
     元素.分析结果.hidden = true;
     元素.分析结果摘要.textContent = '';
     元素.分析结果列表.replaceChildren();
@@ -2754,7 +2945,6 @@ function 绑定事件() {
       if (!元素.内容选择弹窗.open) {
         return;
       }
-      状态.文本字数 = new Map();
       渲染内容选择列表();
       状态.文本字数 = await 统计文本字数();
       if (元素.内容选择弹窗.open) {
@@ -2771,29 +2961,56 @@ function 绑定事件() {
     async function 统计文本字数() {
       const 统计结果 = await Promise.all(
         状态.文本目录.map(async function 统计单个文本(文件名) {
-          try {
-            const 响应 = await fetch(创建文本地址(文件名));
-            if (!响应.ok) {
-              throw new Error(`HTTP ${响应.status} ${响应.statusText}`);
-            }
-            const 文本 = new TextDecoder('utf-8', { fatal: true }).decode(
-              await 响应.arrayBuffer(),
-            );
-            const 非空白字符模式 = /\S/u;
-            let 字数 = 0;
-            for (const 字符 of 文本) {
-              if (非空白字符模式.test(字符)) {
-                字数 += 1;
-              }
-            }
-            return [文件名, 字数];
-          } catch (错误) {
-            console.error(`[阅读器] 无法统计文本字数：${文件名}`, 错误);
-            return [文件名, null];
+          if (状态.文本字数.has(文件名)) {
+            return [文件名, 状态.文本字数.get(文件名)];
           }
+          let 统计任务 = 文本字数任务.get(文件名);
+          if (!统计任务) {
+            统计任务 = 读取并统计文本(文件名).finally(
+              function 清理文本字数任务() {
+                文本字数任务.delete(文件名);
+              },
+            );
+            文本字数任务.set(文件名, 统计任务);
+          }
+          return [文件名, await 统计任务];
         }),
       );
-      return new Map(统计结果);
+      for (const [文件名, 字数] of 统计结果) {
+        if (字数 !== null) {
+          状态.文本字数.set(文件名, 字数);
+        }
+      }
+      return 状态.文本字数;
+
+      async function 读取并统计文本(文件名) {
+        try {
+          const 响应 = await fetch(创建文本地址(文件名));
+          if (!响应.ok) {
+            throw new Error(`HTTP ${响应.status} ${响应.statusText}`);
+          }
+          const 文本 = new TextDecoder('utf-8', { fatal: true }).decode(
+            await 响应.arrayBuffer(),
+          );
+          const 非空白字符模式 = /\S/u;
+          let 字数 = 0;
+          let 已扫描字符数 = 0;
+          let 时间片开始 = performance.now();
+          for (const 字符 of 文本) {
+            if (非空白字符模式.test(字符)) {
+              字数 += 1;
+            }
+            已扫描字符数 += 1;
+            if ((已扫描字符数 & 8191) === 0) {
+              时间片开始 = await 按需让出主线程(时间片开始);
+            }
+          }
+          return 字数;
+        } catch (错误) {
+          console.error(`[阅读器] 无法统计文本字数：${文件名}`, 错误);
+          return null;
+        }
+      }
     }
   }
 
@@ -3657,7 +3874,7 @@ function 读取持久化数据() {
   };
 }
 
-function 应用文本(原始文本, 文件名) {
+async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然有效) {
   const 开始时间 = performance.now();
   const 规范文本 = 原始文本
     .replace(/^\uFEFF/, '')
@@ -3669,6 +3886,10 @@ function 应用文本(原始文本, 文件名) {
   const 句子整理耗时 = performance.now() - 句子整理开始时间;
   const 文本 = 句子整理结果.文本;
   const 缩进起点集合 = new Set(句子整理结果.缩进起点列表);
+  await scheduler.yield();
+  if (!载入仍然有效()) {
+    return false;
+  }
 
   const 上一本书公共状态 = 状态.文件名
     ? {
@@ -3708,21 +3929,7 @@ function 应用文本(原始文本, 文件名) {
   状态.文本 = 文本;
   状态.指示器缓存 = null;
   状态.词频分析 = null;
-  const 汉字频次 = new Map();
-  for (const 字 of 文本) {
-    if (汉字模式.test(字)) {
-      汉字频次.set(字, (汉字频次.get(字) ?? 0) + 1);
-    }
-  }
-  状态.全文单字 = new Set(
-    [...汉字频次]
-      .filter(function 筛选全文单字([, 频次]) {
-        return 频次 === 1;
-      })
-      .map(function 读取全文单字([字]) {
-        return 字;
-      }),
-  );
+  状态.全文单字 = 全文单字;
   状态.文件名 = 文件名;
   状态.引文边界列表 = 句子整理结果.引文边界列表;
   状态.缩进起点集合 = 缩进起点集合;
@@ -3756,6 +3963,7 @@ function 应用文本(原始文本, 文件名) {
     句子整理耗时毫秒: Math.round(句子整理耗时),
     耗时毫秒: Math.round(performance.now() - 开始时间),
   });
+  return true;
 
   function 恢复阅读设置(持久化状态) {
     const 根元素 = document.documentElement;
@@ -4158,7 +4366,7 @@ function 应用文本(原始文本, 文件名) {
     let 引文终点 = 原引文边界列表[引文idx + 1];
     let 引文包含句末标点 = false;
 
-    for (let idx = 0; idx < 全文.length;) {
+    for (let idx = 0; idx < 全文.length; ) {
       if (
         全文[idx] === '\n' &&
         idx + 1 < 全文.length &&
@@ -4895,6 +5103,29 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
       const 段落idx = 状态.行段落索引[idx];
       if (行文本) {
         行元素.classList.add(段落idx % 2 === 0 ? '段落底色一' : '段落底色二');
+      } else {
+        const 上一行idx = idx - 1;
+        if (
+          上一行idx >= 0 &&
+          状态.行终点列表[上一行idx] > 状态.行起点列表[上一行idx]
+        ) {
+          行元素.classList.add(
+            状态.行段落索引[上一行idx] % 2 === 0
+              ? '上接段落底色一'
+              : '上接段落底色二',
+          );
+        }
+        const 下一行idx = idx + 1;
+        if (
+          下一行idx < 状态.行起点列表.length &&
+          状态.行终点列表[下一行idx] > 状态.行起点列表[下一行idx]
+        ) {
+          行元素.classList.add(
+            状态.行段落索引[下一行idx] % 2 === 0
+              ? '下接段落底色一'
+              : '下接段落底色二',
+          );
+        }
       }
       行元素.dataset.start = String(行起点);
       行元素.dataset.end = String(行终点);
@@ -4988,21 +5219,18 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
           字元素.classList.add('人称代词');
         }
 
-        // 关系连词（数据驱动）：按词表标记类别，并显式记录词首供圆点定位。
-        for (const [词, 类] of 关系连词表) {
-          if (词.length === 2) {
-            const 首 = 词[0];
-            const 次 = 词[1];
-            if (
-              (字文本 === 首 && 状态.文本[字终点] === 次) ||
-              (字文本 === 次 && 状态.文本[字起点 - 1] === 首)
-            ) {
-              字元素.classList.add(类);
-              if (字文本 === 首 && 状态.文本[字终点] === 次) {
-                字元素.classList.add('关系词首字');
-              }
-            }
-          }
+        // 关系连词：只查询当前字与前后邻字组成的两个词，避免每个可见字扫描整张词表。
+        const 后接关系类别 = 关系连词类别映射.get(
+          字文本 + (状态.文本[字终点] ?? ''),
+        );
+        if (后接关系类别) {
+          字元素.classList.add(...后接关系类别, '关系词首字');
+        }
+        const 前接关系类别 = 关系连词类别映射.get(
+          (状态.文本[字起点 - 1] ?? '') + 字文本,
+        );
+        if (前接关系类别) {
+          字元素.classList.add(...前接关系类别);
         }
 
         while (
@@ -5900,6 +6128,13 @@ function 设置属性(元素, 名称, 值) {
 }
 
 function 更新滚动块(度量 = null) {
+  const 滚动块状态 = 更新滚动块位置(度量);
+  if (滚动块状态) {
+    更新滚动块文本(滚动块状态);
+  }
+}
+
+function 更新滚动块位置(度量 = null) {
   const 轨道 = 元素.自定义滚动条;
   轨道.hidden = false;
   元素.滚动进度.hidden = false;
@@ -5910,7 +6145,7 @@ function 更新滚动块(度量 = null) {
   if (轨道高度 <= 0 || 最大滚动位置 <= 0) {
     轨道.hidden = true;
     元素.滚动进度.hidden = true;
-    return;
+    return null;
   }
 
   const 滚动块高度 = Math.min(
@@ -5918,7 +6153,6 @@ function 更新滚动块(度量 = null) {
     Math.max(32, (容器高度 / 滚动高度) * 轨道高度),
   );
   const 进度 = Math.min(1, Math.max(0, 元素.滚动容器.scrollTop / 最大滚动位置));
-  const 百分比 = (进度 * 100).toFixed(1);
   const 滚动块偏移 = 进度 * (轨道高度 - 滚动块高度);
 
   const 滚动块高度样式 = `${滚动块高度}px`;
@@ -5930,6 +6164,11 @@ function 更新滚动块(度量 = null) {
     元素.滚动进度.style.height = 滚动块高度样式;
   }
   元素.滚动进度.style.transform = `translateY(${滚动块偏移}px)`;
+  return { 轨道, 最大滚动位置, 进度 };
+}
+
+function 更新滚动块文本({ 轨道, 最大滚动位置, 进度 }) {
+  const 百分比 = (进度 * 100).toFixed(1);
   设置文本(元素.滚动百分比, `${百分比}%`);
   // 剩余时间 = 剩余句段负担 ÷ 基准节奏折算的负担/秒，让「剩余滚动时间」真正表示
   // 「按当前设定节奏的预计剩余阅读时长」：节奏（负担/秒）= 基准速度(px/s)
@@ -6305,6 +6544,7 @@ function 动画滚动到(目标位置, 边框跳转 = null) {
       ? 220
       : Math.min(720, Math.max(300, Math.sqrt(Math.abs(距离)) * 12));
   const 开始时间 = performance.now();
+  let 上次文字更新时间 = 开始时间;
   const 动画目标 = { 终点, 边框动画, 缓动进度: 0 };
   状态.滚动动画目标 = 动画目标;
   if (边框动画) {
@@ -6316,7 +6556,14 @@ function 动画滚动到(目标位置, 边框跳转 = null) {
     动画目标.缓动进度 = 缓动进度;
     元素.滚动容器.scrollTop = 起点 + 距离 * 缓动进度;
     渲染可见行(false, 视口度量.容器高度);
-    更新滚动块(视口度量);
+    const 滚动块状态 = 更新滚动块位置(视口度量);
+    if (
+      滚动块状态 &&
+      (进度 === 1 || 当前时间 - 上次文字更新时间 >= 自动滚动界面间隔)
+    ) {
+      上次文字更新时间 = 当前时间;
+      更新滚动块文本(滚动块状态);
+    }
     if (边框动画) {
       更新跳转边框(边框动画, 缓动进度);
     }
