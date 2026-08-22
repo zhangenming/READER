@@ -786,9 +786,9 @@ body.右下面板展开 .关键词面板开关 {
 
 /* 折行句：同一原文行（一句话）因宽度不够被拆成多个显示行时，
    各显示行首字之前的留白里画竖条并上下连成一整根（中间无缝相接），
-   首行上端、尾行下端各留 20% 空白，整根在留白里水平居中；
+   首行上端、尾行下端各留 30% 空白，整根在留白里水平居中；
    未折行的句子不画。行缘线已在折行句行上常态隐藏（见文件末尾），
-   竖条即左侧唯一标记。 */
+   竖条即左侧唯一标记。颜色混入白色提亮，深浅主题下都更鲜明。 */
 .正文行.折行句::before {
   position: absolute;
   top: 0;
@@ -796,18 +796,18 @@ body.右下面板展开 .关键词面板开关 {
   left: 2px;
   z-index: 6;
   width: 5px;
-  background: color-mix(in oklab, var(--选中色) 75%, var(--边线色));
+  background: color-mix(in oklab, var(--选中色) 70%, white 30%);
   content: '';
   pointer-events: none;
 }
 
 .正文行.折行句首::before {
-  top: 20%;
+  top: 30%;
   border-radius: 3px 3px 0 0;
 }
 
 .正文行.折行句尾::before {
-  bottom: 20%;
+  bottom: 30%;
   border-radius: 0 0 3px 3px;
 }
 
