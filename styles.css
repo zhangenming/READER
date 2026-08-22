@@ -1183,22 +1183,22 @@ body.右下面板展开 .关键词面板开关 {
 
 /* 同组悬停的关键词色底黑字样式见「当前命中」规则之后（需压过当前命中态）。 */
 
-/* 当前关键词组用黑底白字实底标记，在整屏命中里一眼可辨。
+/* 当前关键词组用白底黑字实底标记，在整屏命中里一眼可辨。
    圆角沿用 .命中起点/.命中终点 与 [data-group-start]/[data-group-end] 的既有规则。 */
 .字.命中.当前关键词组 {
-  color: #ffffff;
-  background-color: #000000;
+  color: #000000;
+  background-color: #ffffff;
 }
 
 /* spk 内命中：background-color 画在引文条（::before）之上，
-   需隐藏引文条，保证黑块是完整实底。 */
+   需隐藏引文条，保证白块是完整实底。 */
 .字.引文内容.命中.当前关键词组::before {
   background: transparent;
 }
 
-/* 「全文唯一」的虚线删除痕在黑底上改近白，否则看不见。 */
+/* 「全文唯一」的虚线删除痕在白底上改近黑，否则看不见。 */
 .字.命中.全文唯一:is(.当前关键词组, .同组悬停) {
-  text-decoration-color: rgb(255 255 255 / 85%);
+  text-decoration-color: rgb(0 0 0 / 85%);
 }
 
 .字.命中:is(.当前命中, .悬停命中)[data-hit-position]::after {
