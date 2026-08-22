@@ -5505,7 +5505,7 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
           字元素.classList.add('人称代词');
         }
 
-        if ('但是却又而且虽所以如果也则乃既'.includes(字文本)) {
+        if ('但是却又而且虽所以如果也则乃既甚最更太很'.includes(字文本)) {
           字元素.classList.add('关系字特殊');
           const 关系字标记 = document.createElement('span');
           关系字标记.className = '关系字标记';
