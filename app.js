@@ -290,6 +290,7 @@ const 元素 = {
   滚动进度: document.querySelector('#滚动进度'),
   滚动百分比: document.querySelector('#滚动百分比'),
   剩余滚动时间: document.querySelector('#剩余滚动时间'),
+  已滚动时间: document.querySelector('#已滚动时间'),
   基础速度显示: document.querySelector('#基础速度显示'),
   实际速度显示: document.querySelector('#实际速度显示'),
   关键词指示器: document.querySelector('#关键词指示器'),
@@ -2154,6 +2155,7 @@ function 绑定事件() {
       帧: 0,
       上帧时间: performance.now(),
       上次界面时间: 0,
+      开始时刻: performance.now(),
       当前速度: 0,
       浮点位置: 元素.滚动容器.scrollTop,
       快速滚动终点: null,
@@ -2552,6 +2554,11 @@ function 绑定事件() {
         元素.实际速度显示,
         `${Math.round((本次滚动.密度目标速度 / 状态.自动滚动速度) * 100)}%`,
       );
+      // 已持续时长：随界面节拍刷新（秒 或 分:秒）
+      设置文本(
+        元素.已滚动时间,
+        格式化已滚动时间((当前时间 - 本次滚动.开始时刻) / 1000),
+      );
     }
     if (新位置 >= 最大滚动位置 - 0.5) {
       停止自动滚动('已到文末');
@@ -2584,6 +2591,7 @@ function 绑定事件() {
     // 剩余滚动时间与实际速度仅在自动滚动进行中显示
     元素.剩余滚动时间.hidden = !正在滚动;
     元素.实际速度显示.hidden = !正在滚动;
+    元素.已滚动时间.hidden = !正在滚动;
     // 自动滚动进行中：强制显示右下角控件（尤其是自动滚动按钮本身）
     右下强制 = 正在滚动;
     刷新右下控件可见性();
@@ -3098,14 +3106,15 @@ function 渲染字体选项() {
     return;
   }
   if (区域 === '背景') {
-    // 背景预览：外层用页面背景色铺底，内层纸面色块模拟正文纸面；
-    // 用变量引用而非拷贝值，调整上方取色器时预览实时跟随。
+    // 背景预览：外层铺当前页面背景色，内层色块模拟正文纸面。
+    // 弹窗作用域内 --背景色/--纸张色 已被钉成固定浅色（见 styles.css .字体弹窗），
+    // 不能用变量引用，这里直接拷贝状态值，改色时由设置函数刷新重绘。
     const 预览 = document.createElement('div');
     预览.className = '奇偶行样式预览';
-    预览.style.backgroundColor = 'var(--背景色)';
+    预览.style.backgroundColor = 页面背景色;
     const 纸面块 = document.createElement('div');
     纸面块.textContent = '页面背景 · 纸面色';
-    纸面块.style.backgroundColor = 'var(--纸张色)';
+    纸面块.style.backgroundColor = 纸面色;
     纸面块.style.color = 'var(--正文字色)';
     预览.append(纸面块);
     容器.replaceChildren(预览);
@@ -3343,6 +3352,7 @@ function 设置页面背景色(颜色, 选项 = {}) {
     document.documentElement.style.setProperty('--背景色', 规范颜色);
   }
   if (!选项.静默) {
+    刷新背景标签预览();
     安排保存持久化状态();
   }
   console.info('[阅读器] 已设置页面背景色', { 颜色: 规范颜色 });
@@ -5809,6 +5819,17 @@ function 格式化剩余滚动时间(秒数) {
   const 秒 = 总秒 % 60;
   const 补零 = (值) => String(值).padStart(2, '0');
   return 时 > 0 ? `${时}:${补零(分)}:${补零(秒)}` : `${补零(分)}:${补零(秒)}`;
+}
+
+// 将已滚动秒数格式化为纯秒（不足 1 分钟）或 分:秒
+function 格式化已滚动时间(秒数) {
+  const 总秒 = Math.max(0, Math.floor(Number.isFinite(秒数) ? 秒数 : 0));
+  if (总秒 < 60) {
+    return String(总秒);
+  }
+  const 分 = Math.floor(总秒 / 60);
+  const 秒 = 总秒 % 60;
+  return `${分}:${String(秒).padStart(2, '0')}`;
 }
 
 function 设置文本(元素, 文本) {

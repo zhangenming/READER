@@ -297,6 +297,27 @@ body.关键词手势中 .滚动容器 {
   display: none;
 }
 
+/* 自动滚动已持续时长：显示在剩余时长上方一行 */
+.已滚动时间 {
+  position: fixed;
+  right: calc(var(--滚动条宽度) + 12px);
+  bottom: 46px;
+  z-index: 5;
+  min-width: 8ch;
+  color: #6c757d;
+  font-family: 'Avenir Next', 'PingFang SC', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-align: right;
+  pointer-events: none;
+}
+
+.已滚动时间[hidden] {
+  display: none;
+}
+
 .滚动进度.拖动中 {
   cursor: grabbing;
 }
@@ -782,7 +803,7 @@ body.右下面板展开 .关键词面板开关 {
   left: 2px;
   z-index: 6;
   width: 5px;
-  background: color-mix(in oklab, var(--选中色) 60%, white 40%);
+  background: color-mix(in oklab, var(--选中色) 45%, white 55%);
   content: '';
   pointer-events: none;
 }
@@ -2360,6 +2381,15 @@ body:has(.字.命中.同组悬停)
   width: min(560px, calc(100vw - 32px));
   max-height: calc(100dvh - 48px);
   padding: 0;
+  /* 弹窗 UI 固定浅色：在作用域内钉住主题变量（取 :root 默认值），
+     页面背景/纸面色等阅读区自定义配色不影响设置面板本身；
+     各预览块依赖的 --正文字色、--段落底色一/二 等变量不在其列，照常跟随。 */
+  --背景色: #e9e7df;
+  --纸张色: #fff;
+  --墨色: #2c2924;
+  --次要墨色: #8a8374;
+  --边线色: #dbd7c9;
+  --选中色: #2f6a5b;
   color: var(--墨色);
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   background: var(--纸张色);
