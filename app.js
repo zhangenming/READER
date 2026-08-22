@@ -242,7 +242,6 @@ const 状态 = {
   当前关键词id: null,
   悬停关键词id: null,
   悬停命中idx: null,
-  悬停逻辑行idx: null,
   下一个关键词id: 1,
   跳转起点: null,
   指示器缓存: null,
@@ -586,8 +585,6 @@ function 绑定事件() {
   元素.滚动容器.addEventListener('dblclick', 处理高亮双击);
   元素.滚动容器.addEventListener('pointerover', 处理高亮移入);
   元素.滚动容器.addEventListener('pointerout', 处理高亮移出);
-  元素.滚动容器.addEventListener('pointerover', 处理正文行移入);
-  元素.滚动容器.addEventListener('pointerout', 处理正文行移出);
   元素.滚动容器.addEventListener('contextmenu', 处理高亮上下文点击);
   元素.滚动容器.addEventListener('keyup', 处理正文键盘选择);
   元素.自动滚动按钮.addEventListener('mouseenter', 开始自动滚动);
@@ -1722,45 +1719,6 @@ function 绑定事件() {
       }
     } else {
       切换同组高亮(null, null);
-    }
-  }
-
-  function 处理正文行移入(事件) {
-    if (事件.pointerType && 事件.pointerType !== 'mouse') {
-      return;
-    }
-    const 行元素 = 事件.target.closest('.正文行');
-    if (!行元素 || !元素.可见内容.contains(行元素)) {
-      return;
-    }
-    const 原行元素 = 事件.relatedTarget?.closest?.('.正文行');
-    if (原行元素 === 行元素) {
-      return;
-    }
-    切换逻辑行悬停(Number(行元素.dataset.logicalLine));
-  }
-
-  function 处理正文行移出(事件) {
-    if (事件.pointerType && 事件.pointerType !== 'mouse') {
-      return;
-    }
-    const 行元素 = 事件.target.closest('.正文行');
-    if (!行元素 || !元素.可见内容.contains(行元素)) {
-      return;
-    }
-    if (事件.relatedTarget?.closest?.('.正文行')) {
-      return;
-    }
-    切换逻辑行悬停(null);
-  }
-
-  function 切换逻辑行悬停(逻辑行idx) {
-    状态.悬停逻辑行idx = 逻辑行idx;
-    for (const 行元素 of 元素.可见内容.querySelectorAll('.正文行')) {
-      行元素.classList.toggle(
-        '逻辑行悬停',
-        逻辑行idx !== null && Number(行元素.dataset.logicalLine) === 逻辑行idx,
-      );
     }
   }
 
@@ -3652,7 +3610,6 @@ function 应用文本(原始文本, 文件名) {
   状态.缩进起点集合 = 缩进起点集合;
   状态.关键词列表 = [];
   状态.当前关键词id = null;
-  状态.悬停逻辑行idx = null;
   状态.下一个关键词id = 1;
   状态.关键词面板签名 = '';
   状态.跳转起点 = null;
@@ -4790,12 +4747,6 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
       }
       行元素.dataset.start = String(行起点);
       行元素.dataset.end = String(行终点);
-      行元素.dataset.logicalLine = String(状态.行逻辑索引[idx]);
-      行元素.classList.toggle(
-        '逻辑行悬停',
-        状态.悬停逻辑行idx !== null &&
-          状态.行逻辑索引[idx] === 状态.悬停逻辑行idx,
-      );
       // 折行句：同一逻辑行（原文一行 = 一句话）占了多个显示行（前后相邻行逻辑索引相同），
       // 每个显示行加 .折行句，行首留白里画竖条表明同属一句；
       // 再按组内位置加 .折行句首 / .折行句尾，样式据此把上下各行的竖条
