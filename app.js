@@ -254,6 +254,7 @@ const 状态 = {
   当前关键词id: null,
   悬停关键词id: null,
   悬停命中idx: null,
+  正文悬停已暂停: false,
   下一个关键词id: 1,
   跳转起点: null,
   指示器缓存: null,
@@ -570,6 +571,9 @@ function 绑定事件() {
   元素.滚动容器.addEventListener('pointerup', 处理非鼠标选择结束);
   元素.滚动容器.addEventListener('click', 处理高亮点击);
   元素.滚动容器.addEventListener('dblclick', 处理高亮双击);
+  元素.滚动容器.addEventListener('pointermove', 处理正文指针移动, {
+    passive: true,
+  });
   元素.滚动容器.addEventListener('pointerover', 处理高亮移入);
   元素.滚动容器.addEventListener('pointerout', 处理高亮移出);
   元素.滚动容器.addEventListener('contextmenu', 处理高亮上下文点击);
@@ -739,6 +743,7 @@ function 绑定事件() {
   window.addEventListener('pointercancel', 处理关键词手势取消);
 
   function 处理滚动() {
+    暂停正文悬停();
     if (状态.拖选状态) {
       if (元素.滚动容器.scrollTop !== 状态.拖选状态.滚动位置) {
         元素.滚动容器.scrollTop = 状态.拖选状态.滚动位置;
@@ -747,7 +752,7 @@ function 绑定事件() {
       return;
     }
 
-    if (自动滚动状态 || 状态.滚动帧) {
+    if (自动滚动状态 || 状态.滚动动画目标 || 状态.滚动帧) {
       return;
     }
 
@@ -760,6 +765,16 @@ function 绑定事件() {
       渲染可见行();
       安排保存持久化状态();
     });
+
+    function 暂停正文悬停() {
+      if (状态.正文悬停已暂停) {
+        return;
+      }
+      状态.正文悬停已暂停 = true;
+      if (状态.悬停关键词id !== null) {
+        切换同组高亮(null, null);
+      }
+    }
   }
 
   function 处理正文按下(事件) {
@@ -1679,6 +1694,9 @@ function 绑定事件() {
   }
 
   function 处理高亮移入(事件) {
+    if (状态.正文悬停已暂停) {
+      return;
+    }
     const 字元素 = 事件.target.closest('.字.命中');
     if (!字元素 || !元素.滚动容器.contains(字元素)) {
       return;
@@ -1694,6 +1712,9 @@ function 绑定事件() {
   }
 
   function 处理高亮移出(事件) {
+    if (状态.正文悬停已暂停) {
+      return;
+    }
     const 字元素 = 事件.target.closest('.字.命中');
     if (
       !字元素 ||
@@ -1719,13 +1740,28 @@ function 绑定事件() {
     const 旧悬停id = 状态.悬停关键词id;
     状态.悬停关键词id = 关键词id;
     状态.悬停命中idx = 命中idx;
+    for (const 行元素 of 元素.可见内容.querySelectorAll('.正文行.含悬停命中')) {
+      行元素.classList.remove('含悬停命中');
+    }
     for (const 命中元素 of 元素.可见内容.querySelectorAll('.字.命中')) {
       const 是悬停关键词 = Number(命中元素.dataset.keywordId) === 关键词id;
+      const 是悬停命中 =
+        是悬停关键词 && Number(命中元素.dataset.hitIndex) === 命中idx;
       命中元素.classList.toggle('同组悬停', 是悬停关键词);
+      命中元素.classList.toggle('悬停命中', 是悬停命中);
       命中元素.classList.toggle(
-        '悬停命中',
-        是悬停关键词 && Number(命中元素.dataset.hitIndex) === 命中idx,
+        '悬停让位',
+        关键词id !== null &&
+          命中元素.classList.contains('当前关键词组') &&
+          !是悬停关键词,
       );
+      命中元素.classList.toggle(
+        '悬停隐藏当前框',
+        关键词id !== null && 命中元素.classList.contains('当前命中'),
+      );
+      if (是悬停命中) {
+        命中元素.closest('.正文行').classList.add('含悬停命中');
+      }
     }
     // 关键词指示器的悬停列只在该关键词“非当前关键词”时才出现：
     // 悬停当前关键词或移出命中都不改变指示器，无需重绘，跳过冗余的画布与面板刷新。
@@ -1737,6 +1773,14 @@ function 绑定事件() {
     ) {
       更新关键词指示器();
     }
+  }
+
+  function 处理正文指针移动(事件) {
+    if (!状态.正文悬停已暂停 || 事件.pointerType === 'touch') {
+      return;
+    }
+    状态.正文悬停已暂停 = false;
+    处理高亮移入(事件);
   }
 
   function 悬停影响指示器(悬停id) {
@@ -4114,7 +4158,7 @@ function 应用文本(原始文本, 文件名) {
     let 引文终点 = 原引文边界列表[引文idx + 1];
     let 引文包含句末标点 = false;
 
-    for (let idx = 0; idx < 全文.length; ) {
+    for (let idx = 0; idx < 全文.length;) {
       if (
         全文[idx] === '\n' &&
         idx + 1 < 全文.length &&
@@ -4826,7 +4870,8 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
     元素.可见内容.replaceChildren(创建行片段(可见起点, 可见终点));
   }
 
-  元素.可见内容.style.top = `${可见起点 * 状态.行高}px`;
+  // 虚拟窗口只做合成位移，避免逐行更新 top 触发布局与 Layout Shift。
+  元素.可见内容.style.transform = `translateY(${可见起点 * 状态.行高}px)`;
   状态.渲染起点 = 可见起点;
   状态.渲染终点 = 可见终点;
 
@@ -4918,6 +4963,7 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
           全文单字标记.className = '全文单字标记';
           全文单字标记.setAttribute('aria-hidden', 'true');
           字元素.append(全文单字标记);
+          行元素.classList.add('含全文单字');
         }
 
         // 「不」字：叠加浅黑色 ✕ 遮罩（见 .字.否定叉 样式）；
@@ -5070,6 +5116,7 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
           字元素.classList.toggle('当前关键词组', Boolean(当前关键词命中));
           字元素.classList.toggle('当前命中', Boolean(当前项命中));
           if (当前项命中) {
+            行元素.classList.add('含当前命中');
             字元素.classList.toggle(
               '当前命中起点',
               当前项命中.命中起点 === 字起点,
@@ -5083,15 +5130,22 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
               是混合盒命中(当前项命中.命中起点, 当前项命中.命中终点),
             );
           }
+          const 是悬停关键词 = 点击命中.关键词.id === 状态.悬停关键词id;
+          const 是悬停命中 =
+            是悬停关键词 && 点击命中.命中idx === 状态.悬停命中idx;
+          字元素.classList.toggle('同组悬停', 是悬停关键词);
+          字元素.classList.toggle('悬停命中', 是悬停命中);
           字元素.classList.toggle(
-            '同组悬停',
-            点击命中.关键词.id === 状态.悬停关键词id,
+            '悬停让位',
+            状态.悬停关键词id !== null && 当前关键词命中 && !是悬停关键词,
           );
           字元素.classList.toggle(
-            '悬停命中',
-            点击命中.关键词.id === 状态.悬停关键词id &&
-              点击命中.命中idx === 状态.悬停命中idx,
+            '悬停隐藏当前框',
+            状态.悬停关键词id !== null && 当前项命中,
           );
+          if (是悬停命中) {
+            行元素.classList.add('含悬停命中');
+          }
           字元素.classList.toggle(
             '全文唯一',
             字命中详情.some(function 是全文唯一命中(命中详情) {
@@ -5113,6 +5167,10 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
           }
           if (点击命中.命中终点 === 字终点) {
             字元素.dataset.hitPosition = `${点击命中.命中idx + 1}/${点击命中.关键词.命中位置.length}`;
+            字元素.classList.toggle(
+              '显示命中位置',
+              Boolean(当前项命中 && 状态.当前命中位置计时器),
+            );
           }
           字元素.dataset.keywordId = String(点击命中.关键词.id);
           字元素.dataset.hitIndex = String(点击命中.命中idx);
@@ -5746,6 +5804,7 @@ function 更新关键词指示器() {
   ) {
     元素.关键词指示器.hidden = true;
     元素.悬停关键词指示器.hidden = true;
+    设置悬停指示器状态(false);
     状态.指示器缓存 = null;
     return;
   }
@@ -5764,6 +5823,7 @@ function 更新关键词指示器() {
 
   绘制单列指示器(元素.关键词指示器, 当前指示器上下文, 当前关键词, '当前');
   绘制单列指示器(元素.悬停关键词指示器, 悬停指示器上下文, 悬停关键词, '悬停');
+  设置悬停指示器状态(!元素.悬停关键词指示器.hidden);
 
   function 绘制单列指示器(画布, 上下文, 关键词, 类型) {
     if (!关键词?.命中位置.length) {
@@ -5798,6 +5858,11 @@ function 更新关键词指示器() {
 
     上下文.clearRect(0, 0, 画布宽, 画布高);
     上下文.drawImage(底图, 0, 0);
+  }
+
+  function 设置悬停指示器状态(正在显示) {
+    元素.滚动块.classList.toggle('悬停关键词时隐藏', 正在显示);
+    元素.滚动进度.classList.toggle('悬停关键词时隐藏', 正在显示);
   }
 }
 
@@ -6072,7 +6137,9 @@ function 跳到命中(
       Math.max(目标滚动位置, 当前滚动位置 + 最小前行距离),
     );
   }
-  渲染可见行(true);
+  if (!原始边框) {
+    渲染可见行(true);
+  }
   更新关键词指示器();
   显示当前命中位置提示();
   安排保存持久化状态();
@@ -6099,12 +6166,21 @@ function 跳到命中(
 }
 
 function 显示当前命中位置提示() {
-  document.body.classList.add('显示当前命中位置');
+  for (const 字元素 of 元素.可见内容.querySelectorAll('.字.显示命中位置')) {
+    字元素.classList.remove('显示命中位置');
+  }
   window.clearTimeout(状态.当前命中位置计时器);
   状态.当前命中位置计时器 = window.setTimeout(function 隐藏当前命中位置提示() {
-    document.body.classList.remove('显示当前命中位置');
     状态.当前命中位置计时器 = 0;
+    for (const 字元素 of 元素.可见内容.querySelectorAll('.字.显示命中位置')) {
+      字元素.classList.remove('显示命中位置');
+    }
   }, 当前命中位置提示时长);
+  for (const 字元素 of 元素.可见内容.querySelectorAll(
+    '.字.命中.当前命中[data-hit-position]',
+  )) {
+    字元素.classList.add('显示命中位置');
+  }
 }
 
 function 获取当前命中行位置(关键词) {
@@ -6207,10 +6283,12 @@ function 获取元素行位置(字元素) {
 
 function 动画滚动到(目标位置, 边框跳转 = null) {
   取消滚动动画();
-  const 最大滚动位置 = Math.max(
-    0,
-    元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight,
-  );
+  const 视口度量 = {
+    轨道高度: 元素.自定义滚动条.clientHeight,
+    容器高度: 元素.滚动容器.clientHeight,
+    滚动高度: 元素.滚动容器.scrollHeight,
+  };
+  const 最大滚动位置 = Math.max(0, 视口度量.滚动高度 - 视口度量.容器高度);
   const 终点 = Math.min(最大滚动位置, Math.max(0, 目标位置));
   const 起点 = 元素.滚动容器.scrollTop;
   const 距离 = 终点 - 起点;
@@ -6237,6 +6315,8 @@ function 动画滚动到(目标位置, 边框跳转 = null) {
     const 缓动进度 = 进度 ** 2;
     动画目标.缓动进度 = 缓动进度;
     元素.滚动容器.scrollTop = 起点 + 距离 * 缓动进度;
+    渲染可见行(false, 视口度量.容器高度);
+    更新滚动块(视口度量);
     if (边框动画) {
       更新跳转边框(边框动画, 缓动进度);
     }
@@ -6246,8 +6326,9 @@ function 动画滚动到(目标位置, 边框跳转 = null) {
       状态.滚动动画帧 = 0;
       状态.滚动动画目标 = null;
       元素.滚动容器.scrollTop = 终点;
-      渲染可见行(true);
+      渲染可见行(false, 视口度量.容器高度);
       隐藏跳转边框();
+      安排保存持久化状态();
       if (边框动画) {
         播放跳转迸发(边框动画.终点);
       }
@@ -6284,7 +6365,7 @@ function 动画滚动到(目标位置, 边框跳转 = null) {
       };
     } finally {
       元素.滚动容器.scrollTop = 起点;
-      渲染可见行(true);
+      渲染可见行(false, 视口度量.容器高度);
     }
   }
 

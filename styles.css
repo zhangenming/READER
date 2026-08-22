@@ -326,8 +326,8 @@ body.关键词手势中 .滚动容器 {
   display: none;
 }
 
-body:has(.悬停关键词指示器:not([hidden])) .滚动块,
-body:has(.悬停关键词指示器:not([hidden])) .滚动进度 {
+.滚动块.悬停关键词时隐藏,
+.滚动进度.悬停关键词时隐藏 {
   visibility: hidden;
 }
 
@@ -750,6 +750,7 @@ body.右下面板展开 .关键词面板开关 {
   top: 0;
   right: 0;
   left: 0;
+  will-change: transform;
 }
 
 .正文行 {
@@ -820,7 +821,7 @@ body.右下面板展开 .关键词面板开关 {
 
 /* 当前命中项的 box-shadow 外环与计数徽标会溢出到行外，
    需要放行溢出并提升整行层叠顺序，避免被相邻行遮挡。 */
-.正文行:has(.当前命中) {
+.正文行.含当前命中 {
   position: relative;
   z-index: 1;
   overflow: visible;
@@ -828,14 +829,14 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 /* 悬停命中项的 x/y 徽标会溢出行顶，避免被相邻行裁掉。 */
-.正文行:has(.悬停命中) {
+.正文行.含悬停命中 {
   position: relative;
   z-index: 2;
   overflow: visible;
   contain: layout style;
 }
 
-.正文行:has(.全文单字标记) {
+.正文行.含全文单字 {
   position: relative;
   z-index: 1;
   overflow: visible;
@@ -1205,7 +1206,7 @@ body.右下面板展开 .关键词面板开关 {
     visibility 0s linear 180ms;
 }
 
-body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after,
+.字.命中.当前命中.显示命中位置[data-hit-position]::after,
 .字.命中.悬停命中[data-hit-position]::after {
   opacity: 1;
   visibility: visible;
@@ -1325,19 +1326,18 @@ body.显示当前命中位置 .字.命中.当前命中[data-hit-position]::after
 /* 悬停命中时：选中组的黑底收回为普通关键词色，
    被悬停关键词的全部命中（同组悬停）使用关键词色背景和黑字，让该词的所有位置一眼可辨。
    悬停样式放在当前命中之后：同组命中被悬停时优先显示悬停态。 */
-body:has(.字.命中.同组悬停) .字.命中.当前关键词组:not(.同组悬停) {
+.字.命中.当前关键词组.悬停让位 {
   color: color-mix(in oklab, var(--命中当前色, #1e4a7a) 82%, var(--墨色));
   background-color: transparent;
 }
 
 /* hover 已切换到另一组关键词时，收起原当前命中的外框，避免边框悬空。 */
-body:has(.字.命中.同组悬停) .字.命中.当前命中::before {
+.字.命中.当前命中.悬停隐藏当前框::before {
   content: none;
 }
 
 /* 收回的引文命中恢复引文底色条（条由 ::before 绘制，沿用基类几何）。 */
-body:has(.字.命中.同组悬停)
-  .字.引文内容.命中.当前关键词组:not(.同组悬停)::before {
+.字.引文内容.命中.当前关键词组.悬停让位::before {
   background: var(--当前引文底色);
 }
 
