@@ -785,20 +785,30 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 /* 折行句：同一原文行（一句话）因宽度不够被拆成多个显示行时，
-   每个显示行首字之前的留白里画一枚竖向短条，条身垂直居中、上下留空，
-   上下各行的短条断开成列，表示这几行同属一句话；未折行的句子不画。
-   竖条与行缘线合并为一个整体：在留白里整体居中、稍宽、颜色更亮。 */
+   各显示行首字之前的留白里画竖条并上下连成一整根（中间无缝相接），
+   首行上端、尾行下端各留 20% 空白，整根在留白里水平居中；
+   未折行的句子不画。行缘线已在折行句行上常态隐藏（见文件末尾），
+   竖条即左侧唯一标记。 */
 .正文行.折行句::before {
   position: absolute;
-  top: 20%;
-  bottom: 20%;
+  top: 0;
+  bottom: 0;
   left: 2px;
   z-index: 6;
   width: 5px;
-  border-radius: 3px;
   background: color-mix(in oklab, var(--选中色) 75%, var(--边线色));
   content: '';
   pointer-events: none;
+}
+
+.正文行.折行句首::before {
+  top: 20%;
+  border-radius: 3px 3px 0 0;
+}
+
+.正文行.折行句尾::before {
+  bottom: 20%;
+  border-radius: 0 0 3px 3px;
 }
 
 /* 当前命中项的 box-shadow 外环与计数徽标会溢出到行外，
