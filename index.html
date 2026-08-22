@@ -56,40 +56,44 @@
     <span id="滚动进度" class="滚动进度" aria-hidden="true" hidden>
       <span id="滚动百分比">0.0%</span>
     </span>
-    <aside id="关键词面板" class="关键词面板" aria-label="关键词管理" hidden>
+    <div class="右下按钮组">
+      <aside id="关键词面板" class="关键词面板" aria-label="关键词管理" hidden>
+        <button
+          id="关键词面板开关"
+          class="关键词面板开关"
+          type="button"
+          aria-expanded="false"
+          aria-controls="关键词列表容器"
+        ></button>
+        <div id="关键词列表容器" class="关键词列表容器" hidden></div>
+      </aside>
       <button
-        id="关键词面板开关"
-        class="关键词面板开关"
+        id="自动滚动按钮"
+        class="自动滚动按钮"
         type="button"
-        aria-expanded="false"
-        aria-controls="关键词列表容器"
-      ></button>
-      <div id="关键词列表容器" class="关键词列表容器" hidden></div>
-    </aside>
-    <button
-      id="自动滚动按钮"
-      class="自动滚动按钮"
-      type="button"
-      aria-pressed="false"
-    >
-      <span>滚动</span>
-      <span id="基础速度显示" class="自动滚动速度">基 36</span>
-      <span id="实际速度显示" class="自动滚动速度" hidden>实 36</span>
-    </button>
-    <span id="剩余滚动时间" class="剩余滚动时间" hidden>00:00</span>
-    <span id="已滚动时间" class="已滚动时间" hidden>0.0分</span>
-    <time id="当前时间" class="当前时间">00:00:00</time>
-    <button
-      id="内容选择按钮"
-      class="内容选择按钮"
-      type="button"
-      aria-haspopup="dialog"
-      aria-controls="内容选择弹窗"
-      title="选择阅读内容"
-    >
-      <span class="内容选择图标" aria-hidden="true">文</span>
-      <span>内容</span>
-    </button>
+        aria-pressed="false"
+      >
+        <span>滚动</span>
+        <span id="基础速度显示" class="自动滚动速度">基 36</span>
+        <span id="实际速度显示" class="自动滚动速度" hidden>实 36</span>
+      </button>
+      <button
+        id="内容选择按钮"
+        class="内容选择按钮"
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="内容选择弹窗"
+        title="选择阅读内容"
+      >
+        <span class="内容选择图标" aria-hidden="true">文</span>
+        <span>内容</span>
+      </button>
+    </div>
+    <div class="时间信息">
+      <span id="已滚动时间" class="已滚动时间" hidden>0.0分</span>
+      <span id="剩余滚动时间" class="剩余滚动时间" hidden>00:00</span>
+      <time id="当前时间" class="当前时间">00:00:00</time>
+    </div>
     <div id="跳转边框" class="跳转边框" aria-hidden="true" hidden></div>
     <div id="跳转迸发" class="跳转迸发" aria-hidden="true" hidden></div>
 

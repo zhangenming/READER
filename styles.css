@@ -206,10 +206,6 @@ body.关键词手势中 .滚动容器 {
   width: var(--滚动条宽度);
 }
 
-.滚动进度:not([hidden]) ~ .关键词面板 {
-  right: calc(var(--滚动条宽度) + 60px);
-}
-
 .滚动块 {
   position: absolute;
   top: 0;
@@ -277,12 +273,19 @@ body.关键词手势中 .滚动容器 {
   outline-offset: 2px;
 }
 
-.剩余滚动时间 {
+.时间信息 {
   position: fixed;
   right: calc(var(--滚动条宽度) + 12px);
-  bottom: 30px;
+  bottom: 10px;
   z-index: 5;
-  min-width: max-content;
+  display: grid;
+  width: 104px;
+  justify-items: stretch;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.剩余滚动时间 {
   color: #fff;
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-size: 11px;
@@ -291,7 +294,6 @@ body.关键词手势中 .滚动容器 {
   line-height: 1;
   text-align: right;
   white-space: nowrap;
-  pointer-events: none;
 }
 
 .剩余滚动时间[hidden] {
@@ -300,11 +302,6 @@ body.关键词手势中 .滚动容器 {
 
 /* 自动滚动已持续时长：显示在剩余时长上方一行 */
 .已滚动时间 {
-  position: fixed;
-  right: calc(var(--滚动条宽度) + 12px);
-  bottom: 50px;
-  z-index: 5;
-  min-width: max-content;
   color: #fff;
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-size: 11px;
@@ -313,7 +310,6 @@ body.关键词手势中 .滚动容器 {
   line-height: 1;
   text-align: right;
   white-space: nowrap;
-  pointer-events: none;
 }
 
 .已滚动时间[hidden] {
@@ -333,14 +329,22 @@ body.关键词手势中 .滚动容器 {
   visibility: hidden;
 }
 
-.自动滚动按钮 {
+.右下按钮组 {
   position: fixed;
-  position-anchor: --关键词按钮;
-  anchor-name: --滚动按钮;
-  /* 没有关键词面板时没有可供锚定的按钮，使用独立的底部位置作为回退。 */
-  bottom: anchor(bottom, 10px);
-  right: anchor(left, calc(var(--滚动条宽度) + 180px));
+  right: calc(var(--滚动条宽度) + 128px);
+  bottom: 10px;
   z-index: 5;
+  display: grid;
+  grid-template-areas:
+    '滚动 关键词'
+    '内容 内容';
+  grid-template-columns: 136px max-content;
+  gap: 8px;
+  align-items: center;
+}
+
+.自动滚动按钮 {
+  grid-area: 滚动;
   display: inline-flex;
   width: 136px;
   height: 26px;
@@ -348,7 +352,6 @@ body.关键词手势中 .滚动容器 {
   justify-content: center;
   gap: 6px;
   padding: 0 10px;
-  margin-right: 6px;
   color: var(--次要墨色);
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-size: 12px;
@@ -371,11 +374,6 @@ body.关键词手势中 .滚动容器 {
 }
 
 .当前时间 {
-  position: fixed;
-  right: calc(var(--滚动条宽度) + 12px);
-  bottom: 10px;
-  z-index: 5;
-  min-width: max-content;
   color: #fff;
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-size: 13px;
@@ -384,7 +382,6 @@ body.关键词手势中 .滚动容器 {
   line-height: 1;
   text-align: right;
   white-space: nowrap;
-  pointer-events: none;
 }
 
 /* ===== 排版调节（字体设置标题栏） ===== */
@@ -454,11 +451,8 @@ body.关键词手势中 .滚动容器 {
 }
 
 .内容选择按钮 {
-  position: fixed;
-  position-anchor: --滚动按钮;
-  right: anchor(left, calc(var(--滚动条宽度) + 322px));
-  bottom: 10px;
-  z-index: 5;
+  grid-area: 内容;
+  justify-self: start;
   display: inline-flex;
   height: 26px;
   align-items: center;
@@ -495,10 +489,6 @@ body.关键词手势中 .滚动容器 {
 .内容选择按钮:focus-visible {
   outline: 2px solid var(--选中色);
   outline-offset: 1px;
-}
-
-.关键词面板开关 {
-  anchor-name: --关键词按钮;
 }
 
 .自动滚动按钮:hover {
@@ -542,14 +532,8 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .关键词面板 {
-  position: fixed;
-  bottom: 44px;
-  right: calc(var(--滚动条宽度) + 12px);
-  z-index: 5;
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: flex-end;
-  gap: 6px;
+  position: relative;
+  grid-area: 关键词;
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
 }
 
@@ -578,6 +562,9 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .关键词列表容器 {
+  position: absolute;
+  right: 0;
+  bottom: 34px;
   width: min(300px, calc(100vw - 48px));
   max-height: min(46vh, 420px);
   padding: 4px;
