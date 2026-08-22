@@ -3200,10 +3200,12 @@ function 设置区域颜色(区域, 颜色, 选项 = {}) {
   const 规范颜色 = 颜色?.toLowerCase() ?? null;
   const 变量名 = 区域 === '引号内' ? '--引文墨色' : '--正文字色';
   字体颜色设置[区域] = 规范颜色;
+  // 必须写在 body 上：视觉方案会在 body[data-视觉方案] 里重定义 --正文字色，
+  // 写在根元素会被 body 级声明覆盖，导致「全部」只改到 spk 内、spk 外不变。
   if (规范颜色 === null) {
-    document.documentElement.style.removeProperty(变量名);
+    document.body.style.removeProperty(变量名);
   } else {
-    document.documentElement.style.setProperty(变量名, 规范颜色);
+    document.body.style.setProperty(变量名, 规范颜色);
   }
   渲染字体颜色选择器();
   if (!选项.静默) {
@@ -3676,6 +3678,10 @@ function 应用文本(原始文本, 文件名) {
 
   function 恢复阅读设置(持久化状态) {
     const 根元素 = document.documentElement;
+    // 字色变量写在 body 上（见 设置区域颜色），清理时也要从 body 移除。
+    for (const 变量名 of ['--引文墨色', '--正文字色']) {
+      document.body.style.removeProperty(变量名);
+    }
     for (const 变量名 of [
       '--正文字号',
       '--行高',
@@ -3683,8 +3689,6 @@ function 应用文本(原始文本, 文件名) {
       '--正文字体',
       '--引文粗细',
       '--正文粗细',
-      '--引文墨色',
-      '--正文字色',
       '--关键词粗细',
       '--段落底色一',
       '--段落底色二',
