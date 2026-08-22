@@ -163,7 +163,7 @@ body.自动滚动中 * {
   width: var(--滚动条宽度);
   height: 100%;
   overflow: hidden;
-  background: var(--背景色);
+  background: #fff;
   cursor: default;
   touch-action: none;
   user-select: none;
@@ -281,15 +281,17 @@ body.关键词手势中 .滚动容器 {
   display: flex;
   width: 104px;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: stretch;
   gap: 6px;
   text-align: right;
   pointer-events: none;
 }
 
 .时间信息 > * {
-  width: max-content;
-  max-width: 100%;
+  display: block;
+  width: 100%;
+  max-width: none;
+  text-align: right;
 }
 
 .剩余滚动时间 {
