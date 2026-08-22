@@ -351,8 +351,7 @@ const 元素 = {
   奇数行颜色选择器: document.querySelector('#奇数行颜色选择器'),
   偶数行颜色选择器: document.querySelector('#偶数行颜色选择器'),
   背景颜色选项: document.querySelector('#背景颜色选项'),
-  页面背景色选择器: document.querySelector('#页面背景色选择器'),
-  纸面背景色选择器: document.querySelector('#纸面背景色选择器'),
+  背景色选择器: document.querySelector('#背景色选择器'),
   字体粗细按钮: document.querySelector('#字体粗细按钮'),
   字体选项列表: document.querySelector('#字体选项列表'),
 };
@@ -658,11 +657,10 @@ function 绑定事件() {
   元素.偶数行颜色选择器.addEventListener('input', function 切换偶数行颜色() {
     设置奇偶行颜色('偶数', 元素.偶数行颜色选择器.value);
   });
-  元素.页面背景色选择器.addEventListener('input', function 切换页面背景色() {
-    设置页面背景色(元素.页面背景色选择器.value);
-  });
-  元素.纸面背景色选择器.addEventListener('input', function 切换纸面色() {
-    设置纸面色(元素.纸面背景色选择器.value);
+  元素.背景色选择器.addEventListener('input', function 切换阅读背景色() {
+    const 颜色 = 元素.背景色选择器.value;
+    设置纸面色(颜色, { 静默: true });
+    设置页面背景色(颜色);
   });
   元素.字体粗细按钮.addEventListener('click', 处理字体粗细按钮点击);
   元素.字体粗细按钮.addEventListener('wheel', 处理字体粗细滚轮, {
@@ -3038,8 +3036,8 @@ function 重置字体设置() {
     return;
   }
   if (当前字体标签 === '背景') {
-    设置页面背景色(默认页面背景色, { 静默: true });
-    设置纸面色(默认纸面色);
+    设置纸面色(默认纸面色, { 静默: true });
+    设置页面背景色(默认页面背景色);
     return;
   }
   if (当前字体标签 === '关键词') {
@@ -3113,6 +3111,7 @@ function 渲染字体选项() {
     预览.className = '奇偶行样式预览';
     预览.style.backgroundColor = 页面背景色;
     const 纸面块 = document.createElement('div');
+    纸面块.className = '背景预览纸面块';
     纸面块.textContent = '页面背景 · 纸面色';
     纸面块.style.backgroundColor = 纸面色;
     纸面块.style.color = 'var(--正文字色)';
@@ -3345,7 +3344,7 @@ function 设置页面背景色(颜色, 选项 = {}) {
   }
   const 规范颜色 = 颜色.toLowerCase();
   页面背景色 = 规范颜色;
-  元素.页面背景色选择器.value = 规范颜色;
+  元素.背景色选择器.value = 规范颜色;
   if (规范颜色 === 默认页面背景色) {
     document.documentElement.style.removeProperty('--背景色');
   } else {
@@ -3364,7 +3363,7 @@ function 设置纸面色(颜色, 选项 = {}) {
   }
   const 规范颜色 = 颜色.toLowerCase();
   纸面色 = 规范颜色;
-  元素.纸面背景色选择器.value = 规范颜色;
+  元素.背景色选择器.value = 规范颜色;
   // CSS 默认纸面是 oklch 记法，与任何 hex 都不相等；把近似默认值视为「重置」，
   // 这样恢复默认与用户选回默认色都走同一条 removeProperty 路径。
   if (规范颜色 === 默认纸面色) {
@@ -3751,9 +3750,8 @@ function 应用文本(原始文本, 文件名) {
     元素.奇数行颜色选择器.value = 默认奇偶行颜色.奇数;
     元素.偶数行颜色选择器.value = 默认奇偶行颜色.偶数;
     页面背景色 = 默认页面背景色;
-    元素.页面背景色选择器.value = 默认页面背景色;
     纸面色 = 默认纸面色;
-    元素.纸面背景色选择器.value = 默认纸面色;
+    元素.背景色选择器.value = 默认页面背景色;
     Object.assign(引文背景色, 默认引文背景色);
     元素.奇数引文颜色选择器.value = 默认引文背景色.奇数;
     元素.偶数引文颜色选择器.value = 默认引文背景色.偶数;
