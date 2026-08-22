@@ -3345,10 +3345,12 @@ function 设置奇偶行颜色(类型, 颜色, 选项 = {}) {
     类型 === '奇数' ? 元素.奇数行颜色选择器 : 元素.偶数行颜色选择器;
   奇偶行颜色[类型] = 规范颜色;
   选择器.value = 规范颜色;
+  // 必须写在 body 上：视觉方案会在 body[data-视觉方案] 里重定义 --段落底色一/二，
+  // 写在根元素会被 body 级声明覆盖，导致奇偶行颜色设置无效。
   if (规范颜色 === 默认奇偶行颜色[类型]) {
-    document.documentElement.style.removeProperty(变量名);
+    document.body.style.removeProperty(变量名);
   } else {
-    document.documentElement.style.setProperty(变量名, 规范颜色);
+    document.body.style.setProperty(变量名, 规范颜色);
   }
   if (!选项.静默) {
     安排保存持久化状态();
@@ -3677,8 +3679,14 @@ function 应用文本(原始文本, 文件名) {
 
   function 恢复阅读设置(持久化状态) {
     const 根元素 = document.documentElement;
-    // 字色变量写在 body 上（见 设置区域颜色），清理时也要从 body 移除。
-    for (const 变量名 of ['--引文墨色', '--正文字色']) {
+    // 字色与奇偶行底色变量写在 body 上（见 设置区域颜色、设置奇偶行颜色），
+    // 清理时也要从 body 移除。
+    for (const 变量名 of [
+      '--引文墨色',
+      '--正文字色',
+      '--段落底色一',
+      '--段落底色二',
+    ]) {
       document.body.style.removeProperty(变量名);
     }
     for (const 变量名 of [
@@ -3689,8 +3697,6 @@ function 应用文本(原始文本, 文件名) {
       '--引文粗细',
       '--正文粗细',
       '--关键词粗细',
-      '--段落底色一',
-      '--段落底色二',
       '--奇数引文底色',
       '--偶数引文底色',
     ]) {
