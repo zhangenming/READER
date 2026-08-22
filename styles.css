@@ -1233,19 +1233,18 @@ body.右下面板展开 .关键词面板开关 {
   border-radius: 4px;
 }
 
-/* 当前跳转命中：与选中组同为黑底白字，靠外侧准星框区分层级；
-   准星线宽由 --当前准星粗细 控制。 */
+/* 当前跳转命中沿用当前关键词组的白底黑字，额外用外侧连续边框提示位置。 */
 .字.命中.当前命中 {
-  --当前命中色: #000000;
+  --当前命中色: #ffffff;
   --当前准星色: #000000;
   --当前准星粗细: 2.5px;
   --当前准星延伸: 0.2em;
   z-index: 2;
-  color: #ffffff;
+  color: #000000;
   background-color: var(--当前命中色);
   background-image: none;
   border-radius: 3px;
-  font-weight: var(--关键词粗细, 700);
+  font-weight: var(--关键词粗细, inherit);
 }
 
 .字.引文内容.命中.当前命中 {
