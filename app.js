@@ -3373,9 +3373,16 @@ function 设置纸面色(颜色, 选项 = {}) {
     document.documentElement.style.setProperty('--纸张色', 规范颜色);
   }
   if (!选项.静默) {
+    刷新背景标签预览();
     安排保存持久化状态();
   }
   console.info('[阅读器] 已设置纸面色', { 颜色: 规范颜色 });
+}
+
+function 刷新背景标签预览() {
+  if (当前字体标签 === '背景') {
+    渲染字体选项();
+  }
 }
 
 function 设置引文背景色(启用, 选项 = {}) {
