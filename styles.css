@@ -805,46 +805,6 @@ body.右下面板展开 .关键词面板开关 {
   contain: layout style;
 }
 
-/* 同一原文段落的自动折行共享同一色边；边框脱离文档流，不改变正文宽度。 */
-.正文行.段落边框一::before,
-.正文行.段落边框二::before {
-  position: absolute;
-  inset: 0 auto 0 1px;
-  z-index: 5;
-  width: 4px;
-  content: '';
-  pointer-events: none;
-}
-
-.正文行.段落起始行.段落边框一::before,
-.正文行.段落起始行.段落边框二::before {
-  top: 7px;
-}
-
-.正文行.段落结束行.段落边框一::before,
-.正文行.段落结束行.段落边框二::before {
-  bottom: 7px;
-}
-
-.正文行.段落边框一::before {
-  background: color-mix(in oklab, var(--段落主色一) 72%, transparent);
-}
-
-.正文行.段落边框二::before {
-  background: color-mix(in oklab, var(--段落主色二) 72%, transparent);
-}
-
-.隐藏奇偶行左侧边框 .正文行.段落边框一::before,
-.隐藏奇偶行左侧边框 .正文行.段落边框二::before,
-.隐藏奇偶行左侧边框 .正文行::after,
-.隐藏奇偶行左侧边框 .虚拟画布::before {
-  display: none;
-}
-
-.隐藏奇偶行左侧边框 .虚拟画布 {
-  border-left-color: transparent;
-}
-
 .字 {
   position: relative;
   display: inline-block;
@@ -2565,13 +2525,6 @@ body:has(.字.命中.同组悬停)
   outline-offset: 2px;
 }
 
-.奇偶行边框选项 input {
-  width: 14px;
-  height: 14px;
-  margin: 0;
-  accent-color: var(--选中色);
-}
-
 .字体粗细按钮 {
   min-width: 132px;
   margin-left: auto;
@@ -2814,14 +2767,8 @@ body[data-视觉方案='纸本'] {
   --段落主色一: #718c7a;
   --段落主色二: #b8896b;
   --关键词颜色: #315a74;
-}
-
-body[data-视觉方案='纸本'] .正文行.段落底色一 {
-  background-color: #f5f0e7;
-}
-
-body[data-视觉方案='纸本'] .正文行.段落底色二 {
-  background-color: #f0e9df;
+  --段落底色一: #f5f0e7;
+  --段落底色二: #f0e9df;
 }
 
 body[data-视觉方案='纸本'] .正文行::after {
@@ -2842,14 +2789,8 @@ body[data-视觉方案='夜读'] {
   --段落主色一: #304740;
   --段落主色二: #493936;
   --关键词颜色: #a6c8df;
-}
-
-body[data-视觉方案='夜读'] .正文行.段落底色一 {
-  background-color: #1d2528;
-}
-
-body[data-视觉方案='夜读'] .正文行.段落底色二 {
-  background-color: #20292c;
+  --段落底色一: #1d2528;
+  --段落底色二: #20292c;
 }
 
 body[data-视觉方案='夜读'] .虚拟画布 {
@@ -2878,14 +2819,8 @@ body[data-视觉方案='蓝图'] {
   --段落主色一: #6e9ab0;
   --段落主色二: #c57d6e;
   --关键词颜色: #1e5c79;
-}
-
-body[data-视觉方案='蓝图'] .正文行.段落底色一 {
-  background-color: #e4edf2;
-}
-
-body[data-视觉方案='蓝图'] .正文行.段落底色二 {
-  background-color: #dce8ef;
+  --段落底色一: #e4edf2;
+  --段落底色二: #dce8ef;
 }
 
 body[data-视觉方案='蓝图'] .正文行::after {
