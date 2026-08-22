@@ -5505,6 +5505,14 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
           字元素.classList.add('人称代词');
         }
 
+        if ('但却而'.includes(字文本)) {
+          字元素.classList.add('但却而字');
+          const 但却而标记 = document.createElement('span');
+          但却而标记.className = '但却而标记';
+          但却而标记.setAttribute('aria-hidden', 'true');
+          字元素.append(但却而标记);
+        }
+
         // 关系连词：只查询当前字与前后邻字组成的两个词，避免每个可见字扫描整张词表。
         const 后接关系类别 = 关系连词类别映射.get(
           字文本 + (状态.文本[字终点] ?? ''),

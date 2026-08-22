@@ -977,6 +977,25 @@ body.右下面板展开 .关键词面板开关 {
   font-weight: 700;
 }
 
+/* 「但、却、而」特殊样式：白色加粗，并在字格底部中央画红色短横杠。 */
+.字.但却而字:not(.命中) {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.但却而标记 {
+  position: absolute;
+  bottom: 0.18em;
+  left: 50%;
+  z-index: 2;
+  width: 0.38em;
+  height: 2px;
+  background: #ff0000;
+  border-radius: 1px;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
 /* 内置连词（让步/转折/因果/假设/递进/选择/顺接/时间/限制/语气/强调/疑问）：
    文字本身不做任何特殊样式，仅由双字词首字在两字正中画红色实心圆点。
    圆点只画在首字的右侧、不改变正文行高；命中态仍由关键词高亮接管。 */
