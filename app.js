@@ -20,13 +20,9 @@ const 整数格式器 = new Intl.NumberFormat('zh-CN');
 const 关键词排序方式列表 = ['数量', '位置', '拼音'];
 const 西文字素模式 =
   /^(?:[\u0020-\u007e\u00a0]|\p{Script=Latin}|\p{Number}|\p{Mark})+$/u;
-const 西文单词模式 = /\s*\S+|\s+$/gu;
+const 空白字符模式 = /\s/u;
 const 不渲染引号集合 = new Set(['“', '”']);
 const 显示引号过滤模式 = /[“”]/gu;
-const 正文测量上下文 = document.createElement('canvas').getContext('2d');
-if (!正文测量上下文) {
-  throw new Error('当前浏览器无法创建正文测量画布');
-}
 const 跳转迸发时长 = 680; // 与 styles.css 的 @keyframes 跳转迸发 保持一致
 const 迸发粒子数 = 18;
 const 迸发起跳留白 = 3;
@@ -190,6 +186,21 @@ async function 按需让出主线程(时间片开始) {
   return performance.now();
 }
 
+async function 创建Uint32Array(数组, 任务仍然有效) {
+  const 结果 = new Uint32Array(数组.length);
+  let 时间片开始 = performance.now();
+  for (let idx = 0; idx < 数组.length; idx += 1) {
+    结果[idx] = 数组[idx];
+    if ((idx & 4095) === 4095) {
+      时间片开始 = await 按需让出主线程(时间片开始);
+      if (!任务仍然有效()) {
+        return null;
+      }
+    }
+  }
+  return 任务仍然有效() ? 结果 : null;
+}
+
 // 字体选择：引号内（spk 内）/ 引号外（spk 外）两块独立。
 // 值为 null 表示“跟随该区域 CSS 默认”，写入时清空内联变量以回退到 :root。
 const 字体设置 = { 引号内: null, 引号外: null };
@@ -268,6 +279,7 @@ const 状态 = {
   迸发计时器: 0,
   衔接线计时器: 0,
   载入序号: 0,
+  排版任务序号: 0,
   拖选状态: null,
   关键词列表: [],
   当前关键词id: null,
@@ -419,11 +431,7 @@ function 启动() {
 
       const 新排版 = 读取正文排版();
       if (新排版.键 !== 状态.排版键) {
-        try {
-          重建行索引(新排版);
-        } catch (错误) {
-          显示文本处理错误(错误);
-        }
+        重建行索引(新排版);
         return;
       }
 
@@ -3876,18 +3884,34 @@ function 读取持久化数据() {
 
 async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然有效) {
   const 开始时间 = performance.now();
-  const 规范文本 = 原始文本
-    .replace(/^\uFEFF/, '')
-    .replace(/\r\n?/g, '\n')
-    .replace(/(?<=\p{Script=Han})\?/gu, '？');
-  const 句子整理开始时间 = performance.now();
-  const 原引文索引 = 创建引文索引(规范文本);
-  const 句子整理结果 = 整理句子换行(规范文本, 原引文索引.边界列表);
-  const 句子整理耗时 = performance.now() - 句子整理开始时间;
+  const 阶段耗时 = {};
+  let 阶段开始时间 = performance.now();
+  const 规范文本 = await 规范化文本(原始文本);
+  阶段耗时.文本规范化 = performance.now() - 阶段开始时间;
+  if (规范文本 === null) {
+    return false;
+  }
+
+  阶段开始时间 = performance.now();
+  const 原引文索引 = await 创建引文索引(规范文本);
+  阶段耗时.引文索引 = performance.now() - 阶段开始时间;
+  if (!原引文索引) {
+    return false;
+  }
+
+  阶段开始时间 = performance.now();
+  const 句子整理结果 = await 整理句子换行(规范文本, 原引文索引.边界列表);
+  阶段耗时.句子整理 = performance.now() - 阶段开始时间;
+  if (!句子整理结果) {
+    return false;
+  }
   const 文本 = 句子整理结果.文本;
-  const 缩进起点集合 = new Set(句子整理结果.缩进起点列表);
-  await scheduler.yield();
-  if (!载入仍然有效()) {
+  const 缩进起点集合 = 句子整理结果.缩进起点集合;
+
+  阶段开始时间 = performance.now();
+  const 句段负担索引 = await 构建句段负担索引(文本);
+  阶段耗时.句段负担 = performance.now() - 阶段开始时间;
+  if (!句段负担索引) {
     return false;
   }
 
@@ -3924,8 +3948,14 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
   }
 
   const 排版 = 读取正文排版();
-  const 行索引 = 创建行索引(文本, 排版, 缩进起点集合);
+  阶段开始时间 = performance.now();
+  const 行索引 = await 创建行索引(文本, 排版, 缩进起点集合, 载入仍然有效);
+  阶段耗时.行索引 = performance.now() - 阶段开始时间;
+  if (!行索引 || !载入仍然有效()) {
+    return false;
+  }
 
+  状态.排版任务序号 += 1;
   状态.文本 = 文本;
   状态.指示器缓存 = null;
   状态.词频分析 = null;
@@ -3933,6 +3963,9 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
   状态.文件名 = 文件名;
   状态.引文边界列表 = 句子整理结果.引文边界列表;
   状态.缩进起点集合 = 缩进起点集合;
+  状态.句段起点列表 = 句段负担索引.句段起点列表;
+  状态.句段负担前缀和 = 句段负担索引.句段负担前缀和;
+  状态.句段负担总合 = 句段负担索引.句段负担总合;
   状态.关键词列表 = [];
   状态.当前关键词id = null;
   状态.下一个关键词id = 1;
@@ -3941,7 +3974,9 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
   取消滚动动画();
   隐藏衔接线();
   提交行索引(行索引);
+  阶段开始时间 = performance.now();
   恢复文本内容状态(持久化状态);
+  阶段耗时.内容状态恢复 = performance.now() - 阶段开始时间;
   更新自动滚动速度();
   渲染可见行(true);
   更新关键词指示器();
@@ -3960,7 +3995,11 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
     引文片段数: 状态.引文边界列表.length / 2,
     新增句子换行数: 句子整理结果.新增换行数,
     原文单换行数: 状态.缩进起点集合.size,
-    句子整理耗时毫秒: Math.round(句子整理耗时),
+    阶段耗时毫秒: Object.fromEntries(
+      Object.entries(阶段耗时).map(function 取整阶段耗时([阶段, 耗时]) {
+        return [阶段, Math.round(耗时)];
+      }),
+    ),
     耗时毫秒: Math.round(performance.now() - 开始时间),
   });
   return true;
@@ -4306,7 +4345,63 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
     元素.滚动容器.scrollTop = 计算阅读位置(持久化状态);
   }
 
-  function 创建引文索引(全文) {
+  async function 规范化文本(全文) {
+    const 输出片段列表 = [];
+    const 文本长度 = 全文.length;
+    const 文本起点 = 全文.charCodeAt(0) === 0xfeff ? 1 : 0;
+    let 上次截取位置 = 文本起点;
+    let 时间片开始 = performance.now();
+
+    for (let idx = 文本起点; idx < 文本长度; idx += 1) {
+      const 码 = 全文.charCodeAt(idx);
+      let 替换终点 = idx + 1;
+      let 替换文本 = null;
+      if (码 === 0x0d) {
+        if (全文.charCodeAt(idx + 1) === 0x0a) {
+          替换终点 += 1;
+        }
+        替换文本 = '\n';
+      } else if (码 === 0x3f && idx > 文本起点) {
+        let 前字符起点 = idx - 1;
+        if (
+          前字符起点 > 文本起点 &&
+          全文.charCodeAt(前字符起点) >= 0xdc00 &&
+          全文.charCodeAt(前字符起点) <= 0xdfff &&
+          全文.charCodeAt(前字符起点 - 1) >= 0xd800 &&
+          全文.charCodeAt(前字符起点 - 1) <= 0xdbff
+        ) {
+          前字符起点 -= 1;
+        }
+        if (汉字模式.test(全文.slice(前字符起点, idx))) {
+          替换文本 = '？';
+        }
+      }
+
+      if (替换文本 !== null) {
+        输出片段列表.push(全文.slice(上次截取位置, idx), 替换文本);
+        上次截取位置 = 替换终点;
+        idx = 替换终点 - 1;
+      }
+
+      if ((idx & 4095) === 4095) {
+        时间片开始 = await 按需让出主线程(时间片开始);
+        if (!载入仍然有效()) {
+          return null;
+        }
+      }
+    }
+
+    if (!载入仍然有效()) {
+      return null;
+    }
+    if (输出片段列表.length === 0) {
+      return 文本起点 === 0 ? 全文 : 全文.slice(文本起点);
+    }
+    输出片段列表.push(全文.slice(上次截取位置));
+    return 输出片段列表.join('');
+  }
+
+  async function 创建引文索引(全文) {
     const 引号配对 = new Map([
       ['“', '”'],
       ['‘', '’'],
@@ -4314,15 +4409,14 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
       ['『', '』'],
       ['《', '》'],
     ]);
-    const 引号模式 = /[“”‘’「」『》《》]/g;
+    const 闭引号集合 = new Set(引号配对.values());
     const 待闭合引号栈 = [];
     const 边界列表 = [];
     let 未配对数量 = 0;
-    let 引号匹配;
+    let 时间片开始 = performance.now();
 
-    while ((引号匹配 = 引号模式.exec(全文)) !== null) {
-      const 字 = 引号匹配[0];
-      const idx = 引号匹配.index;
+    for (let idx = 0; idx < 全文.length; idx += 1) {
+      const 字 = 全文[idx];
       const 目标闭引号 = 引号配对.get(字);
       if (目标闭引号) {
         待闭合引号栈.push({
@@ -4330,49 +4424,68 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
           目标闭引号,
           原边界数量: 边界列表.length,
         });
-        continue;
+      } else if (闭引号集合.has(字)) {
+        const 待闭合引号 = 待闭合引号栈[待闭合引号栈.length - 1];
+        if (!待闭合引号 || 待闭合引号.目标闭引号 !== 字) {
+          未配对数量 += 1;
+        } else {
+          待闭合引号栈.pop();
+          边界列表.length = 待闭合引号.原边界数量;
+          if (待闭合引号.内容起点 < idx) {
+            边界列表.push(待闭合引号.内容起点, idx);
+          }
+        }
       }
 
-      const 待闭合引号 = 待闭合引号栈[待闭合引号栈.length - 1];
-      if (!待闭合引号 || 待闭合引号.目标闭引号 !== 字) {
-        未配对数量 += 1;
-        continue;
-      }
-
-      待闭合引号栈.pop();
-      边界列表.length = 待闭合引号.原边界数量;
-      if (待闭合引号.内容起点 < idx) {
-        边界列表.push(待闭合引号.内容起点, idx);
+      if ((idx & 4095) === 4095) {
+        时间片开始 = await 按需让出主线程(时间片开始);
+        if (!载入仍然有效()) {
+          return null;
+        }
       }
     }
 
     未配对数量 += 待闭合引号栈.length;
+    const 类型化边界列表 = await 创建Uint32Array(边界列表, 载入仍然有效);
+    if (!类型化边界列表) {
+      return null;
+    }
 
     return {
-      边界列表: Uint32Array.from(边界列表),
+      边界列表: 类型化边界列表,
       未配对数量,
     };
   }
 
-  function 整理句子换行(全文, 原引文边界列表) {
+  async function 整理句子换行(全文, 原引文边界列表) {
     const 句末标点集合 = new Set(['。', '！', '？', '!', '?', '…']);
     const 输出片段列表 = [];
     const 引文边界列表 = [];
-    const 缩进起点列表 = [];
+    const 缩进起点集合 = new Set();
     let 上次截取位置 = 0;
     let 新增换行数 = 0;
     let 引文idx = 0;
     let 引文起点 = 原引文边界列表[引文idx];
     let 引文终点 = 原引文边界列表[引文idx + 1];
     let 引文包含句末标点 = false;
+    let 下次检查位置 = 4096;
+    let 时间片开始 = performance.now();
 
     for (let idx = 0; idx < 全文.length; ) {
+      if (idx >= 下次检查位置) {
+        时间片开始 = await 按需让出主线程(时间片开始);
+        if (!载入仍然有效()) {
+          return null;
+        }
+        下次检查位置 = idx + 4096;
+      }
+
       if (
         全文[idx] === '\n' &&
         idx + 1 < 全文.length &&
         全文[idx + 1] !== '\n'
       ) {
-        缩进起点列表.push(idx + 1 + 新增换行数);
+        缩进起点集合.add(idx + 1 + 新增换行数);
       }
 
       if (idx === 引文起点) {
@@ -4406,8 +4519,37 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
         continue;
       }
 
-      const 标点终点 = 读取句末标点终点(idx);
-      if (标点终点 === -1) {
+      let 标点终点 = idx;
+      let 找到句末标点 = false;
+      while (标点终点 < 全文.length) {
+        if (句末标点集合.has(全文[标点终点])) {
+          找到句末标点 = true;
+          标点终点 += 1;
+        } else if (全文.startsWith('...', 标点终点)) {
+          找到句末标点 = true;
+          do {
+            标点终点 += 1;
+            if (标点终点 >= 下次检查位置) {
+              时间片开始 = await 按需让出主线程(时间片开始);
+              if (!载入仍然有效()) {
+                return null;
+              }
+              下次检查位置 = 标点终点 + 4096;
+            }
+          } while (全文[标点终点] === '.');
+        } else {
+          break;
+        }
+
+        if (标点终点 >= 下次检查位置) {
+          时间片开始 = await 按需让出主线程(时间片开始);
+          if (!载入仍然有效()) {
+            return null;
+          }
+          下次检查位置 = 标点终点 + 4096;
+        }
+      }
+      if (!找到句末标点) {
         idx += 1;
         continue;
       }
@@ -4421,10 +4563,17 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
     }
 
     输出片段列表.push(全文.slice(上次截取位置));
+    const 类型化引文边界列表 = await 创建Uint32Array(
+      引文边界列表,
+      载入仍然有效,
+    );
+    if (!类型化引文边界列表) {
+      return null;
+    }
     return {
       文本: 输出片段列表.join(''),
-      引文边界列表: Uint32Array.from(引文边界列表),
-      缩进起点列表: Uint32Array.from(缩进起点列表),
+      引文边界列表: 类型化引文边界列表,
+      缩进起点集合,
       新增换行数,
     };
 
@@ -4436,58 +4585,121 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
       上次截取位置 = 位置;
       新增换行数 += 1;
     }
+  }
 
-    function 读取句末标点终点(起点) {
-      let idx = 起点;
-      let 找到句末标点 = false;
-      while (idx < 全文.length) {
-        if (句末标点集合.has(全文[idx])) {
-          找到句末标点 = true;
-          idx += 1;
-          continue;
+  async function 构建句段负担索引(全文) {
+    const 起点数组 = [];
+    const 负担数组 = [];
+    let 段起点 = -1;
+    let 段长度 = 0;
+    let 总负担 = 0;
+    let 时间片开始 = performance.now();
+    for (let idx = 0; idx < 全文.length; idx += 1) {
+      const 码 = 全文.charCodeAt(idx);
+      if (是阅读字符码(码)) {
+        if (段起点 === -1) {
+          段起点 = idx;
         }
-        if (全文.startsWith('...', idx)) {
-          找到句末标点 = true;
-          do {
-            idx += 1;
-          } while (全文[idx] === '.');
-          continue;
-        }
-        break;
+        段长度 += 1;
+      } else if (是句内停顿码(码) && 段起点 !== -1) {
+        const 负担值 = 计算句段负担(段长度);
+        起点数组.push(段起点);
+        负担数组.push(负担值);
+        总负担 += 负担值;
+        段起点 = -1;
+        段长度 = 0;
       }
-      return 找到句末标点 ? idx : -1;
+
+      if ((idx & 4095) === 4095) {
+        时间片开始 = await 按需让出主线程(时间片开始);
+        if (!载入仍然有效()) {
+          return null;
+        }
+      }
     }
+    if (段起点 !== -1) {
+      const 负担值 = 计算句段负担(段长度);
+      起点数组.push(段起点);
+      负担数组.push(负担值);
+      总负担 += 负担值;
+    }
+
+    const 句段起点列表 = await 创建Uint32Array(起点数组, 载入仍然有效);
+    if (!句段起点列表) {
+      return null;
+    }
+    const 句段负担前缀和 = new Float64Array(负担数组.length + 1);
+    时间片开始 = performance.now();
+    for (let idx = 0; idx < 负担数组.length; idx += 1) {
+      句段负担前缀和[idx + 1] = 句段负担前缀和[idx] + 负担数组[idx];
+      if ((idx & 4095) === 4095) {
+        时间片开始 = await 按需让出主线程(时间片开始);
+        if (!载入仍然有效()) {
+          return null;
+        }
+      }
+    }
+    return 载入仍然有效()
+      ? { 句段起点列表, 句段负担前缀和, 句段负担总合: 总负担 }
+      : null;
   }
 }
 
 function 重建行索引(排版 = 读取正文排版()) {
-  const 顶部行idx = Math.floor(获取静止滚动位置() / 状态.行高);
-  const 顶部偏移 = 状态.行起点列表[顶部行idx] ?? 0;
-  取消滚动动画();
-  隐藏衔接线();
-  const 行索引 = 创建行索引(状态.文本, 排版, 状态.缩进起点集合);
-  提交行索引(行索引);
-  const 新行idx = 查找偏移所在行(顶部偏移);
-  元素.滚动容器.scrollTop = 新行idx * 状态.行高;
-  渲染可见行(true);
-  更新关键词指示器();
+  const 本次任务序号 = ++状态.排版任务序号;
+  const 本次文本 = 状态.文本;
+  const 本次缩进起点集合 = 状态.缩进起点集合;
+  const 开始时间 = performance.now();
+  void 执行重建().catch(显示文本处理错误);
 
-  console.info('[阅读器] 虚拟布局已重建', {
-    正文宽度: Math.round(排版.内容宽度),
-    行数: 行索引.行起点列表.length,
-    总高度: 行索引.总高度,
-  });
+  async function 执行重建() {
+    const 行索引 = await 创建行索引(
+      本次文本,
+      排版,
+      本次缩进起点集合,
+      任务仍然有效,
+    );
+    if (!行索引 || !任务仍然有效()) {
+      return;
+    }
+
+    const 顶部行idx = Math.floor(获取静止滚动位置() / 状态.行高);
+    const 顶部偏移 = 状态.行起点列表[顶部行idx] ?? 0;
+    取消滚动动画();
+    隐藏衔接线();
+    提交行索引(行索引);
+    const 新行idx = 查找偏移所在行(顶部偏移);
+    元素.滚动容器.scrollTop = 新行idx * 状态.行高;
+    渲染可见行(true);
+    更新关键词指示器();
+
+    console.info('[阅读器] 虚拟布局已重建', {
+      任务序号: 本次任务序号,
+      正文宽度: Math.round(排版.内容宽度),
+      行数: 行索引.行起点列表.length,
+      总高度: 行索引.总高度,
+      耗时毫秒: Math.round(performance.now() - 开始时间),
+    });
+  }
+
+  function 任务仍然有效() {
+    return 本次任务序号 === 状态.排版任务序号 && 本次文本 === 状态.文本;
+  }
 }
 
-function 创建行索引(文本, 排版, 缩进起点集合) {
+async function 创建行索引(文本, 排版, 缩进起点集合, 任务仍然有效) {
   const 起点数组 = [];
   const 终点数组 = [];
   const 逻辑行数组 = [];
   const 段落索引数组 = [];
   const 西文宽度缓存 = new Map();
   const 文本长度 = 文本.length;
-  正文测量上下文.font = 排版.西文字体;
-  正文测量上下文.fontKerning = 'normal';
+  const 测量上下文 = document.createElement('canvas').getContext('2d');
+  if (!测量上下文) {
+    throw new Error('当前浏览器无法创建正文测量画布');
+  }
+  测量上下文.font = 排版.西文字体;
+  测量上下文.fontKerning = 'normal';
   let 行起点 = 0;
   let 当前行宽度 = 0;
   let 当前行有内容 = false;
@@ -4496,8 +4708,17 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
   let 逻辑行idx = 0;
   let 段落idx = 0;
   let 字起点 = 0;
+  let 下次检查位置 = 2048;
+  let 时间片开始 = performance.now();
 
   while (字起点 < 文本长度) {
+    if (字起点 >= 下次检查位置) {
+      if (!(await 让出并检查任务())) {
+        return null;
+      }
+      下次检查位置 = 字起点 + 2048;
+    }
+
     const 码 = 文本.charCodeAt(字起点);
     let 字终点;
     if (
@@ -4510,7 +4731,9 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
     }
 
     if (码 === 0x0a && 字终点 === 字起点 + 1) {
-      提交西文片段(字起点);
+      if (西文片段起点 !== -1 && !(await 提交西文片段(字起点))) {
+        return null;
+      }
       if (当前行有内容) {
         添加行(行起点, 字起点);
       } else if (!物理行有内容) {
@@ -4537,11 +4760,22 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
       continue;
     }
 
-    提交西文片段(字起点);
-    添加排版片段(字起点, 字终点, false, null);
+    if (西文片段起点 !== -1 && !(await 提交西文片段(字起点))) {
+      return null;
+    }
+    const 超长片段任务 = 添加排版片段(字起点, 字终点, false, null);
+    if (超长片段任务 && !(await 超长片段任务)) {
+      return null;
+    }
     字起点 = 字终点;
   }
-  提交西文片段(文本长度);
+  if (西文片段起点 !== -1 && !(await 提交西文片段(文本长度))) {
+    return null;
+  }
+
+  if (!任务仍然有效()) {
+    return null;
+  }
 
   if (当前行有内容 || 起点数组.length === 0) {
     添加行(行起点, 文本.length);
@@ -4551,30 +4785,80 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
 
   const 总高度 = 起点数组.length * 排版.行高;
   校验虚拟高度(总高度);
+  const 行起点列表 = await 创建Uint32Array(起点数组, 任务仍然有效);
+  if (!行起点列表) {
+    return null;
+  }
+  const 行终点列表 = await 创建Uint32Array(终点数组, 任务仍然有效);
+  if (!行终点列表) {
+    return null;
+  }
+  const 行逻辑索引 = await 创建Uint32Array(逻辑行数组, 任务仍然有效);
+  if (!行逻辑索引) {
+    return null;
+  }
+  const 行段落索引 = await 创建Uint32Array(段落索引数组, 任务仍然有效);
+  if (!行段落索引) {
+    return null;
+  }
   return {
-    行起点列表: Uint32Array.from(起点数组),
-    行终点列表: Uint32Array.from(终点数组),
-    行逻辑索引: Uint32Array.from(逻辑行数组),
-    行段落索引: Uint32Array.from(段落索引数组),
+    行起点列表,
+    行终点列表,
+    行逻辑索引,
+    行段落索引,
     排版键: 排版.键,
     行高: 排版.行高,
     总高度,
   };
 
-  function 提交西文片段(片段终点) {
-    if (西文片段起点 === -1) {
-      return;
-    }
+  async function 提交西文片段(片段终点) {
+    let idx = 西文片段起点;
+    let 西文检查位置 = idx + 2048;
+    while (idx < 片段终点) {
+      const 单词起点 = idx;
+      while (idx < 片段终点 && 空白字符模式.test(文本[idx])) {
+        idx += 1;
+        if (idx >= 西文检查位置) {
+          if (!(await 让出并检查任务())) {
+            return false;
+          }
+          西文检查位置 = idx + 2048;
+        }
+      }
+      while (idx < 片段终点 && !空白字符模式.test(文本[idx])) {
+        idx += 1;
+        if (idx >= 西文检查位置) {
+          if (!(await 让出并检查任务())) {
+            return false;
+          }
+          西文检查位置 = idx + 2048;
+        }
+      }
 
-    const 西文片段文本 = 文本.slice(西文片段起点, 片段终点);
-    for (const 匹配 of 西文片段文本.matchAll(西文单词模式)) {
-      const 单词起点 = 西文片段起点 + 匹配.index;
-      添加排版片段(单词起点, 单词起点 + 匹配[0].length, true, 匹配[0]);
+      const 单词文本 = 文本.slice(单词起点, idx);
+      const 超长片段任务 = 添加排版片段(单词起点, idx, true, 单词文本);
+      if (超长片段任务 && !(await 超长片段任务)) {
+        return false;
+      }
+      if (idx >= 西文检查位置) {
+        if (!(await 让出并检查任务())) {
+          return false;
+        }
+        西文检查位置 = idx + 2048;
+      }
     }
     西文片段起点 = -1;
+    return 任务仍然有效();
   }
 
   function 添加排版片段(片段起点, 片段终点, 是西文, 已知文本) {
+    if (是西文 && 片段终点 - 片段起点 > 2048) {
+      if (当前行有内容) {
+        完成自动行(片段起点);
+      }
+      return 添加超长片段(已知文本, 片段起点, true);
+    }
+
     const 片段宽度 = 测量范围(片段起点, 片段终点, 是西文, 已知文本);
     const 本行内容宽度 = 排版.内容宽度;
     if (片段宽度 <= 本行内容宽度 + 0.01) {
@@ -4584,26 +4868,36 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
       当前行宽度 += 片段宽度;
       当前行有内容 = true;
       物理行有内容 = true;
-      return;
+      return null;
     }
 
     if (当前行有内容) {
       完成自动行(片段起点);
     }
-    添加超长片段(已知文本 ?? 文本.slice(片段起点, 片段终点), 片段起点, 是西文);
+    return 添加超长片段(
+      已知文本 ?? 文本.slice(片段起点, 片段终点),
+      片段起点,
+      是西文,
+    );
   }
 
-  function 添加超长片段(片段文本, 片段起点, 是西文) {
+  async function 添加超长片段(片段文本, 片段起点, 是西文) {
     const 字素边界 = [0];
+    let 已分段字素数 = 0;
     for (const 字素信息 of 字素分段器.segment(片段文本)) {
       字素边界.push(字素信息.index + 字素信息.segment.length);
+      已分段字素数 += 1;
+      if ((已分段字素数 & 2047) === 0 && !(await 让出并检查任务())) {
+        return false;
+      }
     }
 
     let 起始边界idx = 0;
+    let 已完成行数 = 0;
     while (起始边界idx < 字素边界.length - 1) {
       const 本行内容宽度 = 排版.内容宽度;
       let 左边界idx = 起始边界idx + 1;
-      let 右边界idx = 字素边界.length - 1;
+      let 右边界idx = Math.min(起始边界idx + 2048, 字素边界.length - 1);
       let 最佳边界idx = 起始边界idx;
       while (左边界idx <= 右边界idx) {
         const 中间边界idx = (左边界idx + 右边界idx) >>> 1;
@@ -4634,7 +4928,12 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
         完成自动行(本行终点);
       }
       起始边界idx = 最佳边界idx;
+      已完成行数 += 1;
+      if ((已完成行数 & 31) === 0 && !(await 让出并检查任务())) {
+        return false;
+      }
     }
+    return 任务仍然有效();
   }
 
   function 完成自动行(终点) {
@@ -4665,7 +4964,7 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
     if (缓存宽度 !== undefined) {
       return 缓存宽度;
     }
-    const 宽度 = 正文测量上下文.measureText(片段文本).width;
+    const 宽度 = 测量上下文.measureText(片段文本).width;
     西文宽度缓存.set(片段文本, 宽度);
     return 宽度;
   }
@@ -4675,6 +4974,11 @@ function 创建行索引(文本, 排版, 缩进起点集合) {
     终点数组.push(终点);
     逻辑行数组.push(逻辑行idx);
     段落索引数组.push(段落idx);
+  }
+
+  async function 让出并检查任务() {
+    时间片开始 = await 按需让出主线程(时间片开始);
+    return 任务仍然有效();
   }
 }
 
@@ -4688,52 +4992,6 @@ function 提交行索引(行索引) {
   状态.渲染起点 = -1;
   状态.渲染终点 = -1;
   设置画布高度(行索引.总高度);
-  构建句段负担索引();
-}
-
-// 句段负担索引：把全文切为「无标点连续段」（跨虚拟折行连续，以标点 / 换行为界），
-// 段负担 = 段长 × 句长惩罚。这是「内容密集」的真实信号——视口内长段越多越慢，
-// 对话 / 短句 / 空白越多越快；且不被排版折行抹平（折行只影响显示，不切断文本段）。
-// 在 提交行索引 时构建一次（O(全文)，重排等低频操作可接受），
-// 运行时用二分 + 前缀和取任意文本范围（视口 / 剩余）的负担，O(log 段数)。
-function 构建句段负担索引() {
-  const 文本 = 状态.文本;
-  const 文本长度 = 文本.length;
-  const 起点数组 = [];
-  const 负担数组 = [];
-  let 段起点 = -1;
-  let 段长度 = 0;
-  let 总负担 = 0;
-  for (let i = 0; i < 文本长度; i++) {
-    const 码 = 文本.charCodeAt(i);
-    if (是阅读字符码(码)) {
-      if (段起点 === -1) {
-        段起点 = i;
-      }
-      段长度 += 1;
-    } else if (是句内停顿码(码) && 段起点 !== -1) {
-      const 负担值 = 计算句段负担(段长度);
-      起点数组.push(段起点);
-      负担数组.push(负担值);
-      总负担 += 负担值;
-      段起点 = -1;
-      段长度 = 0;
-    }
-  }
-  if (段起点 !== -1) {
-    const 负担值 = 计算句段负担(段长度);
-    起点数组.push(段起点);
-    负担数组.push(负担值);
-    总负担 += 负担值;
-  }
-  const 段数 = 起点数组.length;
-  const 负担前缀和 = new Float64Array(段数 + 1);
-  for (let i = 0; i < 段数; i++) {
-    负担前缀和[i + 1] = 负担前缀和[i] + 负担数组[i];
-  }
-  状态.句段起点列表 = Uint32Array.from(起点数组);
-  状态.句段负担前缀和 = 负担前缀和;
-  状态.句段负担总合 = 总负担;
   重算全文负担密度();
 }
 
