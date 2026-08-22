@@ -786,16 +786,17 @@ body.右下面板展开 .关键词面板开关 {
 
 /* 折行句：同一原文行（一句话）因宽度不够被拆成多个显示行时，
    每个显示行首字之前的留白里画一枚竖向短条，条身垂直居中、上下留空，
-   上下各行的短条断开成列，表示这几行同属一句话；未折行的句子不画。 */
+   上下各行的短条断开成列，表示这几行同属一句话；未折行的句子不画。
+   竖条与行缘线合并为一个整体：在留白里整体居中、稍宽、颜色更亮。 */
 .正文行.折行句::before {
   position: absolute;
   top: 20%;
   bottom: 20%;
-  left: 3px;
+  left: 2px;
   z-index: 6;
-  width: 3px;
-  border-radius: 2px;
-  background: color-mix(in oklab, var(--选中色) 60%, var(--边线色));
+  width: 5px;
+  border-radius: 3px;
+  background: color-mix(in oklab, var(--选中色) 75%, var(--边线色));
   content: '';
   pointer-events: none;
 }
@@ -2848,6 +2849,13 @@ body[data-视觉方案='蓝图'] {
 body[data-视觉方案='蓝图'] .正文行::after {
   width: 2px;
   background: #a5bdca;
+}
+
+/* 折行句的行缘线并入竖条（常态隐藏，避免左侧出现两条分离的竖线）。
+   各主题的 .正文行::after 覆盖与该规则优先级相同，必须排在其后才能胜出；
+   悬停 / 逻辑行悬停的高亮条带（.正文行:hover::after 等）优先级更高、照常生效。 */
+body .正文行.折行句::after {
+  background: transparent;
 }
 
 @media (max-width: 640px) {
