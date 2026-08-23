@@ -842,21 +842,21 @@ body.右下面板展开 .关键词面板开关 {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 2.5px;
+  left: 1.5px;
   z-index: 6;
-  width: 4px;
+  width: 6px;
   background: #fff;
   content: '';
   pointer-events: none;
 }
 
 .正文行.折行句首::before {
-  top: 30%;
+  top: 35%;
   border-radius: 2px 2px 0 0;
 }
 
 .正文行.折行句尾::before {
-  bottom: 30%;
+  bottom: 35%;
   border-radius: 0 0 2px 2px;
 }
 
