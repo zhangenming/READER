@@ -5230,7 +5230,7 @@ function 读取正文排版() {
   // 两侧留白分别容纳折行句竖条与末次出现标记；排版内容宽度必须同步折减，
   // 避免末字或位于行尾的标记被 overflow: hidden 裁掉。
   const 左留白 = 读取数字变量('--正文左留白', 0);
-  const 右留白 = 读取数字变量('--正文右留白', 0);
+  const 右留白 = 正文字号 * 读取数字变量('--末处标记留白比例', 0);
   const 内容宽度 = Math.max(正文字号, 画布宽度 - 左留白 - 右留白);
   return {
     键: [
@@ -5777,6 +5777,7 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
             点击命中.命中idx === 点击命中.关键词.命中位置.length - 1
           ) {
             const 末处标记 = document.createElement('span');
+            字元素.classList.add('含末处标记');
             末处标记.className = '末处标记';
             末处标记.textContent = '▶';
             末处标记.setAttribute('aria-hidden', 'true');
