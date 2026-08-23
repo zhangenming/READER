@@ -1056,9 +1056,9 @@ function 绑定事件() {
   function 处理滚动条键盘(事件) {
     const 最大滚动位置 =
       元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
+    // ArrowUp / ArrowDown 不在此按行滚动：它们已全局接管为整屏翻页（等同 Space / Shift+Space），
+    // 事件会冒泡到 window 的键盘处理统一执行
     const 键盘滚动表 = {
-      ArrowUp: -状态.行高,
-      ArrowDown: 状态.行高,
       PageUp: -元素.滚动容器.clientHeight,
       PageDown: 元素.滚动容器.clientHeight,
       Home: -Infinity,
@@ -1309,7 +1309,23 @@ function 绑定事件() {
       return;
     }
 
-    const 是翻页按键 = 事件.code === 'Space' || 事件.key === 'Enter';
+    // ↑ / ↓ 方向键与 Space / Shift+Space 完全等价：↓ 向前翻整屏，↑ 向后翻整屏。
+    const 是箭头翻页键 = 事件.key === 'ArrowUp' || 事件.key === 'ArrowDown';
+    const 是翻页按键 =
+      事件.code === 'Space' || 事件.key === 'Enter' || 是箭头翻页键;
+    // 方向键由键自身决定方向（Shift 不反转）；Space / Enter 仍由 Shift 决定方向
+    const 翻页向上 = 是箭头翻页键 ? 事件.key === 'ArrowUp' : 事件.shiftKey;
+    const 翻页来源 = 是箭头翻页键
+      ? 事件.key === 'ArrowUp'
+        ? '↑'
+        : '↓'
+      : 事件.shiftKey
+        ? 事件.key === 'Enter'
+          ? 'Shift + Enter'
+          : 'Shift + Space'
+        : 事件.key === 'Enter'
+          ? 'Enter'
+          : 'Space';
 
     if (
       是翻页按键 &&
@@ -1321,16 +1337,7 @@ function 绑定事件() {
     ) {
       事件.preventDefault();
       if (!事件.repeat) {
-        执行自动滚动翻页(
-          事件.shiftKey,
-          事件.shiftKey
-            ? 事件.key === 'Enter'
-              ? 'Shift + Enter'
-              : 'Shift + Space'
-            : 事件.key === 'Enter'
-              ? 'Enter'
-              : 'Space',
-        );
+        执行自动滚动翻页(翻页向上, 翻页来源);
       }
       return;
     }
@@ -1346,7 +1353,7 @@ function 绑定事件() {
     ) {
       事件.preventDefault();
       document.body.classList.add('自动滚动中');
-      翻页整屏(事件.shiftKey);
+      翻页整屏(翻页向上);
       return;
     }
 
