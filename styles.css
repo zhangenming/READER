@@ -737,6 +737,7 @@ body.右下面板展开 .关键词面板开关 {
   outline-offset: 1px;
 }
 
+/* 左侧不绘制边线，避免正文边缘出现无内容的 1px 白线。 */
 .虚拟画布 {
   position: relative;
   width: 100%;
@@ -745,19 +746,7 @@ body.右下面板展开 .关键词面板开关 {
   overflow: hidden;
   background: var(--纸张色);
   border-right: 1px solid var(--边线色);
-  border-left: 1px solid var(--边线色);
   box-shadow: 0 16px 44px rgb(32 37 34 / 8%);
-}
-
-/* 正文命中背景可能覆盖父元素边框；用独立覆层保证左边界始终可见。 */
-.虚拟画布::before {
-  position: absolute;
-  inset: 0 auto 0 0;
-  z-index: 10;
-  width: 1px;
-  background: var(--边线色);
-  content: '';
-  pointer-events: none;
 }
 
 .可见内容 {
@@ -821,22 +810,10 @@ body.右下面板展开 .关键词面板开关 {
   --空行下遮色: var(--段落底色二);
 }
 
-/* 行缘线：静态细边线，不随悬停变化。 */
-.正文行::after {
-  position: absolute;
-  inset: 0 auto 0 0;
-  z-index: 5;
-  width: 1px;
-  background: var(--边线色);
-  content: '';
-  pointer-events: none;
-}
-
 /* 折行句：同一原文行（一句话）因宽度不够被拆成多个显示行时，
    各显示行首字之前的留白里画竖条并上下连成一整根（中间无缝相接），
    首行上端、尾行下端各留 30% 空白，整根在留白里水平居中；
-   未折行的句子不画。行缘线已在折行句行上常态隐藏（见文件末尾），
-   竖条即左侧唯一标记。固定白色，不随背景色配置变化，
+   未折行的句子不画。固定白色，不随背景色配置变化，
    深浅主题下都保持清晰。 */
 .正文行.折行句::before {
   position: absolute;
@@ -2871,10 +2848,4 @@ body.右下面板展开 .关键词面板开关 {
 .背景颜色选项:focus-within {
   outline: 2px solid var(--选中色);
   outline-offset: 2px;
-}
-
-/* 折行句的行缘线并入竖条（常态隐藏，避免左侧出现两条分离的竖线）。
-   靠 body 前缀的更高优先级压过基础 .正文行::after 的底色。 */
-body .正文行.折行句::after {
-  background: transparent;
 }
