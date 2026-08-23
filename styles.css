@@ -71,8 +71,9 @@
   --高亮色: #c5d9f0;
   --段落主色一: #477da2;
   --段落主色二: #b7655a;
-  --段落底色一: color-mix(in oklab, var(--段落主色一) 20%, var(--纸张色));
-  --段落底色二: color-mix(in oklab, var(--段落主色二) 18%, var(--纸张色));
+  /* 段落色带浮在背景色面上，混入背景色而非纸面色（默认两者几乎同色） */
+  --段落底色一: color-mix(in oklab, var(--段落主色一) 20%, var(--背景色));
+  --段落底色二: color-mix(in oklab, var(--段落主色二) 18%, var(--背景色));
   --奇数引文底色: #bcc7cc;
   --偶数引文底色: #d7c5bf;
   /* 引文条边框：spkborder 使用纯黑色，宽度 3px */
@@ -488,7 +489,9 @@ body.关键词手势中 .滚动容器 {
   width: 15px;
   height: 15px;
   place-items: center;
-  color: var(--纸张色);
+  /* 图标底是固定的深绿选中色，字用纯白即可恒定可读；
+     不随纸面色走（纸面调成中灰/深色时灰字会融入绿底）。 */
+  color: #fff;
   font-size: 9px;
   line-height: 1;
   background: var(--选中色);
@@ -510,14 +513,15 @@ body.关键词手势中 .滚动容器 {
   border-color: #aeb8b2;
 }
 
+/* 按下态底色是固定的深绿选中色，字用纯白恒定可读，不随纸面色变化。 */
 .自动滚动按钮[aria-pressed='true'] {
-  color: var(--纸张色);
+  color: #fff;
   background: var(--选中色);
   border-color: var(--选中色);
 }
 
 .自动滚动按钮[aria-pressed='true']:hover {
-  color: var(--纸张色);
+  color: #fff;
   background: #125b56;
   border-color: #125b56;
 }
@@ -621,13 +625,14 @@ body.右下面板展开 .关键词面板开关 {
 
 .关键词排序钮:hover {
   color: var(--墨色);
-  background: rgb(32 37 34 / 7%);
+  /* hover 底随墨色混色：纸面深浅变化后墨色翻转时，混色同向翻转，保持可见 */
+  background: color-mix(in srgb, var(--墨色) 7%, transparent);
 }
 
 .关键词排序钮[aria-pressed='true'] {
   color: var(--墨色);
   font-weight: 700;
-  background: rgb(32 37 34 / 6%);
+  background: color-mix(in srgb, var(--墨色) 6%, transparent);
   border-color: var(--边线色);
 }
 
@@ -664,7 +669,7 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .关键词主钮:hover {
-  background: rgb(32 37 34 / 5%);
+  background: color-mix(in srgb, var(--墨色) 5%, transparent);
 }
 
 .关键词色点 {
@@ -711,7 +716,7 @@ body.右下面板展开 .关键词面板开关 {
 
 .关键词操作钮:hover {
   color: var(--墨色);
-  background: rgb(32 37 34 / 7%);
+  background: color-mix(in srgb, var(--墨色) 7%, transparent);
 }
 
 .关键词操作钮[data-action='删除']:hover {
@@ -785,10 +790,11 @@ body.右下面板展开 .关键词面板开关 {
   background-color: var(--段落底色二);
 }
 
-/* 空行保持原有虚拟高度，只用相邻段落的底色收窄可见色带，避免影响滚动定位。 */
+/* 空行保持原有虚拟高度，只用相邻段落的底色收窄可见色带，避免影响滚动定位。
+   遮色取背景色：色带浮在滚动容器的背景色上，遮罩需与之无缝（默认与纸面色几乎同色）。 */
 .正文行:empty {
-  --空行上遮色: var(--纸张色);
-  --空行下遮色: var(--纸张色);
+  --空行上遮色: var(--背景色);
+  --空行下遮色: var(--背景色);
   border-top: calc(var(--行高) * 0.15) solid var(--空行上遮色);
   border-bottom: calc(var(--行高) * 0.15) solid var(--空行下遮色);
 }
@@ -1565,7 +1571,7 @@ body.右下面板展开 .关键词面板开关 {
 
 .关闭查找按钮:hover {
   color: var(--墨色);
-  background: var(--背景色);
+  background: color-mix(in srgb, var(--墨色) 8%, transparent);
 }
 
 .关闭字体按钮 {
@@ -1588,7 +1594,7 @@ body.右下面板展开 .关键词面板开关 {
 
 .关闭字体按钮:hover {
   color: var(--墨色);
-  background: var(--背景色);
+  background: color-mix(in srgb, var(--墨色) 8%, transparent);
 }
 
 .查找输入行 {
@@ -1729,7 +1735,8 @@ body.右下面板展开 .关键词面板开关 {
   color: var(--次要墨色);
   font-size: 11px;
   font-weight: 700;
-  background: #f5f7f5;
+  /* 原固定浅底 #f5f7f5 会在深色纸面上与自适应的深墨字相撞；跟随纸面色即可。 */
+  background: var(--纸张色);
 }
 
 .分析表格 th:last-child,

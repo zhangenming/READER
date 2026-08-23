@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>原文阅读器</title>
+    <link rel="icon" href="../icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <main class="阅读区域">
+      <div id="滚动容器" class="滚动容器" tabindex="0" aria-label="正文">
+        <div id="虚拟画布" class="虚拟画布">
+          <div
+            id="可见内容"
+            class="可见内容"
+            role="document"
+            aria-label="文本内容"
+          ></div>
+          <div id="衔接线" class="衔接线" aria-hidden="true" hidden></div>
+        </div>
+        <div id="载入状态" class="载入状态" role="status">
+          <span class="载入线" aria-hidden="true"></span>
+          <p>正在载入文本</p>
+        </div>
+      </div>
+    </main>
+    <div
+      id="自定义滚动条"
+      class="自定义滚动条"
+      role="scrollbar"
+      aria-label="阅读进度"
+      aria-controls="滚动容器"
+      aria-orientation="vertical"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="0"
+      tabindex="0"
+      hidden
+    >
+      <canvas
+        id="关键词指示器"
+        class="关键词指示器"
+        aria-hidden="true"
+        hidden
+      ></canvas>
+      <div id="滚动块" class="滚动块" aria-hidden="true"></div>
+    </div>
+    <canvas
+      id="悬停关键词指示器"
+      class="关键词指示器 悬停关键词指示器"
+      aria-hidden="true"
+      hidden
+    ></canvas>
+    <span id="滚动进度" class="滚动进度" aria-hidden="true" hidden>
+      <span id="滚动百分比">0.0%</span>
+    </span>
+    <div class="右下按钮组">
+      <aside id="关键词面板" class="关键词面板" aria-label="关键词管理" hidden>
+        <button
+          id="关键词面板开关"
+          class="关键词面板开关"
+          type="button"
+          aria-expanded="false"
+          aria-controls="关键词列表容器"
+        ></button>
+        <div id="关键词列表容器" class="关键词列表容器" hidden></div>
+      </aside>
+      <button
+        id="自动滚动按钮"
+        class="自动滚动按钮"
+        type="button"
+        aria-pressed="false"
+      >
+        <span>滚动</span>
+        <span id="基础速度显示" class="自动滚动速度">基 36</span>
+        <span id="实际速度显示" class="自动滚动速度" hidden>实 36</span>
+      </button>
+      <button
+        id="内容选择按钮"
+        class="内容选择按钮"
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="内容选择弹窗"
+        title="选择阅读内容"
+      >
+        <span class="内容选择图标" aria-hidden="true">文</span>
+        <span>内容</span>
+      </button>
+    </div>
+    <div class="时间信息">
+      <div id="已滚动时间行" class="时间信息行" hidden>
+        <span id="已滚动时间" class="已滚动时间">0.0分</span>
+        <span id="今日滚动时间" class="累计滚动时间">（0.0h）</span>
+      </div>
+      <div id="剩余滚动时间行" class="时间信息行" hidden>
+        <span id="剩余滚动时间" class="剩余滚动时间">0.0h</span>
+        <span id="本书滚动时间" class="累计滚动时间">（0.0h）</span>
+      </div>
+      <time id="当前时间" class="当前时间">00:00:00</time>
+    </div>
+    <div id="跳转边框" class="跳转边框" aria-hidden="true" hidden></div>
+    <div id="跳转迸发" class="跳转迸发" aria-hidden="true" hidden></div>
+
+    <dialog id="查找弹窗" class="查找弹窗" aria-labelledby="查找标题">
+      <form id="查找表单" class="查找表单">
+        <div class="查找标题栏">
+          <label id="查找标题" for="查找输入框">查找正文</label>
+          <button
+            id="关闭查找按钮"
+            class="关闭查找按钮"
+            type="button"
+            aria-label="关闭查找"
+            title="关闭"
+          >
+            ×
+          </button>
+        </div>
+        <div class="查找输入行">
+          <input
+            id="查找输入框"
+            class="查找输入框"
+            type="search"
+            autocomplete="off"
+            enterkeyhint="search"
+            placeholder="输入关键词"
+            aria-describedby="查找反馈"
+          />
+          <button class="提交查找按钮" type="submit">查找</button>
+          <button id="分析按钮" class="分析按钮" type="button">分析</button>
+        </div>
+        <p id="查找反馈" class="查找反馈" role="status" aria-live="polite"></p>
+        <section id="分析结果" class="分析结果" aria-live="polite" hidden>
+          <p id="分析结果摘要" class="分析结果摘要"></p>
+          <div class="分析表格容器">
+            <table class="分析表格">
+              <thead>
+                <tr>
+                  <th scope="col">词组</th>
+                  <th scope="col">数量</th>
+                </tr>
+              </thead>
+              <tbody id="分析结果列表"></tbody>
+            </table>
+          </div>
+        </section>
+      </form>
+    </dialog>
+
+    <dialog id="上下文弹窗" class="上下文弹窗" aria-labelledby="上下文标题">
+      <div class="上下文标题栏">
+        <p id="上下文标题" class="上下文标题"></p>
+        <button
+          id="关闭上下文按钮"
+          class="关闭查找按钮"
+          type="button"
+          aria-label="关闭上下文列表"
+          title="关闭"
+        >
+          ×
+        </button>
+      </div>
+      <div id="上下文列表" class="上下文列表"></div>
+    </dialog>
+
+    <dialog id="词频弹窗" class="词频弹窗" aria-labelledby="词频标题">
+      <div class="词频标题栏">
+        <div>
+          <h2 id="词频标题" class="词频标题">词频分析</h2>
+          <p id="词频摘要" class="词频摘要" aria-live="polite">正在统计全文</p>
+        </div>
+        <button
+          id="关闭词频按钮"
+          class="关闭查找按钮"
+          type="button"
+          aria-label="关闭词频分析"
+          title="关闭"
+        >
+          ×
+        </button>
+      </div>
+      <div
+        id="词频标签栏"
+        class="词频标签栏"
+        role="tablist"
+        aria-label="词频字数"
+      >
+        <button
+          class="词频标签 当前"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          data-字数="1"
+        >
+          单字
+        </button>
+        <button
+          class="词频标签"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          tabindex="-1"
+          data-字数="2"
+        >
+          二字
+        </button>
+        <button
+          class="词频标签"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          tabindex="-1"
+          data-字数="3"
+        >
+          三字
+        </button>
+        <button
+          class="词频标签"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          tabindex="-1"
+          data-字数="4"
+        >
+          四字
+        </button>
+        <button
+          class="词频标签"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          tabindex="-1"
+          data-字数="5"
+        >
+          五字
+        </button>
+        <button
+          class="词频标签"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          tabindex="-1"
+          data-字数="6"
+        >
+          六字
+        </button>
+      </div>
+      <div id="单字双列表" class="单字双列表">
+        <table class="词频表格">
+          <thead>
+            <tr>
+              <th class="单字列表标题" colspan="3">频次倒序</th>
+            </tr>
+            <tr>
+              <th scope="col">排名</th>
+              <th scope="col">字词</th>
+              <th scope="col">频次</th>
+            </tr>
+          </thead>
+          <tbody id="单字重复列表"></tbody>
+        </table>
+        <table class="词频表格">
+          <thead>
+            <tr>
+              <th class="单字列表标题" colspan="3">只出现一次</th>
+            </tr>
+            <tr>
+              <th scope="col">排名</th>
+              <th scope="col">字词</th>
+              <th scope="col">频次</th>
+            </tr>
+          </thead>
+          <tbody id="单字一次列表"></tbody>
+        </table>
+      </div>
+      <div id="词频表格容器" class="词频表格容器" hidden>
+        <table class="词频表格">
+          <thead>
+            <tr>
+              <th scope="col">排名</th>
+              <th scope="col">字词</th>
+              <th scope="col">频次</th>
+            </tr>
+          </thead>
+          <tbody id="词频列表"></tbody>
+        </table>
+      </div>
+      <div id="词频分页" class="词频分页" hidden>
+        <button
+          id="词频上一页"
+          type="button"
+          aria-label="上一页"
+          title="上一页"
+        >
+          ‹
+        </button>
+        <output id="词频页码">1 / 1</output>
+        <button
+          id="词频下一页"
+          type="button"
+          aria-label="下一页"
+          title="下一页"
+        >
+          ›
+        </button>
+      </div>
+    </dialog>
+
+    <dialog
+      id="内容选择弹窗"
+      class="内容选择弹窗"
+      aria-labelledby="内容选择标题"
+    >
+      <div class="内容选择标题栏">
+        <div>
+          <h2 id="内容选择标题" class="内容选择标题">阅读内容</h2>
+          <p id="内容选择摘要" class="内容选择摘要" role="status">
+            正在读取文本目录
+          </p>
+        </div>
+        <button
+          id="关闭内容选择按钮"
+          class="关闭查找按钮"
+          type="button"
+          aria-label="关闭内容选择"
+          title="关闭"
+        >
+          ×
+        </button>
+      </div>
+      <div id="内容选择列表" class="内容选择列表" aria-live="polite"></div>
+    </dialog>
+
+    <div id="字体遮罩" class="字体遮罩" hidden></div>
+    <div
+      id="字体弹窗"
+      class="字体弹窗"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="字体标题"
+      hidden
+    >
+      <div class="字体标题栏">
+        <h2 id="字体标题" class="字体标题">字体设置</h2>
+        <div class="排版控制">
+          <button
+            id="字号控制"
+            class="字号控制"
+            type="button"
+            aria-label="当前字号 30 像素，悬停滚轮调节，点击恢复默认"
+            title="悬停滚轮调节字号 · 点击恢复默认"
+          >
+            <span class="字号标签">字号</span>
+            <span id="字号值" class="字号值">30</span>
+            <span class="字号单位">px</span>
+          </button>
+          <button
+            id="行距控制"
+            class="行距控制"
+            type="button"
+            aria-label="当前行距 30 像素，悬停滚轮调节，点击恢复默认"
+            title="悬停滚轮调节行距 · 点击恢复默认"
+          >
+            <span class="行距标签">行距</span>
+            <span id="行距值" class="行距值">30</span>
+            <span class="行距单位">px</span>
+          </button>
+        </div>
+        <button
+          id="关闭字体按钮"
+          class="关闭字体按钮"
+          type="button"
+          aria-label="关闭字体设置"
+          title="关闭"
+        >
+          ×
+        </button>
+      </div>
+      <div class="字体标签栏" role="tablist" aria-label="字体设置区域">
+        <button
+          id="字体标签全部"
+          class="字体标签"
+          role="tab"
+          aria-selected="false"
+          type="button"
+        >
+          全部
+        </button>
+        <button
+          id="字体标签引号外"
+          class="字体标签"
+          role="tab"
+          aria-selected="false"
+          type="button"
+        >
+          引号外（spk 外）
+        </button>
+        <button
+          id="字体标签引号内"
+          class="字体标签"
+          role="tab"
+          aria-selected="true"
+          type="button"
+        >
+          引号内（spk 内）
+        </button>
+        <button
+          id="字体标签关键词"
+          class="字体标签"
+          role="tab"
+          aria-selected="false"
+          type="button"
+        >
+          关键词
+        </button>
+        <button
+          id="字体标签奇偶行"
+          class="字体标签"
+          role="tab"
+          aria-selected="false"
+          type="button"
+        >
+          奇偶行
+        </button>
+        <button
+          id="字体标签背景"
+          class="字体标签"
+          role="tab"
+          aria-selected="false"
+          type="button"
+        >
+          背景
+        </button>
+      </div>
+      <div class="字体分组列表">
+        <div class="字体设置工具栏">
+          <div id="引文背景色选项" class="引文背景色选项">
+            <label>
+              <input id="引文背景色开关" type="checkbox" checked />
+              <span>背景色</span>
+            </label>
+            <label>
+              <span>奇数 spk</span>
+              <input
+                id="奇数引文颜色选择器"
+                type="color"
+                value="#bcc7cc"
+                aria-label="奇数 spk 背景色"
+              />
+            </label>
+            <label>
+              <span>偶数 spk</span>
+              <input
+                id="偶数引文颜色选择器"
+                type="color"
+                value="#d7c5bf"
+                aria-label="偶数 spk 背景色"
+              />
+            </label>
+          </div>
+          <label id="引文边框选项" class="引文边框选项">
+            <input id="引文边框开关" type="checkbox" checked />
+            <span>边框</span>
+          </label>
+          <label id="关键词颜色选项" class="关键词颜色选项" hidden>
+            <span>关键词颜色</span>
+            <input
+              id="关键词颜色选择器"
+              type="color"
+              value="#1e4a7a"
+              aria-label="关键词颜色"
+            />
+          </label>
+          <label id="字体颜色选项" class="字体颜色选项" hidden>
+            <span>字体颜色</span>
+            <input
+              id="字体颜色选择器"
+              type="color"
+              value="#221e16"
+              aria-label="字体颜色"
+            />
+          </label>
+          <div id="奇偶行颜色选项" class="奇偶行颜色选项" hidden>
+            <label>
+              <span>奇数行</span>
+              <input
+                id="奇数行颜色选择器"
+                type="color"
+                value="#d3dde1"
+                aria-label="奇数行颜色"
+              />
+            </label>
+            <label>
+              <span>偶数行</span>
+              <input
+                id="偶数行颜色选择器"
+                type="color"
+                value="#eedbd4"
+                aria-label="偶数行颜色"
+              />
+            </label>
+          </div>
+          <div id="背景颜色选项" class="背景颜色选项" hidden>
+            <label>
+              <span>背景色</span>
+              <input
+                id="背景色选择器"
+                type="color"
+                value="#e9e7df"
+                aria-label="页面背景与纸面色"
+              />
+            </label>
+          </div>
+          <button
+            id="字体粗细按钮"
+            class="字体粗细按钮"
+            type="button"
+            title="点击或滚轮循环调整粗细"
+          ></button>
+        </div>
+        <div id="字体选项列表" class="字体选项列表"></div>
+      </div>
+      <div class="字体弹窗底部">
+        <button id="字体重置按钮" class="字体重置按钮" type="button">
+          恢复默认
+        </button>
+        <button id="字体关闭底部按钮" class="字体关闭底部按钮" type="button">
+          关闭
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // 关闭字体弹窗的兜底脚本：即使主脚本事件绑定失败，也能关闭弹窗。
+      (function () {
+        function 取弹窗() {
+          return document.getElementById('字体弹窗');
+        }
+        function 取遮罩() {
+          return document.getElementById('字体遮罩');
+        }
+        function 关闭() {
+          const 弹窗 = 取弹窗();
+          const 遮罩 = 取遮罩();
+          if (弹窗) 弹窗.hidden = true;
+          if (遮罩) 遮罩.hidden = true;
+        }
+        const 弹窗 = 取弹窗();
+        if (!弹窗) return;
+        const 关闭按钮 = document.getElementById('关闭字体按钮');
+        const 底部关闭 = document.getElementById('字体关闭底部按钮');
+        const 遮罩 = 取遮罩();
+        if (关闭按钮) 关闭按钮.addEventListener('click', 关闭);
+        if (底部关闭) 底部关闭.addEventListener('click', 关闭);
+        if (遮罩) 遮罩.addEventListener('click', 关闭);
+        document.addEventListener('keydown', function (事件) {
+          if (事件.key === 'Escape' && !弹窗.hidden) 关闭();
+        });
+      })();
+    </script>
+    <script src="../app.js" defer></script>
+    <script src="../语音订阅.js" defer></script>
+  </body>
+</html>
+<script>
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const q = new URLSearchParams(location.search);
+      const paper = q.get('paper'), bg = q.get('bg');
+      try {
+        if (bg) window.设置页面背景色(bg, { 静默: true });
+        if (paper) window.设置纸面色(paper, { 静默: true });
+        console.info('[测试页] 已应用配置', { paper, bg });
+      } catch (e) { console.error('[测试页] 配置失败', e); }
+    }, 1200);
+  });
+</script>
