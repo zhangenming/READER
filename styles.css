@@ -812,7 +812,7 @@ body.右下面板展开 .关键词面板开关 {
 
 /* 折行句：同一原文行（一句话）因宽度不够被拆成多个显示行时，
    各显示行首字之前的留白里画竖条并上下连成一整根（中间无缝相接），
-   首行上端、尾行下端各留 30% 空白，整根在留白里水平居中；
+   首行从文字中线起笔，尾行提前收笔，整根在留白里水平居中；
    未折行的句子不画。固定白色，不随背景色配置变化，
    深浅主题下都保持清晰。 */
 .正文行.折行句::before {
@@ -823,18 +823,21 @@ body.右下面板展开 .关键词面板开关 {
   z-index: 6;
   width: 6px;
   background: #fff;
-  border: 1px solid #241b15;
+  border-right: 1px solid #241b15;
+  border-left: 1px solid #241b15;
   content: '';
   pointer-events: none;
 }
 
 .正文行.折行句首::before {
-  top: 60%;
+  top: 50%;
+  border-top: 1px solid #241b15;
   border-radius: 3px 3px 0 0;
 }
 
 .正文行.折行句尾::before {
-  bottom: 60%;
+  bottom: 75%;
+  border-bottom: 1px solid #241b15;
   border-radius: 0 0 3px 3px;
 }
 
