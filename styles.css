@@ -830,9 +830,9 @@ body.右下面板展开 .关键词面板开关 {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 2px;
+  left: 2.5px;
   z-index: 6;
-  width: 5px;
+  width: 4px;
   background: #fff;
   content: '';
   pointer-events: none;
@@ -840,12 +840,12 @@ body.右下面板展开 .关键词面板开关 {
 
 .正文行.折行句首::before {
   top: 30%;
-  border-radius: 3px 3px 0 0;
+  border-radius: 2px 2px 0 0;
 }
 
 .正文行.折行句尾::before {
   bottom: 30%;
-  border-radius: 0 0 3px 3px;
+  border-radius: 0 0 2px 2px;
 }
 
 /* 当前命中项的 box-shadow 外环与计数徽标会溢出到行外，
