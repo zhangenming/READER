@@ -3161,9 +3161,15 @@ function 绑定事件() {
             ? '统计失败'
             : `${(统计字数 / 10_000).toFixed(1)} 万字`;
 
+      const 已阅读时间 = document.createElement('span');
+      已阅读时间.className = '内容选项时长';
+      已阅读时间.textContent = `已阅读 · ${格式化滚动小时(
+        文本状态?.总滚动毫秒 ?? 0,
+      )}`;
+
       const 文本信息 = document.createElement('span');
       文本信息.className = '内容选项信息';
-      文本信息.append(名称, 字数);
+      文本信息.append(名称, 字数, 已阅读时间);
 
       const 状态文字 = document.createElement('span');
       状态文字.className = '内容选项状态';

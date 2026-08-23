@@ -1965,6 +1965,15 @@ body.右下面板展开 .关键词面板开关 {
   display: none;
 }
 
+.内容选项时长 {
+  display: block;
+  margin-top: 1px;
+  color: var(--次要墨色);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  line-height: 16px;
+}
+
 .内容选项状态 {
   min-width: 5.5em;
   color: var(--次要墨色);
