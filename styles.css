@@ -862,6 +862,14 @@ body.右下面板展开 .关键词面板开关 {
   contain: layout style;
 }
 
+/* 首尾序号徽标位于行顶之外；所在行需放行溢出，避免徽标被裁掉。 */
+.正文行.含首尾标记 {
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+  contain: layout style;
+}
+
 .字 {
   position: relative;
   display: inline-block;
@@ -1201,36 +1209,43 @@ body.右下面板展开 .关键词面板开关 {
   border-radius: 3px;
 }
 
-/* 关键词首个出现左缘 ◀ / 最后出现右缘 ▶：颜色随各词深色 */
+/* 关键词首个/最后出现：统一用右上角序号徽标表达首尾位置。 */
 .字.命中 > .首处标记,
 .字.命中 > .末处标记 {
   position: absolute;
-  top: 50%;
+  top: -7px;
+  right: -3px;
   z-index: 2;
-  font-size: 0.42em;
-  line-height: 1;
-  color: var(--命中当前色, #1e4a7a);
+  min-width: 18px;
+  padding: 1px 2px;
+  color: var(--纸张色);
+  font-family: 'Avenir Next', 'PingFang SC', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 10px;
+  text-align: center;
+  letter-spacing: 0;
+  background: #241b15;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: 0 2px 7px rgb(0 0 0 / 42%);
   pointer-events: none;
   user-select: none;
 }
 
-.字.命中 > .首处标记 {
-  left: -0.62em;
-  transform: translateY(-50%);
-}
-
-.字.命中.含末处标记 {
+.字.命中:is(.含首处标记, .含末处标记) {
   z-index: 2;
   padding-right: calc(1em * var(--末处标记留白比例));
 }
 
-.字:not(.西文).命中.含末处标记 {
+.字:not(.西文).命中:is(.含首处标记, .含末处标记) {
   width: calc(1em + 1em * var(--末处标记留白比例));
 }
 
-.字.命中 > .末处标记 {
-  right: 0;
-  transform: translateY(-50%);
+/* 首尾徽标已经提供位置数字，隐藏同一字上的临时命中徽标，避免叠加。 */
+.字.命中:is(.含首处标记, .含末处标记)[data-hit-position]::after {
+  display: none;
 }
 
 /* 同组悬停的关键词色底黑字样式见「当前命中」规则之后（需压过当前命中态）。 */
