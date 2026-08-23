@@ -6480,7 +6480,7 @@ function 更新关键词指示器() {
 
   function 设置悬停指示器状态(正在显示) {
     元素.滚动块.classList.toggle('悬停关键词时隐藏', 正在显示);
-    元素.滚动进度.classList.toggle('悬停关键词时隐藏', 正在显示);
+    元素.滚动进度.classList.toggle('悬停关键词时左移', 正在显示);
   }
 }
 
