@@ -1200,37 +1200,21 @@ body.右下面板展开 .关键词面板开关 {
   border-radius: 3px;
 }
 
-/* 关键词首个/最后出现标记：用贴边括号标出序列起止，避免字体箭头抢占视觉。 */
+/* 关键词首个出现左缘 ◀ / 最后出现右缘 ▶：颜色随各词深色 */
 .字.命中 > .首处标记,
 .字.命中 > .末处标记 {
   position: absolute;
   top: 50%;
   z-index: 2;
-  width: 8px;
-  height: 14px;
+  font-size: 0.42em;
+  line-height: 1;
   color: var(--命中当前色, #1e4a7a);
-  border-top: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  opacity: 0.9;
   pointer-events: none;
   user-select: none;
-  overflow: hidden;
-  font-size: 1px;
-  line-height: 1px;
-  text-indent: -999px;
 }
 
 .字.命中 > .首处标记 {
-  left: -10px;
-  border-left: 1.5px solid currentColor;
-  border-radius: 3px 0 0 3px;
-  transform: translateY(-50%);
-}
-
-.字.命中 > .末处标记 {
-  right: 2px;
-  border-right: 1.5px solid currentColor;
-  border-radius: 0 3px 3px 0;
+  left: -0.62em;
   transform: translateY(-50%);
 }
 
@@ -1241,6 +1225,11 @@ body.右下面板展开 .关键词面板开关 {
 
 .字:not(.西文).命中.含末处标记 {
   width: calc(1em + 1em * var(--末处标记留白比例));
+}
+
+.字.命中 > .末处标记 {
+  right: 0;
+  transform: translateY(-50%);
 }
 
 /* 同组悬停的关键词色底黑字样式见「当前命中」规则之后（需压过当前命中态）。 */
