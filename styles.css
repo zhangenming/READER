@@ -1219,11 +1219,15 @@ body.右下面板展开 .关键词面板开关 {
 
 .字.命中.含末处标记 {
   z-index: 2;
-  margin-right: calc(1em * var(--末处标记留白比例));
+  padding-right: calc(1em * var(--末处标记留白比例));
+}
+
+.字:not(.西文).命中.含末处标记 {
+  width: calc(1em + 1em * var(--末处标记留白比例));
 }
 
 .字.命中 > .末处标记 {
-  right: -1em;
+  right: 0;
   transform: translateY(-50%);
 }
 
