@@ -5751,7 +5751,10 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
               字元素.dataset.groupEnd = '';
             }
           }
-          if (点击命中.命中终点 === 字终点) {
+          if (
+            点击命中.关键词.命中位置.length > 1 &&
+            点击命中.命中终点 === 字终点
+          ) {
             字元素.dataset.hitPosition = `${点击命中.命中idx + 1}/${点击命中.关键词.命中位置.length}`;
             字元素.classList.toggle(
               '显示命中位置',
