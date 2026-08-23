@@ -5550,6 +5550,7 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
         字元素.className = '字';
         字元素.classList.toggle('西文', 是西文字素(字文本));
         字元素.classList.toggle('数字', 是数字字素(字文本));
+        字元素.classList.toggle('代词字母', '我他你'.includes(字文本));
         字元素.dataset.start = String(字起点);
         字元素.dataset.end = String(字终点);
         字元素.setAttribute('aria-hidden', 'true');
