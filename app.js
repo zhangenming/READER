@@ -5706,6 +5706,28 @@ function 渲染可见行(强制渲染 = false, 视口高度 = null) {
           }
           字元素.dataset.keywordId = String(点击命中.关键词.id);
           字元素.dataset.hitIndex = String(点击命中.命中idx);
+          if (
+            点击命中.关键词.命中位置.length > 1 &&
+            点击命中.命中起点 === 字起点 &&
+            点击命中.命中idx === 0
+          ) {
+            const 首处标记 = document.createElement('span');
+            首处标记.className = '首处标记';
+            首处标记.textContent = '◀';
+            首处标记.setAttribute('aria-hidden', 'true');
+            字元素.append(首处标记);
+          }
+          if (
+            点击命中.关键词.命中位置.length > 1 &&
+            点击命中.命中终点 === 字终点 &&
+            点击命中.命中idx === 点击命中.关键词.命中位置.length - 1
+          ) {
+            const 末处标记 = document.createElement('span');
+            末处标记.className = '末处标记';
+            末处标记.textContent = '▶';
+            末处标记.setAttribute('aria-hidden', 'true');
+            字元素.append(末处标记);
+          }
           字元素.style.setProperty('--命中背景', 主配色.浅色);
           字元素.style.setProperty('--命中当前色', 主配色.深色);
         }

@@ -1188,6 +1188,29 @@ body.右下面板展开 .关键词面板开关 {
   border-radius: 3px;
 }
 
+/* 关键词首个出现左缘 ◀ / 最后出现右缘 ▶：颜色随各词深色 */
+.字.命中 > .首处标记,
+.字.命中 > .末处标记 {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  font-size: 0.42em;
+  line-height: 1;
+  color: var(--命中当前色, #1e4a7a);
+  pointer-events: none;
+  user-select: none;
+}
+
+.字.命中 > .首处标记 {
+  left: -0.62em;
+  transform: translateY(-50%);
+}
+
+.字.命中 > .末处标记 {
+  right: -0.62em;
+  transform: translateY(-50%);
+}
+
 /* 同组悬停的关键词色底黑字样式见「当前命中」规则之后（需压过当前命中态）。 */
 
 /* 当前关键词组用白底黑字实底标记，在整屏命中里一眼可辨。
