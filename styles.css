@@ -99,6 +99,8 @@
   /* 正文行首留白：折行句竖条画在这条留白里（首字之前），不压字也不占正文宽度；
      JS 读取同一变量折减排版内容宽度，保证两侧一致。 */
   --正文左留白: 9px;
+  /* 末次出现标记画在末字右侧；预留同宽空间，避免位于行尾时被裁切。 */
+  --正文右留白: 9px;
   --滚动条宽度: 20px;
   color: var(--墨色);
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
@@ -765,7 +767,7 @@ body.右下面板展开 .关键词面板开关 {
 .正文行 {
   position: relative;
   height: var(--行高);
-  padding: 0 0 0 var(--正文左留白);
+  padding: 0 var(--正文右留白) 0 var(--正文左留白);
   overflow: hidden;
   contain: content;
   color: var(--正文字色);
