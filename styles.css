@@ -1265,7 +1265,7 @@ body.右下面板展开 .关键词面板开关 {
     visibility 0s linear 180ms;
 }
 
-.字.命中.当前命中.显示命中位置[data-hit-position]::after,
+.字.命中.当前命中[data-hit-position]::after,
 .字.命中.悬停命中[data-hit-position]::after {
   opacity: 1;
   visibility: visible;
