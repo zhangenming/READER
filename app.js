@@ -646,6 +646,7 @@ function 绑定事件() {
   let 滚动块拖动状态 = null;
   let 滚动进度拖动状态 = null;
   let 自动滚动状态 = null;
+  let 按键滚动状态 = null;
   let 上次滚动统计保存时刻 = 0;
   let 当前词频字数 = 1;
   let 当前词频页码 = 1;
@@ -964,6 +965,7 @@ function 绑定事件() {
 
   function 取消交互状态() {
     停止自动滚动('窗口失去焦点');
+    停止按键滚动('窗口失去焦点');
     状态.拖选状态 = null;
     关键词手势 = null;
     document.body.classList.remove('关键词手势中');
@@ -1240,6 +1242,29 @@ function 绑定事件() {
       (!目标.isContentEditable &&
         !目标.matches('input, textarea, button, select'));
 
+    const 按键滚动方向 =
+      事件.key.toLowerCase() === 'z'
+        ? 1
+        : 事件.key.toLowerCase() === 'x'
+          ? -1
+          : 0;
+    if (
+      按键滚动方向 &&
+      !事件.altKey &&
+      !事件.ctrlKey &&
+      !事件.metaKey &&
+      !事件.shiftKey &&
+      !是交互目标 &&
+      !有弹窗打开() &&
+      状态.行起点列表.length
+    ) {
+      事件.preventDefault();
+      if (!事件.repeat) {
+        开始按键滚动(事件.key.toLowerCase(), 按键滚动方向);
+      }
+      return;
+    }
+
     if (
       事件.key.toLowerCase() === 'a' &&
       (事件.ctrlKey || 事件.metaKey) &&
@@ -1465,6 +1490,12 @@ function 绑定事件() {
   }
 
   function 处理键盘松开(事件) {
+    if (事件.key.toLowerCase() === 按键滚动状态?.按键) {
+      事件.preventDefault();
+      停止按键滚动('按键松开');
+      return;
+    }
+
     // 若上一轮 Ctrl 已先松开、当前正松开的是最后一个修饰键，则此刻才真正跳转
     尝试执行待导航(事件);
 
@@ -2461,6 +2492,69 @@ function 绑定事件() {
     document.body.classList.add('自动滚动中');
     console.info('[阅读器] 自动滚动已启动', {
       速度: 状态.自动滚动速度,
+    });
+  }
+
+  function 开始按键滚动(按键, 方向) {
+    if (按键滚动状态) {
+      return;
+    }
+
+    停止自动滚动('按键滚动');
+    取消滚动动画();
+    结束跳转会话('按键滚动');
+    按键滚动状态 = {
+      按键,
+      方向,
+      帧: requestAnimationFrame(执行按键滚动),
+      上帧时间: performance.now(),
+    };
+    console.info('[阅读器] 按键滚动已启动', {
+      按键,
+      方向: 方向 > 0 ? '向下' : '向上',
+      速度: 状态.自动滚动速度 * 2,
+    });
+  }
+
+  function 执行按键滚动(当前时间) {
+    const 本次滚动 = 按键滚动状态;
+    if (!本次滚动) {
+      return;
+    }
+
+    const 最大滚动位置 =
+      元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
+    const 经过毫秒 = Math.min(50, 当前时间 - 本次滚动.上帧时间);
+    const 新位置 = Math.max(
+      0,
+      Math.min(
+        最大滚动位置,
+        元素.滚动容器.scrollTop +
+          (状态.自动滚动速度 * 2 * 本次滚动.方向 * 经过毫秒) / 1000,
+      ),
+    );
+    本次滚动.上帧时间 = 当前时间;
+    元素.滚动容器.scrollTop = 新位置;
+    if (新位置 <= 0 || 新位置 >= 最大滚动位置 - 0.5) {
+      停止按键滚动('已到文章边界');
+      return;
+    }
+    本次滚动.帧 = requestAnimationFrame(执行按键滚动);
+  }
+
+  function 停止按键滚动(原因) {
+    if (!按键滚动状态) {
+      return;
+    }
+
+    cancelAnimationFrame(按键滚动状态.帧);
+    按键滚动状态 = null;
+    更新滚动块();
+    渲染可见行();
+    安排保存持久化状态();
+    console.info('[阅读器] 按键滚动已停止', {
+      原因,
+      滚动位置: Math.round(元素.滚动容器.scrollTop),
     });
   }
 
