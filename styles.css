@@ -1612,7 +1612,6 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .查找输入框,
-.提交查找按钮,
 .分析按钮 {
   height: 42px;
   font:
@@ -1643,22 +1642,6 @@ body.右下面板展开 .关键词面板开关 {
   box-shadow: 0 0 0 2px rgb(183 72 55 / 14%);
 }
 
-.提交查找按钮 {
-  flex: 0 0 auto;
-  padding: 0 17px;
-  color: #ffffff;
-  font-weight: 700;
-  background: var(--选中色);
-  border: 1px solid var(--选中色);
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.提交查找按钮:hover {
-  background: #115b56;
-  border-color: #115b56;
-}
-
 .分析按钮 {
   flex: 0 0 auto;
   width: 72px;
@@ -1683,7 +1666,6 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .关闭查找按钮:focus-visible,
-.提交查找按钮:focus-visible,
 .分析按钮:focus-visible,
 .查找导航按钮:focus-visible {
   outline: 2px solid var(--选中色);
