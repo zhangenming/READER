@@ -394,7 +394,7 @@
           aria-selected="false"
           type="button"
         >
-          引号外（spk 外）
+          正文
         </button>
         <button
           id="字体标签引号内"
@@ -403,7 +403,7 @@
           aria-selected="true"
           type="button"
         >
-          引号内（spk 内）
+          spk
         </button>
         <button
           id="字体标签关键词"
@@ -567,12 +567,15 @@
   window.addEventListener('load', () => {
     setTimeout(() => {
       const q = new URLSearchParams(location.search);
-      const paper = q.get('paper'), bg = q.get('bg');
+      const paper = q.get('paper'),
+        bg = q.get('bg');
       try {
         if (bg) window.设置页面背景色(bg, { 静默: true });
         if (paper) window.设置纸面色(paper, { 静默: true });
         console.info('[测试页] 已应用配置', { paper, bg });
-      } catch (e) { console.error('[测试页] 配置失败', e); }
+      } catch (e) {
+        console.error('[测试页] 配置失败', e);
+      }
     }, 1200);
   });
 </script>
