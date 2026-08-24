@@ -1020,13 +1020,13 @@ body.右下面板展开 .关键词面板开关 {
   top: 50%;
   left: 100%;
   z-index: 10;
-  width: 0.38em;
-  height: 1.5px;
+  width: 0.4em;
+  height: 3px;
   content: '';
   background: #ff0000;
-  border-radius: 1px;
+  border-radius: 1.5px;
   pointer-events: none;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
 }
 
 /* 横线跨过首字与次字的边界；提升首字层级，避免被次字字形遮住。 */
