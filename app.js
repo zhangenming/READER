@@ -725,6 +725,7 @@ function 绑定事件() {
   元素.查找弹窗.addEventListener('close', 处理查找弹窗关闭);
   元素.关键词面板开关.addEventListener('click', 处理面板开关);
   元素.关键词列表容器.addEventListener('click', 处理面板操作);
+  document.addEventListener('click', 处理关键词面板外部点击);
   元素.关闭上下文按钮.addEventListener('click', 关闭上下文弹窗);
   元素.上下文弹窗.addEventListener('click', 处理上下文弹窗点击);
   元素.上下文弹窗.addEventListener('close', 处理上下文弹窗关闭);
@@ -3288,6 +3289,25 @@ function 绑定事件() {
     安排保存持久化状态();
   }
 
+  function 关闭关键词面板() {
+    if (!状态.关键词面板展开) {
+      return;
+    }
+    状态.关键词面板展开 = false;
+    渲染关键词面板();
+    安排保存持久化状态();
+  }
+
+  function 处理关键词面板外部点击(事件) {
+    if (!状态.关键词面板展开) {
+      return;
+    }
+    if (元素.关键词面板.contains(事件.target)) {
+      return;
+    }
+    关闭关键词面板();
+  }
+
   function 处理面板操作(事件) {
     const 排序按钮 = 事件.target.closest('button[data-sort]');
     if (排序按钮) {
@@ -4980,7 +5000,7 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
     let 下次检查位置 = 4096;
     let 时间片开始 = performance.now();
 
-    for (let idx = 0; idx < 全文.length; ) {
+    for (let idx = 0; idx < 全文.length;) {
       if (idx >= 下次检查位置) {
         时间片开始 = await 按需让出主线程(时间片开始);
         if (!载入仍然有效()) {
