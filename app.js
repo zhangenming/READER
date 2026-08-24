@@ -1345,16 +1345,24 @@ function 绑定事件() {
       return;
     }
 
-    // ↑ / ↓ 方向键与 Space / Shift+Space 完全等价：↓ 向前翻整屏，↑ 向后翻整屏。
-    const 是箭头翻页键 = 事件.key === 'ArrowUp' || 事件.key === 'ArrowDown';
+    // ← / ↑ / ↓ 方向键与 Space / Shift+Space 完全等价：↓ 向前翻整屏，← / ↑ 向后翻整屏。
+    const 是箭头翻页键 =
+      事件.key === 'ArrowLeft' ||
+      事件.key === 'ArrowUp' ||
+      事件.key === 'ArrowDown';
     const 是翻页按键 =
       事件.code === 'Space' || 事件.key === 'Enter' || 是箭头翻页键;
     // 方向键由键自身决定方向（Shift 不反转）；Space / Enter 仍由 Shift 决定方向
-    const 翻页向上 = 是箭头翻页键 ? 事件.key === 'ArrowUp' : 事件.shiftKey;
+    const 翻页向上 =
+      是箭头翻页键
+        ? 事件.key === 'ArrowLeft' || 事件.key === 'ArrowUp'
+        : 事件.shiftKey;
     const 翻页来源 = 是箭头翻页键
-      ? 事件.key === 'ArrowUp'
-        ? '↑'
-        : '↓'
+      ? 事件.key === 'ArrowLeft'
+        ? '←'
+        : 事件.key === 'ArrowUp'
+          ? '↑'
+          : '↓'
       : 事件.shiftKey
         ? 事件.key === 'Enter'
           ? 'Shift + Enter'
