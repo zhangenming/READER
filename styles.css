@@ -596,8 +596,8 @@ body.右下面板展开 .关键词面板开关 {
   background: var(--纸张色);
   border: 1px solid #cbd2ce;
   border-radius: 6px;
-  box-shadow: 0 12px 34px rgb(32 37 34 / 16%);
-  scrollbar-color: #aab3ad transparent;
+  box-shadow: 0 12px 34px rgb(0 0 0 / 16%);
+  scrollbar-color: #8c8c8c transparent;
   scrollbar-width: thin;
 }
 
@@ -1530,19 +1530,31 @@ body.右下面板展开 .关键词面板开关 {
   }
 }
 
+/* 所有弹窗一律黑白配色：在弹窗作用域内钉死中性主题变量，
+   阅读区自定义的纸色/墨色/选中色等不再影响弹窗 UI（继承让位于直接声明，无需更高优先级）。 */
+dialog {
+  --背景色: #f2f2f2;
+  --纸张色: #ffffff;
+  --墨色: #000000;
+  --次要墨色: #767676;
+  --边线色: #d9d9d9;
+  --选中色: #000000;
+  --高亮色: #e2e2e2;
+}
+
 .查找弹窗 {
   width: min(520px, calc(100vw - 32px));
   margin: 24px auto auto;
   padding: 0;
   color: var(--墨色);
   background: var(--纸张色);
-  border: 1px solid #cbd2ce;
+  border: 1px solid #000000;
   border-radius: 6px;
-  box-shadow: 0 12px 34px rgb(32 37 34 / 18%);
+  box-shadow: 0 12px 34px rgb(0 0 0 / 18%);
 }
 
 .查找弹窗::backdrop {
-  background: rgb(32 37 34 / 8%);
+  background: rgb(0 0 0 / 8%);
 }
 
 .查找弹窗[open] {
@@ -1632,16 +1644,16 @@ body.右下面板展开 .关键词面板开关 {
   flex: 1;
   padding: 0 12px;
   color: var(--墨色);
-  background: #f8f9f8;
-  border: 1px solid #b9c2bc;
+  background: #f5f5f5;
+  border: 1px solid #8c8c8c;
   border-radius: 4px;
   outline: 0;
 }
 
 .查找输入框:focus {
   background: var(--纸张色);
-  border-color: var(--选中色);
-  box-shadow: 0 0 0 2px rgb(23 109 103 / 16%);
+  border-color: var(--墨色);
+  box-shadow: 0 0 0 2px rgb(0 0 0 / 15%);
 }
 
 .查找输入框[aria-invalid='true'] {
@@ -1688,14 +1700,14 @@ body.右下面板展开 .关键词面板开关 {
     'PingFang SC',
     sans-serif;
   background: var(--纸张色);
-  border: 1px solid #aeb8b2;
+  border: 1px solid #8c8c8c;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .查找导航按钮:hover:not(:disabled) {
   background: var(--背景色);
-  border-color: #89958e;
+  border-color: var(--墨色);
 }
 
 .查找导航按钮:disabled {
@@ -1730,7 +1742,7 @@ body.右下面板展开 .关键词面板开关 {
   overflow: auto;
   border-top: 1px solid #000000;
   border-bottom: 1px solid var(--边线色);
-  scrollbar-color: #aab3ad transparent;
+  scrollbar-color: #8c8c8c transparent;
   scrollbar-width: thin;
 }
 
@@ -1782,7 +1794,7 @@ body.右下面板展开 .关键词面板开关 {
   padding: 5px 6px;
   font-size: 13px;
   line-height: 18px;
-  border-bottom: 1px solid #e4e8e5;
+  border-bottom: 1px solid #e6e6e6;
 }
 
 .分析行 span:first-child {
@@ -1797,7 +1809,7 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .分析行:hover {
-  background: #f8f9f8;
+  background: #f2f2f2;
 }
 
 /* 某一侧没有高频搭配时显示占位说明 */
@@ -1823,13 +1835,13 @@ body.右下面板展开 .关键词面板开关 {
   color: var(--墨色);
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   background: var(--纸张色);
-  border: 1px solid #cbd2ce;
+  border: 1px solid #000000;
   border-radius: 6px;
-  box-shadow: 0 12px 34px rgb(32 37 34 / 18%);
+  box-shadow: 0 12px 34px rgb(0 0 0 / 18%);
 }
 
 .上下文弹窗::backdrop {
-  background: rgb(32 37 34 / 8%);
+  background: rgb(0 0 0 / 8%);
 }
 
 .上下文弹窗[open] {
@@ -1845,13 +1857,13 @@ body.右下面板展开 .关键词面板开关 {
   color: var(--墨色);
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   background: var(--纸张色);
-  border: 1px solid #cbd2ce;
+  border: 1px solid #000000;
   border-radius: 6px;
-  box-shadow: 0 12px 34px rgb(32 37 34 / 18%);
+  box-shadow: 0 12px 34px rgb(0 0 0 / 18%);
 }
 
 .词频弹窗::backdrop {
-  background: rgb(32 37 34 / 8%);
+  background: rgb(0 0 0 / 8%);
 }
 
 .词频弹窗[open] {
@@ -1869,13 +1881,13 @@ body.右下面板展开 .关键词面板开关 {
   color: var(--墨色);
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   background: var(--纸张色);
-  border: 1px solid #cbd2ce;
+  border: 1px solid #000000;
   border-radius: 6px;
-  box-shadow: 0 16px 42px rgb(32 37 34 / 20%);
+  box-shadow: 0 16px 42px rgb(0 0 0 / 20%);
 }
 
 .内容选择弹窗::backdrop {
-  background: rgb(32 37 34 / 10%);
+  background: rgb(0 0 0 / 10%);
 }
 
 .内容选择弹窗[open] {
@@ -1912,7 +1924,7 @@ body.右下面板展开 .关键词面板开关 {
 .内容选择列表 {
   min-height: 88px;
   overflow-y: auto;
-  scrollbar-color: #aab3ad transparent;
+  scrollbar-color: #8c8c8c transparent;
   scrollbar-width: thin;
 }
 
@@ -1929,7 +1941,7 @@ body.右下面板展开 .关键词面板开关 {
   text-align: left;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid #e4e2da;
+  border-bottom: 1px solid #e6e6e6;
   cursor: pointer;
 }
 
@@ -1943,11 +1955,11 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .内容选项:hover {
-  background: rgb(47 106 91 / 7%);
+  background: rgb(0 0 0 / 5%);
 }
 
 .内容选项.当前 {
-  background: rgb(47 106 91 / 10%);
+  background: rgb(0 0 0 / 7%);
   box-shadow: inset 3px 0 0 var(--选中色);
 }
 
@@ -2079,7 +2091,7 @@ body.右下面板展开 .关键词面板开关 {
 
 .词频标签:hover {
   color: var(--墨色);
-  background: rgb(32 37 34 / 4%);
+  background: rgb(0 0 0 / 4%);
 }
 
 .词频标签.当前 {
@@ -2098,7 +2110,7 @@ body.右下面板展开 .关键词面板开关 {
   min-height: 220px;
   max-height: calc(100dvh - 224px);
   overflow: auto;
-  scrollbar-color: #aab3ad transparent;
+  scrollbar-color: #8c8c8c transparent;
   scrollbar-width: thin;
 }
 
@@ -2151,7 +2163,7 @@ body.右下面板展开 .关键词面板开关 {
 .词频表格 td {
   height: 34px;
   padding: 6px 16px;
-  border-bottom: 1px solid #e4e8e5;
+  border-bottom: 1px solid #e6e6e6;
 }
 
 .词频表格 th {
@@ -2162,7 +2174,7 @@ body.右下面板展开 .关键词面板开关 {
   font-size: 11px;
   font-weight: 700;
   text-align: left;
-  background: #f5f7f5;
+  background: #f2f2f2;
 }
 
 .词频表格 th:first-child,
@@ -2186,7 +2198,7 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .词频表格 tbody tr:hover {
-  background: #f8f9f8;
+  background: #f7f7f7;
 }
 
 .词频分页 {
@@ -2220,7 +2232,7 @@ body.右下面板展开 .关键词面板开关 {
 
 .词频分页 button:hover:not(:disabled) {
   background: var(--背景色);
-  border-color: #aeb8b2;
+  border-color: var(--墨色);
 }
 
 .词频分页 button:disabled {
@@ -2258,7 +2270,7 @@ body.右下面板展开 .关键词面板开关 {
   padding: 0 8px 8px;
   overflow-y: auto;
   border-top: 1px solid var(--边线色);
-  scrollbar-color: #aab3ad transparent;
+  scrollbar-color: #8c8c8c transparent;
   scrollbar-width: thin;
 }
 
@@ -2276,12 +2288,12 @@ body.右下面板展开 .关键词面板开关 {
   text-align: left;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid #eef1ef;
+  border-bottom: 1px solid #e6e6e6;
   cursor: pointer;
 }
 
 .上下文行:hover {
-  background: #f5f7f5;
+  background: #f2f2f2;
 }
 
 .上下文行:focus-visible {
@@ -2460,7 +2472,7 @@ body.右下面板展开 .关键词面板开关 {
   position: fixed;
   inset: 0;
   z-index: 900;
-  background: rgb(32 37 34 / 8%);
+  background: rgb(0 0 0 / 8%);
 }
 
 .字体遮罩[hidden],
@@ -2477,21 +2489,21 @@ body.右下面板展开 .关键词面板开关 {
   width: min(560px, calc(100vw - 32px));
   max-height: calc(100dvh - 48px);
   padding: 0;
-  /* 弹窗 UI 固定浅色：在作用域内钉住主题变量（取 :root 默认值），
+  /* 弹窗 UI 固定浅色：在作用域内钉住主题变量（黑白中性色），
      页面背景/纸面色等阅读区自定义配色不影响设置面板本身；
      各预览块依赖的 --正文字色、--段落底色一/二 等变量不在其列，照常跟随。 */
-  --背景色: #e9e7df;
+  --背景色: #f2f2f2;
   --纸张色: #fff;
-  --墨色: #2c2924;
-  --次要墨色: #8a8374;
-  --边线色: #dbd7c9;
-  --选中色: #2f6a5b;
+  --墨色: #000000;
+  --次要墨色: #767676;
+  --边线色: #d9d9d9;
+  --选中色: #000000;
   color: var(--墨色);
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   background: var(--纸张色);
-  border: 1px solid #cbd2ce;
+  border: 1px solid #000000;
   border-radius: 6px;
-  box-shadow: 0 12px 34px rgb(32 37 34 / 18%);
+  box-shadow: 0 12px 34px rgb(0 0 0 / 18%);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -2539,7 +2551,7 @@ body.右下面板展开 .关键词面板开关 {
 
 .字体标签:hover {
   color: var(--墨色);
-  background: rgb(32 37 34 / 4%);
+  background: rgb(0 0 0 / 4%);
 }
 
 .字体标签.当前 {
@@ -2550,7 +2562,7 @@ body.右下面板展开 .关键词面板开关 {
 .字体分组列表 {
   padding: 12px 16px;
   overflow-y: auto;
-  scrollbar-color: #aab3ad transparent;
+  scrollbar-color: #8c8c8c transparent;
   scrollbar-width: thin;
 }
 
@@ -2691,8 +2703,8 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .字体粗细按钮:hover {
-  border-color: #aeb8b2;
-  background: rgb(32 37 34 / 4%);
+  border-color: var(--墨色);
+  background: rgb(0 0 0 / 4%);
 }
 
 .字体粗细按钮:focus-visible {
@@ -2718,8 +2730,8 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .字体选项:hover {
-  border-color: #aeb8b2;
-  background: rgb(32 37 34 / 4%);
+  border-color: var(--墨色);
+  background: rgb(0 0 0 / 4%);
 }
 
 .字体选项.选中 {
@@ -2807,14 +2819,14 @@ body.右下面板展开 .关键词面板开关 {
   font-weight: 700;
   color: var(--墨色);
   background: var(--纸张色);
-  border: 1px solid #aeb8b2;
+  border: 1px solid #8c8c8c;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .字体重置按钮:hover {
   background: var(--背景色);
-  border-color: #89958e;
+  border-color: var(--墨色);
 }
 
 .字体重置按钮:focus-visible {
