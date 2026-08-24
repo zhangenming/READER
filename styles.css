@@ -1597,8 +1597,7 @@ body.右下面板展开 .关键词面板开关 {
   gap: 8px;
 }
 
-.查找输入框,
-.分析按钮 {
+.查找输入框 {
   height: 42px;
   font:
     15px/1 'Avenir Next',
@@ -1628,31 +1627,7 @@ body.右下面板展开 .关键词面板开关 {
   box-shadow: 0 0 0 2px rgb(183 72 55 / 14%);
 }
 
-.分析按钮 {
-  flex: 0 0 auto;
-  width: 72px;
-  padding: 0 8px;
-  color: var(--墨色);
-  font-weight: 700;
-  background: var(--纸张色);
-  border: 1px solid #aeb8b2;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.分析按钮:hover {
-  background: var(--背景色);
-  border-color: #89958e;
-}
-
-.分析按钮:disabled {
-  color: var(--次要墨色);
-  cursor: wait;
-  background: var(--背景色);
-}
-
 .关闭查找按钮:focus-visible,
-.分析按钮:focus-visible,
 .查找导航按钮:focus-visible {
   outline: 2px solid var(--选中色);
   outline-offset: 2px;

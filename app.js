@@ -336,7 +336,6 @@ const 元素 = {
   查找命中摘要: document.querySelector('#查找命中摘要'),
   查找上一个按钮: document.querySelector('#查找上一个按钮'),
   查找下一个按钮: document.querySelector('#查找下一个按钮'),
-  分析按钮: document.querySelector('#分析按钮'),
   分析结果: document.querySelector('#分析结果'),
   分析结果摘要: document.querySelector('#分析结果摘要'),
   分析分栏: document.querySelector('.分析分栏'),
@@ -703,10 +702,14 @@ function 绑定事件() {
     元素.查找输入框.dataset.合成中 = '1';
     window.clearTimeout(实时查找计时器);
   });
-  元素.查找输入框.addEventListener('compositionend', function 标记合成结束() {
+  // 组词结束后主动提交一次：部分输入法上屏后的最终 input 事件不会到达或先于本事件，
+  // 仅依赖 input 会漏掉最后一次更新，导致实时查询不触发（表现为上一个/下一个一直禁用）。
+  元素.查找输入框.addEventListener('compositionend', function 合成结束提交() {
     delete 元素.查找输入框.dataset.合成中;
+    window.clearTimeout(实时查找计时器);
+    实时查找计时器 = window.setTimeout(执行实时查找, 实时查找延迟);
   });
-  元素.分析按钮.addEventListener('click', 处理词组分析);
+  元素.分析结果摘要.addEventListener('click', 处理词组分析);
   元素.查找上一个按钮.addEventListener('click', function 定位查找上一个() {
     定位查找命中(-1);
   });
@@ -2307,7 +2310,7 @@ function 绑定事件() {
   }
 
   function 处理查找提交(事件) {
-    // 输入框已无独立查找按钮，回车仅用于跳过防抖立即查询
+    // 输入框已无独立按钮，回车仅用于跳过防抖立即查询
     事件.preventDefault();
     window.clearTimeout(实时查找计时器);
     实时查找计时器 = 0;
@@ -2320,6 +2323,8 @@ function 绑定事件() {
     if (查询.错误 || !查询.目标) {
       // 输入为空或不完整时静默清除旧结果
       清除查找错误();
+      取消词组分析();
+      清空分析结果();
       if (查找临时状态) {
         状态.悬停关键词id = 查找临时状态.悬停关键词id;
         状态.悬停命中idx = 查找临时状态.悬停命中idx;
@@ -2338,6 +2343,7 @@ function 绑定事件() {
     if (!命中位置.length) {
       显示查找错误('未找到该关键词');
       更新查找导航状态(null);
+      清空分析结果();
       console.info('[阅读器] 查找无匹配', { 查询 });
       return;
     }
@@ -2350,6 +2356,8 @@ function 绑定事件() {
     查找临时状态.命中idx = 0;
     更新查找导航状态(关键词);
     临时跳到查找命中(0);
+    // 实时刷新下方搭配分析面板
+    处理词组分析();
   }
 
   function 解析查找查询(查询文本) {
@@ -2480,7 +2488,6 @@ function 绑定事件() {
     const 前缀 = 元素.查找输入框.value.trim();
     if (!前缀) {
       清空分析结果();
-      显示查找错误('请输入前缀');
       return;
     }
     if (!状态.文件名) {
@@ -2493,9 +2500,6 @@ function 绑定事件() {
     const 本次分析序号 = ++词组分析序号;
     const 本次载入序号 = 状态.载入序号;
     const 分析文本 = 状态.文本;
-    元素.分析按钮.disabled = true;
-    元素.分析按钮.setAttribute('aria-busy', 'true');
-    元素.分析按钮.textContent = '分析中';
     await scheduler.yield();
     const 开始时间 = performance.now();
     try {
@@ -2565,12 +2569,8 @@ function 绑定事件() {
         命中数: 命中位置.length,
         耗时毫秒: Math.round(performance.now() - 开始时间),
       });
-    } finally {
-      if (词组分析序号 === 本次分析序号) {
-        元素.分析按钮.disabled = false;
-        元素.分析按钮.removeAttribute('aria-busy');
-        元素.分析按钮.textContent = '分析';
-      }
+    } catch (错误) {
+      console.error('[阅读器] 关键词搭配分析失败', 错误);
     }
 
     function 提取后续词组(文本偏移) {
@@ -2708,9 +2708,6 @@ function 绑定事件() {
 
   function 取消词组分析() {
     词组分析序号 += 1;
-    元素.分析按钮.disabled = false;
-    元素.分析按钮.removeAttribute('aria-busy');
-    元素.分析按钮.textContent = '分析';
   }
 
   function 显示查找错误(文字) {
