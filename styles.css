@@ -1252,7 +1252,7 @@ body.右下面板展开 .关键词面板开关 {
   z-index: 2;
   min-width: 18px;
   padding: 1px 2px;
-  color: var(--纸张色);
+  color: #000000;
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-size: 9px;
   font-weight: 700;
@@ -1261,8 +1261,8 @@ body.右下面板展开 .关键词面板开关 {
   text-align: center;
   letter-spacing: 0;
   content: attr(data-hit-position);
-  background: #241b15;
-  border: 0;
+  background: #ffffff;
+  border: 1px solid #241b15;
   border-radius: 3px;
   box-shadow: 0 2px 7px rgb(0 0 0 / 42%);
   pointer-events: none;
