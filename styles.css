@@ -1523,7 +1523,7 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .查找弹窗 {
-  width: min(420px, calc(100vw - 32px));
+  width: min(520px, calc(100vw - 32px));
   margin: 24px auto auto;
   padding: 0;
   color: var(--墨色);
@@ -1738,8 +1738,12 @@ body.右下面板展开 .关键词面板开关 {
   line-height: 18px;
 }
 
-.分析表格容器 {
-  max-height: min(340px, calc(100dvh - 220px));
+/* 分析结果：左右两栏（???关键词 / 关键词???），各自带标题、行式列表和数量。 */
+.分析分栏 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  max-height: min(360px, calc(100dvh - 220px));
   overflow: auto;
   border-top: 1px solid #000000;
   border-bottom: 1px solid var(--边线色);
@@ -1747,49 +1751,79 @@ body.右下面板展开 .关键词面板开关 {
   scrollbar-width: thin;
 }
 
-.分析表格 {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-  font-size: 13px;
+.分析栏 {
+  min-width: 0;
 }
 
-.分析表格 th,
-.分析表格 td {
-  height: 34px;
-  padding: 6px 8px;
-  text-align: left;
-  border-bottom: 1px solid #e4e8e5;
+/* 中缝分隔线画在右栏左侧，避免左栏加边框影响首栏对齐 */
+.分析栏 + .分析栏 {
+  border-left: 1px solid var(--边线色);
 }
 
-.分析表格 th {
+.分析栏标题 {
   position: sticky;
   top: 0;
   z-index: 1;
-  color: var(--次要墨色);
-  font-size: 11px;
-  font-weight: 700;
-  /* 原固定浅底 #f5f7f5 会在深色纸面上与自适应的深墨字相撞；跟随纸面色即可。 */
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  margin: 0;
+  padding: 8px 10px 6px;
+  /* 跟随纸面色，滚动时压住下方行 */
   background: var(--纸张色);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--墨色);
+  border-bottom: 1px solid var(--边线色);
 }
 
-.分析表格 th:last-child,
-.分析表格 td:last-child {
-  width: 72px;
-  text-align: right;
-  font-variant-numeric: tabular-nums;
+.分析栏标记 {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--次要墨色);
 }
 
-.分析表格 td:first-child {
+.分析词组列表 {
+  margin: 0;
+  padding: 0 4px;
+  list-style: none;
+}
+
+.分析行 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 6px;
+  font-size: 13px;
+  line-height: 18px;
+  border-bottom: 1px solid #e4e8e5;
+}
+
+.分析行 span:first-child {
+  min-width: 0;
   overflow-wrap: anywhere;
 }
 
-.分析表格 tbody tr:hover {
+.分析行 span:last-child {
+  flex-shrink: 0;
+  color: var(--次要墨色);
+  font-variant-numeric: tabular-nums;
+}
+
+.分析行:hover {
   background: #f8f9f8;
 }
 
-.分析表格 tbody tr:last-child td {
-  border-bottom: 0;
+/* 某一侧没有高频搭配时显示占位说明 */
+.分析栏:not(:has(.分析行)) .分析词组列表::after {
+  content: '无高频搭配';
+  display: block;
+  padding: 10px 6px;
+  color: var(--次要墨色);
+  font-size: 12px;
 }
 
 @keyframes 查找弹窗进入 {

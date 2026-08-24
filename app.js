@@ -339,8 +339,9 @@ const 元素 = {
   分析按钮: document.querySelector('#分析按钮'),
   分析结果: document.querySelector('#分析结果'),
   分析结果摘要: document.querySelector('#分析结果摘要'),
-  分析表格容器: document.querySelector('.分析表格容器'),
-  分析结果列表: document.querySelector('#分析结果列表'),
+  分析分栏: document.querySelector('.分析分栏'),
+  前置词组列表: document.querySelector('#前置词组列表'),
+  后续词组列表: document.querySelector('#后续词组列表'),
   关闭查找按钮: document.querySelector('#关闭查找按钮'),
   自定义滚动条: document.querySelector('#自定义滚动条'),
   滚动块: document.querySelector('#滚动块'),
@@ -712,7 +713,7 @@ function 绑定事件() {
   元素.查找下一个按钮.addEventListener('click', function 定位查找下一个() {
     定位查找命中(1);
   });
-  元素.分析表格容器.addEventListener('scroll', 处理分析结果滚动, {
+  元素.分析分栏.addEventListener('scroll', 处理分析结果滚动, {
     passive: true,
   });
   元素.关闭查找按钮.addEventListener('click', 关闭查找弹窗);
@@ -2504,17 +2505,25 @@ function 绑定事件() {
       }
       if (!命中位置.length) {
         清空分析结果();
-        显示查找错误('未找到该前缀');
-        console.info('[阅读器] 前缀分析无匹配', { 前缀 });
+        显示查找错误('未找到该关键词');
+        console.info('[阅读器] 关键词分析无匹配', { 关键词: 前缀 });
         return;
       }
 
-      const 词组数量 = new Map();
+      // 左右两组搭配分别计数；只出现 1 次的词组属于偶发组合，不展示
+      const 后续数量 = new Map();
+      const 前置数量 = new Map();
       let 已分析命中数 = 0;
       let 时间片开始 = performance.now();
       for (const 文本偏移 of 命中位置) {
-        const 词组 = 提取词组(文本偏移);
-        词组数量.set(词组, (词组数量.get(词组) ?? 0) + 1);
+        const 后续词组 = 提取后续词组(文本偏移);
+        if (后续词组 !== 前缀) {
+          后续数量.set(后续词组, (后续数量.get(后续词组) ?? 0) + 1);
+        }
+        const 前置词组 = 提取前置词组(文本偏移);
+        if (前置词组 && 前置词组 !== 前缀) {
+          前置数量.set(前置词组, (前置数量.get(前置词组) ?? 0) + 1);
+        }
         已分析命中数 += 1;
         if ((已分析命中数 & 255) === 0) {
           时间片开始 = await 按需让出主线程(时间片开始);
@@ -2523,23 +2532,32 @@ function 绑定事件() {
           }
         }
       }
-      const 统计列表 = [...词组数量]
-        .map(function 转换统计项([词组, 数量]) {
-          return { 词组, 数量 };
-        })
-        .sort(function 排序统计项(左项, 右项) {
-          return (
-            右项.数量 - 左项.数量 || 左项.词组.localeCompare(右项.词组, 'zh-CN')
-          );
-        });
+      const 转换统计列表 = function 转换统计列表(数量表) {
+        return [...数量表]
+          .filter(function 过滤单次([, 数量]) {
+            return 数量 > 1;
+          })
+          .map(function 转换统计项([词组, 数量]) {
+            return { 词组, 数量 };
+          })
+          .sort(function 排序统计项(左项, 右项) {
+            return (
+              右项.数量 - 左项.数量 ||
+              左项.词组.localeCompare(右项.词组, 'zh-CN')
+            );
+          });
+      };
+      const 后续列表 = 转换统计列表(后续数量);
+      const 前置列表 = 转换统计列表(前置数量);
       if (!分析仍然有效()) {
         return;
       }
-      渲染分析结果(统计列表, 命中位置.length);
+      渲染分析结果(后续列表, 前置列表, 命中位置.length);
 
-      console.info('[阅读器] 前缀分析完成', {
-        前缀,
-        词组数: 统计列表.length,
+      console.info('[阅读器] 关键词搭配分析完成', {
+        关键词: 前缀,
+        前置词组数: 前置列表.length,
+        后续词组数: 后续列表.length,
         命中数: 命中位置.length,
         耗时毫秒: Math.round(performance.now() - 开始时间),
       });
@@ -2551,7 +2569,7 @@ function 绑定事件() {
       }
     }
 
-    function 提取词组(文本偏移) {
+    function 提取后续词组(文本偏移) {
       const 上下文 = 状态.文本.slice(文本偏移, 文本偏移 + 前缀.length + 64);
       const 前缀终点 = 前缀.length;
       let 词组终点 = 前缀终点;
@@ -2571,11 +2589,36 @@ function 绑定事件() {
       return 上下文.slice(0, 词组终点);
     }
 
-    function 渲染分析结果(统计列表, 命中总数) {
-      分析结果视图 = { 统计列表, 已渲染数: 0 };
-      元素.分析结果摘要.textContent = `${统计列表.length} 个词组 · ${命中总数.toLocaleString('zh-CN')} 次出现`;
-      元素.分析结果列表.replaceChildren();
-      元素.分析表格容器.scrollTop = 0;
+    function 提取前置词组(文本偏移) {
+      const 起点 = Math.max(0, 文本偏移 - 64);
+      const 上下文 = 状态.文本.slice(起点, 文本偏移);
+      const 片段列表 = [...词组分段器.segment(上下文)];
+      let 词组起点 = 上下文.length;
+      for (let idx = 片段列表.length - 1; idx >= 0; idx -= 1) {
+        const 片段 = 片段列表[idx];
+        const 片段终点 = 片段.index + 片段.segment.length;
+        if (片段.index >= 上下文.length) {
+          continue;
+        }
+        if (
+          片段终点 > 上下文.length ||
+          (片段终点 === 上下文.length && 片段.isWordLike)
+        ) {
+          词组起点 = 片段.index;
+        }
+        break;
+      }
+      return 上下文.slice(词组起点);
+    }
+
+    function 渲染分析结果(后续列表, 前置列表, 命中总数) {
+      分析结果视图 = { 后续列表, 前置列表, 已渲染后续: 0, 已渲染前置: 0 };
+      const 高频词组数 = 后续列表.length + 前置列表.length;
+      元素.分析结果摘要.textContent = `${命中总数.toLocaleString('zh-CN')} 次出现 · ${高频词组数} 个高频搭配`;
+      元素.前置词组列表.replaceChildren();
+      元素.后续词组列表.replaceChildren();
+      元素.分析分栏.scrollTop = 0;
+      元素.分析分栏.scrollLeft = 0;
       追加分析结果行();
       元素.分析结果.hidden = false;
     }
@@ -2610,8 +2653,10 @@ function 绑定事件() {
   function 处理分析结果滚动() {
     if (
       分析结果视图 &&
-      元素.分析表格容器.scrollTop + 元素.分析表格容器.clientHeight >
-        元素.分析表格容器.scrollHeight - 200
+      (分析结果视图.已渲染后续 < 分析结果视图.后续列表.length ||
+        分析结果视图.已渲染前置 < 分析结果视图.前置列表.length) &&
+      元素.分析分栏.scrollTop + 元素.分析分栏.clientHeight >
+        元素.分析分栏.scrollHeight - 200
     ) {
       追加分析结果行();
     }
@@ -2621,23 +2666,40 @@ function 绑定事件() {
     if (!分析结果视图) {
       return;
     }
-    const 终点 = Math.min(
-      分析结果视图.统计列表.length,
-      分析结果视图.已渲染数 + 每批分析结果数,
-    );
-    const 表格片段 = document.createDocumentFragment();
-    for (let idx = 分析结果视图.已渲染数; idx < 终点; idx += 1) {
-      const 统计项 = 分析结果视图.统计列表[idx];
-      const 行 = document.createElement('tr');
-      const 词组单元格 = document.createElement('td');
-      const 数量单元格 = document.createElement('td');
-      词组单元格.textContent = 统计项.词组;
-      数量单元格.textContent = 统计项.数量.toLocaleString('zh-CN');
-      行.append(词组单元格, 数量单元格);
-      表格片段.append(行);
+    let 剩余额度 = 每批分析结果数;
+    for (const 区间 of [
+      {
+        列表: 分析结果视图.后续列表,
+        进度键: '已渲染后续',
+        目标: 元素.后续词组列表,
+      },
+      {
+        列表: 分析结果视图.前置列表,
+        进度键: '已渲染前置',
+        目标: 元素.前置词组列表,
+      },
+    ]) {
+      const 起点 = 分析结果视图[区间.进度键];
+      if (起点 >= 区间.列表.length || 剩余额度 <= 0) {
+        continue;
+      }
+      const 终点 = Math.min(区间.列表.length, 起点 + 剩余额度);
+      const 行片段 = document.createDocumentFragment();
+      for (let idx = 起点; idx < 终点; idx += 1) {
+        const 统计项 = 区间.列表[idx];
+        const 行 = document.createElement('li');
+        行.className = '分析行';
+        const 词组单元格 = document.createElement('span');
+        const 数量单元格 = document.createElement('span');
+        词组单元格.textContent = 统计项.词组;
+        数量单元格.textContent = 统计项.数量.toLocaleString('zh-CN');
+        行.append(词组单元格, 数量单元格);
+        行片段.append(行);
+      }
+      区间.目标.append(行片段);
+      分析结果视图[区间.进度键] = 终点;
+      剩余额度 -= 终点 - 起点;
     }
-    分析结果视图.已渲染数 = 终点;
-    元素.分析结果列表.append(表格片段);
   }
 
   function 取消词组分析() {
@@ -2657,7 +2719,8 @@ function 绑定事件() {
     分析结果视图 = null;
     元素.分析结果.hidden = true;
     元素.分析结果摘要.textContent = '';
-    元素.分析结果列表.replaceChildren();
+    元素.前置词组列表.replaceChildren();
+    元素.后续词组列表.replaceChildren();
   }
 
   function 清除查找错误() {
@@ -3137,9 +3200,6 @@ function 绑定事件() {
       安排保存持久化状态();
     }
     元素.滚动容器.scrollTop = 新位置;
-    // 滚动块只依赖滚动位置，使用缓存的度量按每个 rAF 更新；布局读取、虚拟行
-    // 重绘和文字统计仍按界面节拍执行，避免把重型工作塞进每个屏幕帧。
-    更新滚动块位置(本次滚动.视口度量);
     if (当前时间 - 本次滚动.上次界面时间 >= 自动滚动界面间隔) {
       本次滚动.上次界面时间 = 当前时间;
       // 每个界面节拍只读取一次布局尺寸，并把结果传给后续更新，避免写入后反复强制重排。
@@ -3173,6 +3233,12 @@ function 绑定事件() {
       );
       设置文本(元素.今日滚动时间, 今日滚动后缀());
     }
+    // scrollTop 在 Chrome 中按整数像素存储；用合成层补回小数位，避免低速时
+    // 必须累计到 1px 才产生一次可见移动。滚动块只依赖滚动位置，仍按每个 rAF 更新。
+    const 实际滚动位置 = 元素.滚动容器.scrollTop;
+    const 小数位移 = 本次滚动.浮点位置 - 实际滚动位置;
+    元素.可见内容.style.transform = `translateY(${状态.渲染起点 * 状态.行高 - 小数位移}px)`;
+    更新滚动块位置(本次滚动.视口度量, 本次滚动.浮点位置);
     if (新位置 >= 最大滚动位置 - 0.5) {
       停止自动滚动('已到文末');
       return;
@@ -7055,7 +7121,7 @@ function 轨道中心转滚动位置(轨道位置, 度量) {
   return 进度 * 度量.最大滚动位置;
 }
 
-function 更新滚动块位置(度量 = null) {
+function 更新滚动块位置(度量 = null, 滚动位置 = null) {
   const 轨道 = 元素.自定义滚动条;
   轨道.hidden = false;
   元素.滚动进度.hidden = false;
@@ -7070,9 +7136,10 @@ function 更新滚动块位置(度量 = null) {
     return null;
   }
 
-  const 进度 = Math.min(1, Math.max(0, 元素.滚动容器.scrollTop / 最大滚动位置));
+  const 当前滚动位置 = 滚动位置 ?? 元素.滚动容器.scrollTop;
+  const 进度 = Math.min(1, Math.max(0, 当前滚动位置 / 最大滚动位置));
   const 滚动块偏移 =
-    滚动位置转轨道中心(元素.滚动容器.scrollTop, 滚动条度量) - 滚动块高度 / 2;
+    滚动位置转轨道中心(当前滚动位置, 滚动条度量) - 滚动块高度 / 2;
 
   const 滚动块高度样式 = `${滚动块高度}px`;
   if (元素.滚动块.style.height !== 滚动块高度样式) {
