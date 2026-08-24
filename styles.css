@@ -2635,6 +2635,35 @@ dialog,
   outline-offset: 2px;
 }
 
+/* 阶梯段落开关：与工具栏其他开关同款外观 */
+.阶梯段落选项 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--墨色);
+  font:
+    12px/1.2 'Avenir Next',
+    'PingFang SC',
+    sans-serif;
+  cursor: pointer;
+}
+
+.阶梯段落选项[hidden] {
+  display: none;
+}
+
+.阶梯段落选项 input[type='checkbox'] {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--选中色);
+}
+
+.阶梯段落选项:focus-within {
+  outline: 2px solid var(--选中色);
+  outline-offset: 2px;
+}
+
 .关键词颜色选项 input,
 .字体颜色选项 input,
 .内置字词颜色选项 input,
