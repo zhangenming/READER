@@ -272,7 +272,7 @@ body.关键词手势中 .滚动容器 {
   transform: translateY(-50%);
 }
 
-.自定义滚动条:focus-visible~.滚动进度 #滚动百分比 {
+.自定义滚动条:focus-visible ~ .滚动进度 #滚动百分比 {
   outline: 2px solid var(--选中色);
   outline-offset: 2px;
 }
@@ -654,7 +654,7 @@ body.右下面板展开 .关键词面板开关 {
   background: color-mix(in srgb, var(--关键词浅色) 26%, var(--纸张色));
 }
 
-.关键词项+.关键词项 {
+.关键词项 + .关键词项 {
   margin-top: 1px;
 }
 
@@ -962,8 +962,8 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 /* 命中高亮时保留遮罩，并改用略深的红，避免在彩色背景上发灰看不清 */
-.字.否定叉.命中>.否定叉标记::before,
-.字.否定叉.命中>.否定叉标记::after {
+.字.否定叉.命中 > .否定叉标记::before,
+.字.否定叉.命中 > .否定叉标记::after {
   background: rgba(176, 42, 26, 0.85);
 }
 
@@ -975,61 +975,44 @@ body.右下面板展开 .关键词面板开关 {
   font-weight: 700;
 }
 
-/* 关系字特殊样式：使用内置字词颜色并加粗，在字格底部中央画红色短横杠。 */
+/* 关系字特殊样式：使用内置字词颜色并加粗。
+   底部短横杠效果已移除。 */
 .字.关系字特殊:not(.命中) {
   color: var(--内置字词颜色);
   font-weight: 750;
 }
 
 .关系字标记 {
-  position: absolute;
-  bottom: 0.15em;
-  left: 50%;
-  z-index: 2;
-  width: 0.38em;
-  height: 1.5px;
-  background: #ff0000;
-  border-radius: 1px;
-  pointer-events: none;
-  transform: translateX(-50%);
+  display: none;
 }
 
 /* 内置连词（让步/转折/因果/假设/递进/选择/顺接/时间/限制/语气/强调/疑问）：
-   文字使用内置字词颜色，双字词首字在两字正中画红色短横线。
-   横线只画在首字的右侧、不改变正文行高；命中态仍由关键词高亮接管。 */
-.字:is(.让步词,
-  .转折词,
-  .因词,
-  .果词,
-  .假设词,
-  .递进词,
-  .选择词,
-  .顺接词,
-  .时间词,
-  .限制词,
-  .语气词,
-  .强调词,
-  .疑问词):not(.命中) {
+   文字使用内置字词颜色；首字与次字之间的红色短横线效果已移除。
+   命中态仍由关键词高亮接管。 */
+.字:is(
+    .让步词,
+    .转折词,
+    .因词,
+    .果词,
+    .假设词,
+    .递进词,
+    .选择词,
+    .顺接词,
+    .时间词,
+    .限制词,
+    .语气词,
+    .强调词,
+    .疑问词
+  ):not(.命中) {
   color: var(--内置字词颜色);
 }
 
 .字.关系词首字:not(.命中)::after {
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  z-index: 10;
-  width: 0.4em;
-  height: 6px;
-  content: '';
-  background: #ff0000;
-  border-radius: 6px;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
+  content: none;
 }
 
-/* 横线跨过首字与次字的边界；提升首字层级，避免被次字字形遮住。 */
+/* 首字层级提升已随横线一并移除。 */
 .字.关系词首字:not(.命中) {
-  z-index: 10;
 }
 
 /* 引号边界的引号标记也跟随 spk 内字体，使整段引文字体统一 */
@@ -1173,7 +1156,7 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 /* 行首命中块不能向左溢出，否则会盖住阅读画布的左边框。 */
-.正文行>.字.命中:first-child {
+.正文行 > .字.命中:first-child {
   margin-left: 0;
 }
 
@@ -1203,8 +1186,8 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 /* 首尾三角与序号徽标分离：三角标明边界，序号仍由 data-hit-position 绘制。 */
-.字.命中>.首处标记,
-.字.命中>.末处标记 {
+.字.命中 > .首处标记,
+.字.命中 > .末处标记 {
   position: absolute;
   top: 50%;
   z-index: 2;
@@ -1215,12 +1198,12 @@ body.右下面板展开 .关键词面板开关 {
   user-select: none;
 }
 
-.字.命中>.首处标记 {
+.字.命中 > .首处标记 {
   left: -0.48em;
   transform: translateY(-50%);
 }
 
-.字.命中>.末处标记 {
+.字.命中 > .末处标记 {
   right: -0.58em;
   transform: translateY(-50%);
 }
@@ -1325,35 +1308,47 @@ body.右下面板展开 .关键词面板开关 {
   height: auto;
   transform: none;
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% var(--当前准星粗细) no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% var(--当前准星粗细) no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100%
+      var(--当前准星粗细) no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100%
+      var(--当前准星粗细) no-repeat;
   pointer-events: none;
 }
 
 .字.命中.当前命中.当前命中起点::before {
   left: calc(var(--当前准星延伸) * -1);
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% var(--当前准星粗细) no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% var(--当前准星粗细) no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / var(--当前准星粗细) 100% no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100%
+      var(--当前准星粗细) no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100%
+      var(--当前准星粗细) no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 /
+      var(--当前准星粗细) 100% no-repeat;
 }
 
 .字.命中.当前命中.当前命中终点::before {
   right: calc(var(--当前准星延伸) * -1);
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% var(--当前准星粗细) no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% var(--当前准星粗细) no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 / var(--当前准星粗细) 100% no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100%
+      var(--当前准星粗细) no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100%
+      var(--当前准星粗细) no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 /
+      var(--当前准星粗细) 100% no-repeat;
 }
 
 /* 单字命中由同一个伪元素绘制完整外框。 */
 .字.命中.当前命中.当前命中起点.当前命中终点::before {
   inset: calc(var(--当前准星延伸) * -1);
   background:
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100% var(--当前准星粗细) no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100% var(--当前准星粗细) no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / var(--当前准星粗细) 100% no-repeat,
-    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 / var(--当前准星粗细) 100% no-repeat;
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 / 100%
+      var(--当前准星粗细) no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 100% / 100%
+      var(--当前准星粗细) no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 0 0 /
+      var(--当前准星粗细) 100% no-repeat,
+    linear-gradient(var(--当前准星色), var(--当前准星色)) 100% 0 /
+      var(--当前准星粗细) 100% no-repeat;
 }
 
 .字.命中.当前命中.当前命中起点 {
@@ -1729,7 +1724,7 @@ dialog {
 }
 
 /* 中缝分隔线画在右栏左侧，避免左栏加边框影响首栏对齐 */
-.分析栏+.分析栏 {
+.分析栏 + .分析栏 {
   border-left: 1px solid var(--边线色);
 }
 
@@ -2102,7 +2097,7 @@ dialog {
   display: none;
 }
 
-.单字双列表>.词频表格+.词频表格 {
+.单字双列表 > .词频表格 + .词频表格 {
   border-left: 1px solid var(--边线色);
 }
 
@@ -2373,7 +2368,6 @@ dialog {
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   .载入线::after,
   .查找弹窗[open],
   .上下文弹窗[open],
