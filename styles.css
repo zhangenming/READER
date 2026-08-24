@@ -594,7 +594,7 @@ body.右下面板展开 .关键词面板开关 {
   padding: 4px;
   overflow-y: auto;
   background: var(--纸张色);
-  border: 1px solid #cbd2ce;
+  border: 1px solid #000000;
   border-radius: 6px;
   box-shadow: 0 12px 34px rgb(0 0 0 / 16%);
   scrollbar-color: #8c8c8c transparent;
