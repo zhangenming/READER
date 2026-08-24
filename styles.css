@@ -1684,7 +1684,8 @@ body.右下面板展开 .关键词面板开关 {
 
 .关闭查找按钮:focus-visible,
 .提交查找按钮:focus-visible,
-.分析按钮:focus-visible {
+.分析按钮:focus-visible,
+.查找导航按钮:focus-visible {
   outline: 2px solid var(--选中色);
   outline-offset: 2px;
 }
@@ -1695,6 +1696,47 @@ body.右下面板展开 .关键词面板开关 {
   color: #9f3526;
   font-size: 12px;
   line-height: 18px;
+}
+
+.查找导航行 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 30px;
+  margin-top: 8px;
+  color: var(--次要墨色);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.查找导航按钮组 {
+  display: flex;
+  gap: 6px;
+}
+
+.查找导航按钮 {
+  min-height: 28px;
+  padding: 0 8px;
+  color: var(--墨色);
+  font:
+    12px/1 'Avenir Next',
+    'PingFang SC',
+    sans-serif;
+  background: var(--纸张色);
+  border: 1px solid #aeb8b2;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.查找导航按钮:hover:not(:disabled) {
+  background: var(--背景色);
+  border-color: #89958e;
+}
+
+.查找导航按钮:disabled {
+  color: var(--次要墨色);
+  cursor: default;
+  opacity: 0.5;
 }
 
 .分析结果[hidden] {

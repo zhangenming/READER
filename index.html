@@ -131,6 +131,29 @@
           <button id="分析按钮" class="分析按钮" type="button">分析</button>
         </div>
         <p id="查找反馈" class="查找反馈" role="status" aria-live="polite"></p>
+        <div class="查找导航行" aria-live="polite">
+          <span id="查找命中摘要" class="查找命中摘要"></span>
+          <div class="查找导航按钮组">
+            <button
+              id="查找上一个按钮"
+              class="查找导航按钮"
+              type="button"
+              title="上一个命中"
+              disabled
+            >
+              ← 上一个
+            </button>
+            <button
+              id="查找下一个按钮"
+              class="查找导航按钮"
+              type="button"
+              title="下一个命中"
+              disabled
+            >
+              下一个 →
+            </button>
+          </div>
+        </div>
         <section id="分析结果" class="分析结果" aria-live="polite" hidden>
           <p id="分析结果摘要" class="分析结果摘要"></p>
           <div class="分析表格容器">
