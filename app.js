@@ -1243,12 +1243,19 @@ function 绑定事件() {
       }
       // Shift 与 Ctrl/Meta 组合（Ctrl+Shift 跳到上一个关键词）：
       // 1) 标记「期间有其他交互」→ 松开不触发自动滚动；
-      // 2) 若 Ctrl 导航已激活（Ctrl 先按），把方向改为「向上」（上一个）。
+      // 2) 若 Ctrl 导航已激活（Ctrl 先按），把方向改为「向上」（上一个），
+      //    并在按下的这一刻就立即跳一次——连续点按 Shift 可连续向上跳；
+      //    标记「已执行跳转」，之后全部修饰键松开时不再补跳。
       // 注：本机 Ctrl↔Win 对调，物理 Ctrl 以 Meta 形式送达，故同时检查 ctrlKey/metaKey。
       if (事件.ctrlKey || 事件.metaKey) {
         shift期间有其他交互 = true;
-        if (Ctrl按键状态) {
+        if (Ctrl按键状态 && !Ctrl按键状态.已与其他键组合) {
           Ctrl按键状态.向上 = true;
+          // Win/Alt 组合（跳到全文首/末）不走即时路径，仍等全部修饰键松开再生效。
+          if (!Ctrl按键状态.Command已按下) {
+            Ctrl按键状态.已执行跳转 = true;
+            执行导航跳转(Ctrl按键状态);
+          }
         }
       }
       return;
@@ -1564,6 +1571,12 @@ function 绑定事件() {
     const 本次按键状态 = Ctrl按键状态;
     Ctrl按键状态 = null;
     if (!本次按键状态 || 本次按键状态.已与其他键组合) {
+      return;
+    }
+    // Shift+Ctrl 组合已在每次按下 Shift 的那一刻即时跳转（连点 Shift 连跳），
+    // 这里见到「已执行跳转」标记就不再补跳，避免松开时多跳一格。
+    if (本次按键状态.已执行跳转) {
+      待导航参数 = null;
       return;
     }
 
