@@ -1167,6 +1167,24 @@ body.右下面板展开 .关键词面板开关 {
   background-color: transparent;
 }
 
+/* 普通关键词在字正中叠一枚实心圆点，颜色跟随关键词字色（currentColor）：
+   普通命中为关键词色点，当前关键词组/同组悬停的白底或色底上为黑点。
+   「当前命中/悬停命中」的 x/y 序号徽标复用此伪元素，其选择器优先级更高，
+   会整体覆盖本规则，二者不冲突。 */
+.字.命中::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 0.24em;
+  height: 0.24em;
+  content: '';
+  background: currentColor;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
 /* spk 内命中：引文底色已改为内嵌条，命中只改字色，条由底层规则继续绘制。 */
 .字.引文内容.命中 {
   background-color: transparent;
@@ -1250,6 +1268,10 @@ body.右下面板展开 .关键词面板开关 {
   top: -7px;
   right: -3px;
   z-index: 2;
+  /* 覆盖中心圆点规则的宽高与位移：徽标按自身尺寸绘制在右上角 */
+  width: auto;
+  height: auto;
+  transform: none;
   min-width: 18px;
   padding: 1px 2px;
   color: var(--纸张色);
