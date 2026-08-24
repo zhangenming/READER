@@ -362,6 +362,18 @@ body.关键词手势中 .滚动容器 {
   align-items: center;
 }
 
+/* 右下角悬浮控件与关键词面板同属弹窗类 UI,一并钉死黑白变量 */
+.自动滚动按钮,
+.内容选择按钮,
+.关键词面板开关 {
+  --背景色: #f2f2f2;
+  --纸张色: #ffffff;
+  --墨色: #000000;
+  --次要墨色: #767676;
+  --边线色: #d9d9d9;
+  --选中色: #000000;
+}
+
 .自动滚动按钮 {
   grid-area: 滚动;
   display: inline-flex;
@@ -379,7 +391,7 @@ body.关键词手势中 .滚动容器 {
   border: 1px solid var(--边线色);
   border-radius: 13px;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgb(32 37 34 / 8%);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
 }
 
 .自动滚动速度 {
@@ -486,7 +498,7 @@ body.关键词手势中 .滚动容器 {
   background: var(--纸张色);
   border: 1px solid var(--边线色);
   border-radius: 13px;
-  box-shadow: 0 2px 8px rgb(32 37 34 / 8%);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
   cursor: pointer;
 }
 
@@ -495,8 +507,8 @@ body.关键词手势中 .滚动容器 {
   width: 15px;
   height: 15px;
   place-items: center;
-  /* 图标底是固定的深绿选中色，字用纯白即可恒定可读；
-     不随纸面色走（纸面调成中灰/深色时灰字会融入绿底）。 */
+  /* 图标底用黑色选中色，字用纯白恒定可读；
+     不随纸面色走（纸面调成中灰/深色时灰字会融入底色）。 */
   color: #fff;
   font-size: 9px;
   line-height: 1;
@@ -519,7 +531,7 @@ body.关键词手势中 .滚动容器 {
   border-color: #aeb8b2;
 }
 
-/* 按下态底色是固定的深绿选中色，字用纯白恒定可读，不随纸面色变化。 */
+/* 按下态底色用黑色选中色，字用纯白恒定可读，不随纸面色变化。 */
 .自动滚动按钮[aria-pressed='true'] {
   color: #fff;
   background: var(--选中色);
@@ -528,8 +540,8 @@ body.关键词手势中 .滚动容器 {
 
 .自动滚动按钮[aria-pressed='true']:hover {
   color: #fff;
-  background: #125b56;
-  border-color: #125b56;
+  background: #333333;
+  border-color: #333333;
 }
 
 .自动滚动按钮:focus-visible {
