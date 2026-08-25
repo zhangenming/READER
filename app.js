@@ -2,33 +2,15 @@ import {
   shift双击中阈值,
   关键词排序方式列表,
   双击判定延迟,
-  字素分段器,
-  拼音排序器,
   文本目录地址,
   时间格式器,
   最大字号,
   最大行高,
   最小字号,
   最小行高硬下限,
-  自动滚动反向翻页停留时长,
-  自动滚动快速速度,
   自动滚动最低速度,
   自动滚动最高速度,
-  自动滚动滚轮归一化,
-  自动滚动滚轮死区,
-  自动滚动滚轮灵敏系数,
-  自动滚动界面间隔,
-  自动滚动统计保存间隔,
-  自动滚动缓动时长,
-  自动滚动翻页距离比例,
   自动滚动默认速度,
-  自适应密度因子上限,
-  自适应密度因子下限,
-  自适应滚动强度,
-  自适应窗口下移比例,
-  自适应视口负担下限,
-  衔接线停留时长,
-  词组分段器,
   高亮配色,
   默认关键词颜色,
   默认内置字词颜色,
@@ -41,8 +23,7 @@ import {
   默认页面背景色,
   语音事件,
 } from './js/常量.js';
-import { 按需让出主线程 } from './js/调度.js';
-import { 是有效文本文件名, 是汉字 } from './js/文本工具.js';
+import { 是有效文本文件名 } from './js/文本工具.js';
 import {
   元素,
   外观,
@@ -52,17 +33,13 @@ import {
   字体颜色设置,
   引文背景色,
   状态,
-  统计,
   查找关键词,
-  获取静止滚动位置,
 } from './js/状态.js';
 import { 显示文本处理错误, 显示错误 } from './js/错误提示.js';
 import {
-  二分句段起点,
   创建行索引,
   刷新画布尺寸,
   提交行索引,
-  查找偏移所在行,
   计算最小行高,
   读取正文排版,
   重建行索引,
@@ -75,10 +52,9 @@ import {
   构建句段负担索引,
   统计全文单字,
 } from './js/文本管线.js';
-import { 渲染可见行, 设置文本, 显示当前命中位置提示 } from './js/虚拟渲染.js';
+import { 渲染可见行, 显示当前命中位置提示 } from './js/虚拟渲染.js';
 import {
   关闭上下文弹窗,
-  创建关键词标记,
   删除关键词标记,
   打开上下文弹窗,
   查找关键词命中,
@@ -94,14 +70,13 @@ import {
 } from './js/面板.js';
 import {
   更新滚动块,
-  更新滚动块位置,
   读取滚动条度量,
   轨道中心转滚动位置,
 } from './js/滚动条.js';
 import {
   动画滚动到,
   取消滚动动画,
-  显示衔接线,
+  结束跳转会话,
   获取元素命中边框,
   获取元素行位置,
   获取当前命中边框,
@@ -110,14 +85,18 @@ import {
 } from './js/跳转动画.js';
 import {
   更新自动滚动速度,
-  确保今日滚动统计,
   载入自动滚动统计,
+  开始自动滚动,
+  开始按键滚动,
+  停止按键滚动,
+  执行自动滚动翻页,
+  处理自动滚动滚轮,
+  处理鼠标移动,
+  停止自动滚动,
+  自动滚动进行中,
+  获取按键滚动按键,
+  注册右下强制显示,
 } from './js/自动滚动.js';
-import {
-  今日滚动后缀,
-  格式化当前滚动分钟,
-  格式化滚动小时,
-} from './js/统计展示.js';
 import {
   关闭字体弹窗,
   切换字体标签,
@@ -156,6 +135,36 @@ import {
   读取持久化数据,
   读取阅读位置,
 } from './js/持久化.js';
+import {
+  处理分析结果滚动,
+  处理查找弹窗关闭,
+  处理查找弹窗点击,
+  处理查找提交,
+  处理查找输入,
+  处理词组分析,
+  取消词组分析,
+  关闭查找弹窗,
+  定位查找命中,
+  打开查找弹窗,
+  标记合成开始,
+  合成结束提交,
+} from './js/查找弹窗.js';
+import {
+  处理词频标签点击,
+  处理词频标签键盘,
+  处理词频弹窗点击,
+  取消词频分析,
+  关闭词频弹窗,
+  打开词频弹窗,
+  翻词频页,
+} from './js/词频弹窗.js';
+import {
+  初始化内容选择弹窗,
+  处理内容选择弹窗点击,
+  处理内容选择列表点击,
+  关闭内容选择弹窗,
+  打开内容选择弹窗,
+} from './js/内容选择弹窗.js';
 
 启动();
 
@@ -297,6 +306,15 @@ function 创建文本地址(文件名) {
 }
 
 function 绑定事件() {
+  // 自动滚动的右下控件强制显示经钩子注入（断环：避免「自动滚动 → app」反向依赖）
+  注册右下强制显示((正在滚动) => {
+    右下强制 = 正在滚动;
+    刷新右下控件可见性();
+  });
+
+  // 内容选择弹窗经注入回调访问 app 的 载入文本 / 创建文本地址（断环：避免「内容选择弹窗 → app」反向依赖）
+  初始化内容选择弹窗({ 载入文本, 创建文本地址 });
+
   // ===== 右下角控件：默认隐藏，仅在鼠标靠近 / 触摸 / 聚焦 / 自动滚动时显示 =====
   // 时间（#当前时间）固定显示，不受影响。隐藏时 opacity:0 + pointer-events:none，
   // 既不遮挡正文，也不拦截文本选择。
@@ -360,20 +378,6 @@ function 绑定事件() {
   let 待定单击列表 = []; // 每次单击各自排一个计时器；双击时统一清空，确保单击不抢先在双击前前进
   let 滚动块拖动状态 = null;
   let 滚动进度拖动状态 = null;
-  let 自动滚动状态 = null;
-  let 按键滚动状态 = null;
-  let 上次滚动统计保存时刻 = 0;
-  let 当前词频字数 = 1;
-  let 当前词频页码 = 1;
-  const 每页词频数 = 200;
-  const 每批分析结果数 = 200;
-  const 文本字数任务 = new Map();
-  let 词频分析任务 = null;
-  let 词组分析序号 = 0;
-  let 分析结果视图 = null;
-  let 查找临时状态 = null;
-  let 实时查找计时器 = 0;
-  const 实时查找延迟 = 250; // 输入停止后延时触发实时查找，避免每个按键都全文扫描
   // 「关键词手势」状态：单击=该词下一个 / 双击=该词上一个 / 向上拖=该词第一个 / 向下拖=该词最后一个
   let 关键词手势 = null; // { 关键词, 命中idx, 起点Y, 起点X, 方向: null|'上'|'下' }
   let 点击抑制 = false; // 拖拽手势触发后抑制紧随的 click，避免重复跳转
@@ -405,18 +409,8 @@ function 绑定事件() {
   元素.内容选择列表.addEventListener('click', 处理内容选择列表点击);
   元素.查找表单.addEventListener('submit', 处理查找提交);
   元素.查找输入框.addEventListener('input', 处理查找输入);
-  // 中文输入法组词过程中不触发实时查找
-  元素.查找输入框.addEventListener('compositionstart', function 标记合成开始() {
-    元素.查找输入框.dataset.合成中 = '1';
-    window.clearTimeout(实时查找计时器);
-  });
-  // 组词结束后主动提交一次：部分输入法上屏后的最终 input 事件不会到达或先于本事件，
-  // 仅依赖 input 会漏掉最后一次更新，导致实时查询不触发（表现为上一个/下一个一直禁用）。
-  元素.查找输入框.addEventListener('compositionend', function 合成结束提交() {
-    delete 元素.查找输入框.dataset.合成中;
-    window.clearTimeout(实时查找计时器);
-    实时查找计时器 = window.setTimeout(执行实时查找, 实时查找延迟);
-  });
+  元素.查找输入框.addEventListener('compositionstart', 标记合成开始);
+  元素.查找输入框.addEventListener('compositionend', 合成结束提交);
   元素.分析结果摘要.addEventListener('click', 处理词组分析);
   元素.查找上一个按钮.addEventListener('click', function 定位查找上一个() {
     定位查找命中(-1);
@@ -447,12 +441,10 @@ function 绑定事件() {
   元素.词频标签栏.addEventListener('click', 处理词频标签点击);
   元素.词频标签栏.addEventListener('keydown', 处理词频标签键盘);
   元素.词频上一页.addEventListener('click', function 显示上一页词频() {
-    当前词频页码 -= 1;
-    渲染词频页();
+    翻词频页(-1);
   });
   元素.词频下一页.addEventListener('click', function 显示下一页词频() {
-    当前词频页码 += 1;
-    渲染词频页();
+    翻词频页(1);
   });
   元素.关闭字体按钮.addEventListener('click', 关闭字体弹窗);
   元素.字体遮罩.addEventListener('click', 关闭字体弹窗);
@@ -610,13 +602,13 @@ function 绑定事件() {
       return;
     }
 
-    if (自动滚动状态 || 状态.滚动动画目标 || 状态.滚动帧) {
+    if (自动滚动进行中() || 状态.滚动动画目标 || 状态.滚动帧) {
       return;
     }
 
     状态.滚动帧 = requestAnimationFrame(function 更新滚动状态() {
       状态.滚动帧 = 0;
-      if (自动滚动状态) {
+      if (自动滚动进行中()) {
         return;
       }
       更新滚动块();
@@ -1051,7 +1043,7 @@ function 绑定事件() {
     ) {
       事件.preventDefault();
       Ctrl按键状态 = null; // 取消待导航，避免与 Ctrl 触发键组合时误跳转
-      if (自动滚动状态) {
+      if (自动滚动进行中()) {
         停止自动滚动('Ctrl + D 切换');
       } else {
         开始自动滚动();
@@ -1089,7 +1081,7 @@ function 绑定事件() {
       状态.行起点列表.length
     ) {
       事件.preventDefault();
-      if (!自动滚动状态) {
+      if (!自动滚动进行中()) {
         开始自动滚动();
       }
       return;
@@ -1126,7 +1118,7 @@ function 绑定事件() {
       !事件.ctrlKey &&
       !事件.metaKey &&
       可快速前进自动滚动 &&
-      自动滚动状态
+      自动滚动进行中()
     ) {
       事件.preventDefault();
       if (!事件.repeat) {
@@ -1247,7 +1239,7 @@ function 绑定事件() {
   }
 
   function 处理键盘松开(事件) {
-    if (事件.key.toLowerCase() === 按键滚动状态?.按键) {
+    if (事件.key.toLowerCase() === 获取按键滚动按键()) {
       事件.preventDefault();
       停止按键滚动('按键松开');
       return;
@@ -1262,7 +1254,7 @@ function 绑定事件() {
       if (shift按住中 && !shift期间有其他交互) {
         const 现在 = performance.now();
         if (现在 - shift最后松开时间 <= shift双击中阈值) {
-          if (自动滚动状态) {
+          if (自动滚动进行中()) {
             停止自动滚动('双击 Shift 切换');
           } else {
             开始自动滚动();
@@ -1701,877 +1693,6 @@ function 绑定事件() {
     return 悬停id !== null && 悬停id !== 状态.当前关键词id;
   }
 
-  function 打开查找弹窗() {
-    if (!元素.查找弹窗.open) {
-      元素.查找弹窗.showModal();
-    }
-    清除查找错误();
-    requestAnimationFrame(function 聚焦查找输入框() {
-      元素.查找输入框.focus();
-      元素.查找输入框.select();
-    });
-  }
-
-  function 关闭查找弹窗() {
-    if (!元素.查找弹窗.open) {
-      return;
-    }
-    window.clearTimeout(实时查找计时器);
-    实时查找计时器 = 0;
-    元素.查找弹窗.close();
-    元素.滚动容器.focus({ preventScroll: true });
-  }
-
-  function 处理查找弹窗关闭() {
-    if (!查找临时状态) {
-      return;
-    }
-    const 原状态 = 查找临时状态;
-    查找临时状态 = null;
-    移除临时查找关键词();
-    状态.当前关键词id = 原状态.当前关键词id;
-    const 原关键词 = 查找关键词(原状态.当前关键词id);
-    if (原关键词 && 原状态.当前命中idx >= 0) {
-      原关键词.当前命中idx = Math.min(
-        原状态.当前命中idx,
-        原关键词.命中位置.length - 1,
-      );
-    }
-    状态.悬停关键词id = 原状态.悬停关键词id;
-    状态.悬停命中idx = 原状态.悬停命中idx;
-    渲染可见行(true);
-    更新关键词指示器();
-    动画滚动到(原状态.滚动位置);
-    console.info('[阅读器] 查找临时定位已恢复', {
-      阅读偏移: 原状态.阅读位置.阅读偏移,
-    });
-  }
-
-  function 处理查找弹窗点击(事件) {
-    if (事件.target === 元素.查找弹窗) {
-      关闭查找弹窗();
-    }
-  }
-
-  async function 打开词频弹窗() {
-    if (!元素.词频弹窗.open) {
-      元素.词频弹窗.showModal();
-    }
-    if (状态.词频分析) {
-      渲染词频页();
-      return;
-    }
-    if (!状态.文件名) {
-      元素.词频摘要.textContent = '正文尚未载入';
-      return;
-    }
-    if (词频分析任务) {
-      return;
-    }
-
-    元素.词频摘要.textContent = '正在统计全文';
-    元素.词频列表.replaceChildren();
-    元素.单字重复列表.replaceChildren();
-    元素.单字一次列表.replaceChildren();
-    元素.词频分页.hidden = true;
-    const 本次任务 = {
-      载入序号: 状态.载入序号,
-      文本: 状态.文本,
-    };
-    词频分析任务 = 本次任务;
-    await scheduler.yield();
-    try {
-      const 开始时间 = performance.now();
-      const 分析 = await 统计全文词频(本次任务.文本, 任务仍然有效);
-      if (!分析 || !任务仍然有效()) {
-        return;
-      }
-      状态.词频分析 = 分析;
-      当前词频页码 = 1;
-      渲染词频页();
-      console.info('[阅读器] 词频分析完成', {
-        汉字总数: 分析.汉字总数,
-        去重汉字数: 分析.去重汉字数,
-        单字种数: 分析.列表[1].length,
-        二字种数: 分析.列表[2].length,
-        三字种数: 分析.列表[3].length,
-        四字种数: 分析.列表[4].length,
-        五字种数: 分析.列表[5].length,
-        六字种数: 分析.列表[6].length,
-        只出现一次单字数: 分析.单字列表.一次.length,
-        耗时毫秒: Math.round(performance.now() - 开始时间),
-      });
-    } finally {
-      if (词频分析任务 === 本次任务) {
-        词频分析任务 = null;
-      }
-    }
-
-    function 任务仍然有效() {
-      return (
-        词频分析任务 === 本次任务 &&
-        状态.载入序号 === 本次任务.载入序号 &&
-        状态.文本 === 本次任务.文本
-      );
-    }
-  }
-
-  function 关闭词频弹窗() {
-    if (!元素.词频弹窗.open) {
-      return;
-    }
-    元素.词频弹窗.close();
-    元素.滚动容器.focus({ preventScroll: true });
-  }
-
-  function 取消词频分析() {
-    if (!词频分析任务) {
-      return;
-    }
-    词频分析任务 = null;
-    元素.词频摘要.textContent = '统计已取消';
-  }
-
-  function 处理词频弹窗点击(事件) {
-    if (事件.target === 元素.词频弹窗) {
-      关闭词频弹窗();
-    }
-  }
-
-  function 处理词频标签点击(事件) {
-    const 标签 = 事件.target.closest('.词频标签');
-    if (!(标签 instanceof HTMLButtonElement)) {
-      return;
-    }
-    切换词频字数(Number(标签.dataset.字数));
-  }
-
-  function 处理词频标签键盘(事件) {
-    if (事件.key !== 'ArrowLeft' && 事件.key !== 'ArrowRight') {
-      return;
-    }
-    const 标签列表 = [...元素.词频标签栏.querySelectorAll('.词频标签')];
-    const 当前idx = 标签列表.indexOf(事件.target);
-    if (当前idx === -1) {
-      return;
-    }
-    事件.preventDefault();
-    const 步进 = 事件.key === 'ArrowRight' ? 1 : -1;
-    const 目标标签 =
-      标签列表[(当前idx + 步进 + 标签列表.length) % 标签列表.length];
-    切换词频字数(Number(目标标签.dataset.字数));
-    目标标签.focus();
-  }
-
-  function 切换词频字数(字数) {
-    当前词频字数 = 字数;
-    当前词频页码 = 1;
-    元素.单字双列表.hidden = 字数 !== 1;
-    元素.词频表格容器.hidden = 字数 === 1;
-    for (const 标签 of 元素.词频标签栏.querySelectorAll('.词频标签')) {
-      const 是当前 = Number(标签.dataset.字数) === 字数;
-      标签.classList.toggle('当前', 是当前);
-      标签.setAttribute('aria-selected', String(是当前));
-      标签.tabIndex = 是当前 ? 0 : -1;
-    }
-    渲染词频页();
-  }
-
-  function 渲染词频页() {
-    const 分析 = 状态.词频分析;
-    if (!分析) {
-      return;
-    }
-    const 是单字 = 当前词频字数 === 1;
-    const 统计列表 = 是单字 ? 分析.单字列表.重复 : 分析.列表[当前词频字数];
-    const 最长列表数 = 是单字
-      ? Math.max(统计列表.length, 分析.单字列表.一次.length)
-      : 统计列表.length;
-    const 总页数 = Math.max(1, Math.ceil(最长列表数 / 每页词频数));
-    当前词频页码 = Math.min(总页数, Math.max(1, 当前词频页码));
-    const 起点 = (当前词频页码 - 1) * 每页词频数;
-    if (是单字) {
-      元素.单字重复列表.replaceChildren(创建词频表格片段(统计列表, 起点));
-      元素.单字一次列表.replaceChildren(
-        创建词频表格片段(分析.单字列表.一次, 起点),
-      );
-    } else {
-      元素.词频列表.replaceChildren(创建词频表格片段(统计列表, 起点));
-    }
-
-    const 统计说明 = 是单字
-      ? `${分析.单字列表.一次.length.toLocaleString('zh-CN')} 个字只出现一次`
-      : `${统计列表.length.toLocaleString('zh-CN')} 种${['二', '三', '四', '五', '六'][当前词频字数 - 2]}字组合`;
-    元素.词频摘要.textContent = `${分析.去重汉字数.toLocaleString('zh-CN')} 个汉字 · ${统计说明}`;
-    元素.词频页码.textContent = `${当前词频页码.toLocaleString('zh-CN')} / ${总页数.toLocaleString('zh-CN')}`;
-    元素.词频上一页.disabled = 当前词频页码 === 1;
-    元素.词频下一页.disabled = 当前词频页码 === 总页数;
-    元素.词频分页.hidden = 总页数 === 1;
-    (是单字 ? 元素.单字双列表 : 元素.词频表格容器).scrollTop = 0;
-
-    function 创建词频表格片段(列表, 起点) {
-      const 表格片段 = document.createDocumentFragment();
-      const 本页列表 = 列表.slice(起点, 起点 + 每页词频数);
-      for (const [idx, 统计项] of 本页列表.entries()) {
-        const 行 = document.createElement('tr');
-        const 排名单元格 = document.createElement('td');
-        const 字词单元格 = document.createElement('td');
-        const 频次单元格 = document.createElement('td');
-        排名单元格.textContent = (起点 + idx + 1).toLocaleString('zh-CN');
-        字词单元格.textContent = 统计项.文本;
-        频次单元格.textContent = 统计项.数量.toLocaleString('zh-CN');
-        行.append(排名单元格, 字词单元格, 频次单元格);
-        表格片段.append(行);
-      }
-      return 表格片段;
-    }
-  }
-
-  async function 统计全文词频(全文, 任务仍然有效) {
-    const 词频映射 = Array.from({ length: 7 }, function 创建词频映射() {
-      return new Map();
-    });
-    const 连续汉字 = [];
-    let 汉字总数 = 0;
-    let 文本位置 = 0;
-    let 已扫描字符数 = 0;
-    let 时间片开始 = performance.now();
-
-    for (const 字 of 全文) {
-      if (!是汉字(字)) {
-        连续汉字.length = 0;
-        文本位置 += 字.length;
-      } else {
-        汉字总数 += 1;
-        连续汉字.push({ 字, 位置: 文本位置 });
-        if (连续汉字.length > 6) {
-          连续汉字.shift();
-        }
-        let 字词 = '';
-        for (
-          let 起点 = 连续汉字.length - 1, 字数 = 1;
-          起点 >= 0;
-          起点 -= 1, 字数 += 1
-        ) {
-          字词 = 连续汉字[起点].字 + 字词;
-          记录词频(词频映射[字数], 字词, 连续汉字[起点].位置);
-        }
-        文本位置 += 字.length;
-      }
-      已扫描字符数 += 1;
-      if ((已扫描字符数 & 255) === 0) {
-        时间片开始 = await 按需让出主线程(时间片开始);
-        if (!任务仍然有效()) {
-          return null;
-        }
-      }
-    }
-
-    const 被更长组合覆盖 = Array.from({ length: 7 }, function 创建覆盖集合() {
-      return new Set();
-    });
-    let 已检查组合数 = 0;
-    for (let 字数 = 2; 字数 <= 5; 字数 += 1) {
-      for (const [更长文本, 更长统计] of 词频映射[字数 + 1]) {
-        const 更长汉字 = [...更长文本];
-        for (const 起点 of [0, 1]) {
-          const 短文本 = 更长汉字.slice(起点, 起点 + 字数).join('');
-          const 短统计 = 词频映射[字数].get(短文本);
-          if (短统计.数量 === 更长统计.数量) {
-            被更长组合覆盖[字数].add(短文本);
-          }
-        }
-        已检查组合数 += 1;
-        if ((已检查组合数 & 1023) === 0) {
-          时间片开始 = await 按需让出主线程(时间片开始);
-          if (!任务仍然有效()) {
-            return null;
-          }
-        }
-      }
-    }
-
-    const 列表 = {};
-    for (const 字数 of [1, 2, 3, 4, 5, 6]) {
-      const 统计列表 = [];
-      for (const [文本, 统计] of 词频映射[字数]) {
-        if (字数 === 1 || (统计.数量 > 1 && !被更长组合覆盖[字数].has(文本))) {
-          统计列表.push({ 文本, 数量: 统计.数量, 首次位置: 统计.首次位置 });
-        }
-        已检查组合数 += 1;
-        if ((已检查组合数 & 1023) === 0) {
-          时间片开始 = await 按需让出主线程(时间片开始);
-          if (!任务仍然有效()) {
-            return null;
-          }
-        }
-      }
-      统计列表.sort(function 排序词频(左项, 右项) {
-        return 右项.数量 - 左项.数量 || 左项.首次位置 - 右项.首次位置;
-      });
-      列表[字数] = 统计列表;
-    }
-    const 单字列表 = {
-      重复: 列表[1].filter(function 筛选重复单字(项) {
-        return 项.数量 > 1;
-      }),
-      一次: 列表[1].filter(function 筛选只出现一次的单字(项) {
-        return 项.数量 === 1;
-      }),
-    };
-    return {
-      汉字总数,
-      去重汉字数: 词频映射[1].size,
-      列表,
-      单字列表,
-    };
-
-    function 记录词频(映射, 字词, 首次位置) {
-      const 已有统计 = 映射.get(字词);
-      if (已有统计) {
-        已有统计.数量 += 1;
-        return;
-      }
-      映射.set(字词, { 数量: 1, 首次位置 });
-    }
-  }
-
-  function 处理查找提交(事件) {
-    // 输入框已无独立按钮，回车仅用于跳过防抖立即查询
-    事件.preventDefault();
-    window.clearTimeout(实时查找计时器);
-    实时查找计时器 = 0;
-    执行实时查找();
-  }
-
-  function 执行实时查找() {
-    实时查找计时器 = 0;
-    const 查询 = 解析查找查询(元素.查找输入框.value.trim());
-    if (查询.错误 || !查询.目标) {
-      // 输入为空或不完整时静默清除旧结果
-      清除查找错误();
-      取消词组分析();
-      清空分析结果();
-      if (查找临时状态) {
-        状态.悬停关键词id = 查找临时状态.悬停关键词id;
-        状态.悬停命中idx = 查找临时状态.悬停命中idx;
-        移除临时查找关键词();
-        渲染可见行(true);
-        更新关键词指示器();
-      }
-      return;
-    }
-    if (!状态.文件名) {
-      显示查找错误('正文尚未载入');
-      return;
-    }
-
-    const 命中位置 = 查找带排除前缀的命中(查询.目标, 查询.排除前缀);
-    if (!命中位置.length) {
-      显示查找错误('未找到该关键词');
-      更新查找导航状态(null);
-      清空分析结果();
-      console.info('[阅读器] 查找无匹配', { 查询 });
-      return;
-    }
-
-    const 关键词 = 创建临时查找关键词(
-      元素.查找输入框.value.trim(),
-      查询,
-      命中位置,
-    );
-    查找临时状态.命中idx = 0;
-    更新查找导航状态(关键词);
-    临时跳到查找命中(0);
-    // 实时刷新下方搭配分析面板
-    处理词组分析();
-  }
-
-  function 解析查找查询(查询文本) {
-    const 字素 = Array.from(查询文本);
-    let idx = 0;
-    const 排除列表 = [];
-    while (字素[idx] === '!') {
-      if (!字素[idx + 1]) {
-        return { 目标: '', 排除前缀: '', 错误: '排除符号后需要一个字符' };
-      }
-      排除列表.push(字素[idx + 1]);
-      idx += 2;
-    }
-    return {
-      目标: 字素.slice(idx).join(''),
-      排除前缀: 排除列表.join(''),
-    };
-  }
-
-  function 查找带排除前缀的命中(关键词文本, 排除前缀) {
-    const 命中数组 = [];
-    const 文本字素列表 = 字素分段器.segment(状态.文本);
-    let 搜索位置 = 0;
-    while (搜索位置 <= 状态.文本.length - 关键词文本.length) {
-      const 命中位置 = 状态.文本.indexOf(关键词文本, 搜索位置);
-      if (命中位置 === -1) {
-        break;
-      }
-      const 起点在字素边界 =
-        文本字素列表.containing(命中位置)?.index === 命中位置;
-      const 命中终点 = 命中位置 + 关键词文本.length;
-      const 终点在字素边界 =
-        命中终点 === 状态.文本.length ||
-        文本字素列表.containing(命中终点)?.index === 命中终点;
-      const 前缀匹配 =
-        排除前缀 &&
-        状态.文本.slice(Math.max(0, 命中位置 - 排除前缀.length), 命中位置) ===
-          排除前缀;
-      if (起点在字素边界 && 终点在字素边界 && !前缀匹配) {
-        命中数组.push(命中位置);
-      }
-      搜索位置 = 命中位置 + Math.max(1, 关键词文本.length);
-    }
-    return Uint32Array.from(命中数组);
-  }
-
-  function 创建临时查找关键词(原查询, 查询, 命中位置) {
-    移除临时查找关键词();
-    const 关键词 = 创建关键词标记(查询.目标, 命中位置);
-    关键词.临时 = true;
-    状态.查找临时关键词id = 关键词.id;
-    if (!查找临时状态) {
-      查找临时状态 = {
-        阅读位置: 读取阅读位置(),
-        滚动位置: 获取静止滚动位置(),
-        当前关键词id: 状态.当前关键词id,
-        当前命中idx: 查找关键词(状态.当前关键词id)?.当前命中idx ?? -1,
-        悬停关键词id: 状态.悬停关键词id,
-        悬停命中idx: 状态.悬停命中idx,
-      };
-    }
-    查找临时状态.原查询 = 原查询;
-    查找临时状态.查询 = 查询;
-    查找临时状态.关键词id = 关键词.id;
-    状态.悬停关键词id = 关键词.id;
-    状态.悬停命中idx = 0;
-    return 关键词;
-  }
-
-  function 移除临时查找关键词() {
-    if (状态.查找临时关键词id === null) {
-      return;
-    }
-    const idx = 状态.关键词列表.findIndex(function 找到临时关键词(关键词) {
-      return 关键词.id === 状态.查找临时关键词id;
-    });
-    if (idx >= 0) {
-      状态.关键词列表.splice(idx, 1);
-    }
-    状态.查找临时关键词id = null;
-    状态.指示器缓存 = null;
-    更新查找导航状态(null);
-  }
-
-  function 临时跳到查找命中(命中idx) {
-    const 关键词 = 查找关键词(状态.查找临时关键词id);
-    if (!关键词 || !查找临时状态) {
-      return;
-    }
-    查找临时状态.命中idx = Math.max(
-      0,
-      Math.min(命中idx, 关键词.命中位置.length - 1),
-    );
-    状态.悬停关键词id = 关键词.id;
-    状态.悬停命中idx = 查找临时状态.命中idx;
-    渲染可见行(true);
-    更新关键词指示器();
-    const 行idx = 查找偏移所在行(关键词.命中位置[查找临时状态.命中idx]);
-    const 目标位置 =
-      行idx * 状态.行高 - (元素.滚动容器.clientHeight - 状态.行高) / 2;
-    更新查找导航状态(关键词);
-    动画滚动到(目标位置);
-  }
-
-  function 定位查找命中(方向) {
-    const 关键词 = 查找关键词(状态.查找临时关键词id);
-    if (!关键词?.命中位置.length || !查找临时状态) {
-      return;
-    }
-    const 下一个idx =
-      (查找临时状态.命中idx + 方向 + 关键词.命中位置.length) %
-      关键词.命中位置.length;
-    临时跳到查找命中(下一个idx);
-  }
-
-  function 更新查找导航状态(关键词) {
-    const 有效关键词 = 关键词 || 查找关键词(状态.查找临时关键词id);
-    const 命中数 = 有效关键词?.命中位置.length ?? 0;
-    const 当前idx = 查找临时状态?.命中idx ?? -1;
-    元素.查找命中摘要.textContent = 命中数
-      ? `${(当前idx + 1).toLocaleString('zh-CN')} / ${命中数.toLocaleString('zh-CN')}`
-      : '';
-    元素.查找上一个按钮.disabled = !命中数;
-    元素.查找下一个按钮.disabled = !命中数;
-  }
-
-  async function 处理词组分析() {
-    const 前缀 = 元素.查找输入框.value.trim();
-    if (!前缀) {
-      清空分析结果();
-      return;
-    }
-    if (!状态.文件名) {
-      清空分析结果();
-      显示查找错误('正文尚未载入');
-      return;
-    }
-
-    清除查找错误();
-    const 本次分析序号 = ++词组分析序号;
-    const 本次载入序号 = 状态.载入序号;
-    const 分析文本 = 状态.文本;
-    await scheduler.yield();
-    const 开始时间 = performance.now();
-    try {
-      const 命中位置 = 查找关键词命中(前缀);
-      if (!分析仍然有效()) {
-        return;
-      }
-      if (!命中位置.length) {
-        清空分析结果();
-        显示查找错误('未找到该关键词');
-        console.info('[阅读器] 关键词分析无匹配', { 关键词: 前缀 });
-        return;
-      }
-
-      // 左右两组搭配分别计数；只出现 1 次的词组属于偶发组合，不展示。
-      // 两栏都只记录「接续部分」本身：左侧是前置词，右侧把关键词自身切掉。
-      const 后续数量 = new Map();
-      const 前置数量 = new Map();
-      let 已分析命中数 = 0;
-      let 时间片开始 = performance.now();
-      for (const 文本偏移 of 命中位置) {
-        const 后续词组 = 提取后续词组(文本偏移);
-        if (后续词组 !== 前缀) {
-          const 接续 = 后续词组.slice(前缀.length);
-          if (接续) {
-            后续数量.set(接续, (后续数量.get(接续) ?? 0) + 1);
-          }
-        }
-        const 前置词组 = 提取前置词组(文本偏移);
-        if (前置词组 && 前置词组 !== 前缀) {
-          前置数量.set(前置词组, (前置数量.get(前置词组) ?? 0) + 1);
-        }
-        已分析命中数 += 1;
-        if ((已分析命中数 & 255) === 0) {
-          时间片开始 = await 按需让出主线程(时间片开始);
-          if (!分析仍然有效()) {
-            return;
-          }
-        }
-      }
-      const 转换统计列表 = function 转换统计列表(数量表) {
-        return [...数量表]
-          .filter(function 过滤单次([, 数量]) {
-            return 数量 > 1;
-          })
-          .map(function 转换统计项([词组, 数量]) {
-            return { 词组, 数量 };
-          })
-          .sort(function 排序统计项(左项, 右项) {
-            return (
-              右项.数量 - 左项.数量 ||
-              左项.词组.localeCompare(右项.词组, 'zh-CN')
-            );
-          });
-      };
-      const 后续列表 = 转换统计列表(后续数量);
-      const 前置列表 = 转换统计列表(前置数量);
-      if (!分析仍然有效()) {
-        return;
-      }
-      渲染分析结果(后续列表, 前置列表, 命中位置.length);
-
-      console.info('[阅读器] 关键词搭配分析完成', {
-        关键词: 前缀,
-        前置词组数: 前置列表.length,
-        后续词组数: 后续列表.length,
-        命中数: 命中位置.length,
-        耗时毫秒: Math.round(performance.now() - 开始时间),
-      });
-    } catch (错误) {
-      console.error('[阅读器] 关键词搭配分析失败', 错误);
-    }
-
-    function 提取后续词组(文本偏移) {
-      const 上下文 = 状态.文本.slice(文本偏移, 文本偏移 + 前缀.length + 64);
-      const 前缀终点 = 前缀.length;
-      let 词组终点 = 前缀终点;
-      for (const 片段 of 词组分段器.segment(上下文)) {
-        const 片段终点 = 片段.index + 片段.segment.length;
-        if (片段终点 <= 前缀终点) {
-          continue;
-        }
-        if (
-          片段.index < 前缀终点 ||
-          (片段.index === 前缀终点 && 片段.isWordLike)
-        ) {
-          词组终点 = 片段终点;
-        }
-        break;
-      }
-      return 上下文.slice(0, 词组终点);
-    }
-
-    function 提取前置词组(文本偏移) {
-      const 起点 = Math.max(0, 文本偏移 - 64);
-      const 上下文 = 状态.文本.slice(起点, 文本偏移);
-      const 片段列表 = [...词组分段器.segment(上下文)];
-      let 词组起点 = 上下文.length;
-      for (let idx = 片段列表.length - 1; idx >= 0; idx -= 1) {
-        const 片段 = 片段列表[idx];
-        const 片段终点 = 片段.index + 片段.segment.length;
-        if (片段.index >= 上下文.length) {
-          continue;
-        }
-        if (
-          片段终点 > 上下文.length ||
-          (片段终点 === 上下文.length && 片段.isWordLike)
-        ) {
-          词组起点 = 片段.index;
-        }
-        break;
-      }
-      return 上下文.slice(词组起点);
-    }
-
-    function 渲染分析结果(后续列表, 前置列表, 命中总数) {
-      分析结果视图 = { 后续列表, 前置列表, 已渲染后续: 0, 已渲染前置: 0 };
-      const 高频词组数 = 后续列表.length + 前置列表.length;
-      元素.分析结果摘要.textContent = `${命中总数.toLocaleString('zh-CN')} 次出现 · ${高频词组数} 个高频搭配`;
-      元素.前置词组列表.replaceChildren();
-      元素.后续词组列表.replaceChildren();
-      元素.分析分栏.scrollTop = 0;
-      元素.分析分栏.scrollLeft = 0;
-      追加分析结果行();
-      元素.分析结果.hidden = false;
-    }
-
-    function 分析仍然有效() {
-      return (
-        词组分析序号 === 本次分析序号 &&
-        状态.载入序号 === 本次载入序号 &&
-        状态.文本 === 分析文本 &&
-        元素.查找输入框.value.trim() === 前缀
-      );
-    }
-  }
-
-  function 处理查找输入() {
-    取消词组分析();
-    清除查找错误();
-    清空分析结果();
-    if (!元素.查找输入框.dataset.合成中) {
-      window.clearTimeout(实时查找计时器);
-      实时查找计时器 = window.setTimeout(执行实时查找, 实时查找延迟);
-    }
-    if (查找临时状态) {
-      状态.悬停关键词id = 查找临时状态.悬停关键词id;
-      状态.悬停命中idx = 查找临时状态.悬停命中idx;
-      移除临时查找关键词();
-      渲染可见行(true);
-      更新关键词指示器();
-    }
-  }
-
-  function 处理分析结果滚动() {
-    if (
-      分析结果视图 &&
-      (分析结果视图.已渲染后续 < 分析结果视图.后续列表.length ||
-        分析结果视图.已渲染前置 < 分析结果视图.前置列表.length) &&
-      元素.分析分栏.scrollTop + 元素.分析分栏.clientHeight >
-        元素.分析分栏.scrollHeight - 200
-    ) {
-      追加分析结果行();
-    }
-  }
-
-  function 追加分析结果行() {
-    if (!分析结果视图) {
-      return;
-    }
-    let 剩余额度 = 每批分析结果数;
-    for (const 区间 of [
-      {
-        列表: 分析结果视图.后续列表,
-        进度键: '已渲染后续',
-        目标: 元素.后续词组列表,
-      },
-      {
-        列表: 分析结果视图.前置列表,
-        进度键: '已渲染前置',
-        目标: 元素.前置词组列表,
-      },
-    ]) {
-      const 起点 = 分析结果视图[区间.进度键];
-      if (起点 >= 区间.列表.length || 剩余额度 <= 0) {
-        continue;
-      }
-      const 终点 = Math.min(区间.列表.length, 起点 + 剩余额度);
-      const 行片段 = document.createDocumentFragment();
-      for (let idx = 起点; idx < 终点; idx += 1) {
-        const 统计项 = 区间.列表[idx];
-        const 行 = document.createElement('li');
-        行.className = '分析行';
-        const 词组单元格 = document.createElement('span');
-        const 数量单元格 = document.createElement('span');
-        词组单元格.textContent = 统计项.词组;
-        数量单元格.textContent = 统计项.数量.toLocaleString('zh-CN');
-        行.append(词组单元格, 数量单元格);
-        行片段.append(行);
-      }
-      区间.目标.append(行片段);
-      分析结果视图[区间.进度键] = 终点;
-      剩余额度 -= 终点 - 起点;
-    }
-  }
-
-  function 取消词组分析() {
-    词组分析序号 += 1;
-  }
-
-  function 显示查找错误(文字) {
-    元素.查找反馈.textContent = 文字;
-    元素.查找输入框.setAttribute('aria-invalid', 'true');
-    元素.查找输入框.focus();
-  }
-
-  function 清空分析结果() {
-    分析结果视图 = null;
-    元素.分析结果.hidden = true;
-    元素.分析结果摘要.textContent = '';
-    元素.前置词组列表.replaceChildren();
-    元素.后续词组列表.replaceChildren();
-  }
-
-  function 清除查找错误() {
-    元素.查找反馈.textContent = '';
-    元素.查找输入框.removeAttribute('aria-invalid');
-  }
-
-  function 开始自动滚动() {
-    if (自动滚动状态) {
-      return;
-    }
-
-    const 最大滚动位置 =
-      元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
-    if (元素.滚动容器.scrollTop >= 最大滚动位置 - 0.5) {
-      console.info('[阅读器] 自动滚动未启动', { 原因: '已到文末' });
-      return;
-    }
-
-    确保今日滚动统计();
-    取消滚动动画();
-    结束跳转会话('自动滚动');
-    上次滚动统计保存时刻 = performance.now();
-    自动滚动状态 = {
-      帧: 0,
-      上帧时间: performance.now(),
-      上次界面时间: 0,
-      开始时刻: performance.now(),
-      当前速度: 0,
-      浮点位置: 元素.滚动容器.scrollTop,
-      快速滚动终点: null,
-      快速滚动方向: 0,
-      衔接位置: null,
-      停留结束时间: 0,
-      衔接线已淡出: false,
-      密度目标速度: 状态.自动滚动速度,
-      视口度量: {
-        轨道高度: 元素.自定义滚动条.clientHeight,
-        容器高度: 元素.滚动容器.clientHeight,
-        滚动高度: 元素.滚动容器.scrollHeight,
-      },
-      // 滚动中画布高度不变，避免在每一帧读取布局尺寸触发同步重排。
-      最大滚动位置: Math.max(
-        0,
-        元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight,
-      ),
-    };
-    自动滚动状态.帧 = requestAnimationFrame(执行自动滚动);
-    更新自动滚动按钮(true);
-    document.body.classList.add('自动滚动中');
-    console.info('[阅读器] 自动滚动已启动', {
-      速度: 状态.自动滚动速度,
-      帧调度: 'requestAnimationFrame',
-      辅助界面刷新间隔毫秒: 自动滚动界面间隔,
-    });
-  }
-
-  function 开始按键滚动(按键, 方向) {
-    if (按键滚动状态) {
-      return;
-    }
-
-    停止自动滚动('按键滚动');
-    取消滚动动画();
-    结束跳转会话('按键滚动');
-    按键滚动状态 = {
-      按键,
-      方向,
-      帧: requestAnimationFrame(执行按键滚动),
-      上帧时间: performance.now(),
-    };
-    console.info('[阅读器] 按键滚动已启动', {
-      按键,
-      方向: 方向 > 0 ? '向下' : '向上',
-      速度: 状态.自动滚动速度 * 2,
-    });
-  }
-
-  function 执行按键滚动(当前时间) {
-    const 本次滚动 = 按键滚动状态;
-    if (!本次滚动) {
-      return;
-    }
-
-    const 最大滚动位置 =
-      元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
-    const 经过毫秒 = Math.min(50, 当前时间 - 本次滚动.上帧时间);
-    const 新位置 = Math.max(
-      0,
-      Math.min(
-        最大滚动位置,
-        元素.滚动容器.scrollTop +
-          (状态.自动滚动速度 * 2 * 本次滚动.方向 * 经过毫秒) / 1000,
-      ),
-    );
-    本次滚动.上帧时间 = 当前时间;
-    元素.滚动容器.scrollTop = 新位置;
-    const 已到边界 =
-      (本次滚动.方向 < 0 && 新位置 <= 0) ||
-      (本次滚动.方向 > 0 && 新位置 >= 最大滚动位置 - 0.5);
-    if (已到边界) {
-      停止按键滚动('已到文章边界');
-      return;
-    }
-    本次滚动.帧 = requestAnimationFrame(执行按键滚动);
-  }
-
-  function 停止按键滚动(原因) {
-    if (!按键滚动状态) {
-      return;
-    }
-
-    cancelAnimationFrame(按键滚动状态.帧);
-    按键滚动状态 = null;
-    更新滚动块();
-    渲染可见行();
-    安排保存持久化状态();
-    console.info('[阅读器] 按键滚动已停止', {
-      原因,
-      滚动位置: Math.round(元素.滚动容器.scrollTop),
-    });
-  }
-
   function 处理自动滚动按钮移出() {
     停止自动滚动('鼠标移出滚动按钮');
   }
@@ -2592,140 +1713,6 @@ function 绑定事件() {
     }
     await 全屏操作;
     console.info(`[阅读器] 已${正在退出 ? '退出' : '进入'}全屏`);
-  }
-
-  function 快速前进自动滚动() {
-    const 本次滚动 = 自动滚动状态;
-    if (!本次滚动) {
-      return;
-    }
-
-    const 最大滚动位置 =
-      元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
-    本次滚动.快速滚动终点 = Math.min(
-      最大滚动位置,
-      本次滚动.浮点位置 + 元素.滚动容器.clientHeight * 自动滚动翻页距离比例,
-    );
-    本次滚动.快速滚动方向 = 1;
-    本次滚动.衔接位置 = Math.min(
-      元素.滚动容器.scrollHeight,
-      本次滚动.浮点位置 + 元素.滚动容器.clientHeight,
-    );
-    本次滚动.衔接线已淡出 = false;
-    本次滚动.当前速度 = 自动滚动快速速度;
-    if (
-      本次滚动.衔接位置 <
-      本次滚动.快速滚动终点 + 元素.滚动容器.clientHeight
-    ) {
-      显示衔接线(本次滚动.衔接位置);
-    }
-    console.info('[阅读器] 自动滚动开始快速前进', {
-      原速度: Math.round(状态.自动滚动速度),
-      目标位置: Math.round(本次滚动.快速滚动终点),
-    });
-  }
-
-  function 执行自动滚动翻页(向上, 来源) {
-    if (!自动滚动状态) {
-      console.info('[阅读器] 自动滚动指令被忽略', {
-        原因: '自动滚动未运行',
-        来源,
-      });
-      return;
-    }
-    if (向上) {
-      调整自动滚动速度(0.9, 来源);
-      向上翻页并暂停自动滚动();
-      return;
-    }
-    调整自动滚动速度(1.1, 来源);
-    快速前进自动滚动();
-  }
-
-  function 向上翻页并暂停自动滚动() {
-    const 本次滚动 = 自动滚动状态;
-    if (!本次滚动) {
-      return;
-    }
-
-    const 起始位置 = 本次滚动.浮点位置;
-    const 目标位置 = Math.max(
-      0,
-      起始位置 - 元素.滚动容器.clientHeight * 自动滚动翻页距离比例,
-    );
-    本次滚动.快速滚动终点 = 目标位置;
-    本次滚动.快速滚动方向 = -1;
-    本次滚动.衔接位置 = 起始位置;
-    本次滚动.衔接线已淡出 = false;
-    本次滚动.当前速度 = -自动滚动快速速度;
-    显示衔接线(本次滚动.衔接位置);
-    console.info('[阅读器] 自动滚动开始向上翻页', {
-      起始位置: Math.round(起始位置),
-      目标位置: Math.round(目标位置),
-    });
-  }
-
-  function 调整自动滚动速度(速度因子, 来源) {
-    const 原速度 = 状态.自动滚动速度;
-    状态.自动滚动速度 = Math.max(
-      自动滚动最低速度,
-      Math.min(自动滚动最高速度, 原速度 * 速度因子),
-    );
-    更新自动滚动速度();
-    安排保存持久化状态();
-    console.info('[阅读器] 自动滚动速度已调整', {
-      来源,
-      原速度: Math.round(原速度),
-      速度: Math.round(状态.自动滚动速度),
-    });
-  }
-
-  function 处理自动滚动滚轮(事件) {
-    // 滚轮发生在行距控件上时，交给行距滚轮处理（调整行距），不干扰自动滚动速度
-    if (元素.行距控制 && 元素.行距控制.contains(事件.target)) {
-      return;
-    }
-    if (!自动滚动状态) {
-      return;
-    }
-
-    事件.preventDefault();
-    事件.stopPropagation();
-    const 滚轮像素 =
-      事件.deltaMode === WheelEvent.DOM_DELTA_LINE
-        ? 事件.deltaY * 40
-        : 事件.deltaMode === WheelEvent.DOM_DELTA_PAGE
-          ? Math.sign(事件.deltaY) * 元素.滚动容器.clientHeight
-          : 事件.deltaY;
-
-    // 非线性（指数曲线）映射：调整幅度与当前速度成正比，微小输入影响极小，
-    // 避免滚轮抖动导致速度剧烈跳变；整体灵敏度较旧线性方案更低、节奏更慢。
-    if (Math.abs(滚轮像素) < 自动滚动滚轮死区) {
-      return;
-    }
-    const 归一化输入 = Math.max(-1, Math.min(1, 滚轮像素 / 自动滚动滚轮归一化));
-    // 上滚（deltaY<0）→ 速度因子 >1 加速；下滚 → 因子 <1 减速
-    const 速度因子 = Math.exp(自动滚动滚轮灵敏系数 * -归一化输入);
-    状态.自动滚动速度 = Math.max(
-      自动滚动最低速度,
-      Math.min(自动滚动最高速度, 状态.自动滚动速度 * 速度因子),
-    );
-    更新自动滚动速度();
-    安排保存持久化状态();
-    console.info('[阅读器] 自动滚动速度已调整', {
-      速度: Math.round(状态.自动滚动速度),
-    });
-  }
-
-  function 处理鼠标移动() {
-    if (自动滚动状态) {
-      if (!元素.自动滚动按钮.matches(':hover')) {
-        停止自动滚动('鼠标移动');
-      }
-      return;
-    }
-    // 非自动滚动时，移除空格翻页触发的光标隐藏
-    document.body.classList.remove('自动滚动中');
   }
 
   // ===== 「关键词手势」 =====
@@ -2825,185 +1812,6 @@ function 绑定事件() {
   function 处理关键词手势取消() {
     关键词手势 = null;
     document.body.classList.remove('关键词手势中');
-  }
-
-  // 密度自适应目标速度：评估窗口整体下移视口高度的 自适应窗口下移比例（高度不变，
-  // 忽略屏内顶部该比例内容、额外纳入屏外下方等量内容），把窗口覆盖文本范围内的
-  // 句段负担，与「全文平均密度 × 窗口高度」的期望负担比较——实际负担越高（长句多、
-  // 文字密）目标越低（慢读），越低（对话、短句、空白多）目标越高（快读）。
-  // 窗口前瞻使调速在密度变化进入屏幕前就开始启动。二分 + 前缀和 O(log 段数)，
-  // 修正因子夹在 [自适应密度因子下限, 自适应密度因子上限]，再按 自适应滚动强度
-  // 做幂映射，保证「基准速度」仍是用户可预期的主导量（滚轮 / 快慢指令调整的正是它）。
-  function 计算密度自适应目标速度(浮点位置, 容器高度 = null) {
-    const 行数 = 状态.行起点列表.length;
-    if (行数 === 0 || 状态.句段起点列表.length === 0) {
-      return 状态.自动滚动速度;
-    }
-    const 视口高度 = 容器高度 ?? 元素.滚动容器.clientHeight;
-    const 窗口起点位置 = 浮点位置 + 视口高度 * 自适应窗口下移比例;
-    const 窗口起始行idx = Math.max(
-      0,
-      Math.min(行数 - 1, Math.floor(窗口起点位置 / 状态.行高)),
-    );
-    const 视口行数 = Math.max(1, Math.ceil(视口高度 / 状态.行高) + 1);
-    const 结束行idx = Math.min(行数, 窗口起始行idx + 视口行数);
-    const 视口起点 = 状态.行起点列表[窗口起始行idx];
-    const 视口终点 = 状态.行终点列表[结束行idx - 1];
-    const 段起点idx = 二分句段起点(视口起点);
-    const 段终点idx = 二分句段起点(视口终点 + 1);
-    let 视口负担 =
-      状态.句段负担前缀和[段终点idx] - 状态.句段负担前缀和[段起点idx];
-    if (视口负担 < 自适应视口负担下限) {
-      视口负担 = 自适应视口负担下限;
-    }
-    const 视口高度像素 = (结束行idx - 窗口起始行idx) * 状态.行高;
-    const 期望负担 = 状态.全文负担密度 * 视口高度像素;
-    const 密度因子 = Math.max(
-      自适应密度因子下限,
-      Math.min(自适应密度因子上限, 期望负担 / 视口负担),
-    );
-    return Math.max(
-      自动滚动最低速度,
-      状态.自动滚动速度 * Math.pow(密度因子, 自适应滚动强度),
-    );
-  }
-
-  function 执行自动滚动(当前时间) {
-    const 本次滚动 = 自动滚动状态;
-    if (!本次滚动) {
-      return;
-    }
-
-    const 最大滚动位置 = 本次滚动.最大滚动位置;
-    const 经过毫秒 = Math.min(50, 当前时间 - 本次滚动.上帧时间);
-    const 缓动比例 = 1 - Math.exp(-经过毫秒 / 自动滚动缓动时长);
-    const 快速滚动中 = 本次滚动.快速滚动终点 !== null;
-    const 停留中 = !快速滚动中 && 当前时间 < 本次滚动.停留结束时间;
-    const 密度目标速度 = 本次滚动.密度目标速度;
-    const 目标速度 = 快速滚动中
-      ? 自动滚动快速速度 * 本次滚动.快速滚动方向
-      : 停留中
-        ? 0
-        : 密度目标速度;
-    // 密度目标速度由界面节拍更新，同时供滚动进度区显示。
-    // 快速翻页的停留结束（恢复常速）后，淡出衔接线
-    if (
-      !快速滚动中 &&
-      !停留中 &&
-      本次滚动.停留结束时间 !== 0 &&
-      !本次滚动.衔接线已淡出
-    ) {
-      本次滚动.衔接线已淡出 = true;
-      隐藏衔接线();
-    }
-    本次滚动.当前速度 += (目标速度 - 本次滚动.当前速度) * 缓动比例;
-    本次滚动.浮点位置 += (本次滚动.当前速度 * 经过毫秒) / 1000;
-    let 新位置 = Math.max(0, Math.min(最大滚动位置, 本次滚动.浮点位置));
-    const 快速滚动已到位 =
-      快速滚动中 &&
-      (本次滚动.快速滚动方向 > 0
-        ? 新位置 >= 本次滚动.快速滚动终点
-        : 新位置 <= 本次滚动.快速滚动终点);
-    if (快速滚动已到位) {
-      const 快速滚动方向 = 本次滚动.快速滚动方向;
-      const 停留时长 =
-        快速滚动方向 < 0 ? 自动滚动反向翻页停留时长 : 衔接线停留时长;
-      新位置 = 本次滚动.快速滚动终点;
-      本次滚动.浮点位置 = 新位置;
-      本次滚动.快速滚动终点 = null;
-      本次滚动.快速滚动方向 = 0;
-      本次滚动.当前速度 = 快速滚动方向 < 0 ? 0 : 状态.自动滚动速度;
-      本次滚动.停留结束时间 = 当前时间 + 停留时长;
-      console.info('[阅读器] 自动滚动快速翻页已完成', {
-        方向: 快速滚动方向 < 0 ? '向上' : '向下',
-        恢复速度: Math.round(状态.自动滚动速度),
-        滚动位置: Math.round(新位置),
-        暂停毫秒: 停留时长,
-      });
-    }
-    本次滚动.上帧时间 = 当前时间;
-    // 自动滚动时长统计：按帧累计真实经过时间（rAF 暂停/标签页隐藏不会虚增）
-    确保今日滚动统计();
-    统计.未入账滚动毫秒 += 经过毫秒;
-    if (当前时间 - 上次滚动统计保存时刻 >= 自动滚动统计保存间隔) {
-      上次滚动统计保存时刻 = 当前时间;
-      安排保存持久化状态();
-    }
-    元素.滚动容器.scrollTop = 新位置;
-    if (当前时间 - 本次滚动.上次界面时间 >= 自动滚动界面间隔) {
-      本次滚动.上次界面时间 = 当前时间;
-      // 每个界面节拍只读取一次布局尺寸，并把结果传给后续更新，避免写入后反复强制重排。
-      const 视口度量 = {
-        轨道高度: 元素.自定义滚动条.clientHeight,
-        容器高度: 元素.滚动容器.clientHeight,
-        滚动高度: 元素.滚动容器.scrollHeight,
-      };
-      本次滚动.视口度量 = 视口度量;
-      本次滚动.最大滚动位置 = Math.max(
-        0,
-        视口度量.滚动高度 - 视口度量.容器高度,
-      );
-      本次滚动.密度目标速度 = 计算密度自适应目标速度(
-        本次滚动.浮点位置,
-        视口度量.容器高度,
-      );
-      更新滚动块(视口度量);
-      渲染可见行(false, 视口度量.容器高度);
-      // 基础/实际速度：仅滚动进行中刷新（元素此时才可见）；
-      // 实际速度 = 基础速度经窗口内容密度调整后的目标速度。
-      设置文本(元素.基础速度显示, `基 ${Math.round(状态.自动滚动速度)}`);
-      设置文本(
-        元素.实际速度显示,
-        `${Math.round((本次滚动.密度目标速度 / 状态.自动滚动速度) * 100)}%`,
-      );
-      // 当前自动滚动时长：随界面节拍刷新，并显示今日总时长
-      设置文本(
-        元素.已滚动时间,
-        格式化当前滚动分钟(当前时间 - 本次滚动.开始时刻),
-      );
-      设置文本(元素.今日滚动时间, 今日滚动后缀());
-    }
-    // scrollTop 在 Chrome 中按整数像素存储；用合成层补回小数位，避免低速时
-    // 必须累计到 1px 才产生一次可见移动。滚动块只依赖滚动位置，仍按每个 rAF 更新。
-    const 实际滚动位置 = 元素.滚动容器.scrollTop;
-    const 小数位移 = 本次滚动.浮点位置 - 实际滚动位置;
-    元素.可见内容.style.transform = `translateY(${状态.渲染起点 * 状态.行高 - 小数位移}px)`;
-    更新滚动块位置(本次滚动.视口度量, 本次滚动.浮点位置);
-    if (新位置 >= 最大滚动位置 - 0.5) {
-      停止自动滚动('已到文末');
-      return;
-    }
-    本次滚动.帧 = requestAnimationFrame(执行自动滚动);
-  }
-
-  function 停止自动滚动(原因) {
-    if (!自动滚动状态) {
-      return;
-    }
-
-    cancelAnimationFrame(自动滚动状态.帧);
-    自动滚动状态 = null;
-    更新滚动块();
-    渲染可见行();
-    安排保存持久化状态();
-    更新自动滚动按钮(false);
-    隐藏衔接线();
-    document.body.classList.remove('自动滚动中');
-    console.info('[阅读器] 自动滚动已停止', {
-      原因,
-      滚动位置: Math.round(元素.滚动容器.scrollTop),
-    });
-  }
-
-  function 更新自动滚动按钮(正在滚动) {
-    元素.自动滚动按钮.setAttribute('aria-pressed', String(正在滚动));
-    // 剩余滚动时间与实际速度仅在自动滚动进行中显示
-    元素.剩余滚动时间行.hidden = !正在滚动;
-    元素.实际速度显示.hidden = !正在滚动;
-    元素.已滚动时间行.hidden = !正在滚动;
-    // 自动滚动进行中：强制显示右下角控件（尤其是自动滚动按钮本身）
-    右下强制 = 正在滚动;
-    刷新右下控件可见性();
   }
 
   function 处理手动滚动() {
@@ -3117,241 +1925,6 @@ function 绑定事件() {
     ) {
       追加上下文行块();
     }
-  }
-
-  async function 打开内容选择弹窗() {
-    if (元素.内容选择弹窗.open) {
-      return;
-    }
-    停止自动滚动('打开内容选择');
-    保存持久化状态();
-    元素.内容选择摘要.textContent = '正在读取文本目录';
-    元素.内容选择列表.replaceChildren(创建内容载入提示('正在读取'));
-    元素.内容选择弹窗.showModal();
-
-    try {
-      状态.文本目录 = await 读取文本目录();
-      if (!元素.内容选择弹窗.open) {
-        return;
-      }
-      渲染内容选择列表();
-      状态.文本字数 = await 统计文本字数();
-      if (元素.内容选择弹窗.open) {
-        渲染内容选择列表();
-      }
-    } catch (错误) {
-      元素.内容选择摘要.textContent = '目录读取失败';
-      const 提示 = 创建内容载入提示('无法读取 txt 目录');
-      提示.classList.add('错误');
-      元素.内容选择列表.replaceChildren(提示);
-      console.error('[阅读器] 文本目录读取失败', 错误);
-    }
-
-    async function 统计文本字数() {
-      const 统计结果 = await Promise.all(
-        状态.文本目录.map(async function 统计单个文本(文件名) {
-          if (状态.文本字数.has(文件名)) {
-            return [文件名, 状态.文本字数.get(文件名)];
-          }
-          let 统计任务 = 文本字数任务.get(文件名);
-          if (!统计任务) {
-            统计任务 = 读取并统计文本(文件名).finally(
-              function 清理文本字数任务() {
-                文本字数任务.delete(文件名);
-              },
-            );
-            文本字数任务.set(文件名, 统计任务);
-          }
-          return [文件名, await 统计任务];
-        }),
-      );
-      for (const [文件名, 字数] of 统计结果) {
-        if (字数 !== null) {
-          状态.文本字数.set(文件名, 字数);
-        }
-      }
-      return 状态.文本字数;
-
-      async function 读取并统计文本(文件名) {
-        try {
-          const 响应 = await fetch(创建文本地址(文件名));
-          if (!响应.ok) {
-            throw new Error(`HTTP ${响应.status} ${响应.statusText}`);
-          }
-          const 文本 = new TextDecoder('utf-8', { fatal: true }).decode(
-            await 响应.arrayBuffer(),
-          );
-          const 非空白字符模式 = /\S/u;
-          let 字数 = 0;
-          let 已扫描字符数 = 0;
-          let 时间片开始 = performance.now();
-          for (const 字符 of 文本) {
-            if (非空白字符模式.test(字符)) {
-              字数 += 1;
-            }
-            已扫描字符数 += 1;
-            if ((已扫描字符数 & 8191) === 0) {
-              时间片开始 = await 按需让出主线程(时间片开始);
-            }
-          }
-          return 字数;
-        } catch (错误) {
-          console.error(`[阅读器] 无法统计文本字数：${文件名}`, 错误);
-          return null;
-        }
-      }
-    }
-  }
-
-  function 关闭内容选择弹窗() {
-    if (元素.内容选择弹窗.open) {
-      元素.内容选择弹窗.close();
-    }
-  }
-
-  function 处理内容选择弹窗点击(事件) {
-    if (事件.target === 元素.内容选择弹窗) {
-      关闭内容选择弹窗();
-    }
-  }
-
-  function 处理内容选择列表点击(事件) {
-    const 按钮 = 事件.target.closest('button[data-file-name]');
-    if (!按钮) {
-      return;
-    }
-    const 文件名 = 按钮.dataset.fileName;
-    关闭内容选择弹窗();
-    void 载入文本(文件名);
-  }
-
-  async function 读取文本目录() {
-    const 响应 = await fetch(文本目录地址, { cache: 'no-store' });
-    if (!响应.ok) {
-      throw new Error(`HTTP ${响应.status} ${响应.statusText}`);
-    }
-
-    const 目录文档 = new DOMParser().parseFromString(
-      await 响应.text(),
-      'text/html',
-    );
-    const 目录地址 = new URL(响应.url);
-    const 目录路径 = 目录地址.pathname.endsWith('/')
-      ? 目录地址.pathname
-      : 目录地址.pathname + '/';
-    const 文件名集合 = new Set();
-
-    for (const 链接 of 目录文档.querySelectorAll('a[href]')) {
-      const 文件地址 = new URL(链接.getAttribute('href'), 目录地址);
-      if (
-        文件地址.origin !== 目录地址.origin ||
-        !文件地址.pathname.startsWith(目录路径)
-      ) {
-        continue;
-      }
-      const 文件名 = decodeURIComponent(
-        文件地址.pathname.slice(目录路径.length),
-      );
-      if (是有效文本文件名(文件名)) {
-        文件名集合.add(文件名);
-      }
-    }
-
-    const 文件列表 = [...文件名集合].sort(function 按文件名排序(左, 右) {
-      return 拼音排序器.compare(左, 右);
-    });
-    if (!文件列表.length) {
-      throw new Error('txt 目录中没有可读取的 .txt 文件');
-    }
-    return 文件列表;
-  }
-
-  function 渲染内容选择列表() {
-    const 持久化数据 = 读取持久化数据();
-    const 片段 = document.createDocumentFragment();
-    元素.内容选择摘要.textContent = `${状态.文本目录.length} 个文本`;
-
-    for (const 文件名 of 状态.文本目录) {
-      const 文本状态 = 持久化数据.文本状态[文件名];
-      const 是当前文本 = 文件名 === 状态.文件名;
-      const 按钮 = document.createElement('button');
-      按钮.className = '内容选项';
-      按钮.type = 'button';
-      按钮.dataset.fileName = 文件名;
-      按钮.title = 文件名;
-      if (是当前文本) {
-        按钮.classList.add('当前');
-        按钮.setAttribute('aria-current', 'true');
-      }
-
-      const 名称 = document.createElement('span');
-      名称.className = '内容选项名称';
-      名称.textContent = 文件名.replace(/\.txt$/i, '');
-
-      const 字数 = document.createElement('span');
-      字数.className = '内容选项字数';
-      const 统计字数 = 状态.文本字数.get(文件名);
-      字数.textContent =
-        统计字数 === undefined
-          ? '正在统计'
-          : 统计字数 === null
-            ? '统计失败'
-            : `${(统计字数 / 10_000).toFixed(1)} 万字`;
-
-      const 已阅读时间 = document.createElement('span');
-      已阅读时间.className = '内容选项时长';
-      已阅读时间.textContent = `已阅读 · ${格式化滚动小时(
-        文本状态?.总滚动毫秒 ?? 0,
-      )}`;
-
-      const 文本信息 = document.createElement('span');
-      文本信息.className = '内容选项信息';
-      文本信息.append(名称, 字数, 已阅读时间);
-
-      const 状态文字 = document.createElement('span');
-      状态文字.className = '内容选项状态';
-      const 阅读进度 = 计算已保存阅读进度(文本状态);
-      状态文字.textContent = 是当前文本
-        ? `当前 · ${阅读进度}`
-        : 文本状态
-          ? `继续 · ${阅读进度}`
-          : '加载';
-
-      按钮.append(文本信息, 状态文字);
-      片段.append(按钮);
-    }
-    元素.内容选择列表.replaceChildren(片段);
-  }
-
-  function 创建内容载入提示(文字) {
-    const 提示 = document.createElement('p');
-    提示.className = '内容选择提示';
-    提示.textContent = 文字;
-    return 提示;
-  }
-
-  function 计算已保存阅读进度(文本状态) {
-    if (
-      !文本状态 ||
-      !Number.isFinite(文本状态.文本长度) ||
-      文本状态.文本长度 <= 0 ||
-      !Number.isFinite(文本状态.阅读偏移)
-    ) {
-      return '0%';
-    }
-    const 比例 = Math.min(
-      1,
-      Math.max(0, 文本状态.阅读偏移 / 文本状态.文本长度),
-    );
-    return `${Math.round(比例 * 100)}%`;
-  }
-
-  function 结束跳转会话(原因) {
-    if (!状态.跳转起点) {
-      return;
-    }
-    状态.跳转起点 = null;
-    console.info('[阅读器] 已结束跳转会话', { 原因 });
   }
 }
 

@@ -418,3 +418,11 @@ export function 收起衔接线() {
   元素.衔接线.hidden = true;
   取消衔接线淡出();
 }
+
+export function 结束跳转会话(原因) {
+  if (!状态.跳转起点) {
+    return;
+  }
+  状态.跳转起点 = null;
+  console.info('[阅读器] 已结束跳转会话', { 原因 });
+}

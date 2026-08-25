@@ -14,6 +14,7 @@ export const 字体粗细设置 = { 引号内: null, 引号外: null };
 export const 字体颜色设置 = { 引号内: null, 引号外: null };
 export const 奇偶行颜色 = { ...默认奇偶行颜色 };
 export const 引文背景色 = { ...默认引文背景色 };
+// 界面外观设置：关键词/字词颜色、粗细、页面与纸面背景、引文样式与排版开关；值为默认值或用户覆盖。
 export const 外观 = {
   关键词颜色: 默认关键词颜色,
   内置字词颜色: 默认内置字词颜色,
@@ -28,6 +29,7 @@ export const 外观 = {
   阶梯段落启用: false,
   当前字体标签: '引号内',
 };
+// 自动滚动时长记账：今日总时长及按书分项按本地日期归零；每本书另存历史累计。
 export const 统计 = {
   // 自动滚动时长统计：今日总时长及按书分项按本地日期归零；每本书另存历史累计。
   今日滚动日期: '',
@@ -37,6 +39,68 @@ export const 统计 = {
   未入账滚动毫秒: 0, // 滚动会话中已累计、待结转到统计的毫秒数
 };
 
+/**
+ * 阅读器全局共享可变状态单例：各模块直接读写，无变更通知。
+ * @typedef {Object} 阅读器状态
+ *
+ * ① 文本与排版数据
+ * @property {string} 文本 当前载入的全文文本
+ * @property {string} 文件名 当前文本文件名（空串表示未载入）
+ * @property {Uint32Array} 行起点列表 每行起点文本偏移
+ * @property {Uint32Array} 行终点列表 每行终点文本偏移（不含）
+ * @property {Uint32Array} 行逻辑索引 每行对应的逻辑行号（跨重排稳定）
+ * @property {Uint32Array} 行段落索引 每行所属段落序号
+ * @property {?Uint8Array} 行阶梯索引 每行阶梯缩进层级；未启用阶梯段落为 null
+ * @property {?Object} 阶梯断点 阶梯段落断点（起点列表 + 层级列表）；未启用为 null
+ * @property {Uint32Array} 引文边界列表 成对引号/书名号边界偏移列表
+ * @property {Set} 缩进起点集合 段落缩进起点偏移集合（spk 对话行等）
+ * @property {string} 排版键 当前排版参数签名，变化即需重建行索引
+ * @property {number} 行高 当前排版行高（像素）
+ * @property {Uint32Array} 句段起点列表 全文「无标点连续段」起点（文本偏移，升序），用于运行时二分
+ * @property {Float64Array} 句段负担前缀和 长度 = 段数 + 1；[i] = 前 i 段负担之和
+ * @property {number} 句段负担总合 全部句段负担之和（= 前缀和末位），用于剩余时间语义化
+ * @property {number} 全文负担密度 负担/像素 = 句段负担总合 ÷ 虚拟总高度；视口期望负担 = 密度 × 视口高度
+ *
+ * ② 渲染与滚动运行时
+ * @property {number} 渲染起点 当前已渲染的起始行号（-1 表示未渲染）
+ * @property {number} 渲染终点 当前已渲染的结束行号（-1 表示未渲染）
+ * @property {number} 滚动帧 滚动事件节流帧号（requestAnimationFrame 返回值）
+ * @property {number} 滚动动画帧 滚动动画帧号（0 表示无动画）
+ * @property {?Object} 滚动动画目标 进行中的滚动动画目标（含终点位置）；静止为 null
+ * @property {?number} 跳转起点 本轮跳转会话的起始偏移（Backspace 回跳用）；无会话为 null
+ *
+ * ③ 计时器与任务序号
+ * @property {number} 尺寸计时器 尺寸刷新防抖计时器（setTimeout 返回值）
+ * @property {number} 保存计时器 持久化保存防抖计时器（setTimeout 返回值）
+ * @property {number} 迸发计时器 跳转迸发淡出清理计时器（setTimeout 返回值）
+ * @property {number} 衔接线计时器 衔接线淡出计时器（setTimeout 返回值）
+ * @property {number} 当前命中位置计时器 当前命中位置提示淡出计时器（setTimeout 返回值）
+ * @property {number} 载入序号 文本载入任务单调递增序号，用于判定异步结果有效性
+ * @property {number} 排版任务序号 排版重建任务单调递增序号，用于判定异步结果有效性
+ *
+ * ④ 关键词与交互
+ * @property {?Object} 拖选状态 正在进行的拖选标记会话（起点/方向等）；未拖选为 null
+ * @property {Array} 关键词列表 全部关键词标记对象
+ * @property {?number} 当前关键词id 当前关键词 id；无为 null
+ * @property {?number} 悬停关键词id 悬停中的关键词 id；无为 null
+ * @property {?number} 悬停命中idx 悬停命中的序号；无为 null
+ * @property {boolean} 正文悬停已暂停 正文悬停提示是否被暂停（如弹窗打开）
+ * @property {number} 下一个关键词id 下一个待分配关键词 id
+ * @property {?number} 查找临时关键词id 查找命中的临时关键词 id；无为 null
+ * @property {?Object} 指示器缓存 关键词指示器绘制缓存；脏时为 null 待重建
+ * @property {boolean} 关键词面板展开 关键词管理面板是否展开
+ * @property {string} 关键词面板签名 面板渲染签名，变化即需重渲染面板行列表（含排序与当前项）
+ * @property {string} 关键词排序 面板排序方式（'数量' / 首次出现 / 拼音等）
+ * @property {?Object} 上下文视图 上下文弹窗状态（关键词 id 与已渲染数）；关闭为 null
+ *
+ * ⑤ 用户设置与分析缓存
+ * @property {number} 自动滚动速度 自动滚动基准速度（用户可调）
+ * @property {number} 字号 当前字号（像素）
+ * @property {?Object} 词频分析 最近一次词频分析结果；未分析为 null
+ * @property {Set} 全文单字 全文出现过的单字集合（词频分析用缓存）
+ * @property {Array} 文本目录 ./txt/ 目录文件清单（文件名、字符数等）
+ * @property {Map} 文本字数 各文本的非空白字符数缓存（文件名 → 字数）
+ */
 export const 状态 = {
   文本: '',
   文件名: '',
@@ -88,6 +152,7 @@ export const 状态 = {
   文本字数: new Map(),
 };
 
+// DOM 元素引用表：模块加载时一次性 querySelector 缓存，运行期不再查找。
 export const 元素 = {
   滚动容器: document.querySelector('#滚动容器'),
   虚拟画布: document.querySelector('#虚拟画布'),
@@ -207,4 +272,51 @@ export function 获取静止滚动位置() {
     元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight,
   );
   return Math.min(最大滚动位置, 状态.滚动动画目标.终点);
+}
+
+export function 本地日期串(日期) {
+  const 补零 = (值) => String(值).padStart(2, '0');
+  return `${日期.getFullYear()}-${补零(日期.getMonth() + 1)}-${补零(
+    日期.getDate(),
+  )}`;
+}
+
+export function 确保今日滚动统计() {
+  const 今天 = 本地日期串(new Date());
+  if (统计.今日滚动日期 === 今天) {
+    return;
+  }
+  if (状态.文件名 && 统计.未入账滚动毫秒 > 0) {
+    统计.书籍滚动毫秒.set(
+      状态.文件名,
+      (统计.书籍滚动毫秒.get(状态.文件名) ?? 0) + 统计.未入账滚动毫秒,
+    );
+  }
+  const 上一日期 = 统计.今日滚动日期;
+  统计.今日滚动日期 = 今天;
+  统计.今日滚动毫秒 = 0;
+  统计.今日书籍滚动毫秒.clear();
+  统计.未入账滚动毫秒 = 0;
+  console.info('[阅读器] 自动滚动今日统计已重置', { 上一日期, 当前日期: 今天 });
+}
+
+// 把滚动会话中累计的未入账时长结转到今日总计、今日当前书与本书历史累计
+export function 结转未入账滚动毫秒() {
+  if (!状态.文件名 || 统计.未入账滚动毫秒 <= 0) {
+    return;
+  }
+  确保今日滚动统计();
+  if (统计.未入账滚动毫秒 <= 0) {
+    return;
+  }
+  统计.今日滚动毫秒 += 统计.未入账滚动毫秒;
+  统计.今日书籍滚动毫秒.set(
+    状态.文件名,
+    (统计.今日书籍滚动毫秒.get(状态.文件名) ?? 0) + 统计.未入账滚动毫秒,
+  );
+  统计.书籍滚动毫秒.set(
+    状态.文件名,
+    (统计.书籍滚动毫秒.get(状态.文件名) ?? 0) + 统计.未入账滚动毫秒,
+  );
+  统计.未入账滚动毫秒 = 0;
 }
