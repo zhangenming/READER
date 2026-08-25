@@ -42,7 +42,12 @@ import {
   默认页面背景色,
 } from './js/常量.js';
 import { 创建Uint32Array, 创建Uint8Array, 按需让出主线程 } from './js/调度.js';
-import { 是句内停顿码, 是汉字, 是阅读字符码 } from './js/文本工具.js';
+import {
+  是句内停顿码,
+  是有效文本文件名,
+  是汉字,
+  是阅读字符码,
+} from './js/文本工具.js';
 import {
   元素,
   外观,
@@ -146,11 +151,6 @@ import {
   读取持久化数据,
   读取阅读位置,
 } from './js/持久化.js';
-
-'use strict';
-
-
-
 
 启动();
 
@@ -298,15 +298,6 @@ async function 载入文本(文件名) {
 
 function 创建文本地址(文件名) {
   return new URL(encodeURIComponent(文件名), 文本目录地址);
-}
-
-function 是有效文本文件名(文件名) {
-  return (
-    typeof 文件名 === 'string' &&
-    文件名.toLowerCase().endsWith('.txt') &&
-    !文件名.includes('/') &&
-    !文件名.includes('\\')
-  );
 }
 
 function 绑定事件() {

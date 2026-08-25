@@ -12,6 +12,7 @@ import {
 import { 查找偏移所在行 } from './排版引擎.js';
 import { 获取静止滚动位置 } from './跳转动画.js';
 import { 结转未入账滚动毫秒 } from './自动滚动.js';
+import { 是有效文本文件名 } from './文本工具.js';
 
 export function 读取持久化数据() {
   const 原始数据 = localStorage.getItem(持久化键);

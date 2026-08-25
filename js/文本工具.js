@@ -1,5 +1,14 @@
 import { 字素分段器, 汉字模式, 西文字素模式 } from './常量.js';
 
+export function 是有效文本文件名(文件名) {
+  return (
+    typeof 文件名 === 'string' &&
+    文件名.toLowerCase().endsWith('.txt') &&
+    !文件名.includes('/') &&
+    !文件名.includes('\\')
+  );
+}
+
 export function 是汉字(字) {
   const 码点 = 字.codePointAt(0);
   return (
