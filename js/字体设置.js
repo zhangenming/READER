@@ -246,7 +246,7 @@ export function 渲染字体选项() {
     预览.style.backgroundColor = 外观.页面背景色;
     const 纸面块 = document.createElement('div');
     纸面块.className = '背景预览纸面块';
-    纸面块.textContent = '页面背景 · 外观.纸面色';
+    纸面块.textContent = '页面背景 · 纸面色';
     纸面块.style.backgroundColor = 外观.纸面色;
     纸面块.style.color = 'var(--正文字色)';
     预览.append(纸面块);
@@ -352,7 +352,7 @@ export function 设置内置字词颜色(颜色, 选项 = {}) {
     throw new TypeError('内置字词颜色格式无效');
   }
   外观.内置字词颜色 = 颜色.toLowerCase();
-  document.documentElement.style.setProperty('--外观.内置字词颜色', 外观.内置字词颜色);
+  document.documentElement.style.setProperty('--内置字词颜色', 外观.内置字词颜色);
   元素.内置字词颜色选择器.value = 外观.内置字词颜色;
   if (!选项.静默) {
     安排保存持久化状态();
@@ -363,7 +363,7 @@ export function 设置内置字词颜色(颜色, 选项 = {}) {
 export function 渲染字体粗细按钮() {
   if (外观.当前字体标签 === '关键词') {
     const 显示值 = 外观.关键词粗细 === null ? '默认' : String(外观.关键词粗细);
-    元素.字体粗细按钮.textContent = `外观.关键词粗细：${显示值}`;
+    元素.字体粗细按钮.textContent = `关键词粗细：${显示值}`;
     元素.字体粗细按钮.setAttribute(
       'aria-label',
       `当前关键词粗细：${显示值}，点击或滚轮循环调整`,
@@ -407,7 +407,7 @@ export function 设置关键词颜色(颜色, 选项 = {}) {
   高亮配色[0].深色 = 外观.关键词颜色;
   高亮配色[0].浅色 =
     外观.关键词颜色 === 默认关键词颜色 ? '#c5d9f0' : 计算关键词浅色(外观.关键词颜色);
-  document.documentElement.style.setProperty('--外观.关键词颜色', 外观.关键词颜色);
+  document.documentElement.style.setProperty('--关键词颜色', 外观.关键词颜色);
   元素.关键词颜色选择器.value = 外观.关键词颜色;
   if (!选项.不渲染) {
     状态.关键词面板签名 = '';
@@ -441,9 +441,9 @@ export function 设置关键词粗细(值, 选项 = {}) {
   }
   外观.关键词粗细 = 值;
   if (值 === null) {
-    document.documentElement.style.removeProperty('--外观.关键词粗细');
+    document.documentElement.style.removeProperty('--关键词粗细');
   } else {
-    document.documentElement.style.setProperty('--外观.关键词粗细', String(值));
+    document.documentElement.style.setProperty('--关键词粗细', String(值));
   }
   if (!选项.静默) {
     渲染字体粗细按钮();

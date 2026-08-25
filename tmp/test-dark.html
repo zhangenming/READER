@@ -550,19 +550,20 @@
         });
       })();
     </script>
-    <script src="../app.js" defer></script>
+    <script type="module" src="../app.js"></script>
     <script src="../语音订阅.js" defer></script>
   </body>
 </html>
-<script>
+<script type="module">
+  import { 设置页面背景色, 设置纸面色 } from '../js/字体设置.js';
   window.addEventListener('load', () => {
     setTimeout(() => {
       const q = new URLSearchParams(location.search);
       const paper = q.get('paper'),
         bg = q.get('bg');
       try {
-        if (bg) window.设置页面背景色(bg, { 静默: true });
-        if (paper) window.设置纸面色(paper, { 静默: true });
+        if (bg) 设置页面背景色(bg, { 静默: true });
+        if (paper) 设置纸面色(paper, { 静默: true });
         console.info('[测试页] 已应用配置', { paper, bg });
       } catch (e) {
         console.error('[测试页] 配置失败', e);
