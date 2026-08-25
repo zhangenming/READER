@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>READER 架构重构评审 · 2026-08-26</title>
+<style>
+  :root {
+    --ink: #1f2430; --muted: #6b7280; --line: #e5e7eb;
+    --bg: #f7f8fa; --card: #ffffff;
+    --green: #16a34a; --green-bg: #f0fdf4; --green-line: #bbf7d0;
+    --amber: #d97706; --amber-bg: #fffbeb; --amber-line: #fde68a;
+    --red: #dc2626; --red-bg: #fef2f2; --red-line: #fecaca;
+    --blue: #2563eb; --blue-bg: #eff6ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.75; padding: 40px 20px; }
+  .wrap { max-width: 960px; margin: 0 auto; }
+  header { border-bottom: 3px solid var(--ink); padding-bottom: 20px; margin-bottom: 28px; }
+  header h1 { font-size: 26px; letter-spacing: 0.5px; }
+  header .sub { color: var(--muted); font-size: 14px; margin-top: 6px; }
+  h2 { font-size: 19px; margin: 36px 0 14px; padding-left: 10px; border-left: 4px solid var(--ink); }
+  h3 { font-size: 16px; margin: 20px 0 8px; }
+  p { margin: 10px 0; }
+  code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.88em; background: #eef0f4; padding: 1px 6px; border-radius: 4px; }
+  .verdict { background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--green); border-radius: 10px; padding: 18px 22px; margin: 18px 0; }
+  .verdict strong { font-size: 16px; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin: 18px 0; }
+  .metric { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+  .metric .num { font-size: 26px; font-weight: 700; }
+  .metric .num.good { color: var(--green); }
+  .metric .num.warn { color: var(--amber); }
+  .metric .label { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .metric .note { font-size: 12px; color: var(--muted); margin-top: 6px; border-top: 1px dashed var(--line); padding-top: 6px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin: 16px 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+  .card .t { font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .card p { font-size: 14px; color: #374151; margin: 4px 0; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex: none; }
+  .dot.g { background: var(--green); } .dot.a { background: var(--amber); } .dot.r { background: var(--red); } .dot.b { background: var(--blue); }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin: 14px 0; font-size: 14px; }
+  th { background: #f0f2f6; text-align: left; padding: 9px 12px; font-size: 13px; border-bottom: 1px solid var(--line); }
+  td { padding: 9px 12px; border-bottom: 1px solid #f0f2f4; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .tag { display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 10px; border-radius: 999px; }
+  .tag.p1 { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-line); }
+  .tag.p2 { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-line); }
+  .tag.p3 { background: var(--blue-bg); color: var(--blue); border: 1px solid #bfdbfe; }
+  .tag.ok { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-line); }
+  .block { border-radius: 10px; padding: 16px 20px; margin: 14px 0; }
+  .block.p1 { background: var(--red-bg); border: 1px solid var(--red-line); }
+  .block.p2 { background: var(--amber-bg); border: 1px solid var(--amber-line); }
+  .block.p3 { background: #f8fafc; border: 1px solid var(--line); }
+  .block .bt { font-weight: 700; margin-bottom: 6px; }
+  .block p, .block li { font-size: 14px; }
+  .block ul { padding-left: 20px; }
+  .fix { font-size: 13px; color: var(--muted); margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
+  .fix::before { content: "▸ 修复方向 "; font-weight: 600; color: var(--ink); }
+  footer { margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  .src { font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>READER 架构重构评审</h1>
+  <div class="sub">范围：8e476b7「重构」→ 78b0d91「按此实现」共 4 个架构 commit · 2026-08-26 · 独立验证（未改动任何代码）</div>
+</header>
+
+<div class="verdict">
+  <strong>结论：这是一次执行纪律很强的成功重构。</strong>
+  <p>按「行为零回归 + 结构目标达成」的双重标准衡量均达标：app.js 从 4389 行降到 2484 行（-43%），拆出 21 个职责清晰的模块，依赖图无环且全部具名导出齐全（<code>verify-模块图</code> 本地实测通过），全部文件 <code>node --check</code> 语法通过。拆分采用「纯搬移、逐字等价」策略，commit 记录了 E2E 回归 8/8 与 62 个搬移函数逐字比对。剩余问题不推翻重构成果，集中在三处：一个 P1 级启动异常路径、组合根仍厚（<code>绑定事件()</code> 余 1622 行）、验证资产未固化（守门脚本未入 git）。</p>
+</div>
+
+<div class="metrics">
+  <div class="metric"><div class="num good">4389 → 2484</div><div class="label">app.js 行数（-43%）</div><div class="note">实测 wc -l 确认</div></div>
+  <div class="metric"><div class="num good">21</div><div class="label">js/ 模块数（+ 语音订阅.js）</div><div class="note">职责边界：常量/状态/持久化/管线/排版/渲染/弹窗/动画/调度</div></div>
+  <div class="metric"><div class="num good">无环</div><div class="label">模块依赖图（实测）</div><div class="note">verify-模块图.mjs 输出「通过：依赖图无环，全部 import 具名导出存在」</div></div>
+  <div class="metric"><div class="num warn">1622</div><div class="label">绑定事件() 剩余行数</div><div class="note">占 app.js 剩余代码约 65%，重构下半场未完成</div></div>
+</div>
+
+<h2>一、成功面：做对了什么</h2>
+
+<div class="grid">
+  <div class="card"><div class="t"><span class="dot g"></span>拆分策略：绞杀巨石，纯搬移</div>
+    <p>四次 commit 均为「行为完全不变」的搬移：先大块拆（8e476b7 一次拆 13 个模块），再针对性剥离（文本管线 → cbb1710；自动滚动/三个弹窗/记账下沉 → 78b0d91）。每步都有逐字等价比对，不是重写式的「顺手优化」——这是零回归的根本原因。</p></div>
+  <div class="card"><div class="t"><span class="dot g"></span>断环手段正确</div>
+    <p>依赖成环处用依赖注入解开而非硬绕：<code>注册右下强制显示()</code> 钩子断「自动滚动→app」环；<code>任务仍然有效()</code> 回调注入替代闭包引用；记账函数下沉 状态.js 断「持久化→自动滚动」边。手段与问题匹配。</p></div>
+  <div class="card"><div class="t"><span class="dot g"></span>分层意图明确</div>
+    <p>文本管线.js 不 import 状态.js、不碰 DOM，纯计算层可独立测试；语音订阅.js 与 app.js 经 语义事件 常量解耦（单一数据源改名两处生效）；状态.js 补了 JSDoc 五域分组。孤儿代码 circular-navigator.js（206 行零引用）已删除。</p></div>
+  <div class="card"><div class="t"><span class="dot g"></span>验证意识在线</div>
+    <p>守门三件套：verify-模块图（依赖图无环）、verify-persistence-migration（持久化迁移）、verify-collocations（词组提取边界）；commit 记录浏览器 E2E 回归 8/8。对无构建、无测试框架的纯静态项目，这是超出预期的验证密度。</p></div>
+</div>
+
+<h3>重构前后对比</h3>
+<table>
+  <tr><th>维度</th><th>重构前</th><th>重构后（实测）</th></tr>
+  <tr><td>app.js</td><td>4389 行巨石，文本管线/滚动/弹窗全内嵌</td><td>2484 行，收敛为组合根（启动/载入/事件绑定/应用文本）</td></tr>
+  <tr><td>模块化</td><td>仅 语音订阅.js 独立</td><td>21 个 js/ 模块，依赖图无环</td></tr>
+  <tr><td>文本预处理</td><td>内嵌 app.js，闭包耦合 载入仍然有效</td><td>独立纯计算层，任务有效性经参数注入</td></tr>
+  <tr><td>孤儿代码</td><td>circular-navigator.js 206 行零引用</td><td>已删除</td></tr>
+  <tr><td>架构文档</td><td>无</td><td>重构适用性评估.md（但论据有过时，见 P3）</td></tr>
+</table>
+
+<h2>二、现存问题（按严重度分级）</h2>
+
+<div class="block p1">
+  <div class="bt"><span class="tag p1">P1</span> 启动异常路径：第二次读取持久化数据无保护，损坏数据 → 整个应用白屏</div>
+  <p><code>启动()</code> 里第 175 行对 <code>读取持久化数据()</code> 做了 try-catch，但 <code>读取初始文件名()</code>（第 233 行）内<b>再次裸调同一函数，无任何保护</b>。<code>读取持久化数据()</code> 在 JSON 损坏时抛 SyntaxError、结构校验失败时抛 TypeError——只要 localStorage 里的数据坏了，异常会从模块顶层逃逸，<b>整个 app.js 模块执行中断，页面完全不可用，且用户看不到任何错误提示</b>（只在控制台）。第一次 try-catch 因此形同虚设。</p>
+  <p class="fix">读取初始文件名() 套同款 try-catch；或读取持久化数据() 失败时清除坏键并返回默认值。约 5 行改动，风险极低。</p>
+</div>
+
+<div class="block p2">
+  <div class="bt"><span class="tag p2">P2</span> 绑定事件() 仍是 1622 行巨石</div>
+  <p>实测 <code>绑定事件()</code> 占 app.js 剩余代码约 65%，内部还嵌着词组分析等业务处理函数。这是重构「下半场」未完成的部分：事件绑定天然属于组合根，但 1622 行单函数的可读性代价已经超过「集中绑定」的收益。</p>
+  <p class="fix">不急于继续拆。下次要动 app.js 时按交互域（键盘/指针/弹窗/语音）分批搬移，沿用纯搬移纪律即可。</p>
+</div>
+
+<div class="block p2">
+  <div class="bt"><span class="tag p2">P2</span> 验证资产未固化：守门脚本不在版本库里，且测试会漂移</div>
+  <p>实测 <code>tmp/verify-模块图.mjs</code>（最重要的架构守门脚本）是 <b>untracked</b> 状态——换机器、误清理或 CI 上即失效，等于门禁只存在于这台 Mac。已入库的 <code>verify-collocations.mjs</code> 则是把 <code>提取后续词组/前置词组</code> 函数体以字符串复制进测试再比对源码文本——它测的是「字符串相等」而非「行为相等」，源码改个缩进就假红，改了逻辑忘了同步就假绿。</p>
+  <p class="fix">verify-模块图.mjs 入 git；collocations 测试改为 import 真实模块后跑行为断言（搬移后函数已在 js/查找弹窗.js，具备可 import 的条件）。</p>
+</div>
+
+<div class="block p2">
+  <div class="bt"><span class="tag p2">P2</span> 状态单例：15 个模块直接读写共享可变对象，耦合是隐式的</div>
+  <p>实测 15 个文件 import 状态.js，JSDoc 自己也写明「各模块直接读写，无变更通知」。依赖图无环 ≠ 低耦合——它只保证没有循环，<b>「谁在改 状态.字号」这类问题依然只能靠 grep</b>。对单人无框架项目这是务实选择（且已有 排版键 签名机制缓解重排传播），暂不必推翻，但它是未来一切诡异 bug 的温床，值得有意识地控制：新增模块优先参数传递而非直接摸单例。</p>
+</div>
+
+<div class="block p3">
+  <div class="bt"><span class="tag p3">P3</span> 次级问题（不阻塞，按顺手程度处理）</div>
+  <ul>
+    <li><b>文本管线纯度打折</b>：不直接 import 状态.js（好），但 import 了 排版引擎.js 的 <code>计算句段负担</code>，而排版引擎整模块 import 状态+元素。该函数本身是纯函数（实测无状态引用），但「纯计算层」的标签经传递依赖打了折扣。可把 计算句段负担 挪入常量或独立纯函数模块。</li>
+    <li><b>常量.js 藏可变状态</b>：<code>高亮配色[0].深色/浅色</code> 在 app.js 与 字体设置.js 被直接突变。常量模块语义上是不可变数据源，实际是共享可变状态——import 顺序敏感，测试/热重载下会状态泄漏。</li>
+    <li><b>localStorage.setItem 无异常防护</b>：隐私模式/配额满时抛 QuotaExceededError。多数调用点在事件处理器里影响面小，但 <code>保存持久化状态()</code> 全库读写（每次保存都 JSON.parse 整个书库再写回）在书多了之后会成为性能项。</li>
+    <li><b>语音订阅.js 断线无重连</b>：<code>onclose</code> 只 console.warn。语音服务器重启后必须手动刷新页面才能恢复语音控制。</li>
+    <li><b>重构适用性评估.md 论据过时且前后矛盾</b>：「架构特征」一节仍写「app.js 是单一脚本……无 import/export」，「代码库结构」一节却写「已拆入 js/ 模块」；还引用了已不存在的 hqmx_*.xlsx。文档结论（不引 Vue/React）依然成立，但论据需要一次刷新，否则误导未来的读者（包括未来的你）。</li>
+  </ul>
+</div>
+
+<h2>三、总评</h2>
+<p>以「巨石拆解」为目标衡量，这次重构的<b>成功率是高的</b>：量化目标达成（-43%）、行为零回归有证据链（逐字比对 + E2E 8/8）、断环手段专业、验证密度超出项目基础设施水平。它没有犯重构最常见的错误——边搬边改、顺手优化导致行为漂移。</p>
+<p>遗留问题里，真正值得尽快处理的是 P1 启动路径（5 行修复）；P2 三项是「重构下半场」的议程而非缺陷；P3 是卫生项。依赖图无环 + 纯搬移纪律这套方法已被验证有效，继续沿用即可。</p>
+
+<footer>
+  评审方法：git 历史 + diff 复核 · verify-模块图 本地执行 · 全模块 node --check · 关键路径（启动/持久化/状态 fan-in）逐一 grep 实证 · E2E 8/8 与 62 函数逐字等价引自 commit 78b0d91 记录（本轮未复跑浏览器回归）。仅评审，未改动任何代码。
+</footer>
+
+</div>
+</body>
+</html>
