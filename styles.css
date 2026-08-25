@@ -103,6 +103,9 @@
   /* 末次出现标记占一个 0.42em 字格；行尾按字号预留同宽空间。 */
   --末处标记留白比例: 0.42;
   --滚动条宽度: 20px;
+  /* 动画时长：JS（js/跳转动画.js）读取同一变量同步兜底计时器，改这里即两处同时生效 */
+  --跳转迸发时长: 680ms;
+  --衔接线播放时长: 1200ms;
   color: var(--墨色);
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-synthesis: none;
@@ -1479,7 +1482,7 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .跳转迸发.跳转迸发播放中 i {
-  animation: 跳转迸发 680ms linear;
+  animation: 跳转迸发 var(--跳转迸发时长, 680ms) linear;
 }
 
 @keyframes 跳转迸发 {
@@ -1514,7 +1517,7 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .衔接线.播放中 {
-  animation: 衔接线淡出 1200ms ease-out forwards;
+  animation: 衔接线淡出 var(--衔接线播放时长, 1200ms) ease-out forwards;
 }
 
 @keyframes 衔接线淡出 {

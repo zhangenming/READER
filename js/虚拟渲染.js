@@ -1,4 +1,9 @@
-import { 不渲染引号集合, 关系连词类别映射, 显示引号过滤模式 } from './常量.js';
+import {
+  不渲染引号集合,
+  关系连词类别映射,
+  显示引号过滤模式,
+  当前命中位置提示时长,
+} from './常量.js';
 import {
   是安全字素码,
   是数字字素,
@@ -9,8 +14,7 @@ import {
 } from './文本工具.js';
 import { 元素, 状态 } from './状态.js';
 import { 是混合盒命中 } from './排版引擎.js';
-import { 获取关键词配色 } from './关键词.js';
-import { 查找首个相交命中 } from './跳转动画.js';
+import { 获取关键词配色, 查找首个相交命中 } from './搜索.js';
 
 export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
   if (!状态.行起点列表.length) {
@@ -564,6 +568,25 @@ export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
       }
     }
     return 左边界 * 2;
+  }
+}
+
+// 当前命中项的「当前序号/总数」徽标：短暂显示后自动隐藏。
+export function 显示当前命中位置提示() {
+  for (const 字元素 of 元素.可见内容.querySelectorAll('.字.显示命中位置')) {
+    字元素.classList.remove('显示命中位置');
+  }
+  window.clearTimeout(状态.当前命中位置计时器);
+  状态.当前命中位置计时器 = window.setTimeout(function 隐藏当前命中位置提示() {
+    状态.当前命中位置计时器 = 0;
+    for (const 字元素 of 元素.可见内容.querySelectorAll('.字.显示命中位置')) {
+      字元素.classList.remove('显示命中位置');
+    }
+  }, 当前命中位置提示时长);
+  for (const 字元素 of 元素.可见内容.querySelectorAll(
+    '.字.命中.当前命中[data-hit-position]',
+  )) {
+    字元素.classList.add('显示命中位置');
   }
 }
 

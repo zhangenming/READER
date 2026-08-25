@@ -1,8 +1,5 @@
 import {
-  当前命中位置提示时长,
   自动滚动界面间隔,
-  衔接线播放时长,
-  跳转迸发时长,
   迸发射程差,
   迸发尺寸差,
   迸发最小尺寸,
@@ -11,19 +8,40 @@ import {
   迸发起跳留白,
   迸发重力位移,
 } from './常量.js';
-import { 元素, 状态 } from './状态.js';
+import { 元素, 状态, 查找关键词, 获取静止滚动位置 } from './状态.js';
 import { 查找偏移所在行 } from './排版引擎.js';
-import { 渲染可见行 } from './虚拟渲染.js';
-import { 查找关键词 } from './关键词.js';
+import { 渲染可见行, 显示当前命中位置提示 } from './虚拟渲染.js';
 import { 更新关键词指示器 } from './指示器.js';
 import { 更新滚动块位置, 更新滚动块文本 } from './滚动条.js';
 import { 安排保存持久化状态, 读取阅读位置 } from './持久化.js';
 
-元素.跳转迸发.append(
-  ...Array.from({ length: 迸发粒子数 }, function 造火花() {
-    return document.createElement('i');
-  }),
-);
+// 动画时长与 styles.css 的 @keyframes 以 CSS 变量（:root）为单一数据源：
+// 改样式表时长即同时生效，无需再同步本文件；读取失败时回退到默认值。
+function 读取CSS时长(变量名, 回退值) {
+  try {
+    const 原始值 = getComputedStyle(document.documentElement).getPropertyValue(
+      变量名,
+    );
+    const 数值 = Number.parseFloat(原始值);
+    return Number.isFinite(数值) && 数值 > 0 ? 数值 : 回退值;
+  } catch {
+    return 回退值;
+  }
+}
+const 跳转迸发时长 = 读取CSS时长('--跳转迸发时长', 680);
+const 衔接线播放时长 = 读取CSS时长('--衔接线播放时长', 1200);
+
+// 迸发粒子延迟到首次播放时创建，模块加载不触碰 DOM。
+function 确保粒子存在() {
+  if (元素.跳转迸发.children.length > 0) {
+    return;
+  }
+  元素.跳转迸发.append(
+    ...Array.from({ length: 迸发粒子数 }, function 造火花() {
+      return document.createElement('i');
+    }),
+  );
+}
 
 export function 跳到命中(
   关键词,
@@ -93,24 +111,6 @@ export function 跳到命中(
   });
 }
 
-export function 显示当前命中位置提示() {
-  for (const 字元素 of 元素.可见内容.querySelectorAll('.字.显示命中位置')) {
-    字元素.classList.remove('显示命中位置');
-  }
-  window.clearTimeout(状态.当前命中位置计时器);
-  状态.当前命中位置计时器 = window.setTimeout(function 隐藏当前命中位置提示() {
-    状态.当前命中位置计时器 = 0;
-    for (const 字元素 of 元素.可见内容.querySelectorAll('.字.显示命中位置')) {
-      字元素.classList.remove('显示命中位置');
-    }
-  }, 当前命中位置提示时长);
-  for (const 字元素 of 元素.可见内容.querySelectorAll(
-    '.字.命中.当前命中[data-hit-position]',
-  )) {
-    字元素.classList.add('显示命中位置');
-  }
-}
-
 export function 获取当前命中行位置(关键词) {
   if (关键词.当前命中idx < 0 || 关键词.id !== 状态.当前关键词id) {
     return null;
@@ -155,17 +155,6 @@ export function 获取动画中边框(动画目标) {
     高度: 边框动画.起点.高度,
     颜色: 边框动画.终点.颜色,
   };
-}
-
-export function 获取静止滚动位置() {
-  if (!状态.滚动动画目标) {
-    return 元素.滚动容器.scrollTop;
-  }
-  const 最大滚动位置 = Math.max(
-    0,
-    元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight,
-  );
-  return Math.min(最大滚动位置, 状态.滚动动画目标.终点);
 }
 
 export function 获取元素命中边框(字元素) {
@@ -348,6 +337,7 @@ export function 隐藏跳转边框() {
 
 export function 播放跳转迸发(边框) {
   隐藏跳转迸发();
+  确保粒子存在();
   元素.跳转迸发.style.left = `${边框.左侧 + 边框.宽度 / 2}px`;
   元素.跳转迸发.style.top = `${边框.顶部 + 边框.高度 / 2}px`;
   布置迸发粒子(边框.宽度 / 2, 边框.高度 / 2);
@@ -427,37 +417,4 @@ export function 取消衔接线淡出() {
 export function 收起衔接线() {
   元素.衔接线.hidden = true;
   取消衔接线淡出();
-}
-
-export function 查找首个相交命中(关键词, 文本偏移) {
-  let 左边界 = 0;
-  let 右边界 = 关键词.命中位置.length;
-  while (左边界 < 右边界) {
-    const idx = (左边界 + 右边界) >>> 1;
-    if (关键词.命中位置[idx] + 关键词.文本.length <= 文本偏移) {
-      左边界 = idx + 1;
-    } else {
-      右边界 = idx;
-    }
-  }
-  return 左边界;
-}
-
-export function 查找首个不小于的命中(关键词, 文本偏移) {
-  let 左边界 = 0;
-  let 右边界 = 关键词.命中位置.length;
-  while (左边界 < 右边界) {
-    const idx = (左边界 + 右边界) >>> 1;
-    if (关键词.命中位置[idx] < 文本偏移) {
-      左边界 = idx + 1;
-    } else {
-      右边界 = idx;
-    }
-  }
-  return 左边界;
-}
-
-export function 二分查找精确命中(关键词, 文本偏移) {
-  const idx = 查找首个不小于的命中(关键词, 文本偏移);
-  return 关键词.命中位置[idx] === 文本偏移 ? idx : -1;
 }

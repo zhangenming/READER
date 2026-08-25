@@ -2,7 +2,7 @@ import { 自动滚动最低速度 } from './常量.js';
 import { 元素, 状态 } from './状态.js';
 import { 二分句段起点 } from './排版引擎.js';
 import { 设置属性, 设置文本 } from './虚拟渲染.js';
-import { 今日本书滚动后缀, 格式化剩余滚动时间 } from './自动滚动.js';
+import { 今日本书滚动后缀, 格式化剩余滚动时间 } from './统计展示.js';
 
 export function 更新滚动块(度量 = null) {
   const 滚动块状态 = 更新滚动块位置(度量);

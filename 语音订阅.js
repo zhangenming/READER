@@ -8,7 +8,8 @@
 //   事件「语音自动滚动」；具体动作均由 app.js 监听后执行。
 //   识别到指令后立即派发，阅读器同步翻页，无需任何手动确认。
 // 不创建任何 DOM 与样式，识别在后台静默进行；所有日志仅输出到控制台。
-'use strict';
+// 事件名与 app.js 共享 js/常量.js 的 语音事件（单一数据源，改名时两处同时生效）。
+import { 语音事件 } from './js/常量.js';
 
 (function () {
   const 参数 = new URLSearchParams(location.search);
@@ -110,7 +111,7 @@
 
   function 触发指令(指令) {
     const 事件名称 =
-      指令 === '快' || 指令 === '慢' ? '语音自动滚动' : '语音翻页';
+      指令 === '快' || 指令 === '慢' ? 语音事件.自动滚动 : 语音事件.翻页;
     window.dispatchEvent(
       new CustomEvent(事件名称, { detail: { 指令, 原文: 最近文本 } }),
     );

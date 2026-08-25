@@ -188,3 +188,23 @@ export const 元素 = {
   字体粗细按钮: document.querySelector('#字体粗细按钮'),
   字体选项列表: document.querySelector('#字体选项列表'),
 };
+
+// —— 状态查询（叶子层，供各模块共享，避免「持久化 ↔ 跳转动画」「关键词 ↔ 跳转动画」互相依赖）——
+
+export function 查找关键词(关键词id) {
+  return 状态.关键词列表.find(function 找到关键词(关键词) {
+    return 关键词.id === 关键词id;
+  });
+}
+
+// 当前实际滚动位置：滚动动画进行中取动画终点（静止视口位置），否则读容器 scrollTop。
+export function 获取静止滚动位置() {
+  if (!状态.滚动动画目标) {
+    return 元素.滚动容器.scrollTop;
+  }
+  const 最大滚动位置 = Math.max(
+    0,
+    元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight,
+  );
+  return Math.min(最大滚动位置, 状态.滚动动画目标.终点);
+}
