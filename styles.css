@@ -2840,7 +2840,7 @@ dialog,
   font-weight: var(--关键词粗细, inherit);
 }
 
-.奇偶行样式预览 {
+.背景样式预览 {
   overflow: hidden;
   color: var(--正文字色);
   font-family: var(--正文字体);
@@ -2851,12 +2851,12 @@ dialog,
   border-radius: 6px;
 }
 
-.奇偶行样式预览 div {
+.背景样式预览 div {
   padding: 12px;
 }
 
 /* 背景预览的纸面块：与页面背景同色时靠内描边保住边界 */
-.奇偶行样式预览 .背景预览纸面块 {
+.背景样式预览 .背景预览纸面块 {
   box-shadow: inset 0 0 0 1px var(--边线色);
 }
 

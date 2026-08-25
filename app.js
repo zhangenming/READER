@@ -417,7 +417,6 @@ const 元素 = {
   字体标签引号外: document.querySelector('#字体标签引号外'),
   字体标签全部: document.querySelector('#字体标签全部'),
   字体标签关键词: document.querySelector('#字体标签关键词'),
-  字体标签奇偶行: document.querySelector('#字体标签奇偶行'),
   字体标签背景: document.querySelector('#字体标签背景'),
   引文背景色选项: document.querySelector('#引文背景色选项'),
   引文背景色开关: document.querySelector('#引文背景色开关'),
@@ -788,7 +787,6 @@ function 绑定事件() {
   元素.字体标签引号外.addEventListener('click', () => 切换字体标签('引号外'));
   元素.字体标签全部.addEventListener('click', () => 切换字体标签('全部'));
   元素.字体标签关键词.addEventListener('click', () => 切换字体标签('关键词'));
-  元素.字体标签奇偶行.addEventListener('click', () => 切换字体标签('奇偶行'));
   元素.字体标签背景.addEventListener('click', () => 切换字体标签('背景'));
   元素.引文背景色开关.addEventListener('change', function 切换引文背景色() {
     设置引文背景色(元素.引文背景色开关.checked);
@@ -3704,7 +3702,7 @@ function 切换字体标签(标签) {
 }
 
 function 处理字体选项点击(事件) {
-  if (['关键词', '奇偶行', '背景'].includes(当前字体标签)) {
+  if (['关键词', '背景'].includes(当前字体标签)) {
     return;
   }
   const 选项 = 事件.target.closest('.字体选项');
@@ -3810,11 +3808,6 @@ function 设置区域粗细(区域, 值, 选项 = {}) {
 }
 
 function 重置字体设置() {
-  if (当前字体标签 === '奇偶行') {
-    设置奇偶行颜色('奇数', 默认奇偶行颜色.奇数, { 静默: true });
-    设置奇偶行颜色('偶数', 默认奇偶行颜色.偶数);
-    return;
-  }
   if (当前字体标签 === '背景') {
     设置纸面色(默认纸面色, { 静默: true });
     设置页面背景色(默认页面背景色);
@@ -3845,6 +3838,11 @@ function 重置字体设置() {
     设置引文背景颜色('奇数', 默认引文背景色.奇数, { 静默: true });
     设置引文背景颜色('偶数', 默认引文背景色.偶数);
   }
+  if (当前字体标签 === '引号外') {
+    // 正文 tab 现在容纳奇偶行底色，恢复默认时一并重置
+    设置奇偶行颜色('奇数', 默认奇偶行颜色.奇数, { 静默: true });
+    设置奇偶行颜色('偶数', 默认奇偶行颜色.偶数);
+  }
 }
 
 function 渲染字体标签() {
@@ -3853,7 +3851,6 @@ function 渲染字体标签() {
     { 元素: 元素.字体标签引号内, 名称: '引号内' },
     { 元素: 元素.字体标签引号外, 名称: '引号外' },
     { 元素: 元素.字体标签关键词, 名称: '关键词' },
-    { 元素: 元素.字体标签奇偶行, 名称: '奇偶行' },
     { 元素: 元素.字体标签背景, 名称: '背景' },
   ];
   for (const { 元素: 标签元素, 名称 } of 标签列表) {
@@ -3867,32 +3864,22 @@ function 渲染字体标签() {
   元素.换行标记选项.hidden = 当前字体标签 !== '全部';
   元素.字体颜色选项.hidden = 当前字体标签 !== '全部';
   元素.内置字词颜色选项.hidden = 当前字体标签 !== '全部';
+  元素.奇偶行颜色选项.hidden = 当前字体标签 !== '引号外';
   元素.关键词颜色选项.hidden = 当前字体标签 !== '关键词';
-  元素.奇偶行颜色选项.hidden = 当前字体标签 !== '奇偶行';
   元素.背景颜色选项.hidden = 当前字体标签 !== '背景';
-  元素.字体粗细按钮.hidden = ['奇偶行', '背景'].includes(当前字体标签);
+  元素.字体粗细按钮.hidden = 当前字体标签 === '背景';
 }
 
 function 渲染字体选项() {
   const 区域 = 当前字体标签;
   const 容器 = 元素.字体选项列表;
   const 片段 = document.createDocumentFragment();
-  if (区域 === '奇偶行') {
-    const 预览 = document.createElement('div');
-    预览.className = '奇偶行样式预览';
-    预览.append(
-      创建行预览('奇数行颜色', '奇数'),
-      创建行预览('偶数行颜色', '偶数'),
-    );
-    容器.replaceChildren(预览);
-    return;
-  }
   if (区域 === '背景') {
     // 背景预览：外层铺当前页面背景色，内层色块模拟正文纸面。
     // 弹窗作用域内 --背景色/--纸张色 已被钉成固定浅色（见 styles.css .字体弹窗），
     // 不能用变量引用，这里直接拷贝状态值，改色时由设置函数刷新重绘。
     const 预览 = document.createElement('div');
-    预览.className = '奇偶行样式预览';
+    预览.className = '背景样式预览';
     预览.style.backgroundColor = 页面背景色;
     const 纸面块 = document.createElement('div');
     纸面块.className = '背景预览纸面块';
@@ -3957,13 +3944,6 @@ function 渲染字体选项() {
     const 文字 = document.createElement('span');
     文字.textContent = '关键词';
     return 文字;
-  }
-
-  function 创建行预览(文字, 类型) {
-    const 行 = document.createElement('div');
-    行.textContent = 文字;
-    行.style.backgroundColor = `var(--段落底色${类型 === '奇数' ? '一' : '二'})`;
-    return 行;
   }
 }
 
@@ -4756,14 +4736,17 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
         状态.关键词面板展开 = 持久化状态.关键词面板展开;
       }
       if (持久化状态.当前字体标签 !== undefined) {
+        let 持久化标签 = 持久化状态.当前字体标签;
+        if (持久化标签 === '奇偶行') {
+          // 旧版「奇偶行」独立标签页已并入「正文」，迁移旧持久化值
+          持久化标签 = '引号外';
+        }
         if (
-          !['全部', '引号内', '引号外', '关键词', '奇偶行', '背景'].includes(
-            持久化状态.当前字体标签,
-          )
+          !['全部', '引号内', '引号外', '关键词', '背景'].includes(持久化标签)
         ) {
           throw new TypeError('持久化的字体标签状态无效');
         }
-        当前字体标签 = 持久化状态.当前字体标签;
+        当前字体标签 = 持久化标签;
       }
       恢复字体设置(持久化状态.字体);
       恢复字体粗细设置(持久化状态.字体粗细);
