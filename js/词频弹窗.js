@@ -1,3 +1,4 @@
+import { 每页词频数 } from './常量.js';
 import { 是汉字 } from './文本工具.js';
 import { 按需让出主线程 } from './调度.js';
 import { 元素, 状态 } from './状态.js';
@@ -9,7 +10,6 @@ import { 元素, 状态 } from './状态.js';
 
 let 当前词频字数 = 1;
 let 当前词频页码 = 1;
-const 每页词频数 = 200;
 let 词频分析任务 = null;
 
 export async function 打开词频弹窗() {

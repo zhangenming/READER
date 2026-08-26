@@ -3,6 +3,7 @@ import {
   关系连词类别映射,
   显示引号过滤模式,
   当前命中位置提示时长,
+  渲染缓冲行数,
 } from './常量.js';
 import {
   是安全字素码,
@@ -21,15 +22,15 @@ export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
     return;
   }
 
-  const 缓冲行数 = 12;
   const 可见起点 = Math.max(
     0,
-    Math.floor(元素.滚动容器.scrollTop / 状态.行高) - 缓冲行数,
+    Math.floor(元素.滚动容器.scrollTop / 状态.行高) - 渲染缓冲行数,
   );
   const 实际视口高度 = 视口高度 ?? 元素.滚动容器.clientHeight;
   const 可见终点 = Math.min(
     状态.行起点列表.length,
-    Math.ceil((元素.滚动容器.scrollTop + 实际视口高度) / 状态.行高) + 缓冲行数,
+    Math.ceil((元素.滚动容器.scrollTop + 实际视口高度) / 状态.行高) +
+      渲染缓冲行数,
   );
 
   if (!强制渲染 && 可见起点 === 状态.渲染起点 && 可见终点 === 状态.渲染终点) {

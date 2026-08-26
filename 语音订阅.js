@@ -9,7 +9,7 @@
 //   识别到指令后立即派发，阅读器同步翻页，无需任何手动确认。
 // 不创建任何 DOM 与样式，识别在后台静默进行；所有日志仅输出到控制台。
 // 事件名与 app.js 共享 js/常量.js 的 语音事件（单一数据源，改名时两处同时生效）。
-import { 语音事件 } from './js/常量.js';
+import { 语音事件, 语音重连间隔毫秒 } from './js/常量.js';
 
 (function () {
   const 参数 = new URLSearchParams(location.search);
@@ -23,13 +23,14 @@ import { 语音事件 } from './js/常量.js';
   let 最近文本 = '';
 
   let 连接 = null;
+  let 重连计时器 = 0;
 
   function 时间戳() {
     return new Date().toLocaleTimeString('zh-CN', { hour12: false });
   }
 
   function 打印收到的信息(消息) {
-    console.log(`[语音转录 ${时间戳()}] ${消息.type}`, 消息);
+    console.info(`[语音转录 ${时间戳()}] ${消息.type}`, 消息);
   }
 
   // ===== 转写文本提取（兼容多种服务器报文结构）=====
@@ -158,7 +159,8 @@ import { 语音事件 } from './js/常量.js';
       return;
     }
     连接.onopen = () => {
-      console.log(`[语音转录 ${时间戳()}] 已连接 ${地址}，加入房间「${房间}」`);
+      console.info(`[语音转录 ${时间戳()}] 已连接 ${地址}，加入房间「${房间}」`);
+      window.clearTimeout(重连计时器);
       连接.send(JSON.stringify({ type: 'join', role: 'display', room: 房间 }));
     };
     连接.onmessage = (事件) => {
@@ -171,7 +173,11 @@ import { 语音事件 } from './js/常量.js';
       处理转录消息(消息);
     };
     连接.onclose = () => {
-      console.warn(`[语音转录 ${时间戳()}] 连接断开（服务器未启动？）`);
+      console.warn(
+        `[语音转录 ${时间戳()}] 连接断开（服务器未启动？），${Math.round(语音重连间隔毫秒 / 1000)} 秒后自动重连`,
+      );
+      window.clearTimeout(重连计时器);
+      重连计时器 = window.setTimeout(连接服务器, 语音重连间隔毫秒);
     };
     连接.onerror = () => 连接.close();
   }

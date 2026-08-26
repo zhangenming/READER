@@ -1,10 +1,20 @@
 import { 主线程时间片毫秒 } from './常量.js';
 
+// scheduler.yield 仅 Chrome 系支持；缺失时回退 setTimeout(0) 宏任务让出，
+// 保证非 Chromium 浏览器与 Node 环境下管线仍可运行（只是让出粒度变粗）。
+async function 让出主线程() {
+  if (typeof scheduler !== 'undefined' && typeof scheduler.yield === 'function') {
+    await scheduler.yield();
+  } else {
+    await new Promise((解决) => setTimeout(解决, 0));
+  }
+}
+
 export async function 按需让出主线程(时间片开始) {
   if (performance.now() - 时间片开始 < 主线程时间片毫秒) {
     return 时间片开始;
   }
-  await scheduler.yield();
+  await 让出主线程();
   return performance.now();
 }
 

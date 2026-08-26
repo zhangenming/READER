@@ -1,0 +1,9 @@
+{
+  "name": "reader",
+  "private": true,
+  "type": "module",
+  "description": "原文阅读器（纯原生 JS，零运行时依赖）。本文件仅提供校验门禁脚本，不引入任何依赖与构建。",
+  "scripts": {
+    "test": "node tmp/verify-模块图.mjs && node tmp/verify-persistence-migration.mjs && node tmp/verify-collocations.mjs"
+  }
+}

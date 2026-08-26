@@ -1,4 +1,4 @@
-import { 持久化键, 旧持久化键 } from './常量.js';
+import { 持久化键, 旧持久化键, 持久化保存防抖毫秒 } from './常量.js';
 import {
   外观,
   奇偶行颜色,
@@ -50,7 +50,7 @@ export function 读取持久化数据() {
 
 export function 安排保存持久化状态() {
   window.clearTimeout(状态.保存计时器);
-  状态.保存计时器 = window.setTimeout(保存持久化状态, 120);
+  状态.保存计时器 = window.setTimeout(保存持久化状态, 持久化保存防抖毫秒);
 }
 
 export function 保存持久化状态() {
@@ -113,7 +113,12 @@ export function 保存持久化状态() {
         };
       }),
   };
-  localStorage.setItem(持久化键, JSON.stringify(持久化数据));
+  try {
+    localStorage.setItem(持久化键, JSON.stringify(持久化数据));
+  } catch (错误) {
+    // 隐私模式 / 配额满时 setItem 会抛异常；落盘失败只影响持久化，不能打断阅读会话
+    console.warn('[阅读器] 持久化状态保存失败', 错误);
+  }
 }
 
 export function 读取阅读位置() {

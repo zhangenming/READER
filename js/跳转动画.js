@@ -142,7 +142,7 @@ export function 获取当前命中边框(关键词) {
   return 当前元素 ? 获取元素命中边框(当前元素) : null;
 }
 
-export function 获取动画中边框(动画目标) {
+function 获取动画中边框(动画目标) {
   const 边框动画 = 动画目标.边框动画;
   if (!边框动画) {
     return null;
@@ -326,7 +326,7 @@ export function 取消滚动动画() {
   }
 }
 
-export function 隐藏跳转边框() {
+function 隐藏跳转边框() {
   if (元素.跳转边框.hidden) {
     return;
   }
@@ -335,7 +335,7 @@ export function 隐藏跳转边框() {
   元素.跳转边框.removeAttribute('style');
 }
 
-export function 播放跳转迸发(边框) {
+function 播放跳转迸发(边框) {
   隐藏跳转迸发();
   确保粒子存在();
   元素.跳转迸发.style.left = `${边框.左侧 + 边框.宽度 / 2}px`;
@@ -372,7 +372,7 @@ export function 播放跳转迸发(边框) {
   }
 }
 
-export function 隐藏跳转迸发() {
+function 隐藏跳转迸发() {
   if (元素.跳转迸发.hidden && !状态.迸发计时器) {
     return;
   }
@@ -408,13 +408,13 @@ export function 隐藏衔接线() {
   状态.衔接线计时器 = window.setTimeout(收起衔接线, 衔接线播放时长 + 80);
 }
 
-export function 取消衔接线淡出() {
+function 取消衔接线淡出() {
   window.clearTimeout(状态.衔接线计时器);
   元素.衔接线.classList.remove('播放中');
   元素.衔接线.removeEventListener('animationend', 收起衔接线);
 }
 
-export function 收起衔接线() {
+function 收起衔接线() {
   元素.衔接线.hidden = true;
   取消衔接线淡出();
 }
