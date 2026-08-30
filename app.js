@@ -1,32 +1,17 @@
 import {
-  关键词排序方式列表,
   双击判定延迟,
   文本目录地址,
   时间格式器,
-  最大字号,
-  最大行高,
-  最小字号,
-  最小行高硬下限,
   右下热区宽度,
   右下热区高度,
   右下触摸显示时长,
   尺寸重排防抖毫秒,
-  自动滚动最低速度,
-  自动滚动最高速度,
-  自动滚动默认速度,
   上下文滚动预载像素,
-  默认关键词颜色,
-  默认内置字词颜色,
-  默认奇偶行颜色,
   默认字号,
-  默认引文背景色,
   默认文件名,
-  默认纸面色,
-  默认行高,
-  默认页面背景色,
   语音事件,
 } from './js/常量.js';
-import { 是有效文本文件名 } from './js/文本工具.js';
+import { 是有效文本文件名, 清除文本字素分段缓存 } from './js/文本工具.js';
 import {
   元素,
   外观,
@@ -44,7 +29,6 @@ import {
   创建行索引,
   刷新画布尺寸,
   提交行索引,
-  计算最小行高,
   读取正文排版,
   重建行索引,
 } from './js/排版引擎.js';
@@ -67,7 +51,6 @@ import {
 } from './js/关键词.js';
 import { 更新关键词指示器, 初始化指示器 } from './js/指示器.js';
 import {
-  有弹窗打开,
   切换关键词排序,
   排序后的关键词列表,
   渲染关键词面板,
@@ -90,7 +73,6 @@ import {
   结束跳转会话,
   获取元素命中边框,
   获取元素行位置,
-  获取当前命中边框,
   跳到命中,
   隐藏衔接线,
 } from './js/跳转动画.js';
@@ -98,14 +80,13 @@ import {
   更新自动滚动速度,
   载入自动滚动统计,
   开始自动滚动,
-  开始按键滚动,
   停止按键滚动,
   执行自动滚动翻页,
   处理自动滚动滚轮,
   处理鼠标移动,
   停止自动滚动,
   自动滚动进行中,
-  获取按键滚动按键,
+  注册自动滚动滚轮监听,
   注册右下强制显示,
 } from './js/自动滚动.js';
 import {
@@ -116,13 +97,8 @@ import {
   处理字体选项点击,
   处理字号滚轮,
   处理行距滚轮,
-  字体粗细列表,
-  打开字体弹窗,
-  更新字号显示,
-  更新行高显示,
   离开字号调节,
   离开行距调节,
-  设置关键词粗细,
   设置关键词颜色,
   设置内置字词颜色,
   设置区域颜色,
@@ -145,7 +121,7 @@ import {
   保存持久化状态,
   安排保存持久化状态,
   计算阅读位置,
-  读取持久化数据,
+  读取持久化数据或新建,
   读取阅读位置,
 } from './js/持久化.js';
 import {
@@ -158,7 +134,6 @@ import {
   取消词组分析,
   关闭查找弹窗,
   定位查找命中,
-  打开查找弹窗,
   标记合成开始,
   合成结束提交,
 } from './js/查找弹窗.js';
@@ -168,7 +143,6 @@ import {
   处理词频弹窗点击,
   取消词频分析,
   关闭词频弹窗,
-  打开词频弹窗,
   翻词频页,
 } from './js/词频弹窗.js';
 import {
@@ -201,18 +175,17 @@ import {
 function 启动() {
   // 画布上下文在启动时创建（指示器模块本身不触碰 DOM，便于静态加载与测试）
   初始化指示器();
-  let 持久化数据 = null;
-  try {
-    持久化数据 = 读取持久化数据();
-  } catch (错误) {
-    console.warn('[阅读器] 持久化数据未载入', 错误);
-  }
+  const 持久化数据 = 读取持久化数据或新建();
   载入自动滚动统计(持久化数据);
   绑定事件();
   更新当前时间();
   window.setInterval(更新当前时间, 1000);
   new ResizeObserver(处理尺寸变化).observe(元素.滚动容器);
-  void 载入文本(读取初始文件名());
+  void 载入文本(
+    是有效文本文件名(持久化数据.当前文件名)
+      ? 持久化数据.当前文件名
+      : 默认文件名,
+  );
 
   function 更新当前时间() {
     const 现在 = new Date();
@@ -257,20 +230,6 @@ function 启动() {
         显示文本处理错误(错误);
       }
     }, 尺寸重排防抖毫秒);
-  }
-
-  function 读取初始文件名() {
-    // 持久化数据损坏时不能让启动断裂（绑定事件已执行、正文却永不载入），
-    // 这里兜底回退到默认文本，与上方首次读取的容错保持对称。
-    try {
-      const 持久化数据 = 读取持久化数据();
-      return 是有效文本文件名(持久化数据.当前文件名)
-        ? 持久化数据.当前文件名
-        : 默认文件名;
-    } catch (错误) {
-      console.warn('[阅读器] 初始文件名读取失败，回退默认文本', 错误);
-      return 默认文件名;
-    }
   }
 }
 
@@ -347,6 +306,24 @@ function 绑定事件() {
   注册右下强制显示((正在滚动) => {
     右下强制 = 正在滚动;
     刷新右下控件可见性();
+  });
+
+  const 自动滚动滚轮监听选项 = { capture: true, passive: false };
+  let 自动滚动滚轮已绑定 = false;
+  注册自动滚动滚轮监听(function 切换自动滚动滚轮监听(启用) {
+    if (启用 === 自动滚动滚轮已绑定) {
+      return;
+    }
+    自动滚动滚轮已绑定 = 启用;
+    if (启用) {
+      window.addEventListener('wheel', 处理自动滚动滚轮, 自动滚动滚轮监听选项);
+    } else {
+      window.removeEventListener(
+        'wheel',
+        处理自动滚动滚轮,
+        自动滚动滚轮监听选项,
+      );
+    }
   });
 
   // 内容选择弹窗经注入回调访问 app 的 载入文本 / 创建文本地址（断环：避免「内容选择弹窗 → app」反向依赖）
@@ -568,10 +545,6 @@ function 绑定事件() {
   元素.滚动进度.addEventListener('pointercancel', 结束滚动进度拖动);
   window.addEventListener('mouseup', 处理鼠标选择结束);
   window.addEventListener('mousemove', 处理鼠标移动, { passive: true });
-  window.addEventListener('wheel', 处理自动滚动滚轮, {
-    capture: true,
-    passive: false,
-  });
   window.addEventListener('blur', 取消交互状态);
   window.addEventListener('keydown', 处理键盘按下);
   window.addEventListener('keyup', 处理键盘松开);
@@ -609,18 +582,70 @@ function 绑定事件() {
 
   // 「关键词手势」：单击/双击/上下拖拽（pointer 统一鼠标/触摸/笔）
   // 单击=下一个 / 双击=上一个 / 向上拖=第一个 / 向下拖=最后一个
-  元素.滚动容器.addEventListener('pointerdown', 处理关键词手势开始);
-  window.addEventListener('pointermove', 处理关键词手势移动, {
-    passive: false,
-  });
-  元素.滚动容器.addEventListener('touchmove', 处理关键词触摸移动, {
-    passive: false,
-  });
-  document.addEventListener('selectstart', 处理关键词选择阻止, {
-    passive: false,
-  });
-  window.addEventListener('pointerup', 处理关键词手势松开);
-  window.addEventListener('pointercancel', 处理关键词手势取消);
+  // 只有无修饰键按下关键词命中时才挂载非 passive 监听，普通正文滚动不受影响。
+  let 关键词手势监听中 = false;
+  const 关键词手势监听选项 = { passive: false };
+  元素.滚动容器.addEventListener('pointerdown', 开始关键词手势监听);
+
+  function 开始关键词手势监听(事件) {
+    if (关键词手势监听中 || !处理关键词手势开始(事件)) {
+      return;
+    }
+    关键词手势监听中 = true;
+    window.addEventListener(
+      'pointermove',
+      处理关键词手势移动,
+      关键词手势监听选项,
+    );
+    window.addEventListener('pointerup', 结束关键词手势监听);
+    window.addEventListener('pointercancel', 取消关键词手势监听);
+    window.addEventListener(
+      'touchmove',
+      处理关键词触摸移动,
+      关键词手势监听选项,
+    );
+    document.addEventListener(
+      'selectstart',
+      处理关键词选择阻止,
+      关键词手势监听选项,
+    );
+  }
+
+  function 结束关键词手势监听(事件) {
+    if (处理关键词手势松开(事件)) {
+      移除关键词手势监听();
+    }
+  }
+
+  function 取消关键词手势监听(事件) {
+    if (处理关键词手势取消(事件)) {
+      移除关键词手势监听();
+    }
+  }
+
+  function 移除关键词手势监听() {
+    if (!关键词手势监听中) {
+      return;
+    }
+    关键词手势监听中 = false;
+    window.removeEventListener(
+      'pointermove',
+      处理关键词手势移动,
+      关键词手势监听选项,
+    );
+    window.removeEventListener('pointerup', 结束关键词手势监听);
+    window.removeEventListener('pointercancel', 取消关键词手势监听);
+    window.removeEventListener(
+      'touchmove',
+      处理关键词触摸移动,
+      关键词手势监听选项,
+    );
+    document.removeEventListener(
+      'selectstart',
+      处理关键词选择阻止,
+      关键词手势监听选项,
+    );
+  }
 
   function 处理滚动() {
     暂停正文悬停();
@@ -732,7 +757,7 @@ function 绑定事件() {
     停止自动滚动('窗口失去焦点');
     停止按键滚动('窗口失去焦点');
     状态.拖选状态 = null;
-    处理关键词手势取消();
+    取消关键词手势监听();
     取消待定导航();
     重置滚动条拖拽();
   }
@@ -1201,7 +1226,8 @@ function 绑定事件() {
     const 列表 = 元素.上下文列表;
     if (
       状态.上下文视图 &&
-      列表.scrollTop + 列表.clientHeight > 列表.scrollHeight - 上下文滚动预载像素
+      列表.scrollTop + 列表.clientHeight >
+        列表.scrollHeight - 上下文滚动预载像素
     ) {
       追加上下文行块();
     }
@@ -1285,7 +1311,7 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
         关键词面板展开: 状态.关键词面板展开,
       }
     : null;
-  const 持久化状态 = 读取持久化数据().文本状态[文件名] ?? null;
+  const 持久化状态 = 读取持久化数据或新建().文本状态[文件名] ?? null;
   恢复阅读设置(持久化状态 ?? 上一本书公共状态, 文件名);
   if (!持久化状态 && 上一本书公共状态) {
     console.info('[阅读器] 新文本已继承上一本书的公共设置', { 文件名 });
@@ -1319,6 +1345,7 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
   阶段耗时.行索引 = performance.now() - 阶段开始时间;
 
   状态.排版任务序号 += 1;
+  清除文本字素分段缓存();
   状态.文本 = 文本;
   状态.指示器缓存 = null;
   状态.词频分析 = null;
@@ -1420,7 +1447,6 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
       ) + 1;
     元素.滚动容器.scrollTop = 计算阅读位置(持久化状态);
   }
-
 }
 
 function 更新文档标题() {

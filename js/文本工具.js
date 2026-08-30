@@ -1,5 +1,22 @@
 import { 字素分段器, 汉字模式, 西文字素模式 } from './常量.js';
 
+let 字素缓存文本 = null;
+let 字素缓存结果 = null;
+
+// 全文查找会反复使用同一份字素边界；按字符串值缓存，切换文本时自动失效。
+export function 获取文本字素分段(文本) {
+  if (文本 !== 字素缓存文本) {
+    字素缓存文本 = 文本;
+    字素缓存结果 = 字素分段器.segment(文本);
+  }
+  return 字素缓存结果;
+}
+
+export function 清除文本字素分段缓存() {
+  字素缓存文本 = null;
+  字素缓存结果 = null;
+}
+
 export function 是有效文本文件名(文件名) {
   return (
     typeof 文件名 === 'string' &&

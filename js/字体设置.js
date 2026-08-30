@@ -370,7 +370,10 @@ export function 渲染字体颜色选择器() {
   const 当前颜色 =
     字体颜色设置.引号内 === 字体颜色设置.引号外 ? 字体颜色设置.引号内 : null;
   元素.字体颜色选择器.value = 当前颜色 ?? '#221e16';
-  元素.字体颜色选择器.setAttribute('aria-label', `当前${外观.当前字体标签}字体颜色`);
+  元素.字体颜色选择器.setAttribute(
+    'aria-label',
+    `当前${外观.当前字体标签}字体颜色`,
+  );
 }
 
 export function 设置内置字词颜色(颜色, 选项 = {}) {
@@ -378,7 +381,10 @@ export function 设置内置字词颜色(颜色, 选项 = {}) {
     throw new TypeError('内置字词颜色格式无效');
   }
   外观.内置字词颜色 = 颜色.toLowerCase();
-  document.documentElement.style.setProperty('--内置字词颜色', 外观.内置字词颜色);
+  document.documentElement.style.setProperty(
+    '--内置字词颜色',
+    外观.内置字词颜色,
+  );
   元素.内置字词颜色选择器.value = 外观.内置字词颜色;
   if (!选项.静默) {
     安排保存持久化状态();
@@ -765,8 +771,6 @@ export function 更新行高显示() {
 }
 
 // 悬停行距控件时滚轮实时调整行距：上滚（deltaY<0）增大间距，下滚减小。
-
-// 悬停行距控件时滚轮实时调整行距：上滚（deltaY<0）增大间距，下滚减小。
 export function 处理行距滚轮(事件) {
   事件.preventDefault();
   事件.stopPropagation();
@@ -782,8 +786,6 @@ export function 处理行距滚轮(事件) {
   }
   调整行高(状态.行高 + 步数 * 行高步进);
 }
-
-// 悬停期间给按钮加高亮态，提示「滚轮可调节」
 
 // 悬停期间给按钮加高亮态，提示「滚轮可调节」
 export function 进入行距调节() {
@@ -927,9 +929,7 @@ export function 恢复阅读设置(持久化状态, 文件名) {
   状态.关键词面板展开 = false;
 
   const 根计算样式 = getComputedStyle(根元素);
-  const 计算字号 = Number.parseFloat(
-    根计算样式.getPropertyValue('--正文字号'),
-  );
+  const 计算字号 = Number.parseFloat(根计算样式.getPropertyValue('--正文字号'));
   const 计算行高 = Number.parseFloat(根计算样式.getPropertyValue('--行高'));
   状态.字号 = Number.isFinite(计算字号) && 计算字号 > 0 ? 计算字号 : 默认字号;
   状态.行高 = Number.isFinite(计算行高) && 计算行高 > 0 ? 计算行高 : 默认行高;
@@ -1039,11 +1039,7 @@ export function 恢复阅读设置(持久化状态, 文件名) {
     }
     for (const 区域 of ['引号内', '引号外']) {
       const 值 = 持久化字体[区域];
-      if (
-        值 !== null &&
-        值 !== undefined &&
-        (typeof 值 !== 'string' || !值)
-      ) {
+      if (值 !== null && 值 !== undefined && (typeof 值 !== 'string' || !值)) {
         throw new TypeError(`持久化的${区域}字体设置格式无效`);
       }
       const 变量名 = 区域 === '引号内' ? '--引文字体' : '--正文字体';

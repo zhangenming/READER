@@ -10,7 +10,7 @@ import { 执行导航跳转 } from './键盘控制.js';
 // 拖拽期间通过 CSS（body.关键词手势中 的 user-select:none）+
 // 阻止 touchmove/pointermove 默认行为 + 阻止 selectstart，确保绝不选中文字。
 
-let 关键词手势 = null; // { 关键词, 命中idx, 起点Y, 起点X, 方向: null|'上'|'下' }
+let 关键词手势 = null; // { 关键词, 命中idx, 起点Y, 起点X, pointerId, 方向: null|'上'|'下' }
 let 点击抑制 = false; // 拖拽手势触发后抑制紧随的 click，避免重复跳转
 
 // 手势触发跳转后，紧随的 click 会带抑制标记到达；消费一次即复位
@@ -23,17 +23,16 @@ export function 消费点击抑制() {
 }
 
 export function 处理关键词手势开始(事件) {
-  关键词手势 = null; // 每次新按下先清空，避免上一轮残留
-  document.body.classList.remove('关键词手势中');
-  if (事件.button !== 0) {
-    return;
+  if (事件.button !== 0 || 事件.isPrimary === false || 关键词手势) {
+    return false;
   }
+  document.body.classList.remove('关键词手势中');
   const 字元素 = 事件.target.closest?.('.字');
   if (!字元素 || !字元素.classList.contains('命中')) {
-    return;
+    return false;
   }
   if (事件.shiftKey || 事件.altKey || 事件.metaKey || 事件.ctrlKey) {
-    return; // 修饰键组合交给既有逻辑，不介入
+    return false; // 修饰键组合交给既有逻辑，不介入
   }
   点击抑制 = false;
   关键词手势 = {
@@ -41,21 +40,20 @@ export function 处理关键词手势开始(事件) {
     命中idx: Number(字元素.dataset.hitIndex),
     起点Y: 事件.clientY,
     起点X: 事件.clientX,
+    pointerId: 事件.pointerId ?? null,
     方向: null, // null=尚未拖动；'上'=第一个；'下'=最后一个
   };
+  return true;
 }
 
 export function 处理关键词手势移动(事件) {
-  if (!关键词手势 || 关键词手势.方向) {
+  if (!是当前关键词手势指针(事件) || 关键词手势.方向) {
     return;
   }
   const 偏移Y = 事件.clientY - 关键词手势.起点Y;
   const 偏移X = 事件.clientX - 关键词手势.起点X;
   // 横向拖动或位移过小 → 视为普通点击/双击，不进入手势
-  if (
-    Math.abs(偏移X) > Math.abs(偏移Y) ||
-    Math.abs(偏移Y) < 关键词拖拽死区
-  ) {
+  if (Math.abs(偏移X) > Math.abs(偏移Y) || Math.abs(偏移Y) < 关键词拖拽死区) {
     return;
   }
   关键词手势.方向 = 偏移Y < 0 ? '上' : '下';
@@ -81,14 +79,14 @@ export function 处理关键词选择阻止(事件) {
 }
 
 export function 处理关键词手势松开(事件) {
-  if (!关键词手势) {
-    return;
+  if (!是当前关键词手势指针(事件)) {
+    return false;
   }
   const 手势 = 关键词手势;
   关键词手势 = null;
   document.body.classList.remove('关键词手势中');
   if (!手势.方向 || !手势.关键词?.命中位置.length) {
-    return; // 无方向 = 普通点击/双击，交还给 click/dblclick 处理
+    return true; // 无方向 = 普通点击/双击，交还给 click/dblclick 处理
   }
   // 抑制紧随的 click（避免 处理高亮点击 再前进一格），并清掉选区
   点击抑制 = true;
@@ -111,9 +109,27 @@ export function 处理关键词手势松开(事件) {
     Command已按下: true,
     仅当前关键词: true,
   });
+  return true;
 }
 
-export function 处理关键词手势取消() {
+export function 处理关键词手势取消(事件) {
+  if (!是当前关键词手势指针(事件)) {
+    return false;
+  }
   关键词手势 = null;
   document.body.classList.remove('关键词手势中');
+  return true;
+}
+
+function 是当前关键词手势指针(事件) {
+  if (!关键词手势) {
+    return false;
+  }
+  if (!事件) {
+    return true;
+  }
+  if (事件.isPrimary === false) {
+    return false;
+  }
+  return 事件.pointerId === 关键词手势.pointerId;
 }

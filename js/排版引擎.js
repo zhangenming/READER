@@ -34,7 +34,11 @@ export function 创建排版键(换行键, 行高) {
 // 使本模块不依赖任何视图模块（虚拟渲染 / 指示器 / 跳转动画），保持纯计算层。
 // 提交前回调（提交前）在 提交行索引 之前执行（如取消滚动动画、隐藏衔接线）；
 // 完成后回调（完成后）在 scrollTop 落位后执行（如 渲染可见行(true)、更新关键词指示器）。
-export function 重建行索引(排版 = 读取正文排版(), 提交前 = null, 完成后 = null) {
+export function 重建行索引(
+  排版 = 读取正文排版(),
+  提交前 = null,
+  完成后 = null,
+) {
   const 本次任务序号 = ++状态.排版任务序号;
   const 本次文本 = 状态.文本;
   const 本次缩进起点集合 = 状态.缩进起点集合;
@@ -91,7 +95,13 @@ export function 重建行索引(排版 = 读取正文排版(), 提交前 = null,
   }
 }
 
-export async function 创建行索引(文本, 排版, 缩进起点集合, 阶梯断点, 任务仍然有效) {
+export async function 创建行索引(
+  文本,
+  排版,
+  缩进起点集合,
+  阶梯断点,
+  任务仍然有效,
+) {
   const 起点数组 = [];
   const 终点数组 = [];
   const 逻辑行数组 = [];
@@ -524,17 +534,7 @@ export function 读取正文排版() {
   const 画布宽度 =
     元素.虚拟画布.clientWidth || Math.min(940, window.innerWidth);
   const 根样式 = getComputedStyle(document.documentElement);
-
-  // 取 CSS 变量，解析失败或无效时回退到默认值，避免样式表加载异常导致整个应用崩溃
-  const 读取数字变量 = (变量名, 默认值) => {
-    const 原始值 = 根样式.getPropertyValue(变量名);
-    const 数值 = Number.parseFloat(原始值);
-    return Number.isFinite(数值) && 数值 > 0 ? 数值 : 默认值;
-  };
-  const 读取字体变量 = (变量名, 默认值) => {
-    const 原始值 = 根样式.getPropertyValue(变量名).trim();
-    return 原始值 || 默认值;
-  };
+  const CSS变量回退列表 = [];
 
   const 默认西文字号比例 = 0.96;
   const 默认正文字体 = "'Songti SC', 'STSong', 'Noto Serif CJK SC', serif";
@@ -548,14 +548,13 @@ export function 读取正文排版() {
   const 正文粗细 = 读取数字变量('--正文粗细', 100);
   const 引文粗细 = 读取数字变量('--引文粗细', 900);
 
-  const css回退 =
-    正文字号 === 默认字号 ||
-    行高 === 默认行高 ||
-    西文字号比例 === 默认西文字号比例 ||
-    正文字体 === 默认正文字体 ||
-    西文字体 === 默认西文字体;
-  if (css回退) {
+  // 两侧留白分别容纳折行句竖条与末次出现标记；排版内容宽度必须同步折减，
+  // 避免末字或位于行尾的标记被 overflow: hidden 裁掉。
+  const 左留白 = 读取数字变量('--正文左留白', 0, true);
+  const 右留白 = 正文字号 * 读取数字变量('--末处标记留白比例', 0, true);
+  if (CSS变量回退列表.length) {
     console.warn('[阅读器] 部分正文排版 CSS 变量未生效，已使用默认值', {
+      变量: CSS变量回退列表,
       正文字号,
       行高,
       西文字号比例,
@@ -563,13 +562,10 @@ export function 读取正文排版() {
       西文字体,
       正文粗细,
       引文粗细,
+      左留白,
+      右留白,
     });
   }
-
-  // 两侧留白分别容纳折行句竖条与末次出现标记；排版内容宽度必须同步折减，
-  // 避免末字或位于行尾的标记被 overflow: hidden 裁掉。
-  const 左留白 = 读取数字变量('--正文左留白', 0);
-  const 右留白 = 正文字号 * 读取数字变量('--末处标记留白比例', 0);
   const 内容宽度 = Math.max(正文字号, 画布宽度 - 左留白 - 右留白);
   const 换行键 = [
     内容宽度.toFixed(2),
@@ -588,6 +584,26 @@ export function 读取正文排版() {
     行高,
     西文字体: `${正文粗细} ${正文字号 * 西文字号比例}px ${西文字体}`,
   };
+
+  // 解析失败时保留可观测记录，再使用默认值维持现有阅读会话。
+  function 读取数字变量(变量名, 默认值, 允许零 = false) {
+    const 原始值 = 根样式.getPropertyValue(变量名).trim();
+    const 数值 = Number.parseFloat(原始值);
+    if (Number.isFinite(数值) && (数值 > 0 || (允许零 && 数值 === 0))) {
+      return 数值;
+    }
+    CSS变量回退列表.push(变量名);
+    return 默认值;
+  }
+
+  function 读取字体变量(变量名, 默认值) {
+    const 原始值 = 根样式.getPropertyValue(变量名).trim();
+    if (原始值) {
+      return 原始值;
+    }
+    CSS变量回退列表.push(变量名);
+    return 默认值;
+  }
 }
 
 export function 是混合盒命中(命中起点, 命中终点) {

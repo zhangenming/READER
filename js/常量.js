@@ -3,8 +3,11 @@ export const 默认文件名 =
   '嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt';
 export const 持久化键 = '原文阅读器:阅读状态:v2';
 export const 旧持久化键 = '原文阅读器:阅读状态:v1';
+export const 损坏持久化备份键 = '原文阅读器:阅读状态:损坏备份';
 export const 最大虚拟高度 = 30_000_000;
-export const 字素分段器 = new Intl.Segmenter('zh-CN', { granularity: 'grapheme' });
+export const 字素分段器 = new Intl.Segmenter('zh-CN', {
+  granularity: 'grapheme',
+});
 export const 词组分段器 = new Intl.Segmenter('zh-CN', { granularity: 'word' });
 export const 拼音排序器 = new Intl.Collator('zh-Hans-CN-u-co-pinyin');
 export const 汉字模式 = /^\p{Script=Han}$/u;
@@ -109,7 +112,7 @@ export const 语音重连间隔毫秒 = 5000; // 语音 WebSocket 断开后自�
 // 关系连词词表（数据驱动，按词着色；2 字词用「首字+邻字」邻接判定）：
 // 因果（因词/果词）、假设（假设词）、递进（递进词）、选择（选择词）、顺接（顺接词）、时间（时间词）、限制（限制词）、语气（语气词）、强调（强调词）、让步（让步词）、疑问（疑问词）。
 // 注意「既然」末字「然」与「虽然」末字同字，靠首字（既/虽）邻接区分，已无冲突。
-export const 关系连词表 = [
+const 关系连词表 = [
   ['虽然', '让步词'],
   ['尽管', '让步词'],
   ['即使', '让步词'],

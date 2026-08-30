@@ -80,12 +80,20 @@ export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
 
   function 创建行片段(创建起点, 创建终点) {
     const 片段 = document.createDocumentFragment();
-    const 关键词游标列表 = 状态.关键词列表.map(function 创建关键词游标(关键词) {
-      return {
-        关键词,
-        idx: 查找首个相交命中(关键词, 状态.行起点列表[创建起点]),
-      };
-    });
+    const 关键词游标列表 = [];
+    const 文本起点 = 状态.行起点列表[创建起点];
+    for (const 关键词 of 状态.关键词列表) {
+      if (!关键词.命中位置.length) {
+        continue;
+      }
+      const 命中idx = 查找首个相交命中(关键词, 文本起点);
+      if (
+        命中idx < 关键词.命中位置.length &&
+        关键词.命中位置[命中idx] < 状态.行终点列表[创建终点 - 1]
+      ) {
+        关键词游标列表.push({ 关键词, idx: 命中idx });
+      }
+    }
     let 引文idx = 查找首个未结束引文(状态.行起点列表[创建起点]);
 
     for (let idx = 创建起点; idx < 创建终点; idx += 1) {

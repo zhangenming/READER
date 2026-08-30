@@ -3,13 +3,13 @@ import {
   上下文前文字数,
   上下文后文字数,
   上下文最大初始行数,
-  字素分段器,
 } from './常量.js';
 import { 元素, 状态, 查找关键词, 高亮配色 } from './状态.js';
 import { 渲染可见行, 显示当前命中位置提示 } from './虚拟渲染.js';
 import { 更新关键词指示器 } from './指示器.js';
 import { 二分查找精确命中, 获取关键词配色 } from './搜索.js';
 import { 安排保存持久化状态 } from './持久化.js';
+import { 获取文本字素分段 } from './文本工具.js';
 
 export function 读取选择关键词() {
   const 选择 = window.getSelection();
@@ -55,26 +55,14 @@ export function 读取选择关键词() {
   选择.removeAllRanges();
 }
 
-// 双向自动扩展：向前探测（前置前一字符）与向后探测（追加后一字符）交替进行，
-// 只要候选词的全文命中数与当前词一致且大于 1 就吸收该字符，
-// 直到两个方向都无法扩展。返回 { 词, 起点 }——向前扩展会改变起点，
-// 调用方必须用返回的起点定位「当前命中」。
-
-// 双向自动扩展：向前探测（前置前一字符）与向后探测（追加后一字符）交替进行，
-// 只要候选词的全文命中数与当前词一致且大于 1 就吸收该字符，
+// 双向自动扩展：向前探测（前置前一字素）与向后探测（追加后一字素）交替进行，
+// 只要候选词的全文命中数与当前词一致且大于 1 就吸收该字素，
 // 直到两个方向都无法扩展。返回 { 词, 起点 }——向前扩展会改变起点，
 // 调用方必须用返回的起点定位「当前命中」。
 export function 尝试自动扩展关键词(关键词, 起点) {
-  // 命中次数缓存：同一次扩展内避免对相同候选词重复做全文扫描
+  const 文本 = 状态.文本;
+  const 文本字素列表 = 获取文本字素分段(文本);
   const 次数缓存 = new Map();
-  function 取命中次数(词) {
-    let 次数 = 次数缓存.get(词);
-    if (次数 === undefined) {
-      次数 = 查找关键词命中(词).length;
-      次数缓存.set(词, 次数);
-    }
-    return 次数;
-  }
 
   let 当前词 = 关键词;
   let 当前起点 = 起点;
@@ -82,17 +70,19 @@ export function 尝试自动扩展关键词(关键词, 起点) {
   while (当前次数 > 1) {
     let 已扩展 = false;
     if (当前起点 > 0) {
-      const 左候选词 = 状态.文本[当前起点 - 1] + 当前词;
+      const 前一字素 = 文本字素列表.containing(当前起点 - 1);
+      const 左候选词 = 前一字素.segment + 当前词;
       const 左次数 = 取命中次数(左候选词);
       if (左次数 === 当前次数) {
         当前词 = 左候选词;
-        当前起点 -= 1;
+        当前起点 = 前一字素.index;
         已扩展 = true;
       }
     }
     const 下一位置 = 当前起点 + 当前词.length;
-    if (下一位置 < 状态.文本.length) {
-      const 右候选词 = 当前词 + 状态.文本[下一位置];
+    if (下一位置 < 文本.length) {
+      const 后一字素 = 文本字素列表.containing(下一位置);
+      const 右候选词 = 当前词 + 后一字素.segment;
       const 右次数 = 取命中次数(右候选词);
       if (右次数 === 当前次数) {
         当前词 = 右候选词;
@@ -105,6 +95,16 @@ export function 尝试自动扩展关键词(关键词, 起点) {
     }
   }
   return { 词: 当前词, 起点: 当前起点 };
+
+  // 同一次扩展内避免对相同候选词重复做全文扫描。
+  function 取命中次数(词) {
+    let 次数 = 次数缓存.get(词);
+    if (次数 === undefined) {
+      次数 = 扫描关键词命中(词, true);
+      次数缓存.set(词, 次数);
+    }
+    return 次数;
+  }
 }
 
 export function 获取选择边界偏移(节点, 节点内偏移) {
@@ -210,11 +210,21 @@ export function 创建关键词标记(关键词文本, 命中位置) {
 }
 
 export function 查找关键词命中(关键词) {
-  const 命中数组 = [];
-  const 文本字素列表 = 字素分段器.segment(状态.文本);
+  return 扫描关键词命中(关键词, false);
+}
+
+function 扫描关键词命中(关键词, 仅计数) {
+  if (!关键词.length) {
+    return 仅计数 ? 0 : new Uint32Array();
+  }
+
+  const 文本 = 状态.文本;
+  const 命中数组 = 仅计数 ? null : [];
+  let 命中数 = 0;
+  const 文本字素列表 = 获取文本字素分段(文本);
   let 搜索位置 = 0;
-  while (搜索位置 <= 状态.文本.length - 关键词.length) {
-    const 命中位置 = 状态.文本.indexOf(关键词, 搜索位置);
+  while (搜索位置 <= 文本.length - 关键词.length) {
+    const 命中位置 = 文本.indexOf(关键词, 搜索位置);
     if (命中位置 === -1) {
       break;
     }
@@ -223,14 +233,18 @@ export function 查找关键词命中(关键词) {
     const 命中终点 = 命中位置 + 关键词.length;
     const 起点在字素边界 = 起始字素?.index === 命中位置;
     const 终点在字素边界 =
-      命中终点 === 状态.文本.length ||
+      命中终点 === 文本.length ||
       文本字素列表.containing(命中终点)?.index === 命中终点;
     if (起点在字素边界 && 终点在字素边界) {
-      命中数组.push(命中位置);
+      if (仅计数) {
+        命中数 += 1;
+      } else {
+        命中数组.push(命中位置);
+      }
     }
     搜索位置 = 起始字素.index + 起始字素.segment.length;
   }
-  return Uint32Array.from(命中数组);
+  return 仅计数 ? 命中数 : Uint32Array.from(命中数组);
 }
 
 export function 删除关键词标记(关键词id) {

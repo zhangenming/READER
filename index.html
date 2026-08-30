@@ -573,34 +573,6 @@
       </div>
     </div>
 
-    <script>
-      // 关闭字体弹窗的兜底脚本：即使主脚本事件绑定失败，也能关闭弹窗。
-      (function () {
-        function 取弹窗() {
-          return document.getElementById('字体弹窗');
-        }
-        function 取遮罩() {
-          return document.getElementById('字体遮罩');
-        }
-        function 关闭() {
-          const 弹窗 = 取弹窗();
-          const 遮罩 = 取遮罩();
-          if (弹窗) 弹窗.hidden = true;
-          if (遮罩) 遮罩.hidden = true;
-        }
-        const 弹窗 = 取弹窗();
-        if (!弹窗) return;
-        const 关闭按钮 = document.getElementById('关闭字体按钮');
-        const 底部关闭 = document.getElementById('字体关闭底部按钮');
-        const 遮罩 = 取遮罩();
-        if (关闭按钮) 关闭按钮.addEventListener('click', 关闭);
-        if (底部关闭) 底部关闭.addEventListener('click', 关闭);
-        if (遮罩) 遮罩.addEventListener('click', 关闭);
-        document.addEventListener('keydown', function (事件) {
-          if (事件.key === 'Escape' && !弹窗.hidden) 关闭();
-        });
-      })();
-    </script>
     <script type="module" src="./app.js"></script>
     <script type="module" src="./语音订阅.js"></script>
   </body>

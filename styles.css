@@ -1,13 +1,10 @@
 /* 字魂白鸽天行体（ZiHunBaiGeTianXingTi）
    商用字体，需自行获取授权。将字体文件放到 ./fonts/ 下即可生效：
    - fonts/ZiHunBaiGeTianXingTi.ttf  （truetype）
-   - fonts/ZiHunBaiGeTianXingTi.woff2（更优，体积更小）
    未放置文件、或你已在系统中安装该字体时，会自动回退/使用已安装版本，阅读器仍可正常使用。 */
 @font-face {
   font-family: 'ZiHunBaiGeTianXingTi-Local';
-  src:
-    url('./fonts/ZiHunBaiGeTianXingTi.woff2') format('woff2'),
-    url('./fonts/ZiHunBaiGeTianXingTi.ttf') format('truetype');
+  src: url('./fonts/ZiHunBaiGeTianXingTi.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;

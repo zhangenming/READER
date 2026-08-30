@@ -1,5 +1,4 @@
 import {
-  字素分段器,
   词组分段器,
   词组上下文窗口,
   每批分析结果数,
@@ -8,6 +7,7 @@ import {
 import { 按需让出主线程 } from './调度.js';
 import { 元素, 状态, 查找关键词, 获取静止滚动位置 } from './状态.js';
 import { 查找偏移所在行 } from './排版引擎.js';
+import { 获取文本字素分段 } from './文本工具.js';
 import { 渲染可见行 } from './虚拟渲染.js';
 import { 创建关键词标记, 查找关键词命中 } from './关键词.js';
 import { 更新关键词指示器 } from './指示器.js';
@@ -204,7 +204,7 @@ function 解析查找查询(查询文本) {
 
 function 查找带排除前缀的命中(关键词文本, 排除前缀) {
   const 命中数组 = [];
-  const 文本字素列表 = 字素分段器.segment(状态.文本);
+  const 文本字素列表 = 获取文本字素分段(状态.文本);
   let 搜索位置 = 0;
   while (搜索位置 <= 状态.文本.length - 关键词文本.length) {
     const 命中位置 = 状态.文本.indexOf(关键词文本, 搜索位置);
@@ -375,8 +375,7 @@ export async function 处理词组分析() {
         })
         .sort(function 排序统计项(左项, 右项) {
           return (
-            右项.数量 - 左项.数量 ||
-            左项.词组.localeCompare(右项.词组, 'zh-CN')
+            右项.数量 - 左项.数量 || 左项.词组.localeCompare(右项.词组, 'zh-CN')
           );
         });
     };
