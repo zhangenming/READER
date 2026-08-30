@@ -1,0 +1,2420 @@
+{
+  "book": "大明王朝1566",
+  "author": "刘和平",
+  "chapters": 40,
+  "total_annotations": 28076,
+  "entities": {
+    "person": [
+      {
+        "name": "海瑞",
+        "count": 2498,
+        "first": "第五章",
+        "note": "字刚峰。淳安知县→户部主事，上《治安疏》直谏"
+      },
+      {
+        "name": "嘉靖",
+        "count": 1493,
+        "first": "楔子",
+        "note": "明世宗朱厚熜。二十余年不上朝，居西苑修玄，大权独揽"
+      },
+      {
+        "name": "吕芳",
+        "count": 1099,
+        "first": "第一章",
+        "note": "司礼监掌印太监，内廷尊称“老祖宗”"
+      },
+      {
+        "name": "胡宗宪",
+        "count": 990,
+        "first": "第一章",
+        "note": "浙直总督兼浙江巡抚，严嵩门生，东南柱石"
+      },
+      {
+        "name": "杨金水",
+        "count": 964,
+        "first": "第二章",
+        "note": "江南织造局兼浙江市舶司总管太监，吕芳干儿子"
+      },
+      {
+        "name": "陈洪",
+        "count": 956,
+        "first": "第一章",
+        "note": "司礼监首席秉笔太监，狠辣善迎"
+      },
+      {
+        "name": "徐阶",
+        "count": 930,
+        "first": "第一章",
+        "note": "内阁次辅，清流的定盘星"
+      },
+      {
+        "name": "高翰文",
+        "count": 850,
+        "first": "第五章",
+        "note": "翰林院编修出身的杭州知府，始提“以改兼赈”"
+      },
+      {
+        "name": "赵贞吉",
+        "count": 833,
+        "first": "第五章",
+        "note": "应天巡抚，理学名臣，后入阁"
+      },
+      {
+        "name": "裕王",
+        "count": 778,
+        "first": "第一章",
+        "note": "皇储朱载垕，清流所望，后继位为隆庆帝"
+      },
+      {
+        "name": "严嵩",
+        "count": 772,
+        "first": "楔子",
+        "note": "内阁首辅，严党之首，贪而不昏"
+      },
+      {
+        "name": "郑泌昌",
+        "count": 703,
+        "first": "第二章",
+        "note": "浙江布政使，后升浙江巡抚"
+      },
+      {
+        "name": "何茂才",
+        "count": 637,
+        "first": "第二章",
+        "note": "浙江按察使，严党干将"
+      },
+      {
+        "name": "严世蕃",
+        "count": 612,
+        "first": "楔子",
+        "note": "严嵩独子，人称“小阁老”，兼领工部、吏部"
+      },
+      {
+        "name": "沈一石",
+        "count": 580,
+        "first": "第三章",
+        "note": "江南首富，织造局白手套，账册藏杀机"
+      },
+      {
+        "name": "黄锦",
+        "count": 570,
+        "first": "第一章",
+        "note": "司礼监秉笔太监，嘉靖贴身近侍"
+      },
+      {
+        "name": "王用汲",
+        "count": 562,
+        "first": "第五章",
+        "note": "建德知县，海瑞挚友"
+      },
+      {
+        "name": "张居正",
+        "count": 549,
+        "first": "第一章",
+        "note": "兵部堂官，裕王侍读，雄才大略"
+      },
+      {
+        "name": "谭纶",
+        "count": 546,
+        "first": "第一章",
+        "note": "裕王府詹事、浙直总督署参军"
+      },
+      {
+        "name": "齐大柱",
+        "count": 457,
+        "first": "第二章",
+        "note": "淳安桑农，后投戚家军，终入锦衣卫"
+      },
+      {
+        "name": "高拱",
+        "count": 408,
+        "first": "第一章",
+        "note": "户部堂官，裕王师傅，性刚烈"
+      },
+      {
+        "name": "李时珍",
+        "count": 382,
+        "first": "第一章",
+        "note": "一代神医，胡宗宪故人"
+      },
+      {
+        "name": "世子",
+        "count": 352,
+        "first": "第一章",
+        "note": "裕王长子朱翊钧，即后来的万历帝"
+      },
+      {
+        "name": "芸娘",
+        "count": 335,
+        "first": "第三章",
+        "note": "沈一石的红颜，后随高翰文"
+      },
+      {
+        "name": "海母",
+        "count": 321,
+        "first": "第五章",
+        "note": "海瑞之母，海家规矩的执掌者"
+      },
+      {
+        "name": "李妃",
+        "count": 298,
+        "first": "第一章",
+        "note": "裕王妃，诞下世子"
+      },
+      {
+        "name": "冯保",
+        "count": 267,
+        "first": "楔子",
+        "note": "东厂提督太监，因打死周云逸被贬往裕王府做皇孙大伴"
+      },
+      {
+        "name": "田有禄",
+        "count": 257,
+        "first": "第九章",
+        "note": "淳安县丞"
+      },
+      {
+        "name": "戚继光",
+        "count": 234,
+        "first": "第一章",
+        "note": "浙江总兵，戚家军统帅，抗倭名将"
+      },
+      {
+        "name": "朱七",
+        "count": 166,
+        "first": "第二十七章",
+        "note": "锦衣卫头目"
+      },
+      {
+        "name": "马宁远",
+        "count": 163,
+        "first": "第二章",
+        "note": "杭州知府，踏苗毁堤的执行者"
+      },
+      {
+        "name": "鄢懋卿",
+        "count": 120,
+        "first": "第四章",
+        "note": "刑部侍郎，严党干将，奉旨巡盐"
+      },
+      {
+        "name": "蒋千户",
+        "count": 108,
+        "first": "第九章",
+        "note": "锦衣卫千户"
+      },
+      {
+        "name": "徐千户",
+        "count": 96,
+        "first": "第九章",
+        "note": "锦衣卫千户"
+      },
+      {
+        "name": "罗龙文",
+        "count": 92,
+        "first": "第二章",
+        "note": "通政司通政使，严世蕃心腹"
+      },
+      {
+        "name": "海妻",
+        "count": 71,
+        "first": "第二十六章",
+        "note": "海瑞之妻"
+      },
+      {
+        "name": "周云逸",
+        "count": 37,
+        "first": "楔子",
+        "note": "钦天监监正，因直言上天示警被廷杖打死"
+      },
+      {
+        "name": "常伯熙",
+        "count": 34,
+        "first": "第二章",
+        "note": "淳安知县"
+      },
+      {
+        "name": "张知良",
+        "count": 29,
+        "first": "第二章",
+        "note": "建德知县"
+      },
+      {
+        "name": "俺答",
+        "count": 11,
+        "first": "第一章",
+        "note": "蒙古鞑靼首领，屡犯北边"
+      },
+      {
+        "name": "蓝道行",
+        "count": 9,
+        "first": "第二十八章",
+        "note": "朝天观观主，西苑扶乩道士"
+      },
+      {
+        "name": "俞大猷",
+        "count": 7,
+        "first": "第一章",
+        "note": "抗倭名将"
+      },
+      {
+        "name": "王直",
+        "count": 5,
+        "first": "第二章",
+        "note": "倭寇首领"
+      }
+    ],
+    "place": [
+      {
+        "name": "浙江",
+        "count": 409,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "淳安",
+        "count": 263,
+        "first": "第二章",
+        "note": "浙江严州府属县，“改稻为桑”风暴眼"
+      },
+      {
+        "name": "杭州",
+        "count": 118,
+        "first": "第二章",
+        "note": "浙江省城"
+      },
+      {
+        "name": "建德",
+        "count": 84,
+        "first": "第二章",
+        "note": "与淳安同属严州府，滨新安江"
+      },
+      {
+        "name": "玉熙宫",
+        "count": 77,
+        "first": "楔子",
+        "note": "嘉靖帝迁居西苑后的寝宫"
+      },
+      {
+        "name": "北京",
+        "count": 68,
+        "first": "楔子",
+        "note": "京师"
+      },
+      {
+        "name": "西苑",
+        "count": 55,
+        "first": "楔子",
+        "note": "皇城西内，嘉靖修玄之所"
+      },
+      {
+        "name": "京师",
+        "count": 52,
+        "first": "楔子",
+        "note": ""
+      },
+      {
+        "name": "总督衙门",
+        "count": 51,
+        "first": "第二章",
+        "note": "浙直总督署"
+      },
+      {
+        "name": "西洋",
+        "count": 45,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "南京",
+        "count": 45,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "应天",
+        "count": 41,
+        "first": "第一章",
+        "note": "南直隶要地，赵贞吉辖境"
+      },
+      {
+        "name": "裕王府",
+        "count": 37,
+        "first": "第一章",
+        "note": "皇储裕王的王府"
+      },
+      {
+        "name": "新安江",
+        "count": 35,
+        "first": "第一章",
+        "note": "钱塘江上游，“毁堤淹田”之地"
+      },
+      {
+        "name": "朝天观",
+        "count": 35,
+        "first": "第二十四章",
+        "note": "蓝道行所在的道观"
+      },
+      {
+        "name": "江南",
+        "count": 33,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "台州",
+        "count": 29,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "苏州",
+        "count": 27,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "江西",
+        "count": 25,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "直隶",
+        "count": 22,
+        "first": "楔子",
+        "note": ""
+      },
+      {
+        "name": "午门",
+        "count": 22,
+        "first": "楔子",
+        "note": "周云逸受廷杖处"
+      },
+      {
+        "name": "福建",
+        "count": 18,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "万寿宫",
+        "count": 16,
+        "first": "楔子",
+        "note": "被大火焚毁的宫殿"
+      },
+      {
+        "name": "紫禁城",
+        "count": 15,
+        "first": "楔子",
+        "note": ""
+      },
+      {
+        "name": "大内",
+        "count": 10,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "广东",
+        "count": 9,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "云南",
+        "count": 6,
+        "first": "第五章",
+        "note": ""
+      },
+      {
+        "name": "绍兴",
+        "count": 6,
+        "first": "第十一章",
+        "note": ""
+      },
+      {
+        "name": "山东",
+        "count": 5,
+        "first": "楔子",
+        "note": ""
+      },
+      {
+        "name": "山西",
+        "count": 5,
+        "first": "楔子",
+        "note": ""
+      },
+      {
+        "name": "谨身精舍",
+        "count": 5,
+        "first": "第一章",
+        "note": "玉熙宫内嘉靖的丹房居所"
+      },
+      {
+        "name": "云贵",
+        "count": 5,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "白茆河",
+        "count": 4,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "吴淞江",
+        "count": 4,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "陕西",
+        "count": 4,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "湖广",
+        "count": 4,
+        "first": "第十四章",
+        "note": ""
+      },
+      {
+        "name": "印度",
+        "count": 3,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "贵州",
+        "count": 3,
+        "first": "第二十八章",
+        "note": ""
+      },
+      {
+        "name": "波斯",
+        "count": 2,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "南洋",
+        "count": 2,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "宣府",
+        "count": 2,
+        "first": "第一章",
+        "note": "北边军事重镇"
+      },
+      {
+        "name": "河南",
+        "count": 2,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "四川",
+        "count": 1,
+        "first": "第十四章",
+        "note": ""
+      }
+    ],
+    "org": [
+      {
+        "name": "锦衣卫",
+        "count": 677,
+        "first": "第九章",
+        "note": "皇帝亲军兼特务机构"
+      },
+      {
+        "name": "内阁",
+        "count": 313,
+        "first": "楔子",
+        "note": "辅政机构，票拟之所"
+      },
+      {
+        "name": "大明",
+        "count": 282,
+        "first": "楔子",
+        "note": "国号"
+      },
+      {
+        "name": "织造局",
+        "count": 272,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "司礼监",
+        "count": 200,
+        "first": "第一章",
+        "note": "内廷首席衙门，代皇帝批红"
+      },
+      {
+        "name": "户部",
+        "count": 157,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "国库",
+        "count": 83,
+        "first": "楔子",
+        "note": ""
+      },
+      {
+        "name": "兵部",
+        "count": 76,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "工部",
+        "count": 55,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "都察院",
+        "count": 53,
+        "first": "第七章",
+        "note": ""
+      },
+      {
+        "name": "江南织造局",
+        "count": 51,
+        "first": "第一章",
+        "note": "内廷派驻浙江的织造衙门，杨金水总管"
+      },
+      {
+        "name": "吏部",
+        "count": 47,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "六部",
+        "count": 41,
+        "first": "第十四章",
+        "note": ""
+      },
+      {
+        "name": "刑部",
+        "count": 31,
+        "first": "第四章",
+        "note": ""
+      },
+      {
+        "name": "翰林院",
+        "count": 29,
+        "first": "第五章",
+        "note": ""
+      },
+      {
+        "name": "北镇抚司",
+        "count": 22,
+        "first": "第十一章",
+        "note": "锦衣卫诏狱所在"
+      },
+      {
+        "name": "东厂",
+        "count": 15,
+        "first": "楔子",
+        "note": "特务机构，冯保曾提督"
+      },
+      {
+        "name": "钦天监",
+        "count": 14,
+        "first": "楔子",
+        "note": "观天象、定时宪的衙门"
+      },
+      {
+        "name": "市舶司",
+        "count": 13,
+        "first": "第一章",
+        "note": "管理海外贸易的衙门"
+      },
+      {
+        "name": "通政司",
+        "count": 3,
+        "first": "第二章",
+        "note": "收转内外奏章的衙门"
+      },
+      {
+        "name": "敬事房",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "礼部",
+        "count": 1,
+        "first": "第二十一章",
+        "note": ""
+      },
+      {
+        "name": "詹事府",
+        "count": 1,
+        "first": "第三十二章",
+        "note": ""
+      }
+    ],
+    "office": [
+      {
+        "name": "阁老",
+        "count": 203,
+        "first": "第一章",
+        "note": "对大学士的尊称"
+      },
+      {
+        "name": "巡抚",
+        "count": 183,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "部堂",
+        "count": 173,
+        "first": "第二章",
+        "note": "对总督的尊称"
+      },
+      {
+        "name": "知县",
+        "count": 145,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "秉笔太监",
+        "count": 139,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "提刑太监",
+        "count": 72,
+        "first": "楔子",
+        "note": ""
+      },
+      {
+        "name": "知府",
+        "count": 60,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "堂官",
+        "count": 46,
+        "first": "第一章",
+        "note": "部院主官的统称"
+      },
+      {
+        "name": "御史",
+        "count": 41,
+        "first": "第四章",
+        "note": ""
+      },
+      {
+        "name": "首辅",
+        "count": 37,
+        "first": "楔子",
+        "note": "内阁之首"
+      },
+      {
+        "name": "按察使",
+        "count": 35,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "主事",
+        "count": 35,
+        "first": "第九章",
+        "note": ""
+      },
+      {
+        "name": "浙直总督",
+        "count": 34,
+        "first": "第一章",
+        "note": "总督浙直军务"
+      },
+      {
+        "name": "千户",
+        "count": 33,
+        "first": "第九章",
+        "note": ""
+      },
+      {
+        "name": "县丞",
+        "count": 31,
+        "first": "第三章",
+        "note": ""
+      },
+      {
+        "name": "布政使",
+        "count": 30,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "尚书",
+        "count": 26,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "钦差",
+        "count": 21,
+        "first": "第十一章",
+        "note": ""
+      },
+      {
+        "name": "侍郎",
+        "count": 19,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "总督",
+        "count": 18,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "总管太监",
+        "count": 14,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "次辅",
+        "count": 12,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "掌印太监",
+        "count": 10,
+        "first": "第一章",
+        "note": "司礼监之首"
+      },
+      {
+        "name": "詹事",
+        "count": 9,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "参军",
+        "count": 8,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "大学士",
+        "count": 8,
+        "first": "第八章",
+        "note": ""
+      },
+      {
+        "name": "监正",
+        "count": 7,
+        "first": "楔子",
+        "note": "钦天监长官"
+      },
+      {
+        "name": "侍读",
+        "count": 4,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "总兵",
+        "count": 3,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "编修",
+        "count": 2,
+        "first": "第五章",
+        "note": ""
+      },
+      {
+        "name": "提督太监",
+        "count": 1,
+        "first": "楔子",
+        "note": ""
+      },
+      {
+        "name": "参将",
+        "count": 1,
+        "first": "第十七章",
+        "note": ""
+      }
+    ],
+    "time": [
+      {
+        "name": "嘉靖四十年",
+        "count": 29,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "五月",
+        "count": 29,
+        "first": "第四章",
+        "note": ""
+      },
+      {
+        "name": "六月",
+        "count": 20,
+        "first": "第七章",
+        "note": ""
+      },
+      {
+        "name": "正月十五",
+        "count": 17,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "七月",
+        "count": 17,
+        "first": "第七章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖三十九年",
+        "count": 14,
+        "first": "楔子",
+        "note": ""
+      },
+      {
+        "name": "嘉靖二十一年",
+        "count": 12,
+        "first": "楔子",
+        "note": ""
+      },
+      {
+        "name": "三月",
+        "count": 11,
+        "first": "第七章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖四十五年",
+        "count": 10,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "正月初一",
+        "count": 8,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "腊月二十三",
+        "count": 7,
+        "first": "第二十七章",
+        "note": ""
+      },
+      {
+        "name": "腊月二十九",
+        "count": 6,
+        "first": "楔子",
+        "note": ""
+      },
+      {
+        "name": "腊月",
+        "count": 6,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "正月",
+        "count": 6,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "二月",
+        "count": 6,
+        "first": "第七章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖四十一年",
+        "count": 6,
+        "first": "第二十八章",
+        "note": ""
+      },
+      {
+        "name": "十月",
+        "count": 5,
+        "first": "第七章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖四十四年",
+        "count": 5,
+        "first": "第三十章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖三十年",
+        "count": 4,
+        "first": "第五章",
+        "note": ""
+      },
+      {
+        "name": "一月",
+        "count": 4,
+        "first": "第十四章",
+        "note": ""
+      },
+      {
+        "name": "正月十六",
+        "count": 4,
+        "first": "第二十八章",
+        "note": ""
+      },
+      {
+        "name": "十一月",
+        "count": 3,
+        "first": "楔子",
+        "note": ""
+      },
+      {
+        "name": "四月",
+        "count": 3,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖三十五年",
+        "count": 3,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "七月十四",
+        "count": 3,
+        "first": "第二十三章",
+        "note": ""
+      },
+      {
+        "name": "八月",
+        "count": 3,
+        "first": "第二十六章",
+        "note": ""
+      },
+      {
+        "name": "腊月二十二",
+        "count": 3,
+        "first": "第二十八章",
+        "note": ""
+      },
+      {
+        "name": "正月初五",
+        "count": 3,
+        "first": "第三十三章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖年",
+        "count": 2,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖三十一年",
+        "count": 2,
+        "first": "第三章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖三十七年",
+        "count": 2,
+        "first": "第十一章",
+        "note": ""
+      },
+      {
+        "name": "六月初六",
+        "count": 2,
+        "first": "第十一章",
+        "note": ""
+      },
+      {
+        "name": "七月十五",
+        "count": 2,
+        "first": "第十六章",
+        "note": ""
+      },
+      {
+        "name": "五月初三",
+        "count": 2,
+        "first": "第十七章",
+        "note": ""
+      },
+      {
+        "name": "正德十二年",
+        "count": 2,
+        "first": "第十八章",
+        "note": ""
+      },
+      {
+        "name": "七月一日",
+        "count": 2,
+        "first": "第二十二章",
+        "note": ""
+      },
+      {
+        "name": "七月初七",
+        "count": 2,
+        "first": "第三十八章",
+        "note": ""
+      },
+      {
+        "name": "十二月十五日",
+        "count": 2,
+        "first": "第三十九章",
+        "note": ""
+      },
+      {
+        "name": "腊月二十七",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖三十六年",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "永乐三年",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "五月二十一",
+        "count": 1,
+        "first": "第四章",
+        "note": ""
+      },
+      {
+        "name": "冬月",
+        "count": 1,
+        "first": "第五章",
+        "note": ""
+      },
+      {
+        "name": "公元1561年",
+        "count": 1,
+        "first": "第五章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖三十二年",
+        "count": 1,
+        "first": "第六章",
+        "note": ""
+      },
+      {
+        "name": "九月十",
+        "count": 1,
+        "first": "第十章",
+        "note": ""
+      },
+      {
+        "name": "六月初七",
+        "count": 1,
+        "first": "第十一章",
+        "note": ""
+      },
+      {
+        "name": "六月十四",
+        "count": 1,
+        "first": "第十二章",
+        "note": ""
+      },
+      {
+        "name": "公元1651年",
+        "count": 1,
+        "first": "第十二章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖二十二年",
+        "count": 1,
+        "first": "第十四章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖二十三年",
+        "count": 1,
+        "first": "第十四章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖二十四年",
+        "count": 1,
+        "first": "第十四章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖二十九年",
+        "count": 1,
+        "first": "第十四章",
+        "note": ""
+      },
+      {
+        "name": "洪武十一年",
+        "count": 1,
+        "first": "第十八章",
+        "note": ""
+      },
+      {
+        "name": "洪武十九年",
+        "count": 1,
+        "first": "第十八章",
+        "note": ""
+      },
+      {
+        "name": "永乐九年",
+        "count": 1,
+        "first": "第十八章",
+        "note": ""
+      },
+      {
+        "name": "宣德八年",
+        "count": 1,
+        "first": "第十八章",
+        "note": ""
+      },
+      {
+        "name": "弘治四年",
+        "count": 1,
+        "first": "第十八章",
+        "note": ""
+      },
+      {
+        "name": "六月二十一",
+        "count": 1,
+        "first": "第二十三章",
+        "note": ""
+      },
+      {
+        "name": "七月十六",
+        "count": 1,
+        "first": "第二十五章",
+        "note": ""
+      },
+      {
+        "name": "十二月",
+        "count": 1,
+        "first": "第二十七章",
+        "note": ""
+      },
+      {
+        "name": "六月初三",
+        "count": 1,
+        "first": "第二十七章",
+        "note": ""
+      },
+      {
+        "name": "八月十五",
+        "count": 1,
+        "first": "第二十八章",
+        "note": ""
+      },
+      {
+        "name": "嘉靖二十六年",
+        "count": 1,
+        "first": "第二十九章",
+        "note": ""
+      },
+      {
+        "name": "腊月三十",
+        "count": 1,
+        "first": "第三十一章",
+        "note": ""
+      },
+      {
+        "name": "二月二十三日",
+        "count": 1,
+        "first": "第三十五章",
+        "note": ""
+      },
+      {
+        "name": "十二月二十二日",
+        "count": 1,
+        "first": "第三十六章",
+        "note": ""
+      },
+      {
+        "name": "十二月二十七日",
+        "count": 1,
+        "first": "第三十六章",
+        "note": ""
+      },
+      {
+        "name": "十二月二十九日",
+        "count": 1,
+        "first": "第三十六章",
+        "note": ""
+      },
+      {
+        "name": "二月初七",
+        "count": 1,
+        "first": "第三十六章",
+        "note": ""
+      },
+      {
+        "name": "九月",
+        "count": 1,
+        "first": "第三十六章",
+        "note": ""
+      },
+      {
+        "name": "四月十四",
+        "count": 1,
+        "first": "第三十六章",
+        "note": ""
+      },
+      {
+        "name": "五月初五",
+        "count": 1,
+        "first": "第三十六章",
+        "note": ""
+      },
+      {
+        "name": "二月十七",
+        "count": 1,
+        "first": "第三十七章",
+        "note": ""
+      },
+      {
+        "name": "腊月二十八",
+        "count": 1,
+        "first": "第三十七章",
+        "note": ""
+      },
+      {
+        "name": "六月二十四",
+        "count": 1,
+        "first": "第三十八章",
+        "note": ""
+      },
+      {
+        "name": "十二月十四日",
+        "count": 1,
+        "first": "第三十九章",
+        "note": ""
+      },
+      {
+        "name": "公元1566年",
+        "count": 1,
+        "first": "第三十九章",
+        "note": ""
+      }
+    ],
+    "quantity": [
+      {
+        "name": "一张",
+        "count": 80,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "十万匹",
+        "count": 41,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "五十万匹",
+        "count": 41,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "一两",
+        "count": 17,
+        "first": "第四章",
+        "note": ""
+      },
+      {
+        "name": "一匹",
+        "count": 16,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "三十万匹",
+        "count": 11,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "二十万匹",
+        "count": 10,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "十石",
+        "count": 10,
+        "first": "第三章",
+        "note": ""
+      },
+      {
+        "name": "五十石",
+        "count": 10,
+        "first": "第三章",
+        "note": ""
+      },
+      {
+        "name": "五十万两",
+        "count": 9,
+        "first": "第十六章",
+        "note": ""
+      },
+      {
+        "name": "八石",
+        "count": 8,
+        "first": "第五章",
+        "note": ""
+      },
+      {
+        "name": "三十石",
+        "count": 8,
+        "first": "第五章",
+        "note": ""
+      },
+      {
+        "name": "三百万两",
+        "count": 7,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "万匹",
+        "count": 7,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "五万匹",
+        "count": 7,
+        "first": "第七章",
+        "note": ""
+      },
+      {
+        "name": "十两",
+        "count": 6,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "二十万两",
+        "count": 6,
+        "first": "第六章",
+        "note": ""
+      },
+      {
+        "name": "一百匹",
+        "count": 6,
+        "first": "第十三章",
+        "note": ""
+      },
+      {
+        "name": "十二万匹",
+        "count": 5,
+        "first": "第七章",
+        "note": ""
+      },
+      {
+        "name": "万两",
+        "count": 5,
+        "first": "第十六章",
+        "note": ""
+      },
+      {
+        "name": "三十艘",
+        "count": 4,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "十艘",
+        "count": 4,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "四十石",
+        "count": 4,
+        "first": "第三章",
+        "note": ""
+      },
+      {
+        "name": "三两",
+        "count": 4,
+        "first": "第五章",
+        "note": ""
+      },
+      {
+        "name": "一百万匹",
+        "count": 4,
+        "first": "第十三章",
+        "note": ""
+      },
+      {
+        "name": "一万零九百六十匹",
+        "count": 4,
+        "first": "第十三章",
+        "note": ""
+      },
+      {
+        "name": "五张",
+        "count": 4,
+        "first": "第十六章",
+        "note": ""
+      },
+      {
+        "name": "一文",
+        "count": 4,
+        "first": "第二十一章",
+        "note": ""
+      },
+      {
+        "name": "二十艘",
+        "count": 3,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "二百万两",
+        "count": 3,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "四百万两",
+        "count": 3,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "一千万两",
+        "count": 3,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "二百二十万两",
+        "count": 3,
+        "first": "第七章",
+        "note": ""
+      },
+      {
+        "name": "三张",
+        "count": 3,
+        "first": "第十三章",
+        "note": ""
+      },
+      {
+        "name": "一万三千匹",
+        "count": 3,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "三万匹",
+        "count": 3,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "八万匹",
+        "count": 3,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "一千匹",
+        "count": 3,
+        "first": "第二十章",
+        "note": ""
+      },
+      {
+        "name": "六百两",
+        "count": 3,
+        "first": "第二十六章",
+        "note": ""
+      },
+      {
+        "name": "四百两",
+        "count": 3,
+        "first": "第二十六章",
+        "note": ""
+      },
+      {
+        "name": "一千四百万两",
+        "count": 2,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "二百五十万两",
+        "count": 2,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "六两",
+        "count": 2,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "十五两",
+        "count": 2,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "四两",
+        "count": 2,
+        "first": "第三章",
+        "note": ""
+      },
+      {
+        "name": "五万石",
+        "count": 2,
+        "first": "第五章",
+        "note": ""
+      },
+      {
+        "name": "五十两",
+        "count": 2,
+        "first": "第六章",
+        "note": ""
+      },
+      {
+        "name": "一万两",
+        "count": 2,
+        "first": "第六章",
+        "note": ""
+      },
+      {
+        "name": "十万两",
+        "count": 2,
+        "first": "第六章",
+        "note": ""
+      },
+      {
+        "name": "七两",
+        "count": 2,
+        "first": "第七章",
+        "note": ""
+      },
+      {
+        "name": "一百两",
+        "count": 2,
+        "first": "第八章",
+        "note": ""
+      },
+      {
+        "name": "二百一十万匹",
+        "count": 2,
+        "first": "第十三章",
+        "note": ""
+      },
+      {
+        "name": "千匹",
+        "count": 2,
+        "first": "第十三章",
+        "note": ""
+      },
+      {
+        "name": "百万匹",
+        "count": 2,
+        "first": "第十四章",
+        "note": ""
+      },
+      {
+        "name": "八万七千匹",
+        "count": 2,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "六万五千匹",
+        "count": 2,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "一万匹",
+        "count": 2,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "二百两",
+        "count": 2,
+        "first": "第二十六章",
+        "note": ""
+      },
+      {
+        "name": "五两",
+        "count": 2,
+        "first": "第二十六章",
+        "note": ""
+      },
+      {
+        "name": "二百三十万两",
+        "count": 2,
+        "first": "第二十七章",
+        "note": ""
+      },
+      {
+        "name": "六张",
+        "count": 2,
+        "first": "第二十七章",
+        "note": ""
+      },
+      {
+        "name": "一百六十万两",
+        "count": 2,
+        "first": "第三十章",
+        "note": ""
+      },
+      {
+        "name": "六十万两",
+        "count": 2,
+        "first": "第三十章",
+        "note": ""
+      },
+      {
+        "name": "四千五百三十六万七千两",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "三千九百八十万两",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "五千三百八十万两",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "八百四十三万三千两",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "一千一百万两",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "一艘",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "三百五十万两",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "一百万两",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "七百万两",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "一万张",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "八千张",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "万石",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "千张",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "七百五十万两",
+        "count": 1,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "一百万石",
+        "count": 1,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "九两",
+        "count": 1,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "四百五十万两",
+        "count": 1,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "八千匹",
+        "count": 1,
+        "first": "第三章",
+        "note": ""
+      },
+      {
+        "name": "三万石",
+        "count": 1,
+        "first": "第三章",
+        "note": ""
+      },
+      {
+        "name": "四匹",
+        "count": 1,
+        "first": "第五章",
+        "note": ""
+      },
+      {
+        "name": "二十万石",
+        "count": 1,
+        "first": "第五章",
+        "note": ""
+      },
+      {
+        "name": "七千石",
+        "count": 1,
+        "first": "第五章",
+        "note": ""
+      },
+      {
+        "name": "二十石",
+        "count": 1,
+        "first": "第六章",
+        "note": ""
+      },
+      {
+        "name": "一千万石",
+        "count": 1,
+        "first": "第六章",
+        "note": ""
+      },
+      {
+        "name": "四张",
+        "count": 1,
+        "first": "第七章",
+        "note": ""
+      },
+      {
+        "name": "二石",
+        "count": 1,
+        "first": "第七章",
+        "note": ""
+      },
+      {
+        "name": "四千两",
+        "count": 1,
+        "first": "第八章",
+        "note": ""
+      },
+      {
+        "name": "三百艘",
+        "count": 1,
+        "first": "第十二章",
+        "note": ""
+      },
+      {
+        "name": "九十万匹",
+        "count": 1,
+        "first": "第十三章",
+        "note": ""
+      },
+      {
+        "name": "五百四十八匹",
+        "count": 1,
+        "first": "第十三章",
+        "note": ""
+      },
+      {
+        "name": "四十八万九千四十匹",
+        "count": 1,
+        "first": "第十三章",
+        "note": ""
+      },
+      {
+        "name": "十二万五千六百匹",
+        "count": 1,
+        "first": "第十三章",
+        "note": ""
+      },
+      {
+        "name": "二万五千六百匹",
+        "count": 1,
+        "first": "第十三章",
+        "note": ""
+      },
+      {
+        "name": "三千五百匹",
+        "count": 1,
+        "first": "第十三章",
+        "note": ""
+      },
+      {
+        "name": "七八百万两",
+        "count": 1,
+        "first": "第十四章",
+        "note": ""
+      },
+      {
+        "name": "八百万两",
+        "count": 1,
+        "first": "第十四章",
+        "note": ""
+      },
+      {
+        "name": "六十五万两",
+        "count": 1,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "七万八千匹",
+        "count": 1,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "五千两",
+        "count": 1,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "八万八千匹",
+        "count": 1,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "一万八千石",
+        "count": 1,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "一百八十万石",
+        "count": 1,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "三十六万石",
+        "count": 1,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "三万六千匹",
+        "count": 1,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "二千匹",
+        "count": 1,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "十八万两",
+        "count": 1,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "九万两",
+        "count": 1,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "三千匹",
+        "count": 1,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "六十两",
+        "count": 1,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "四百万匹",
+        "count": 1,
+        "first": "第十五章",
+        "note": ""
+      },
+      {
+        "name": "三万两",
+        "count": 1,
+        "first": "第十六章",
+        "note": ""
+      },
+      {
+        "name": "千两",
+        "count": 1,
+        "first": "第十六章",
+        "note": ""
+      },
+      {
+        "name": "一百五十万两",
+        "count": 1,
+        "first": "第十六章",
+        "note": ""
+      },
+      {
+        "name": "七十五万两",
+        "count": 1,
+        "first": "第十六章",
+        "note": ""
+      },
+      {
+        "name": "十一艘",
+        "count": 1,
+        "first": "第十六章",
+        "note": ""
+      },
+      {
+        "name": "二十两",
+        "count": 1,
+        "first": "第十七章",
+        "note": ""
+      },
+      {
+        "name": "百匹",
+        "count": 1,
+        "first": "第十八章",
+        "note": ""
+      },
+      {
+        "name": "一百五十八两",
+        "count": 1,
+        "first": "第二十章",
+        "note": ""
+      },
+      {
+        "name": "二万五千贯",
+        "count": 1,
+        "first": "第二十章",
+        "note": ""
+      },
+      {
+        "name": "四十匹",
+        "count": 1,
+        "first": "第二十章",
+        "note": ""
+      },
+      {
+        "name": "三百匹",
+        "count": 1,
+        "first": "第二十章",
+        "note": ""
+      },
+      {
+        "name": "五百匹",
+        "count": 1,
+        "first": "第二十章",
+        "note": ""
+      },
+      {
+        "name": "六十二万九千石",
+        "count": 1,
+        "first": "第二十章",
+        "note": ""
+      },
+      {
+        "name": "一百二十三万石",
+        "count": 1,
+        "first": "第二十章",
+        "note": ""
+      },
+      {
+        "name": "十万贯",
+        "count": 1,
+        "first": "第二十一章",
+        "note": ""
+      },
+      {
+        "name": "三十万两",
+        "count": 1,
+        "first": "第二十二章",
+        "note": ""
+      },
+      {
+        "name": "十二张",
+        "count": 1,
+        "first": "第二十七章",
+        "note": ""
+      },
+      {
+        "name": "三百三十万两",
+        "count": 1,
+        "first": "第二十七章",
+        "note": ""
+      },
+      {
+        "name": "一百石",
+        "count": 1,
+        "first": "第三十章",
+        "note": ""
+      },
+      {
+        "name": "一石",
+        "count": 1,
+        "first": "第三十章",
+        "note": ""
+      },
+      {
+        "name": "三百六十万两",
+        "count": 1,
+        "first": "第三十章",
+        "note": ""
+      },
+      {
+        "name": "二百七十万两",
+        "count": 1,
+        "first": "第三十章",
+        "note": ""
+      },
+      {
+        "name": "三百万石",
+        "count": 1,
+        "first": "第三十章",
+        "note": ""
+      },
+      {
+        "name": "十万张",
+        "count": 1,
+        "first": "第三十章",
+        "note": ""
+      },
+      {
+        "name": "四十万两",
+        "count": 1,
+        "first": "第三十二章",
+        "note": ""
+      },
+      {
+        "name": "五万两",
+        "count": 1,
+        "first": "第三十六章",
+        "note": ""
+      }
+    ],
+    "book": [
+      {
+        "name": "大明律",
+        "count": 35,
+        "first": "第四章",
+        "note": ""
+      },
+      {
+        "name": "广陵散",
+        "count": 28,
+        "first": "第六章",
+        "note": ""
+      },
+      {
+        "name": "道德经",
+        "count": 10,
+        "first": "第二章",
+        "note": ""
+      },
+      {
+        "name": "大明会典",
+        "count": 6,
+        "first": "第十一章",
+        "note": ""
+      },
+      {
+        "name": "祭十二郎文",
+        "count": 5,
+        "first": "第二十二章",
+        "note": ""
+      },
+      {
+        "name": "左传",
+        "count": 4,
+        "first": "第三章",
+        "note": ""
+      },
+      {
+        "name": "诗经",
+        "count": 2,
+        "first": "第八章",
+        "note": ""
+      },
+      {
+        "name": "二十一史",
+        "count": 2,
+        "first": "第十章",
+        "note": ""
+      },
+      {
+        "name": "千金方",
+        "count": 2,
+        "first": "第十二章",
+        "note": ""
+      },
+      {
+        "name": "朱子语类",
+        "count": 2,
+        "first": "第二十一章",
+        "note": ""
+      },
+      {
+        "name": "吕氏春秋",
+        "count": 2,
+        "first": "第二十二章",
+        "note": ""
+      },
+      {
+        "name": "浣纱记",
+        "count": 2,
+        "first": "第二十七章",
+        "note": ""
+      },
+      {
+        "name": "四书讲义",
+        "count": 2,
+        "first": "第三十一章",
+        "note": ""
+      },
+      {
+        "name": "问道诗",
+        "count": 1,
+        "first": "第一章",
+        "note": ""
+      },
+      {
+        "name": "通鉴",
+        "count": 1,
+        "first": "第三章",
+        "note": ""
+      },
+      {
+        "name": "论语",
+        "count": 1,
+        "first": "第三章",
+        "note": ""
+      },
+      {
+        "name": "大明律例",
+        "count": 1,
+        "first": "第七章",
+        "note": ""
+      },
+      {
+        "name": "离骚",
+        "count": 1,
+        "first": "第八章",
+        "note": ""
+      },
+      {
+        "name": "淳安县志",
+        "count": 1,
+        "first": "第十章",
+        "note": ""
+      },
+      {
+        "name": "风吹荷叶煞",
+        "count": 1,
+        "first": "第十三章",
+        "note": ""
+      },
+      {
+        "name": "孝经•广扬名章第十四",
+        "count": 1,
+        "first": "第十六章",
+        "note": ""
+      },
+      {
+        "name": "谏诤章第十五",
+        "count": 1,
+        "first": "第十六章",
+        "note": ""
+      },
+      {
+        "name": "全唐诗",
+        "count": 1,
+        "first": "第十九章",
+        "note": ""
+      },
+      {
+        "name": "易经",
+        "count": 1,
+        "first": "第二十一章",
+        "note": ""
+      },
+      {
+        "name": "韩昌黎集",
+        "count": 1,
+        "first": "第二十二章",
+        "note": ""
+      },
+      {
+        "name": "出师表",
+        "count": 1,
+        "first": "第二十三章",
+        "note": ""
+      },
+      {
+        "name": "九歌",
+        "count": 1,
+        "first": "第二十四章",
+        "note": ""
+      },
+      {
+        "name": "永乐大典",
+        "count": 1,
+        "first": "第二十五章",
+        "note": ""
+      },
+      {
+        "name": "石壕吏",
+        "count": 1,
+        "first": "第二十六章",
+        "note": ""
+      },
+      {
+        "name": "凯旋令",
+        "count": 1,
+        "first": "第二十六章",
+        "note": ""
+      },
+      {
+        "name": "将军令",
+        "count": 1,
+        "first": "第二十六章",
+        "note": ""
+      },
+      {
+        "name": "浣纱记•捧心",
+        "count": 1,
+        "first": "第二十七章",
+        "note": ""
+      },
+      {
+        "name": "南华经",
+        "count": 1,
+        "first": "第二十八章",
+        "note": ""
+      },
+      {
+        "name": "道情歌",
+        "count": 1,
+        "first": "第二十八章",
+        "note": ""
+      },
+      {
+        "name": "明史",
+        "count": 1,
+        "first": "第二十八章",
+        "note": ""
+      },
+      {
+        "name": "本草纲目",
+        "count": 1,
+        "first": "第三十四章",
+        "note": ""
+      },
+      {
+        "name": "礼记",
+        "count": 1,
+        "first": "第三十九章",
+        "note": ""
+      },
+      {
+        "name": "大学衍义补",
+        "count": 1,
+        "first": "第三十九章",
+        "note": ""
+      },
+      {
+        "name": "明史•海瑞传",
+        "count": 1,
+        "first": "第三十九章",
+        "note": ""
+      }
+    ],
+    "concept": [
+      {
+        "name": "改稻为桑",
+        "count": 107,
+        "first": "第二章",
+        "note": "全书主线国策：改浙江稻田为桑田，多产丝绸补亏空"
+      }
+    ],
+    "tribe": [
+      {
+        "name": "倭寇",
+        "count": 252,
+        "first": "第一章",
+        "note": "侵扰东南沿海的海盗集团"
+      }
+    ]
+  }
+}
