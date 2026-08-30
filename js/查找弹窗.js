@@ -4,7 +4,7 @@ import {
   每批分析结果数,
   实时查找延迟,
 } from './常量.js';
-import { 按需让出主线程 } from './调度.js';
+import { 让出主线程, 按需让出主线程 } from './调度.js';
 import { 元素, 状态, 查找关键词, 获取静止滚动位置 } from './状态.js';
 import { 查找偏移所在行 } from './排版引擎.js';
 import { 获取文本字素分段 } from './文本工具.js';
@@ -325,7 +325,8 @@ export async function 处理词组分析() {
   const 本次分析序号 = ++词组分析序号;
   const 本次载入序号 = 状态.载入序号;
   const 分析文本 = 状态.文本;
-  await scheduler.yield();
+  // 让出主线程经 调度.js 统一回退，禁止裸调 scheduler.yield()（非 Chromium 会抛 ReferenceError）
+  await 让出主线程();
   const 开始时间 = performance.now();
   try {
     const 命中位置 = 查找关键词命中(前缀);

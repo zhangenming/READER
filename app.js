@@ -1,10 +1,6 @@
 import {
-  双击判定延迟,
   文本目录地址,
   时间格式器,
-  右下热区宽度,
-  右下热区高度,
-  右下触摸显示时长,
   尺寸重排防抖毫秒,
   上下文滚动预载像素,
   默认字号,
@@ -40,13 +36,12 @@ import {
   构建句段负担索引,
   统计全文单字,
 } from './js/文本管线.js';
-import { 渲染可见行, 显示当前命中位置提示 } from './js/虚拟渲染.js';
+import { 渲染可见行 } from './js/虚拟渲染.js';
 import {
   关闭上下文弹窗,
   删除关键词标记,
   打开上下文弹窗,
   查找关键词命中,
-  读取选择关键词,
   追加上下文行块,
 } from './js/关键词.js';
 import { 更新关键词指示器, 初始化指示器 } from './js/指示器.js';
@@ -71,8 +66,6 @@ import {
 import {
   取消滚动动画,
   结束跳转会话,
-  获取元素命中边框,
-  获取元素行位置,
   跳到命中,
   隐藏衔接线,
 } from './js/跳转动画.js';
@@ -122,7 +115,6 @@ import {
   安排保存持久化状态,
   计算阅读位置,
   读取持久化数据或新建,
-  读取阅读位置,
 } from './js/持久化.js';
 import {
   处理分析结果滚动,
@@ -155,13 +147,11 @@ import {
 import {
   处理键盘按下,
   处理键盘松开,
-  执行导航跳转,
   翻页整屏,
   取消待定导航,
   标记shift组合,
 } from './js/键盘控制.js';
 import {
-  消费点击抑制,
   处理关键词手势开始,
   处理关键词手势移动,
   处理关键词触摸移动,
@@ -169,6 +159,25 @@ import {
   处理关键词手势松开,
   处理关键词手势取消,
 } from './js/关键词手势.js';
+import {
+  处理正文按下,
+  处理鼠标选择结束,
+  处理非鼠标选择结束,
+  处理正文键盘选择,
+  处理高亮上下文点击,
+  处理高亮点击,
+  处理高亮双击,
+  处理正文指针移动,
+  处理高亮移入,
+  处理高亮移出,
+  切换同组高亮,
+} from './js/正文交互.js';
+import {
+  处理右下控件悬停,
+  处理右下控件触摸,
+  设置右下强制显示,
+  设置右下聚焦,
+} from './js/右下控件.js';
 
 启动();
 
@@ -302,11 +311,9 @@ function 创建文本地址(文件名) {
 }
 
 function 绑定事件() {
-  // 自动滚动的右下控件强制显示经钩子注入（断环：避免「自动滚动 → app」反向依赖）
-  注册右下强制显示((正在滚动) => {
-    右下强制 = 正在滚动;
-    刷新右下控件可见性();
-  });
+  // 自动滚动的右下控件强制显示经钩子注入（断环：避免「自动滚动 → app」反向依赖）；
+  // 显示状态本体在 js/右下控件.js
+  注册右下强制显示(设置右下强制显示);
 
   const 自动滚动滚轮监听选项 = { capture: true, passive: false };
   let 自动滚动滚轮已绑定 = false;
@@ -334,65 +341,8 @@ function 绑定事件() {
   初始化滚动条拖拽({ 取消滚动动画, 结束跳转会话 });
 
   // ===== 右下角控件：默认隐藏，仅在鼠标靠近 / 触摸 / 聚焦 / 自动滚动时显示 =====
-  // 时间（#当前时间）固定显示，不受影响。隐藏时 opacity:0 + pointer-events:none，
-  // 既不遮挡正文，也不拦截文本选择。
-  let 右下悬停 = false;
-  let 右下聚焦 = false;
-  let 右下强制 = false;
-  let 右下触摸 = false;
-  let 右下悬停帧 = 0;
-  let 右下悬停X = 0;
-  let 右下悬停Y = 0;
-  let 右下触摸计时器 = 0;
+  // 热区判定与显示状态机在 js/右下控件.js；时间（#当前时间）固定显示，不受影响。
 
-  function 刷新右下控件可见性() {
-    document.body.classList.toggle(
-      '右下控件显示',
-      右下悬停 || 右下聚焦 || 右下强制 || 右下触摸,
-    );
-  }
-
-  // 鼠标靠近右下角热区（右 380px / 底 130px 以内）即显示，离开则隐藏。
-  // 用 rAF 节流，避免每次 mousemove 都同步刷新。
-  function 处理右下控件悬停(事件) {
-    右下悬停X = 事件.clientX;
-    右下悬停Y = 事件.clientY;
-    if (右下悬停帧) {
-      return;
-    }
-    右下悬停帧 = requestAnimationFrame(function 计算下方热区() {
-      右下悬停帧 = 0;
-      const 在热区 =
-        右下悬停X > window.innerWidth - 右下热区宽度 &&
-        右下悬停Y > window.innerHeight - 右下热区高度;
-      右下悬停 = 在热区;
-      刷新右下控件可见性();
-    });
-  }
-
-  // 触摸设备无 hover：点击右下角热区后短暂显示，给触摸用户一个入口，
-  // 超时后自动隐藏，避免长期遮挡正文。
-  function 处理右下控件触摸(事件) {
-    const 触点 = 事件.touches[0];
-    if (!触点) {
-      return;
-    }
-    if (
-      触点.clientX > window.innerWidth - 右下热区宽度 &&
-      触点.clientY > window.innerHeight - 右下热区高度
-    ) {
-      右下触摸 = true;
-      刷新右下控件可见性();
-      window.clearTimeout(右下触摸计时器);
-      右下触摸计时器 = window.setTimeout(function 结束触摸显示() {
-        右下触摸 = false;
-        刷新右下控件可见性();
-      }, 右下触摸显示时长);
-    }
-  }
-
-  let 双击待定 = false;
-  let 待定单击列表 = []; // 每次单击各自排一个计时器；双击时统一清空，确保单击不抢先在双击前前进
   元素.滚动容器.addEventListener('scroll', 处理滚动, { passive: true });
   元素.滚动容器.addEventListener('wheel', 处理手动滚动, { passive: true });
   元素.滚动容器.addEventListener('touchstart', 取消滚动动画, { passive: true });
@@ -570,14 +520,8 @@ function 绑定事件() {
     if (!控件) {
       continue;
     }
-    控件.addEventListener('focus', function () {
-      右下聚焦 = true;
-      刷新右下控件可见性();
-    });
-    控件.addEventListener('blur', function () {
-      右下聚焦 = false;
-      刷新右下控件可见性();
-    });
+    控件.addEventListener('focus', () => 设置右下聚焦(true));
+    控件.addEventListener('blur', () => 设置右下聚焦(false));
   }
 
   // 「关键词手势」：单击/双击/上下拖拽（pointer 统一鼠标/触摸/笔）
@@ -682,77 +626,6 @@ function 绑定事件() {
     }
   }
 
-  function 处理正文按下(事件) {
-    取消滚动动画();
-    双击待定 = 事件.detail >= 2; // 第二次按下属于双击序列，mouseup 时放弃建关键词
-    const 字元素 = 事件.target.closest('.字');
-    if (!字元素 || 事件.button !== 0) {
-      if (事件.button === 0 && 事件.target === 元素.滚动容器) {
-        结束跳转会话('拖动滚动条');
-      }
-      return;
-    }
-    if (
-      字元素.classList.contains('命中') &&
-      (事件.shiftKey || 事件.altKey || 事件.metaKey || 事件.ctrlKey)
-    ) {
-      事件.preventDefault();
-      window.getSelection()?.removeAllRanges();
-      return;
-    }
-
-    // 双击命中词时阻止原生整词选中：双击用于「跳到上一个」，不应选中文本。
-    // 仅对第二/三次按下（detail>1）拦截默认行为，单击与拖选不受影响。
-    if (字元素.classList.contains('命中') && 事件.detail > 1) {
-      事件.preventDefault();
-      window.getSelection()?.removeAllRanges();
-    }
-
-    状态.拖选状态 = {
-      滚动位置: 元素.滚动容器.scrollTop,
-      已阻止滚动: false,
-    };
-    if (状态.滚动帧) {
-      cancelAnimationFrame(状态.滚动帧);
-      状态.滚动帧 = 0;
-    }
-  }
-
-  function 处理鼠标选择结束() {
-    const 本次拖选 = 状态.拖选状态;
-    if (!本次拖选) {
-      return;
-    }
-
-    window.setTimeout(function 完成鼠标选择() {
-      if (状态.拖选状态 !== 本次拖选) {
-        return;
-      }
-
-      if (双击待定) {
-        // 双击：不把选区当作新关键词，仅清除选区并收尾
-        双击待定 = false;
-        window.getSelection()?.removeAllRanges();
-        状态.拖选状态 = null;
-        return;
-      }
-
-      读取选择关键词();
-      状态.拖选状态 = null;
-      if (本次拖选.已阻止滚动) {
-        console.info('[阅读器] 已阻止拖选自动滚动', {
-          滚动位置: Math.round(本次拖选.滚动位置),
-        });
-      }
-    });
-  }
-
-  function 处理非鼠标选择结束(事件) {
-    if (事件.pointerType !== 'mouse') {
-      window.setTimeout(读取选择关键词);
-    }
-  }
-
   function 取消交互状态() {
     停止自动滚动('窗口失去焦点');
     停止按键滚动('窗口失去焦点');
@@ -760,12 +633,6 @@ function 绑定事件() {
     取消关键词手势监听();
     取消待定导航();
     重置滚动条拖拽();
-  }
-
-  function 处理正文键盘选择(事件) {
-    if (事件.key.startsWith('Arrow')) {
-      读取选择关键词();
-    }
   }
 
   // ===== 语音翻页：监听「语音翻页」语义事件（由 语音订阅.js 在识别到
@@ -798,305 +665,6 @@ function 绑定事件() {
 
   window.addEventListener(语音事件.自动滚动, 处理语音自动滚动);
 
-  function 处理高亮上下文点击(事件) {
-    if (事件.altKey || 事件.metaKey || 事件.ctrlKey) {
-      事件.preventDefault();
-      处理高亮点击(事件);
-    }
-  }
-
-  function 处理高亮点击(事件) {
-    // 拖拽手势已触发跳转，抑制随后派发的 click，避免再前进一格
-    if (消费点击抑制()) {
-      return;
-    }
-    const 字元素 = 事件.target.closest('.字.命中');
-    const 选择 = window.getSelection();
-    if (!字元素 || (选择 && !选择.isCollapsed)) {
-      return;
-    }
-    状态.拖选状态 = null;
-
-    const 关键词 = 查找关键词(Number(字元素.dataset.keywordId));
-    if (!关键词?.命中位置.length) {
-      return;
-    }
-
-    const 点击命中idx = Number(字元素.dataset.hitIndex);
-    const 原始行位置 = 获取元素行位置(字元素);
-    if (事件.ctrlKey || 事件.metaKey) {
-      取消待定导航();
-    }
-    const 原始边框 = 安全获取命中边框(字元素);
-
-    // 修饰键行为保持即时，不参与单击/双击判定
-    if (事件.altKey || 事件.metaKey || 事件.ctrlKey || 事件.shiftKey) {
-      const 是Ctrl点击 = 事件.ctrlKey || 事件.metaKey;
-      let 目标命中idx;
-      if (事件.altKey || 是Ctrl点击) {
-        目标命中idx = 事件.shiftKey ? 关键词.命中位置.length - 1 : 0;
-      } else {
-        目标命中idx =
-          (点击命中idx - 1 + 关键词.命中位置.length) % 关键词.命中位置.length;
-      }
-      状态.当前关键词id = 关键词.id;
-      关键词.当前命中idx = 点击命中idx;
-      if (目标命中idx === 点击命中idx) {
-        渲染可见行(true);
-        更新关键词指示器();
-        安排保存持久化状态();
-        return;
-      }
-      跳到命中(关键词, 目标命中idx, 原始行位置, 原始边框);
-      return;
-    }
-
-    // 双击的第二次点击：浏览器已选中整词，detail>=2，这里直接放弃，
-    // 不排计时器，留待 dblclick 统一跳到首/末项并清空挂起项。
-    if (事件.detail >= 2) {
-      return;
-    }
-
-    // 纯单击：延迟 双击判定延迟 执行，每次单击各自排一个计时器（连点不吞）。
-    // 若在延迟内被判定为双击，dblclick 会统一清空挂起项，单击不会抢先前进一格。
-    const 待定数据 = {
-      关键词id: 关键词.id,
-      点击命中idx,
-      原始行位置,
-      原始边框,
-    };
-    const 本项 = {
-      计时器: window.setTimeout(function 执行待定单击() {
-        待定单击列表 = 待定单击列表.filter((项) => 项 !== 本项);
-        执行单击前进(待定数据);
-      }, 双击判定延迟),
-    };
-    待定单击列表.push(本项);
-  }
-
-  /* 清空所有挂起的单击计时器（双击判定成功时调用），避免单击抢先前进。 */
-  function 清空待定单击() {
-    for (const 项 of 待定单击列表) {
-      window.clearTimeout(项.计时器);
-    }
-    待定单击列表 = [];
-  }
-
-  /* 单击延迟到期后的前进逻辑：以被点击的词为基准，跳到该关键词命中序列中的下一个出现并循环。 */
-  function 执行单击前进(数据) {
-    const 关键词 = 查找关键词(数据.关键词id);
-    if (!关键词?.命中位置.length) {
-      console.info('[阅读器] 单击前进：关键词无效或无命中', {
-        关键词id: 数据.关键词id,
-      });
-      return;
-    }
-    const 目标命中idx = Math.max(
-      0,
-      Math.min(数据.点击命中idx, 关键词.命中位置.length - 1),
-    );
-    const 当前命中未变化 =
-      状态.当前关键词id === 关键词.id && 关键词.当前命中idx === 目标命中idx;
-    状态.当前关键词id = 关键词.id;
-    关键词.当前命中idx = 目标命中idx;
-    console.info('[阅读器] 单击前进', {
-      关键词: 关键词.文本,
-      点击命中: 数据.点击命中idx + 1,
-      当前命中: 关键词.当前命中idx + 1,
-      总命中数: 关键词.命中位置.length,
-    });
-    if (关键词.命中位置.length === 1) {
-      // 唯一命中没有下一处可跳转，点击只更新当前状态，不改变阅读位置。
-      const 原滚动位置 = 元素.滚动容器.scrollTop;
-      if (!当前命中未变化) {
-        渲染可见行(true);
-        元素.滚动容器.scrollTop = 原滚动位置;
-      }
-      更新关键词指示器();
-      显示当前命中位置提示();
-      安排保存持久化状态();
-      console.info('[阅读器] 单击前进：唯一命中保持阅读位置', {
-        关键词: 关键词.文本,
-        阅读偏移: 读取阅读位置().阅读偏移,
-      });
-      return;
-    }
-    // 透传被点击词的真实视口位置，保证下一个命中锚定到同一相对高度，
-    // 滚动距离即为「两个词之间的距离」（符合需求）；不传则落到旧当前命中位置。
-    执行导航跳转(
-      { 向上: false, Command已按下: false, 仅当前关键词: true },
-      {
-        最小前行距离: 状态.行高,
-        原始行位置: 数据.原始行位置,
-        原始边框: 数据.原始边框,
-      },
-    );
-  }
-
-  /* 命中边框计算针对「当前命中」元素，点到非当前命中项时会取不到，
-     这里兜底为 null，保证单击导航不被异常中断（边框动画退化为无横向位移）。 */
-  function 安全获取命中边框(字元素) {
-    try {
-      return 获取元素命中边框(字元素);
-    } catch {
-      return null;
-    }
-  }
-
-  /* 双击跳转：以被双击的词为基准，跳到该关键词命中序列中的上一个出现（到开头则回到末个，循环）。
-     注意：因单击已延迟执行，双击判定期间挂起的单击会被 清空待定单击 取消，
-     此处直接以双击位置为基准重设当前命中，无需撤销单击的前进。 */
-  function 处理双击跳转(关键词, 命中idx) {
-    状态.当前关键词id = 关键词.id;
-    关键词.当前命中idx = Math.max(
-      0,
-      Math.min(命中idx, 关键词.命中位置.length - 1),
-    );
-    执行导航跳转({ 向上: true, Command已按下: false, 仅当前关键词: true });
-  }
-
-  /* 双击：命中词 → 跳到上一个；未命中词但在正文行内 → 选中整行并复制到剪贴板。
-     清理选区与拖选状态，确保绝不触发新建关键词（见 处理鼠标选择结束 的拦截）。 */
-  function 处理高亮双击(事件) {
-    双击待定 = false;
-    清空待定单击(); // 取消可能挂起的单击前进，保证干净跳到上一个
-    状态.拖选状态 = null;
-
-    const 字元素 = 事件.target.closest('.字.命中');
-    const 行元素 = !字元素 && 事件.target.closest('.正文行');
-    if (行元素) {
-      事件.preventDefault();
-      选中并复制行(行元素);
-      return;
-    }
-
-    window.getSelection()?.removeAllRanges();
-
-    if (!字元素) {
-      return;
-    }
-    const 关键词 = 查找关键词(Number(字元素.dataset.keywordId));
-    if (!关键词?.命中位置.length) {
-      return;
-    }
-    处理双击跳转(关键词, Number(字元素.dataset.hitIndex));
-  }
-
-  function 选中并复制行(行元素) {
-    const 行起点 = Number(行元素.dataset.start);
-    const 行终点 = Number(行元素.dataset.end);
-    const 行文本 = 状态.文本.slice(行起点, 行终点);
-    if (!行文本) {
-      return;
-    }
-
-    const 选择 = window.getSelection();
-    if (选择) {
-      const range = document.createRange();
-      range.selectNodeContents(行元素);
-      选择.removeAllRanges();
-      选择.addRange(range);
-    }
-
-    navigator.clipboard.writeText(行文本).catch((错误) => {
-      console.warn('[阅读器] 复制行到剪贴板失败', 错误);
-    });
-  }
-
-  function 处理高亮移入(事件) {
-    if (状态.正文悬停已暂停) {
-      return;
-    }
-    const 字元素 = 事件.target.closest('.字.命中');
-    if (!字元素 || !元素.滚动容器.contains(字元素)) {
-      return;
-    }
-
-    const 关键词id = Number(字元素.dataset.keywordId);
-    const 命中idx = Number(字元素.dataset.hitIndex);
-    if (关键词id === 状态.悬停关键词id && 命中idx === 状态.悬停命中idx) {
-      return;
-    }
-
-    切换同组高亮(关键词id, 命中idx);
-  }
-
-  function 处理高亮移出(事件) {
-    if (状态.正文悬停已暂停) {
-      return;
-    }
-    const 字元素 = 事件.target.closest('.字.命中');
-    if (
-      !字元素 ||
-      Number(字元素.dataset.keywordId) !== 状态.悬停关键词id ||
-      Number(字元素.dataset.hitIndex) !== 状态.悬停命中idx
-    ) {
-      return;
-    }
-
-    const 新字元素 = 事件.relatedTarget?.closest?.('.字.命中');
-    if (新字元素) {
-      const 新关键词id = Number(新字元素.dataset.keywordId);
-      const 新命中idx = Number(新字元素.dataset.hitIndex);
-      if (新关键词id !== 状态.悬停关键词id || 新命中idx !== 状态.悬停命中idx) {
-        切换同组高亮(新关键词id, 新命中idx);
-      }
-    } else {
-      切换同组高亮(null, null);
-    }
-  }
-
-  function 切换同组高亮(关键词id, 命中idx) {
-    const 旧悬停id = 状态.悬停关键词id;
-    状态.悬停关键词id = 关键词id;
-    状态.悬停命中idx = 命中idx;
-    for (const 行元素 of 元素.可见内容.querySelectorAll('.正文行.含悬停命中')) {
-      行元素.classList.remove('含悬停命中');
-    }
-    for (const 命中元素 of 元素.可见内容.querySelectorAll('.字.命中')) {
-      const 是悬停关键词 = Number(命中元素.dataset.keywordId) === 关键词id;
-      const 是悬停命中 =
-        是悬停关键词 && Number(命中元素.dataset.hitIndex) === 命中idx;
-      命中元素.classList.toggle('同组悬停', 是悬停关键词);
-      命中元素.classList.toggle('悬停命中', 是悬停命中);
-      命中元素.classList.toggle(
-        '悬停让位',
-        关键词id !== null &&
-          命中元素.classList.contains('当前关键词组') &&
-          !是悬停关键词,
-      );
-      命中元素.classList.toggle(
-        '悬停隐藏当前框',
-        关键词id !== null && 命中元素.classList.contains('当前命中'),
-      );
-      if (是悬停命中) {
-        命中元素.closest('.正文行').classList.add('含悬停命中');
-      }
-    }
-    // 关键词指示器的悬停列只在该关键词“非当前关键词”时才出现：
-    // 悬停当前关键词或移出命中都不改变指示器，无需重绘，跳过冗余的画布与面板刷新。
-    if (
-      悬停影响指示器(旧悬停id) !== 悬停影响指示器(关键词id) ||
-      (悬停影响指示器(旧悬停id) &&
-        悬停影响指示器(关键词id) &&
-        旧悬停id !== 关键词id)
-    ) {
-      更新关键词指示器();
-    }
-  }
-
-  function 处理正文指针移动(事件) {
-    if (!状态.正文悬停已暂停 || 事件.pointerType === 'touch') {
-      return;
-    }
-    状态.正文悬停已暂停 = false;
-    处理高亮移入(事件);
-  }
-
-  function 悬停影响指示器(悬停id) {
-    return 悬停id !== null && 悬停id !== 状态.当前关键词id;
-  }
-
   function 处理自动滚动按钮移出() {
     停止自动滚动('鼠标移出滚动按钮');
   }
@@ -1115,8 +683,13 @@ function 绑定事件() {
     if (事件.detail > 0) {
       元素.自动滚动按钮.blur();
     }
-    await 全屏操作;
-    console.info(`[阅读器] 已${正在退出 ? '退出' : '进入'}全屏`);
+    try {
+      await 全屏操作;
+      console.info(`[阅读器] 已${正在退出 ? '退出' : '进入'}全屏`);
+    } catch (错误) {
+      // 全屏请求可能因失去用户激活 / 权限策略被拒绝，静默记录即可
+      console.warn('[阅读器] 切换全屏失败', 错误);
+    }
   }
 
   function 处理手动滚动() {
