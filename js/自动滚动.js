@@ -154,6 +154,9 @@ export function 开始自动滚动() {
     return;
   }
 
+  // 与 开始按键滚动 对称：互斥抢占，避免双 rAF 循环同帧争写 scrollTop。
+  停止按键滚动('自动滚动');
+
   const 最大滚动位置 = 元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
   if (元素.滚动容器.scrollTop >= 最大滚动位置 - 0.5) {
     console.info('[阅读器] 自动滚动未启动', { 原因: '已到文末' });
