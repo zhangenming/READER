@@ -3,6 +3,7 @@ import { 元素, 状态 } from './状态.js';
 import { 二分句段起点 } from './排版引擎.js';
 import { 设置属性, 设置文本 } from './虚拟渲染.js';
 import { 今日本书滚动后缀, 格式化剩余滚动时间 } from './统计展示.js';
+import { 更新章节进度 } from './章节目录.js';
 
 export function 更新滚动块(度量 = null) {
   const 滚动块状态 = 更新滚动块位置(度量);
@@ -38,6 +39,7 @@ export function 轨道中心转滚动位置(轨道位置, 度量) {
 }
 
 export function 更新滚动块位置(度量 = null, 滚动位置 = null) {
+  更新章节进度(滚动位置 ?? 元素.滚动容器.scrollTop);
   const 轨道 = 元素.自定义滚动条;
   轨道.hidden = false;
   元素.滚动进度.hidden = false;

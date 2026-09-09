@@ -37,6 +37,7 @@ import {
 } from './js/状态.js';
 import { 显示文本处理错误, 显示错误 } from './js/错误提示.js';
 import {
+  查找偏移所在行,
   创建行索引,
   刷新画布尺寸,
   提交行索引,
@@ -165,6 +166,9 @@ import {
   关闭内容选择弹窗,
   打开内容选择弹窗,
 } from './js/内容选择弹窗.js';
+
+import { 创建章节索引 } from './js/章节索引.js';
+import { 初始化章节目录, 关闭章节目录 } from './js/章节目录.js';
 
 启动();
 
@@ -314,6 +318,33 @@ function 绑定事件() {
 
   // 内容选择弹窗经注入回调访问 app 的 载入文本 / 创建文本地址（断环：避免「内容选择弹窗 → app」反向依赖）
   初始化内容选择弹窗({ 载入文本, 创建文本地址 });
+  初始化章节目录({
+    准备打开() {
+      停止自动滚动('打开章节目录');
+      停止按键滚动('打开章节目录');
+      取消滚动动画();
+      状态.拖选状态 = null;
+      Ctrl按键状态 = null;
+      待导航参数 = null;
+      shift按住中 = false;
+      shift最后松开时间 = 0;
+    },
+    跳到章节(偏移) {
+      结束跳转会话('章节导航');
+      隐藏衔接线();
+      const 目标位置 = 查找偏移所在行(偏移) * 状态.行高;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        取消滚动动画();
+        元素.滚动容器.scrollTop = 目标位置;
+        渲染可见行(true);
+      } else {
+        动画滚动到(目标位置);
+      }
+      更新滚动块();
+      安排保存持久化状态();
+      元素.滚动容器.focus({ preventScroll: true });
+    },
+  });
 
   // ===== 右下角控件：默认隐藏，仅在鼠标靠近 / 触摸 / 聚焦 / 自动滚动时显示 =====
   // 时间（#当前时间）固定显示，不受影响。隐藏时 opacity:0 + pointer-events:none，
@@ -563,6 +594,7 @@ function 绑定事件() {
     元素.自动滚动按钮,
     元素.关键词面板开关,
     元素.内容选择按钮,
+    元素.章节目录按钮,
   ]) {
     if (!控件) {
       continue;
@@ -885,6 +917,7 @@ function 绑定事件() {
   }
 
   function 处理语音翻页(事件) {
+    if (元素.章节目录弹窗.open) return;
     const 指令 = 事件.detail && 事件.detail.指令;
     if (指令 !== '上一页' && 指令 !== '下一页') {
       return;
@@ -932,6 +965,7 @@ function 绑定事件() {
   window.addEventListener(语音事件.自动滚动, 处理语音自动滚动);
 
   function 处理键盘按下(事件) {
+    if (元素.章节目录弹窗.open) return;
     // Esc 关闭字体设置弹窗（div 弹窗无原生 close，需手动处理）
     if (事件.key === 'Escape' && !元素.字体弹窗.hidden) {
       事件.preventDefault();
@@ -1239,6 +1273,7 @@ function 绑定事件() {
   }
 
   function 处理键盘松开(事件) {
+    if (元素.章节目录弹窗.open) return;
     if (事件.key.toLowerCase() === 获取按键滚动按键()) {
       事件.preventDefault();
       停止按键滚动('按键松开');
@@ -1949,6 +1984,11 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
   }
 
   阶段开始时间 = performance.now();
+  const 原章节列表 = await 创建章节索引(规范文本, 载入仍然有效);
+  阶段耗时.章节索引 = performance.now() - 阶段开始时间;
+  if (!原章节列表) return false;
+
+  阶段开始时间 = performance.now();
   const 原引文索引 = await 创建引文索引(规范文本, 载入仍然有效);
   阶段耗时.引文索引 = performance.now() - 阶段开始时间;
   if (!原引文索引) {
@@ -1960,6 +2000,7 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
     规范文本,
     原引文索引.边界列表,
     载入仍然有效,
+    原章节列表,
   );
   阶段耗时.句子整理 = performance.now() - 阶段开始时间;
   if (!句子整理结果) {
@@ -2035,8 +2076,10 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
     return false;
   }
 
+  关闭章节目录();
   状态.排版任务序号 += 1;
   状态.文本 = 文本;
+  状态.章节列表 = 句子整理结果.章节列表;
   状态.指示器缓存 = null;
   状态.词频分析 = null;
   状态.全文单字 = 全文单字;

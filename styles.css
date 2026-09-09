@@ -359,7 +359,7 @@ body.关键词手势中 .滚动容器 {
   display: grid;
   grid-template-areas:
     '滚动 关键词'
-    '内容 内容';
+    '内容 目录';
   grid-template-columns: 136px max-content;
   gap: 8px;
   align-items: center;
@@ -2038,6 +2038,94 @@ dialog,
   color: #9f3526;
 }
 
+.章节目录按钮 {
+  grid-area: 目录;
+}
+
+.章节目录按钮:disabled {
+  cursor: default;
+}
+
+.章节目录弹窗 {
+  width: min(480px, calc(100vw - 32px));
+}
+
+.章节标题信息 {
+  min-width: 0;
+}
+
+.章节标题信息 .内容选择摘要 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.章节目录工具栏 {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+  padding: 12px 16px 6px;
+}
+
+.章节目录工具栏 .查找导航按钮 {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.章节搜索框 {
+  min-width: 0;
+  width: 100%;
+  padding: 8px 10px;
+  color: var(--墨色);
+  background: var(--纸张色);
+  border: 1px solid var(--边线色);
+  border-radius: 4px;
+  font: 14px 'Avenir Next', 'PingFang SC', sans-serif;
+}
+
+.章节搜索框:focus-visible {
+  outline: 2px solid var(--选中色);
+  outline-offset: 1px;
+}
+
+.章节目录反馈 {
+  flex: 0 0 auto;
+  padding: 0 16px 8px;
+}
+
+.章节目录列表 {
+  min-height: 0;
+  overscroll-behavior: contain;
+}
+
+.章节目录项 {
+  min-height: 48px;
+  gap: 8px;
+}
+
+.章节目录项名称 {
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.章节目录项[data-chapter-type='分卷'] .章节目录项名称 {
+  font-weight: 700;
+}
+
+.章节目录分页 {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-top: 1px solid var(--边线色);
+}
+
+.章节目录分页[hidden] {
+  display: none;
+}
+
 @keyframes 内容选择弹窗进入 {
   from {
     opacity: 0;
@@ -2443,6 +2531,16 @@ dialog,
     width: calc(100vw - 24px);
     max-height: min(70dvh, 540px);
     margin: auto 12px 44px auto;
+  }
+
+  .章节目录弹窗 {
+    max-height: calc(100dvh - 24px);
+    margin: 12px auto;
+  }
+
+  .右下按钮组 {
+    right: calc(var(--滚动条宽度) + 12px);
+    bottom: 76px;
   }
 
   .单字双列表,

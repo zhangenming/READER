@@ -52,7 +52,8 @@ export function 重建行索引(排版 = 读取正文排版(), 提交前 = null,
       return;
     }
 
-    const 顶部行idx = Math.floor(获取静止滚动位置() / 状态.行高);
+    // 缩放时 scrollTop 可能落在行边界前不足半像素，重排不应因此退到上一行。
+    const 顶部行idx = Math.floor((获取静止滚动位置() + 0.5) / 状态.行高);
     const 顶部偏移 = 状态.行起点列表[顶部行idx] ?? 0;
     if (提交前) {
       提交前();
