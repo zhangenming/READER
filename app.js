@@ -19,6 +19,7 @@ import {
   状态,
   高亮配色,
   查找关键词,
+  获取静止滚动位置,
 } from './js/状态.js';
 import { 显示文本处理错误, 显示错误 } from './js/错误提示.js';
 import {
@@ -368,6 +369,10 @@ function 绑定事件() {
   元素.自动滚动按钮.addEventListener('mouseleave', 处理自动滚动按钮移出);
   元素.自动滚动按钮.addEventListener('blur', 处理自动滚动按钮失焦);
   元素.内容选择按钮.addEventListener('click', 打开内容选择弹窗);
+  元素.阅读统计按钮.addEventListener('click', 打开阅读统计);
+  元素.关闭阅读统计按钮.addEventListener('click', () =>
+    元素.阅读统计弹窗.close(),
+  );
   元素.关闭内容选择按钮.addEventListener('click', 关闭内容选择弹窗);
   元素.内容选择弹窗.addEventListener('click', 处理内容选择弹窗点击);
   元素.内容选择列表.addEventListener('click', 处理内容选择列表点击);
@@ -677,6 +682,46 @@ function 绑定事件() {
     if (!元素.自动滚动按钮.matches(':hover')) {
       停止自动滚动('滚动按钮失去焦点');
     }
+  }
+
+  function 打开阅读统计() {
+    const 数据 = 读取持久化数据或新建();
+    const 书籍 = Object.entries(数据.文本状态 ?? {});
+    const 今日 = 统计.今日滚动毫秒 + 统计.未入账滚动毫秒;
+    const 总时长 =
+      书籍.reduce((总数, [, 项]) => 总数 + (项.总滚动毫秒 ?? 0), 0) +
+      统计.未入账滚动毫秒;
+    const 当前 = 数据.文本状态?.[状态.文件名];
+    const 进度 = 状态.文本.length
+      ? Math.min(
+          100,
+          Math.max(
+            0,
+            (获取静止滚动位置() /
+              Math.max(
+                1,
+                元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight,
+              )) *
+              100,
+          ),
+        )
+      : 0;
+    const 行 = 书籍
+      .sort(([, a], [, b]) => (b.总滚动毫秒 ?? 0) - (a.总滚动毫秒 ?? 0))
+      .map(
+        ([名, 项]) =>
+          `<tr><td>${名}</td><td>${格式化统计时长(项.总滚动毫秒 ?? 0)}</td><td>${名 === 状态.文件名 ? `${进度.toFixed(1)}%` : '—'}</td></tr>`,
+      )
+      .join('');
+    元素.阅读统计内容.innerHTML = `<div class="统计摘要"><b>今日阅读</b><strong>${格式化统计时长(今日)}</strong><b>累计阅读</b><strong>${格式化统计时长(总时长)}</strong><b>本书进度</b><strong>${进度.toFixed(1)}%</strong></div><table><thead><tr><th>书籍</th><th>阅读时长</th><th>进度</th></tr></thead><tbody>${行 || '<tr><td colspan="3">还没有阅读记录</td></tr>'}</tbody></table>`;
+    元素.阅读统计弹窗.showModal();
+  }
+
+  function 格式化统计时长(毫秒) {
+    const 分钟 = Math.round(Math.max(0, 毫秒) / 60000);
+    return 分钟 < 60
+      ? `${分钟} 分钟`
+      : `${Math.floor(分钟 / 60)} 小时 ${分钟 % 60} 分钟`;
   }
 
   async function 切换全屏模式(事件) {

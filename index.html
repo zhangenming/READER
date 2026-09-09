@@ -88,7 +88,33 @@
         <span class="内容选择图标" aria-hidden="true">文</span>
         <span>内容</span>
       </button>
+      <button
+        id="阅读统计按钮"
+        class="内容选择按钮"
+        type="button"
+        title="阅读统计"
+      >
+        <span>统计</span>
+      </button>
     </div>
+    <dialog
+      id="阅读统计弹窗"
+      class="阅读统计弹窗"
+      aria-labelledby="阅读统计标题"
+    >
+      <div class="上下文标题栏">
+        <h2 id="阅读统计标题" class="上下文标题">阅读统计</h2>
+        <button
+          id="关闭阅读统计按钮"
+          class="关闭查找按钮"
+          type="button"
+          aria-label="关闭统计"
+        >
+          ×
+        </button>
+      </div>
+      <div id="阅读统计内容" class="阅读统计内容"></div>
+    </dialog>
     <div class="时间信息">
       <div id="已滚动时间行" class="时间信息行" hidden>
         <span id="已滚动时间" class="已滚动时间">0.0分</span>

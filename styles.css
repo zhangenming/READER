@@ -306,6 +306,43 @@ body.关键词手势中 .滚动容器 {
   line-height: 1;
   white-space: nowrap;
 }
+.阅读统计弹窗 {
+  width: min(620px, calc(100vw - 32px));
+  max-height: 80vh;
+  border: 1px solid var(--边框色);
+  background: var(--纸面色);
+  color: var(--文字色);
+  padding: 18px;
+}
+.统计摘要 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 12px 0 18px;
+}
+.统计摘要 b,
+.统计摘要 strong {
+  padding: 10px;
+  background: color-mix(in srgb, var(--背景色) 70%, transparent);
+}
+.统计摘要 strong {
+  font-size: 1.1em;
+}
+.阅读统计内容 table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.阅读统计内容 th,
+.阅读统计内容 td {
+  padding: 8px;
+  border-bottom: 1px solid var(--边框色);
+  text-align: left;
+}
+@media (max-width: 560px) {
+  .统计摘要 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 
 .剩余滚动时间 {
   grid-column: 1;
