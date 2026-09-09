@@ -1,5 +1,6 @@
+import { 每页词频数 } from './常量.js';
 import { 是汉字 } from './文本工具.js';
-import { 按需让出主线程 } from './调度.js';
+import { 让出主线程, 按需让出主线程 } from './调度.js';
 import { 元素, 状态 } from './状态.js';
 
 // 词频弹窗：从 app.js 绑定事件() 闭包拆出。
@@ -9,7 +10,6 @@ import { 元素, 状态 } from './状态.js';
 
 let 当前词频字数 = 1;
 let 当前词频页码 = 1;
-const 每页词频数 = 200;
 let 词频分析任务 = null;
 
 export async function 打开词频弹窗() {
@@ -38,7 +38,8 @@ export async function 打开词频弹窗() {
     文本: 状态.文本,
   };
   词频分析任务 = 本次任务;
-  await scheduler.yield();
+  // 让出主线程经 调度.js 统一回退，禁止裸调 scheduler.yield()（非 Chromium 会抛 ReferenceError）
+  await 让出主线程();
   try {
     const 开始时间 = performance.now();
     const 分析 = await 统计全文词频(本次任务.文本, 任务仍然有效);

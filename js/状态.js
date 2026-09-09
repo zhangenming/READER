@@ -5,8 +5,10 @@ import {
   默认引文背景色,
   默认页面背景色,
   默认纸面色,
+  默认高亮浅色,
   自动滚动默认速度,
   默认字号,
+  默认行高,
 } from './常量.js';
 
 export const 字体设置 = { 引号内: null, 引号外: null };
@@ -39,6 +41,11 @@ export const 统计 = {
   未入账滚动毫秒: 0, // 滚动会话中已累计、待结转到统计的毫秒数
 };
 
+// 关键词高亮配色表（运行期可变，随用户自定义关键词颜色重算）：
+// 深色用于普通正文与指示器，浅色用于面板、上下文与跳转边框。
+// 原先放在 常量.js 属「常量模块藏可变状态」，已迁入状态域。
+export const 高亮配色 = [{ 浅色: 默认高亮浅色, 深色: 默认关键词颜色 }];
+
 /**
  * 阅读器全局共享可变状态单例：各模块直接读写，无变更通知。
  * @typedef {Object} 阅读器状态
@@ -54,7 +61,8 @@ export const 统计 = {
  * @property {?Object} 阶梯断点 阶梯段落断点（起点列表 + 层级列表）；未启用为 null
  * @property {Uint32Array} 引文边界列表 成对引号/书名号边界偏移列表
  * @property {Set} 缩进起点集合 段落缩进起点偏移集合（spk 对话行等）
- * @property {string} 排版键 当前排版参数签名，变化即需重建行索引
+ * @property {string} 换行键 当前行索引的横向排版参数签名（不含行高）
+ * @property {string} 排版键 当前完整排版参数签名（换行键 + 行高）
  * @property {number} 行高 当前排版行高（像素）
  * @property {Uint32Array} 句段起点列表 全文「无标点连续段」起点（文本偏移，升序），用于运行时二分
  * @property {Float64Array} 句段负担前缀和 长度 = 段数 + 1；[i] = 前 i 段负担之和
@@ -113,8 +121,9 @@ export const 状态 = {
   阶梯断点: null,
   引文边界列表: new Uint32Array(),
   缩进起点集合: new Set(),
+  换行键: '',
   排版键: '',
-  行高: 39,
+  行高: 默认行高,
   渲染起点: -1,
   渲染终点: -1,
   滚动帧: 0,
@@ -209,6 +218,10 @@ export const 元素 = {
   定位当前章节按钮: document.querySelector('#定位当前章节按钮'),
   关闭章节目录按钮: document.querySelector('#关闭章节目录按钮'),
   内容选择按钮: document.querySelector('#内容选择按钮'),
+  阅读统计按钮: document.querySelector('#阅读统计按钮'),
+  阅读统计弹窗: document.querySelector('#阅读统计弹窗'),
+  关闭阅读统计按钮: document.querySelector('#关闭阅读统计按钮'),
+  阅读统计内容: document.querySelector('#阅读统计内容'),
   内容选择弹窗: document.querySelector('#内容选择弹窗'),
   内容选择摘要: document.querySelector('#内容选择摘要'),
   内容选择列表: document.querySelector('#内容选择列表'),

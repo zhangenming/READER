@@ -170,10 +170,24 @@ try {
   await send('Page.reload', { ignoreCache: true });
   await ready();
   assert.equal(await evaluate(`${index} return 读取当前章节().索引`), 2);
+  const enlargedLineHeight = await evaluate(`${state} return 状态.行高 + 6`);
   await evaluate(
-    'const { 状态 } = await import("./js/状态.js"); const { 调整字号 } = await import("./js/字体设置.js"); 调整字号(状态.行高 + 6);',
+    `const { 调整字号 } = await import("./js/字体设置.js"); 调整字号(${enlargedLineHeight});`,
   );
   await pause(1200);
+  assert.equal(await evaluate(`${state} return 状态.行高`), enlargedLineHeight);
+  assert.equal(
+    await evaluate(
+      'return parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--行高"))',
+    ),
+    enlargedLineHeight,
+  );
+  assert.equal(
+    await evaluate(
+      `${state} return 状态.排版键 === (await import("./js/排版引擎.js")).读取正文排版().键`,
+    ),
+    true,
+  );
   assert.equal(await evaluate(`${index} return 读取当前章节().索引`), 2);
   await openToc();
   await jump(3);
@@ -215,8 +229,44 @@ try {
   await send('Emulation.setEmulatedMedia', { features: [] });
   console.log('PASS Escape dismissal and reduced-motion instant navigation');
 
+  assert.ok(
+    await evaluate(
+      'const r = ["内容选择按钮", "章节目录按钮", "阅读统计按钮"].map(id => document.getElementById(id).getBoundingClientRect()); return r.every(x => x.left >= 0 && x.right <= innerWidth) && r[0].right <= r[1].left && r[1].right <= r[2].left;',
+    ),
+  );
+  await click('#阅读统计按钮');
+  assert.equal(
+    await evaluate('return document.querySelector("#阅读统计弹窗").open'),
+    true,
+  );
+  assert.ok(
+    (
+      await evaluate(
+        'return document.querySelector("#阅读统计内容").textContent',
+      )
+    ).includes('今日阅读'),
+  );
+  const statsTop = await evaluate(`${state} return 元素.滚动容器.scrollTop`);
+  await evaluate(
+    'window.dispatchEvent(new KeyboardEvent("keydown", {key:"d",ctrlKey:true})); window.dispatchEvent(new CustomEvent("语音翻页", {detail:{指令:"下一页"}}));',
+  );
+  await pause(200);
+  assert.equal(
+    await evaluate(`${state} return 元素.滚动容器.scrollTop`),
+    statsTop,
+  );
+  await click('#关闭阅读统计按钮');
+  console.log(
+    'PASS merged content, chapter and statistics controls remain usable without overlap',
+  );
+
   await click('#内容选择按钮');
   await pause(900);
+  assert.ok(
+    await evaluate(
+      'return !!document.querySelector(\'[data-file-name="笑傲江湖.txt"]\')',
+    ),
+  );
   await click('[data-file-name="香农传.txt"]');
   await ready();
   assert.equal(

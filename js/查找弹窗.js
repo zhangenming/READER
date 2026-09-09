@@ -1,7 +1,13 @@
-import { 字素分段器, 词组分段器 } from './常量.js';
-import { 按需让出主线程 } from './调度.js';
+import {
+  词组分段器,
+  词组上下文窗口,
+  每批分析结果数,
+  实时查找延迟,
+} from './常量.js';
+import { 让出主线程, 按需让出主线程 } from './调度.js';
 import { 元素, 状态, 查找关键词, 获取静止滚动位置 } from './状态.js';
 import { 查找偏移所在行 } from './排版引擎.js';
+import { 获取文本字素分段 } from './文本工具.js';
 import { 渲染可见行 } from './虚拟渲染.js';
 import { 创建关键词标记, 查找关键词命中 } from './关键词.js';
 import { 更新关键词指示器 } from './指示器.js';
@@ -18,8 +24,49 @@ let 查找临时状态 = null;
 let 实时查找计时器 = 0;
 let 词组分析序号 = 0;
 let 分析结果视图 = null;
-const 每批分析结果数 = 200;
-const 实时查找延迟 = 250; // 输入停止后延时触发实时查找，避免每个按键都全文扫描
+
+// —— 搭配分析的词组提取（纯函数，供本模块与 tmp/verify-collocations.mjs 共享）——
+// 从全文的 文本偏移 处（关键词起点），向后取「关键词 + 紧随其后的第一个词」，
+// 词边界由词组分段器决定；紧邻标点不是词，只返回关键词本身，由调用方过滤。
+
+export function 提取后续词组自文本(全文, 文本偏移, 前缀长度) {
+  const 上下文 = 全文.slice(文本偏移, 文本偏移 + 前缀长度 + 词组上下文窗口);
+  const 前缀终点 = 前缀长度;
+  let 词组终点 = 前缀终点;
+  for (const 片段 of 词组分段器.segment(上下文)) {
+    const 片段终点 = 片段.index + 片段.segment.length;
+    if (片段终点 <= 前缀终点) {
+      continue;
+    }
+    if (片段.index < 前缀终点 || (片段.index === 前缀终点 && 片段.isWordLike)) {
+      词组终点 = 片段终点;
+    }
+    break;
+  }
+  return 上下文.slice(0, 词组终点);
+}
+
+export function 提取前置词组自文本(全文, 文本偏移) {
+  const 起点 = Math.max(0, 文本偏移 - 词组上下文窗口);
+  const 上下文 = 全文.slice(起点, 文本偏移);
+  const 片段列表 = [...词组分段器.segment(上下文)];
+  let 词组起点 = 上下文.length;
+  for (let idx = 片段列表.length - 1; idx >= 0; idx -= 1) {
+    const 片段 = 片段列表[idx];
+    const 片段终点 = 片段.index + 片段.segment.length;
+    if (片段.index >= 上下文.length) {
+      continue;
+    }
+    if (
+      片段终点 > 上下文.length ||
+      (片段终点 === 上下文.length && 片段.isWordLike)
+    ) {
+      词组起点 = 片段.index;
+    }
+    break;
+  }
+  return 上下文.slice(词组起点);
+}
 
 export function 打开查找弹窗() {
   if (!元素.查找弹窗.open) {
@@ -157,7 +204,7 @@ function 解析查找查询(查询文本) {
 
 function 查找带排除前缀的命中(关键词文本, 排除前缀) {
   const 命中数组 = [];
-  const 文本字素列表 = 字素分段器.segment(状态.文本);
+  const 文本字素列表 = 获取文本字素分段(状态.文本);
   let 搜索位置 = 0;
   while (搜索位置 <= 状态.文本.length - 关键词文本.length) {
     const 命中位置 = 状态.文本.indexOf(关键词文本, 搜索位置);
@@ -278,7 +325,8 @@ export async function 处理词组分析() {
   const 本次分析序号 = ++词组分析序号;
   const 本次载入序号 = 状态.载入序号;
   const 分析文本 = 状态.文本;
-  await scheduler.yield();
+  // 让出主线程经 调度.js 统一回退，禁止裸调 scheduler.yield()（非 Chromium 会抛 ReferenceError）
+  await 让出主线程();
   const 开始时间 = performance.now();
   try {
     const 命中位置 = 查找关键词命中(前缀);
@@ -328,8 +376,7 @@ export async function 处理词组分析() {
         })
         .sort(function 排序统计项(左项, 右项) {
           return (
-            右项.数量 - 左项.数量 ||
-            左项.词组.localeCompare(右项.词组, 'zh-CN')
+            右项.数量 - 左项.数量 || 左项.词组.localeCompare(右项.词组, 'zh-CN')
           );
         });
     };
@@ -352,45 +399,11 @@ export async function 处理词组分析() {
   }
 
   function 提取后续词组(文本偏移) {
-    const 上下文 = 状态.文本.slice(文本偏移, 文本偏移 + 前缀.length + 64);
-    const 前缀终点 = 前缀.length;
-    let 词组终点 = 前缀终点;
-    for (const 片段 of 词组分段器.segment(上下文)) {
-      const 片段终点 = 片段.index + 片段.segment.length;
-      if (片段终点 <= 前缀终点) {
-        continue;
-      }
-      if (
-        片段.index < 前缀终点 ||
-        (片段.index === 前缀终点 && 片段.isWordLike)
-      ) {
-        词组终点 = 片段终点;
-      }
-      break;
-    }
-    return 上下文.slice(0, 词组终点);
+    return 提取后续词组自文本(状态.文本, 文本偏移, 前缀.length);
   }
 
   function 提取前置词组(文本偏移) {
-    const 起点 = Math.max(0, 文本偏移 - 64);
-    const 上下文 = 状态.文本.slice(起点, 文本偏移);
-    const 片段列表 = [...词组分段器.segment(上下文)];
-    let 词组起点 = 上下文.length;
-    for (let idx = 片段列表.length - 1; idx >= 0; idx -= 1) {
-      const 片段 = 片段列表[idx];
-      const 片段终点 = 片段.index + 片段.segment.length;
-      if (片段.index >= 上下文.length) {
-        continue;
-      }
-      if (
-        片段终点 > 上下文.length ||
-        (片段终点 === 上下文.length && 片段.isWordLike)
-      ) {
-        词组起点 = 片段.index;
-      }
-      break;
-    }
-    return 上下文.slice(词组起点);
+    return 提取前置词组自文本(状态.文本, 文本偏移);
   }
 
   function 渲染分析结果(后续列表, 前置列表, 命中总数) {

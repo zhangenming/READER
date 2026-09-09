@@ -3,8 +3,11 @@ export const 默认文件名 =
   '嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt';
 export const 持久化键 = '原文阅读器:阅读状态:v2';
 export const 旧持久化键 = '原文阅读器:阅读状态:v1';
+export const 损坏持久化备份键 = '原文阅读器:阅读状态:损坏备份';
 export const 最大虚拟高度 = 30_000_000;
-export const 字素分段器 = new Intl.Segmenter('zh-CN', { granularity: 'grapheme' });
+export const 字素分段器 = new Intl.Segmenter('zh-CN', {
+  granularity: 'grapheme',
+});
 export const 词组分段器 = new Intl.Segmenter('zh-CN', { granularity: 'word' });
 export const 拼音排序器 = new Intl.Collator('zh-Hans-CN-u-co-pinyin');
 export const 汉字模式 = /^\p{Script=Han}$/u;
@@ -14,7 +17,6 @@ export const 时间格式器 = new Intl.DateTimeFormat('zh-CN', {
   minute: '2-digit',
   second: '2-digit',
 });
-export const 整数格式器 = new Intl.NumberFormat('zh-CN');
 export const 关键词排序方式列表 = ['数量', '位置', '拼音'];
 export const 西文字素模式 =
   /^(?:[\u0020-\u007e\u00a0]|\p{Script=Latin}|\p{Number}|\p{Mark})+$/u;
@@ -83,19 +85,34 @@ export const 默认引文背景色 = { 奇数: '#bcc7cc', 偶数: '#d7c5bf' };
 // 纸面默认值为 oklch(97.2% 0.008 95) 的 sRGB 近似。
 export const 默认页面背景色 = '#e9e7df';
 export const 默认纸面色 = '#f7f6f0';
-export const 高亮配色 = [{ 浅色: '#c5d9f0', 深色: 默认关键词颜色 }];
+// 关键词高亮浅色的默认值（深色默认即 默认关键词颜色）；配色本体是运行期可变状态，见 状态.js
+export const 默认高亮浅色 = '#c5d9f0';
 
 // 语音订阅.js 与 app.js 共享的语义事件名（单一数据源，改名时两处同时生效）
 export const 语音事件 = {
   翻页: '语音翻页',
   自动滚动: '语音自动滚动',
-  翻页完成: '语音翻页完成',
 };
+
+// —— 界面交互阈值（原先散布在调用点，统一收编）——
+export const 右下热区宽度 = 380; // 右下控件悬停热区：距右边界的宽度（px）
+export const 右下热区高度 = 130; // 右下控件悬停热区：距底边界的高度（px）
+export const 右下触摸显示时长 = 3000; // 触摸右下热区后控件保持显示的时长（毫秒）
+export const 尺寸重排防抖毫秒 = 100; // ResizeObserver 触发的重排防抖
+export const 持久化保存防抖毫秒 = 120; // 安排保存持久化状态的防抖间隔
+export const 上下文滚动预载像素 = 300; // 上下文列表滚动到距底部该距离时追加分块
+export const 关键词拖拽死区 = 10; // 小于此位移视为未拖动（横向容差，避免轻微抖动误判）
+export const 词组上下文窗口 = 64; // 搭配分析中关键词前/后截取的上下文字数
+export const 渲染缓冲行数 = 12; // 虚拟渲染视口上下各多渲染的缓冲行数
+export const 每页词频数 = 200; // 词频弹窗每页展示的条目数
+export const 每批分析结果数 = 200; // 搭配分析结果分批渲染的批大小
+export const 实时查找延迟 = 250; // 输入停止后延时触发实时查找（毫秒），避免每个按键都全文扫描
+export const 语音重连间隔毫秒 = 5000; // 语音 WebSocket 断开后自动重连的间隔
 
 // 关系连词词表（数据驱动，按词着色；2 字词用「首字+邻字」邻接判定）：
 // 因果（因词/果词）、假设（假设词）、递进（递进词）、选择（选择词）、顺接（顺接词）、时间（时间词）、限制（限制词）、语气（语气词）、强调（强调词）、让步（让步词）、疑问（疑问词）。
 // 注意「既然」末字「然」与「虽然」末字同字，靠首字（既/虽）邻接区分，已无冲突。
-export const 关系连词表 = [
+const 关系连词表 = [
   ['虽然', '让步词'],
   ['尽管', '让步词'],
   ['即使', '让步词'],

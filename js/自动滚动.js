@@ -17,13 +17,7 @@ import {
   自适应视口负担下限,
   衔接线停留时长,
 } from './常量.js';
-import {
-  元素,
-  状态,
-  统计,
-  本地日期串,
-  确保今日滚动统计,
-} from './状态.js';
+import { 元素, 状态, 统计, 本地日期串, 确保今日滚动统计 } from './状态.js';
 import { 二分句段起点 } from './排版引擎.js';
 import { 渲染可见行, 设置文本 } from './虚拟渲染.js';
 import { 更新滚动块, 更新滚动块位置 } from './滚动条.js';
@@ -52,6 +46,7 @@ let 自动滚动状态 = null;
 let 按键滚动状态 = null;
 let 上次滚动统计保存时刻 = 0;
 let 右下强制设置 = null;
+let 自动滚动滚轮监听设置 = null;
 
 export function 自动滚动进行中() {
   return 自动滚动状态 !== null;
@@ -65,6 +60,11 @@ export function 注册右下强制显示(设置函数) {
   右下强制设置 = 设置函数;
 }
 
+export function 注册自动滚动滚轮监听(设置函数) {
+  自动滚动滚轮监听设置 = 设置函数;
+  设置函数(Boolean(自动滚动状态));
+}
+
 export function 更新自动滚动速度() {
   const 显示速度 = String(Math.round(状态.自动滚动速度));
   元素.基础速度显示.textContent = `基 ${显示速度}`;
@@ -75,41 +75,57 @@ export function 更新自动滚动速度() {
 }
 
 // 启动时从持久化数据恢复今日总时长、今日按书分项与每本书的历史累计时长。
-// 数据由调用方（app.js）从 读取持久化数据() 取得并传入；null 表示读取失败，跳过恢复。
+// 数据由调用方（app.js）从持久化模块取得并传入；null 表示读取失败，跳过恢复。
 export function 载入自动滚动统计(数据) {
   if (!数据) {
     return;
   }
   const 持久统计 = 数据.自动滚动统计;
   const 今天 = 本地日期串(new Date());
-  if (
-    持久统计 &&
-    typeof 持久统计 === 'object' &&
-    持久统计.日期 === 今天 &&
-    typeof 持久统计.今日毫秒 === 'number' &&
-    Number.isFinite(持久统计.今日毫秒)
-  ) {
-    统计.今日滚动日期 = 今天;
-    统计.今日滚动毫秒 = Math.max(0, 持久统计.今日毫秒);
-    if (持久统计.书籍毫秒 !== undefined) {
+  let 今日滚动毫秒 = 0;
+  const 今日书籍滚动毫秒 = new Map();
+  const 书籍滚动毫秒 = new Map();
+  try {
+    if (持久统计 !== undefined) {
       if (
-        !持久统计.书籍毫秒 ||
-        typeof 持久统计.书籍毫秒 !== 'object' ||
-        Array.isArray(持久统计.书籍毫秒)
+        !持久统计 ||
+        typeof 持久统计 !== 'object' ||
+        Array.isArray(持久统计)
       ) {
-        throw new TypeError('持久化的今日按书滚动统计格式无效');
+        throw new TypeError('持久化的自动滚动统计格式无效');
       }
-      for (const [文件名, 毫秒] of Object.entries(持久统计.书籍毫秒)) {
-        if (typeof 毫秒 !== 'number' || !Number.isFinite(毫秒)) {
-          throw new TypeError(`持久化的今日滚动时长无效：${文件名}`);
+      if (持久统计.日期 === 今天) {
+        if (
+          typeof 持久统计.今日毫秒 !== 'number' ||
+          !Number.isFinite(持久统计.今日毫秒)
+        ) {
+          throw new TypeError('持久化的今日滚动时长格式无效');
         }
-        统计.今日书籍滚动毫秒.set(文件名, Math.max(0, 毫秒));
+        今日滚动毫秒 = Math.max(0, 持久统计.今日毫秒);
+      }
+      if (持久统计.日期 === 今天 && 持久统计.书籍毫秒 !== undefined) {
+        if (
+          !持久统计.书籍毫秒 ||
+          typeof 持久统计.书籍毫秒 !== 'object' ||
+          Array.isArray(持久统计.书籍毫秒)
+        ) {
+          throw new TypeError('持久化的今日按书滚动统计格式无效');
+        }
+        for (const [文件名, 毫秒] of Object.entries(持久统计.书籍毫秒)) {
+          if (typeof 毫秒 !== 'number' || !Number.isFinite(毫秒)) {
+            throw new TypeError(`持久化的今日滚动时长无效：${文件名}`);
+          }
+          今日书籍滚动毫秒.set(文件名, Math.max(0, 毫秒));
+        }
       }
     }
-  } else {
-    统计.今日滚动日期 = 今天;
-    统计.今日滚动毫秒 = 0;
+  } catch (错误) {
+    今日滚动毫秒 = 0;
+    今日书籍滚动毫秒.clear();
+    console.error('[阅读器] 持久化的自动滚动统计无效，已重置今日统计', 错误);
   }
+
+  // 历史累计来自每本书的独立状态；今日统计损坏时仍须保留这些有效数据。
   for (const 文本状态 of Object.values(数据.文本状态)) {
     if (
       文本状态 &&
@@ -117,8 +133,19 @@ export function 载入自动滚动统计(数据) {
       typeof 文本状态.总滚动毫秒 === 'number' &&
       Number.isFinite(文本状态.总滚动毫秒)
     ) {
-      统计.书籍滚动毫秒.set(文本状态.文件名, Math.max(0, 文本状态.总滚动毫秒));
+      书籍滚动毫秒.set(文本状态.文件名, Math.max(0, 文本状态.总滚动毫秒));
     }
+  }
+
+  统计.今日滚动日期 = 今天;
+  统计.今日滚动毫秒 = 今日滚动毫秒;
+  统计.今日书籍滚动毫秒.clear();
+  统计.书籍滚动毫秒.clear();
+  for (const [文件名, 毫秒] of 今日书籍滚动毫秒) {
+    统计.今日书籍滚动毫秒.set(文件名, 毫秒);
+  }
+  for (const [文件名, 毫秒] of 书籍滚动毫秒) {
+    统计.书籍滚动毫秒.set(文件名, 毫秒);
   }
 }
 
@@ -127,8 +154,10 @@ export function 开始自动滚动() {
     return;
   }
 
-  const 最大滚动位置 =
-    元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
+  // 与 开始按键滚动 对称：互斥抢占，避免双 rAF 循环同帧争写 scrollTop。
+  停止按键滚动('自动滚动');
+
+  const 最大滚动位置 = 元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
   if (元素.滚动容器.scrollTop >= 最大滚动位置 - 0.5) {
     console.info('[阅读器] 自动滚动未启动', { 原因: '已到文末' });
     return;
@@ -163,6 +192,7 @@ export function 开始自动滚动() {
     ),
   };
   自动滚动状态.帧 = requestAnimationFrame(执行自动滚动);
+  自动滚动滚轮监听设置?.(true);
   更新自动滚动按钮(true);
   document.body.classList.add('自动滚动中');
   console.info('[阅读器] 自动滚动已启动', {
@@ -199,8 +229,7 @@ export function 执行按键滚动(当前时间) {
     return;
   }
 
-  const 最大滚动位置 =
-    元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
+  const 最大滚动位置 = 元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
   const 经过毫秒 = Math.min(50, 当前时间 - 本次滚动.上帧时间);
   const 新位置 = Math.max(
     0,
@@ -244,8 +273,7 @@ export function 快速前进自动滚动() {
     return;
   }
 
-  const 最大滚动位置 =
-    元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
+  const 最大滚动位置 = 元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
   本次滚动.快速滚动终点 = Math.min(
     最大滚动位置,
     本次滚动.浮点位置 + 元素.滚动容器.clientHeight * 自动滚动翻页距离比例,
@@ -257,10 +285,7 @@ export function 快速前进自动滚动() {
   );
   本次滚动.衔接线已淡出 = false;
   本次滚动.当前速度 = 自动滚动快速速度;
-  if (
-    本次滚动.衔接位置 <
-    本次滚动.快速滚动终点 + 元素.滚动容器.clientHeight
-  ) {
+  if (本次滚动.衔接位置 < 本次滚动.快速滚动终点 + 元素.滚动容器.clientHeight) {
     显示衔接线(本次滚动.衔接位置);
   }
   console.info('[阅读器] 自动滚动开始快速前进', {
@@ -484,10 +509,7 @@ export function 执行自动滚动(当前时间) {
       滚动高度: 元素.滚动容器.scrollHeight,
     };
     本次滚动.视口度量 = 视口度量;
-    本次滚动.最大滚动位置 = Math.max(
-      0,
-      视口度量.滚动高度 - 视口度量.容器高度,
-    );
+    本次滚动.最大滚动位置 = Math.max(0, 视口度量.滚动高度 - 视口度量.容器高度);
     本次滚动.密度目标速度 = 计算密度自适应目标速度(
       本次滚动.浮点位置,
       视口度量.容器高度,
@@ -502,10 +524,7 @@ export function 执行自动滚动(当前时间) {
       `${Math.round((本次滚动.密度目标速度 / 状态.自动滚动速度) * 100)}%`,
     );
     // 当前自动滚动时长：随界面节拍刷新，并显示今日总时长
-    设置文本(
-      元素.已滚动时间,
-      格式化当前滚动分钟(当前时间 - 本次滚动.开始时刻),
-    );
+    设置文本(元素.已滚动时间, 格式化当前滚动分钟(当前时间 - 本次滚动.开始时刻));
     设置文本(元素.今日滚动时间, 今日滚动后缀());
   }
   // scrollTop 在 Chrome 中按整数像素存储；用合成层补回小数位，避免低速时
@@ -528,6 +547,7 @@ export function 停止自动滚动(原因) {
 
   cancelAnimationFrame(自动滚动状态.帧);
   自动滚动状态 = null;
+  自动滚动滚轮监听设置?.(false);
   更新滚动块();
   渲染可见行();
   安排保存持久化状态();

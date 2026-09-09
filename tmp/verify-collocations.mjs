@@ -1,65 +1,49 @@
-// 验证「提取后续词组 / 提取前置词组」的边界与分段行为(从 app.js 抽取的函数体)
-const 词组分段器 = new Intl.Segmenter('zh-CN', { granularity: 'word' });
+// 验证「提取后续词组 / 提取前置词组」的边界与分段行为。
+// 与旧版不同：直接动态导入 js/查找弹窗.js 的导出（提取后续词组自文本 / 提取前置词组自文本），
+// 测的是真实发布代码，不再用字符串复制源码重建（那会随实现演进而静默漂移）。
+// 查找弹窗的依赖闭包在模块求值期只触 document.querySelector 与 document.baseURI，
+// 用最小 stub 即可在 Node 下加载。
 
-const 提取后续词组源 = String.raw`
-    function 提取后续词组(文本偏移) {
-      const 上下文 = 状态.文本.slice(文本偏移, 文本偏移 + 前缀.length + 64);
-      const 前缀终点 = 前缀.length;
-      let 词组终点 = 前缀终点;
-      for (const 片段 of 词组分段器.segment(上下文)) {
-        const 片段终点 = 片段.index + 片段.segment.length;
-        if (片段终点 <= 前缀终点) {
-          continue;
-        }
-        if (
-          片段.index < 前缀终点 ||
-          (片段.index === 前缀终点 && 片段.isWordLike)
-        ) {
-          词组终点 = 片段终点;
-        }
-        break;
+const 空元素 = new Proxy(
+  {},
+  {
+    get(目标, 键) {
+      if (键 === 'getContext') {
+        return function 获取画布上下文() {
+          return {};
+        };
       }
-      return 上下文.slice(0, 词组终点);
-    }`;
-
-const 提取前置词组源 = String.raw`
-    function 提取前置词组(文本偏移) {
-      const 起点 = Math.max(0, 文本偏移 - 64);
-      const 上下文 = 状态.文本.slice(起点, 文本偏移);
-      const 片段列表 = [...词组分段器.segment(上下文)];
-      let 词组起点 = 上下文.length;
-      for (let idx = 片段列表.length - 1; idx >= 0; idx -= 1) {
-        const 片段 = 片段列表[idx];
-        const 片段终点 = 片段.index + 片段.segment.length;
-        if (片段.index >= 上下文.length) {
-          continue;
-        }
-        if (
-          片段终点 > 上下文.length ||
-          (片段终点 === 上下文.length && 片段.isWordLike)
-        ) {
-          词组起点 = 片段.index;
-        }
-        break;
+      if (键 === 'append') {
+        return function 追加元素() {};
       }
-      return 上下文.slice(词组起点);
-    }`;
+      return 空元素;
+    },
+  },
+);
 
-const 状态 = { 文本: '' };
-const 制造函数 = new Function(
-  '状态',
-  '词组分段器',
-  '前缀',
-  `${提取后续词组源}\n${提取前置词组源}
-   return { 提取后续词组, 提取前置词组 };`,
+globalThis.document = {
+  baseURI: 'http://127.0.0.1/',
+  querySelector() {
+    return 空元素;
+  },
+  createElement() {
+    return 空元素;
+  },
+};
+globalThis.localStorage = {
+  getItem() {
+    return null;
+  },
+};
+
+const { 提取后续词组自文本, 提取前置词组自文本 } = await import(
+  '../js/查找弹窗.js'
 );
 
 const 场景 = [];
 function 检查(name, 文本, 偏移, 前缀, 期望前, 期望后) {
-  状态.文本 = 文本;
-  const { 提取后续词组, 提取前置词组 } = 制造函数(状态, 词组分段器, 前缀);
-  const 后 = 提取后续词组(偏移);
-  const 前 = 提取前置词组(偏移);
+  const 后 = 提取后续词组自文本(文本, 偏移, 前缀.length);
+  const 前 = 提取前置词组自文本(文本, 偏移);
   const ok后 = 后 === 期望后;
   const ok前 = 前 === 期望前;
   场景.push({

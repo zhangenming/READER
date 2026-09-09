@@ -54,13 +54,15 @@ function 打开章节目录() {
   元素.章节搜索框.focus({ preventScroll: true });
 }
 
-export function 读取当前章节(滚动位置 = 元素.滚动容器.scrollTop) {
+export function 读取当前章节(
+  滚动位置 = 元素.滚动容器.scrollTop,
+  最大位置 = 元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight,
+) {
   // 非整数缩放下 scrollTop 会量化到设备像素，行边界可能出现不足半像素的负误差。
   const 行idx = Math.min(
     状态.行起点列表.length - 1,
     Math.max(0, Math.floor((滚动位置 + 0.5) / 状态.行高)),
   );
-  const 最大位置 = 元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
   // 最后一章可能短于一屏，滚动到书末时它的标题无法到达视口顶端。
   const 偏移 =
     最大位置 > 0 && 滚动位置 >= 最大位置 - 1
@@ -69,8 +71,8 @@ export function 读取当前章节(滚动位置 = 元素.滚动容器.scrollTop)
   return 计算章节进度(状态.章节列表, 偏移, 状态.文本.length);
 }
 
-export function 更新章节进度(滚动位置) {
-  const { 索引, 进度 } = 读取当前章节(滚动位置);
+export function 更新章节进度(滚动位置, 最大位置) {
+  const { 索引, 进度 } = 读取当前章节(滚动位置, 最大位置);
   const 章节 = 状态.章节列表[索引];
   const 数量 = 状态.章节列表.length;
   const 说明 = 章节

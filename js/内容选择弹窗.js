@@ -4,7 +4,7 @@ import { 是有效文本文件名 } from './文本工具.js';
 import { 元素, 状态 } from './状态.js';
 import { 格式化滚动小时 } from './统计展示.js';
 import { 停止自动滚动 } from './自动滚动.js';
-import { 保存持久化状态, 读取持久化数据 } from './持久化.js';
+import { 保存持久化状态, 读取持久化数据或新建 } from './持久化.js';
 
 // 内容选择弹窗：从 app.js 绑定事件() 闭包拆出。
 // 簇内原先调用 app.js 的 载入文本 / 创建文本地址；为避免「内容选择弹窗 → app」
@@ -19,7 +19,9 @@ export function 初始化内容选择弹窗({ 载入文本, 创建文本地址 }
 
 function 取注入回调() {
   if (注入回调 === null) {
-    throw new Error('内容选择弹窗未初始化：请先在组合根调用 初始化内容选择弹窗');
+    throw new Error(
+      '内容选择弹窗未初始化：请先在组合根调用 初始化内容选择弹窗',
+    );
   }
   return 注入回调;
 }
@@ -154,9 +156,7 @@ async function 读取文本目录() {
     ) {
       continue;
     }
-    const 文件名 = decodeURIComponent(
-      文件地址.pathname.slice(目录路径.length),
-    );
+    const 文件名 = decodeURIComponent(文件地址.pathname.slice(目录路径.length));
     if (是有效文本文件名(文件名)) {
       文件名集合.add(文件名);
     }
@@ -172,7 +172,7 @@ async function 读取文本目录() {
 }
 
 function 渲染内容选择列表() {
-  const 持久化数据 = 读取持久化数据();
+  const 持久化数据 = 读取持久化数据或新建();
   const 片段 = document.createDocumentFragment();
   元素.内容选择摘要.textContent = `${状态.文本目录.length} 个文本`;
 
@@ -244,9 +244,6 @@ function 计算已保存阅读进度(文本状态) {
   ) {
     return '0%';
   }
-  const 比例 = Math.min(
-    1,
-    Math.max(0, 文本状态.阅读偏移 / 文本状态.文本长度),
-  );
+  const 比例 = Math.min(1, Math.max(0, 文本状态.阅读偏移 / 文本状态.文本长度));
   return `${Math.round(比例 * 100)}%`;
 }

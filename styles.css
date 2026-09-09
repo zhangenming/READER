@@ -1,13 +1,10 @@
 /* 字魂白鸽天行体（ZiHunBaiGeTianXingTi）
    商用字体，需自行获取授权。将字体文件放到 ./fonts/ 下即可生效：
    - fonts/ZiHunBaiGeTianXingTi.ttf  （truetype）
-   - fonts/ZiHunBaiGeTianXingTi.woff2（更优，体积更小）
    未放置文件、或你已在系统中安装该字体时，会自动回退/使用已安装版本，阅读器仍可正常使用。 */
 @font-face {
   font-family: 'ZiHunBaiGeTianXingTi-Local';
-  src:
-    url('./fonts/ZiHunBaiGeTianXingTi.woff2') format('woff2'),
-    url('./fonts/ZiHunBaiGeTianXingTi.ttf') format('truetype');
+  src: url('./fonts/ZiHunBaiGeTianXingTi.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -309,6 +306,43 @@ body.关键词手势中 .滚动容器 {
   line-height: 1;
   white-space: nowrap;
 }
+.阅读统计弹窗 {
+  width: min(620px, calc(100vw - 32px));
+  max-height: 80vh;
+  border: 1px solid var(--边框色);
+  background: var(--纸面色);
+  color: var(--文字色);
+  padding: 18px;
+}
+.统计摘要 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 12px 0 18px;
+}
+.统计摘要 b,
+.统计摘要 strong {
+  padding: 10px;
+  background: color-mix(in srgb, var(--背景色) 70%, transparent);
+}
+.统计摘要 strong {
+  font-size: 1.1em;
+}
+.阅读统计内容 table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.阅读统计内容 th,
+.阅读统计内容 td {
+  padding: 8px;
+  border-bottom: 1px solid var(--边框色);
+  text-align: left;
+}
+@media (max-width: 560px) {
+  .统计摘要 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 
 .剩余滚动时间 {
   grid-column: 1;
@@ -358,9 +392,9 @@ body.关键词手势中 .滚动容器 {
   z-index: 5;
   display: grid;
   grid-template-areas:
-    '滚动 关键词'
-    '内容 目录';
-  grid-template-columns: 136px max-content;
+    '滚动 滚动 关键词'
+    '内容 目录 统计';
+  grid-template-columns: max-content max-content max-content;
   gap: 8px;
   align-items: center;
 }
@@ -2036,6 +2070,10 @@ dialog,
 
 .内容选择提示.错误 {
   color: #9f3526;
+}
+
+.阅读统计按钮 {
+  grid-area: 统计;
 }
 
 .章节目录按钮 {

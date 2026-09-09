@@ -14,6 +14,7 @@ export function 有弹窗打开() {
     元素.词频弹窗.open ||
     元素.内容选择弹窗.open ||
     元素.章节目录弹窗.open ||
+    元素.阅读统计弹窗.open ||
     !元素.字体弹窗.hidden
   );
 }

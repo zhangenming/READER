@@ -1,0 +1,193 @@
+/* 大明王朝1566 · 知识阅读器样式
+   视觉体例参考 baojie/shiji-kb 的章节阅读器 */
+
+:root {
+  --bg: #faf6ef;          /* 宣纸底色 */
+  --ink: #2c2620;         /* 墨色 */
+  --muted: #8a7f70;
+  --accent: #9e2b25;      /* 朱砂红 */
+  --card: #fffdf8;
+  --line: #e6dcc8;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+  line-height: 2;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+h1 { font-size: 1.9em; font-weight: 700; letter-spacing: .06em; margin: .6em 0 .2em; }
+h1 .chapter-no { color: var(--accent); }
+h2 { font-size: 1.25em; margin: 1.4em 0 .4em; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+p { margin: 0 0 1.1em; text-align: justify; text-indent: 2em; }
+
+/* ---------------- 章节导航 ---------------- */
+.chapter-nav {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  padding: 10px 0 6px; font-size: .92em;
+  border-bottom: 1px solid var(--line);
+}
+.chapter-nav a {
+  padding: 2px 10px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--card); color: var(--ink);
+}
+.chapter-nav a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+/* ---------------- 段落编号（Purple Numbers） ---------------- */
+.para-num {
+  color: var(--muted); font-size: .68em; font-family: ui-monospace, Menlo, monospace;
+  margin-right: .5em; text-indent: 0; vertical-align: .18em;
+  border: none; background: none;
+}
+.para-num:hover { color: var(--accent); }
+
+/* ---------------- 实体高亮 ---------------- */
+.person   { color: #8B4513; font-weight: 500; cursor: default;
+            text-decoration: underline; text-decoration-color: #8B451380; text-underline-offset: 3px; }
+.place    { color: #B8860B; cursor: default;
+            text-decoration: underline double; text-decoration-color: #B8860B80; text-underline-offset: 3px; }
+.org      { color: #7A5CC4; font-weight: 500; cursor: default;
+            text-decoration: underline solid #7A5CC480; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.office   { color: #8B0000; font-weight: 500; cursor: default; }
+.time     { color: #008B8B; font-style: italic; cursor: default; }
+.quantity { color: #2E8B57; font-weight: 500; cursor: default; }
+.book     { color: #4B0082; font-style: italic; cursor: default;
+            text-decoration: underline wavy #4B008280; text-underline-offset: 3px; }
+.concept  { color: #C0272D; font-weight: 500; cursor: default;
+            text-decoration: underline dotted #C0272D; text-underline-offset: 4px; }
+.tribe    { color: #556B2F; font-weight: 500; cursor: default;
+            text-decoration: underline; text-decoration-style: dashed; text-decoration-color: #556B2F80; text-underline-offset: 3px; }
+
+.entity-link { text-decoration: none; color: inherit; }
+.entity-link:hover span { background: rgba(158, 43, 37, .07); border-radius: 2px; }
+
+/* 高亮开关 */
+body.syntax-highlight-off .person,
+body.syntax-highlight-off .place,
+body.syntax-highlight-off .org,
+body.syntax-highlight-off .office,
+body.syntax-highlight-off .time,
+body.syntax-highlight-off .quantity,
+body.syntax-highlight-off .book,
+body.syntax-highlight-off .concept,
+body.syntax-highlight-off .tribe {
+  color: inherit; font-weight: inherit; font-style: inherit; text-decoration: none;
+}
+
+/* ---------------- 设置按钮 ---------------- */
+#settings-toggle {
+  position: fixed; top: 14px; right: 14px; z-index: 20;
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--card);
+  font-size: 17px; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+#settings-panel {
+  position: fixed; top: 62px; right: 14px; z-index: 20;
+  background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px 16px; box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  font-size: .92em; min-width: 190px;
+}
+#settings-panel label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+
+/* ---------------- 首页 ---------------- */
+.hero { text-align: center; padding: 46px 0 26px; }
+.hero .book-title {
+  font-size: 2.6em; font-weight: 800; letter-spacing: .12em; margin: 0;
+  color: var(--ink);
+}
+.hero .book-title em { color: var(--accent); font-style: normal; }
+.hero .byline { color: var(--muted); margin: 10px 0 4px; letter-spacing: .2em; }
+.hero .pub { color: var(--muted); font-size: .85em; }
+.seal {
+  display: inline-block; margin-top: 14px; padding: 6px 10px;
+  border: 2px solid var(--accent); border-radius: 6px; color: var(--accent);
+  font-weight: 700; letter-spacing: .3em; text-indent: .3em; font-size: .95em;
+  transform: rotate(-2deg);
+}
+
+.stats { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 26px 0 8px; }
+.stat {
+  background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+  padding: 10px 18px; text-align: center; min-width: 104px;
+}
+.stat b { display: block; font-size: 1.35em; color: var(--accent); }
+.stat span { color: var(--muted); font-size: .82em; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: center; margin: 18px 0 6px; font-size: .88em; color: var(--muted); }
+
+.toc { margin-top: 30px; }
+.toc h2 { border-left: 4px solid var(--accent); padding-left: 10px; }
+.chapter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 12px; }
+.chapter-card {
+  display: block; background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px 14px; color: var(--ink);
+}
+.chapter-card:hover { border-color: var(--accent); text-decoration: none; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+.chapter-card .cc-no { color: var(--accent); font-size: .8em; letter-spacing: .1em; }
+.chapter-card .cc-title { font-weight: 700; font-size: 1.05em; margin: 2px 0; }
+.chapter-card .cc-excerpt { color: var(--muted); font-size: .8em; line-height: 1.7; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+section.block { margin-top: 34px; }
+section.block h2 { border-left: 4px solid var(--accent); padding-left: 10px; }
+.about { color: #57503f; font-size: .93em; }
+.about code { background: var(--card); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: .92em; }
+
+/* ---------------- 实体页 ---------------- */
+.entity-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 20px; }
+.entity-tabs a {
+  padding: 3px 14px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--card); color: var(--ink);
+}
+.entity-tabs a.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* ---------------- 知识索引（类型卡片栅格，仿 shiji-kb entities/index.html） ---------------- */
+.entity-type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; margin-top: 22px; }
+.entity-type-card {
+  display: flex; flex-direction: column; gap: 3px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+  padding: 14px 16px; color: var(--ink);
+}
+.entity-type-card:hover { border-color: var(--accent); text-decoration: none; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+.type-label { font-weight: 700; font-size: 1.08em; letter-spacing: .08em; text-decoration: none; font-style: normal; }
+.type-label.person { color: #8B4513; }
+.type-label.place { color: #B8860B; }
+.type-label.org { color: #7A5CC4; }
+.type-label.office { color: #8B0000; }
+.type-label.time { color: #008B8B; }
+.type-label.quantity { color: #2E8B57; }
+.type-label.book { color: #4B0082; }
+.type-label.concept { color: #C0272D; }
+.type-label.tribe { color: #556B2F; }
+.type-count { font-size: .95em; margin-top: 4px; }
+.type-total { color: var(--muted); font-size: .82em; }
+.entity-list { list-style: none; margin: 0; padding: 0; }
+.entity-item {
+  background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px 16px; margin-bottom: 10px;
+}
+.entity-item .e-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
+.entity-item .e-name { font-size: 1.12em; font-weight: 700; }
+.entity-item .e-aliases { color: var(--muted); font-size: .85em; }
+.entity-item .e-count { margin-left: auto; color: var(--accent); font-size: .85em; white-space: nowrap; }
+.entity-item .e-note { color: #57503f; font-size: .88em; margin-top: 4px; }
+.entity-item .e-chapters { margin-top: 4px; font-size: .8em; color: var(--muted); }
+
+footer.page-foot {
+  margin-top: 60px; padding-top: 14px; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: .8em; text-align: center;
+}
+footer.page-foot a { color: var(--muted); text-decoration: underline; }
+
+@media (max-width: 620px) {
+  body { padding: 16px 14px 60px; line-height: 1.9; }
+  .hero .book-title { font-size: 2em; }
+}

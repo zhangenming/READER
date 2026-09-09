@@ -3,6 +3,7 @@ import {
   关系连词类别映射,
   显示引号过滤模式,
   当前命中位置提示时长,
+  渲染缓冲行数,
 } from './常量.js';
 import {
   是安全字素码,
@@ -21,15 +22,15 @@ export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
     return;
   }
 
-  const 缓冲行数 = 12;
   const 可见起点 = Math.max(
     0,
-    Math.floor(元素.滚动容器.scrollTop / 状态.行高) - 缓冲行数,
+    Math.floor(元素.滚动容器.scrollTop / 状态.行高) - 渲染缓冲行数,
   );
   const 实际视口高度 = 视口高度 ?? 元素.滚动容器.clientHeight;
   const 可见终点 = Math.min(
     状态.行起点列表.length,
-    Math.ceil((元素.滚动容器.scrollTop + 实际视口高度) / 状态.行高) + 缓冲行数,
+    Math.ceil((元素.滚动容器.scrollTop + 实际视口高度) / 状态.行高) +
+      渲染缓冲行数,
   );
 
   if (!强制渲染 && 可见起点 === 状态.渲染起点 && 可见终点 === 状态.渲染终点) {
@@ -79,12 +80,20 @@ export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
 
   function 创建行片段(创建起点, 创建终点) {
     const 片段 = document.createDocumentFragment();
-    const 关键词游标列表 = 状态.关键词列表.map(function 创建关键词游标(关键词) {
-      return {
-        关键词,
-        idx: 查找首个相交命中(关键词, 状态.行起点列表[创建起点]),
-      };
-    });
+    const 关键词游标列表 = [];
+    const 文本起点 = 状态.行起点列表[创建起点];
+    for (const 关键词 of 状态.关键词列表) {
+      if (!关键词.命中位置.length) {
+        continue;
+      }
+      const 命中idx = 查找首个相交命中(关键词, 文本起点);
+      if (
+        命中idx < 关键词.命中位置.length &&
+        关键词.命中位置[命中idx] < 状态.行终点列表[创建终点 - 1]
+      ) {
+        关键词游标列表.push({ 关键词, idx: 命中idx });
+      }
+    }
     let 引文idx = 查找首个未结束引文(状态.行起点列表[创建起点]);
 
     for (let idx = 创建起点; idx < 创建终点; idx += 1) {
