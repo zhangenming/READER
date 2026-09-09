@@ -89,8 +89,21 @@
         <span>内容</span>
       </button>
       <button
+        id="章节目录按钮"
+        class="内容选择按钮 章节目录按钮"
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="章节目录弹窗"
+        title="章节目录"
+        disabled
+      >
+        <span class="内容选择图标" aria-hidden="true">目</span>
+        <span>目录</span>
+        <span id="章节数量"></span>
+      </button>
+      <button
         id="阅读统计按钮"
-        class="内容选择按钮"
+        class="内容选择按钮 阅读统计按钮"
         type="button"
         title="阅读统计"
       >
@@ -382,6 +395,44 @@
         </button>
       </div>
       <div id="内容选择列表" class="内容选择列表" aria-live="polite"></div>
+    </dialog>
+
+    <dialog
+      id="章节目录弹窗"
+      class="内容选择弹窗 章节目录弹窗"
+      aria-labelledby="章节目录标题"
+    >
+      <div class="内容选择标题栏">
+        <div class="章节标题信息">
+          <h2 id="章节目录标题" class="内容选择标题">章节目录</h2>
+          <p id="章节目录摘要" class="内容选择摘要" role="status"></p>
+        </div>
+        <button
+          id="关闭章节目录按钮"
+          class="关闭查找按钮"
+          type="button"
+          aria-label="关闭章节目录"
+        >×</button>
+      </div>
+      <div class="章节目录工具栏">
+        <input
+          id="章节搜索框"
+          class="章节搜索框"
+          type="search"
+          placeholder="搜索章节标题"
+          aria-label="搜索章节标题"
+          autocomplete="off"
+          autofocus
+        />
+        <button id="定位当前章节按钮" class="查找导航按钮" type="button">当前章节</button>
+      </div>
+      <p id="章节目录反馈" class="内容选择摘要 章节目录反馈" role="status"></p>
+      <nav id="章节目录列表" class="内容选择列表 章节目录列表" aria-label="章节"></nav>
+      <div id="章节目录分页" class="章节目录分页" hidden>
+        <button id="章节上一页" class="查找导航按钮" type="button">上一页</button>
+        <span id="章节目录页码" class="内容选择摘要"></span>
+        <button id="章节下一页" class="查找导航按钮" type="button">下一页</button>
+      </div>
     </dialog>
 
     <div id="字体遮罩" class="字体遮罩" hidden></div>

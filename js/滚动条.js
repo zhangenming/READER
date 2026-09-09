@@ -3,6 +3,7 @@ import { 元素, 状态 } from './状态.js';
 import { 二分句段起点 } from './排版引擎.js';
 import { 设置属性, 设置文本 } from './虚拟渲染.js';
 import { 今日本书滚动后缀, 格式化剩余滚动时间 } from './统计展示.js';
+import { 更新章节进度 } from './章节目录.js';
 
 // 拖拽中断钩子：由 app 注入 取消滚动动画 / 结束跳转会话。
 // 断环：跳转动画 → 本模块（更新滚动块），故本模块不能反向 import 跳转动画。
@@ -200,13 +201,14 @@ export function 更新滚动块位置(度量 = null, 滚动位置 = null) {
   const 滚动高度 = 度量?.滚动高度 ?? 元素.滚动容器.scrollHeight;
   const 滚动条度量 = 读取滚动条度量(轨道高度, 容器高度, 滚动高度);
   const { 最大滚动位置, 滚动块高度 } = 滚动条度量;
+  const 当前滚动位置 = 滚动位置 ?? 元素.滚动容器.scrollTop;
+  更新章节进度(当前滚动位置, 最大滚动位置);
   if (轨道高度 <= 0 || 最大滚动位置 <= 0) {
     轨道.hidden = true;
     元素.滚动进度.hidden = true;
     return null;
   }
 
-  const 当前滚动位置 = 滚动位置 ?? 元素.滚动容器.scrollTop;
   const 进度 = Math.min(1, Math.max(0, 当前滚动位置 / 最大滚动位置));
   const 滚动块偏移 =
     滚动位置转轨道中心(当前滚动位置, 滚动条度量) - 滚动块高度 / 2;

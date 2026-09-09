@@ -48,6 +48,13 @@ export function 取消待定导航() {
   待导航参数 = null;
 }
 
+export function 重置键盘导航() {
+  取消待定导航();
+  shift按住中 = false;
+  shift期间有其他交互 = false;
+  shift最后松开时间 = 0;
+}
+
 // ===== 整屏翻页：Space / Enter / 方向键 / 语音翻页共用的翻页原语 =====
 export function 翻页整屏(向上) {
   取消滚动动画();
@@ -76,6 +83,7 @@ export function 翻页整屏(向上) {
 }
 
 export function 处理键盘按下(事件) {
+  if (元素.章节目录弹窗.open || 元素.阅读统计弹窗.open) return;
   // Esc 关闭字体设置弹窗（div 弹窗无原生 close，需手动处理）
   if (事件.key === 'Escape' && !元素.字体弹窗.hidden) {
     事件.preventDefault();
@@ -383,6 +391,7 @@ export function 处理键盘按下(事件) {
 }
 
 export function 处理键盘松开(事件) {
+  if (元素.章节目录弹窗.open || 元素.阅读统计弹窗.open) return;
   if (事件.key.toLowerCase() === 获取按键滚动按键()) {
     事件.preventDefault();
     停止按键滚动('按键松开');
