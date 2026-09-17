@@ -307,40 +307,122 @@ body.关键词手势中 .滚动容器 {
   white-space: nowrap;
 }
 .阅读统计弹窗 {
-  width: min(620px, calc(100vw - 32px));
+  width: min(720px, calc(100vw - 32px));
   max-height: 80vh;
-  border: 1px solid var(--边框色);
-  background: var(--纸面色);
-  color: var(--文字色);
-  padding: 18px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--边线色);
+  border-radius: 12px;
+  background: var(--纸张色);
+  color: var(--墨色);
+  padding: 20px;
+  box-shadow: 0 18px 60px rgb(0 0 0 / 25%);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.阅读统计弹窗::backdrop {
+  background: rgb(0 0 0 / 55%);
+}
+.统计说明 {
+  margin: 8px 0 16px;
+  color: var(--次要墨色);
+  font-size: 12px;
 }
 .统计摘要 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin: 12px 0 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 20px;
 }
-.统计摘要 b,
-.统计摘要 strong {
-  padding: 10px;
-  background: color-mix(in srgb, var(--背景色) 70%, transparent);
+.统计卡片 {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--边线色);
+  border-radius: 8px;
+  background: var(--背景色);
 }
-.统计摘要 strong {
-  font-size: 1.1em;
+.统计卡片 dt {
+  margin-bottom: 6px;
+  color: var(--次要墨色);
+  font-size: 12px;
+}
+.统计卡片 dd {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 .阅读统计内容 table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.阅读统计内容 caption {
+  margin-bottom: 8px;
+  text-align: left;
+  font-weight: 600;
 }
 .阅读统计内容 th,
 .阅读统计内容 td {
-  padding: 8px;
-  border-bottom: 1px solid var(--边框色);
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--边线色);
+  text-align: right;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+.阅读统计内容 th {
+  color: var(--次要墨色);
+  font-size: 12px;
+  font-weight: 500;
+}
+.阅读统计内容 th:first-child,
+.阅读统计内容 td:first-child {
+  width: 54%;
   text-align: left;
 }
+.统计当前书 {
+  background: var(--背景色);
+}
+.统计当前标记 {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--墨色);
+  color: var(--纸张色);
+  font-size: 11px;
+}
+.阅读统计内容 .统计空状态 {
+  padding: 24px 8px;
+  color: var(--次要墨色);
+  text-align: center;
+}
 @media (max-width: 560px) {
+  .阅读统计弹窗 {
+    padding: 14px;
+  }
   .统计摘要 {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .统计卡片 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+  }
+  .统计卡片 dt {
+    margin: 0;
+    flex-shrink: 0;
+  }
+  .统计卡片 dd {
+    font-size: 18px;
+  }
+  .阅读统计内容 th,
+  .阅读统计内容 td {
+    padding: 10px 4px;
   }
 }
 
