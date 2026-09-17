@@ -30,7 +30,7 @@ import {
   隐藏衔接线,
 } from './跳转动画.js';
 
-// 自动滚动统计：滚动时长记账（今日按书分项、历史累计）与基准速度展示。
+// 自动滚动统计：滚动时长记账（今日按书分项、历史累计、按日记录）与基准速度展示。
 // 格式化展示已移入 统计展示.js；持久化「读取」仍由 app.js 传入（载入自动滚动统计(数据)）。
 // 主循环簇迁入后，本模块依赖 持久化 的 安排保存持久化状态（仅保存方向，单向无环）；
 // 注意不可再加「持久化 → 自动滚动」反向边，否则成环。
@@ -74,7 +74,7 @@ export function 更新自动滚动速度() {
   );
 }
 
-// 启动时从持久化数据恢复今日总时长、今日按书分项与每本书的历史累计时长。
+// 启动时从持久化数据恢复今日总时长、今日按书分项、每本书的历史累计与按日记录。
 // 数据由调用方（app.js）从持久化模块取得并传入；null 表示读取失败，跳过恢复。
 export function 载入自动滚动统计(数据) {
   if (!数据) {
@@ -85,6 +85,7 @@ export function 载入自动滚动统计(数据) {
   let 今日滚动毫秒 = 0;
   const 今日书籍滚动毫秒 = new Map();
   const 书籍滚动毫秒 = new Map();
+  let 书籍每日滚动毫秒 = new Map();
   try {
     if (持久统计 !== undefined) {
       if (
@@ -104,18 +105,8 @@ export function 载入自动滚动统计(数据) {
         今日滚动毫秒 = Math.max(0, 持久统计.今日毫秒);
       }
       if (持久统计.日期 === 今天 && 持久统计.书籍毫秒 !== undefined) {
-        if (
-          !持久统计.书籍毫秒 ||
-          typeof 持久统计.书籍毫秒 !== 'object' ||
-          Array.isArray(持久统计.书籍毫秒)
-        ) {
-          throw new TypeError('持久化的今日按书滚动统计格式无效');
-        }
-        for (const [文件名, 毫秒] of Object.entries(持久统计.书籍毫秒)) {
-          if (typeof 毫秒 !== 'number' || !Number.isFinite(毫秒)) {
-            throw new TypeError(`持久化的今日滚动时长无效：${文件名}`);
-          }
-          今日书籍滚动毫秒.set(文件名, Math.max(0, 毫秒));
+        for (const [文件名, 毫秒] of 解析书籍分项(持久统计.书籍毫秒)) {
+          今日书籍滚动毫秒.set(文件名, 毫秒);
         }
       }
     }
@@ -123,6 +114,35 @@ export function 载入自动滚动统计(数据) {
     今日滚动毫秒 = 0;
     今日书籍滚动毫秒.clear();
     console.error('[阅读器] 持久化的自动滚动统计无效，已重置今日统计', 错误);
+  }
+
+  try {
+    if (持久统计 && typeof 持久统计 === 'object' && !Array.isArray(持久统计)) {
+      书籍每日滚动毫秒 = 解析每日书籍毫秒(持久统计.每日书籍毫秒);
+    }
+  } catch (错误) {
+    书籍每日滚动毫秒 = new Map();
+    console.error('[阅读器] 持久化的每日滚动统计无效，已忽略分日记录', 错误);
+  }
+
+  const 归档日期 =
+    持久统计 && typeof 持久统计 === 'object' && !Array.isArray(持久统计)
+      ? 持久统计.日期
+      : '';
+  if (typeof 归档日期 === 'string' && 归档日期) {
+    if (归档日期 === 今天) {
+      for (const [文件名, 毫秒] of 今日书籍滚动毫秒) {
+        写入每日(书籍每日滚动毫秒, 文件名, 归档日期, 毫秒);
+      }
+    } else {
+      try {
+        for (const [文件名, 毫秒] of 解析书籍分项(持久统计.书籍毫秒)) {
+          写入每日(书籍每日滚动毫秒, 文件名, 归档日期, 毫秒);
+        }
+      } catch {
+        // 跨日归档失败不影响已载入的分日记录
+      }
+    }
   }
 
   // 历史累计来自每本书的独立状态；今日统计损坏时仍须保留这些有效数据。
@@ -141,11 +161,72 @@ export function 载入自动滚动统计(数据) {
   统计.今日滚动毫秒 = 今日滚动毫秒;
   统计.今日书籍滚动毫秒.clear();
   统计.书籍滚动毫秒.clear();
+  统计.书籍每日滚动毫秒.clear();
   for (const [文件名, 毫秒] of 今日书籍滚动毫秒) {
     统计.今日书籍滚动毫秒.set(文件名, 毫秒);
   }
   for (const [文件名, 毫秒] of 书籍滚动毫秒) {
     统计.书籍滚动毫秒.set(文件名, 毫秒);
+  }
+  for (const [文件名, 日期表] of 书籍每日滚动毫秒) {
+    统计.书籍每日滚动毫秒.set(文件名, new Map(日期表));
+  }
+
+  function 解析书籍分项(原始) {
+    const 结果 = new Map();
+    if (原始 === undefined) {
+      return 结果;
+    }
+    if (!原始 || typeof 原始 !== 'object' || Array.isArray(原始)) {
+      throw new TypeError('持久化的今日按书滚动统计格式无效');
+    }
+    for (const [文件名, 毫秒] of Object.entries(原始)) {
+      if (typeof 毫秒 !== 'number' || !Number.isFinite(毫秒)) {
+        throw new TypeError(`持久化的今日滚动时长无效：${文件名}`);
+      }
+      结果.set(文件名, Math.max(0, 毫秒));
+    }
+    return 结果;
+  }
+
+  function 解析每日书籍毫秒(原始) {
+    const 结果 = new Map();
+    if (原始 === undefined) {
+      return 结果;
+    }
+    if (!原始 || typeof 原始 !== 'object' || Array.isArray(原始)) {
+      throw new TypeError('持久化的每日滚动统计格式无效');
+    }
+    for (const [文件名, 日期表] of Object.entries(原始)) {
+      if (!日期表 || typeof 日期表 !== 'object' || Array.isArray(日期表)) {
+        throw new TypeError(`持久化的每日滚动统计无效：${文件名}`);
+      }
+      const 解析日期表 = new Map();
+      for (const [日期, 毫秒] of Object.entries(日期表)) {
+        if (typeof 毫秒 !== 'number' || !Number.isFinite(毫秒)) {
+          throw new TypeError(`持久化的每日滚动时长无效：${文件名} ${日期}`);
+        }
+        if (毫秒 > 0) {
+          解析日期表.set(日期, Math.max(0, 毫秒));
+        }
+      }
+      if (解析日期表.size) {
+        结果.set(文件名, 解析日期表);
+      }
+    }
+    return 结果;
+  }
+
+  function 写入每日(每日, 文件名, 日期, 毫秒) {
+    if (!文件名 || !日期 || !(毫秒 > 0)) {
+      return;
+    }
+    let 日期表 = 每日.get(文件名);
+    if (!日期表) {
+      日期表 = new Map();
+      每日.set(文件名, 日期表);
+    }
+    日期表.set(日期, Math.max(日期表.get(日期) ?? 0, 毫秒));
   }
 }
 
