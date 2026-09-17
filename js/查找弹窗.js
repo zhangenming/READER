@@ -5,11 +5,17 @@ import {
   实时查找延迟,
   上下文滚动预载像素,
 } from './常量.js';
+import { 是汉字 } from './文本工具.js';
 import { 让出主线程, 按需让出主线程 } from './调度.js';
 import { 元素, 状态, 查找关键词, 获取静止滚动位置 } from './状态.js';
 import { 查找偏移所在行 } from './排版引擎.js';
 import { 渲染可见行 } from './虚拟渲染.js';
-import { 创建关键词标记, 查找关键词命中, 渲染查找上下文, 追加上下文行块 } from './关键词.js';
+import {
+  创建关键词标记,
+  查找关键词命中,
+  渲染查找上下文,
+  追加上下文行块,
+} from './关键词.js';
 import { 更新关键词指示器 } from './指示器.js';
 import { 动画滚动到 } from './跳转动画.js';
 import { 读取阅读位置, 安排保存持久化状态 } from './持久化.js';
@@ -55,7 +61,10 @@ export function 处理上下文滚动() {
   if (!状态.上下文视图 || 元素.上下文结果.hidden) return;
   if (列表.scrollTop < 上下文滚动预载像素 && 状态.上下文视图.起点 > 0) {
     追加上下文行块(true);
-  } else if (列表.scrollTop + 列表.clientHeight > 列表.scrollHeight - 上下文滚动预载像素) {
+  } else if (
+    列表.scrollTop + 列表.clientHeight >
+    列表.scrollHeight - 上下文滚动预载像素
+  ) {
     追加上下文行块();
   }
 }
@@ -65,7 +74,8 @@ export function 处理上下文行点击(事件) {
   const 关键词 = 查找关键词(状态.查找临时关键词id);
   if (!行 || !关键词 || !查找临时状态) return;
   const idx = Number(行.dataset.hitIndex);
-  if (!Number.isInteger(idx) || idx < 0 || idx >= 关键词.命中位置.length) return;
+  if (!Number.isInteger(idx) || idx < 0 || idx >= 关键词.命中位置.length)
+    return;
   临时跳到查找命中(idx);
   // 确认进入正文：恢复原关键词状态，但不撤销这次定位，也不保存临时标记。
   const 原状态 = 查找临时状态;
@@ -130,6 +140,41 @@ export function 提取前置词组自文本(全文, 文本偏移) {
   return 上下文.slice(词组起点);
 }
 
+// 同一组搭配若每一次再往前/后都是同一个汉字，则并入该字，直到不再 100% 相同。
+// 只出现 1 次时「全部相同」没有对比意义，保持原词组；碰到非汉字或超出窗口则停止。
+export function 扩展唯一汉字接续(全文, 锚点列表, 已有接续, 向后) {
+  if (锚点列表.length <= 1) return 已有接续;
+  let 接续 = 已有接续;
+  while (接续.length < 词组上下文窗口) {
+    let 下一字 = '';
+    for (const 锚点 of 锚点列表) {
+      const 字 = 向后
+        ? 取后一汉字(全文, 锚点 + 接续.length)
+        : 取前一汉字(全文, 锚点 - 接续.length);
+      if (!字 || (下一字 && 字 !== 下一字)) return 接续;
+      下一字 = 字;
+    }
+    if (!下一字) return 接续;
+    接续 = 向后 ? 接续 + 下一字 : 下一字 + 接续;
+  }
+  return 接续;
+
+  function 取前一汉字(文本, 偏移) {
+    if (偏移 <= 0) return '';
+    const 尾码 = 文本.charCodeAt(偏移 - 1);
+    const 是低代理 = 尾码 >= 0xdc00 && 尾码 <= 0xdfff;
+    const 起点 = 是低代理 && 偏移 >= 2 ? 偏移 - 2 : 偏移 - 1;
+    const 字 = 文本.slice(起点, 偏移);
+    return 是汉字(字) ? 字 : '';
+  }
+
+  function 取后一汉字(文本, 偏移) {
+    if (偏移 < 0 || 偏移 >= 文本.length) return '';
+    const 字 = String.fromCodePoint(文本.codePointAt(偏移));
+    return 是汉字(字) ? 字 : '';
+  }
+}
+
 // 打开查找弹窗。传 关键词（面板“≡”等入口）时直接填入该关键词；
 // 未传时（Ctrl + F）：优先用当前文本选区，其次用当前关键词，否则保留上次查询。
 export function 打开查找弹窗(关键词 = null) {
@@ -139,9 +184,7 @@ export function 打开查找弹窗(关键词 = null) {
   if (新打开 && !关键词) {
     // showModal 会转移焦点，必须先读取选区；正文拖选结束后则使用当前标记。
     const 选中文字 = window.getSelection()?.toString().trim();
-    关键词 = 选中文字
-      ? { 文本: 选中文字 }
-      : 查找关键词(状态.当前关键词id);
+    关键词 = 选中文字 ? { 文本: 选中文字 } : 查找关键词(状态.当前关键词id);
   }
   if (新打开) 元素.查找弹窗.showModal();
   if (关键词) {
@@ -227,7 +270,10 @@ export function 合成结束提交() {
 export function 处理查找提交(事件) {
   事件.preventDefault();
   if (事件.isComposing || 元素.查找输入框.dataset.合成中) return;
-  if (查找临时状态?.原查询 === 元素.查找输入框.value.trim() && 状态.查找临时关键词id !== null) {
+  if (
+    查找临时状态?.原查询 === 元素.查找输入框.value.trim() &&
+    状态.查找临时关键词id !== null
+  ) {
     定位查找命中(1);
     return;
   }
@@ -262,7 +308,8 @@ function 执行实时查找(来源关键词 = null, 定位正文 = true) {
     return;
   }
 
-  const 命中位置 = 来源关键词?.命中位置 ?? 查找带排除前缀的命中(查询.目标, 查询.排除前缀);
+  const 命中位置 =
+    来源关键词?.命中位置 ?? 查找带排除前缀的命中(查询.目标, 查询.排除前缀);
   if (!命中位置.length) {
     显示查找错误('未找到该关键词');
     元素.上下文列表.textContent = '没有匹配的上下文';
@@ -303,8 +350,9 @@ function 解析查找查询(查询文本) {
 function 查找带排除前缀的命中(关键词文本, 排除前缀) {
   const 命中位置 = 查找关键词命中(关键词文本);
   if (!排除前缀) return 命中位置;
-  return 命中位置.filter(偏移 =>
-    状态.文本.slice(Math.max(0, 偏移 - 排除前缀.length), 偏移) !== 排除前缀,
+  return 命中位置.filter(
+    (偏移) =>
+      状态.文本.slice(Math.max(0, 偏移 - 排除前缀.length), 偏移) !== 排除前缀,
   );
 }
 
@@ -360,7 +408,12 @@ function 临时跳到查找命中(命中idx, 定位正文 = true) {
   );
   关键词.当前命中idx = 查找临时状态.命中idx;
   const 视图 = 状态.上下文视图;
-  if (!视图 || 视图.关键词id !== 关键词.id || 命中idx < 视图.起点 || 命中idx >= 视图.已渲染数) {
+  if (
+    !视图 ||
+    视图.关键词id !== 关键词.id ||
+    命中idx < 视图.起点 ||
+    命中idx >= 视图.已渲染数
+  ) {
     渲染查找上下文(关键词, 关键词.当前命中idx);
   }
   for (const 行 of 元素.上下文列表.querySelectorAll('.上下文行')) {
@@ -370,7 +423,9 @@ function 临时跳到查找命中(命中idx, 定位正文 = true) {
     else 行.removeAttribute('aria-current');
   }
   if (当前查找视图 === '上下文') {
-    元素.上下文列表.querySelector('.当前')?.scrollIntoView({ block: 'nearest' });
+    元素.上下文列表
+      .querySelector('.当前')
+      ?.scrollIntoView({ block: 'nearest' });
   }
   状态.悬停关键词id = 关键词.id;
   状态.悬停命中idx = 查找临时状态.命中idx;
@@ -440,21 +495,20 @@ export async function 处理词组分析() {
 
     // 左右两组搭配分别计数；只出现 1 次的词组属于偶发组合，不展示。
     // 两栏都只记录「接续部分」本身：左侧是前置词，右侧把关键词自身切掉。
-    const 后续数量 = new Map();
-    const 前置数量 = new Map();
+    // 若某组每一次出现再往前/后都是同一个汉字，并入更完整搭配后再计数。
+    const 后续分组 = new Map();
+    const 前置分组 = new Map();
     let 已分析命中数 = 0;
     let 时间片开始 = performance.now();
     for (const 文本偏移 of 命中位置) {
       const 后续词组 = 提取后续词组(文本偏移);
       if (后续词组 !== 前缀) {
         const 接续 = 后续词组.slice(前缀.length);
-        if (接续) {
-          后续数量.set(接续, (后续数量.get(接续) ?? 0) + 1);
-        }
+        if (接续) 记入分组(后续分组, 接续, 文本偏移 + 前缀.length);
       }
       const 前置词组 = 提取前置词组(文本偏移);
       if (前置词组 && 前置词组 !== 前缀) {
-        前置数量.set(前置词组, (前置数量.get(前置词组) ?? 0) + 1);
+        记入分组(前置分组, 前置词组, 文本偏移);
       }
       已分析命中数 += 1;
       if ((已分析命中数 & 255) === 0) {
@@ -464,6 +518,8 @@ export async function 处理词组分析() {
         }
       }
     }
+    const 后续数量 = 统计扩展搭配(后续分组, true);
+    const 前置数量 = 统计扩展搭配(前置分组, false);
     const 转换统计列表 = function 转换统计列表(数量表) {
       return [...数量表]
         .filter(function 过滤单次([, 数量]) {
@@ -502,6 +558,22 @@ export async function 处理词组分析() {
 
   function 提取前置词组(文本偏移) {
     return 提取前置词组自文本(状态.文本, 文本偏移);
+  }
+
+  function 记入分组(分组, 词组, 锚点) {
+    const 列表 = 分组.get(词组);
+    if (列表) 列表.push(锚点);
+    else 分组.set(词组, [锚点]);
+  }
+
+  function 统计扩展搭配(分组, 向后) {
+    const 数量表 = new Map();
+    for (const [词组, 锚点列表] of 分组) {
+      if (锚点列表.length <= 1) continue;
+      const 完整词组 = 扩展唯一汉字接续(分析文本, 锚点列表, 词组, 向后);
+      数量表.set(完整词组, (数量表.get(完整词组) ?? 0) + 锚点列表.length);
+    }
+    return 数量表;
   }
 
   function 渲染分析结果(后续列表, 前置列表, 命中总数) {
