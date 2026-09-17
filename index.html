@@ -157,19 +157,6 @@
           </button>
         </div>
         <div class="查找输入行">
-          <input
-            id="查找输入框"
-            class="查找输入框"
-            type="search"
-            autocomplete="off"
-            enterkeyhint="search"
-            placeholder="输入关键词"
-            aria-describedby="查找反馈"
-          />
-        </div>
-        <p id="查找反馈" class="查找反馈" role="status" aria-live="polite"></p>
-        <div class="查找导航行" aria-live="polite">
-          <span id="查找命中摘要" class="查找命中摘要"></span>
           <div class="查找导航按钮组">
             <button
               id="查找上一个按钮"
@@ -190,16 +177,25 @@
               下一个 →
             </button>
           </div>
+          <input
+            id="查找输入框"
+            class="查找输入框"
+            type="search"
+            autocomplete="off"
+            enterkeyhint="search"
+            placeholder="输入关键词"
+            aria-describedby="查找反馈"
+          />
         </div>
-        <div class="查找视图切换" role="group" aria-label="结果视图">
-          <button id="上下文视图按钮" class="查找导航按钮" type="button" aria-pressed="true" aria-controls="上下文结果">上下文</button>
-          <button id="搭配视图按钮" class="查找导航按钮" type="button" aria-pressed="false" aria-controls="分析结果">搭配分析</button>
+        <p id="查找反馈" class="查找反馈" role="status" aria-live="polite"></p>
+        <div class="查找导航行" aria-live="polite">
+          <span id="查找命中摘要" class="查找命中摘要"></span>
+          <span class="查找操作提示">点击结果进入正文 · Esc 返回原位置</span>
         </div>
         <section id="上下文结果" aria-label="查找上下文">
-          <p class="查找操作提示">上一个 / 下一个预览 · 点击结果进入正文 · Esc 返回原位置</p>
           <div id="上下文列表" class="上下文列表"></div>
         </section>
-        <section id="分析结果" class="分析结果" aria-live="polite" hidden>
+        <section id="分析结果" class="分析结果" aria-live="polite">
           <p id="分析结果摘要" class="分析结果摘要"></p>
           <div class="分析分栏">
             <section id="前置分析栏" class="分析栏">

@@ -127,7 +127,6 @@ import {
   处理查找提交,
   处理查找输入,
   打开查找弹窗,
-  切换查找视图,
   处理上下文行点击,
   处理上下文滚动,
   处理查找按键,
@@ -413,8 +412,6 @@ function 绑定事件() {
   元素.查找输入框.addEventListener('input', 处理查找输入);
   元素.查找输入框.addEventListener('compositionstart', 标记合成开始);
   元素.查找输入框.addEventListener('compositionend', 合成结束提交);
-  元素.上下文视图按钮.addEventListener('click', () => 切换查找视图('上下文'));
-  元素.搭配视图按钮.addEventListener('click', () => 切换查找视图('搭配'));
   元素.查找输入框.addEventListener('keydown', 处理查找按键);
   元素.查找上一个按钮.addEventListener('click', function 定位查找上一个() {
     定位查找命中(-1);

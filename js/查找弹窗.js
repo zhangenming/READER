@@ -30,16 +30,6 @@ let 查找临时状态 = null;
 let 实时查找计时器 = 0;
 let 词组分析序号 = 0;
 let 分析结果视图 = null;
-let 当前查找视图 = '上下文';
-
-export function 切换查找视图(视图) {
-  当前查找视图 = 视图;
-  元素.上下文结果.hidden = 视图 !== '上下文';
-  元素.分析结果.hidden = 视图 !== '搭配';
-  元素.上下文视图按钮.setAttribute('aria-pressed', String(视图 === '上下文'));
-  元素.搭配视图按钮.setAttribute('aria-pressed', String(视图 === '搭配'));
-  if (视图 === '搭配' && !分析结果视图) 处理词组分析();
-}
 
 export function 处理查找按键(事件) {
   if (事件.isComposing || 元素.查找输入框.dataset.合成中) return;
@@ -58,7 +48,7 @@ export function 处理查找按键(事件) {
 
 export function 处理上下文滚动() {
   const 列表 = 元素.上下文列表;
-  if (!状态.上下文视图 || 元素.上下文结果.hidden) return;
+  if (!状态.上下文视图) return;
   if (列表.scrollTop < 上下文滚动预载像素 && 状态.上下文视图.起点 > 0) {
     追加上下文行块(true);
   } else if (
@@ -189,7 +179,6 @@ export function 打开查找弹窗(关键词 = null) {
   if (新打开) 元素.查找弹窗.showModal();
   if (关键词) {
     元素.查找输入框.value = 关键词.文本;
-    切换查找视图('上下文');
     执行实时查找(关键词, 定位正文);
   } else if (新打开) {
     执行实时查找(null, 定位正文);
@@ -327,7 +316,7 @@ function 执行实时查找(来源关键词 = null, 定位正文 = true) {
   查找临时状态.来源关键词id = 来源关键词?.id ?? null;
   if (来源关键词?.配色idx !== undefined) 关键词.配色idx = 来源关键词.配色idx;
   临时跳到查找命中(Math.max(0, 来源关键词?.当前命中idx ?? 0), 定位正文);
-  if (当前查找视图 === '搭配') 处理词组分析();
+  处理词组分析();
 }
 
 function 解析查找查询(查询文本) {
@@ -422,11 +411,7 @@ function 临时跳到查找命中(命中idx, 定位正文 = true) {
     if (是当前) 行.setAttribute('aria-current', 'location');
     else 行.removeAttribute('aria-current');
   }
-  if (当前查找视图 === '上下文') {
-    元素.上下文列表
-      .querySelector('.当前')
-      ?.scrollIntoView({ block: 'nearest' });
-  }
+  元素.上下文列表.querySelector('.当前')?.scrollIntoView({ block: 'nearest' });
   状态.悬停关键词id = 关键词.id;
   状态.悬停命中idx = 查找临时状态.命中idx;
   渲染可见行(true);
@@ -591,7 +576,6 @@ export async function 处理词组分析() {
     元素.分析分栏.scrollTop = 0;
     元素.分析分栏.scrollLeft = 0;
     追加分析结果行();
-    元素.分析结果.hidden = 当前查找视图 !== '搭配';
   }
 
   function 分析仍然有效() {
@@ -707,7 +691,6 @@ function 显示查找错误(文字) {
 
 function 清空分析结果() {
   分析结果视图 = null;
-  元素.分析结果.hidden = 当前查找视图 !== '搭配';
   元素.分析结果摘要.textContent = '查找后显示高频搭配';
   元素.前置词组列表.replaceChildren();
   元素.后续词组列表.replaceChildren();

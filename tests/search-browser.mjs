@@ -111,10 +111,8 @@ try {
   await click('#查找下一个按钮');
   assert.equal(await evaluate('return document.querySelector(".上下文行.当前").dataset.hitIndex'), '1');
   await query('的');
-  await click('#搭配视图按钮');
   await pause(700);
-  assert.equal(await evaluate('return document.querySelector("#上下文结果").hidden'), true);
-  assert.equal(await evaluate('return document.querySelector("#分析结果").hidden'), false);
+  assert.ok(await evaluate('return document.querySelectorAll("#查找弹窗 .上下文行").length > 0'));
   assert.ok(await evaluate('return document.querySelectorAll("#分析结果 .分析行").length > 0'));
   const count = await evaluate(`${state} return 状态.关键词列表.find(k => k.id === 状态.查找临时关键词id).命中位置.length;`);
   assert.ok((await evaluate('return document.querySelector("#分析结果摘要").textContent')).startsWith(count.toLocaleString('zh-CN')));
@@ -130,7 +128,6 @@ try {
   );
   assert.equal(await evaluate('return document.querySelector("#分析结果").hidden'), false);
   await query('的');
-  await click('#上下文视图按钮');
   // 首项向前循环到最后一项，按当前批渲染而不是创建全文 DOM。
   await click('#查找上一个按钮');
   assert.equal(await evaluate('return Number(document.querySelector(".上下文行.当前").dataset.hitIndex)'), count - 1);
@@ -158,7 +155,7 @@ try {
   assert.equal(await evaluate(`${state} return 状态.查找临时关键词id;`), null);
   const restoredTop = await evaluate(`${state} return 元素.滚动容器.scrollTop;`);
   assert.ok(Math.abs(restoredTop - originalTop) < 1, `Esc restore: expected ${originalTop}, actual ${restoredTop}; errors ${JSON.stringify(browserErrors)}`);
-  console.log('PASS panel entry, live query, view switching, shared counts, navigation, bounded batches, Esc rollback');
+  console.log('PASS panel entry, live query, collocation, shared counts, navigation, bounded batches, Esc rollback');
 
   await open();
   await query('绝不会存在的查询xyz123');
@@ -175,9 +172,8 @@ try {
   await query('!他的');
   const filtered = await evaluate(`${state} const k = 状态.关键词列表.find(k => k.id === 状态.查找临时关键词id); return {count:k.命中位置.length, valid:[...k.命中位置].every(p => 状态.文本[p-1] !== '他')};`);
   assert.equal(filtered.valid, true);
-  await click('#搭配视图按钮'); await pause(700);
+  await pause(700);
   assert.ok((await evaluate('return document.querySelector("#分析结果摘要").textContent')).startsWith(filtered.count.toLocaleString('zh-CN')));
-  await click('#上下文视图按钮');
   await query('的'); await settled();
   await click('.上下文行[data-hit-index="20"]');
   await pause(100); await settled();

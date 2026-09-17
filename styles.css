@@ -1680,6 +1680,8 @@ dialog,
 }
 
 .查找弹窗 {
+  display: flex;
+  flex-direction: column;
   width: min(720px, calc(100vw - 32px));
   max-height: calc(100dvh - 32px);
   margin: 16px auto auto;
@@ -1700,6 +1702,10 @@ dialog,
 }
 
 .查找表单 {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 100%;
   padding: 16px;
 }
 
@@ -1806,27 +1812,37 @@ dialog,
 }
 
 .查找反馈 {
-  min-height: 18px;
   margin: 6px 0 -4px;
   color: #9f3526;
   font-size: 12px;
   line-height: 18px;
 }
 
+.查找反馈:empty {
+  display: none;
+}
+
 .查找导航行 {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
-  min-height: 30px;
+  gap: 12px;
   margin-top: 8px;
   color: var(--次要墨色);
   font-size: 12px;
   font-variant-numeric: tabular-nums;
+  line-height: 18px;
 }
 
 .查找导航按钮组 {
   display: flex;
+  flex: 0 0 auto;
   gap: 6px;
+}
+
+.查找输入行 .查找导航按钮 {
+  min-height: 42px;
+  padding: 0 10px;
 }
 
 .查找导航按钮 {
@@ -1854,31 +1870,26 @@ dialog,
   opacity: 0.5;
 }
 
-.查找视图切换 {
-  display: flex;
-  gap: 8px;
-  margin-top: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--边线色);
-}
-
-.查找视图切换 [aria-pressed='true'] {
-  color: #ffffff;
-  background: #000000;
-  border-color: #000000;
-}
-
 .查找操作提示 {
-  margin: 8px 0;
+  margin: 0;
+  min-width: 0;
   color: var(--次要墨色);
   font-size: 12px;
   line-height: 18px;
+  text-align: right;
 }
 
 .查找弹窗 .上下文列表,
 .查找弹窗 .分析分栏 {
-  max-height: min(480px, max(100px, calc(100dvh - 290px)));
   overscroll-behavior: contain;
+}
+
+.查找弹窗 .上下文列表 {
+  max-height: min(360px, max(8em, calc(100dvh - 420px)));
+}
+
+.查找弹窗 .分析分栏 {
+  max-height: min(220px, max(8em, calc(100dvh - 520px)));
 }
 
 .上下文行.当前 {
@@ -1891,13 +1902,8 @@ dialog,
   text-overflow: ellipsis;
 }
 
-.分析结果[hidden] {
-  display: none;
-}
-
 .分析结果 {
-  margin-top: 8px;
-  padding-top: 12px;
+  margin-top: 10px;
 }
 
 .分析结果摘要 {
@@ -1913,7 +1919,6 @@ dialog,
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
-  max-height: min(360px, calc(100dvh - 220px));
   overflow: auto;
   border-top: 1px solid #000000;
   border-bottom: 1px solid var(--边线色);
@@ -2530,7 +2535,6 @@ dialog,
 }
 
 .上下文列表 {
-  max-height: min(560px, calc(100dvh - 120px));
   padding: 0 8px 8px;
   overflow-y: auto;
   border-top: 1px solid var(--边线色);
