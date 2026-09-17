@@ -3,16 +3,16 @@ import {
   词组上下文窗口,
   每批分析结果数,
   实时查找延迟,
+  上下文滚动预载像素,
 } from './常量.js';
 import { 让出主线程, 按需让出主线程 } from './调度.js';
 import { 元素, 状态, 查找关键词, 获取静止滚动位置 } from './状态.js';
 import { 查找偏移所在行 } from './排版引擎.js';
-import { 获取文本字素分段 } from './文本工具.js';
 import { 渲染可见行 } from './虚拟渲染.js';
-import { 创建关键词标记, 查找关键词命中 } from './关键词.js';
+import { 创建关键词标记, 查找关键词命中, 渲染查找上下文, 追加上下文行块 } from './关键词.js';
 import { 更新关键词指示器 } from './指示器.js';
 import { 动画滚动到 } from './跳转动画.js';
-import { 读取阅读位置 } from './持久化.js';
+import { 读取阅读位置, 安排保存持久化状态 } from './持久化.js';
 
 // 查找弹窗 + 词组搭配分析：从 app.js 绑定事件() 闭包拆出。
 // 执行实时查找 内联调用 处理词组分析，两簇共享查找输入框与取消逻辑，必须同模块
@@ -24,6 +24,68 @@ let 查找临时状态 = null;
 let 实时查找计时器 = 0;
 let 词组分析序号 = 0;
 let 分析结果视图 = null;
+let 当前查找视图 = '上下文';
+
+export function 切换查找视图(视图) {
+  当前查找视图 = 视图;
+  元素.上下文结果.hidden = 视图 !== '上下文';
+  元素.分析结果.hidden = 视图 !== '搭配';
+  元素.上下文视图按钮.setAttribute('aria-pressed', String(视图 === '上下文'));
+  元素.搭配视图按钮.setAttribute('aria-pressed', String(视图 === '搭配'));
+  if (视图 === '搭配' && !分析结果视图) 处理词组分析();
+}
+
+export function 处理查找按键(事件) {
+  if (事件.isComposing || 元素.查找输入框.dataset.合成中) return;
+  // search 输入框的原生 Esc 只清空查询；统一为关闭并撤销预览。
+  if (事件.key === 'Escape') {
+    事件.preventDefault();
+    事件.stopPropagation();
+    关闭查找弹窗();
+    return;
+  }
+  if (事件.key === 'ArrowUp' || 事件.key === 'ArrowDown') {
+    事件.preventDefault();
+    定位查找命中(事件.key === 'ArrowUp' ? -1 : 1);
+  }
+}
+
+export function 处理上下文滚动() {
+  const 列表 = 元素.上下文列表;
+  if (!状态.上下文视图 || 元素.上下文结果.hidden) return;
+  if (列表.scrollTop < 上下文滚动预载像素 && 状态.上下文视图.起点 > 0) {
+    追加上下文行块(true);
+  } else if (列表.scrollTop + 列表.clientHeight > 列表.scrollHeight - 上下文滚动预载像素) {
+    追加上下文行块();
+  }
+}
+
+export function 处理上下文行点击(事件) {
+  const 行 = 事件.target.closest('.上下文行');
+  const 关键词 = 查找关键词(状态.查找临时关键词id);
+  if (!行 || !关键词 || !查找临时状态) return;
+  const idx = Number(行.dataset.hitIndex);
+  if (!Number.isInteger(idx) || idx < 0 || idx >= 关键词.命中位置.length) return;
+  临时跳到查找命中(idx);
+  // 确认进入正文：恢复原关键词状态，但不撤销这次定位，也不保存临时标记。
+  const 原状态 = 查找临时状态;
+  const 已有关键词 = 查找关键词(原状态.来源关键词id);
+  状态.跳转起点 ??= {
+    ...原状态.阅读位置,
+    当前关键词id: 原状态.当前关键词id,
+    当前命中idx: 原状态.当前命中idx,
+  };
+  查找临时状态 = null;
+  移除临时查找关键词();
+  状态.当前关键词id = 已有关键词?.id ?? 原状态.当前关键词id;
+  状态.悬停关键词id = null;
+  状态.悬停命中idx = -1;
+  if (已有关键词) 已有关键词.当前命中idx = idx;
+  安排保存持久化状态();
+  渲染可见行(true);
+  更新关键词指示器();
+  关闭查找弹窗();
+}
 
 // —— 搭配分析的词组提取（纯函数，供本模块与 tmp/verify-collocations.mjs 共享）——
 // 从全文的 文本偏移 处（关键词起点），向后取「关键词 + 紧随其后的第一个词」，
@@ -68,12 +130,18 @@ export function 提取前置词组自文本(全文, 文本偏移) {
   return 上下文.slice(词组起点);
 }
 
-export function 打开查找弹窗() {
-  if (!元素.查找弹窗.open) {
-    元素.查找弹窗.showModal();
+export function 打开查找弹窗(关键词 = null) {
+  const 新打开 = !元素.查找弹窗.open;
+  if (新打开) 元素.查找弹窗.showModal();
+  if (关键词) {
+    元素.查找输入框.value = 关键词.文本;
+    切换查找视图('上下文');
+    执行实时查找(关键词);
+  } else if (新打开) {
+    执行实时查找();
   }
-  清除查找错误();
   requestAnimationFrame(function 聚焦查找输入框() {
+    if (!元素.查找弹窗.open) return;
     元素.查找输入框.focus();
     元素.查找输入框.select();
   });
@@ -86,10 +154,21 @@ export function 关闭查找弹窗() {
   window.clearTimeout(实时查找计时器);
   实时查找计时器 = 0;
   元素.查找弹窗.close();
+  处理查找弹窗关闭();
   元素.滚动容器.focus({ preventScroll: true });
 }
 
 export function 处理查找弹窗关闭() {
+  // close 事件异步派发；如果已重新打开，不清理新会话。
+  if (元素.查找弹窗.open) return;
+  window.clearTimeout(实时查找计时器);
+  实时查找计时器 = 0;
+  取消词组分析();
+  清空分析结果();
+  状态.上下文视图 = null;
+  元素.上下文列表.replaceChildren();
+  delete 元素.查找输入框.dataset.合成中;
+  元素.滚动容器.focus({ preventScroll: true });
   if (!查找临时状态) {
     return;
   }
@@ -135,28 +214,36 @@ export function 合成结束提交() {
 }
 
 export function 处理查找提交(事件) {
-  // 输入框已无独立按钮，回车仅用于跳过防抖立即查询
   事件.preventDefault();
+  if (事件.isComposing || 元素.查找输入框.dataset.合成中) return;
+  if (查找临时状态?.原查询 === 元素.查找输入框.value.trim() && 状态.查找临时关键词id !== null) {
+    定位查找命中(1);
+    return;
+  }
   window.clearTimeout(实时查找计时器);
   实时查找计时器 = 0;
   执行实时查找();
 }
 
-function 执行实时查找() {
+function 执行实时查找(来源关键词 = null) {
+  window.clearTimeout(实时查找计时器);
   实时查找计时器 = 0;
-  const 查询 = 解析查找查询(元素.查找输入框.value.trim());
+  if (!元素.查找弹窗.open || 元素.查找输入框.dataset.合成中) return;
+  清除查找错误();
+  取消词组分析();
+  清空分析结果();
+  移除临时查找关键词();
+  const 查询 = 来源关键词
+    ? { 目标: 来源关键词.文本, 排除前缀: '' }
+    : 解析查找查询(元素.查找输入框.value.trim());
   if (查询.错误 || !查询.目标) {
     // 输入为空或不完整时静默清除旧结果
     清除查找错误();
+    元素.上下文列表.textContent = 查询.错误 || '输入关键词，查看每一处上下文';
     取消词组分析();
     清空分析结果();
-    if (查找临时状态) {
-      状态.悬停关键词id = 查找临时状态.悬停关键词id;
-      状态.悬停命中idx = 查找临时状态.悬停命中idx;
-      移除临时查找关键词();
-      渲染可见行(true);
-      更新关键词指示器();
-    }
+    渲染可见行(true);
+    更新关键词指示器();
     return;
   }
   if (!状态.文件名) {
@@ -164,9 +251,10 @@ function 执行实时查找() {
     return;
   }
 
-  const 命中位置 = 查找带排除前缀的命中(查询.目标, 查询.排除前缀);
+  const 命中位置 = 来源关键词?.命中位置 ?? 查找带排除前缀的命中(查询.目标, 查询.排除前缀);
   if (!命中位置.length) {
     显示查找错误('未找到该关键词');
+    元素.上下文列表.textContent = '没有匹配的上下文';
     更新查找导航状态(null);
     清空分析结果();
     console.info('[阅读器] 查找无匹配', { 查询 });
@@ -178,11 +266,10 @@ function 执行实时查找() {
     查询,
     命中位置,
   );
-  查找临时状态.命中idx = 0;
-  更新查找导航状态(关键词);
-  临时跳到查找命中(0);
-  // 实时刷新下方搭配分析面板
-  处理词组分析();
+  查找临时状态.来源关键词id = 来源关键词?.id ?? null;
+  if (来源关键词) 关键词.配色idx = 来源关键词.配色idx;
+  临时跳到查找命中(Math.max(0, 来源关键词?.当前命中idx ?? 0));
+  if (当前查找视图 === '搭配') 处理词组分析();
 }
 
 function 解析查找查询(查询文本) {
@@ -203,30 +290,11 @@ function 解析查找查询(查询文本) {
 }
 
 function 查找带排除前缀的命中(关键词文本, 排除前缀) {
-  const 命中数组 = [];
-  const 文本字素列表 = 获取文本字素分段(状态.文本);
-  let 搜索位置 = 0;
-  while (搜索位置 <= 状态.文本.length - 关键词文本.length) {
-    const 命中位置 = 状态.文本.indexOf(关键词文本, 搜索位置);
-    if (命中位置 === -1) {
-      break;
-    }
-    const 起点在字素边界 =
-      文本字素列表.containing(命中位置)?.index === 命中位置;
-    const 命中终点 = 命中位置 + 关键词文本.length;
-    const 终点在字素边界 =
-      命中终点 === 状态.文本.length ||
-      文本字素列表.containing(命中终点)?.index === 命中终点;
-    const 前缀匹配 =
-      排除前缀 &&
-      状态.文本.slice(Math.max(0, 命中位置 - 排除前缀.length), 命中位置) ===
-        排除前缀;
-    if (起点在字素边界 && 终点在字素边界 && !前缀匹配) {
-      命中数组.push(命中位置);
-    }
-    搜索位置 = 命中位置 + Math.max(1, 关键词文本.length);
-  }
-  return Uint32Array.from(命中数组);
+  const 命中位置 = 查找关键词命中(关键词文本);
+  if (!排除前缀) return 命中位置;
+  return 命中位置.filter(偏移 =>
+    状态.文本.slice(Math.max(0, 偏移 - 排除前缀.length), 偏移) !== 排除前缀,
+  );
 }
 
 function 创建临时查找关键词(原查询, 查询, 命中位置) {
@@ -253,8 +321,11 @@ function 创建临时查找关键词(原查询, 查询, 命中位置) {
 }
 
 function 移除临时查找关键词() {
-  if (状态.查找临时关键词id === null) {
-    return;
+  状态.上下文视图 = null;
+  元素.上下文列表.replaceChildren();
+  if (查找临时状态) {
+    状态.悬停关键词id = 查找临时状态.悬停关键词id;
+    状态.悬停命中idx = 查找临时状态.悬停命中idx;
   }
   const idx = 状态.关键词列表.findIndex(function 找到临时关键词(关键词) {
     return 关键词.id === 状态.查找临时关键词id;
@@ -276,6 +347,20 @@ function 临时跳到查找命中(命中idx) {
     0,
     Math.min(命中idx, 关键词.命中位置.length - 1),
   );
+  关键词.当前命中idx = 查找临时状态.命中idx;
+  const 视图 = 状态.上下文视图;
+  if (!视图 || 视图.关键词id !== 关键词.id || 命中idx < 视图.起点 || 命中idx >= 视图.已渲染数) {
+    渲染查找上下文(关键词, 关键词.当前命中idx);
+  }
+  for (const 行 of 元素.上下文列表.querySelectorAll('.上下文行')) {
+    const 是当前 = Number(行.dataset.hitIndex) === 关键词.当前命中idx;
+    行.classList.toggle('当前', 是当前);
+    if (是当前) 行.setAttribute('aria-current', 'location');
+    else 行.removeAttribute('aria-current');
+  }
+  if (当前查找视图 === '上下文') {
+    元素.上下文列表.querySelector('.当前')?.scrollIntoView({ block: 'nearest' });
+  }
   状态.悬停关键词id = 关键词.id;
   状态.悬停命中idx = 查找临时状态.命中idx;
   渲染可见行(true);
@@ -304,13 +389,15 @@ function 更新查找导航状态(关键词) {
   const 当前idx = 查找临时状态?.命中idx ?? -1;
   元素.查找命中摘要.textContent = 命中数
     ? `${(当前idx + 1).toLocaleString('zh-CN')} / ${命中数.toLocaleString('zh-CN')}`
-    : '';
+    : '0 处';
   元素.查找上一个按钮.disabled = !命中数;
   元素.查找下一个按钮.disabled = !命中数;
 }
 
 export async function 处理词组分析() {
-  const 前缀 = 元素.查找输入框.value.trim();
+  const 分析关键词 = 查找关键词(状态.查找临时关键词id);
+  const 原查询 = 元素.查找输入框.value.trim();
+  const 前缀 = 分析关键词?.文本;
   if (!前缀) {
     清空分析结果();
     return;
@@ -329,7 +416,7 @@ export async function 处理词组分析() {
   await 让出主线程();
   const 开始时间 = performance.now();
   try {
-    const 命中位置 = 查找关键词命中(前缀);
+    const 命中位置 = 分析关键词.命中位置;
     if (!分析仍然有效()) {
       return;
     }
@@ -415,15 +502,17 @@ export async function 处理词组分析() {
     元素.分析分栏.scrollTop = 0;
     元素.分析分栏.scrollLeft = 0;
     追加分析结果行();
-    元素.分析结果.hidden = false;
+    元素.分析结果.hidden = 当前查找视图 !== '搭配';
   }
 
   function 分析仍然有效() {
     return (
+      元素.查找弹窗.open &&
+      状态.查找临时关键词id === 分析关键词.id &&
       词组分析序号 === 本次分析序号 &&
       状态.载入序号 === 本次载入序号 &&
       状态.文本 === 分析文本 &&
-      元素.查找输入框.value.trim() === 前缀
+      元素.查找输入框.value.trim() === 原查询
     );
   }
 }
@@ -432,16 +521,12 @@ export function 处理查找输入() {
   取消词组分析();
   清除查找错误();
   清空分析结果();
+  移除临时查找关键词();
+  渲染可见行(true);
+  更新关键词指示器();
   if (!元素.查找输入框.dataset.合成中) {
     window.clearTimeout(实时查找计时器);
     实时查找计时器 = window.setTimeout(执行实时查找, 实时查找延迟);
-  }
-  if (查找临时状态) {
-    状态.悬停关键词id = 查找临时状态.悬停关键词id;
-    状态.悬停命中idx = 查找临时状态.悬停命中idx;
-    移除临时查找关键词();
-    渲染可见行(true);
-    更新关键词指示器();
   }
 }
 
@@ -509,8 +594,8 @@ function 显示查找错误(文字) {
 
 function 清空分析结果() {
   分析结果视图 = null;
-  元素.分析结果.hidden = true;
-  元素.分析结果摘要.textContent = '';
+  元素.分析结果.hidden = 当前查找视图 !== '搭配';
+  元素.分析结果摘要.textContent = '查找后显示高频搭配';
   元素.前置词组列表.replaceChildren();
   元素.后续词组列表.replaceChildren();
 }

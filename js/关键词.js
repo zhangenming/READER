@@ -2,7 +2,6 @@ import {
   上下文分块行数,
   上下文前文字数,
   上下文后文字数,
-  上下文最大初始行数,
 } from './常量.js';
 import { 元素, 状态, 查找关键词, 高亮配色 } from './状态.js';
 import { 渲染可见行, 显示当前命中位置提示 } from './虚拟渲染.js';
@@ -271,50 +270,24 @@ export function 删除关键词标记(关键词id) {
   });
 }
 
-export function 打开上下文弹窗(关键词) {
-  const 开始时间 = performance.now();
-  状态.上下文视图 = { 关键词id: 关键词.id, 已渲染数: 0 };
-  元素.上下文标题.textContent = `${关键词.文本} · ${关键词.命中位置.length.toLocaleString('zh-CN')} 处`;
+// 从当前命中所在批开始，避免靠后的命中一次性创建数千行 DOM。
+export function 渲染查找上下文(关键词, 命中idx = 0) {
+  const 起点 = Math.floor(Math.max(0, 命中idx) / 上下文分块行数) * 上下文分块行数;
+  状态.上下文视图 = { 关键词id: 关键词.id, 起点, 已渲染数: 起点 };
   元素.上下文列表.replaceChildren();
   元素.上下文列表.scrollTop = 0;
-
-  // 当前命中靠前时直接渲染到那一块并居中；太靠后则只渲染首块，避免一次性建海量 DOM
-  const 居中命中idx =
-    关键词.id === 状态.当前关键词id &&
-    关键词.当前命中idx >= 0 &&
-    关键词.当前命中idx < 上下文最大初始行数
-      ? 关键词.当前命中idx
-      : -1;
-  do {
-    追加上下文行块();
-  } while (状态.上下文视图.已渲染数 <= 居中命中idx);
-
-  if (!元素.上下文弹窗.open) {
-    元素.上下文弹窗.showModal();
-  }
-  if (居中命中idx >= 0) {
-    元素.上下文列表
-      .querySelector('.上下文行.当前')
-      ?.scrollIntoView({ block: 'center' });
-  }
-
-  console.info('[阅读器] 已打开上下文列表', {
-    关键词: 关键词.文本,
-    命中数: 关键词.命中位置.length,
-    首批行数: 状态.上下文视图.已渲染数,
-    耗时毫秒: Math.round(performance.now() - 开始时间),
-  });
+  追加上下文行块();
 }
 
-export function 追加上下文行块() {
+export function 追加上下文行块(向前 = false) {
   const 视图 = 状态.上下文视图;
   const 关键词 = 视图 ? 查找关键词(视图.关键词id) : null;
   if (!关键词) {
     return;
   }
 
-  const 起点 = 视图.已渲染数;
-  const 终点 = Math.min(关键词.命中位置.length, 起点 + 上下文分块行数);
+  const 起点 = 向前 ? Math.max(0, 视图.起点 - 上下文分块行数) : 视图.已渲染数;
+  const 终点 = 向前 ? 视图.起点 : Math.min(关键词.命中位置.length, 起点 + 上下文分块行数);
   if (起点 >= 终点) {
     return;
   }
@@ -329,7 +302,7 @@ export function 追加上下文行块() {
     行.className = '上下文行';
     行.classList.toggle(
       '当前',
-      关键词.id === 状态.当前关键词id && idx === 关键词.当前命中idx,
+      idx === 关键词.当前命中idx,
     );
     行.dataset.hitIndex = String(idx);
 
@@ -350,8 +323,16 @@ export function 追加上下文行块() {
     行.append(序号, 前文, 命中, 后文);
     片段.append(行);
   }
-  视图.已渲染数 = 终点;
-  元素.上下文列表.append(片段);
+  if (向前) {
+    const 原高度 = 元素.上下文列表.scrollHeight;
+    const 原位置 = 元素.上下文列表.scrollTop;
+    视图.起点 = 起点;
+    元素.上下文列表.prepend(片段);
+    元素.上下文列表.scrollTop = 原位置 + 元素.上下文列表.scrollHeight - 原高度;
+  } else {
+    视图.已渲染数 = 终点;
+    元素.上下文列表.append(片段);
+  }
 }
 
 /* 截取上下文时绕开被切断的代理对，换行压成空格。 */
@@ -368,10 +349,4 @@ export function 读取上下文片段(起点, 终点) {
     止 -= 1;
   }
   return 状态.文本.slice(起, 止).replace(/\n+/g, ' ');
-}
-
-export function 关闭上下文弹窗() {
-  if (元素.上下文弹窗.open) {
-    元素.上下文弹窗.close();
-  }
 }

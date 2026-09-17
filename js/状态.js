@@ -100,7 +100,7 @@ export const 高亮配色 = [{ 浅色: 默认高亮浅色, 深色: 默认关键�
  * @property {boolean} 关键词面板展开 关键词管理面板是否展开
  * @property {string} 关键词面板签名 面板渲染签名，变化即需重渲染面板行列表（含排序与当前项）
  * @property {string} 关键词排序 面板排序方式（'数量' / 首次出现 / 拼音等）
- * @property {?Object} 上下文视图 上下文弹窗状态（关键词 id 与已渲染数）；关闭为 null
+ * @property {?Object} 上下文视图 查找上下文状态（关键词 id 与已渲染数）；关闭为 null
  *
  * ⑤ 用户设置与分析缓存
  * @property {number} 自动滚动速度 自动滚动基准速度（用户可调）
@@ -173,6 +173,9 @@ export const 元素 = {
   跳转迸发: document.querySelector('#跳转迸发'),
   衔接线: document.querySelector('#衔接线'),
   查找弹窗: document.querySelector('#查找弹窗'),
+  上下文结果: document.querySelector('#上下文结果'),
+  上下文视图按钮: document.querySelector('#上下文视图按钮'),
+  搭配视图按钮: document.querySelector('#搭配视图按钮'),
   查找表单: document.querySelector('#查找表单'),
   查找输入框: document.querySelector('#查找输入框'),
   查找反馈: document.querySelector('#查找反馈'),
@@ -230,10 +233,7 @@ export const 元素 = {
   关键词面板: document.querySelector('#关键词面板'),
   关键词面板开关: document.querySelector('#关键词面板开关'),
   关键词列表容器: document.querySelector('#关键词列表容器'),
-  上下文弹窗: document.querySelector('#上下文弹窗'),
-  上下文标题: document.querySelector('#上下文标题'),
   上下文列表: document.querySelector('#上下文列表'),
-  关闭上下文按钮: document.querySelector('#关闭上下文按钮'),
   词频弹窗: document.querySelector('#词频弹窗'),
   词频摘要: document.querySelector('#词频摘要'),
   词频标签栏: document.querySelector('#词频标签栏'),

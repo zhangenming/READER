@@ -1680,8 +1680,9 @@ dialog,
 }
 
 .查找弹窗 {
-  width: min(520px, calc(100vw - 32px));
-  margin: 24px auto auto;
+  width: min(720px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: 16px auto auto;
   padding: 0;
   color: var(--墨色);
   background: var(--纸张色);
@@ -1853,6 +1854,43 @@ dialog,
   opacity: 0.5;
 }
 
+.查找视图切换 {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--边线色);
+}
+
+.查找视图切换 [aria-pressed='true'] {
+  color: #ffffff;
+  background: #000000;
+  border-color: #000000;
+}
+
+.查找操作提示 {
+  margin: 8px 0;
+  color: var(--次要墨色);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.查找弹窗 .上下文列表,
+.查找弹窗 .分析分栏 {
+  max-height: min(480px, max(100px, calc(100dvh - 290px)));
+  overscroll-behavior: contain;
+}
+
+.上下文行.当前 {
+  background: #f2f2f2;
+}
+
+.上下文命中 {
+  max-width: 16ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .分析结果[hidden] {
   display: none;
 }
@@ -1963,26 +2001,6 @@ dialog,
     opacity: 0;
     transform: translateY(-6px);
   }
-}
-
-.上下文弹窗 {
-  width: min(640px, calc(100vw - 32px));
-  margin: 24px auto auto;
-  padding: 0;
-  color: var(--墨色);
-  font-family: 'Avenir Next', 'PingFang SC', sans-serif;
-  background: var(--纸张色);
-  border: 1px solid #000000;
-  border-radius: 6px;
-  box-shadow: 0 12px 34px rgb(0 0 0 / 18%);
-}
-
-.上下文弹窗::backdrop {
-  background: rgb(0 0 0 / 8%);
-}
-
-.上下文弹窗[open] {
-  animation: 查找弹窗进入 140ms ease-out;
 }
 
 .词频弹窗 {
@@ -2626,7 +2644,6 @@ dialog,
 @media (prefers-reduced-motion: reduce) {
   .载入线::after,
   .查找弹窗[open],
-  .上下文弹窗[open],
   .词频弹窗[open],
   .内容选择弹窗[open] {
     animation: none;
@@ -2650,10 +2667,6 @@ dialog,
   }
 
   .查找弹窗 {
-    margin-top: 12px;
-  }
-
-  .上下文弹窗 {
     margin-top: 12px;
   }
 

@@ -2,7 +2,6 @@ import {
   文本目录地址,
   时间格式器,
   尺寸重排防抖毫秒,
-  上下文滚动预载像素,
   默认字号,
   默认文件名,
   语音事件,
@@ -43,11 +42,8 @@ import {
 } from './js/文本管线.js';
 import { 渲染可见行 } from './js/虚拟渲染.js';
 import {
-  关闭上下文弹窗,
   删除关键词标记,
-  打开上下文弹窗,
   查找关键词命中,
-  追加上下文行块,
 } from './js/关键词.js';
 import { 更新关键词指示器, 初始化指示器 } from './js/指示器.js';
 import {
@@ -129,8 +125,11 @@ import {
   处理查找弹窗点击,
   处理查找提交,
   处理查找输入,
-  处理词组分析,
-  取消词组分析,
+  打开查找弹窗,
+  切换查找视图,
+  处理上下文行点击,
+  处理上下文滚动,
+  处理查找按键,
   关闭查找弹窗,
   定位查找命中,
   标记合成开始,
@@ -413,7 +412,9 @@ function 绑定事件() {
   元素.查找输入框.addEventListener('input', 处理查找输入);
   元素.查找输入框.addEventListener('compositionstart', 标记合成开始);
   元素.查找输入框.addEventListener('compositionend', 合成结束提交);
-  元素.分析结果摘要.addEventListener('click', 处理词组分析);
+  元素.上下文视图按钮.addEventListener('click', () => 切换查找视图('上下文'));
+  元素.搭配视图按钮.addEventListener('click', () => 切换查找视图('搭配'));
+  元素.查找输入框.addEventListener('keydown', 处理查找按键);
   元素.查找上一个按钮.addEventListener('click', function 定位查找上一个() {
     定位查找命中(-1);
   });
@@ -425,14 +426,10 @@ function 绑定事件() {
   });
   元素.关闭查找按钮.addEventListener('click', 关闭查找弹窗);
   元素.查找弹窗.addEventListener('click', 处理查找弹窗点击);
-  元素.查找弹窗.addEventListener('close', 取消词组分析);
   元素.查找弹窗.addEventListener('close', 处理查找弹窗关闭);
   元素.关键词面板开关.addEventListener('click', 处理面板开关);
   元素.关键词列表容器.addEventListener('click', 处理面板操作);
   document.addEventListener('click', 处理关键词面板外部点击);
-  元素.关闭上下文按钮.addEventListener('click', 关闭上下文弹窗);
-  元素.上下文弹窗.addEventListener('click', 处理上下文弹窗点击);
-  元素.上下文弹窗.addEventListener('close', 处理上下文弹窗关闭);
   元素.上下文列表.addEventListener('click', 处理上下文行点击);
   元素.上下文列表.addEventListener('scroll', 处理上下文滚动, {
     passive: true,
@@ -861,7 +858,7 @@ function 绑定事件() {
         删除关键词标记(关键词.id);
         break;
       case '上下文':
-        打开上下文弹窗(关键词);
+        打开查找弹窗(关键词);
         break;
       case '选中': {
         // 面板点击始终循环前进：末位 → 首位
@@ -885,44 +882,7 @@ function 绑定事件() {
     }
   }
 
-  function 处理上下文弹窗点击(事件) {
-    if (事件.target === 元素.上下文弹窗) {
-      关闭上下文弹窗();
-    }
-  }
 
-  function 处理上下文弹窗关闭() {
-    状态.上下文视图 = null;
-    元素.上下文列表.replaceChildren();
-    元素.滚动容器.focus({ preventScroll: true });
-  }
-
-  function 处理上下文行点击(事件) {
-    const 行元素 = 事件.target.closest('.上下文行');
-    const 视图 = 状态.上下文视图;
-    const 关键词 = 视图 ? 查找关键词(视图.关键词id) : null;
-    if (!行元素 || !关键词) {
-      return;
-    }
-
-    const 命中idx = Number(行元素.dataset.hitIndex);
-    if (命中idx < 0 || 命中idx >= 关键词.命中位置.length) {
-      return;
-    }
-    关闭上下文弹窗();
-    跳到命中(关键词, 命中idx);
-  }
-
-  function 处理上下文滚动() {
-    const 列表 = 元素.上下文列表;
-    if (
-      状态.上下文视图 &&
-      列表.scrollTop + 列表.clientHeight >
-        列表.scrollHeight - 上下文滚动预载像素
-    ) {
-      追加上下文行块();
-    }
-  }
 }
 
 async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然有效) {
