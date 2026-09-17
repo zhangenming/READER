@@ -214,15 +214,45 @@ try {
     const k = 状态.关键词列表.find(k => k.id === 状态.当前关键词id);
     k.当前命中idx = 2;
   `);
+  const readCurrentMarks = () => evaluate(`${state}
+    return [...元素.可见内容.querySelectorAll('.字.当前关键词组')].map(node => ({
+      start: node.dataset.start,
+      background: getComputedStyle(node).backgroundColor,
+      color: getComputedStyle(node).color,
+      hiddenFrame: node.classList.contains('悬停隐藏当前框'),
+      current: node.classList.contains('当前命中'),
+    }));
+  `);
+  await evaluate(`${state}
+    const node = 元素.可见内容.querySelector('.字.当前关键词组');
+    const k = 状态.关键词列表.find(k => k.id === 状态.当前关键词id);
+    k.当前命中idx = Number(node.dataset.hitIndex);
+    window.expectedSearchHit = k.当前命中idx;
+    状态.悬停关键词id = null;
+    状态.悬停命中idx = -1;
+    (await import('./js/虚拟渲染.js')).渲染可见行(true);
+  `);
+  const originalMarks = await readCurrentMarks();
+  assert.ok(originalMarks.length > 0 && originalMarks.some(mark => mark.current));
+  assert.ok(originalMarks.every(mark => mark.background === 'rgb(255, 255, 255)'));
   await shortcut();
+  assert.deepEqual(await readCurrentMarks(), originalMarks, 'Ctrl+F preserves white marks and current frame');
+  await evaluate(`${state}
+    (await import('./js/正文交互.js')).切换同组高亮(状态.查找临时关键词id, 0);
+  `);
+  assert.deepEqual(await readCurrentMarks(), originalMarks, 'incremental highlight preserves white marks too');
   assert.deepEqual(await evaluate(`${state}
     const k = 状态.关键词列表.find(k => k.id === 状态.查找临时关键词id);
-    return [元素.查找输入框.value, k.当前命中idx];
-  `), ['的', 2]);
+    return [元素.查找输入框.value, k.当前命中idx === window.expectedSearchHit];
+  `), ['的', true]);
   await query('他');
   await shortcut(4); // Command+F：已打开时不覆盖用户正在编辑的查询。
   assert.equal(await evaluate(`${state} return 元素.查找输入框.value;`), '他');
+  const previewMarks = await readCurrentMarks();
+  assert.ok(previewMarks.length > 0);
+  assert.ok(previewMarks.every(mark => mark.background === 'rgb(255, 255, 255)' && !mark.hiddenFrame), 'other query keeps original group white');
   await closeSearch();
+  assert.deepEqual(await readCurrentMarks(), originalMarks, 'closing restores position and marks');
 
   const selectedWord = await evaluate(`${state}
     元素.滚动容器.focus();

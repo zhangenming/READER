@@ -352,6 +352,9 @@ export function 切换同组高亮(关键词id, 命中idx) {
   const 旧悬停id = 状态.悬停关键词id;
   状态.悬停关键词id = 关键词id;
   状态.悬停命中idx = 命中idx;
+  // 与完整重绘一致：查找临时高亮不撤掉原当前关键词标记。
+  const 是查找预览 = 状态.查找临时关键词id !== null &&
+    关键词id === 状态.查找临时关键词id;
   for (const 行元素 of 元素.可见内容.querySelectorAll('.正文行.含悬停命中')) {
     行元素.classList.remove('含悬停命中');
   }
@@ -363,13 +366,13 @@ export function 切换同组高亮(关键词id, 命中idx) {
     命中元素.classList.toggle('悬停命中', 是悬停命中);
     命中元素.classList.toggle(
       '悬停让位',
-      关键词id !== null &&
+      !是查找预览 && 关键词id !== null &&
         命中元素.classList.contains('当前关键词组') &&
         !是悬停关键词,
     );
     命中元素.classList.toggle(
       '悬停隐藏当前框',
-      关键词id !== null && 命中元素.classList.contains('当前命中'),
+      !是查找预览 && 关键词id !== null && 命中元素.classList.contains('当前命中'),
     );
     if (是悬停命中) {
       命中元素.closest('.正文行').classList.add('含悬停命中');
