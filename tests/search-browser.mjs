@@ -118,6 +118,18 @@ try {
   assert.ok(await evaluate('return document.querySelectorAll("#分析结果 .分析行").length > 0'));
   const count = await evaluate(`${state} return 状态.关键词列表.find(k => k.id === 状态.查找临时关键词id).命中位置.length;`);
   assert.ok((await evaluate('return document.querySelector("#分析结果摘要").textContent')).startsWith(count.toLocaleString('zh-CN')));
+  const 前置搭配 = await evaluate(
+    'return document.querySelector("#前置词组列表 .分析行")?.dataset.词组;',
+  );
+  assert.ok(前置搭配);
+  await click('#前置词组列表 .分析行');
+  await pause(700);
+  assert.equal(
+    await evaluate('return document.querySelector("#查找输入框").value'),
+    前置搭配 + '的',
+  );
+  assert.equal(await evaluate('return document.querySelector("#分析结果").hidden'), false);
+  await query('的');
   await click('#上下文视图按钮');
   // 首项向前循环到最后一项，按当前批渲染而不是创建全文 DOM。
   await click('#查找上一个按钮');

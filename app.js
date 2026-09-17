@@ -120,6 +120,7 @@ import {
   读取持久化数据或新建,
 } from './js/持久化.js';
 import {
+  处理搭配点击,
   处理分析结果滚动,
   处理查找弹窗关闭,
   处理查找弹窗点击,
@@ -421,6 +422,7 @@ function 绑定事件() {
   元素.查找下一个按钮.addEventListener('click', function 定位查找下一个() {
     定位查找命中(1);
   });
+  元素.分析分栏.addEventListener('click', 处理搭配点击);
   元素.分析分栏.addEventListener('scroll', 处理分析结果滚动, {
     passive: true,
   });

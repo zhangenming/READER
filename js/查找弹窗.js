@@ -577,7 +577,13 @@ export async function 处理词组分析() {
   }
 
   function 渲染分析结果(后续列表, 前置列表, 命中总数) {
-    分析结果视图 = { 后续列表, 前置列表, 已渲染后续: 0, 已渲染前置: 0 };
+    分析结果视图 = {
+      关键词: 前缀,
+      后续列表,
+      前置列表,
+      已渲染后续: 0,
+      已渲染前置: 0,
+    };
     const 高频词组数 = 后续列表.length + 前置列表.length;
     元素.分析结果摘要.textContent = `${命中总数.toLocaleString('zh-CN')} 次出现 · ${高频词组数} 个高频搭配`;
     元素.前置词组列表.replaceChildren();
@@ -613,6 +619,17 @@ export function 处理查找输入() {
   }
 }
 
+export function 处理搭配点击(事件) {
+  const 行 = 事件.target.closest('.分析行');
+  if (!行 || !分析结果视图?.关键词) return;
+  const 词组 = 行.dataset.词组;
+  const 方向 = 行.dataset.方向;
+  const 关键词 = 分析结果视图.关键词;
+  if (!词组 || (方向 !== '前' && 方向 !== '后')) return;
+  元素.查找输入框.value = 方向 === '前' ? 词组 + 关键词 : 关键词 + 词组;
+  执行实时查找();
+}
+
 export function 处理分析结果滚动() {
   if (
     分析结果视图 &&
@@ -635,11 +652,13 @@ function 追加分析结果行() {
       列表: 分析结果视图.后续列表,
       进度键: '已渲染后续',
       目标: 元素.后续词组列表,
+      方向: '后',
     },
     {
       列表: 分析结果视图.前置列表,
       进度键: '已渲染前置',
       目标: 元素.前置词组列表,
+      方向: '前',
     },
   ]) {
     const 起点 = 分析结果视图[区间.进度键];
@@ -650,14 +669,25 @@ function 追加分析结果行() {
     const 行片段 = document.createDocumentFragment();
     for (let idx = 起点; idx < 终点; idx += 1) {
       const 统计项 = 区间.列表[idx];
-      const 行 = document.createElement('li');
+      const 项 = document.createElement('li');
+      const 行 = document.createElement('button');
+      行.type = 'button';
       行.className = '分析行';
+      行.dataset.词组 = 统计项.词组;
+      行.dataset.方向 = 区间.方向;
+      const 完整词组 =
+        区间.方向 === '前'
+          ? 统计项.词组 + 分析结果视图.关键词
+          : 分析结果视图.关键词 + 统计项.词组;
+      行.title = `查找 ${完整词组}`;
+      行.setAttribute('aria-label', `查找 ${完整词组}`);
       const 词组单元格 = document.createElement('span');
       const 数量单元格 = document.createElement('span');
       词组单元格.textContent = 统计项.词组;
       数量单元格.textContent = 统计项.数量.toLocaleString('zh-CN');
       行.append(词组单元格, 数量单元格);
-      行片段.append(行);
+      项.append(行);
+      行片段.append(项);
     }
     区间.目标.append(行片段);
     分析结果视图[区间.进度键] = 终点;
