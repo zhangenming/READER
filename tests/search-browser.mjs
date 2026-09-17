@@ -191,10 +191,15 @@ try {
 
   // 真实快捷键入口：文本选区 > 当前关键词 > 上次查询。
   const shortcut = async (modifiers = 2) => {
+    // 输入触发的预览动画先结束，避免把它的剩余位移误算为快捷键滚动。
+    await settled();
+    const before = await evaluate(`${state} return 元素.滚动容器.scrollTop;`);
     await send('Input.dispatchKeyEvent', {type:'keyDown', key:'f', code:'KeyF', windowsVirtualKeyCode:70, modifiers});
     await send('Input.dispatchKeyEvent', {type:'keyUp', key:'f', code:'KeyF', windowsVirtualKeyCode:70, modifiers});
     await pause(100);
     await settled();
+    const after = await evaluate(`${state} return 元素.滚动容器.scrollTop;`);
+    assert.ok(Math.abs(after - before) < 1, `opening search must not scroll: ${before} → ${after}`);
   };
   const closeSearch = async () => {
     await click('#关闭查找按钮');

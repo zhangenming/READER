@@ -134,6 +134,8 @@ export function 提取前置词组自文本(全文, 文本偏移) {
 // 未传时（Ctrl + F）：优先用当前文本选区，其次用当前关键词，否则保留上次查询。
 export function 打开查找弹窗(关键词 = null) {
   const 新打开 = !元素.查找弹窗.open;
+  // 快捷键只展开结果；面板显式传入关键词时才立即定位正文。
+  const 定位正文 = 关键词 !== null;
   if (新打开 && !关键词) {
     // showModal 会转移焦点，必须先读取选区；正文拖选结束后则使用当前标记。
     const 选中文字 = window.getSelection()?.toString().trim();
@@ -145,13 +147,13 @@ export function 打开查找弹窗(关键词 = null) {
   if (关键词) {
     元素.查找输入框.value = 关键词.文本;
     切换查找视图('上下文');
-    执行实时查找(关键词);
+    执行实时查找(关键词, 定位正文);
   } else if (新打开) {
-    执行实时查找();
+    执行实时查找(null, 定位正文);
   }
   requestAnimationFrame(function 聚焦查找输入框() {
     if (!元素.查找弹窗.open) return;
-    元素.查找输入框.focus();
+    元素.查找输入框.focus({ preventScroll: true });
     元素.查找输入框.select();
   });
 }
@@ -234,7 +236,7 @@ export function 处理查找提交(事件) {
   执行实时查找();
 }
 
-function 执行实时查找(来源关键词 = null) {
+function 执行实时查找(来源关键词 = null, 定位正文 = true) {
   window.clearTimeout(实时查找计时器);
   实时查找计时器 = 0;
   if (!元素.查找弹窗.open || 元素.查找输入框.dataset.合成中) return;
@@ -277,7 +279,7 @@ function 执行实时查找(来源关键词 = null) {
   );
   查找临时状态.来源关键词id = 来源关键词?.id ?? null;
   if (来源关键词?.配色idx !== undefined) 关键词.配色idx = 来源关键词.配色idx;
-  临时跳到查找命中(Math.max(0, 来源关键词?.当前命中idx ?? 0));
+  临时跳到查找命中(Math.max(0, 来源关键词?.当前命中idx ?? 0), 定位正文);
   if (当前查找视图 === '搭配') 处理词组分析();
 }
 
@@ -347,7 +349,7 @@ function 移除临时查找关键词() {
   更新查找导航状态(null);
 }
 
-function 临时跳到查找命中(命中idx) {
+function 临时跳到查找命中(命中idx, 定位正文 = true) {
   const 关键词 = 查找关键词(状态.查找临时关键词id);
   if (!关键词 || !查找临时状态) {
     return;
@@ -378,7 +380,7 @@ function 临时跳到查找命中(命中idx) {
   const 目标位置 =
     行idx * 状态.行高 - (元素.滚动容器.clientHeight - 状态.行高) / 2;
   更新查找导航状态(关键词);
-  动画滚动到(目标位置);
+  if (定位正文) 动画滚动到(目标位置);
 }
 
 export function 定位查找命中(方向) {
