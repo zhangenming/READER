@@ -9,7 +9,7 @@
 //   识别到指令后立即派发，阅读器同步翻页，无需任何手动确认。
 // 不创建任何 DOM 与样式，识别在后台静默进行；所有日志仅输出到控制台。
 // 事件名与 app.js 共享 js/常量.js 的 语音事件（单一数据源，改名时两处同时生效）。
-import { 语音事件, 语音重连间隔毫秒 } from './js/常量.js';
+import { 语音事件, 语音重连间隔毫秒, 语音最大重试次数 } from './js/常量.js';
 
 (function () {
   const 参数 = new URLSearchParams(location.search);
@@ -24,6 +24,7 @@ import { 语音事件, 语音重连间隔毫秒 } from './js/常量.js';
 
   let 连接 = null;
   let 重连计时器 = 0;
+  let 已重试次数 = 0;
 
   function 时间戳() {
     return new Date().toLocaleTimeString('zh-CN', { hour12: false });
@@ -75,7 +76,11 @@ import { 语音事件, 语音重连间隔毫秒 } from './js/常量.js';
       return null;
     }
     const 类型 = String(消息.type || '').toLowerCase();
-    if (/(final|result|complete|sentence|utterance|speech\.?end|done|stop|recognition)/.test(类型)) {
+    if (
+      /(final|result|complete|sentence|utterance|speech\.?end|done|stop|recognition)/.test(
+        类型,
+      )
+    ) {
       return true;
     }
     if (/(partial|interim|hypothesis|temp|speaking|alt)/.test(类型)) {
@@ -156,10 +161,14 @@ import { 语音事件, 语音重连间隔毫秒 } from './js/常量.js';
     } catch (错误) {
       console.warn(`[语音转录 ${时间戳()}] 连接失败：${错误.message}`);
       连接 = null;
+      安排重连();
       return;
     }
     连接.onopen = () => {
-      console.info(`[语音转录 ${时间戳()}] 已连接 ${地址}，加入房间「${房间}」`);
+      console.info(
+        `[语音转录 ${时间戳()}] 已连接 ${地址}，加入房间「${房间}」`,
+      );
+      已重试次数 = 0;
       window.clearTimeout(重连计时器);
       连接.send(JSON.stringify({ type: 'join', role: 'display', room: 房间 }));
     };
@@ -173,13 +182,25 @@ import { 语音事件, 语音重连间隔毫秒 } from './js/常量.js';
       处理转录消息(消息);
     };
     连接.onclose = () => {
-      console.warn(
-        `[语音转录 ${时间戳()}] 连接断开（服务器未启动？），${Math.round(语音重连间隔毫秒 / 1000)} 秒后自动重连`,
-      );
-      window.clearTimeout(重连计时器);
-      重连计时器 = window.setTimeout(连接服务器, 语音重连间隔毫秒);
+      连接 = null;
+      安排重连();
     };
     连接.onerror = () => 连接.close();
+
+    function 安排重连() {
+      window.clearTimeout(重连计时器);
+      if (已重试次数 >= 语音最大重试次数) {
+        console.warn(
+          `[语音转录 ${时间戳()}] 已重试 ${语音最大重试次数} 次仍未连上，停止重连`,
+        );
+        return;
+      }
+      已重试次数 += 1;
+      console.warn(
+        `[语音转录 ${时间戳()}] 连接断开（服务器未启动？），${Math.round(语音重连间隔毫秒 / 1000)} 秒后第 ${已重试次数} 次重试`,
+      );
+      重连计时器 = window.setTimeout(连接服务器, 语音重连间隔毫秒);
+    }
   }
 
   连接服务器();
