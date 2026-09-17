@@ -1680,11 +1680,10 @@ dialog,
 }
 
 .查找弹窗 {
-  display: flex;
-  flex-direction: column;
-  width: min(720px, calc(100vw - 32px));
-  max-height: calc(100dvh - 32px);
-  margin: 16px auto auto;
+  width: min(1120px, calc(100vw - 24px));
+  height: calc(100dvh - 24px);
+  max-height: calc(100dvh - 24px);
+  margin: 12px auto;
   padding: 0;
   color: var(--墨色);
   background: var(--纸张色);
@@ -1698,15 +1697,43 @@ dialog,
 }
 
 .查找弹窗[open] {
+  display: flex;
+  flex-direction: column;
   animation: 查找弹窗进入 140ms ease-out;
 }
 
 .查找表单 {
   display: flex;
+  flex: 1;
+  flex-direction: row;
+  min-height: 0;
+  height: 100%;
+  padding: 0;
+}
+
+.查找侧栏 {
+  display: flex;
+  flex: 0 0 252px;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  padding: 16px 14px;
+  border-right: 1px solid var(--边线色);
+}
+
+.查找主栏 {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+#上下文结果 {
+  display: flex;
+  flex: 1 1 58%;
   flex-direction: column;
   min-height: 0;
-  max-height: 100%;
-  padding: 16px;
 }
 
 .查找标题栏,
@@ -1718,7 +1745,7 @@ dialog,
 .查找标题栏 {
   justify-content: space-between;
   min-height: 28px;
-  margin-bottom: 12px;
+  margin-bottom: 2px;
 }
 
 .查找标题栏 label {
@@ -1812,7 +1839,7 @@ dialog,
 }
 
 .查找反馈 {
-  margin: 6px 0 -4px;
+  margin: 0;
   color: #9f3526;
   font-size: 12px;
   line-height: 18px;
@@ -1824,10 +1851,10 @@ dialog,
 
 .查找导航行 {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin-top: 2px;
   color: var(--次要墨色);
   font-size: 12px;
   font-variant-numeric: tabular-nums;
@@ -1835,14 +1862,21 @@ dialog,
 }
 
 .查找导航按钮组 {
-  display: flex;
-  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
   gap: 6px;
 }
 
-.查找输入行 .查找导航按钮 {
-  min-height: 42px;
-  padding: 0 10px;
+.查找侧栏 .查找导航按钮 {
+  min-height: 36px;
+  width: 100%;
+  padding: 0 8px;
+}
+
+.查找侧栏 .查找输入框 {
+  width: 100%;
+  flex: none;
 }
 
 .查找导航按钮 {
@@ -1876,7 +1910,6 @@ dialog,
   color: var(--次要墨色);
   font-size: 12px;
   line-height: 18px;
-  text-align: right;
 }
 
 .查找弹窗 .上下文列表,
@@ -1885,11 +1918,16 @@ dialog,
 }
 
 .查找弹窗 .上下文列表 {
-  max-height: min(360px, max(8em, calc(100dvh - 420px)));
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+  border-top: 0;
 }
 
 .查找弹窗 .分析分栏 {
-  max-height: min(220px, max(8em, calc(100dvh - 520px)));
+  flex: 1;
+  min-height: 0;
+  max-height: none;
 }
 
 .上下文行.当前 {
@@ -1903,11 +1941,18 @@ dialog,
 }
 
 .分析结果 {
-  margin-top: 10px;
+  display: flex;
+  flex: 1 1 42%;
+  flex-direction: column;
+  min-height: 0;
+  margin: 0;
+  border-top: 1px solid #000000;
 }
 
 .分析结果摘要 {
-  margin: 0 0 8px;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 8px 12px 6px;
   color: var(--次要墨色);
   font-size: 12px;
   font-variant-numeric: tabular-nums;

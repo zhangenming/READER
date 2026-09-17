@@ -144,19 +144,30 @@
 
     <dialog id="查找弹窗" class="查找弹窗" aria-labelledby="查找标题">
       <form id="查找表单" class="查找表单">
-        <div class="查找标题栏">
-          <label id="查找标题" for="查找输入框">查找正文</label>
-          <button
-            id="关闭查找按钮"
-            class="关闭查找按钮"
-            type="button"
-            aria-label="关闭查找"
-            title="关闭"
-          >
-            ×
-          </button>
-        </div>
-        <div class="查找输入行">
+        <aside class="查找侧栏">
+          <div class="查找标题栏">
+            <label id="查找标题" for="查找输入框">查找正文</label>
+            <button
+              id="关闭查找按钮"
+              class="关闭查找按钮"
+              type="button"
+              aria-label="关闭查找"
+              title="关闭"
+            >
+              ×
+            </button>
+          </div>
+          <div class="查找输入行">
+            <input
+              id="查找输入框"
+              class="查找输入框"
+              type="search"
+              autocomplete="off"
+              enterkeyhint="search"
+              placeholder="输入关键词"
+              aria-describedby="查找反馈"
+            />
+          </div>
           <div class="查找导航按钮组">
             <button
               id="查找上一个按钮"
@@ -177,25 +188,17 @@
               下一个 →
             </button>
           </div>
-          <input
-            id="查找输入框"
-            class="查找输入框"
-            type="search"
-            autocomplete="off"
-            enterkeyhint="search"
-            placeholder="输入关键词"
-            aria-describedby="查找反馈"
-          />
-        </div>
-        <p id="查找反馈" class="查找反馈" role="status" aria-live="polite"></p>
-        <div class="查找导航行" aria-live="polite">
-          <span id="查找命中摘要" class="查找命中摘要"></span>
-          <span class="查找操作提示">点击结果进入正文 · Esc 返回原位置</span>
-        </div>
-        <section id="上下文结果" aria-label="查找上下文">
-          <div id="上下文列表" class="上下文列表"></div>
-        </section>
-        <section id="分析结果" class="分析结果" aria-live="polite">
+          <p id="查找反馈" class="查找反馈" role="status" aria-live="polite"></p>
+          <div class="查找导航行" aria-live="polite">
+            <span id="查找命中摘要" class="查找命中摘要"></span>
+            <span class="查找操作提示">点击结果进入正文 · Esc 返回原位置</span>
+          </div>
+        </aside>
+        <div class="查找主栏">
+          <section id="上下文结果" aria-label="查找上下文">
+            <div id="上下文列表" class="上下文列表"></div>
+          </section>
+          <section id="分析结果" class="分析结果" aria-live="polite">
           <p id="分析结果摘要" class="分析结果摘要"></p>
           <div class="分析分栏">
             <section id="前置分析栏" class="分析栏">
@@ -214,6 +217,7 @@
             </section>
           </div>
         </section>
+        </div>
       </form>
     </dialog>
 
