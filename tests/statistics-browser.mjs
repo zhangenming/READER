@@ -50,13 +50,43 @@ try {
     if (ready) break;
   }
   assert.ok(ready, 'reader loaded');
+  // 实际 app 事件接线及持久化：手动停留、隐藏暂停、恢复、pagehide/pageshow。
+  await evaluate(`window.前台测试快照 = async () => {
+    const { 保存持久化状态 } = await import('./js/持久化.js');
+    const { 获取书籍前台毫秒 } = await import('./js/前台停留.js');
+    const { 状态 } = await import('./js/状态.js');
+    保存持久化状态();
+    return 获取书籍前台毫秒(状态.文件名);
+  };`);
+  const before = await evaluate('return await window.前台测试快照()');
+  await new Promise(resolve => setTimeout(resolve, 1100));
+  const after = await evaluate('return await window.前台测试快照()');
+  assert.ok(after - before >= 1000, 'manual reading counts');
+  await evaluate(`Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'hidden' });
+    document.dispatchEvent(new Event('visibilitychange'));`);
+  const hidden = await evaluate('return await window.前台测试快照()');
+  await new Promise(resolve => setTimeout(resolve, 1100));
+  assert.equal(await evaluate('return await window.前台测试快照()'), hidden);
+  await evaluate(`delete document.visibilityState; document.dispatchEvent(new Event('visibilitychange'));`);
+  await new Promise(resolve => setTimeout(resolve, 1100));
+  assert.ok(await evaluate('return await window.前台测试快照()') >= hidden + 1000);
+  await evaluate(`window.dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true }));`);
+  const left = await evaluate('return await window.前台测试快照()');
+  await new Promise(resolve => setTimeout(resolve, 200));
+  assert.equal(await evaluate('return await window.前台测试快照()'), left);
+  await evaluate(`window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true }));`);
+  await new Promise(resolve => setTimeout(resolve, 200));
+  assert.ok(await evaluate('return await window.前台测试快照()') > left);
+  const saved = await evaluate(`const { 持久化键 } = await import('./js/常量.js');
+    return JSON.parse(localStorage.getItem(持久化键)).前台停留统计;`);
+  assert.ok(Object.keys(saved.每日书籍毫秒).length > 0, 'foreground persisted');
   await evaluate('document.querySelector("#阅读统计按钮").click()');
   assert.ok(
     await evaluate('return document.querySelector("#阅读统计弹窗").open'),
   );
   assert.equal(
     await evaluate('return document.querySelectorAll(".统计卡片").length'),
-    3,
+    5,
   );
   assert.ok(await evaluate('return !!document.querySelector(".统计每日表")'));
   // 深色正文不能污染弹窗主题。
@@ -73,8 +103,9 @@ try {
   await evaluate(`const { 创建阅读统计内容 } = await import('./js/阅读统计.js');
     const 长名 = '很长的书名'.repeat(16) + '<b>特别版</b>.txt';
     document.querySelector('#阅读统计内容').replaceChildren(创建阅读统计内容({
-      今日: 45000, 文件名: '当前书.txt', 进度: 2.9, 今天: '2026-09-17',
-      书籍: [['当前书.txt', {总滚动毫秒: 11820000}], [长名, {总滚动毫秒: 2700000, 阅读偏移: 50, 文本长度: 100}]],
+      今日: 45000, 今日前台: 180000, 文件名: '当前书.txt', 进度: 2.9, 今天: '2026-09-17',
+      书籍: [['当前书.txt', {总滚动毫秒: 11820000, 总前台毫秒: 180000}], [长名, {总滚动毫秒: 2700000, 阅读偏移: 50, 文本长度: 100}]],
+      每日前台: { '当前书.txt': [['2026-09-17', 120000], ['2026-09-15', 60000]] },
       每日: {
         '当前书.txt': [['2026-09-17', 45000], ['2026-09-16', 11820000]],
         [长名]: [['2026-09-10', 2700000]],
@@ -110,6 +141,12 @@ try {
       'return document.querySelector(".统计每日").textContent.includes("9月16日")',
     ),
   );
+  assert.deepEqual(await evaluate(`return [...document.querySelectorAll('.统计每日 tbody tr')]
+    .map(row => [...row.cells].map(cell => cell.textContent))`), [
+    ['今天', '不足 1 分钟', '2 分钟'],
+    ['9月16日', '3 小时 17 分钟', '0 分钟'],
+    ['9月15日', '0 分钟', '1 分钟'],
+  ]);
   await evaluate(
     'document.querySelector("#阅读统计内容 tr.统计可点:not(.统计选中书)").click()',
   );
@@ -140,7 +177,7 @@ try {
       await evaluate(
         'const d = document.querySelector("#阅读统计弹窗"); const r = d.getBoundingClientRect(); return r.left >= 0 && r.right <= innerWidth && d.scrollWidth <= d.clientWidth;',
       ),
-      `no overflow at ${width}px`,
+      `no overflow at ${width}px: ${JSON.stringify(await evaluate('const d = document.querySelector("#阅读统计弹窗"); const r = d.getBoundingClientRect(); const t = document.querySelector(".统计每日表"); return {left:r.left,right:r.right,width:innerWidth,scroll:d.scrollWidth,client:d.clientWidth,caption:t?.caption?.textContent,tableScroll:t?.scrollWidth,th:t?[...t.querySelectorAll("th")].map(h=>h.clientWidth):null};'))}`,
     );
     const columns = await evaluate(
       'return getComputedStyle(document.querySelector(".统计摘要")).gridTemplateColumns.split(" ").length',

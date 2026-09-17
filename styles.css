@@ -378,7 +378,7 @@ body.关键词手势中 .滚动容器 {
 }
 .阅读统计内容 th:first-child,
 .阅读统计内容 td:first-child {
-  width: 54%;
+  width: 40%;
   text-align: left;
 }
 .统计可点 {
@@ -408,7 +408,6 @@ body.关键词手势中 .滚动容器 {
 .统计每日 caption {
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .阅读统计内容 .统计每日表 th:first-child,
 .阅读统计内容 .统计每日表 td:first-child {

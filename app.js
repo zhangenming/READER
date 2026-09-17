@@ -23,6 +23,13 @@ import {
   获取静止滚动位置,
 } from './js/状态.js';
 import { 创建阅读统计内容 } from './js/阅读统计.js';
+import {
+  载入前台停留统计,
+  更新前台停留计时,
+  书籍每日前台毫秒,
+  获取书籍前台毫秒,
+  获取今日前台毫秒,
+} from './js/前台停留.js';
 import { 显示文本处理错误, 显示错误 } from './js/错误提示.js';
 import {
   查找偏移所在行,
@@ -196,6 +203,11 @@ function 启动() {
   初始化指示器();
   const 持久化数据 = 读取持久化数据或新建();
   载入自动滚动统计(持久化数据);
+  载入前台停留统计(持久化数据);
+  // 手动阅读也定期保存，不依赖滚动事件。
+  window.setInterval(() => {
+    if (document.visibilityState === 'visible') 保存持久化状态();
+  }, 30_000);
   绑定事件();
   更新当前时间();
   window.setInterval(更新当前时间, 1000);
@@ -539,9 +551,13 @@ function 绑定事件() {
   // Shift 按住期间发生鼠标按下（如 Shift+点击命中词）→ 标记为组合，松开时不切换自动滚动
   // （状态机本体在 js/键盘控制.js，经 标记shift组合 注入）
   window.addEventListener('mousedown', 标记shift组合);
-  window.addEventListener('pagehide', 保存持久化状态);
-  // 标签页隐藏时立即落盘，避免长时间滚动会话中累计的自动滚动时长丢失
+  window.addEventListener('pagehide', () => {
+    更新前台停留计时('', false);
+    保存持久化状态();
+  });
+  window.addEventListener('pageshow', () => 更新前台停留计时());
   document.addEventListener('visibilitychange', function () {
+    更新前台停留计时();
     if (document.visibilityState === 'hidden' && 状态.文件名) {
       保存持久化状态();
     }
@@ -727,6 +743,7 @@ function 绑定事件() {
     const 文件名集合 = new Set([
       ...Object.keys(数据.文本状态 ?? {}),
       ...统计.书籍滚动毫秒.keys(),
+      ...书籍每日前台毫秒.keys(),
       ...(状态.文件名 ? [状态.文件名] : []),
     ]);
     const 书籍 = [...文件名集合].map((名) => {
@@ -736,6 +753,7 @@ function 绑定事件() {
         名,
         {
           ...项,
+          总前台毫秒: 获取书籍前台毫秒(名),
           总滚动毫秒:
             (Number.isFinite(毫秒) ? Math.max(0, 毫秒) : 0) +
             (名 === 状态.文件名 ? 统计.未入账滚动毫秒 : 0),
@@ -763,6 +781,10 @@ function 绑定事件() {
     元素.阅读统计内容.replaceChildren(
       创建阅读统计内容({
         今日,
+        今日前台: 获取今日前台毫秒(),
+        每日前台: Object.fromEntries(
+          [...书籍每日前台毫秒].map(([名, 日期表]) => [名, [...日期表]]),
+        ),
         书籍,
         文件名: 状态.文件名,
         进度,
@@ -1008,6 +1030,7 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
   状态.指示器缓存 = null;
   状态.词频分析 = null;
   状态.全文单字 = 全文单字;
+  更新前台停留计时(文件名);
   状态.文件名 = 文件名;
   状态.引文边界列表 = 句子整理结果.引文边界列表;
   状态.缩进起点集合 = 缩进起点集合;
