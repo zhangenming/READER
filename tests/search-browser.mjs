@@ -188,6 +188,64 @@ try {
   await (await import('node:fs/promises')).writeFile('/tmp/reader-search-mobile.png', Buffer.from(screenshot.data,'base64'));
   await click('#关闭查找按钮');
   console.log('PASS narrow viewport; screenshot /tmp/reader-search-mobile.png');
+
+  // 真实快捷键入口：文本选区 > 当前关键词 > 上次查询。
+  const shortcut = async (modifiers = 2) => {
+    await send('Input.dispatchKeyEvent', {type:'keyDown', key:'f', code:'KeyF', windowsVirtualKeyCode:70, modifiers});
+    await send('Input.dispatchKeyEvent', {type:'keyUp', key:'f', code:'KeyF', windowsVirtualKeyCode:70, modifiers});
+    await pause(100);
+    await settled();
+  };
+  const closeSearch = async () => {
+    await click('#关闭查找按钮');
+    await pause(100);
+    await settled();
+  };
+  await pause(100); await settled();
+  await evaluate(`${state}
+    window.getSelection().removeAllRanges();
+    元素.滚动容器.focus();
+    元素.查找输入框.value = '旧查询';
+    const k = 状态.关键词列表.find(k => k.id === 状态.当前关键词id);
+    k.当前命中idx = 2;
+  `);
+  await shortcut();
+  assert.deepEqual(await evaluate(`${state}
+    const k = 状态.关键词列表.find(k => k.id === 状态.查找临时关键词id);
+    return [元素.查找输入框.value, k.当前命中idx];
+  `), ['的', 2]);
+  await query('他');
+  await shortcut(4); // Command+F：已打开时不覆盖用户正在编辑的查询。
+  assert.equal(await evaluate(`${state} return 元素.查找输入框.value;`), '他');
+  await closeSearch();
+
+  const selectedWord = await evaluate(`${state}
+    元素.滚动容器.focus();
+    const node = [...元素.可见内容.querySelectorAll('.字')].find(n => n.textContent.trim() && n.textContent.trim() !== '的');
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    return selection.toString().trim();
+  `);
+  assert.ok(selectedWord);
+  await shortcut();
+  assert.deepEqual(await evaluate(`${state}
+    const k = 状态.关键词列表.find(k => k.id === 状态.查找临时关键词id);
+    return [元素.查找输入框.value, k.文本, Number.isInteger(k.配色idx), document.activeElement === 元素.查找输入框];
+  `), [selectedWord, selectedWord, true, true]);
+  await closeSearch();
+  await evaluate(`${state}
+    window.getSelection().removeAllRanges();
+    状态.当前关键词id = null;
+    元素.查找输入框.value = '的';
+  `);
+  await shortcut(4);
+  assert.equal(await evaluate(`${state} return 元素.查找输入框.value;`), '的');
+  await closeSearch();
+  assert.deepEqual(browserErrors, []);
+  console.log('PASS Ctrl/Command+F selection, current keyword, previous query, repeated shortcut and preview color');
 } finally {
   await send('Emulation.clearDeviceMetricsOverride');
   ws.close();
