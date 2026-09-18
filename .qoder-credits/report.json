@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 3.2,
+  "generatedAt": "2026-09-18T14:08:28.943Z",
+  "source": "desktop-rich",
+  "usageSource": "transcript-ratio",
+  "availability": {
+    "credits": "measured",
+    "roundTrips": "measured",
+    "contextRatio": "measured",
+    "tokens": "derived",
+    "outputTokens": "unavailable",
+    "cachedTokens": "unavailable",
+    "categoryShare": "derived",
+    "toolShare": "derived",
+    "fileShare": "derived",
+    "systemPrompt": "derived",
+    "contextWindow": "measured",
+    "compactions": "measured",
+    "compactionCost": "measured",
+    "model": "measured",
+    "title": "measured",
+    "toolCalls": "measured",
+    "fileReads": "measured",
+    "userTurns": "measured",
+    "userContextLimit": "fallback"
+  },
+  "session": {
+    "id": "b1c4fded-2788-49bf-af32-4972431b9ce8",
+    "title": "[@Architecture Visualiza",
+    "titleSource": "first-user",
+    "model": "qfmodel",
+    "modelSource": "runtime-config",
+    "cwd": "/Users/zem/AI/READER",
+    "turns": 1,
+    "roundTrips": 1,
+    "compactions": 0,
+    "startedAt": "2026-09-18T14:08:20.615Z",
+    "endedAt": "2026-09-18T14:08:27.789Z"
+  },
+  "context": {
+    "contextWindow": 1000000,
+    "contextWindowSource": "runtime-config",
+    "systemPromptTokens": 22264,
+    "netContextTokens": 25581,
+    "peakContextTokens": 25581,
+    "peakContextRatio": 0.025581,
+    "peakSessionTokens": 25581,
+    "peakSessionRatio": 0.025581,
+    "peakSessionNotable": false,
+    "peakAdvice": {
+      "level": "low",
+      "tone": "info",
+      "text": "低于盈亏线（39%）。此时压缩在 token 上是亏的：省下的还不够付摘要输出加压缩后重读，别压"
+    },
+    "userContextLimit": 200000,
+    "userContextLimitSource": "default",
+    "peakUserRatio": 0.127905,
+    "peakUserAdvice": {
+      "level": "low",
+      "tone": "info",
+      "text": "低于盈亏线（39%）。此时压缩在 token 上是亏的：省下的还不够付摘要输出加压缩后重读，别压"
+    },
+    "currentContextTokens": 25581,
+    "netUserRatio": 0.127905,
+    "netUserAdvice": {
+      "level": "low",
+      "tone": "info",
+      "text": "低于盈亏线（39%）。此时压缩在 token 上是亏的：省下的还不够付摘要输出加压缩后重读，别压"
+    },
+    "netWindowRatio": 0.025581,
+    "observedAutoCompactions": 0,
+    "observedAutoTriggerTokens": null,
+    "autoTriggerRatio": null,
+    "thresholdNotEnforced": true
+  },
+  "totals": {
+    "billedInputTokens": 25581,
+    "netContextTokens": 25581,
+    "peakContextTokens": 25581,
+    "amplification": 1,
+    "attributedTokens": 25581,
+    "coverage": 1,
+    "credits": 0.209,
+    "originalCredits": 0.209,
+    "outputTokens": 0,
+    "cachedTokens": 0,
+    "cachedTrips": 0,
+    "cachedShare": 0,
+    "toolCalls": 1,
+    "fileReads": 0
+  },
+  "creditsCoverage": {
+    "trips": 1,
+    "roundTrips": 1,
+    "tokens": 25581,
+    "tokenShare": 1,
+    "full": true
+  },
+  "compactionCost": {
+    "count": 0,
+    "items": [],
+    "totals": {
+      "preTokens": 0,
+      "postTokens": 0,
+      "savedTokens": 0,
+      "measured": 0
+    }
+  },
+  "proxy": {
+    "matched": 0,
+    "requests": 1,
+    "breakdown": {
+      "proxy": 0,
+      "transcriptTokens": 0,
+      "transcriptRatio": 1
+    },
+    "logPath": "/Users/zem/.qoder-credits-proxy/usage.jsonl",
+    "logExists": false,
+    "logRecords": 0,
+    "configured": false,
+    "enabled": true,
+    "port": 49787,
+    "lastRecordAt": null,
+    "dormant": false,
+    "status": null,
+    "statusSuperseded": false
+  },
+  "byCategory": [
+    {
+      "key": "system",
+      "label": "系统提示词",
+      "tokens": 22264,
+      "share": 0.870333450607873
+    },
+    {
+      "key": "user_input",
+      "label": "用户输入",
+      "tokens": 326,
+      "share": 0.012743833313787577
+    },
+    {
+      "key": "attachment",
+      "label": "附件/技能",
+      "tokens": 2991,
+      "share": 0.11692271607833939
+    }
+  ],
+  "byCategoryDetail": [
+    {
+      "key": "system",
+      "label": "系统提示词",
+      "tokens": 22264,
+      "share": 0.870333450607873,
+      "children": []
+    },
+    {
+      "key": "user_input",
+      "label": "用户输入",
+      "tokens": 326,
+      "share": 0.012743833313787577,
+      "children": []
+    },
+    {
+      "key": "attachment",
+      "label": "附件/技能",
+      "tokens": 2991,
+      "share": 0.11692271607833939,
+      "children": []
+    }
+  ],
+  "byTool": [
+    {
+      "tool": "Bash",
+      "tokens": 0,
+      "calls": 1,
+      "perCall": 0,
+      "share": 0
+    }
+  ],
+  "byFile": [],
+  "byAttr": [
+    {
+      "attr": "system",
+      "tokens": 22264,
+      "share": 0.870333450607873
+    },
+    {
+      "attr": "attachment",
+      "tokens": 2991,
+      "share": 0.11692271607833939
+    },
+    {
+      "attr": "user_input",
+      "tokens": 326,
+      "share": 0.012743833313787577
+    }
+  ],
+  "byRequest": [
+    {
+      "index": 1,
+      "time": "22:08",
+      "ratio": 0.025581,
+      "inputTokens": 25581,
+      "outputTokens": null,
+      "usageSource": "transcript-ratio",
+      "credits": 0.209,
+      "originalCredits": 0.209,
+      "afterCompact": false
+    }
+  ],
+  "identity": {
+    "sumAttributed": 25581,
+    "billedInputTokens": 25581,
+    "absDiff": 0,
+    "ok": true
+  },
+  "pluginVersion": "2.7.4",
+  "selfCmd": "node \"/Users/zem/.qoder-cn/plugins/cache/qoder-marketplace/qoder-credits-inspector/2.7.4/scripts/cli.mjs\"",
+  "linkHealth": {
+    "matched": 0,
+    "requests": 1,
+    "coverage": 0,
+    "usageSource": "transcript-ratio",
+    "breakdown": {
+      "proxy": 0,
+      "transcriptTokens": 0,
+      "transcriptRatio": 1
+    },
+    "logRecords": 0,
+    "lastRecordAt": null,
+    "recentRequests": 0,
+    "proxyErrors": null,
+    "clientAbort": null,
+    "clientAbortMaxMs": null,
+    "upstreamRejected": null,
+    "aborted": null,
+    "truncated": null,
+    "noUsage": null,
+    "slowestMs": null,
+    "supersededFailure": null
+  },
+  "subagents": {
+    "scanned": false,
+    "dir": null,
+    "probedPaths": [
+      "/Users/zem/.qoder-cn/projects/-Users-zem-AI-READER/b1c4fded-2788-49bf-af32-4972431b9ce8/subagents",
+      "/Users/zem/.qoder-cn/projects/b1c4fded-2788-49bf-af32-4972431b9ce8/subagents"
+    ],
+    "reason": "no-dir",
+    "count": 0,
+    "items": [],
+    "totals": {
+      "roundTrips": 0,
+      "billedInputTokens": 0,
+      "credits": 0,
+      "originalCredits": 0
+    },
+    "combined": {
+      "roundTrips": 1,
+      "billedInputTokens": 25581,
+      "credits": 0.209,
+      "originalCredits": 0.209
+    }
+  },
+  "manual": null,
+  "artifacts": {
+    "report": "report.json",
+    "canvas": "[@Architecture Visualiza__b1c4fded.canvas.tsx"
+  }
+}
