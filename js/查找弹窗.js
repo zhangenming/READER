@@ -112,8 +112,9 @@ export function 处理上下文行点击(事件) {
 }
 
 // —— 搭配分析的词组提取（纯函数，供本模块与 tmp/verify-collocations.mjs 共享）——
-// 从全文的 文本偏移 处（关键词起点），向后取「关键词 + 紧随其后的第一个词」。
-// 紧邻的标点/空白不做特殊处理：跳过它们继续找下一个词；窗口内再无词才只返回关键词本身。
+// 从全文的 文本偏移 处（关键词起点），向后取「关键词 + 紧随其后的邻接词」。
+// 邻接标点不做特殊处理：按自身归类，只取紧贴关键词的那一个字符；
+// 空白/换行属于排版而非内容，跳过。汉字则取整个词，由 邻接字 归组。
 
 export function 提取后续词组自文本(全文, 文本偏移, 前缀长度) {
   const 上下文 = 全文.slice(文本偏移, 文本偏移 + 前缀长度 + 词组上下文窗口);
@@ -129,10 +130,12 @@ export function 提取后续词组自文本(全文, 文本偏移, 前缀长度) 
       词部分 = 上下文.slice(前缀终点, 片段终点);
       break;
     }
-    if (!片段.isWordLike) {
-      continue; // 紧邻标点不截断，跳过找下一个词
+    if (!片段.segment.trim()) {
+      continue; // 空白/换行跳过，取下一个可见片段
     }
-    词部分 = 片段.segment;
+    词部分 = 片段.isWordLike
+      ? 片段.segment
+      : 邻接字(片段.segment, true); // 标点组：紧贴关键词的单字
     break;
   }
   return 上下文.slice(0, 前缀终点) + 词部分;
@@ -147,10 +150,11 @@ export function 提取前置词组自文本(全文, 文本偏移) {
     if (片段.index >= 上下文.length) {
       continue;
     }
-    if (!片段.isWordLike) {
-      continue; // 紧邻标点不截断，向前跳过找上一个词
+    if (!片段.segment.trim()) {
+      continue; // 空白/换行跳过，向前找上一个可见片段
     }
-    return 片段.segment;
+    // 标点组：只取紧贴关键词的那一个字符
+    return 片段.isWordLike ? 片段.segment : 邻接字(片段.segment, false);
   }
   return '';
 }
@@ -170,6 +174,8 @@ export function 邻接字(词组, 向后) {
 // 只出现 1 次时「全部相同」没有对比意义，保持原词组；碰到非汉字或超出窗口则停止。
 export function 扩展唯一汉字接续(全文, 锚点列表, 已有接续, 向后) {
   if (锚点列表.length <= 1) return 已有接续;
+  // 标点组保持自身：「那里。杨金水」归「。」，不并回相邻汉字
+  if (!是汉字(已有接续)) return 已有接续;
   let 接续 = 已有接续;
   while (接续.length < 词组上下文窗口) {
     let 下一字 = '';
