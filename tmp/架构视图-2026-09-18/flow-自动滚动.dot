@@ -1,0 +1,78 @@
+digraph "READER 自动滚动运行时流程" {
+  # 生成：2026-09-18 · flow-visualizer + graphviz
+  # 每个节点标签含 文件:行号；全部行号已逐条 Read 核实。
+  # 唯一事实源是 js/自动滚动.js，本图为其 执行自动滚动 的时序投影。
+  graph [rankdir=TB, splines=true, fontname="PingFang SC", fontsize=15,
+         label="自动滚动：启动 → 每帧(rAF) → 50ms 界面节拍 → 停止\n实线=同帧顺序；粗红=跨节拍反馈(滞后最多 50ms)；蓝=布局读写",
+         labelloc=t, nodesep=0.22, ranksep=0.5];
+  node [shape=box, style="rounded,filled", fontname="PingFang SC", fontsize=10,
+        fillcolor="#f4f6f7", margin="0.13,0.07"];
+  edge [arrowhead=open, color="#5d6d7e", fontname="PingFang SC", fontsize=9];
+
+  DOM   [label="DOM: 滚动容器.scrollTop\n合成层 可见内容.style.transform", shape=cylinder, fillcolor="#d6eaf8"];
+  LAYOUT[label="布局读取(触发同步重排)\nclientHeight / scrollHeight", fillcolor="#d6eaf8"];
+
+  subgraph cluster_START {
+    label="① 启动路径"; style=dashed; color="#825f48"; fontsize=12;
+    trig  [label="触发：悬停/聚焦滚动按钮\napp.js:418-419；Ctrl/Cmd+D 键盘控制.js:190\nSpace :236；双击Shift :406；Z/X长按 :157"];
+    抢占  [label="自动滚动.js:233 → :239-249\n若已在滚动则先取消旧 rAF(快速翻页复用)"];
+    建状态[label="自动滚动.js:251-274 建 自动滚动状态\n当前速度=0 · 浮点位置=scrollTop\n最大滚动位置一次性缓存(:272)\n视口度量 初始化(:264-268) · 上次界面时间=0"];
+    首帧  [label=":275 帧=requestAnimationFrame(执行自动滚动)\n:276 开滚轮监听 · :277 更新按钮(true)\n上次界面时间=0 ⇒ 首帧必定走满节拍"];
+    trig -> 抢占 -> 建状态 -> 首帧;
+  }
+
+  subgraph cluster_FRAME {
+    label="② 每一帧 执行自动滚动(当前时间)  自动滚动.js:522"; style=dashed; color="#1a5276"; fontsize=12;
+    dt    [label=":529 经过毫秒=min(50, Δt)  ← 掉帧时钳制\n:530 缓动比例=1-exp(-Δt/140)"];
+    目标  [label=":534-538 目标速度\n快速翻页→固定高速 / 停留中→0\n否则→ 密度目标速度(来自节拍)"];
+    插值  [label=":550 当前速度 += (目标-当前)*缓动比例\n:551 浮点位置 += 当前速度*Δt/1000  [px/s→px]\n:552 新位置 = clamp(0, 最大滚动位置)"];
+    快翻  [label=":553-574 快速翻页到位?\n是→设停留结束时间+淡出衔接线+console.info"];
+    计    [label=":575 上帧时间=当前时间\n:577-581 未入账滚动毫秒 += Δt\n每 30s 触发 安排保存持久化状态"];
+    写pos [label="★ :583 元素.滚动容器.scrollTop = 新位置\n唯一每帧写入点(整数像素)", fillcolor="#f9e79f"];
+    门    [label=":584 节拍门\n当前时间-上次界面时间 >= 50ms ?", shape=diamond, fillcolor="#fadbd8"];
+    回读  [label=":613 实际滚动位置 = scrollTop(回读被取整后的值)\n:614 小数位移 = 浮点位置 - 实际滚动位置"];
+    写tf  [label="★ :615 可见内容.transform =\ntranslateY(状态.渲染起点*状态.行高 - 小数位移)\n每帧执行；读两个由他处写入的共享字段", fillcolor="#f9e79f"];
+    块位  [label=":616 更新滚动块位置(视口度量, 浮点位置)\n每帧，用节拍缓存的度量(:592)非实时读取"];
+    末    [label=":617 新位置 >= 最大滚动位置-0.5 ?\n是→ 停止自动滚动('已到文末') 并 return", shape=diamond];
+    续    [label=":621 帧 = requestAnimationFrame(自身)"];
+    dt -> 目标 -> 插值 -> 快翻 -> 计 -> 写pos -> 门 -> 回读 -> 写tf -> 块位 -> 末 -> 续;
+  }
+
+  subgraph cluster_TICK {
+    label="③ 50ms 界面节拍（约 20Hz，自动滚动界面间隔=50 常量.js:45）"; style=dashed; color="#7d6608"; fontsize=12;
+    读量 [label=":587-591 读 轨道高度/容器高度/scrollHeight\n← 全链路唯一的每节拍布局读取"];
+    缓存 [label=":592-593 存 视口度量 并更新 最大滚动位置\n= scrollHeight - clientHeight"];
+    密度 [label=":594 密度目标速度 = 计算密度自适应目标速度()\n:488-520 前瞻窗口: 下移 0.3 视口(常量.js:64)\n:503-506 排版引擎.js:478 二分句段起点 + 前缀和\n:512-518 因子夹取, 强度 0.7 幂映射"];
+    块更 [label=":598 更新滚动块(视口度量)\n→ 滚动条.js:162-167"];
+    渲染 [label=":599 渲染可见行(false, 容器高度)\n→ 虚拟渲染.js:78 写 状态.渲染起点\n   早退: 窗口未变则 :36 直接 return"];
+    文字 [label=":602-609 设置文本 ×4\n基速 / 实际速度% / 已滚动分钟 / 今日总时长"];
+    读量 -> 缓存 -> 密度 -> 块更 -> 渲染 -> 文字;
+  }
+
+  subgraph cluster_STOP {
+    label="④ 停止  停止自动滚动(原因)  :624"; style=dashed; color="#922b21"; fontsize=12;
+    因 [label="移出按钮 app.js:765-772 · 失焦 :726-727\n打开目录/统计 :370,:776 · 跳转动画钩子 :398\n文末 :617 · 手动 :587→:470"];
+    cancel [label=":629 cancelAnimationFrame(帧)\n:630 自动滚动状态 = null ← 幂等守卫 :524"];
+    收尾 [label=":631-637 关滚轮监听 · 更新滚动块 · 渲染可见行()\n安排保存持久化状态 · 按钮 false · 隐藏衔接线\n移除 body.自动滚动中"];
+    因 -> cancel -> 收尾;
+  }
+
+  并行rAF [label="第二条并行 rAF：执行按键滚动 (Z/X 长按)\n:297 起 · :332 自续 · :340 取消\n独立句柄，与 执行自动滚动 不共享帧", fillcolor="#eaf2f8"];
+  短路   [label="scroll 事件不参与驱动\napp.js:700,:706 自动滚动期间直接 return\n(其 rAF 在 :704)", fillcolor="#fdf2e9"];
+
+  首帧 -> dt;
+  末 -> 因 [label="是", color="#922b21"];
+  续 -> dt [label="下一帧", style=bold, color="#1a5276", weight=10];
+  门 -> 读量 [label="是(每50ms)", color="#7d6608"];
+  门 -> 回读 [label="否(直接跳到亚像素补偿)", color="#7d6608", style=dotted];
+  文字 -> 目标 [label="反馈：密度目标速度仅供「下一帧」:533 读取\n⇒ 自适应测速环路实际跑在 20Hz\n而位置积分跑在屏幕刷新率", color="#c0392b", penwidth=3, style=bold];
+  渲染 -> 写tf [label="写 状态.渲染起点 → :615 读", color="#2e86c1"];
+  LAYOUT -> 读量 [label="读", color="#2e86c1", style=dashed];
+  写pos -> DOM [label="写整数 px", color="#2e86c1"];
+  写tf -> DOM [label="写合成层补小数", color="#2e86c1"];
+  建状态 -> LAYOUT [label="启动时读一次", color="#2e86c1", style=dashed];
+  缓存 -> LAYOUT [label="读", color="#2e86c1", style=dashed];
+  块位 -> DOM [color="#2e86c1", style=dashed];
+  并行rAF -> 写pos [label="复用同一段位移写入", style=dotted];
+  短路 -> 块位 [style=invis];
+}
