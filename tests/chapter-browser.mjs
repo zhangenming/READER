@@ -128,6 +128,34 @@ try {
     'PASS chapter navigation, current chapter, exact virtual row and focus',
   );
 
+  const 首章刻度 = await evaluate(`${state}
+    const { 读取滚动条度量, 滚动位置转轨道中心 } = await import('./js/滚动条.js');
+    const { 查找偏移所在行 } = await import('./js/排版引擎.js');
+    const 轨道高度 = 元素.自定义滚动条.clientHeight;
+    const 度量 = 读取滚动条度量(轨道高度, 元素.滚动容器.clientHeight, 元素.滚动容器.scrollHeight);
+    const 章节 = 状态.章节列表[1];
+    const 滚动位置 = Math.max(0, 查找偏移所在行(章节.偏移) * 状态.行高 + 状态.行高 / 2 - 元素.滚动容器.clientHeight / 2);
+    return { 偏移: 章节.偏移, 期望中心: 滚动位置转轨道中心(滚动位置, 度量), 章节数: 状态.章节列表.length };
+  `);
+  const 刻度 = await evaluate(`${state}
+    元素.章节刻度.hidden = false;
+    元素.章节刻度.width = 0;
+    (await import('./js/指示器.js')).更新关键词指示器();
+    const 画布 = 元素.章节刻度;
+    const 图像 = 画布.getContext('2d').getImageData(0, 0, 画布.width, 画布.height).data;
+    const 行 = [];
+    for (let y = 0; y < 画布.height; y++) if (图像[y * 画布.width * 4 + 3] > 0) 行.push(y);
+    return { hidden: 画布.hidden, 行, 像素比: 画布.height / 元素.自定义滚动条.clientHeight };
+  `);
+  assert.equal(刻度.hidden, false);
+  assert.equal(刻度.行.length > 0, true);
+  assert.equal(
+    刻度.行.some((y) => Math.abs((y + 0.5) / 刻度.像素比 - 首章刻度.期望中心) < 2),
+    true,
+    `chapter tick near expected track center ${首章刻度.期望中心}`,
+  );
+  console.log('PASS chapter ticks on scrollbar track (aligned with thumb center mapping)');
+
   await openToc();
   await evaluate(
     'const input = document.querySelector("#章节搜索框"); input.value="不存在的章节"; input.dispatchEvent(new Event("input", {bubbles:true}));',
@@ -377,8 +405,15 @@ try {
   );
   console.log('PASS narrow-screen dialog fits viewport');
   await click('#关闭章节目录按钮');
+  // 无章节文本：章节刻度画布保持隐藏
   fixture = '没有章节的短文本。\n普通正文内容。';
   await resetReload();
+  await evaluate(`(await import('./js/指示器.js')).更新关键词指示器();`);
+  assert.equal(
+    await evaluate('return document.querySelector("#章节刻度").hidden'),
+    true,
+  );
+  console.log('PASS chapter ticks hidden for chapterless text');
   await openToc();
   assert.equal(await evaluate(`${state} return 状态.章节列表.length`), 0);
   assert.equal(
