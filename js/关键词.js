@@ -279,6 +279,49 @@ export function 渲染查找上下文(关键词, 命中idx = 0) {
   追加上下文行块();
 }
 
+function 构建上下文行(关键词, idx, 配色) {
+  const 命中起点 = 关键词.命中位置[idx];
+  const 命中终点 = 命中起点 + 关键词.文本.length;
+  const 行 = document.createElement('button');
+  行.type = 'button';
+  行.className = '上下文行';
+  行.classList.toggle(
+    '当前',
+    idx === 关键词.当前命中idx,
+  );
+  行.dataset.hitIndex = String(idx);
+
+  const 序号 = document.createElement('span');
+  序号.className = '上下文序号';
+  序号.textContent = String(idx + 1);
+  const 前文 = document.createElement('span');
+  前文.className = '上下文前文';
+  前文.textContent = 读取上下文片段(命中起点 - 上下文前文字数, 命中起点);
+  const 命中 = document.createElement('span');
+  命中.className = '上下文命中';
+  命中.textContent = 关键词.文本;
+  命中.style.setProperty('--命中背景', 配色.浅色);
+  const 后文 = document.createElement('span');
+  后文.className = '上下文后文';
+  后文.textContent = 读取上下文片段(命中终点, 命中终点 + 上下文后文字数);
+
+  行.append(序号, 前文, 命中, 后文);
+  return 行;
+}
+
+// 悬停搭配行：把上下文列表整体重建为该搭配的命中子集。
+// 置空 上下文视图 暂停分块加载，避免滚动追块把非命中行混进来。
+export function 渲染搭配上下文(关键词, 命中idx列表) {
+  const 配色 = 获取关键词配色(关键词);
+  const 片段 = document.createDocumentFragment();
+  for (const idx of 命中idx列表) {
+    片段.append(构建上下文行(关键词, idx, 配色));
+  }
+  状态.上下文视图 = null;
+  元素.上下文列表.replaceChildren(片段);
+  元素.上下文列表.scrollTop = 0;
+}
+
 export function 追加上下文行块(向前 = false) {
   const 视图 = 状态.上下文视图;
   const 关键词 = 视图 ? 查找关键词(视图.关键词id) : null;
@@ -295,33 +338,7 @@ export function 追加上下文行块(向前 = false) {
   const 配色 = 获取关键词配色(关键词);
   const 片段 = document.createDocumentFragment();
   for (let idx = 起点; idx < 终点; idx += 1) {
-    const 命中起点 = 关键词.命中位置[idx];
-    const 命中终点 = 命中起点 + 关键词.文本.length;
-    const 行 = document.createElement('button');
-    行.type = 'button';
-    行.className = '上下文行';
-    行.classList.toggle(
-      '当前',
-      idx === 关键词.当前命中idx,
-    );
-    行.dataset.hitIndex = String(idx);
-
-    const 序号 = document.createElement('span');
-    序号.className = '上下文序号';
-    序号.textContent = String(idx + 1);
-    const 前文 = document.createElement('span');
-    前文.className = '上下文前文';
-    前文.textContent = 读取上下文片段(命中起点 - 上下文前文字数, 命中起点);
-    const 命中 = document.createElement('span');
-    命中.className = '上下文命中';
-    命中.textContent = 关键词.文本;
-    命中.style.setProperty('--命中背景', 配色.浅色);
-    const 后文 = document.createElement('span');
-    后文.className = '上下文后文';
-    后文.textContent = 读取上下文片段(命中终点, 命中终点 + 上下文后文字数);
-
-    行.append(序号, 前文, 命中, 后文);
-    片段.append(行);
+    片段.append(构建上下文行(关键词, idx, 配色));
   }
   if (向前) {
     const 原高度 = 元素.上下文列表.scrollHeight;

@@ -14,6 +14,7 @@ import {
   创建关键词标记,
   查找关键词命中,
   渲染查找上下文,
+  渲染搭配上下文,
   追加上下文行块,
 } from './关键词.js';
 import { 更新关键词指示器 } from './指示器.js';
@@ -30,36 +31,28 @@ let 查找临时状态 = null;
 let 实时查找计时器 = 0;
 let 词组分析序号 = 0;
 let 分析结果视图 = null;
-// 悬停搭配行时的命中过滤集合（Set<命中idx>），null 表示不过滤
-let 搭配筛选集 = null;
-
-function 应用搭配筛选() {
-  for (const 行 of 元素.上下文列表.children) {
-    if (!行.classList?.contains('上下文行')) continue;
-    const 隐藏 =
-      搭配筛选集 !== null &&
-      !搭配筛选集.has(Number(行.dataset.hitIndex));
-    行.classList.toggle('搭配隐藏', 隐藏);
-  }
-}
+// 当前悬停生效的搭配统计项；null 表示上下文列表为完整分块视图
+let 悬停搭配项 = null;
 
 export function 处理搭配悬停(事件) {
   const 行 = 事件.target?.closest?.('.分析行');
-  let 新筛选集 = null;
+  let 统计项 = null;
   if (行 && 分析结果视图) {
     const 列表 =
       行.dataset.方向 === '前'
         ? 分析结果视图.前置列表
         : 分析结果视图.后续列表;
-    const 统计项 = 列表?.[Number(行.dataset.统计idx)];
-    if (统计项) {
-      统计项.筛选集 ??= new Set(统计项.命中idx列表);
-      新筛选集 = 统计项.筛选集;
-    }
+    统计项 = 列表?.[Number(行.dataset.统计idx)] ?? null;
   }
-  if (新筛选集 === 搭配筛选集) return;
-  搭配筛选集 = 新筛选集;
-  应用搭配筛选();
+  if (统计项 === 悬停搭配项) return;
+  const 关键词 = 查找关键词(状态.查找临时关键词id);
+  if (!关键词) return;
+  悬停搭配项 = 统计项;
+  if (统计项) {
+    渲染搭配上下文(关键词, 统计项.命中idx列表);
+  } else {
+    渲染查找上下文(关键词, Math.max(0, 关键词.当前命中idx));
+  }
 }
 
 export function 处理查找按键(事件) {
@@ -88,7 +81,6 @@ export function 处理上下文滚动() {
   ) {
     追加上下文行块();
   }
-  if (搭配筛选集) 应用搭配筛选();
 }
 
 export function 处理上下文行点击(事件) {
@@ -623,7 +615,7 @@ export async function 处理词组分析() {
   }
 
   function 渲染分析结果(后续列表, 前置列表, 命中总数) {
-    搭配筛选集 = null;
+    悬停搭配项 = null;
     分析结果视图 = {
       关键词: 前缀,
       后续列表,
@@ -764,7 +756,7 @@ function 显示查找错误(文字) {
 }
 
 function 清空分析结果() {
-  搭配筛选集 = null;
+  悬停搭配项 = null;
   分析结果视图 = null;
   元素.分析结果摘要.textContent = '查找后显示高频搭配';
   元素.前置词组列表.replaceChildren();

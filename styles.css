@@ -1931,11 +1931,6 @@ dialog,
   max-height: none;
 }
 
-/* 悬停两侧搭配行时，非对应命中的上下文行临时隐藏 */
-.上下文行.搭配隐藏 {
-  display: none;
-}
-
 .上下文行.当前 {
   background: #f2f2f2;
 }
