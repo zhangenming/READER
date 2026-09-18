@@ -296,7 +296,9 @@ function 构建上下文行(关键词, idx, 配色) {
   序号.textContent = String(idx + 1);
   const 前文 = document.createElement('span');
   前文.className = '上下文前文';
-  前文.textContent = 读取上下文片段(命中起点 - 上下文前文字数, 命中起点);
+  // 尾部补 LRM：前文用 direction:rtl 实现左侧省略号，句末的 ！” 等中性标点
+  // 会被 bidi 重排到行的视觉左端、正好落进被裁掉的区域（如「掌烛！」丢感叹号）。
+  前文.textContent = `${读取上下文片段(命中起点 - 上下文前文字数, 命中起点)}\u200e`;
   const 命中 = document.createElement('span');
   命中.className = '上下文命中';
   命中.textContent = 关键词.文本;

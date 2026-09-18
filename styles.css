@@ -2630,7 +2630,8 @@ dialog,
   white-space: nowrap;
 }
 
-/* 汉字是强 LTR 字符，rtl 容器只改变裁剪与省略号方向，不改变语序 */
+/* 汉字是强 LTR 字符，rtl 容器只改变裁剪与省略号方向，不改变语序；
+   句末中性标点由 构建上下文行 补 \u200e(LRM) 钉在 LTR 段内，防止被重排裁掉 */
 .上下文前文 {
   overflow: hidden;
   direction: rtl;
