@@ -129,6 +129,7 @@ import {
 import {
   处理搭配点击,
   处理搭配悬停,
+  处理上下文悬停,
   处理分析结果滚动,
   处理查找弹窗关闭,
   处理查找弹窗点击,
@@ -456,6 +457,12 @@ function 绑定事件() {
   元素.关键词列表容器.addEventListener('click', 处理面板操作);
   document.addEventListener('click', 处理关键词面板外部点击);
   元素.上下文列表.addEventListener('click', 处理上下文行点击);
+  元素.上下文列表.addEventListener('pointerover', 处理上下文悬停, {
+    passive: true,
+  });
+  元素.上下文列表.addEventListener('pointerleave', 处理上下文悬停, {
+    passive: true,
+  });
   元素.上下文列表.addEventListener('scroll', 处理上下文滚动, {
     passive: true,
   });

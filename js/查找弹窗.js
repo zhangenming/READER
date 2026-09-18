@@ -33,6 +33,55 @@ let 词组分析序号 = 0;
 let 分析结果视图 = null;
 // 当前悬停生效的搭配统计项；null 表示上下文列表为完整分块视图
 let 悬停搭配项 = null;
+// 中间上下文行悬停联动：当前悬停命中 idx 与两侧被标记的对应搭配行
+let 上下文悬停命中idx = -1;
+let 对应搭配行列表 = [];
+
+function 构建命中映射(列表) {
+  const 映射 = new Map();
+  列表.forEach(function 收集(统计项, idx) {
+    for (const 命中idx of 统计项.命中idx列表) {
+      映射.set(命中idx, idx);
+    }
+  });
+  return 映射;
+}
+
+function 标记对应搭配行() {
+  for (const 行 of 对应搭配行列表) {
+    行.classList.remove('对应');
+  }
+  对应搭配行列表 = [];
+  if (!分析结果视图 || 上下文悬停命中idx < 0) {
+    return;
+  }
+  for (const { 映射, 容器 } of [
+    { 映射: 分析结果视图.前置命中映射, 容器: 元素.前置词组列表 },
+    { 映射: 分析结果视图.后续命中映射, 容器: 元素.后续词组列表 },
+  ]) {
+    const 统计idx = 映射.get(上下文悬停命中idx);
+    if (统计idx === undefined) {
+      continue;
+    }
+    const 行 = 容器.querySelector(`[data-统计idx="${统计idx}"]`);
+    if (!行) {
+      continue;
+    }
+    行.classList.add('对应');
+    对应搭配行列表.push(行);
+  }
+}
+
+export function 处理上下文悬停(事件) {
+  const 行 = 事件.target?.closest?.('.上下文行');
+  const 原始 = 行?.dataset.hitIndex;
+  const 命中idx = 原始 === undefined ? -1 : Number(原始);
+  if (命中idx === 上下文悬停命中idx) {
+    return;
+  }
+  上下文悬停命中idx = Number.isInteger(命中idx) ? 命中idx : -1;
+  标记对应搭配行();
+}
 
 export function 处理搭配悬停(事件) {
   const 行 = 事件.target?.closest?.('.分析行');
@@ -49,6 +98,9 @@ export function 处理搭配悬停(事件) {
   if (!关键词) return;
   悬停搭配项 = 统计项;
   if (统计项) {
+    // 悬停两侧时由本行独占高亮语义，清掉中间行带来的对应标记
+    上下文悬停命中idx = -1;
+    标记对应搭配行();
     渲染搭配上下文(关键词, 统计项.命中idx列表);
   } else {
     渲染查找上下文(关键词, Math.max(0, 关键词.当前命中idx));
@@ -640,12 +692,16 @@ export async function 处理词组分析() {
 
   function 渲染分析结果(后续列表, 前置列表, 命中总数) {
     悬停搭配项 = null;
+    上下文悬停命中idx = -1;
+    对应搭配行列表 = [];
     分析结果视图 = {
       关键词: 前缀,
       后续列表,
       前置列表,
       已渲染后续: 0,
       已渲染前置: 0,
+      前置命中映射: 构建命中映射(前置列表),
+      后续命中映射: 构建命中映射(后续列表),
     };
     const 高频词组数 = 后续列表.length + 前置列表.length;
     元素.分析结果摘要.textContent = `${命中总数.toLocaleString('zh-CN')} 次出现 · ${高频词组数} 个高频搭配`;
@@ -781,6 +837,8 @@ function 显示查找错误(文字) {
 
 function 清空分析结果() {
   悬停搭配项 = null;
+  上下文悬停命中idx = -1;
+  对应搭配行列表 = [];
   分析结果视图 = null;
   元素.分析结果摘要.textContent = '查找后显示高频搭配';
   元素.前置词组列表.replaceChildren();

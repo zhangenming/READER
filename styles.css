@@ -2048,6 +2048,17 @@ dialog,
   background: #f2f2f2;
 }
 
+/* 悬停中间上下文行时，两侧该命中所属的搭配行黑底白字标记（与关键词选中态同色系） */
+.分析行.对应,
+.分析行.对应:hover {
+  color: var(--纸张色);
+  background: var(--墨色);
+}
+
+.分析行.对应 span:last-child {
+  color: var(--纸张色);
+}
+
 .分析行:focus-visible {
   outline: 2px solid var(--选中色);
   outline-offset: -2px;
