@@ -741,10 +741,8 @@ export function 处理搭配点击(事件) {
   const 行 = 事件.target.closest('.分析行');
   if (!行 || !分析结果视图?.关键词) return;
   const 词组 = 行.dataset.词组;
-  const 方向 = 行.dataset.方向;
-  const 关键词 = 分析结果视图.关键词;
-  if (!词组 || (方向 !== '前' && 方向 !== '后')) return;
-  元素.查找输入框.value = 方向 === '前' ? 词组 + 关键词 : 关键词 + 词组;
+  if (!词组) return;
+  元素.查找输入框.value = 词组;
   执行实时查找();
 }
 
