@@ -590,8 +590,8 @@ export async function 处理词组分析() {
     元素.分析结果摘要.textContent = `${命中总数.toLocaleString('zh-CN')} 次出现 · ${高频词组数} 个高频搭配`;
     元素.前置词组列表.replaceChildren();
     元素.后续词组列表.replaceChildren();
-    元素.分析分栏.scrollTop = 0;
-    元素.分析分栏.scrollLeft = 0;
+    元素.前置分析栏.scrollTop = 0;
+    元素.后续分析栏.scrollTop = 0;
     追加分析结果行();
   }
 
@@ -632,12 +632,23 @@ export function 处理搭配点击(事件) {
 }
 
 export function 处理分析结果滚动() {
+  if (!分析结果视图) {
+    return;
+  }
+  const 有待渲染 =
+    分析结果视图.已渲染后续 < 分析结果视图.后续列表.length ||
+    分析结果视图.已渲染前置 < 分析结果视图.前置列表.length;
+  if (!有待渲染) {
+    return;
+  }
+  const 接近底部 = function 接近底部(栏) {
+    return (
+      栏.scrollTop + 栏.clientHeight > 栏.scrollHeight - 200
+    );
+  };
   if (
-    分析结果视图 &&
-    (分析结果视图.已渲染后续 < 分析结果视图.后续列表.length ||
-      分析结果视图.已渲染前置 < 分析结果视图.前置列表.length) &&
-    元素.分析分栏.scrollTop + 元素.分析分栏.clientHeight >
-      元素.分析分栏.scrollHeight - 200
+    接近底部(元素.前置分析栏) ||
+    接近底部(元素.后续分析栏)
   ) {
     追加分析结果行();
   }

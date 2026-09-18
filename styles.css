@@ -1730,9 +1730,11 @@ dialog,
 
 #上下文结果 {
   display: flex;
-  flex: 1 1 58%;
   flex-direction: column;
+  min-width: 0;
   min-height: 0;
+  border-right: 1px solid var(--边线色);
+  border-left: 1px solid var(--边线色);
 }
 
 .查找标题栏,
@@ -1941,11 +1943,11 @@ dialog,
 
 .分析结果 {
   display: flex;
-  flex: 1 1 42%;
+  flex: 0 0 auto;
   flex-direction: column;
   min-height: 0;
   margin: 0;
-  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
 }
 
 .分析结果摘要 {
@@ -1958,13 +1960,12 @@ dialog,
   line-height: 18px;
 }
 
-/* 分析结果：左右两栏（???关键词 / 关键词???），各自带标题、行式列表和数量。 */
+/* 三栏（前面接 / 上下文 / 后面接），左右两栏各自滚动、中缝用分隔线。 */
 .分析分栏 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(96px, 15%) minmax(0, 1fr) minmax(96px, 15%);
   gap: 0;
-  overflow: auto;
-  border-top: 1px solid #000000;
+  overflow: hidden;
   border-bottom: 1px solid var(--边线色);
   scrollbar-color: #8c8c8c transparent;
   scrollbar-width: thin;
@@ -1972,11 +1973,10 @@ dialog,
 
 .分析栏 {
   min-width: 0;
-}
-
-/* 中缝分隔线画在右栏左侧，避免左栏加边框影响首栏对齐 */
-.分析栏 + .分析栏 {
-  border-left: 1px solid var(--边线色);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: #8c8c8c transparent;
+  scrollbar-width: thin;
 }
 
 .分析栏标题 {

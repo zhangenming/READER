@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="light" />
     <title>原文阅读器</title>
     <link rel="icon" href="./icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css?v=20260918-2" />
+    <link rel="stylesheet" href="./styles.css?v=20260918-4" />
   </head>
   <body>
     <main class="阅读区域">
@@ -195,11 +195,9 @@
           </div>
         </aside>
         <div class="查找主栏">
-          <section id="上下文结果" aria-label="查找上下文">
-            <div id="上下文列表" class="上下文列表"></div>
-          </section>
           <section id="分析结果" class="分析结果" aria-live="polite">
-          <p id="分析结果摘要" class="分析结果摘要"></p>
+            <p id="分析结果摘要" class="分析结果摘要"></p>
+          </section>
           <div class="分析分栏">
             <section id="前置分析栏" class="分析栏">
               <h3 class="分析栏标题">
@@ -207,6 +205,9 @@
                 <span class="分析栏标记">…关键词</span>
               </h3>
               <ul id="前置词组列表" class="分析词组列表"></ul>
+            </section>
+            <section id="上下文结果" aria-label="查找上下文">
+              <div id="上下文列表" class="上下文列表"></div>
             </section>
             <section id="后续分析栏" class="分析栏">
               <h3 class="分析栏标题">
@@ -216,7 +217,6 @@
               <ul id="后续词组列表" class="分析词组列表"></ul>
             </section>
           </div>
-        </section>
         </div>
       </form>
     </dialog>
@@ -642,7 +642,7 @@
       </div>
     </div>
 
-    <script type="module" src="./app.js?v=20260918-2"></script>
+    <script type="module" src="./app.js?v=20260918-4"></script>
     <script type="module" src="./语音订阅.js"></script>
   </body>
 </html>

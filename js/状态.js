@@ -181,6 +181,8 @@ export const 元素 = {
   查找下一个按钮: document.querySelector('#查找下一个按钮'),
   分析结果摘要: document.querySelector('#分析结果摘要'),
   分析分栏: document.querySelector('.分析分栏'),
+  前置分析栏: document.querySelector('#前置分析栏'),
+  后续分析栏: document.querySelector('#后续分析栏'),
   前置词组列表: document.querySelector('#前置词组列表'),
   后续词组列表: document.querySelector('#后续词组列表'),
   关闭查找按钮: document.querySelector('#关闭查找按钮'),

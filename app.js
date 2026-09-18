@@ -441,9 +441,9 @@ function 绑定事件() {
     定位查找命中(1);
   });
   元素.分析分栏.addEventListener('click', 处理搭配点击);
-  元素.分析分栏.addEventListener('scroll', 处理分析结果滚动, {
-    passive: true,
-  });
+  for (const 分析栏 of [元素.前置分析栏, 元素.后续分析栏]) {
+    分析栏.addEventListener('scroll', 处理分析结果滚动, { passive: true });
+  }
   元素.关闭查找按钮.addEventListener('click', 关闭查找弹窗);
   元素.查找弹窗.addEventListener('click', 处理查找弹窗点击);
   元素.查找弹窗.addEventListener('close', 处理查找弹窗关闭);
