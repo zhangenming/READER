@@ -857,7 +857,7 @@ function 搭配摘要(列表) {
   const 处数 = 列表.reduce(function 累加(合计, 统计项) {
     return 合计 + 统计项.数量;
   }, 0);
-  return `${处数.toLocaleString('zh-CN')} 处出现 · ${列表.length} 个高频搭配`;
+  return `${处数.toLocaleString('zh-CN')} 处出现 · ${列表.length} 个高频`;
 }
 
 function 清除查找错误() {
