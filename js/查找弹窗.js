@@ -773,7 +773,8 @@ function 追加分析结果行() {
   if (!分析结果视图) {
     return;
   }
-  let 剩余额度 = 每批分析结果数;
+  // 额度按栏各自计算：两侧互不抢占，否则结果多的一侧会耗尽共享额度，
+  // 另一栏一行都渲染不出（空栏无滚动条，也就再不会触发补渲染）。
   for (const 区间 of [
     {
       列表: 分析结果视图.后续列表,
@@ -789,10 +790,13 @@ function 追加分析结果行() {
     },
   ]) {
     const 起点 = 分析结果视图[区间.进度键];
-    if (起点 >= 区间.列表.length || 剩余额度 <= 0) {
+    if (起点 >= 区间.列表.length) {
       continue;
     }
-    const 终点 = Math.min(区间.列表.length, 起点 + 剩余额度);
+    const 终点 = Math.min(
+      区间.列表.length,
+      起点 + 每批分析结果数,
+    );
     const 行片段 = document.createDocumentFragment();
     for (let idx = 起点; idx < 终点; idx += 1) {
       const 统计项 = 区间.列表[idx];
@@ -819,7 +823,6 @@ function 追加分析结果行() {
     }
     区间.目标.append(行片段);
     分析结果视图[区间.进度键] = 终点;
-    剩余额度 -= 终点 - 起点;
   }
 }
 
