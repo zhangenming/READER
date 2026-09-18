@@ -101,6 +101,7 @@ export const 高亮配色 = [{ 浅色: 默认高亮浅色, 深色: 默认关键�
  * @property {string} 关键词面板签名 面板渲染签名，变化即需重渲染面板行列表（含排序与当前项）
  * @property {string} 关键词排序 面板排序方式（'数量' / 首次出现 / 拼音等）
  * @property {?Object} 上下文视图 查找上下文状态（关键词 id 与已渲染数）；关闭为 null
+ * @property {Array} 查找历史 本书查找历史（{ 文本, 命中数 }，最近优先），随文本持久化
  *
  * ⑤ 用户设置与分析缓存
  * @property {number} 自动滚动速度 自动滚动基准速度（用户可调）
@@ -151,6 +152,7 @@ export const 状态 = {
   关键词面板签名: '',
   关键词排序: '数量',
   上下文视图: null,
+  查找历史: [],
   自动滚动速度: 自动滚动默认速度,
   句段起点列表: new Uint32Array(), // 全文「无标点连续段」起点（文本偏移，升序），用于运行时二分
   句段负担前缀和: new Float64Array(1), // 句段负担前缀和，长度 = 段数 + 1；[i] = 前 i 段负担之和
@@ -179,6 +181,9 @@ export const 元素 = {
   查找命中摘要: document.querySelector('#查找命中摘要'),
   查找上一个按钮: document.querySelector('#查找上一个按钮'),
   查找下一个按钮: document.querySelector('#查找下一个按钮'),
+  查找历史区: document.querySelector('#查找历史区'),
+  查找历史列表: document.querySelector('#查找历史列表'),
+  清空查找历史按钮: document.querySelector('#清空查找历史按钮'),
   分析结果摘要: document.querySelector('#分析结果摘要'),
   分析分栏: document.querySelector('.分析分栏'),
   前置分析栏: document.querySelector('#前置分析栏'),

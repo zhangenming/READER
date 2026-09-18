@@ -4,6 +4,7 @@ import {
   每批分析结果数,
   实时查找延迟,
   上下文滚动预载像素,
+  查找历史条数上限,
 } from './常量.js';
 import { 是汉字 } from './文本工具.js';
 import { 让出主线程, 按需让出主线程 } from './调度.js';
@@ -271,6 +272,7 @@ export function 打开查找弹窗(关键词 = null) {
     关键词 = 选中文字 ? { 文本: 选中文字 } : 查找关键词(状态.当前关键词id);
   }
   if (新打开) 元素.查找弹窗.showModal();
+  渲染查找历史();
   if (关键词) {
     元素.查找输入框.value = 关键词.文本;
     执行实时查找(关键词, 定位正文);
@@ -369,13 +371,15 @@ function 执行实时查找(来源关键词 = null, 定位正文 = true) {
   window.clearTimeout(实时查找计时器);
   实时查找计时器 = 0;
   if (!元素.查找弹窗.open || 元素.查找输入框.dataset.合成中) return;
+  渲染查找历史();
   清除查找错误();
   取消词组分析();
   清空分析结果();
   移除临时查找关键词();
+  const 原查询 = 元素.查找输入框.value.trim();
   const 查询 = 来源关键词
     ? { 目标: 来源关键词.文本, 排除前缀: '' }
-    : 解析查找查询(元素.查找输入框.value.trim());
+    : 解析查找查询(原查询);
   if (查询.错误 || !查询.目标) {
     // 输入为空或不完整时静默清除旧结果
     清除查找错误();
@@ -402,13 +406,10 @@ function 执行实时查找(来源关键词 = null, 定位正文 = true) {
     return;
   }
 
-  const 关键词 = 创建临时查找关键词(
-    元素.查找输入框.value.trim(),
-    查询,
-    命中位置,
-  );
+  const 关键词 = 创建临时查找关键词(原查询, 查询, 命中位置);
   查找临时状态.来源关键词id = 来源关键词?.id ?? null;
   if (来源关键词?.配色idx !== undefined) 关键词.配色idx = 来源关键词.配色idx;
+  记入查找历史(原查询, 命中位置.length);
   临时跳到查找命中(Math.max(0, 来源关键词?.当前命中idx ?? 0), 定位正文);
   处理词组分析();
 }
@@ -727,6 +728,7 @@ export async function 处理词组分析() {
 export function 处理查找输入() {
   取消词组分析();
   清除查找错误();
+  渲染查找历史();
   清空分析结果();
   移除临时查找关键词();
   渲染可见行(true);
@@ -849,4 +851,88 @@ function 清空分析结果() {
 function 清除查找错误() {
   元素.查找反馈.textContent = '';
   元素.查找输入框.removeAttribute('aria-invalid');
+}
+
+// —— 查找历史（侧栏底部，按书随文本状态持久化）——
+
+// 文本长度对不上说明正文已换过版本，旧历史连同命中数都不再可信。
+export function 恢复查找历史(持久化状态) {
+  const 可恢复 =
+    持久化状态?.文件名 === 状态.文件名 &&
+    持久化状态?.文本长度 === 状态.文本.length;
+  状态.查找历史 = 可恢复 ? 规范化查找历史(持久化状态.查找历史) : [];
+}
+
+function 规范化查找历史(持久化历史) {
+  if (!Array.isArray(持久化历史)) {
+    return [];
+  }
+  return 持久化历史
+    .filter(function 有效历史项(历史项) {
+      return typeof 历史项?.文本 === 'string' && 历史项.文本;
+    })
+    .slice(0, 查找历史条数上限)
+    .map(function 还原历史项(历史项) {
+      return { 文本: 历史项.文本, 命中数: Number(历史项.命中数) || 0 };
+    });
+}
+
+function 记入查找历史(查询文本, 命中数) {
+  if (!查询文本) {
+    return;
+  }
+  const 历史 = 状态.查找历史;
+  const 已有idx = 历史.findIndex(function 同名(历史项) {
+    return 历史项.文本 === 查询文本;
+  });
+  if (已有idx > 0) {
+    历史.unshift(...历史.splice(已有idx, 1));
+  } else if (已有idx < 0) {
+    // 逐字追加的查询（"嘉" → "嘉靖"）只保留最长的一条，避免历史被中间态占满
+    if (历史.length && 查询文本.startsWith(历史[0].文本)) {
+      历史.shift();
+    }
+    历史.unshift({ 文本: 查询文本, 命中数 });
+    历史.length = Math.min(历史.length, 查找历史条数上限);
+  }
+  渲染查找历史();
+  安排保存持久化状态();
+}
+
+function 渲染查找历史() {
+  const 当前查询 = 元素.查找输入框.value.trim();
+  元素.查找历史区.hidden = !状态.查找历史.length;
+  const 历史片段 = document.createDocumentFragment();
+  for (const 历史项 of 状态.查找历史) {
+    const 项 = document.createElement('li');
+    const 行 = document.createElement('button');
+    行.type = 'button';
+    行.className = '查找历史行';
+    行.dataset.文本 = 历史项.文本;
+    行.title = `查找 ${历史项.文本}`;
+    if (历史项.文本 === 当前查询) 行.classList.add('当前');
+    const 文本单元格 = document.createElement('span');
+    const 数量单元格 = document.createElement('span');
+    文本单元格.textContent = 历史项.文本;
+    数量单元格.textContent = 历史项.命中数.toLocaleString('zh-CN');
+    行.append(文本单元格, 数量单元格);
+    项.append(行);
+    历史片段.append(项);
+  }
+  元素.查找历史列表.replaceChildren(历史片段);
+}
+
+export function 处理查找历史点击(事件) {
+  const 行 = 事件.target.closest('.查找历史行');
+  if (!行?.dataset.文本) {
+    return;
+  }
+  元素.查找输入框.value = 行.dataset.文本;
+  执行实时查找();
+}
+
+export function 清空查找历史() {
+  状态.查找历史 = [];
+  渲染查找历史();
+  安排保存持久化状态();
 }

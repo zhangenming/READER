@@ -214,6 +214,7 @@ export function 保存持久化状态() {
           配色idx: 关键词.配色idx,
         };
       }),
+    查找历史: 状态.查找历史,
   };
   // 只容错 localStorage 的可预期写入失败；序列化失败代表内存状态已异常，直接暴露。
   const 序列化数据 = JSON.stringify(持久化数据);

@@ -244,7 +244,7 @@ try {
       await evaluate(
         'return document.querySelector("#阅读统计内容").textContent',
       )
-    ).includes('今日阅读'),
+    ).includes('今日自动滚动'),
   );
   const statsTop = await evaluate(`${state} return 元素.滚动容器.scrollTop`);
   await evaluate(

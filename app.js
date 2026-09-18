@@ -143,6 +143,9 @@ import {
   定位查找命中,
   标记合成开始,
   合成结束提交,
+  恢复查找历史,
+  处理查找历史点击,
+  清空查找历史,
 } from './js/查找弹窗.js';
 import {
   处理词频标签点击,
@@ -442,6 +445,8 @@ function 绑定事件() {
   元素.查找下一个按钮.addEventListener('click', function 定位查找下一个() {
     定位查找命中(1);
   });
+  元素.查找历史列表.addEventListener('click', 处理查找历史点击);
+  元素.清空查找历史按钮.addEventListener('click', 清空查找历史);
   元素.分析分栏.addEventListener('click', 处理搭配点击);
   元素.分析分栏.addEventListener('pointerover', 处理搭配悬停, {
     passive: true,
@@ -1100,6 +1105,7 @@ async function 应用文本(原始文本, 文件名, 全文单字, 载入仍然�
 
   function 恢复文本内容状态(持久化状态) {
     元素.滚动容器.scrollTop = 0;
+    恢复查找历史(持久化状态);
     if (
       !持久化状态 ||
       持久化状态.文件名 !== 状态.文件名 ||
