@@ -706,6 +706,8 @@ export async function 处理词组分析() {
     };
     const 高频词组数 = 后续列表.length + 前置列表.length;
     元素.分析结果摘要.textContent = `${命中总数.toLocaleString('zh-CN')} 次出现 · ${高频词组数} 个高频搭配`;
+    元素.前置分析摘要.textContent = 搭配摘要(前置列表);
+    元素.后续分析摘要.textContent = 搭配摘要(后续列表);
     元素.前置词组列表.replaceChildren();
     元素.后续词组列表.replaceChildren();
     元素.前置分析栏.scrollTop = 0;
@@ -844,8 +846,18 @@ function 清空分析结果() {
   对应搭配行列表 = [];
   分析结果视图 = null;
   元素.分析结果摘要.textContent = '查找后显示高频搭配';
+  元素.前置分析摘要.textContent = 搭配摘要([]);
+  元素.后续分析摘要.textContent = 搭配摘要([]);
   元素.前置词组列表.replaceChildren();
   元素.后续词组列表.replaceChildren();
+}
+
+// 每栏标题只统计本栏列出的搭配；处数为各词组计数之和（同一命中只归一组）。
+function 搭配摘要(列表) {
+  const 处数 = 列表.reduce(function 累加(合计, 统计项) {
+    return 合计 + 统计项.数量;
+  }, 0);
+  return `${处数.toLocaleString('zh-CN')} 处出现 · ${列表.length} 个高频搭配`;
 }
 
 function 清除查找错误() {

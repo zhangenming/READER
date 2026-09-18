@@ -185,6 +185,8 @@ export const 元素 = {
   查找历史列表: document.querySelector('#查找历史列表'),
   清空查找历史按钮: document.querySelector('#清空查找历史按钮'),
   分析结果摘要: document.querySelector('#分析结果摘要'),
+  前置分析摘要: document.querySelector('#前置分析摘要'),
+  后续分析摘要: document.querySelector('#后续分析摘要'),
   分析分栏: document.querySelector('.分析分栏'),
   前置分析栏: document.querySelector('#前置分析栏'),
   后续分析栏: document.querySelector('#后续分析栏'),

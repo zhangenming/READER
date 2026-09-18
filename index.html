@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="light" />
     <title>原文阅读器</title>
     <link rel="icon" href="./icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css?v=20260918-15" />
+    <link rel="stylesheet" href="./styles.css?v=20260918-16" />
   </head>
   <body>
     <main class="阅读区域">
@@ -214,9 +214,10 @@
           </section>
           <div class="分析分栏">
             <section id="前置分析栏" class="分析栏">
-              <h3 class="分析栏标题">
-                <span>前面接</span>
-                <span class="分析栏标记">…关键词</span>
+              <h3 class="分析栏标题" title="前面接">
+                <span id="前置分析摘要" class="分析栏标记">
+                  0 处出现 · 0 个高频搭配
+                </span>
               </h3>
               <ul id="前置词组列表" class="分析词组列表"></ul>
             </section>
@@ -224,9 +225,10 @@
               <div id="上下文列表" class="上下文列表"></div>
             </section>
             <section id="后续分析栏" class="分析栏">
-              <h3 class="分析栏标题">
-                <span>后面接</span>
-                <span class="分析栏标记">关键词…</span>
+              <h3 class="分析栏标题" title="后面接">
+                <span id="后续分析摘要" class="分析栏标记">
+                  0 处出现 · 0 个高频搭配
+                </span>
               </h3>
               <ul id="后续词组列表" class="分析词组列表"></ul>
             </section>
@@ -656,7 +658,7 @@
       </div>
     </div>
 
-    <script type="module" src="./app.js?v=20260918-15"></script>
+    <script type="module" src="./app.js?v=20260918-16"></script>
     <script type="module" src="./语音订阅.js"></script>
   </body>
 </html>
