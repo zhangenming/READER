@@ -30,6 +30,37 @@ let 查找临时状态 = null;
 let 实时查找计时器 = 0;
 let 词组分析序号 = 0;
 let 分析结果视图 = null;
+// 悬停搭配行时的命中过滤集合（Set<命中idx>），null 表示不过滤
+let 搭配筛选集 = null;
+
+function 应用搭配筛选() {
+  for (const 行 of 元素.上下文列表.children) {
+    if (!行.classList?.contains('上下文行')) continue;
+    const 隐藏 =
+      搭配筛选集 !== null &&
+      !搭配筛选集.has(Number(行.dataset.hitIndex));
+    行.classList.toggle('搭配隐藏', 隐藏);
+  }
+}
+
+export function 处理搭配悬停(事件) {
+  const 行 = 事件.target?.closest?.('.分析行');
+  let 新筛选集 = null;
+  if (行 && 分析结果视图) {
+    const 列表 =
+      行.dataset.方向 === '前'
+        ? 分析结果视图.前置列表
+        : 分析结果视图.后续列表;
+    const 统计项 = 列表?.[Number(行.dataset.统计idx)];
+    if (统计项) {
+      统计项.筛选集 ??= new Set(统计项.命中idx列表);
+      新筛选集 = 统计项.筛选集;
+    }
+  }
+  if (新筛选集 === 搭配筛选集) return;
+  搭配筛选集 = 新筛选集;
+  应用搭配筛选();
+}
 
 export function 处理查找按键(事件) {
   if (事件.isComposing || 元素.查找输入框.dataset.合成中) return;
@@ -57,6 +88,7 @@ export function 处理上下文滚动() {
   ) {
     追加上下文行块();
   }
+  if (搭配筛选集) 应用搭配筛选();
 }
 
 export function 处理上下文行点击(事件) {
@@ -497,7 +529,7 @@ export async function 处理词组分析() {
     const 前置分组 = new Map();
     let 已分析命中数 = 0;
     let 时间片开始 = performance.now();
-    for (const 文本偏移 of 命中位置) {
+    for (const [命中idx, 文本偏移] of 命中位置.entries()) {
       const 后续词组 = 提取后续词组(文本偏移);
       if (后续词组 !== 前缀) {
         const 接续 = 后续词组.slice(前缀.length);
@@ -506,11 +538,12 @@ export async function 处理词组分析() {
             后续分组,
             邻接字(接续, true),
             文本偏移 + 前缀.length,
+            命中idx,
           );
       }
       const 前置词组 = 提取前置词组(文本偏移);
       if (前置词组 && 前置词组 !== 前缀) {
-        记入分组(前置分组, 邻接字(前置词组, false), 文本偏移);
+        记入分组(前置分组, 邻接字(前置词组, false), 文本偏移, 命中idx);
       }
       已分析命中数 += 1;
       if ((已分析命中数 & 255) === 0) {
@@ -523,12 +556,9 @@ export async function 处理词组分析() {
     const 后续数量 = 统计扩展搭配(后续分组, true);
     const 前置数量 = 统计扩展搭配(前置分组, false);
     const 转换统计列表 = function 转换统计列表(数量表) {
-      return [...数量表]
-        .filter(function 过滤单次([, 数量]) {
-          return 数量 > 1;
-        })
-        .map(function 转换统计项([词组, 数量]) {
-          return { 词组, 数量 };
+      return [...数量表.values()]
+        .filter(function 过滤单次(统计项) {
+          return 统计项.数量 > 1;
         })
         .sort(function 排序统计项(左项, 右项) {
           return (
@@ -562,23 +592,38 @@ export async function 处理词组分析() {
     return 提取前置词组自文本(状态.文本, 文本偏移);
   }
 
-  function 记入分组(分组, 词组, 锚点) {
-    const 列表 = 分组.get(词组);
-    if (列表) 列表.push(锚点);
-    else 分组.set(词组, [锚点]);
+  function 记入分组(分组, 词组, 锚点, 命中idx) {
+    const 组 = 分组.get(词组);
+    if (组) {
+      组.锚点列表.push(锚点);
+      组.命中列表.push(命中idx);
+    } else {
+      分组.set(词组, { 锚点列表: [锚点], 命中列表: [命中idx] });
+    }
   }
 
   function 统计扩展搭配(分组, 向后) {
     const 数量表 = new Map();
-    for (const [词组, 锚点列表] of 分组) {
-      if (锚点列表.length <= 1) continue;
-      const 完整词组 = 扩展唯一汉字接续(分析文本, 锚点列表, 词组, 向后);
-      数量表.set(完整词组, (数量表.get(完整词组) ?? 0) + 锚点列表.length);
+    for (const [词组, 组] of 分组) {
+      if (组.锚点列表.length <= 1) continue;
+      const 完整词组 = 扩展唯一汉字接续(分析文本, 组.锚点列表, 词组, 向后);
+      const 统计项 = 数量表.get(完整词组);
+      if (统计项) {
+        统计项.数量 += 组.锚点列表.length;
+        统计项.命中idx列表.push(...组.命中列表);
+      } else {
+        数量表.set(完整词组, {
+          词组: 完整词组,
+          数量: 组.锚点列表.length,
+          命中idx列表: [...组.命中列表],
+        });
+      }
     }
     return 数量表;
   }
 
   function 渲染分析结果(后续列表, 前置列表, 命中总数) {
+    搭配筛选集 = null;
     分析结果视图 = {
       关键词: 前缀,
       后续列表,
@@ -687,6 +732,7 @@ function 追加分析结果行() {
       行.className = '分析行';
       行.dataset.词组 = 统计项.词组;
       行.dataset.方向 = 区间.方向;
+      行.dataset.统计idx = String(idx);
       const 完整词组 =
         区间.方向 === '前'
           ? 统计项.词组 + 分析结果视图.关键词
@@ -718,6 +764,7 @@ function 显示查找错误(文字) {
 }
 
 function 清空分析结果() {
+  搭配筛选集 = null;
   分析结果视图 = null;
   元素.分析结果摘要.textContent = '查找后显示高频搭配';
   元素.前置词组列表.replaceChildren();
