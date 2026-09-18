@@ -112,46 +112,47 @@ export function 处理上下文行点击(事件) {
 }
 
 // —— 搭配分析的词组提取（纯函数，供本模块与 tmp/verify-collocations.mjs 共享）——
-// 从全文的 文本偏移 处（关键词起点），向后取「关键词 + 紧随其后的第一个词」，
-// 词边界由词组分段器决定；紧邻标点不是词，只返回关键词本身，由调用方过滤。
+// 从全文的 文本偏移 处（关键词起点），向后取「关键词 + 紧随其后的第一个词」。
+// 紧邻的标点/空白不做特殊处理：跳过它们继续找下一个词；窗口内再无词才只返回关键词本身。
 
 export function 提取后续词组自文本(全文, 文本偏移, 前缀长度) {
   const 上下文 = 全文.slice(文本偏移, 文本偏移 + 前缀长度 + 词组上下文窗口);
   const 前缀终点 = 前缀长度;
-  let 词组终点 = 前缀终点;
+  let 词部分 = '';
   for (const 片段 of 词组分段器.segment(上下文)) {
     const 片段终点 = 片段.index + 片段.segment.length;
     if (片段终点 <= 前缀终点) {
       continue;
     }
-    if (片段.index < 前缀终点 || (片段.index === 前缀终点 && 片段.isWordLike)) {
-      词组终点 = 片段终点;
+    if (片段.index < 前缀终点) {
+      // 跨界片段：整段余下部分并入（不拆词）
+      词部分 = 上下文.slice(前缀终点, 片段终点);
+      break;
     }
+    if (!片段.isWordLike) {
+      continue; // 紧邻标点不截断，跳过找下一个词
+    }
+    词部分 = 片段.segment;
     break;
   }
-  return 上下文.slice(0, 词组终点);
+  return 上下文.slice(0, 前缀终点) + 词部分;
 }
 
 export function 提取前置词组自文本(全文, 文本偏移) {
   const 起点 = Math.max(0, 文本偏移 - 词组上下文窗口);
   const 上下文 = 全文.slice(起点, 文本偏移);
   const 片段列表 = [...词组分段器.segment(上下文)];
-  let 词组起点 = 上下文.length;
   for (let idx = 片段列表.length - 1; idx >= 0; idx -= 1) {
     const 片段 = 片段列表[idx];
-    const 片段终点 = 片段.index + 片段.segment.length;
     if (片段.index >= 上下文.length) {
       continue;
     }
-    if (
-      片段终点 > 上下文.length ||
-      (片段终点 === 上下文.length && 片段.isWordLike)
-    ) {
-      词组起点 = 片段.index;
+    if (!片段.isWordLike) {
+      continue; // 紧邻标点不截断，向前跳过找上一个词
     }
-    break;
+    return 片段.segment;
   }
-  return 上下文.slice(词组起点);
+  return '';
 }
 
 // 取词组紧邻关键词一侧的汉字：后续接续取首字、前置词组取尾字。
@@ -529,13 +530,18 @@ export async function 处理词组分析() {
           记入分组(
             后续分组,
             邻接字(接续, true),
-            文本偏移 + 前缀.length,
+            后续锚点(接续, 文本偏移 + 前缀.length),
             命中idx,
           );
       }
       const 前置词组 = 提取前置词组(文本偏移);
       if (前置词组 && 前置词组 !== 前缀) {
-        记入分组(前置分组, 邻接字(前置词组, false), 文本偏移, 命中idx);
+        记入分组(
+          前置分组,
+          邻接字(前置词组, false),
+          前置锚点(前置词组, 文本偏移),
+          命中idx,
+        );
       }
       已分析命中数 += 1;
       if ((已分析命中数 & 255) === 0) {
@@ -582,6 +588,18 @@ export async function 处理词组分析() {
 
   function 提取前置词组(文本偏移) {
     return 提取前置词组自文本(状态.文本, 文本偏移);
+  }
+
+  // 邻接词可能跨过标点被找到，与关键词并不粘连；锚点取词组实际起/终点，
+  // 否则 扩展唯一汉字接续 会把它自己当成前一汉字重复并入。
+  function 后续锚点(接续, 起点) {
+    const 实际 = 分析文本.indexOf(接续, 起点);
+    return 实际 >= 0 ? 实际 : 起点;
+  }
+
+  function 前置锚点(词组, 终点上限) {
+    const 实际 = 分析文本.lastIndexOf(词组, 终点上限 - 词组.length);
+    return 实际 >= 0 ? 实际 + 词组.length : 终点上限;
   }
 
   function 记入分组(分组, 词组, 锚点, 命中idx) {
