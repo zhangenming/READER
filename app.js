@@ -417,6 +417,10 @@ function 绑定事件() {
   元素.关闭阅读统计按钮.addEventListener('click', () =>
     元素.阅读统计弹窗.close(),
   );
+  // 与其他弹窗一致：点击遮罩（弹窗自身区域）关闭阅读统计
+  元素.阅读统计弹窗.addEventListener('click', (事件) => {
+    if (事件.target === 元素.阅读统计弹窗) 元素.阅读统计弹窗.close();
+  });
   元素.关闭内容选择按钮.addEventListener('click', 关闭内容选择弹窗);
   元素.内容选择弹窗.addEventListener('click', 处理内容选择弹窗点击);
   元素.内容选择列表.addEventListener('click', 处理内容选择列表点击);
