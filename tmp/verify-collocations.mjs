@@ -36,8 +36,12 @@ globalThis.localStorage = {
   },
 };
 
-const { 提取后续词组自文本, 提取前置词组自文本, 扩展唯一汉字接续 } =
-  await import('../js/查找弹窗.js');
+const {
+  提取后续词组自文本,
+  提取前置词组自文本,
+  扩展唯一汉字接续,
+  邻接字,
+} = await import('../js/查找弹窗.js');
 
 const 场景 = [];
 function 检查(name, 文本, 偏移, 前缀, 期望前, 期望后) {
@@ -85,10 +89,11 @@ function 前置高频(全文, 关键词) {
     const 偏移 = 全文.indexOf(关键词, 搜索);
     if (偏移 < 0) break;
     const 前置 = 提取前置词组自文本(全文, 偏移);
-    if (前置) {
-      const 列表 = 分组.get(前置);
+    const 键 = 邻接字(前置, false);
+    if (前置 && 键) {
+      const 列表 = 分组.get(键);
       if (列表) 列表.push(偏移);
-      else 分组.set(前置, [偏移]);
+      else 分组.set(键, [偏移]);
     }
     搜索 = 偏移 + 关键词.length;
   }
@@ -98,6 +103,31 @@ function 前置高频(全文, 关键词) {
     })
     .map(function 扩展项([词组, 锚点列表]) {
       return [扩展唯一汉字接续(全文, 锚点列表, 词组, false), 锚点列表.length];
+    });
+}
+
+function 后续高频(全文, 关键词) {
+  const 分组 = new Map();
+  let 搜索 = 0;
+  while (搜索 <= 全文.length - 关键词.length) {
+    const 偏移 = 全文.indexOf(关键词, 搜索);
+    if (偏移 < 0) break;
+    const 后续 = 提取后续词组自文本(全文, 偏移, 关键词.length);
+    const 接续 = 后续.slice(关键词.length);
+    const 键 = 邻接字(接续, true);
+    if (键) {
+      const 列表 = 分组.get(键);
+      if (列表) 列表.push(偏移 + 关键词.length);
+      else 分组.set(键, [偏移 + 关键词.length]);
+    }
+    搜索 = 偏移 + 关键词.length;
+  }
+  return [...分组]
+    .filter(function 过滤单次([, 锚点列表]) {
+      return 锚点列表.length > 1;
+    })
+    .map(function 扩展项([词组, 锚点列表]) {
+      return [扩展唯一汉字接续(全文, 锚点列表, 词组, true), 锚点列表.length];
     });
 }
 
@@ -148,6 +178,29 @@ function 前置高频(全文, 关键词) {
     name: '搜太监前面接显示秉笔',
     pass: 无笔 && 有秉笔 && 有一个 && 有当值,
     detail: `结果=${JSON.stringify(条目)} 无笔=${无笔} 秉笔=${条目.秉笔} 当值=${条目.当值}`,
+  });
+}
+// 15. 线上 bug 复现：搜「和阗」时 玉杵/玉镂空/玉圆球/玉佩 被分段器切成
+// 不同词组，按整词分组时「玉」只计 3 次；按邻接字归组后应为 4 次。
+{
+  const 全文 =
+    '将手中那根和阗玉杵摔得粉碎。那笔套却是晶莹的和阗玉镂空磨尖做成的。捧起一个里面镂空的和阗玉圆球。解下那块系着金黄色丝套的和阗玉佩。急递被一方和阗羊脂玉镇纸压在大案上。';
+  const 条目 = Object.fromEntries(后续高频(全文, '和阗'));
+  const 前置条目 = Object.fromEntries(前置高频(全文, '和阗'));
+  场景.push({
+    name: '和阗后面接玉计满4次',
+    pass: 条目.玉 === 4 && 条目.羊脂 === undefined && 前置条目.的 === 3,
+    detail: `后续=${JSON.stringify(条目)} 前置=${JSON.stringify(前置条目)}`,
+  });
+}
+// 16. 邻接字归组不影响全组一致的扩展：都是 玉杵 时仍显示 玉杵
+{
+  const 全文 = '那根和阗玉杵碎了。又有和阗玉杵丢了。';
+  const 条目 = Object.fromEntries(后续高频(全文, '和阗'));
+  场景.push({
+    name: '全是玉杵仍显示玉杵',
+    pass: 条目.玉杵 === 2 && 条目.玉 === undefined,
+    detail: `结果=${JSON.stringify(条目)}`,
   });
 }
 
