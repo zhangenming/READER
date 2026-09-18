@@ -417,9 +417,14 @@ function 绑定事件() {
   元素.关闭阅读统计按钮.addEventListener('click', () =>
     元素.阅读统计弹窗.close(),
   );
-  // 与其他弹窗一致：点击遮罩（弹窗自身区域）关闭阅读统计
-  元素.阅读统计弹窗.addEventListener('click', (事件) => {
-    if (事件.target === 元素.阅读统计弹窗) 元素.阅读统计弹窗.close();
+  // 点击遮罩关闭：真实点击 ::backdrop 时事件目标是 html 而非 dialog 本身，
+  // 因此用坐标命中判断，落在弹窗矩形之外即关闭
+  document.addEventListener('pointerdown', (事件) => {
+    const 弹窗 = 元素.阅读统计弹窗;
+    if (!弹窗.open) return;
+    const r = 弹窗.getBoundingClientRect();
+    const { clientX: x, clientY: y } = 事件;
+    if (x < r.left || x > r.right || y < r.top || y > r.bottom) 弹窗.close();
   });
   元素.关闭内容选择按钮.addEventListener('click', 关闭内容选择弹窗);
   元素.内容选择弹窗.addEventListener('click', 处理内容选择弹窗点击);
