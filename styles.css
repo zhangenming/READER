@@ -2318,9 +2318,9 @@ dialog,
   outline-offset: -2px;
 }
 
-/* 某一侧没有高频搭配时显示占位说明 */
+/* 某一侧没有高频接续时显示占位说明 */
 .分析栏:not(:has(.分析行)) .分析词组列表::after {
-  content: '无高频搭配';
+  content: '无高频';
   display: block;
   padding: 10px 6px;
   color: var(--次要墨色);

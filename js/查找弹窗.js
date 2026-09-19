@@ -705,7 +705,7 @@ export async function 处理词组分析() {
       后续命中映射: 构建命中映射(后续列表),
     };
     const 高频词组数 = 后续列表.length + 前置列表.length;
-    元素.分析结果摘要.textContent = `${命中总数.toLocaleString('zh-CN')} 次出现 · ${高频词组数} 个高频搭配`;
+    元素.分析结果摘要.textContent = `${命中总数.toLocaleString('zh-CN')} 次出现 · ${高频词组数} 个高频`;
     元素.前置分析摘要.textContent = 搭配摘要(前置列表);
     元素.后续分析摘要.textContent = 搭配摘要(后续列表);
     元素.前置词组列表.replaceChildren();
@@ -845,7 +845,7 @@ function 清空分析结果() {
   上下文悬停命中idx = -1;
   对应搭配行列表 = [];
   分析结果视图 = null;
-  元素.分析结果摘要.textContent = '查找后显示高频搭配';
+  元素.分析结果摘要.textContent = '查找后显示高频';
   元素.前置分析摘要.textContent = 搭配摘要([]);
   元素.后续分析摘要.textContent = 搭配摘要([]);
   元素.前置词组列表.replaceChildren();
