@@ -2211,6 +2211,7 @@ dialog,
   font-size: 12px;
   font-variant-numeric: tabular-nums;
   line-height: 18px;
+  text-align: center;
 }
 
 /* 三栏（前面接 / 上下文 / 后面接），左右两栏各自滚动、中缝用分隔线。 */
