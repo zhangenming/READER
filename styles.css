@@ -428,6 +428,108 @@ body.关键词手势中 .滚动容器 {
 .阅读统计内容 .统计每日表 td:first-child {
   width: 36%;
 }
+/* —— 滚动时间段：一天一行，所有行共用一条只覆盖有数据范围的时间轴 —— */
+.统计时段 {
+  margin-top: 20px;
+}
+.统计时段 caption {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.阅读统计内容 .统计时段表 th:first-child,
+.阅读统计内容 .统计时段表 td:first-child {
+  width: 18%;
+  text-align: left;
+}
+.阅读统计内容 .统计时段表 th:nth-child(2),
+.阅读统计内容 .统计时段表 td:nth-child(2) {
+  width: 62%;
+}
+.阅读统计内容 .统计时段表 th:last-child,
+.阅读统计内容 .统计时段表 td:last-child {
+  width: 20%;
+}
+.统计时段日期,
+.统计时段汇总 {
+  white-space: nowrap;
+}
+.统计时段标尺 {
+  position: relative;
+  height: 14px;
+}
+.统计时段端点,
+.统计时段刻度标签 {
+  position: absolute;
+  top: 0;
+  color: var(--次要墨色);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.统计时段端点首 {
+  left: 0;
+}
+.统计时段端点尾 {
+  right: 0;
+}
+.统计时段刻度标签 {
+  transform: translateX(-50%);
+}
+.统计时段轨道 {
+  position: relative;
+  height: 20px;
+  border-radius: 4px;
+  background: var(--背景色);
+  box-shadow: inset 0 0 0 1px var(--边线色);
+}
+.统计时段刻度 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--边线色);
+}
+.统计时段块 {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  min-width: 3px; /* 秒级短段在长轴上也要看得见 */
+  border-radius: 2px;
+}
+.统计时段块-自动 {
+  background: var(--墨色);
+}
+.统计时段块-按键 {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--墨色) 0 2px,
+    transparent 2px 5px
+  );
+  box-shadow: inset 0 0 0 1px var(--次要墨色);
+}
+.统计时段图例 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  margin-top: 8px;
+  color: var(--次要墨色);
+  font-size: 12px;
+}
+.统计时段图例项 {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.统计时段图例块 {
+  width: 14px;
+  height: 8px;
+  border-radius: 2px;
+}
+.统计时段图例说明 {
+  margin-left: auto;
+}
 @media (max-width: 560px) {
   .阅读统计弹窗 {
     padding: 14px;
@@ -453,6 +555,29 @@ body.关键词手势中 .滚动容器 {
   .阅读统计内容 th,
   .阅读统计内容 td {
     padding: 10px 4px;
+  }
+  .阅读统计内容 .统计时段表 th:first-child,
+  .阅读统计内容 .统计时段表 td:first-child {
+    width: 26%;
+  }
+  .阅读统计内容 .统计时段表 th:nth-child(2),
+  .阅读统计内容 .统计时段表 td:nth-child(2) {
+    width: 48%;
+  }
+  .阅读统计内容 .统计时段表 th:last-child,
+  .阅读统计内容 .统计时段表 td:last-child {
+    width: 26%;
+  }
+  .统计时段汇总 {
+    white-space: normal;
+    font-size: 12px;
+  }
+  /* 窄屏轨道只有百余像素，整点标签会压字，改由行内竖线做参照 */
+  .统计时段刻度标签 {
+    display: none;
+  }
+  .统计时段图例说明 {
+    display: none;
   }
 }
 

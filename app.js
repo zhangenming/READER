@@ -30,6 +30,11 @@ import {
   获取书籍前台毫秒,
   获取今日前台毫秒,
 } from './js/前台停留.js';
+import {
+  载入滚动时段统计,
+  结束滚动时段,
+  每日滚动时段,
+} from './js/滚动时段.js';
 import { 显示文本处理错误, 显示错误 } from './js/错误提示.js';
 import {
   查找偏移所在行,
@@ -209,6 +214,7 @@ function 启动() {
   const 持久化数据 = 读取持久化数据或新建();
   载入自动滚动统计(持久化数据);
   载入前台停留统计(持久化数据);
+  载入滚动时段统计(持久化数据);
   // 手动阅读也定期保存，不依赖滚动事件。
   window.setInterval(() => {
     if (document.visibilityState === 'visible') 保存持久化状态();
@@ -579,11 +585,14 @@ function 绑定事件() {
   window.addEventListener('mousedown', 标记shift组合);
   window.addEventListener('pagehide', () => {
     更新前台停留计时('', false);
+    结束滚动时段();
     保存持久化状态();
   });
   window.addEventListener('pageshow', () => 更新前台停留计时());
   document.addEventListener('visibilitychange', function () {
     更新前台停留计时();
+    // 页面隐藏时 rAF 停摆，把仍在进行的时间段就地封口，轴上不会留下假空的滚动条
+    if (document.visibilityState === 'hidden') 结束滚动时段();
     if (document.visibilityState === 'hidden' && 状态.文件名) {
       保存持久化状态();
     }
@@ -815,6 +824,7 @@ function 绑定事件() {
         文件名: 状态.文件名,
         进度,
         每日,
+        每日时段: Object.fromEntries(每日滚动时段),
         今天: 统计.今日滚动日期,
       }),
     );
