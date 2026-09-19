@@ -87,9 +87,11 @@ async function pressedHit() {
       y: Math.round(rect.top + rect.height / 2),
       命中idx: Number(节点.dataset.hitIndex),
       关键词id: Number(节点.dataset.keywordId),
+      顶部: Math.round(元素.滚动容器.scrollTop),
     };
   `);
 }
+const top = () => evaluate(`${state} return Math.round(元素.滚动容器.scrollTop);`);
 async function popupState() {
   return evaluate(`${state} return {
     open: 元素.查找弹窗.open,
@@ -120,7 +122,7 @@ try {
     (await import('./js/面板.js')).渲染关键词面板();
   `);
 
-  // 长按命中词：弹窗填入该词，并定位到按住的那一处
+  // 长按命中词：弹窗填入该词，上下文停在按住的那一处，正文一律不许挪动
   const hit = await pressedHit();
   await mouse('mousePressed', hit.x, hit.y, 1);
   await pause(120);
@@ -133,6 +135,7 @@ try {
   assert.equal(长按结果.源命中idx, hit.命中idx, '定位到按住的那一处命中');
   assert.equal(长按结果.临时命中idx, hit.命中idx, '查找窗口停在同一处');
   assert.ok(长按结果.上下文行数 > 0, '上下文列表已渲染');
+  assert.equal(await top(), hit.顶部, '长按打开弹窗不得移动正文');
   await mouse('mouseReleased', hit.x, hit.y, 0);
   await pause(300);
   assert.equal((await popupState()).open, true, '松手后弹窗保持打开');
@@ -141,6 +144,7 @@ try {
     hit.命中idx,
     '松手的 click 没有再前进一格',
   );
+  assert.equal(await top(), hit.顶部, '松手不得移动正文');
   const 截图 = await send('Page.captureScreenshot', { format: 'png' });
   await (await import('node:fs/promises')).writeFile(
     '/tmp/reader-keyword-longpress.png',
@@ -150,7 +154,8 @@ try {
   await pause(200);
   await settled();
   assert.equal((await popupState()).open, false);
-  console.log('PASS 长按命中词打开查找窗口并定位该处，松手不前进，截图 /tmp/reader-keyword-longpress.png');
+  assert.equal(await top(), hit.顶部, '关闭弹窗不得回跳正文');
+  console.log('PASS 长按打开查找窗口、上下文停在该处，开关弹窗均不移动正文');
 
   // 短按（< 长按阈值）仍是原来的单击前进，不打开弹窗
   const hit2 = await pressedHit();
@@ -201,15 +206,48 @@ try {
   await pause(400);
   assert.equal((await popupState()).open, true, '触摸松手后弹窗保持打开');
   assert.equal((await popupState()).临时命中idx, hit4.命中idx, '触摸松手不前进');
+  assert.equal(await top(), hit4.顶部, '触摸长按与松手都不移动正文');
   await evaluate(`document.querySelector('#关闭查找按钮').click();`);
   await pause(200);
   await settled();
+  assert.equal(await top(), hit4.顶部, '触摸关闭弹窗不回跳正文');
   assert.equal(
     await evaluate(`${state} return 状态.关键词列表.length;`),
     持久词数,
     '长按没有将选区建成新关键词',
   );
   console.log('PASS 触摸长按打开查找窗口，不选字、不建词');
+
+  // 只有长按入口不挪正文：面板「≡」仍然把该处命中定位到视口中央，关闭后回到原位
+  const 面板入口 = await evaluate(`${state}
+    元素.滚动容器.scrollTop = 0;
+    const 项 = 状态.关键词列表.find((关键词) => !关键词.临时);
+    项.当前命中idx = Math.min(500, 项.命中位置.length - 1);
+    状态.当前关键词id = 项.id;
+    状态.关键词面板展开 = false;
+    (await import('./js/面板.js')).渲染关键词面板();
+    await new Promise((r) => setTimeout(r, 200));
+    return { 顶部: Math.round(元素.滚动容器.scrollTop), 关键词id: 项.id };
+  `);
+  await evaluate(`document.querySelector('#关键词面板开关').click();`);
+  await pause(200);
+  await evaluate(
+    `document.querySelector('[data-keyword-id="${面板入口.关键词id}"] [data-action="上下文"]').click();`,
+  );
+  await pause(400);
+  await settled();
+  assert.ok(
+    (await top()) > 面板入口.顶部 + 500,
+    `面板入口应定位正文，实际 scrollTop=${await top()}`,
+  );
+  await evaluate(`document.querySelector('#关闭查找按钮').click();`);
+  await pause(200);
+  await settled();
+  assert.ok(
+    Math.abs((await top()) - 面板入口.顶部) < 2,
+    '面板入口关闭后回到原阅读位置',
+  );
+  console.log('PASS 面板「≡」入口保持定位正文与关闭回位');
 
   // 手机视口：弹窗几乎铺满屏幕，松手点正落在弹窗本体上，最容易被「点框内关闭」误伤
   await send('Emulation.setDeviceMetricsOverride', {
@@ -226,9 +264,11 @@ try {
   });
   await pause(700);
   assert.equal((await popupState()).open, true, '窄屏触摸长按打开查找窗口');
+  assert.equal(await top(), hit5.顶部, '窄屏长按打开弹窗不移动正文');
   await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
   await pause(400);
   assert.equal((await popupState()).open, true, '窄屏松手后弹窗保持打开');
+  assert.equal(await top(), hit5.顶部, '窄屏松手不移动正文');
   const 窄屏截图 = await send('Page.captureScreenshot', { format: 'png' });
   await (await import('node:fs/promises')).writeFile(
     '/tmp/reader-keyword-longpress-mobile.png',
