@@ -1,7 +1,7 @@
 import { 双击判定延迟 } from './常量.js';
 import { 元素, 状态, 查找关键词 } from './状态.js';
 import { 读取选择关键词 } from './关键词.js';
-import { 消费点击抑制 } from './关键词手势.js';
+import { 消费点击抑制, 触摸按住命中词中 } from './关键词手势.js';
 import { 执行导航跳转, 取消待定导航 } from './键盘控制.js';
 import { 渲染可见行, 显示当前命中位置提示 } from './虚拟渲染.js';
 import { 更新关键词指示器 } from './指示器.js';
@@ -101,6 +101,11 @@ export function 处理正文键盘选择(事件) {
 }
 
 export function 处理高亮上下文点击(事件) {
+  if (触摸按住命中词中()) {
+    // 手指长按命中词会被派发为 contextmenu：压掉原生选择/复制菜单，交由长按手势打开查找窗口
+    事件.preventDefault();
+    return;
+  }
   if (事件.altKey || 事件.metaKey || 事件.ctrlKey) {
     事件.preventDefault();
     处理高亮点击(事件);
