@@ -439,16 +439,16 @@ body.关键词手势中 .滚动容器 {
 }
 .阅读统计内容 .统计时段表 th:first-child,
 .阅读统计内容 .统计时段表 td:first-child {
-  width: 18%;
+  width: 16%;
   text-align: left;
 }
 .阅读统计内容 .统计时段表 th:nth-child(2),
 .阅读统计内容 .统计时段表 td:nth-child(2) {
-  width: 62%;
+  width: 60%;
 }
 .阅读统计内容 .统计时段表 th:last-child,
 .阅读统计内容 .统计时段表 td:last-child {
-  width: 20%;
+  width: 24%;
 }
 .统计时段日期,
 .统计时段汇总 {
@@ -498,6 +498,12 @@ body.关键词手势中 .滚动容器 {
   border-radius: 2px;
   background: var(--墨色); /* 自动与按键同算一段，不再分色 */
 }
+/* 页面激活是"底色"，滚动块压在它上面，所以比滚动块上下各多留 1px */
+.统计时段块-激活 {
+  top: 2px;
+  bottom: 2px;
+  background: color-mix(in oklab, var(--墨色) 16%, transparent);
+}
 .统计时段图例 {
   display: flex;
   flex-wrap: wrap;
@@ -517,6 +523,12 @@ body.关键词手势中 .滚动容器 {
   height: 8px;
   border-radius: 2px;
   background: var(--墨色);
+}
+.统计时段图例块-激活 {
+  background: color-mix(in oklab, var(--墨色) 16%, transparent);
+}
+.统计时段次要 {
+  color: var(--次要墨色);
 }
 .统计时段图例说明 {
   margin-left: auto;

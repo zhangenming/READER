@@ -35,6 +35,7 @@ import {
   结束滚动时段,
   每日滚动时段,
 } from './js/滚动时段.js';
+import { 载入激活时段统计, 每日激活时段 } from './js/激活时段.js';
 import { 显示文本处理错误, 显示错误 } from './js/错误提示.js';
 import {
   查找偏移所在行,
@@ -218,6 +219,7 @@ function 启动() {
   载入自动滚动统计(持久化数据);
   载入前台停留统计(持久化数据);
   载入滚动时段统计(持久化数据);
+  载入激活时段统计(持久化数据);
   // 手动阅读也定期保存，不依赖滚动事件。
   window.setInterval(() => {
     if (document.visibilityState === 'visible') 保存持久化状态();
@@ -839,6 +841,7 @@ function 绑定事件() {
         进度,
         每日,
         每日时段: Object.fromEntries(每日滚动时段),
+        每日激活时段: Object.fromEntries(每日激活时段),
         今天: 统计.今日滚动日期,
       }),
     );
