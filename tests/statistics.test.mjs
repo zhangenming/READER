@@ -37,18 +37,18 @@ test('segment axis covers only the recorded range and widens with new days', () 
   assert.equal(计算时段窗口({}), null);
   assert.equal(计算时段窗口(null), null);
   assert.deepEqual(
-    计算时段窗口({ '2026-09-18': [[39804, 39900, 0]] }),
+    计算时段窗口({ '2026-09-18': [[39804, 39900]] }),
     { 起秒: 39804, 止秒: 39900 },
   );
   // 第二天更早/更晚的时间段把共用轴往外扩
   assert.deepEqual(
     计算时段窗口({
-      '2026-09-18': [[39804, 39900, 0]],
-      '2026-09-19': [[50400, 51000, 1]],
+      '2026-09-18': [[39804, 39900]],
+      '2026-09-19': [[50400, 51000]],
     }),
     { 起秒: 39804, 止秒: 51000 },
   );
-  assert.deepEqual(计算时段窗口([['2026-09-18', [[0, 86400, 0]]]]), {
+  assert.deepEqual(计算时段窗口([['2026-09-18', [[0, 86400]]]]), {
     起秒: 0,
     止秒: 86400,
   });
@@ -74,12 +74,12 @@ test('segment geometry clamps to the window', () => {
   assert.equal(时段百分比(51000, 窗口), 100);
   assert.equal(时段百分比(45402, 窗口), 50);
   assert.equal(时段百分比(10, null), 0);
-  const 布局 = 计算时段布局([[10, 60000, 0], [40000, 40100, 1], ['x']], 窗口);
+  const 布局 = 计算时段布局([[10, 60000], [40000, 40100], ['x']], 窗口);
   assert.equal(布局.length, 2); // 字段不足的坏段被忽略
-  assert.deepEqual(布局[0], { 起: 10, 止: 60000, 种类: 0, 左: 0, 宽: 100 });
+  assert.deepEqual(布局[0], { 起: 10, 止: 60000, 左: 0, 宽: 100 });
   assert.equal(Number(布局[1].左.toFixed(3)), 1.751);
   assert.equal(Number(布局[1].宽.toFixed(3)), 0.893);
-  assert.deepEqual(计算时段布局([[0, 1, 0]], null), []);
+  assert.deepEqual(计算时段布局([[0, 1]], null), []);
 });
 
 test('segment clock and duration read to the second', () => {

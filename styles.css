@@ -496,17 +496,7 @@ body.关键词手势中 .滚动容器 {
   bottom: 3px;
   min-width: 3px; /* 秒级短段在长轴上也要看得见 */
   border-radius: 2px;
-}
-.统计时段块-自动 {
-  background: var(--墨色);
-}
-.统计时段块-按键 {
-  background: repeating-linear-gradient(
-    45deg,
-    var(--墨色) 0 2px,
-    transparent 2px 5px
-  );
-  box-shadow: inset 0 0 0 1px var(--次要墨色);
+  background: var(--墨色); /* 自动与按键同算一段，不再分色 */
 }
 .统计时段图例 {
   display: flex;
@@ -526,6 +516,7 @@ body.关键词手势中 .滚动容器 {
   width: 14px;
   height: 8px;
   border-radius: 2px;
+  background: var(--墨色);
 }
 .统计时段图例说明 {
   margin-left: auto;

@@ -47,8 +47,10 @@ async function 等待正文载入() {
 }
 
 const 历史 = {
-  '2026-09-17': [[39_804, 39_904, 0], [50_400, 51_000, 1]],
-  '2026-09-18': [[3_600, 4_200, 0]],
+  '2026-09-17': [[39_804, 39_904], [50_400, 51_000]],
+  '2026-09-18': [[3_600, 4_200]],
+  // 旧版格式：每段多一位「种类」（1 = 按键滚动），读取后应只剩起止两列
+  '2026-09-16': [[7_200, 7_300, 1]],
 };
 
 function 格式化时刻(当日秒) {
@@ -100,8 +102,8 @@ try {
     };
   `);
   assert.equal(记录.今日.length, 1, '一次滚动只记一段');
-  const [起, 止, 种类] = 记录.今日[0];
-  assert.equal(种类, 0, '自动滚动种类');
+  const [起, 止] = 记录.今日[0];
+  assert.equal(记录.今日[0].length, 2, '一段只有起止两列，不记触发方式');
   assert.ok(止 - 起 >= 5 && 止 - 起 <= 12, `段长应约 6 秒，实际 ${止 - 起} 秒`);
   assert.ok(Math.abs(起 - 起始.当日秒) <= 2, `起点即按下滚动的时刻（${起} / ${起始.当日秒}）`);
   assert.deepEqual(记录.落盘, 记录.今日.map((段) => [...段]), '时间段已随持久化落盘');
@@ -119,14 +121,19 @@ try {
   await 等待正文载入();
   const 读回 = await evaluate(`
     const m = await import('./js/滚动时段.js');
-    return { 日期: [...m.每日滚动时段.keys()].sort(), 今日: m.获取当日时段(new Date().toLocaleDateString('sv')) };
+    return {
+      日期: [...m.每日滚动时段.keys()].sort(),
+      今日: m.获取当日时段(new Date().toLocaleDateString('sv')),
+      旧格式: m.获取当日时段('2026-09-16'),
+    };
   `);
   for (const 日期 of Object.keys(历史)) {
     assert.ok(读回.日期.includes(日期), `重载后读回 ${日期}`);
   }
   assert.ok(读回.今日.length >= 1, '今天的真实记录也在');
+  assert.deepEqual(读回.旧格式, [[7_200, 7_300]], '旧版带「种类」的段照常读回，多余一位丢掉');
 
-  // 3) 统计弹窗：一天一行、所有行共用一条轴、两类色块、刻度与首尾时刻
+  // 3) 统计弹窗：一天一行、所有行共用一条轴、一种色块、刻度与首尾时刻
   await evaluate(`document.querySelector('#阅读统计按钮').click()`);
   assert.ok(await evaluate('return document.querySelector("#阅读统计弹窗").open'));
   const 渲染 = await evaluate(`
@@ -145,8 +152,8 @@ try {
       行数: 轨道们.length,
       日期列: [...表.querySelectorAll('.统计时段日期')].map((节点) => 节点.textContent),
       日期标题: [...表.querySelectorAll('.统计时段日期')].map((节点) => 节点.title),
-      自动块: 表.querySelectorAll('.统计时段块-自动').length,
-      按键块: 表.querySelectorAll('.统计时段块-按键').length,
+      色块数: 表.querySelectorAll('.统计时段块').length,
+      色块类名: [...new Set([...表.querySelectorAll('.统计时段块')].map((块) => 块.className))],
       刻度标签: [...表.querySelectorAll('.统计时段刻度标签')].map((节点) => 节点.textContent),
       首尾: [...表.querySelectorAll('.统计时段端点')].map((节点) => 节点.textContent),
       汇总: [...表.querySelectorAll('.统计时段汇总')].map((节点) => 节点.textContent),
@@ -165,8 +172,8 @@ try {
   assert.equal(渲染.行数, 读回.日期.length, '一天一行');
   assert.equal(渲染.日期列[0], '今天', '今天在最上');
   assert.deepEqual(渲染.日期标题, [...读回.日期].sort().reverse(), '按日期倒序，标题为完整日期');
-  assert.ok(渲染.自动块 >= 3, `自动滚动色块数 ${渲染.自动块}`);
-  assert.equal(渲染.按键块, 1, '按键滚动色块单独一种');
+  assert.ok(渲染.色块数 >= 5, `色块总数 ${渲染.色块数}`);
+  assert.deepEqual(渲染.色块类名, ['统计时段块'], '自动与按键同一种色块，不再分色');
   assert.equal(渲染.轨道宽.length, 1, '所有行共用同一条轴（轨道等宽）');
   assert.deepEqual(渲染.首尾, [
     格式化时刻(渲染.窗口.起秒).slice(0, 5),
@@ -178,7 +185,7 @@ try {
   assert.ok(渲染.刻度标签.length >= 1 && 渲染.刻度标签.length <= 6, `整点刻度 ${渲染.刻度标签}`);
   assert.match(
     渲染.段几何[0].标题,
-    /^\d\d:\d\d:\d\d → \d\d:\d\d:\d\d · .+ · (自动滚动|按键滚动)$/,
+    /^\d\d:\d\d:\d\d → \d\d:\d\d:\d\d · \d+ 分 \d+ 秒$/,
   );
   assert.equal(渲染.段几何[0].左, 0, '轴起点即最早一段的起点');
   assert.match(
