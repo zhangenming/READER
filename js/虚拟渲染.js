@@ -17,6 +17,27 @@ import { 元素, 状态 } from './状态.js';
 import { 是混合盒命中 } from './排版引擎.js';
 import { 获取关键词配色, 查找首个相交命中 } from './搜索.js';
 
+/**
+ * 显示层人称字母替换：正文汉字 → 可见拉丁字母。
+ * 仅改变渲染出来的字形，.txt 原文件与 状态.文本 都不变；
+ * 紧跟这三个字之后的「们」渲染为 M（我们 → WM、你们 → NM、他们 → TM）。
+ */
+const 人称字母映射 = new Map([
+  ['我', 'W'],
+  ['他', 'T'],
+  ['你', 'N'],
+]);
+
+function 取人称字母(字文本, 前一个字) {
+  if (人称字母映射.has(字文本)) {
+    return 人称字母映射.get(字文本);
+  }
+  if (字文本 === '们' && 人称字母映射.has(前一个字)) {
+    return 'M';
+  }
+  return null;
+}
+
 export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
   if (!状态.行起点列表.length) {
     return;
@@ -184,10 +205,11 @@ export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
         }
         const 字命中详情 = [];
         const 字元素 = document.createElement('span');
+        const 人称字母 = 取人称字母(字文本, 状态.文本[字起点 - 1]);
         字元素.className = '字';
         字元素.classList.toggle('西文', 是西文字素(字文本));
         字元素.classList.toggle('数字', 是数字字素(字文本));
-        字元素.classList.toggle('代词字母', '我他你'.includes(字文本));
+        字元素.classList.toggle('代词字母', 人称字母 !== null);
         字元素.dataset.start = String(字起点);
         字元素.dataset.end = String(字终点);
         字元素.setAttribute('aria-hidden', 'true');
@@ -197,16 +219,9 @@ export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
           特殊字形.textContent = 字文本;
           字元素.append(特殊字形);
         } else {
-          // 显示层替换：正文「我」渲染为 W、「他」渲染为 T、「你」渲染为 N
-          // （书本 .txt 原文件与 状态.文本 均不变，仅可见字形）。
-          字元素.textContent =
-            字文本 === '我'
-              ? 'W'
-              : 字文本 === '他'
-                ? 'T'
-                : 字文本 === '你'
-                  ? 'N'
-                  : 字文本;
+          // 显示层替换：正文「我」渲染为 W、「他」渲染为 T、「你」渲染为 N，
+          // 其后的「们」渲染为 M（书本 .txt 原文件与 状态.文本 均不变，仅可见字形）。
+          字元素.textContent = 人称字母 ?? 字文本;
         }
         if (状态.全文单字.has(字文本)) {
           const 全文单字标记 = document.createElement('span');
