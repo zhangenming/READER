@@ -489,15 +489,35 @@ export async function 构建句段负担索引(全文, 任务仍然有效) {
 }
 
 export async function 统计全文单字(全文, 任务仍然有效) {
-  const 汉字频次 = new Map();
-  let 已扫描字符数 = 0;
+  // BMP 汉字用 64K 频次数组直查，避免 for...of 迭代器的每字符字符串分配与 Map 哈希；
+  // 扩展平面（代理对）与三区间外的罕用 Han 字（〇 々 〡 等）回退 Map，语义与 是汉字 一致。
+  // 实测百万字文本 62ms → 6ms（tmp/bench-hotpaths.mjs）。
+  const BMP频次 = new Uint32Array(0x10000);
+  const 扩展频次 = new Map();
+  const 文本长度 = 全文.length;
   let 时间片开始 = performance.now();
-  for (const 字 of 全文) {
-    if (是汉字(字)) {
-      汉字频次.set(字, (汉字频次.get(字) ?? 0) + 1);
+  for (let idx = 0; idx < 文本长度; idx += 1) {
+    const 码 = 全文.charCodeAt(idx);
+    if (
+      (码 >= 0x3400 && 码 <= 0x4dbf) ||
+      (码 >= 0x4e00 && 码 <= 0x9fff) ||
+      (码 >= 0xf900 && 码 <= 0xfaff)
+    ) {
+      BMP频次[码] += 1;
+    } else if (码 >= 0xd800 && 码 <= 0xdbff && idx + 1 < 文本长度) {
+      const 低位 = 全文.charCodeAt(idx + 1);
+      if (低位 >= 0xdc00 && 低位 <= 0xdfff) {
+        const 码点 = 0x10000 + ((码 - 0xd800) << 10) + (低位 - 0xdc00);
+        if (汉字模式.test(String.fromCodePoint(码点))) {
+          扩展频次.set(码点, (扩展频次.get(码点) ?? 0) + 1);
+        }
+        idx += 1;
+      }
+      // 孤立高代理：\p{Script=Han} 不匹配，原实现同样不计入
+    } else if (码 > 0x7f && 汉字模式.test(String.fromCharCode(码))) {
+      BMP频次[码] += 1;
     }
-    已扫描字符数 += 1;
-    if ((已扫描字符数 & 4095) === 0) {
+    if ((idx & 4095) === 4095) {
       时间片开始 = await 按需让出主线程(时间片开始);
       if (!任务仍然有效()) {
         return null;
@@ -507,13 +527,16 @@ export async function 统计全文单字(全文, 任务仍然有效) {
   if (!任务仍然有效()) {
     return null;
   }
-  return new Set(
-    [...汉字频次]
-      .filter(function 筛选全文单字([, 频次]) {
-        return 频次 === 1;
-      })
-      .map(function 读取全文单字([字]) {
-        return 字;
-      }),
-  );
+  const 单字 = new Set();
+  for (let 码 = 0x80; 码 < 0x10000; 码 += 1) {
+    if (BMP频次[码] === 1) {
+      单字.add(String.fromCharCode(码));
+    }
+  }
+  for (const [码点, 频次] of 扩展频次) {
+    if (频次 === 1) {
+      单字.add(String.fromCodePoint(码点));
+    }
+  }
+  return 单字;
 }

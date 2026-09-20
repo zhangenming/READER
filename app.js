@@ -133,6 +133,9 @@ import {
 } from './js/持久化.js';
 import {
   处理搭配点击,
+  处理搭配按下,
+  处理搭配移动,
+  处理搭配按下结束,
   处理搭配悬停,
   处理上下文悬停,
   处理分析结果滚动,
@@ -454,6 +457,17 @@ function 绑定事件() {
   元素.查找历史列表.addEventListener('click', 处理查找历史点击);
   元素.清空查找历史按钮.addEventListener('click', 清空查找历史);
   元素.分析分栏.addEventListener('click', 处理搭配点击);
+  // 搭配行：单击只查该搭配词，长按 1 秒查「关键词+搭配」的合并词
+  元素.分析分栏.addEventListener('pointerdown', 处理搭配按下);
+  元素.分析分栏.addEventListener('pointermove', 处理搭配移动, {
+    passive: true,
+  });
+  元素.分析分栏.addEventListener('pointerup', 处理搭配按下结束, {
+    passive: true,
+  });
+  元素.分析分栏.addEventListener('pointercancel', 处理搭配按下结束, {
+    passive: true,
+  });
   元素.分析分栏.addEventListener('pointerover', 处理搭配悬停, {
     passive: true,
   });

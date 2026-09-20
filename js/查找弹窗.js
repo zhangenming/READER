@@ -5,6 +5,8 @@ import {
   实时查找延迟,
   上下文滚动预载像素,
   查找历史条数上限,
+  搭配长按毫秒,
+  搭配长按移动死区,
 } from './常量.js';
 import { 是汉字 } from './文本工具.js';
 import { 让出主线程, 按需让出主线程 } from './调度.js';
@@ -37,6 +39,11 @@ let 悬停搭配项 = null;
 // 中间上下文行悬停联动：当前悬停命中 idx 与两侧被标记的对应搭配行
 let 上下文悬停命中idx = -1;
 let 对应搭配行列表 = [];
+// 搭配行长按：按住满 搭配长按毫秒 立即切换为「关键词+搭配」的合并查询（不等松手）。
+// 松手后那次 click 按触发时刻抑制——长按已重建列表，click 可能落在祖先元素上而不再到来。
+let 搭配长按计时器 = 0;
+let 搭配长按时刻 = 0;
+let 搭配按下位置 = null;
 
 function 构建命中映射(列表) {
   const 映射 = new Map();
@@ -740,13 +747,67 @@ export function 处理查找输入() {
   }
 }
 
-export function 处理搭配点击(事件) {
-  const 行 = 事件.target.closest('.分析行');
-  if (!行 || !分析结果视图?.关键词) return;
-  const 词组 = 行.dataset.词组;
-  if (!词组) return;
-  元素.查找输入框.value = 词组;
+function 完整搭配词组(方向, 词组) {
+  const 关键词 = 分析结果视图?.关键词 ?? '';
+  return 方向 === '前' ? 词组 + 关键词 : 关键词 + 词组;
+}
+
+function 应用搭配查询(方向, 词组, 追加) {
+  元素.查找输入框.value = 追加 ? 完整搭配词组(方向, 词组) : 词组;
   执行实时查找();
+}
+
+export function 处理搭配点击(事件) {
+  if (performance.now() - 搭配长按时刻 < 搭配长按毫秒) {
+    return;
+  }
+  const 行 = 事件.target?.closest?.('.分析行');
+  const 词组 = 行?.dataset.词组;
+  if (!词组 || !分析结果视图?.关键词) return;
+  应用搭配查询(行.dataset.方向, 词组, false);
+}
+
+export function 处理搭配按下(事件) {
+  取消搭配长按();
+  if (事件.button > 0 || !分析结果视图?.关键词) {
+    return;
+  }
+  const 行 = 事件.target?.closest?.('.分析行');
+  const 词组 = 行?.dataset.词组;
+  if (!词组) {
+    return;
+  }
+  const 方向 = 行.dataset.方向;
+  搭配按下位置 = { x: 事件.clientX, y: 事件.clientY };
+  搭配长按计时器 = window.setTimeout(function 长按合并() {
+    搭配长按计时器 = 0;
+    搭配按下位置 = null;
+    搭配长按时刻 = performance.now();
+    应用搭配查询(方向, 词组, true);
+  }, 搭配长按毫秒);
+}
+
+export function 处理搭配移动(事件) {
+  if (!搭配长按计时器) {
+    return;
+  }
+  const 位移 = 搭配按下位置;
+  if (
+    Math.abs(事件.clientX - 位移.x) > 搭配长按移动死区 ||
+    Math.abs(事件.clientY - 位移.y) > 搭配长按移动死区
+  ) {
+    取消搭配长按(); // 按住拖动是在滚动列表，不是在长按
+  }
+}
+
+export function 处理搭配按下结束() {
+  取消搭配长按();
+}
+
+function 取消搭配长按() {
+  window.clearTimeout(搭配长按计时器);
+  搭配长按计时器 = 0;
+  搭配按下位置 = null;
 }
 
 export function 处理分析结果滚动() {
@@ -810,11 +871,8 @@ function 追加分析结果行() {
       行.dataset.词组 = 统计项.词组;
       行.dataset.方向 = 区间.方向;
       行.dataset.统计idx = String(idx);
-      const 完整词组 =
-        区间.方向 === '前'
-          ? 统计项.词组 + 分析结果视图.关键词
-          : 分析结果视图.关键词 + 统计项.词组;
-      行.title = `查找 ${完整词组}`;
+      const 完整词组 = 完整搭配词组(区间.方向, 统计项.词组);
+      行.title = `单击查找 ${统计项.词组} · 长按查找 ${完整词组}`;
       行.setAttribute('aria-label', `查找 ${完整词组}`);
       const 词组单元格 = document.createElement('span');
       const 数量单元格 = document.createElement('span');
