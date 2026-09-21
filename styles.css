@@ -2802,34 +2802,38 @@ dialog,
   text-align: center;
 }
 
+/* 名次列在前、数值列在后；两组之间用一条细线分开 */
 .字频对照表格 th:nth-child(2),
 .字频对照表格 td:nth-child(2),
 .字频对照表格 th:nth-child(4),
 .字频对照表格 td:nth-child(4) {
-  width: 118px;
-}
-
-.字频对照表格 th:nth-child(3),
-.字频对照表格 td:nth-child(3),
-.字频对照表格 th:nth-child(5),
-.字频对照表格 td:nth-child(5) {
   width: 62px;
 }
 
-.字频对照表格 th:nth-child(6),
-.字频对照表格 td:nth-child(6) {
-  width: 86px;
+.字频对照表格 th:nth-child(3),
+.字频对照表格 td:nth-child(3) {
+  width: 112px;
 }
 
-/* 名次列比频次列次要一档；查不到时同样是灰「—」 */
-.字频对照表格 td:nth-child(3),
-.字频对照表格 td:nth-child(5) {
+.字频对照表格 td:nth-child(2),
+.字频对照表格 td:nth-child(4) {
   color: var(--次要墨色);
   font-size: 12px;
 }
 
 .字频对照表格 td.字频缺表 {
   color: var(--次要墨色);
+}
+
+/* 括号里的出现次数不能把行盒顶高、也不能溢出压到下一列：
+   虚拟列表按固定行高算窗口，换行会让可见行数与渲染行数对不上 */
+.字频对照表格 td {
+  white-space: nowrap;
+}
+
+.字频对照表格 th:nth-child(5),
+.字频对照表格 td:nth-child(5) {
+  padding-right: 16px;
 }
 
 /* 可排序表头：整格可点，当前列加深并带箭头（万分之↓ = 从大到小） */

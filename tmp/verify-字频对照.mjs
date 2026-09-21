@@ -193,15 +193,15 @@ function 期望榜(哪一列) {
   ]);
 }
 
-// 期望的一行六格：汉字 | 知乎万分之 | 知乎序号 | 本书万分之 | 本书序号 | 字符个数
+// 期望的一行五格：汉字 | 知乎序号 | 知乎万分之 | 本书序号 | 本书万分之 (次数)
 function 期望行(字) {
+  const 数量 = 计数.get(字);
   return [
     字,
-    期望显示(取知乎万分率(字)),
     显示名次(取知乎序号(字)),
-    期望显示((计数.get(字) / 汉字总数) * 10000),
+    期望显示(取知乎万分率(字)),
     显示名次(本书名次.get(字)),
-    计数.get(字).toLocaleString('zh-CN'),
+    `${期望显示((数量 / 汉字总数) * 10000)} (${期望次数(数量)})`,
   ];
 }
 
@@ -502,13 +502,12 @@ assert.deepEqual(
   结构.表头.map(([名, 键, 排序]) => [名, 键, 排序]),
   [
     ['汉字', '', ''],
-    ['知乎万分之', '现代万分之', 'none'],
     ['序号', '现代序号', 'none'],
-    ['本书万分之', '本书万分之', 'descending'],
+    ['知乎万分之', '现代万分之', 'none'],
     ['序号', '本书序号', 'none'],
-    ['字符个数', '本书个数', 'none'],
+    ['本书万分之', '本书万分之', 'descending'],
   ],
-  '表头应为六列、五列可排序，默认按本书万分之降序',
+  '表头应为五列、四列可排序（序号在各自数值前），默认按本书万分之降序',
 );
 assert.match(结构.摘要, /万分之/);
 assert.ok(
@@ -520,51 +519,51 @@ assert.ok(结构.摘要.includes('按本书万分之降序'), `摘要应说明�
 // —— 对齐：表头文字与数字右边缘齐平（排序箭头挂在标签左侧，不占右侧空间）——
 async function 量对齐(说明) {
   const 测量 = await 求值(`
-    const 取文本节点 = (格) => {
-      const 直接 = [...格.childNodes].find((n) =>
-        n.nodeType === 3 && n.textContent.trim());
-      if (直接) return 直接;
-      for (const 子 of 格.querySelectorAll('*')) {
-        const 命中 = [...子.childNodes].find((n) =>
-          n.nodeType === 3 && n.textContent.trim());
-        if (命中) return 命中;
+    // 取一个格子里「真正画出来的文字」的最右边界：文本节点用 Range，
+    // 元素（如按钮、括号 span）递归下去，这样带 span 的格子也能量准。
+    const 叶 = (节点, 收集 = []) => {
+      for (const 子 of 节点.childNodes) {
+        if (子.nodeType === 3 && 子.textContent.trim()) {
+          const 域 = document.createRange();
+          域.selectNodeContents(子);
+          const 盒 = 域.getBoundingClientRect();
+          收集.push({ 右: 盒.right, 左: 盒.left, 文: 子.textContent.trim() });
+        } else if (子.nodeType === 1) {
+          叶(子, 收集);
+        }
       }
-      return null;
+      return 收集;
     };
-    const 右边缘 = (格) => {
-      const 节点 = 取文本节点(格);
-      const 域 = document.createRange();
-      域.selectNodeContents(节点);
-      const 盒 = 域.getBoundingClientRect();
-      const 格盒 = 格.getBoundingClientRect();
+    const 量 = (格) => {
+      const 片 = 叶(格);
+      const 右 = Math.max(...片.map((p) => p.right));
+      const 左 = Math.min(...片.map((p) => p.left));
       return {
-        右: Math.round(盒.right * 10) / 10,
-        中: Math.round((盒.left + 盒.right) * 5) / 10,
-        文: JSON.stringify(节点.textContent.slice(0, 24)),
-        格右: Math.round(格盒.right * 10) / 10,
-        格内右: Math.round((格盒.right - parseFloat(getComputedStyle(格).paddingRight)) * 10) / 10,
+        右: Math.round(右 * 10) / 10,
+        中: Math.round(((左 + 右) / 2) * 10) / 10,
+        文: JSON.stringify(片.map((p) => p.文).join('')),
       };
     };
     const 表头格 = [...document.querySelectorAll('#字频对照容器 thead th')];
     const 首行 = document.querySelector('#字频对照列表 tr:not(.虚拟占位)');
     const 数据格 = [...首行.children];
-    const 伪元素 = (格) => getComputedStyle(格.querySelector('.字频排序按钮') ?? 格, '::after').content;
     return 表头格.map((格, i) => [
-      右边缘(格), 右边缘(数据格[i]), 格.getAttribute('aria-sort') ?? '', 伪元素(格),
+      量(格), 量(数据格[i]), 格.getAttribute('aria-sort') ?? '',
+      getComputedStyle(格.querySelector('.字频排序按钮') ?? 格, '::after').content,
     ]);
   `);
-  assert.equal(测量.length, 6, `${说明}：应量到六列`);
+  assert.equal(测量.length, 5, `${说明}：应量到五列`);
   测量.forEach(([表头, 数据, 排序, 伪元素], i) => {
     if (i === 0) {
       assert.ok(
         Math.abs(表头.中 - 数据.中) <= 1,
-        `${说明}：汉字列应居中对齐，表头${表头.中} vs 数据${数据.中}`,
+        `${说明}：汉字列应居中对齐，表头${JSON.stringify(表头)} vs 数据${JSON.stringify(数据)}`,
       );
       return;
     }
     assert.ok(
       Math.abs(表头.右 - 数据.右) <= 1,
-      `${说明}：第 ${i + 1} 列表头右边缘应与数字齐平（表头 ${JSON.stringify(表头)} vs 数据 ${JSON.stringify(数据)}，排序=${排序}）`,
+      `${说明}：第 ${i + 1} 列表头文字右边缘应与数字（含括号）右边缘齐平（表头 ${JSON.stringify(表头)} vs 数据 ${JSON.stringify(数据)}，排序=${排序}）`,
     );
     if (排序 !== 'none') {
       assert.equal(
@@ -582,13 +581,28 @@ const 首屏 = await 读窗口('#字频对照列表');
 断言窗口连续(首屏, '字频对照首屏');
 断言窗口内容(首屏, 单字序列, '默认序首屏');
 assert.equal(首屏.序号[0], 0, '首屏第一行应是全书最高频字');
-assert.equal(首屏.行[0].length, 6, '每行应为六格');
+assert.equal(首屏.行[0].length, 5, '每行应为五格');
 assert.ok(首屏.DOM行数 < 分析.单字数 / 4, `DOM 行数没体现虚拟：${首屏.DOM行数}`);
+// 括号不能把主表行盒顶高、也不能溢出压列：虚拟列表的窗口全靠固定行高算
+const 主表行高 = await 求值(`
+  const 表体 = document.querySelector('#字频对照列表');
+  const 行列表 = [...表体.children].filter((行) => !行.classList.contains('虚拟占位'));
+  const 高 = 行列表.map((行) => Math.round(行.getBoundingClientRect().height));
+  let 溢出 = 0;
+  for (const 行 of 行列表) {
+    for (const 格 of 行.children) {
+      if (格.scrollWidth > 格.clientWidth + 1) 溢出 += 1;
+    }
+  }
+  return { 种类: [...new Set(高)], 溢出格数: 溢出, 行数: 行列表.length };
+`);
+assert.deepEqual(主表行高.种类, [34], `主表行高必须统一为 34px：${JSON.stringify(主表行高)}`);
+assert.equal(主表行高.溢出格数, 0, `主表有单元格文字溢出：${JSON.stringify(主表行高)}`);
 assert.ok(
   Math.abs(首屏.表体高 - 分析.单字数 * 首屏.行高) <= 首屏.行高,
   `占位行撑出的表体高应≈全量行高：${首屏.表体高} vs ${分析.单字数 * 首屏.行高}`,
 );
-await 截图('字频对照-六列默认序.png');
+await 截图('字频对照-五列默认序.png');
 
 const 见过 = new Map();
 const 步长 = Math.max(首屏.行高, 首屏.容器视口高 - 缓冲行数 * 首屏.行高);
@@ -610,7 +624,7 @@ for (let 顶 = 0; 顶 <= 首屏.容器滚动高; 顶 += 步长) {
   窗口.序号.forEach((行序号, i) => 见过.set(行序号, 窗口.行[i]));
 }
 assert.equal(见过.size, 分析.单字数, '滚遍全表应覆盖每一个汉字');
-const 缺表字数 = [...见过.values()].filter(([, 现代]) => 现代 === '—').length;
+const 缺表字数 = [...见过.values()].filter((行) => 行[2] === '—').length;
 assert.ok(缺表字数 > 0, '本书应含有现代字频表未收录的字，用于验证「—」分支');
 assert.ok(
   结构.摘要.includes(`${(计数.size - 缺表字数).toLocaleString('zh-CN')} 字有对照值`),
@@ -623,12 +637,12 @@ const 本书列合计 = [...计数.values()].reduce(
 assert.ok(Math.abs(本书列合计 - 10000) < 0.01, `本书列应合计 10000‱：${本书列合计}`);
 // 名次列自洽：本书序号应恰为 1..N 各出现一次；知乎序号缺表字数与「—」一致
 assert.deepEqual(
-  [...new Set([...见过.values()].map((行) => 行[4]))].sort((左, 右) => 左 - 右),
+  [...new Set([...见过.values()].map((行) => 行[3]))].sort((左, 右) => 左 - 右),
   [...见过.keys()].map((序) => (序 + 1).toLocaleString('zh-CN')),
   '本书序号列应为 1..N 且不重不漏',
 );
 assert.equal(
-  [...见过.values()].filter((行) => 行[2] === '—').length,
+  [...见过.values()].filter((行) => 行[1] === '—').length,
   缺表字数,
   '知乎序号列的「—」应与知乎万分之列一致',
 );
@@ -751,13 +765,16 @@ for (const 列名 of ['偏多', '偏少', '最小']) {
     assert.ok(次数 > 0, `${行[0]} 不在本书正文里，不该入榜`);
     assert.notEqual(取知乎万分率(行[0]), undefined, `${行[0]} 知乎未收录，不该入榜`);
     const 基准 = 期望行(行[0]);
-    // 榜里的本书格 = 「主表本书万分之 (主表字符个数)」：两段都要能从主表复算出来
+    // 榜与主表同字必须一字不差：知乎万分之、以及本书「万分之 (次数)」两段
     const 格 = /^(\S+) \((.+)\)$/.exec(行[2]);
-    assert.ok(格, `${行[0]} 本书格应为「万分之 (次数)」，实得「${行[2]}」`);
+    assert.ok(格, `${行[0]} 榜内本书格应为「万分之 (次数)」，实得「${行[2]}」`);
+    const 主表本书 = /^(\S+) \((.+)\)$/.exec(基准[4]);
+    assert.ok(主表本书, `${行[0]} 主表本书格应为「万分之 (次数)」，实得「${基准[4]}」`);
+    assert.equal(行[1], 基准[2], `${行[0]} 榜内知乎值应与主表一致`);
     assert.deepEqual(
-      [行[1], 格[1], 格[2]],
-      [基准[1], 基准[3], 期望次数(Number(基准[5].replace(/,/g, '')))],
-      `${行[0]} 榜内数值应与主表同字的两列一致`,
+      [格[1], 格[2]],
+      [主表本书[1], 主表本书[2]],
+      `${行[0]} 榜内本书「万分之 (次数)」应与主表完全一致`,
     );
     assert.equal(行[0], 基准[0]);
   }
@@ -903,11 +920,10 @@ const 排序列名 = {
   现代序号: '知乎序号',
   本书万分之: '本书万分之',
   本书序号: '本书序号',
-  本书个数: '字符个数',
 };
-for (const 键 of ['现代万分之', '现代序号', '本书万分之', '本书序号', '本书个数']) {
+for (const 键 of ['现代万分之', '现代序号', '本书万分之', '本书序号']) {
   await 点表头(键);
-  const 自然方向 = ['现代万分之', '本书万分之', '本书个数'].includes(键) ? '降' : '升';
+  const 自然方向 = ['现代万分之', '本书万分之'].includes(键) ? '降' : '升';
   await 验证排序(键, 自然方向, `${排序列名[键]}${自然方向 === '降' ? '降序' : '升序'}`);
   const aria = await 求值(`
     return document.querySelector('.字频排序列[data-排序=${JSON.stringify(键)}]')
@@ -1057,8 +1073,8 @@ assert.equal(回对照摘要, 回对照前摘要, '切 tab 不应丢掉当前排
 
 console.log(
   `\nOK：${目标文本} ${汉字总数.toLocaleString('zh-CN')} 汉字 / ${分析.单字数.toLocaleString('zh-CN')} 去重字；` +
-    `默认序滚遍全表逐行比对六格全对（缺表 ${缺表字数} 字，本书列合计 ${本书列合计.toFixed(0)}‱），` +
-    `五列点击排序 + 反向全对且缺表字恒垫底；三视图均虚拟（对照 ${首屏.DOM行数} 行 / 单字 ${重复窗.DOM行数}+${一次窗.DOM行数} 行 / 二字 ${二字窗.DOM行数} 行，` +
+    `默认序滚遍全表逐行比对五格全对（缺表 ${缺表字数} 字，本书列合计 ${本书列合计.toFixed(0)}‱），` +
+    `四列点击排序 + 反向全对且缺表字恒垫底；三视图均虚拟（对照 ${首屏.DOM行数} 行 / 单字 ${重复窗.DOM行数}+${一次窗.DOM行数} 行 / 二字 ${二字窗.DOM行数} 行，` +
     `全量 ${分析.单字数} / ${分析.重复数}+${分析.一次数} / ${分析.二字数}），翻页控件已移除`,
 );
 收尾();
