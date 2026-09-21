@@ -43,22 +43,33 @@ const 汉字序列 = '${汉字序列}';
 const 万分率序列 = ${JSON.stringify(万分率序列)};
 
 const 知乎万分率映射 = new Map();
+const 知乎序号映射 = new Map();
 for (let i = 0; i < 汉字序列.length; i += 1) {
   知乎万分率映射.set(汉字序列[i], 万分率序列[i]);
+  知乎序号映射.set(汉字序列[i], i + 1); // 万分率序列本身按频次降序
 }
 
 /** 某字的知乎万分之频次；表内没有该字（含扩展区、繁体、生僻字）时返回 undefined */
 export function 取知乎万分率(字) {
   return 知乎万分率映射.get(字);
 }
+
+/** 某字在知乎表里的名次（1 起，万分之降序；510 个 0 次字按源表顺序排在尾部） */
+export function 取知乎序号(字) {
+  return 知乎序号映射.get(字);
+}
+
+/** 知乎表总字数，用于把名次说成「N 分之几」 */
+export const 知乎表字数 = 汉字序列.length;
 `;
 
 writeFileSync(输出路径, 代码, 'utf8');
 const 模块 = await import(`data:text/javascript,${encodeURIComponent(代码)}`);
 console.log(
   `已生成 js/知乎字频.js：${行列表.length} 字 / ${(代码.length / 1024).toFixed(0)} KB；` +
-    `的=${模块.取知乎万分率('的')} 是=${模块.取知乎万分率('是')}`,
+    `的=${模块.取知乎万分率('的')}（序号 ${模块.取知乎序号('的')}）` +
+    ` 是=${模块.取知乎万分率('是')}（序号 ${模块.取知乎序号('是')}）`,
 );
-if (模块.取知乎万分率('#') !== undefined) {
-  throw new Error('非汉字条目未剔除干净');
+if (模块.取知乎万分率('#') !== undefined || 模块.取知乎序号('的') !== 1) {
+  throw new Error('数据自检失败：非汉字未剔除干净或序号表与频次表顺序不一致');
 }

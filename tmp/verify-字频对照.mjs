@@ -1,14 +1,14 @@
-// 端到端回归：词频弹窗的三个视图都走虚拟列表（无翻页）。
-// 页面侧走真实入口（内容选择 → 载入正文 → 打开词频弹窗），节点侧独立复算汉字计数、
-// 万分之换算与显示格式；再按滚动位置逐段读窗口，要求「滚遍全表 = 每行都出现过且都对」，
-// 同时断言任意时刻 DOM 里只有几十行（真的虚拟，而不是一次铺完）。
+// 端到端回归：词频弹窗的三个视图都走虚拟列表（无翻页），且字频对照四列可点排序。
+// 页面侧走真实入口（内容选择 → 载入正文 → 打开词频弹窗 → 点表头），节点侧独立复算
+// 汉字计数、万分之换算、两侧名次与排序结果；再按滚动位置读窗口，要求
+// 「滚遍全表 = 每行都出现过且都对」，同时断言任意时刻 DOM 里只有几十行（真的虚拟）。
 // 跑法：node tmp/verify-字频对照.mjs
 import assert from 'node:assert/strict';
 import { execSync, spawn } from 'node:child_process';
 import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
-import { 取知乎万分率 } from '../js/知乎字频.js';
+import { 取知乎序号, 取知乎万分率 } from '../js/知乎字频.js';
 
 const CDP端口 = Number(process.env.VERIFY_CDP_PORT || 9412);
 const 站点端口 = Number(process.env.SITE_PORT || 15998);
@@ -28,16 +28,32 @@ const 是汉字 = (字) => {
   );
 };
 
-// —— 节点侧基准：自己数汉字、自己换算万分之、自己格式化 ——
+// —— 节点侧基准：自己数汉字、自己换算万分之、自己排名次、自己排序 ——
 function 统计基准(文本) {
   let 总数 = 0;
-  const 映射 = new Map();
+  const 计数 = new Map();
+  const 首次位置 = new Map();
+  let 位置 = 0;
   for (const 字 of 文本) {
-    if (!是汉字(字)) continue;
-    总数 += 1;
-    映射.set(字, (映射.get(字) ?? 0) + 1);
+    if (是汉字(字)) {
+      总数 += 1;
+      计数.set(字, (计数.get(字) ?? 0) + 1);
+      if (!首次位置.has(字)) {
+        首次位置.set(字, 位置);
+      }
+    }
+    位置 += 1;
   }
-  return { 汉字总数: 总数, 计数: 映射 };
+  const 名次 = new Map();
+  [...计数.keys()]
+    .sort(
+      (左, 右) =>
+        计数.get(右) - 计数.get(左) || 首次位置.get(左) - 首次位置.get(右),
+    )
+    .forEach(function 记名次(字, 序) {
+      名次.set(字, 序 + 1);
+    });
+  return { 汉字总数: 总数, 计数, 名次 };
 }
 
 // 显示口径：≥10 向下取整（「的」403.89 → 403），其余 3 位有效数字，查不到为「—」
@@ -47,22 +63,47 @@ function 期望显示(值) {
   if (值 >= 10) return String(Math.floor(值));
   return 值.toPrecision(3);
 }
+const 显示名次 = (值) => (值 === undefined ? '—' : 值.toLocaleString('zh-CN'));
 
-function 构造期望行(计数, 汉字总数) {
-  const 映射 = new Map();
-  for (const [字, 数量] of 计数) {
-    映射.set(字, [
-      期望显示(取知乎万分率(字)),
-      期望显示((数量 / 汉字总数) * 10000),
-    ]);
-  }
-  return 映射;
+// 期望的一行五格：汉字 | 知乎万分之 | 知乎序号 | 本书万分之 | 本书序号
+function 期望行(字) {
+  return [
+    字,
+    期望显示(取知乎万分率(字)),
+    显示名次(取知乎序号(字)),
+    期望显示((计数.get(字) / 汉字总数) * 10000),
+    显示名次(本书名次.get(字)),
+  ];
+}
+
+// 排序后的完整期望序列，与页面同一套规则：现代表查不到的字永远垫底，并列按本书名次
+function 期望序列(键, 方向) {
+  const 符号 = 方向 === '降' ? -1 : 1;
+  const 取现代 = 键 === '现代序号' ? 取知乎序号 : 取知乎万分率;
+  const 看现代 = 键 === '现代万分之' || 键 === '现代序号';
+  return [...计数.keys()].sort(function 比较(左, 右) {
+    const 左名 = 本书名次.get(左);
+    const 右名 = 本书名次.get(右);
+    if (看现代) {
+      const 左值 = 取现代(左);
+      const 右值 = 取现代(右);
+      if (左值 === undefined || 右值 === undefined) {
+        if (左值 === 右值) return 左名 - 右名;
+        return 左值 === undefined ? 1 : -1;
+      }
+      if (左值 !== 右值) return (左值 - 右值) * 符号;
+    } else {
+      const 左值 = 键 === '本书万分之' ? 计数.get(左) : 左名;
+      const 右值 = 键 === '本书万分之' ? 计数.get(右) : 右名;
+      if (左值 !== 右值) return (左值 - 右值) * 符号;
+    }
+    return 左名 - 右名;
+  });
 }
 
 let 汉字总数 = 0;
 let 计数 = new Map();
-let 期望行 = new Map();
-let 单字序列 = []; // 本书汉字，按本书频次降序（与页面同一顺序，用于校验窗口起点）
+let 本书名次 = new Map();
 
 function 清理端口() {
   // 断言抛出时子进程不会随 node 退出而死掉，残留的旧 Chrome / 旧服务会让下一次
@@ -120,7 +161,7 @@ async function 等待目标() {
 const 目标 = await 等待目标();
 const ws = new WebSocket(目标.webSocketDebuggerUrl);
 await new Promise((r) => ws.addEventListener('open', r, { once: true }));
-let 序号 = 0;
+let 消息号 = 0;
 const 待回复 = new Map();
 ws.addEventListener('message', (事件) => {
   const 消息 = JSON.parse(事件.data);
@@ -132,7 +173,7 @@ ws.addEventListener('message', (事件) => {
 });
 function 发送(方法, 参数 = {}) {
   return new Promise((resolve2, reject) => {
-    const 下标 = ++序号;
+    const 下标 = ++消息号;
     待回复.set(下标, { resolve: resolve2, reject });
     ws.send(JSON.stringify({ id: 下标, method: 方法, params: 参数 }));
   });
@@ -165,7 +206,6 @@ async function 读窗口(表体选择器) {
       容器滚动高: 容器.scrollHeight,
       容器视口高: 容器.clientHeight,
       容器顶: 容器.scrollTop,
-      表格高: 表体.closest('table').offsetHeight,
       表体高: 表体.offsetHeight,
       行高: 真实行[0]?.offsetHeight ?? 0,
       DOM行数: 真实行.length,
@@ -182,6 +222,14 @@ async function 滚到(容器选择器, 顶) {
   `);
   await pause(90); // 等一帧 rAF 渲染
 }
+async function 点表头(键) {
+  await 求值(`
+    document.querySelector('.字频排序列[data-排序=${JSON.stringify(键)}]')
+      .querySelector('.字频排序按钮').click();
+    return 1;
+  `);
+  await pause(160);
+}
 function 断言窗口连续(窗口, 说明) {
   const { 序号: 序号列表 } = 窗口;
   for (let i = 1; i < 序号列表.length; i += 1) {
@@ -191,6 +239,16 @@ function 断言窗口连续(窗口, 说明) {
       `${说明}：渲染行序号不连续 ${序号列表[i - 1]} → ${序号列表[i]}`,
     );
   }
+}
+// 窗口内每一行都要等于节点侧期望序列的对应片段
+function 断言窗口内容(窗口, 期望顺序, 说明) {
+  窗口.序号.forEach((行序号, i) => {
+    assert.deepEqual(
+      窗口.行[i],
+      期望行(期望顺序[行序号]),
+      `${说明} 第 ${行序号} 行不符：DOM=${窗口.行[i]}`,
+    );
+  });
 }
 
 for (let i = 0; i < 200; i++) {
@@ -223,9 +281,10 @@ for (let i = 0; i < 200; i++) {
 const 正文 = await 求值(
   `const { 状态 } = await import('./js/状态.js'); return 状态.文本;`,
 );
-({ 汉字总数, 计数 } = 统计基准(正文));
-期望行 = 构造期望行(计数, 汉字总数);
-console.log(`基准：${目标文本} 正文 ${正文.length} 字，汉字 ${汉字总数} 个 / 去重 ${计数.size} 字`);
+({ 汉字总数, 计数, 名次: 本书名次 } = 统计基准(正文));
+console.log(
+  `基准：${目标文本} 正文 ${正文.length} 字，汉字 ${汉字总数} 个 / 去重 ${计数.size} 字`,
+);
 
 // —— 打开词频弹窗（Ctrl/Cmd+A 走同一函数），等统计完成 ——
 await 求值(`(await import('./js/词频弹窗.js')).打开词频弹窗(); return 1;`);
@@ -248,17 +307,17 @@ assert.ok(分析, '词频分析应在超时前完成');
 assert.equal(分析.汉字总数, 汉字总数, '汉字总数应与磁盘基准一致');
 assert.equal(分析.去重, 计数.size, '去重汉字数应与磁盘基准一致');
 assert.equal(分析.重复数 + 分析.一次数, 计数.size, '重复 + 只出现一次 应等于去重数');
-单字序列 = await 求值(`
+const 单字序列 = await 求值(`
   const { 状态 } = await import('./js/状态.js');
   return 状态.词频分析.列表[1].map((项) => 项.文本);
 `);
 assert.deepEqual(
   单字序列,
-  [...计数.entries()].sort((左, 右) => 右[1] - 左[1]).map(([字]) => 字),
-  '页面单字顺序应与节点基准一致',
+  期望序列('本书序号', '升'),
+  '页面单字顺序应与节点侧名次排序一致',
 );
 
-// —— 翻页控件应已彻底移除 ——
+// —— 翻页控件应已彻底移除，表头四列可排序 ——
 const 结构 = await 求值(`
   return {
     分页节点: document.querySelector('#词频分页'),
@@ -267,7 +326,9 @@ const 结构 = await 求值(`
       b.classList.contains('当前')).dataset.视图,
     可聚焦: ['#字频对照容器', '#单字双列表', '#词频表格容器'].map((选择) =>
       document.querySelector(选择).tabIndex),
-    弹窗打开: document.querySelector('#词频弹窗').open,
+    表头: [...document.querySelectorAll('#字频对照容器 thead th')].map((格) => [
+      格.textContent.trim(), 格.dataset.排序 ?? '', 格.getAttribute('aria-sort') ?? '',
+    ]),
     摘要: document.querySelector('#词频摘要').textContent,
   };
 `);
@@ -275,77 +336,61 @@ assert.equal(结构.分页节点, null, '翻页控件应已删除');
 assert.deepEqual(结构.标签顺序, ['字频对照', '单字', '二字', '三字', '四字', '五字', '六字']);
 assert.equal(结构.当前视图, '对照', '默认停在第一个 tab');
 assert.deepEqual(结构.可聚焦, [0, 0, 0], '列表容器应可聚焦以便键盘滚动');
+assert.deepEqual(
+  结构.表头.map(([名, 键, 排序]) => [名.replace(/[↑↓]/, '').trim(), 键, 排序]),
+  [
+    ['汉字', '', ''],
+    ['知乎万分之', '现代万分之', 'none'],
+    ['序号', '现代序号', 'none'],
+    ['本书万分之', '本书万分之', 'descending'],
+    ['序号', '本书序号', 'none'],
+  ],
+  '表头应为五列、四列可排序，默认按本书万分之降序',
+);
 assert.match(结构.摘要, /万分之/);
 assert.ok(
   结构.摘要.includes(`${计数.size.toLocaleString('zh-CN')} 字中`),
   `摘要去重字数不对：${结构.摘要}`,
 );
+assert.ok(结构.摘要.includes('按本书万分之降序'), `摘要应说明当前排序：${结构.摘要}`);
 
-// —— 对照视图：DOM 只有窗口内的行，总高度按全量撑起 ——
+// —— 默认排序（本书万分之降）：滚遍全表，逐行与节点侧期望完全一致 ——
 const 首屏 = await 读窗口('#字频对照列表');
 断言窗口连续(首屏, '字频对照首屏');
+断言窗口内容(首屏, 单字序列, '默认序首屏');
 assert.equal(首屏.序号[0], 0, '首屏第一行应是全书最高频字');
+assert.equal(首屏.行[0].length, 5, '每行应为五格');
 assert.ok(首屏.DOM行数 < 分析.单字数 / 4, `DOM 行数没体现虚拟：${首屏.DOM行数}`);
-assert.ok(首屏.DOM行数 >= 首屏.容器视口高 / 首屏.行高, '视口内应有足够行，不能裁切');
 assert.ok(
   Math.abs(首屏.表体高 - 分析.单字数 * 首屏.行高) <= 首屏.行高,
   `占位行撑出的表体高应≈全量行高：${首屏.表体高} vs ${分析.单字数 * 首屏.行高}`,
 );
-assert.equal(首屏.行[0][0], 单字序列[0]);
-assert.equal(首屏.行[0][1], 期望显示(取知乎万分率(单字序列[0])));
-await 截图('字频对照-顶部.png');
+await 截图('字频对照-五列默认序.png');
 
-// —— 滚遍全表：每行都出现过、每行两列都对、窗口起点始终跟滚动位置对得上 ——
 const 见过 = new Map();
 const 步长 = Math.max(首屏.行高, 首屏.容器视口高 - 缓冲行数 * 首屏.行高);
 for (let 顶 = 0; 顶 <= 首屏.容器滚动高; 顶 += 步长) {
   await 滚到('#字频对照容器', 顶);
   const 窗口 = await 读窗口('#字频对照列表');
-  断言窗口连续(窗口, `对照 scrollTop=${顶}`);
+  断言窗口连续(窗口, `默认序 scrollTop=${顶}`);
   assert.equal(
     窗口.序号[0],
     // 用容器实际的 scrollTop 判断：超出最大滚动距离时浏览器会夹取，请求值可能更大
     Math.max(0, Math.floor(窗口.容器顶 / 窗口.行高) - 缓冲行数),
-    `对照窗口起点与 scrollTop 不符（scrollTop=${窗口.容器顶}，请求 ${顶}）`,
+    `窗口起点与 scrollTop 不符（scrollTop=${窗口.容器顶}，请求 ${顶}）`,
   );
   assert.ok(
     窗口.DOM行数 <= Math.ceil(窗口.容器视口高 / 窗口.行高) + 2 * 缓冲行数 + 2,
-    `对照窗口行数超上限：${窗口.DOM行数}`,
+    `窗口行数超上限：${窗口.DOM行数}`,
   );
-  窗口.序号.forEach((行序号, i) => {
-    const 字 = 窗口.行[i][0];
-    assert.equal(字, 单字序列[行序号], `第 ${行序号} 行字不对：DOM=${字}`);
-    const 基准 = 期望行.get(字);
-    if (
-      见过.has(行序号) &&
-      (见过.get(行序号)[1] !== 基准[0] || 见过.get(行序号)[2] !== 基准[1])
-    ) {
-      throw new Error(`${字} 两列值前后不一致：${见过.get(行序号)} vs ${窗口.行[i]}`);
-    }
-    见过.set(行序号, [字, 窗口.行[i][1], 窗口.行[i][2]]);
-  });
+  断言窗口内容(窗口, 单字序列, `默认序 scrollTop=${顶}`);
+  窗口.序号.forEach((行序号, i) => 见过.set(行序号, 窗口.行[i]));
 }
 assert.equal(见过.size, 分析.单字数, '滚遍全表应覆盖每一个汉字');
-assert.deepEqual(
-  [...见过.keys()],
-  [...见过.keys()].sort((左, 右) => 左 - 右),
-  '覆盖顺序应单调递增',
-);
-for (const [行序号, [字, 现代, 本书]] of 见过) {
-  const 基准 = 期望行.get(字);
-  assert.equal(现代, 基准[0], `${字} 知乎列 DOM=${现代} 基准=${基准[0]}`);
-  assert.equal(本书, 基准[1], `${字} 本书列 DOM=${本书} 基准=${基准[1]}`);
-  if (计数.get(字) > 0 && 本书 === '0') {
-    throw new Error(`${字} 出现过却显示 0`);
-  }
-  assert.equal(行序号, 单字序列.indexOf(字), `${字} 行序与列表不一致`);
-}
 const 缺表字数 = [...见过.values()].filter(([, 现代]) => 现代 === '—').length;
 assert.ok(缺表字数 > 0, '本书应含有现代字频表未收录的字，用于验证「—」分支');
 assert.ok(
-  结构.摘要.includes(
-    `${(计数.size - 缺表字数).toLocaleString('zh-CN')} 字有对照值`,
-  ),
+  结构.摘要.includes(`${(计数.size - 缺表字数).toLocaleString('zh-CN')} 字有对照值`),
   `摘要命中字数应与「—」计数自洽：${结构.摘要} / ${缺表字数}`,
 );
 const 本书列合计 = [...计数.values()].reduce(
@@ -353,13 +398,78 @@ const 本书列合计 = [...计数.values()].reduce(
   0,
 );
 assert.ok(Math.abs(本书列合计 - 10000) < 0.01, `本书列应合计 10000‱：${本书列合计}`);
+// 名次列自洽：本书序号应恰为 1..N 各出现一次；知乎序号缺表字数与「—」一致
+assert.deepEqual(
+  [...new Set([...见过.values()].map((行) => 行[4]))].sort((左, 右) => 左 - 右),
+  [...见过.keys()].map((序) => (序 + 1).toLocaleString('zh-CN')),
+  '本书序号列应为 1..N 且不重不漏',
+);
+assert.equal(
+  [...见过.values()].filter((行) => 行[2] === '—').length,
+  缺表字数,
+  '知乎序号列的「—」应与知乎万分之列一致',
+);
 
-// —— 滚到底：最后一行是全表末位，且不再有多余 DOM ——
-await 滚到('#字频对照容器', 首屏.容器滚动高);
-const 末页 = await 读窗口('#字频对照列表');
-assert.equal(末页.序号[末页.序号.length - 1], 分析.单字数 - 1, '末行应为最后一个汉字');
-assert.equal(末页.占位数 >= 1, true, '底部窗口上方应有占位行');
-await 截图('字频对照-底部.png');
+// —— 四个可排序列：点一次自然序、再点反向；缺表字始终垫底；窗口仍虚拟 ——
+async function 验证排序(键, 方向, 说明) {
+  const 期望顺序 = 期望序列(键, 方向);
+  assert.equal(期望顺序.length, 分析.单字数, `${说明}：期望序列长度不对`);
+  const 顶 = await 读窗口('#字频对照列表');
+  断言窗口连续(顶, 说明);
+  断言窗口内容(顶, 期望顺序, `${说明} 顶部`);
+  assert.equal(顶.序号[0], 0, `${说明}：排序后应回到顶部`);
+  assert.ok(顶.DOM行数 < 分析.单字数 / 4, `${说明}：排序后仍需虚拟`);
+  assert.ok(
+    Math.abs(顶.表体高 - 分析.单字数 * 顶.行高) <= 顶.行高,
+    `${说明}：排序后总高不变`,
+  );
+  await 滚到('#字频对照容器', 顶.容器滚动高);
+  const 底 = await 读窗口('#字频对照列表');
+  断言窗口内容(底, 期望顺序, `${说明} 底部`);
+  assert.deepEqual(
+    底.行[底.行.length - 1],
+    期望行(期望顺序[期望顺序.length - 1]),
+    `${说明}：末行应为排序后的最后一个字`,
+  );
+  const 摘要 = await 求值(`return document.querySelector('#词频摘要').textContent;`);
+  assert.ok(摘要.includes(`按${说明}`), `摘要未反映排序：${摘要}`);
+}
+const 排序列名 = {
+  现代万分之: '知乎万分之',
+  现代序号: '知乎序号',
+  本书万分之: '本书万分之',
+  本书序号: '本书序号',
+};
+for (const 键 of ['现代万分之', '现代序号', '本书万分之', '本书序号']) {
+  await 点表头(键);
+  const 自然方向 = 键 === '现代万分之' || 键 === '本书万分之' ? '降' : '升';
+  await 验证排序(键, 自然方向, `${排序列名[键]}${自然方向 === '降' ? '降序' : '升序'}`);
+  const aria = await 求值(`
+    return document.querySelector('.字频排序列[data-排序=${JSON.stringify(键)}]')
+      .getAttribute('aria-sort');
+  `);
+  assert.equal(aria, 自然方向 === '降' ? 'descending' : 'ascending', `${键} aria-sort 不对`);
+  await 点表头(键);
+  await 验证排序(键, 自然方向 === '降' ? '升' : '降', `${排序列名[键]}${自然方向 === '降' ? '升序' : '降序'}`);
+  const aria2 = await 求值(`
+    return document.querySelector('.字频排序列[data-排序=${JSON.stringify(键)}]')
+      .getAttribute('aria-sort');
+  `);
+  assert.equal(aria2, 自然方向 === '降' ? 'ascending' : 'descending', `${键} 二次点击未反向`);
+}
+// 知乎万分之升序时，查不到的字仍在最后（不跟着方向跳到最前）
+await 点表头('现代万分之');
+await 点表头('现代万分之');
+const 升序顶部 = await 读窗口('#字频对照列表');
+断言窗口内容(升序顶部, 期望序列('现代万分之', '升'), '知乎万分之升序 顶部');
+await 滚到('#字频对照容器', 升序顶部.容器滚动高);
+const 升序底部 = await 读窗口('#字频对照列表');
+assert.equal(
+  升序底部.行[升序底部.行.length - 1][1],
+  '—',
+  '知乎万分之升序时缺表字仍应排在最后',
+);
+await 截图('字频对照-知乎万分之升序.png');
 
 // —— 单字视图：两张表共用一个滚动容器，各自按自己的行数撑高 ——
 await 求值(`
@@ -380,8 +490,7 @@ assert.ok(
 );
 assert.ok(
   Math.abs(一次窗.表体高 - 分析.一次数 * 一次窗.行高) <= 一次窗.行高,
-  `一次表表体高应≈自己的行数：表体高=${一次窗.表体高} 行数=${分析.一次数} 行高=${一次窗.行高} ` +
-    `DOM行数=${一次窗.DOM行数} 占位数=${一次窗.占位数} 序号=${一次窗.序号.slice(0, 2)}~${一次窗.序号.slice(-1)}`,
+  `一次表表体高应≈自己的行数：${一次窗.表体高} vs ${分析.一次数 * 一次窗.行高}`,
 );
 assert.ok(
   重复窗.容器滚动高 >= Math.max(分析.重复数, 分析.一次数) * 重复窗.行高 &&
@@ -394,8 +503,6 @@ assert.equal(
   计数.get(重复窗.行[0][1]).toLocaleString('zh-CN'),
   '重复表首行频次应与节点计数一致',
 );
-await 截图('单字双列表-两张表各自撑高.png');
-// 滚到较短那张表已耗尽、较长那张仍有内容的区间：读完的表只剩占位行，不留残缺
 if (分析.一次数 < 分析.重复数 - 20) {
   await 滚到('#单字双列表', 一次窗.表体高 + 重复窗.行高 * 30);
   const 后段 = {
@@ -403,7 +510,7 @@ if (分析.一次数 < 分析.重复数 - 20) {
     一次: await 读窗口('#单字一次列表'),
   };
   assert.equal(后段.一次.DOM行数, 0, '一次表读完后不应再渲染真实行');
-  assert.ok(后段.一次.占位数 === 1, '一次表读完后应只剩一条底部占位行');
+  assert.equal(后段.一次.占位数, 1, '一次表读完后应只剩一条底部占位行');
   assert.ok(后段.重复.DOM行数 > 0 && 后段.重复.序号[0] > 0, '重复表应继续渲染中段');
   断言窗口连续(后段.重复, '单字重复后段');
 } else {
@@ -439,29 +546,31 @@ await 滚到('#词频表格容器', 二字窗.容器滚动高);
 const 二字末窗 = await 读窗口('#词频列表');
 assert.equal(二字末窗.序号[二字末窗.序号.length - 1], 分析.二字数 - 1, '二字应能滚到最后一行');
 
-// —— 方向键在标签间循环，回到对照后重新从顶部渲染 ——
+// —— 方向键切 tab；回到对照后保留上次排序并从顶部重新渲染 ——
 await 求值(`
   [...document.querySelectorAll('.词频标签')].find((b) => b.dataset.视图 === '对照').click();
   document.querySelector('#字频对照容器').scrollTop = 5000;
   return 1;
 `);
 await pause(120);
+const 回对照前摘要 = await 求值(`return document.querySelector('#词频摘要').textContent;`);
 await 求值(`
-  const 标签们 = [...document.querySelectorAll('.词频标签')];
-  const 对照 = 标签们.find((b) => b.dataset.视图 === '对照');
+  const 对照 = [...document.querySelectorAll('.词频标签')].find((b) => b.dataset.视图 === '对照');
   对照.focus();
   对照.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
   return 1;
 `);
 await pause(150);
-const 切换后 = await 求值(`
-  return {
-    当前: [...document.querySelectorAll('.词频标签')].find((b) => b.classList.contains('当前')).dataset.视图,
-    对照隐藏: document.querySelector('#字频对照容器').hidden,
-    单字显示: !document.querySelector('#单字双列表').hidden,
-  };
-`);
-assert.deepEqual(切换后, { 当前: '1', 对照隐藏: true, 单字显示: true });
+assert.deepEqual(
+  await 求值(`
+    return {
+      当前: [...document.querySelectorAll('.词频标签')].find((b) => b.classList.contains('当前')).dataset.视图,
+      对照隐藏: document.querySelector('#字频对照容器').hidden,
+      单字显示: !document.querySelector('#单字双列表').hidden,
+    };
+  `),
+  { 当前: '1', 对照隐藏: true, 单字显示: true },
+);
 await 求值(`
   const 单字 = [...document.querySelectorAll('.词频标签')].find((b) => b.dataset.视图 === '1');
   单字.focus();
@@ -470,13 +579,16 @@ await 求值(`
 `);
 await pause(150);
 const 回对照 = await 读窗口('#字频对照列表');
-assert.equal(回对照.序号[0], 0, '切回对照应回到列表顶部');
-assert.equal(回对照.容器顶, 0);
+assert.equal(回对照.容器顶, 0, '切回对照应回到列表顶部');
+assert.equal(回对照.序号[0], 0);
+const 回对照摘要 = await 求值(`return document.querySelector('#词频摘要').textContent;`);
+assert.equal(回对照摘要, 回对照前摘要, '切 tab 不应丢掉当前排序');
+断言窗口内容(回对照, 期望序列('现代万分之', '升'), '回对照沿用升序');
 
 console.log(
   `\nOK：${目标文本} ${汉字总数.toLocaleString('zh-CN')} 汉字 / ${分析.单字数.toLocaleString('zh-CN')} 去重字；` +
-    `对照逐行比对 ${见过.size} 行两列万分之全对（缺表 ${缺表字数} 字，本书列合计 ${本书列合计.toFixed(0)}‱）；` +
-    `三个视图均虚拟（对照窗口 ${首屏.DOM行数} 行 / 单字 ${重复窗.DOM行数}+${一次窗.DOM行数} 行 / 二字 ${二字窗.DOM行数} 行，` +
+    `默认序滚遍全表逐行比对五格全对（缺表 ${缺表字数} 字，本书列合计 ${本书列合计.toFixed(0)}‱），` +
+    `四列点击排序 + 反向全对且缺表字恒垫底；三视图均虚拟（对照 ${首屏.DOM行数} 行 / 单字 ${重复窗.DOM行数}+${一次窗.DOM行数} 行 / 二字 ${二字窗.DOM行数} 行，` +
     `全量 ${分析.单字数} / ${分析.重复数}+${分析.一次数} / ${分析.二字数}），翻页控件已移除`,
 );
 收尾();

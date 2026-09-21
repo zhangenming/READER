@@ -2785,10 +2785,18 @@ dialog,
   background: #f7f7f7;
 }
 
-/* 字频对照：第一列是汉字本体（不是排名），两列数字右对齐同宽，便于竖着比对 */
+/* 字频对照：汉字 | 知乎万分之 | 序号 | 本书万分之 | 序号，数字一律右对齐 */
+.字频对照表格 th,
+.字频对照表格 td {
+  padding-inline: 8px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
 .字频对照表格 th:first-child,
 .字频对照表格 td:first-child {
-  width: 64px;
+  width: 56px;
+  padding-inline: 16px 4px;
   color: var(--墨色);
   font-size: 15px;
   text-align: center;
@@ -2796,15 +2804,65 @@ dialog,
 
 .字频对照表格 th:nth-child(2),
 .字频对照表格 td:nth-child(2),
-.字频对照表格 th:last-child,
-.字频对照表格 td:last-child {
-  width: 50%;
-  text-align: right;
-  font-variant-numeric: tabular-nums;
+.字频对照表格 th:nth-child(4),
+.字频对照表格 td:nth-child(4) {
+  width: 132px;
+}
+
+.字频对照表格 th:nth-child(3),
+.字频对照表格 td:nth-child(3),
+.字频对照表格 th:nth-child(5),
+.字频对照表格 td:nth-child(5) {
+  width: 68px;
+}
+
+/* 名次列比频次列次要一档；查不到时同样是灰「—」 */
+.字频对照表格 td:nth-child(3),
+.字频对照表格 td:nth-child(5) {
+  color: var(--次要墨色);
+  font-size: 12px;
 }
 
 .字频对照表格 td.字频缺表 {
   color: var(--次要墨色);
+}
+
+/* 可排序表头：整格可点，当前列加深并带箭头（万分之↓ = 从大到小） */
+.字频排序按钮 {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: right;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.字频排序按钮:hover {
+  color: var(--墨色);
+  text-decoration: underline;
+}
+
+.字频排序按钮:focus-visible {
+  outline: 2px solid var(--选中色);
+  outline-offset: -2px;
+}
+
+.字频排序列[aria-sort='descending'],
+.字频排序列[aria-sort='ascending'] {
+  color: var(--墨色);
+  background: #e4e4e4;
+}
+
+.字频排序列[aria-sort='descending'] .字频排序按钮::after {
+  content: ' ↓';
+}
+
+.字频排序列[aria-sort='ascending'] .字频排序按钮::after {
+  content: ' ↑';
 }
 
 /* 虚拟列表的占位行：只负责撑高度，不出边框、不参与悬停 */

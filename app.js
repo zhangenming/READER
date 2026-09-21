@@ -157,6 +157,7 @@ import {
   清空查找历史,
 } from './js/查找弹窗.js';
 import {
+  处理字频排序点击,
   处理词频标签点击,
   处理词频标签键盘,
   处理词频弹窗点击,
@@ -497,6 +498,7 @@ function 绑定事件() {
   元素.词频弹窗.addEventListener('close', 取消词频分析);
   元素.词频标签栏.addEventListener('click', 处理词频标签点击);
   元素.词频标签栏.addEventListener('keydown', 处理词频标签键盘);
+  元素.字频对照容器.addEventListener('click', 处理字频排序点击);
   元素.关闭字体按钮.addEventListener('click', 关闭字体弹窗);
   元素.字体遮罩.addEventListener('click', 关闭字体弹窗);
   元素.字体关闭底部按钮.addEventListener('click', 关闭字体弹窗);

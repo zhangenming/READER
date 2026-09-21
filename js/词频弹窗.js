@@ -2,7 +2,7 @@ import { 是汉字 } from './文本工具.js';
 import { 让出主线程, 按需让出主线程 } from './调度.js';
 import { 元素, 状态 } from './状态.js';
 import { 创建虚拟列表 } from './虚拟列表.js';
-import { 取知乎万分率, 知乎字频说明 } from './知乎字频.js';
+import { 取知乎万分率, 取知乎序号, 知乎字频说明 } from './知乎字频.js';
 
 // 词频弹窗：从 app.js 绑定事件() 闭包拆出。
 // 簇内函数仅互相调用且只被绑定区 / Ctrl+A 键盘分支引用，无跨簇依赖，可独立成模块。
@@ -13,9 +13,19 @@ import { 取知乎万分率, 知乎字频说明 } from './知乎字频.js';
 
 const 对照视图 = '对照';
 
+// 字频对照的四个可排序列：万分之和名次各一组。点一次给该列的「自然序」
+// （万分之从大到小、名次从小到大=第 1 名在前），再点切换方向。
+const 对照排序列 = {
+  现代万分之: { 自然方向: '降', 名: '知乎万分之' },
+  现代序号: { 自然方向: '升', 名: '知乎序号' },
+  本书万分之: { 自然方向: '降', 名: '本书万分之' },
+  本书序号: { 自然方向: '升', 名: '本书序号' },
+};
+
 let 当前词频视图 = 对照视图;
 let 词频分析任务 = null;
 let 当前分析 = null;
+let 对照排序 = { 键: '本书万分之', 方向: '降' };
 
 let 对照虚拟列表 = null;
 let 单字虚拟列表 = null;
@@ -142,6 +152,23 @@ export function 处理词频标签点击(事件) {
   切换词频视图(标签.dataset.视图);
 }
 
+// 字频对照表头：四列（两组万分之 / 序号）点一次排该列的自然序，再点切换方向
+export function 处理字频排序点击(事件) {
+  const 表头 = 事件.target.closest('.字频排序列');
+  if (!(表头 instanceof HTMLTableCellElement)) {
+    return;
+  }
+  const 键 = 表头.dataset.排序;
+  if (!(键 in 对照排序列)) {
+    return;
+  }
+  对照排序 =
+    对照排序.键 === 键
+      ? { 键, 方向: 对照排序.方向 === '降' ? '升' : '降' }
+      : { 键, 方向: 对照排序列[键].自然方向 };
+  渲染词频页();
+}
+
 export function 处理词频标签键盘(事件) {
   if (事件.key !== 'ArrowLeft' && 事件.key !== 'ArrowRight') {
     return;
@@ -183,10 +210,12 @@ function 渲染词频页() {
   当前分析 = 分析;
   const 去重汉字数 = 分析.去重汉字数.toLocaleString('zh-CN');
   if (当前词频视图 === 对照视图) {
-    取对照虚拟列表().设置数据([分析.列表[1]]);
+    取对照虚拟列表().设置数据([排序对照行(分析)]);
+    更新对照表头排序标记();
     元素.词频摘要.textContent =
       `${知乎字频说明} · 单位：万分之 · 本书 ${去重汉字数} 字中 ` +
-      `${统计现代表命中字数(分析).toLocaleString('zh-CN')} 字有对照值`;
+      `${统计现代表命中字数(分析).toLocaleString('zh-CN')} 字有对照值 · ` +
+      `按${对照排序列[对照排序.键].名}${对照排序.方向 === '降' ? '降序' : '升序'}`;
     return;
   }
   const 当前词频字数 = Number(当前词频视图);
@@ -209,6 +238,66 @@ function 统计现代表命中字数(分析) {
   return 分析.现代表命中字数;
 }
 
+// 本书名次：按本书频次降序的名次（并列按全文首次出现顺序），与显示顺序无关，
+// 所以排到知乎那一侧时「本书序号」仍然是它在本书里的第几名。
+function 取本书序号映射(分析) {
+  if (!分析.本书序号映射) {
+    分析.本书序号映射 = new Map(
+      分析.列表[1].map(function 记名次(项, 序) {
+        return [项.文本, 序 + 1];
+      }),
+    );
+  }
+  return 分析.本书序号映射;
+}
+
+function 排序对照行(分析) {
+  const 本书序号映射 = 取本书序号映射(分析);
+  const 键 = 对照排序.键;
+  const 符号 = 对照排序.方向 === '降' ? -1 : 1;
+  const 取现代值 = 键 === '现代序号' ? 取知乎序号 : 取知乎万分率;
+  const 看现代 = 键 === '现代万分之' || 键 === '现代序号';
+  return 分析.列表[1].slice().sort(function 比较对照行(左, 右) {
+    const 左名次 = 本书序号映射.get(左.文本);
+    const 右名次 = 本书序号映射.get(右.文本);
+    if (看现代) {
+      // 现代表里查不到的字（扩展区、繁体、生僻字）永远排在尾部，不随方向跳到最前
+      const 左值 = 取现代值(左.文本);
+      const 右值 = 取现代值(右.文本);
+      if (左值 === undefined || 右值 === undefined) {
+        if (左值 === 右值) {
+          return 左名次 - 右名次;
+        }
+        return 左值 === undefined ? 1 : -1;
+      }
+      if (左值 !== 右值) {
+        return (左值 - 右值) * 符号;
+      }
+    } else {
+      const 左值 = 键 === '本书万分之' ? 左.数量 : 左名次;
+      const 右值 = 键 === '本书万分之' ? 右.数量 : 右名次;
+      if (左值 !== 右值) {
+        return (左值 - 右值) * 符号;
+      }
+    }
+    return 左名次 - 右名次;
+  });
+}
+
+function 更新对照表头排序标记() {
+  for (const 表头 of 元素.字频对照容器.querySelectorAll('.字频排序列')) {
+    const 是当前列 = 表头.dataset.排序 === 对照排序.键;
+    表头.setAttribute(
+      'aria-sort',
+      !是当前列
+        ? 'none'
+        : 对照排序.方向 === '降'
+          ? 'descending'
+          : 'ascending',
+    );
+  }
+}
+
 // 排名 / 字词 / 频次三列：单字的两张表与二至六字组合表共用同一行结构
 function 创建词频行(统计项, 序号) {
   const 行 = document.createElement('tr');
@@ -223,25 +312,42 @@ function 创建词频行(统计项, 序号) {
   return 行;
 }
 
-// 字频对照行：本书汉字与现代（知乎语料）字频并排，两列同为万分之，可直接对读。
-// 不在现代字频表里的字（扩展区、繁体、生僻字）知乎列显示「—」，不静默丢行。
+// 字频对照行：汉字 | 知乎万分之 | 知乎序号 | 本书万分之 | 本书序号。
+// 两组各带名次，万分之与名次可分别排序；不在现代字频表里的字（扩展区、繁体、
+// 生僻字）那一组两格都显示「—」，不静默丢行。
 function 创建字频对照行(统计项, 序号) {
   const 行 = document.createElement('tr');
   const 字单元格 = document.createElement('td');
   const 现代单元格 = document.createElement('td');
+  const 现代名次单元格 = document.createElement('td');
   const 本书单元格 = document.createElement('td');
+  const 本书名次单元格 = document.createElement('td');
   const 现代值 = 取知乎万分率(统计项.文本);
+  const 现代名次 = 取知乎序号(统计项.文本);
   行.dataset.序号 = 序号;
   字单元格.textContent = 统计项.文本;
   现代单元格.textContent = 格式化万分率(现代值);
+  现代名次单元格.textContent =
+    现代名次 === undefined ? '—' : 现代名次.toLocaleString('zh-CN');
   if (现代值 === undefined) {
     现代单元格.classList.add('字频缺表');
+    现代名次单元格.classList.add('字频缺表');
     现代单元格.title = '该字不在现代字频表（通用规范汉字表）内';
+    现代名次单元格.title = 现代单元格.title;
   }
   本书单元格.textContent = 格式化万分率(
     (统计项.数量 / 当前分析.汉字总数) * 10000,
   );
-  行.append(字单元格, 现代单元格, 本书单元格);
+  本书名次单元格.textContent = 取本书序号映射(当前分析)
+    .get(统计项.文本)
+    .toLocaleString('zh-CN');
+  行.append(
+    字单元格,
+    现代单元格,
+    现代名次单元格,
+    本书单元格,
+    本书名次单元格,
+  );
   return 行;
 }
 

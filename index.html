@@ -345,8 +345,50 @@
           <thead>
             <tr>
               <th scope="col">汉字</th>
-              <th scope="col">知乎万分之</th>
-              <th scope="col">本书万分之</th>
+              <th scope="col" class="字频排序列" data-排序="现代万分之">
+                <button
+                  type="button"
+                  class="字频排序按钮"
+                  title="按知乎万分之排序"
+                >
+                  知乎万分之
+                </button>
+              </th>
+              <th
+                scope="col"
+                class="字频排序列 字频序号列"
+                data-排序="现代序号"
+              >
+                <button
+                  type="button"
+                  class="字频排序按钮"
+                  title="按知乎名次排序"
+                >
+                  序号
+                </button>
+              </th>
+              <th scope="col" class="字频排序列" data-排序="本书万分之">
+                <button
+                  type="button"
+                  class="字频排序按钮"
+                  title="按本书万分之排序"
+                >
+                  本书万分之
+                </button>
+              </th>
+              <th
+                scope="col"
+                class="字频排序列 字频序号列"
+                data-排序="本书序号"
+              >
+                <button
+                  type="button"
+                  class="字频排序按钮"
+                  title="按本书名次排序"
+                >
+                  序号
+                </button>
+              </th>
             </tr>
           </thead>
           <tbody id="字频对照列表"></tbody>
