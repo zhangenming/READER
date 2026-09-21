@@ -221,7 +221,8 @@ export function 处理键盘按下(事件) {
     return;
   }
 
-  // 右方向键：直接开启自动滚动（作为 Space / Shift+Space 整屏翻页之外的另一种启动入口）。
+  // 右方向键：未在自动滚动时作为启动入口（Space / Shift+Space 整屏翻页之外的另一种启动方式）；
+  // 已在自动滚动中则不在这里 return，落到下面的翻页分支，与 Space / ↓ 完全一致地快速前进。
   if (
     事件.key === 'ArrowRight' &&
     !事件.altKey &&
@@ -230,20 +231,20 @@ export function 处理键盘按下(事件) {
     !事件.shiftKey &&
     !是交互目标 &&
     !有弹窗打开() &&
-    状态.行起点列表.length
+    状态.行起点列表.length &&
+    !自动滚动进行中()
   ) {
     事件.preventDefault();
-    if (!自动滚动进行中()) {
-      开始自动滚动();
-    }
+    开始自动滚动();
     return;
   }
 
-  // ← / ↑ / ↓ 方向键与 Space / Shift+Space 完全等价：↓ 向前翻整屏，← / ↑ 向后翻整屏。
+  // → / ↓ 向前翻整屏，← / ↑ 向后翻整屏，与 Space / Shift+Space 完全等价。
   const 是箭头翻页键 =
     事件.key === 'ArrowLeft' ||
     事件.key === 'ArrowUp' ||
-    事件.key === 'ArrowDown';
+    事件.key === 'ArrowDown' ||
+    事件.key === 'ArrowRight';
   const 是翻页按键 =
     事件.code === 'Space' || 事件.key === 'Enter' || 是箭头翻页键;
   // 方向键由键自身决定方向（Shift 不反转）；Space / Enter 仍由 Shift 决定方向
@@ -255,7 +256,9 @@ export function 处理键盘按下(事件) {
       ? '←'
       : 事件.key === 'ArrowUp'
         ? '↑'
-        : '↓'
+        : 事件.key === 'ArrowRight'
+          ? '→'
+          : '↓'
     : 事件.shiftKey
       ? 事件.key === 'Enter'
         ? 'Shift + Enter'
