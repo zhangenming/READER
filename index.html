@@ -335,7 +335,12 @@
           六字
         </button>
       </div>
-      <div id="字频对照容器" class="词频表格容器 字频对照容器">
+      <div
+        id="字频对照容器"
+        class="词频表格容器 字频对照容器"
+        tabindex="0"
+        aria-label="字频对照列表，可滚动"
+      >
         <table class="词频表格 字频对照表格">
           <thead>
             <tr>
@@ -347,7 +352,13 @@
           <tbody id="字频对照列表"></tbody>
         </table>
       </div>
-      <div id="单字双列表" class="单字双列表" hidden>
+      <div
+        id="单字双列表"
+        class="单字双列表"
+        tabindex="0"
+        aria-label="单字列表，可滚动"
+        hidden
+      >
         <table class="词频表格">
           <thead>
             <tr>
@@ -375,7 +386,13 @@
           <tbody id="单字一次列表"></tbody>
         </table>
       </div>
-      <div id="词频表格容器" class="词频表格容器" hidden>
+      <div
+        id="词频表格容器"
+        class="词频表格容器"
+        tabindex="0"
+        aria-label="词频列表，可滚动"
+        hidden
+      >
         <table class="词频表格">
           <thead>
             <tr>
@@ -386,25 +403,6 @@
           </thead>
           <tbody id="词频列表"></tbody>
         </table>
-      </div>
-      <div id="词频分页" class="词频分页" hidden>
-        <button
-          id="词频上一页"
-          type="button"
-          aria-label="上一页"
-          title="上一页"
-        >
-          ‹
-        </button>
-        <output id="词频页码">1 / 1</output>
-        <button
-          id="词频下一页"
-          type="button"
-          aria-label="下一页"
-          title="下一页"
-        >
-          ›
-        </button>
       </div>
     </dialog>
 

@@ -162,7 +162,6 @@ import {
   处理词频弹窗点击,
   取消词频分析,
   关闭词频弹窗,
-  翻词频页,
 } from './js/词频弹窗.js';
 import {
   初始化内容选择弹窗,
@@ -498,12 +497,6 @@ function 绑定事件() {
   元素.词频弹窗.addEventListener('close', 取消词频分析);
   元素.词频标签栏.addEventListener('click', 处理词频标签点击);
   元素.词频标签栏.addEventListener('keydown', 处理词频标签键盘);
-  元素.词频上一页.addEventListener('click', function 显示上一页词频() {
-    翻词频页(-1);
-  });
-  元素.词频下一页.addEventListener('click', function 显示下一页词频() {
-    翻词频页(1);
-  });
   元素.关闭字体按钮.addEventListener('click', 关闭字体弹窗);
   元素.字体遮罩.addEventListener('click', 关闭字体弹窗);
   元素.字体关闭底部按钮.addEventListener('click', 关闭字体弹窗);

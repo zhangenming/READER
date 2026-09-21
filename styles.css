@@ -2681,8 +2681,7 @@ dialog,
   border-bottom-color: var(--选中色);
 }
 
-.词频标签:focus-visible,
-.词频分页 button:focus-visible {
+.词频标签:focus-visible {
   outline: 2px solid var(--选中色);
   outline-offset: -2px;
 }
@@ -2690,7 +2689,7 @@ dialog,
 .单字双列表,
 .词频表格容器 {
   min-height: 220px;
-  max-height: calc(100dvh - 224px);
+  max-height: calc(100dvh - 176px); /* 翻页条已去掉，列表多出原来那一截高度 */
   overflow: auto;
   scrollbar-color: #8c8c8c transparent;
   scrollbar-width: thin;
@@ -2699,6 +2698,9 @@ dialog,
 .单字双列表 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* 两张表各按自己的行数撑高；默认的 stretch 会把短的那张拉伸，
+     行高与占位行一起被放大，虚拟列表的窗口计算就全错了 */
+  align-items: start;
 }
 
 .单字双列表[hidden],
@@ -2805,51 +2807,23 @@ dialog,
   color: var(--次要墨色);
 }
 
-.词频分页 {
-  display: flex;
-  min-height: 48px;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  border-top: 1px solid var(--边线色);
-}
-
-.词频分页[hidden] {
-  display: none;
-}
-
-.词频分页 button {
-  display: grid;
-  width: 30px;
-  height: 30px;
-  place-items: center;
-  padding: 0;
-  color: var(--墨色);
-  font:
-    22px/1 'Avenir Next',
-    sans-serif;
+/* 虚拟列表的占位行：只负责撑高度，不出边框、不参与悬停 */
+.词频表格 tbody tr.虚拟占位,
+.词频表格 tbody tr.虚拟占位:hover {
   background: transparent;
-  border: 1px solid var(--边线色);
-  border-radius: 4px;
-  cursor: pointer;
 }
 
-.词频分页 button:hover:not(:disabled) {
-  background: var(--背景色);
-  border-color: var(--墨色);
+.词频表格 tbody tr.虚拟占位 > td {
+  height: auto;
+  padding: 0;
+  border-bottom: 0;
 }
 
-.词频分页 button:disabled {
-  color: var(--边线色);
-  cursor: default;
-}
-
-.词频分页 output {
-  min-width: 9ch;
-  color: var(--次要墨色);
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-  text-align: center;
+/* 列表容器可聚焦，键盘用方向键 / 空格滚动（弹窗打开时正文快捷键不拦截） */
+.单字双列表:focus-visible,
+.词频表格容器:focus-visible {
+  outline: 2px solid var(--选中色);
+  outline-offset: -2px;
 }
 
 .上下文标题栏 {
