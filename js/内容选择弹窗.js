@@ -42,6 +42,7 @@ export async function 打开内容选择弹窗() {
       return;
     }
     渲染内容选择列表();
+    滚动到当前文本();
     状态.文本字数 = await 统计文本字数();
     if (元素.内容选择弹窗.open) {
       渲染内容选择列表();
@@ -226,6 +227,26 @@ function 渲染内容选择列表() {
     片段.append(按钮);
   }
   元素.内容选择列表.replaceChildren(片段);
+}
+
+// 打开弹窗后把当前在读的书滚到列表中间。只在首次渲染后调用一次：
+// 字数统计完成会重渲染一遍，那时用户可能已经自己滚走了，再居中会把人拽回来。
+// 两次渲染的行高一致（字数行始终有内容），所以 scrollTop 会自然保留。
+function 滚动到当前文本() {
+  const 容器 = 元素.内容选择列表;
+  const 当前项 = 容器.querySelector('.内容选项.当前');
+  if (!当前项) {
+    return;
+  }
+  // 用矩形差而不是 offsetTop：列表本身没有 position，offsetTop 会算到 dialog 上，
+  // 把标题栏的高度也当成滚动偏移。矩形差对两者都随弹窗入场动画平移，天然抵消。
+  const 容器框 = 容器.getBoundingClientRect();
+  const 项框 = 当前项.getBoundingClientRect();
+  const 目标 =
+    容器.scrollTop +
+    (项框.top - 容器框.top) -
+    (容器.clientHeight - 项框.height) / 2;
+  容器.scrollTop = Math.max(0, 目标);
 }
 
 function 创建内容载入提示(文字) {
