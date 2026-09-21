@@ -483,13 +483,6 @@ body.关键词手势中 .滚动容器 {
   background: var(--背景色);
   box-shadow: inset 0 0 0 1px var(--边线色);
 }
-.统计时段刻度 {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: var(--边线色);
-}
 .统计时段块 {
   position: absolute;
   top: 3px;
@@ -575,7 +568,7 @@ body.关键词手势中 .滚动容器 {
     white-space: normal;
     font-size: 12px;
   }
-  /* 窄屏轨道只有百余像素，整点标签会压字，改由行内竖线做参照 */
+  /* 窄屏轨道只有百余像素，整点标签会压字，只留首尾时刻；精确起止看色块悬停提示 */
   .统计时段刻度标签 {
     display: none;
   }
