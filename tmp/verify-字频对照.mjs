@@ -147,8 +147,8 @@ function 计算榜行列表() {
   return 行列表;
 }
 
-function 期望榜(取最大) {
-  const 行列表 = 计算榜行列表().sort((左, 右) => {
+function 排榜(行列表, 取最大) {
+  return 行列表.sort((左, 右) => {
     const 差 = 取最大 ? 右.对数差 - 左.对数差 : 左.对数差 - 右.对数差;
     if (差 !== 0) return 差;
     return (
@@ -157,6 +157,13 @@ function 期望榜(取最大) {
       左.字.localeCompare(右.字, 'zh-CN')
     );
   });
+}
+
+function 期望榜(哪一列) {
+  let 行列表 = 计算榜行列表();
+  if (哪一列 === '偏多') 行列表 = 行列表.filter((行) => 行.比值 > 1);
+  if (哪一列 === '偏少') 行列表 = 行列表.filter((行) => 行.比值 < 1);
+  行列表 = 排榜(行列表, 哪一列 !== '最小');
   return 行列表.slice(0, 30).map((行) => [
     行.字,
     期望显示(行.现代显示),
@@ -164,7 +171,6 @@ function 期望榜(取最大) {
     期望倍数(行.比值),
   ]);
 }
-
 
 // 期望的一行六格：汉字 | 知乎万分之 | 知乎序号 | 本书万分之 | 本书序号 | 字符个数
 function 期望行(字) {
@@ -178,7 +184,7 @@ function 期望行(字) {
   ];
 }
 
-// 排序后的完整期望序列，与页面同一套规则：现代表查不到的字永远垫底，并列按本书名次
+// 主表某一列排序后的完整期望序列（现代表查不到的字恒垫底，并列按本书名次）
 function 期望序列(键, 方向) {
   const 符号 = 方向 === '降' ? -1 : 1;
   const 取现代 = 键 === '现代序号' ? 取知乎序号 : 取知乎万分率;
@@ -606,16 +612,17 @@ assert.equal(
   '知乎序号列的「—」应与知乎万分之列一致',
 );
 
-// —— 右侧差异榜：30 + 30 行，完全独立于主表的虚拟滚动 ——
+// —— 右侧差异榜：三列各 30 行，完全独立于主表的虚拟滚动 ——
 async function 读榜() {
   return 求值(`
-    const 读栏 = (表体选择) => {
-      const 表体 = document.querySelector(表体选择);
-      const 滚动 = 表体.closest('.字频差异滚动');
+    const 读栏 = (键) => {
+      const 表体 = document.querySelector('#字频差异' + 键 + '列表');
+      const 滚动 = document.querySelector('#字频差异' + 键 + '滚动');
       return {
         行数: 表体.children.length,
         行: [...表体.children].map((行) => [...行.children].map((格) => 格.textContent)),
         占位数: 表体.querySelectorAll('.虚拟占位').length,
+        标题: document.querySelector('#字频差异' + 键 + '标题').textContent,
         滚动高: 滚动.scrollHeight,
         视口高: 滚动.clientHeight,
         顶: 滚动.scrollTop,
@@ -625,10 +632,10 @@ async function 读榜() {
       弹窗加宽: document.querySelector('#词频弹窗').classList.contains('宽对照'),
       模块隐藏: document.querySelector('#字频差异模块').closest('[hidden]') !== null,
       说明: document.querySelector('#字频差异说明').textContent,
-      最大标题: document.querySelector('#字频差异最大标题').textContent,
-      最小标题: document.querySelector('#字频差异最小标题').textContent,
-      最大: 读栏('#字频差异最大列表'),
-      最小: 读栏('#字频差异最小列表'),
+      栏数: document.querySelectorAll('#字频差异模块 .字频差异栏').length,
+      偏多: 读栏('偏多'),
+      偏少: 读栏('偏少'),
+      最小: 读栏('最小'),
       主表顶: document.querySelector('#字频对照容器').scrollTop,
     };
   `);
@@ -636,75 +643,105 @@ async function 读榜() {
 const 榜 = await 读榜();
 assert.equal(榜.弹窗加宽, true, '对照视图下弹窗应加宽放下右侧模块');
 assert.equal(榜.模块隐藏, false, '对照视图下差异榜应可见');
-assert.equal(榜.最大.行数, 30, '差异最大榜应为 30 行');
-assert.equal(榜.最小.行数, 30, '差异最小榜应为 30 行');
-assert.equal(榜.最大.占位数 + 榜.最小.占位数, 0, '差异榜不走虚拟列表，不该有占位行');
-assert.deepEqual(榜.最大.行, 期望榜(true), '差异最大榜与节点侧独立计算不一致');
-assert.deepEqual(榜.最小.行, 期望榜(false), '差异最小榜与节点侧独立计算不一致');
-assert.equal(榜.最大标题, '差异最大 30');
-assert.equal(榜.最小标题, '差异最小 30');
+assert.equal(榜.栏数, 3, '差异榜应为三列：偏本书 / 偏知乎 / 差异最小');
+for (const 列名 of ['偏多', '偏少', '最小']) {
+  assert.equal(榜[列名].行数, 30, `${列名} 榜应为 30 行`);
+  assert.equal(榜[列名].占位数, 0, `${列名} 榜不走虚拟列表，不该有占位行`);
+  assert.ok(榜[列名].滚动高 > 榜[列名].视口高, `${列名} 榜应有自己的滚动条`);
+  assert.deepEqual(榜[列名].行, 期望榜(列名), `${列名} 榜与节点侧独立计算不一致`);
+}
+assert.equal(榜.偏多.标题, '偏本书 ×30');
+assert.equal(榜.偏少.标题, '偏知乎 ÷30');
+assert.equal(榜.最小.标题, '差异最小 30');
 assert.ok(
   榜.说明.includes(`本书 ${计数.size.toLocaleString('zh-CN')} 个字全部入榜`),
-  `说明应表明不再设门槛：${榜.说明}`,
+  `说明应表明不设门槛且为全集：${榜.说明}`,
 );
+assert.ok(榜.说明.includes('三列'), `说明应写明三列：${榜.说明}`);
 assert.ok(!/≥\s*5 次/.test(榜.说明), `说明里不该再有次数门槛：${榜.说明}`);
+// 两列方向必须纯净：偏多全是 ×、偏少全是 ÷
 assert.ok(
-  榜.最大.行.some((行) => 行[1] === '—' || 行[1] === '0'),
-  '去掉门槛后，知乎计 0 次或未收录的字应能进差异最大榜',
+  榜.偏多.行.every((行) => 行[3].startsWith('×')),
+  `偏本书列混进了非 × 倍数：${榜.偏多.行.filter((行) => !行[3].startsWith('×')).map((行) => 行[0] + 行[3]).join(' ')}`,
 );
-assert.ok(榜.最大.滚动高 > 榜.最大.视口高, '差异榜应有自己的滚动条');
-// 「差异最小」必须真的接近 1 倍：整榜显示同一个「×1」就等于没信息
 assert.ok(
-  new Set(榜.最小.行.map((行) => 行[3])).size >= 5,
-  `差异最小榜的倍数区分度不够：${[...new Set(榜.最小.行.map((行) => 行[3]))].join(' ')}`,
+  榜.偏少.行.every((行) => 行[3].startsWith('÷')),
+  `偏知乎列混进了非 ÷ 倍数：${榜.偏少.行.filter((行) => !行[3].startsWith('÷')).map((行) => 行[0] + 行[3]).join(' ')}`,
 );
-const 最小榜末位 = 计算榜行列表()
-  .sort((左, 右) => 左.对数差 - 右.对数差 || 右.现代 - 左.现代 || 右.数量 - 左.数量)
-  .slice(0, 30)
-  .at(-1);
 assert.ok(
-  最小榜末位.对数差 < 0.5,
-  `差异最小第 30 名应很接近 1 倍，实得 |log2|=${最小榜末位.对数差.toFixed(3)}`,
+  榜.偏多.行.some((行) => 行[1] === '—' || 行[1] === '0'),
+  '知乎计 0 次或未收录的字应能进偏本书列',
 );
-// 最大端都撞到「知乎计 0 次」的下限，倍数会成串相同，这是口径本身决定的；
-// 排序正确性由上面与节点侧逐格比对保证，这里只要求倍数单调不升。
 const 读倍数 = (文本) => {
   const 万 = 文本.includes('万');
   return Number(文本.replace(/[×÷,万]/g, '')) * (万 ? 10000 : 1);
 };
-const 最大榜倍数 = 榜.最大.行.map((行) => 读倍数(行[3]));
-assert.ok(
-  最大榜倍数.every((值, i) => i === 0 || 值 <= 最大榜倍数[i - 1] * 1.02 + 1),
-  `差异最大榜倍数应递减：${最大榜倍数.join(' ')}`,
-);
-for (const 行 of [...榜.最大.行, ...榜.最小.行]) {
-  const 次数 = 计数.get(行[0]);
-  assert.ok(次数 > 0, `${行[0]} 不在本书正文里，不该入榜`);
-  const 基准 = 期望行(行[0]);
-  assert.deepEqual(
-    [行[1], 行[2]],
-    [基准[1], 基准[3]],
-    `${行[0]} 榜内数值应与主表同字的两列一致`,
+for (const 列名 of ['偏多', '偏少']) {
+  const 序列 = 榜[列名].行.map((行) => 读倍数(行[3]));
+  assert.ok(
+    序列.every((值, i) => i === 0 || 值 <= 序列[i - 1] * 1.02 + 1),
+    `${列名} 列倍数应递减：${序列.join(' ')}`,
   );
+  assert.ok(序列[0] >= 序列[序列.length - 1], `${列名} 列首行应是最大倍数`);
 }
+// 差异最小列：倍数必须真的贴近 1，且区分度够
 assert.ok(
-  new Set(榜.最大.行.map((行) => 行[0])).has('很') === true ||
-    榜.最大.行.length === 30,
+  new Set(榜.最小.行.map((行) => 行[3])).size >= 5,
+  `差异最小榜的倍数区分度不够：${[...new Set(榜.最小.行.map((行) => 行[3]))].join(' ')}`,
 );
-// 主表滚动与两栏滚动互不影响
+const 最小榜末位 = 排榜(计算榜行列表(), false).slice(0, 30).at(-1);
+assert.ok(
+  最小榜末位.对数差 < 0.5,
+  `差异最小第 30 名应很接近 1 倍，实得 |log2|=${最小榜末位.对数差.toFixed(3)}`,
+);
+for (const 列名 of ['偏多', '偏少', '最小']) {
+  for (const 行 of 榜[列名].行) {
+    const 次数 = 计数.get(行[0]);
+    assert.ok(次数 > 0, `${行[0]} 不在本书正文里，不该入榜`);
+    const 基准 = 期望行(行[0]);
+    assert.deepEqual(
+      [行[1], 行[2]],
+      [基准[1], 基准[3]],
+      `${行[0]} 榜内数值应与主表同字的两列一致`,
+    );
+    assert.equal(行[0], 基准[0]);
+  }
+}
+// 三列与主表、以及三列彼此之间滚动互不影响
 await 滚到('#字频对照容器', 12345);
 await 求值(`
-  document.querySelector('#字频差异最大滚动').scrollTop = 200;
-  document.querySelector('#字频差异最小滚动').scrollTop = 300;
+  document.querySelector('#字频差异偏多滚动').scrollTop = 200;
+  document.querySelector('#字频差异偏少滚动').scrollTop = 300;
+  document.querySelector('#字频差异最小滚动').scrollTop = 400;
   return 1;
 `);
 await pause(120);
 const 榜滚后 = await 读榜();
 assert.equal(榜滚后.主表顶, 12345, '滚动差异榜不应带动主表');
-assert.equal(榜滚后.最大.顶, 200, '左栏应保留自己的滚动位置');
-assert.equal(榜滚后.最小.顶, 300, '右栏应保留自己的滚动位置');
-assert.equal(榜滚后.最大.行数, 30, '滚动后行数不变（不是虚拟窗口）');
-assert.deepEqual(榜滚后.最大.行, 榜.最大.行, '滚动不应改变榜单内容');
+assert.equal(榜滚后.偏多.顶, 200, '偏本书列应保留自己的滚动位置');
+assert.equal(榜滚后.偏少.顶, 300, '偏知乎列应保留自己的滚动位置');
+assert.equal(榜滚后.最小.顶, 400, '差异最小列应保留自己的滚动位置');
+for (const 列名 of ['偏多', '偏少', '最小']) {
+  assert.equal(榜滚后[列名].行数, 30, `${列名}：滚动后行数不变（不是虚拟窗口）`);
+  assert.deepEqual(榜滚后[列名].行, 榜[列名].行, `${列名}：滚动不应改变榜单内容`);
+}
+// 主表六列不能被右侧模块挤到横向滚动（数字被裁就白加了列）
+const 主表尺寸 = await 求值(`
+  const 容器 = document.querySelector('#字频对照容器');
+  const 表 = 容器.querySelector('table');
+  return {
+    容器宽: 容器.clientWidth,
+    容器可用: 容器.clientWidth - parseFloat(getComputedStyle(容器).paddingLeft),
+    表宽: Math.round(表.getBoundingClientRect().width),
+    滚动宽: 容器.scrollWidth,
+    模块宽: Math.round(document.querySelector('#字频差异模块').getBoundingClientRect().width),
+    弹窗宽: Math.round(document.querySelector('#词频弹窗').getBoundingClientRect().width),
+  };
+`);
+assert.ok(
+  主表尺寸.滚动宽 <= 主表尺寸.容器宽 + 1,
+  `主表不该横向滚动：${JSON.stringify(主表尺寸)}`,
+);
 await 截图('字频对照-含差异榜.png');
 
 // —— 四个可排序列：点一次自然序、再点反向；缺表字始终垫底；窗口仍虚拟 ——
@@ -774,8 +811,9 @@ assert.equal(
 await 截图('字频对照-知乎万分之升序.png');
 
 const 榜排序后 = await 读榜();
-assert.deepEqual(榜排序后.最大.行, 榜.最大.行, '主表排序不应影响差异榜');
-assert.deepEqual(榜排序后.最小.行, 榜.最小.行, '主表排序不应影响差异榜');
+for (const 列名 of ['偏多', '偏少', '最小']) {
+  assert.deepEqual(榜排序后[列名].行, 榜[列名].行, `主表排序不应影响${列名}榜`);
+}
 
 // —— 单字视图：两张表共用一个滚动容器，各自按自己的行数撑高 ——
 await 求值(`

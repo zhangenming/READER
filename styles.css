@@ -2899,7 +2899,8 @@ dialog,
 
 /* 对照视图右侧的差异榜：主表 + 两栏各 30 行，弹窗在对照视图下加宽 */
 .词频弹窗.宽对照 {
-  width: min(1080px, calc(100vw - 32px));
+  /* 主表六列要 502px、三列榜单要 ~709px，加上边框留一点余量 */
+  width: min(1240px, calc(100vw - 32px));
 }
 
 .字频对照视图 {
@@ -2946,7 +2947,7 @@ dialog,
 
 .字频差异栏 {
   display: flex;
-  width: 224px;
+  width: 216px;
   min-height: 0;
   flex-direction: column;
 }

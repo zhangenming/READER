@@ -412,11 +412,11 @@
         <p id="字频差异说明" class="字频差异说明">正在计算差异</p>
         <div class="字频差异栏列表">
           <div class="字频差异栏">
-            <h3 id="字频差异最大标题" class="字频差异标题">差异最大 30</h3>
+            <h3 id="字频差异偏多标题" class="字频差异标题" title="本书用得远比现代多的字（倍数 ×，按倍数从大到小）">偏本书 ×30</h3>
             <div
-              id="字频差异最大滚动"
+              id="字频差异偏多滚动"
               class="字频差异滚动"
-              aria-label="差异最大的字，可滚动"
+              aria-label="本书用得远比现代多的字（倍数 ×，按倍数从大到小），可滚动"
             >
               <table class="词频表格 字频差异表格">
                 <thead>
@@ -427,16 +427,36 @@
                     <th scope="col">倍数</th>
                   </tr>
                 </thead>
-                <tbody id="字频差异最大列表"></tbody>
+                <tbody id="字频差异偏多列表"></tbody>
               </table>
             </div>
           </div>
           <div class="字频差异栏">
-            <h3 id="字频差异最小标题" class="字频差异标题">差异最小 30</h3>
+            <h3 id="字频差异偏少标题" class="字频差异标题" title="本书用得远比现代少的字（倍数 ÷，按倍数从大到小）">偏知乎 ÷30</h3>
+            <div
+              id="字频差异偏少滚动"
+              class="字频差异滚动"
+              aria-label="本书用得远比现代少的字（倍数 ÷，按倍数从大到小），可滚动"
+            >
+              <table class="词频表格 字频差异表格">
+                <thead>
+                  <tr>
+                    <th scope="col">字</th>
+                    <th scope="col">知乎</th>
+                    <th scope="col">本书</th>
+                    <th scope="col">倍数</th>
+                  </tr>
+                </thead>
+                <tbody id="字频差异偏少列表"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="字频差异栏">
+            <h3 id="字频差异最小标题" class="字频差异标题" title="两边用得几乎一样多的字（倍数最接近 1）">差异最小 30</h3>
             <div
               id="字频差异最小滚动"
               class="字频差异滚动"
-              aria-label="差异最小的字，可滚动"
+              aria-label="两边用得几乎一样多的字（倍数最接近 1），可滚动"
             >
               <table class="词频表格 字频差异表格">
                 <thead>
@@ -451,7 +471,6 @@
               </table>
             </div>
           </div>
-        </div>
       </aside>
       </div>
       <div
