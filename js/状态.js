@@ -243,6 +243,8 @@ export const 元素 = {
   词频弹窗: document.querySelector('#词频弹窗'),
   词频摘要: document.querySelector('#词频摘要'),
   词频标签栏: document.querySelector('#词频标签栏'),
+  字频对照容器: document.querySelector('#字频对照容器'),
+  字频对照列表: document.querySelector('#字频对照列表'),
   单字双列表: document.querySelector('#单字双列表'),
   单字重复列表: document.querySelector('#单字重复列表'),
   单字一次列表: document.querySelector('#单字一次列表'),

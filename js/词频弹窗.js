@@ -2,13 +2,17 @@ import { 每页词频数 } from './常量.js';
 import { 是汉字 } from './文本工具.js';
 import { 让出主线程, 按需让出主线程 } from './调度.js';
 import { 元素, 状态 } from './状态.js';
+import { 取知乎万分率, 知乎字频说明 } from './知乎字频.js';
 
 // 词频弹窗：从 app.js 绑定事件() 闭包拆出。
 // 簇内函数仅互相调用且只被绑定区 / Ctrl+A 键盘分支引用，无跨簇依赖，可独立成模块。
 // 闭包私有状态降为模块级 let；竞态机制原样保留：
 // 词频统计用「任务对象同一性判定」（词频分析任务 === 本次任务），结果仍只存 状态.词频分析。
+// 视图只有一维：'对照'（知乎现代字频 vs 本书字频）或 '1'..'6'（N 字组合）。
 
-let 当前词频字数 = 1;
+const 对照视图 = '对照';
+
+let 当前词频视图 = 对照视图;
 let 当前词频页码 = 1;
 let 词频分析任务 = null;
 
@@ -30,6 +34,7 @@ export async function 打开词频弹窗() {
 
   元素.词频摘要.textContent = '正在统计全文';
   元素.词频列表.replaceChildren();
+  元素.字频对照列表.replaceChildren();
   元素.单字重复列表.replaceChildren();
   元素.单字一次列表.replaceChildren();
   元素.词频分页.hidden = true;
@@ -103,7 +108,7 @@ export function 处理词频标签点击(事件) {
   if (!(标签 instanceof HTMLButtonElement)) {
     return;
   }
-  切换词频字数(Number(标签.dataset.字数));
+  切换词频视图(标签.dataset.视图);
 }
 
 export function 处理词频标签键盘(事件) {
@@ -119,7 +124,7 @@ export function 处理词频标签键盘(事件) {
   const 步进 = 事件.key === 'ArrowRight' ? 1 : -1;
   const 目标标签 =
     标签列表[(当前idx + 步进 + 标签列表.length) % 标签列表.length];
-  切换词频字数(Number(目标标签.dataset.字数));
+  切换词频视图(目标标签.dataset.视图);
   目标标签.focus();
 }
 
@@ -128,13 +133,16 @@ export function 翻词频页(方向) {
   渲染词频页();
 }
 
-function 切换词频字数(字数) {
-  当前词频字数 = 字数;
+function 切换词频视图(视图) {
+  当前词频视图 = 视图;
   当前词频页码 = 1;
-  元素.单字双列表.hidden = 字数 !== 1;
-  元素.词频表格容器.hidden = 字数 === 1;
+  const 是单字 = 视图 === '1';
+  const 是对照 = 视图 === 对照视图;
+  元素.字频对照容器.hidden = !是对照;
+  元素.单字双列表.hidden = !是单字;
+  元素.词频表格容器.hidden = 是单字 || 是对照;
   for (const 标签 of 元素.词频标签栏.querySelectorAll('.词频标签')) {
-    const 是当前 = Number(标签.dataset.字数) === 字数;
+    const 是当前 = 标签.dataset.视图 === 视图;
     标签.classList.toggle('当前', 是当前);
     标签.setAttribute('aria-selected', String(是当前));
     标签.tabIndex = 是当前 ? 0 : -1;
@@ -147,14 +155,17 @@ function 渲染词频页() {
   if (!分析) {
     return;
   }
+  if (当前词频视图 === 对照视图) {
+    渲染字频对照(分析);
+    return;
+  }
+  const 当前词频字数 = Number(当前词频视图);
   const 是单字 = 当前词频字数 === 1;
   const 统计列表 = 是单字 ? 分析.单字列表.重复 : 分析.列表[当前词频字数];
   const 最长列表数 = 是单字
     ? Math.max(统计列表.length, 分析.单字列表.一次.length)
     : 统计列表.length;
-  const 总页数 = Math.max(1, Math.ceil(最长列表数 / 每页词频数));
-  当前词频页码 = Math.min(总页数, Math.max(1, 当前词频页码));
-  const 起点 = (当前词频页码 - 1) * 每页词频数;
+  const 起点 = 更新分页(最长列表数);
   if (是单字) {
     元素.单字重复列表.replaceChildren(创建词频表格片段(统计列表, 起点));
     元素.单字一次列表.replaceChildren(
@@ -168,10 +179,6 @@ function 渲染词频页() {
     ? `${分析.单字列表.一次.length.toLocaleString('zh-CN')} 个字只出现一次`
     : `${统计列表.length.toLocaleString('zh-CN')} 种${['二', '三', '四', '五', '六'][当前词频字数 - 2]}字组合`;
   元素.词频摘要.textContent = `${分析.去重汉字数.toLocaleString('zh-CN')} 个汉字 · ${统计说明}`;
-  元素.词频页码.textContent = `${当前词频页码.toLocaleString('zh-CN')} / ${总页数.toLocaleString('zh-CN')}`;
-  元素.词频上一页.disabled = 当前词频页码 === 1;
-  元素.词频下一页.disabled = 当前词频页码 === 总页数;
-  元素.词频分页.hidden = 总页数 === 1;
   (是单字 ? 元素.单字双列表 : 元素.词频表格容器).scrollTop = 0;
 
   function 创建词频表格片段(列表, 起点) {
@@ -190,6 +197,69 @@ function 渲染词频页() {
     }
     return 表格片段;
   }
+}
+
+// 字频对照：本书每个汉字与现代（知乎语料）字频并排，两列同为万分之，可直接对读。
+// 行 = 本书出现过的汉字（沿用 分析.列表[1] 的本书频次降序），
+// 不在现代字频表里的字（扩展区、繁体、生僻字）知乎列显示「—」，不静默丢行。
+function 渲染字频对照(分析) {
+  const 单字列表 = 分析.列表[1];
+  if (!分析.现代表命中字数) {
+    分析.现代表命中字数 = 单字列表.reduce(function 计数命中(累计, 项) {
+      return 取知乎万分率(项.文本) === undefined ? 累计 : 累计 + 1;
+    }, 0);
+  }
+  const 起点 = 更新分页(单字列表.length);
+  const 表格片段 = document.createDocumentFragment();
+  for (const 项 of 单字列表.slice(起点, 起点 + 每页词频数)) {
+    const 行 = document.createElement('tr');
+    const 字单元格 = document.createElement('td');
+    const 现代单元格 = document.createElement('td');
+    const 本书单元格 = document.createElement('td');
+    const 现代值 = 取知乎万分率(项.文本);
+    字单元格.textContent = 项.文本;
+    现代单元格.textContent = 格式化万分率(现代值);
+    if (现代值 === undefined) {
+      现代单元格.classList.add('字频缺表');
+      现代单元格.title = '该字不在现代字频表（通用规范汉字表）内';
+    }
+    本书单元格.textContent = 格式化万分率(
+      (项.数量 / 分析.汉字总数) * 10000,
+    );
+    行.append(字单元格, 现代单元格, 本书单元格);
+    表格片段.append(行);
+  }
+  元素.字频对照列表.replaceChildren(表格片段);
+  元素.词频摘要.textContent =
+    `${知乎字频说明} · 单位：万分之 · ` +
+    `本书 ${分析.去重汉字数.toLocaleString('zh-CN')} 字中 ` +
+    `${分析.现代表命中字数.toLocaleString('zh-CN')} 字有对照值`;
+  元素.字频对照容器.scrollTop = 0;
+}
+
+function 更新分页(总条数) {
+  const 总页数 = Math.max(1, Math.ceil(总条数 / 每页词频数));
+  当前词频页码 = Math.min(总页数, Math.max(1, 当前词频页码));
+  元素.词频页码.textContent = `${当前词频页码.toLocaleString('zh-CN')} / ${总页数.toLocaleString('zh-CN')}`;
+  元素.词频上一页.disabled = 当前词频页码 === 1;
+  元素.词频下一页.disabled = 当前词频页码 === 总页数;
+  元素.词频分页.hidden = 总页数 === 1;
+  return (当前词频页码 - 1) * 每页词频数;
+}
+
+// 万分之口径：≥10 向下取整（源表「的」为 403.89，显示 403），
+// 1~10 与不足 1 的都取 3 位有效数字，低频字不会被抹成 0，也不会出现 0.999→「1.00」的假象。
+function 格式化万分率(值) {
+  if (值 === undefined) {
+    return '—';
+  }
+  if (值 === 0) {
+    return '0';
+  }
+  if (值 >= 10) {
+    return String(Math.floor(值));
+  }
+  return 值.toPrecision(3);
 }
 
 async function 统计全文词频(全文, 任务仍然有效) {

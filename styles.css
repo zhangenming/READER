@@ -2783,6 +2783,28 @@ dialog,
   background: #f7f7f7;
 }
 
+/* 字频对照：第一列是汉字本体（不是排名），两列数字右对齐同宽，便于竖着比对 */
+.字频对照表格 th:first-child,
+.字频对照表格 td:first-child {
+  width: 64px;
+  color: var(--墨色);
+  font-size: 15px;
+  text-align: center;
+}
+
+.字频对照表格 th:nth-child(2),
+.字频对照表格 td:nth-child(2),
+.字频对照表格 th:last-child,
+.字频对照表格 td:last-child {
+  width: 50%;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.字频对照表格 td.字频缺表 {
+  color: var(--次要墨色);
+}
+
 .词频分页 {
   display: flex;
   min-height: 48px;

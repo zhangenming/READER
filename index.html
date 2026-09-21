@@ -263,14 +263,24 @@
         id="词频标签栏"
         class="词频标签栏"
         role="tablist"
-        aria-label="词频字数"
+        aria-label="词频视图"
       >
         <button
           class="词频标签 当前"
           type="button"
           role="tab"
           aria-selected="true"
-          data-字数="1"
+          data-视图="对照"
+        >
+          字频对照
+        </button>
+        <button
+          class="词频标签"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          tabindex="-1"
+          data-视图="1"
         >
           单字
         </button>
@@ -280,7 +290,7 @@
           role="tab"
           aria-selected="false"
           tabindex="-1"
-          data-字数="2"
+          data-视图="2"
         >
           二字
         </button>
@@ -290,7 +300,7 @@
           role="tab"
           aria-selected="false"
           tabindex="-1"
-          data-字数="3"
+          data-视图="3"
         >
           三字
         </button>
@@ -300,7 +310,7 @@
           role="tab"
           aria-selected="false"
           tabindex="-1"
-          data-字数="4"
+          data-视图="4"
         >
           四字
         </button>
@@ -310,7 +320,7 @@
           role="tab"
           aria-selected="false"
           tabindex="-1"
-          data-字数="5"
+          data-视图="5"
         >
           五字
         </button>
@@ -320,12 +330,24 @@
           role="tab"
           aria-selected="false"
           tabindex="-1"
-          data-字数="6"
+          data-视图="6"
         >
           六字
         </button>
       </div>
-      <div id="单字双列表" class="单字双列表">
+      <div id="字频对照容器" class="词频表格容器 字频对照容器">
+        <table class="词频表格 字频对照表格">
+          <thead>
+            <tr>
+              <th scope="col">汉字</th>
+              <th scope="col">知乎万分之</th>
+              <th scope="col">本书万分之</th>
+            </tr>
+          </thead>
+          <tbody id="字频对照列表"></tbody>
+        </table>
+      </div>
+      <div id="单字双列表" class="单字双列表" hidden>
         <table class="词频表格">
           <thead>
             <tr>
