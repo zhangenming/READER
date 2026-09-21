@@ -49,7 +49,8 @@ async function 取空闲端口(首选) {
 const CDP端口 = await 取空闲端口(Number(process.env.VERIFY_CDP_PORT || 9412));
 const 站点端口 = await 取空闲端口(Number(process.env.SITE_PORT || 15998));
 const 地址 = `http://127.0.0.1:${站点端口}/`;
-const 目标文本 = '成吉思汗.txt';
+// 默认跑小书快；TARGET_TEXT=白鹿原.txt 可换大部头压一遍括号宽度与行高
+const 目标文本 = process.env.TARGET_TEXT || '成吉思汗.txt';
 const 缓冲行数 = 8; // 与 js/常量.js 的 虚拟列表缓冲行数 一致
 
 // 汉字判定与 是汉字()（js/常量.js 的 汉字模式）同源，节点侧直接复述，
@@ -125,15 +126,33 @@ function 期望倍数(比值) {
   return `${前缀}${数值}`;
 }
 
-// 右侧差异榜：本书每个汉字都入榜，知乎计 0 次或未收录的按语料 1 次折算
+// 本书括号里的出现次数：与 js/万分率.js 的 格式化次数 同一口径（过万折成「1.9万」）
+function 期望次数(次数) {
+  if (!Number.isFinite(次数)) return '—';
+  if (次数 >= 10000) {
+    return (
+      (Math.round(次数 / 1000) / 10).toLocaleString('zh-CN', {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+      }) + '万'
+    );
+  }
+  return 次数.toLocaleString('zh-CN');
+}
+
+// 右侧差异榜：本书每个汉字都参与，但知乎必须有数（计 0 次或未收录的属于无数据，排除）
 function 计算榜行列表() {
-  const 零次下限 = (1 / 知乎语料汉字总数) * 10000;
   const 行列表 = [];
+  const 无数据 = [];
   for (const [字, 数量] of 计数) {
     const 现代显示 = 取知乎万分率(字);
     const 现代 = 现代显示 ?? 0;
+    if (现代 <= 0) {
+      无数据.push(字);
+      continue;
+    }
     const 本书 = (数量 / 汉字总数) * 10000;
-    const 比值 = 本书 / Math.max(现代, 零次下限);
+    const 比值 = 本书 / 现代;
     行列表.push({
       字,
       现代显示,
@@ -144,10 +163,11 @@ function 计算榜行列表() {
       数量,
     });
   }
-  return 行列表;
+  return { 行列表, 无数据 };
 }
 
-function 排榜(行列表, 取最大) {
+function 排榜(行列表入, 取最大) {
+  const 行列表 = 行列表入.slice();
   return 行列表.sort((左, 右) => {
     const 差 = 取最大 ? 右.对数差 - 左.对数差 : 左.对数差 - 右.对数差;
     if (差 !== 0) return 差;
@@ -160,14 +180,14 @@ function 排榜(行列表, 取最大) {
 }
 
 function 期望榜(哪一列) {
-  let 行列表 = 计算榜行列表();
+  let 行列表 = 计算榜行列表().行列表;
   if (哪一列 === '偏多') 行列表 = 行列表.filter((行) => 行.比值 > 1);
   if (哪一列 === '偏少') 行列表 = 行列表.filter((行) => 行.比值 < 1);
   行列表 = 排榜(行列表, 哪一列 !== '最小');
   return 行列表.slice(0, 30).map((行) => [
     行.字,
     期望显示(行.现代显示),
-    期望显示(行.本书),
+    `${期望显示(行.本书)} (${期望次数(行.数量)})`,
     期望倍数(行.比值),
   ]);
 }
@@ -653,12 +673,27 @@ for (const 列名 of ['偏多', '偏少', '最小']) {
 assert.equal(榜.偏多.标题, '偏本书 ×30');
 assert.equal(榜.偏少.标题, '偏知乎 ÷30');
 assert.equal(榜.最小.标题, '差异最小 30');
+const { 无数据: 无现代数据字数 } = 计算榜行列表(); // 数组：被排除的字
 assert.ok(
-  榜.说明.includes(`本书 ${计数.size.toLocaleString('zh-CN')} 个字全部入榜`),
-  `说明应表明不设门槛且为全集：${榜.说明}`,
+  榜.说明.includes(`${计数.size.toLocaleString('zh-CN')} 字中`),
+  `说明应写明候选全集：${榜.说明}`,
+);
+assert.ok(
+  榜.说明.includes(
+    `知乎计 0 次或未收录的 ${无现代数据字数.length.toLocaleString('zh-CN')} 字无数据、不入榜`,
+  ),
+  `说明应报出被排除的无数据字数：${榜.说明}`,
 );
 assert.ok(榜.说明.includes('三列'), `说明应写明三列：${榜.说明}`);
+assert.ok(
+  榜.说明.includes('括号内是它在本书的出现次数'),
+  `说明应解释本书列括号里的数：${榜.说明}`,
+);
 assert.ok(!/≥\s*5 次/.test(榜.说明), `说明里不该再有次数门槛：${榜.说明}`);
+assert.ok(
+  无现代数据字数.length > 0 && 无现代数据字数.length < 计数.size,
+  `本书里应有若干字在知乎无数据，实得 ${无现代数据字数.length}/${计数.size}`,
+);
 // 两列方向必须纯净：偏多全是 ×、偏少全是 ÷
 assert.ok(
   榜.偏多.行.every((行) => 行[3].startsWith('×')),
@@ -668,9 +703,24 @@ assert.ok(
   榜.偏少.行.every((行) => 行[3].startsWith('÷')),
   `偏知乎列混进了非 ÷ 倍数：${榜.偏少.行.filter((行) => !行[3].startsWith('÷')).map((行) => 行[0] + 行[3]).join(' ')}`,
 );
+// 知乎无数据（计 0 或未收录）的字一律不入榜，也不该靠折算混进榜首
+for (const 列名 of ['偏多', '偏少', '最小']) {
+  const 漏网 = 榜[列名].行.filter((行) => 行[1] === '—' || 行[1] === '0');
+  assert.deepEqual(
+    漏网,
+    [],
+    `${列名} 列混进了知乎无数据的字：${漏网.map((行) => 行[0]).join(' ')}`,
+  );
+}
+// 被排除的那些字（知乎计 0 / 未收录）一个都不许出现在三列里
+const 无数据字集合 = new Set(无现代数据字数);
+for (const 列名 of ['偏多', '偏少', '最小']) {
+  const 混入 = 榜[列名].行.filter((行) => 无数据字集合.has(行[0]));
+  assert.deepEqual(混入, [], `${列名} 列混入了无数据的字：${混入.map((行) => 行[0]).join(' ')}`);
+}
 assert.ok(
-  榜.偏多.行.some((行) => 行[1] === '—' || 行[1] === '0'),
-  '知乎计 0 次或未收录的字应能进偏本书列',
+  榜.偏多.行.length === 30 && 无现代数据字数.length < 计数.size,
+  '三列应各排满 30 行',
 );
 const 读倍数 = (文本) => {
   const 万 = 文本.includes('万');
@@ -689,7 +739,7 @@ assert.ok(
   new Set(榜.最小.行.map((行) => 行[3])).size >= 5,
   `差异最小榜的倍数区分度不够：${[...new Set(榜.最小.行.map((行) => 行[3]))].join(' ')}`,
 );
-const 最小榜末位 = 排榜(计算榜行列表(), false).slice(0, 30).at(-1);
+const 最小榜末位 = 排榜(计算榜行列表().行列表, false).slice(0, 30).at(-1);
 assert.ok(
   最小榜末位.对数差 < 0.5,
   `差异最小第 30 名应很接近 1 倍，实得 |log2|=${最小榜末位.对数差.toFixed(3)}`,
@@ -698,10 +748,14 @@ for (const 列名 of ['偏多', '偏少', '最小']) {
   for (const 行 of 榜[列名].行) {
     const 次数 = 计数.get(行[0]);
     assert.ok(次数 > 0, `${行[0]} 不在本书正文里，不该入榜`);
+    assert.notEqual(取知乎万分率(行[0]), undefined, `${行[0]} 知乎未收录，不该入榜`);
     const 基准 = 期望行(行[0]);
+    // 榜里的本书格 = 「主表本书万分之 (主表字符个数)」：两段都要能从主表复算出来
+    const 格 = /^(\S+) \((.+)\)$/.exec(行[2]);
+    assert.ok(格, `${行[0]} 本书格应为「万分之 (次数)」，实得「${行[2]}」`);
     assert.deepEqual(
-      [行[1], 行[2]],
-      [基准[1], 基准[3]],
+      [行[1], 格[1], 格[2]],
+      [基准[1], 基准[3], 期望次数(Number(基准[5].replace(/,/g, '')))],
       `${行[0]} 榜内数值应与主表同字的两列一致`,
     );
     assert.equal(行[0], 基准[0]);
@@ -742,6 +796,47 @@ assert.ok(
   主表尺寸.滚动宽 <= 主表尺寸.容器宽 + 1,
   `主表不该横向滚动：${JSON.stringify(主表尺寸)}`,
 );
+// 本书列加了括号：行高不能被撑开，文字也不能溢出到倍数列上面
+const 榜布局 = await 求值(`
+  const 量 = (键) => {
+    const 表体 = document.querySelector('#字频差异' + 键 + '列表');
+    const 行 = [...表体.children].map((r) => ({
+      高: r.getBoundingClientRect().height,
+      本书格: r.children[2],
+      倍数格: r.children[3],
+    }));
+    const 最宽 = 行.reduce((最佳, r) => {
+      const 个数 = r.本书格.querySelector('.本书个数').getBoundingClientRect();
+      const 余量 = r.本书格.getBoundingClientRect().right - 个数.right;
+      return 余量 < 最佳.余量 ? { 余量, 文本: r.本书格.textContent } : 最佳;
+    }, { 余量: Infinity, 文本: '' });
+    const 压列 = 行.filter((r) => {
+      const 个数 = r.本书格.querySelector('.本书个数').getBoundingClientRect();
+      return 个数.right > r.倍数格.getBoundingClientRect().left + 0.5;
+    }).length;
+    return {
+      行高: Math.max(...行.map((r) => r.高)),
+      最小余量: Math.round(最宽.余量 * 10) / 10,
+      最宽单元格: 最宽.文本,
+      压列行数: 压列,
+    };
+  };
+  return {
+    偏多: 量('偏多'),
+    偏少: 量('偏少'),
+    最小: 量('最小'),
+    栏宽: Math.round(document.querySelector('.字频差异栏').getBoundingClientRect().width),
+  };
+`);
+console.log('差异榜布局:', JSON.stringify(榜布局));
+for (const 列名 of ['偏多', '偏少', '最小']) {
+  assert.equal(榜布局[列名].行高, 26, `${列名}：括号不该把 26px 固定行高撑开`);
+  assert.equal(榜布局[列名].压列行数, 0, `${列名}：本书列括号溢出压到了倍数列`);
+  assert.ok(
+    榜布局[列名].最小余量 >= 5,
+    `${列名}：本书列右边距不足 ${榜布局[列名].最小余量}px（最宽「${榜布局[列名].最宽单元格}」）`,
+  );
+}
 await 截图('字频对照-含差异榜.png');
 
 // —— 四个可排序列：点一次自然序、再点反向；缺表字始终垫底；窗口仍虚拟 ——
