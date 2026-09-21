@@ -21,16 +21,31 @@ export function 显示名次(值) {
 }
 
 /** 本书是知乎的多少倍：≥1 显示 ×N，<1 显示 ÷N。
- *  接近 1 的那一端要留到两位小数，否则「差异最小」整榜都显示 ×1，看不出谁更接近 */
+ *  接近 1 的那一端要留到两位小数，否则「差异最小」整榜都显示 ×1，看不出谁更接近；
+ *  另一端可以大到六位数（知乎计 0 次的字），过万改用「万」免得撑破列宽。 */
 export function 格式化倍数(比值) {
   if (!Number.isFinite(比值) || 比值 <= 0) {
     return '—';
   }
   const 前缀 = 比值 >= 1 ? '×' : '÷';
   const 倍数 = 比值 >= 1 ? 比值 : 1 / 比值;
-  const 位数 = 倍数 >= 100 ? 0 : 倍数 >= 10 ? 1 : 2;
-  return `${前缀}${(Math.round(倍数 * 10 ** 位数) / 10 ** 位数).toLocaleString(
-    'zh-CN',
-    { minimumFractionDigits: 位数, maximumFractionDigits: 位数 },
-  )}`;
+  let 数值;
+  if (倍数 >= 10000) {
+    数值 = `${(Math.round(倍数 / 1000) / 10).toLocaleString('zh-CN', {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    })}万`;
+  } else if (倍数 >= 100) {
+    数值 = Math.round(倍数).toLocaleString('zh-CN');
+  } else {
+    const 位数 = 倍数 >= 10 ? 1 : 2;
+    数值 = (
+      Math.round(倍数 * 10 ** 位数) /
+      10 ** 位数
+    ).toLocaleString('zh-CN', {
+      minimumFractionDigits: 位数,
+      maximumFractionDigits: 位数,
+    });
+  }
+  return `${前缀}${数值}`;
 }

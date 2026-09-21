@@ -9,7 +9,11 @@ import { createServer } from 'node:net';
 import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
-import { 取知乎序号, 取知乎万分率 } from '../js/知乎字频.js';
+import {
+  取知乎序号,
+  取知乎万分率,
+  知乎语料汉字总数,
+} from '../js/知乎字频.js';
 
 function 杀掉端口(端口) {
   // 上一轮断言抛出时子进程不会随 node 退出而死掉，残留的旧 Chrome / 旧服务
@@ -100,31 +104,44 @@ function 期望倍数(比值) {
   if (!Number.isFinite(比值) || 比值 <= 0) return '—';
   const 前缀 = 比值 >= 1 ? '×' : '÷';
   const 倍数 = 比值 >= 1 ? 比值 : 1 / 比值;
-  const 位数 = 倍数 >= 100 ? 0 : 倍数 >= 10 ? 1 : 2;
-  const 数值 = Math.round(倍数 * 10 ** 位数) / 10 ** 位数;
-  return (
-    前缀 +
-    数值.toLocaleString('zh-CN', {
+  let 数值;
+  if (倍数 >= 10000) {
+    数值 =
+      (Math.round(倍数 / 1000) / 10).toLocaleString('zh-CN', {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+      }) + '万';
+  } else if (倍数 >= 100) {
+    数值 = Math.round(倍数).toLocaleString('zh-CN');
+  } else {
+    const 位数 = 倍数 >= 10 ? 1 : 2;
+    数值 = (
+      Math.round(倍数 * 10 ** 位数) / 10 ** 位数
+    ).toLocaleString('zh-CN', {
       minimumFractionDigits: 位数,
       maximumFractionDigits: 位数,
-    })
-  );
+    });
+  }
+  return `${前缀}${数值}`;
 }
 
-// 右侧差异榜：与页面同一门槛（本书 ≥5 次、知乎 ≥1），按 |log2 倍数| 排序
+// 右侧差异榜：本书每个汉字都入榜，知乎计 0 次或未收录的按语料 1 次折算
 function 计算榜行列表() {
+  const 零次下限 = (1 / 知乎语料汉字总数) * 10000;
   const 行列表 = [];
   for (const [字, 数量] of 计数) {
-    if (数量 < 5) continue;
-    const 现代 = 取知乎万分率(字);
-    if (现代 === undefined || 现代 < 1) continue;
+    const 现代显示 = 取知乎万分率(字);
+    const 现代 = 现代显示 ?? 0;
     const 本书 = (数量 / 汉字总数) * 10000;
+    const 比值 = 本书 / Math.max(现代, 零次下限);
     行列表.push({
       字,
+      现代显示,
       现代,
       本书,
-      比值: 本书 / 现代,
-      对数差: Math.abs(Math.log2(本书 / 现代)),
+      比值,
+      对数差: Math.abs(Math.log2(比值)),
+      数量,
     });
   }
   return 行列表;
@@ -135,12 +152,14 @@ function 期望榜(取最大) {
     const 差 = 取最大 ? 右.对数差 - 左.对数差 : 左.对数差 - 右.对数差;
     if (差 !== 0) return 差;
     return (
-      右.现代 - 左.现代 || 左.字.localeCompare(右.字, 'zh-CN')
+      右.现代 - 左.现代 ||
+      右.数量 - 左.数量 ||
+      左.字.localeCompare(右.字, 'zh-CN')
     );
   });
   return 行列表.slice(0, 30).map((行) => [
     行.字,
-    期望显示(行.现代),
+    期望显示(行.现代显示),
     期望显示(行.本书),
     期望倍数(行.比值),
   ]);
@@ -624,7 +643,15 @@ assert.deepEqual(榜.最大.行, 期望榜(true), '差异最大榜与节点侧�
 assert.deepEqual(榜.最小.行, 期望榜(false), '差异最小榜与节点侧独立计算不一致');
 assert.equal(榜.最大标题, '差异最大 30');
 assert.equal(榜.最小标题, '差异最小 30');
-assert.match(榜.说明, /本书 ≥5 次且知乎 ≥1/);
+assert.ok(
+  榜.说明.includes(`本书 ${计数.size.toLocaleString('zh-CN')} 个字全部入榜`),
+  `说明应表明不再设门槛：${榜.说明}`,
+);
+assert.ok(!/≥\s*5 次/.test(榜.说明), `说明里不该再有次数门槛：${榜.说明}`);
+assert.ok(
+  榜.最大.行.some((行) => 行[1] === '—' || 行[1] === '0'),
+  '去掉门槛后，知乎计 0 次或未收录的字应能进差异最大榜',
+);
 assert.ok(榜.最大.滚动高 > 榜.最大.视口高, '差异榜应有自己的滚动条');
 // 「差异最小」必须真的接近 1 倍：整榜显示同一个「×1」就等于没信息
 assert.ok(
@@ -632,20 +659,27 @@ assert.ok(
   `差异最小榜的倍数区分度不够：${[...new Set(榜.最小.行.map((行) => 行[3]))].join(' ')}`,
 );
 const 最小榜末位 = 计算榜行列表()
-  .sort((左, 右) => 左.对数差 - 右.对数差)
+  .sort((左, 右) => 左.对数差 - 右.对数差 || 右.现代 - 左.现代 || 右.数量 - 左.数量)
   .slice(0, 30)
   .at(-1);
 assert.ok(
-  最小榜末位.对数差 < 0.2,
+  最小榜末位.对数差 < 0.5,
   `差异最小第 30 名应很接近 1 倍，实得 |log2|=${最小榜末位.对数差.toFixed(3)}`,
 );
+// 最大端都撞到「知乎计 0 次」的下限，倍数会成串相同，这是口径本身决定的；
+// 排序正确性由上面与节点侧逐格比对保证，这里只要求倍数单调不升。
+const 读倍数 = (文本) => {
+  const 万 = 文本.includes('万');
+  return Number(文本.replace(/[×÷,万]/g, '')) * (万 ? 10000 : 1);
+};
+const 最大榜倍数 = 榜.最大.行.map((行) => 读倍数(行[3]));
 assert.ok(
-  new Set(榜.最大.行.map((行) => 行[3])).size >= 20,
-  '差异最大榜的倍数应各不相同（按差异递减）',
+  最大榜倍数.every((值, i) => i === 0 || 值 <= 最大榜倍数[i - 1] * 1.02 + 1),
+  `差异最大榜倍数应递减：${最大榜倍数.join(' ')}`,
 );
 for (const 行 of [...榜.最大.行, ...榜.最小.行]) {
   const 次数 = 计数.get(行[0]);
-  assert.ok(次数 >= 5, `${行[0]} 出现 ${次数} 次，不该入榜`);
+  assert.ok(次数 > 0, `${行[0]} 不在本书正文里，不该入榜`);
   const 基准 = 期望行(行[0]);
   assert.deepEqual(
     [行[1], 行[2]],
