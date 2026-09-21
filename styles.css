@@ -2679,7 +2679,6 @@ dialog,
   outline-offset: -2px;
 }
 
-.单字双列表,
 .词频表格容器 {
   min-height: 220px;
   max-height: calc(100dvh - 176px); /* 翻页条已去掉，列表多出原来那一截高度 */
@@ -2688,45 +2687,8 @@ dialog,
   scrollbar-width: thin;
 }
 
-.单字双列表 {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  /* 两张表各按自己的行数撑高；默认的 stretch 会把短的那张拉伸，
-     行高与占位行一起被放大，虚拟列表的窗口计算就全错了 */
-  align-items: start;
-}
-
-.单字双列表[hidden],
 .词频表格容器[hidden] {
   display: none;
-}
-
-.单字双列表 > .词频表格 + .词频表格 {
-  border-left: 1px solid var(--边线色);
-}
-
-.单字双列表 .词频表格 th,
-.单字双列表 .词频表格 td {
-  padding-inline: 8px;
-}
-
-.单字双列表 .词频表格 thead tr:last-child th:first-child,
-.单字双列表 .词频表格 tbody td:first-child,
-.单字双列表 .词频表格 thead tr:last-child th:last-child,
-.单字双列表 .词频表格 tbody td:last-child {
-  width: 54px;
-}
-
-.单字双列表 .词频表格 thead tr:first-child th {
-  top: 0;
-  height: 34px;
-  color: var(--墨色);
-  font-size: 12px;
-  text-align: center;
-}
-
-.单字双列表 .词频表格 thead tr:last-child th {
-  top: 34px;
 }
 
 .词频表格 {
@@ -2888,7 +2850,6 @@ dialog,
 }
 
 /* 列表容器可聚焦，键盘用方向键 / 空格滚动（弹窗打开时正文快捷键不拦截） */
-.单字双列表:focus-visible,
 .词频表格容器:focus-visible {
   outline: 2px solid var(--选中色);
   outline-offset: -2px;
@@ -3235,15 +3196,9 @@ dialog,
     bottom: 76px;
   }
 
-  .单字双列表,
   .词频表格容器 {
     min-height: 120px;
     max-height: calc(100dvh - 200px);
-  }
-
-  .单字双列表 .词频表格 th,
-  .单字双列表 .词频表格 td {
-    padding-inline: 5px;
   }
 
   .上下文行 {

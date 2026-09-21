@@ -329,7 +329,7 @@ async function 截图(名字) {
 async function 读窗口(表体选择器) {
   return 求值(`
     const 表体 = document.querySelector(${JSON.stringify(表体选择器)});
-    const 容器 = 表体.closest('.词频表格容器, .单字双列表');
+    const 容器 = 表体.closest('.词频表格容器');
     const 行列表 = [...表体.children];
     const 真实行 = 行列表.filter((行) => !行.classList.contains('虚拟占位'));
     return {
@@ -458,8 +458,7 @@ for (let i = 0; i < 300; i++) {
       ? { 汉字总数: 状态.词频分析.汉字总数, 去重: 状态.词频分析.去重汉字数,
           单字数: 状态.词频分析.列表[1].length,
           二字数: 状态.词频分析.列表[2].length,
-          重复数: 状态.词频分析.单字列表.重复.length,
-          一次数: 状态.词频分析.单字列表.一次.length }
+          二字数: 状态.词频分析.列表[2].length }
       : null;
   `);
   if (分析) break;
@@ -468,7 +467,6 @@ for (let i = 0; i < 300; i++) {
 assert.ok(分析, '词频分析应在超时前完成');
 assert.equal(分析.汉字总数, 汉字总数, '汉字总数应与磁盘基准一致');
 assert.equal(分析.去重, 计数.size, '去重汉字数应与磁盘基准一致');
-assert.equal(分析.重复数 + 分析.一次数, 计数.size, '重复 + 只出现一次 应等于去重数');
 const 单字序列 = await 求值(`
   const { 状态 } = await import('./js/状态.js');
   return 状态.词频分析.列表[1].map((项) => 项.文本);
@@ -486,7 +484,7 @@ const 结构 = await 求值(`
     标签顺序: [...document.querySelectorAll('.词频标签')].map((b) => b.textContent.trim()),
     当前视图: [...document.querySelectorAll('.词频标签')].find((b) =>
       b.classList.contains('当前')).dataset.视图,
-    可聚焦: ['#字频对照容器', '#单字双列表', '#词频表格容器'].map((选择) =>
+    可聚焦: ['#字频对照容器', '#词频表格容器'].map((选择) =>
       document.querySelector(选择).tabIndex),
     表头: [...document.querySelectorAll('#字频对照容器 thead th')].map((格) => [
       格.textContent.trim(), 格.dataset.排序 ?? '', 格.getAttribute('aria-sort') ?? '',
@@ -495,9 +493,9 @@ const 结构 = await 求值(`
   };
 `);
 assert.equal(结构.分页节点, null, '翻页控件应已删除');
-assert.deepEqual(结构.标签顺序, ['字频对照', '单字', '二字', '三字', '四字', '五字', '六字']);
+assert.deepEqual(结构.标签顺序, ['字频对照', '二字', '三字', '四字', '五字', '六字'], '单字 tab 应已移除');
 assert.equal(结构.当前视图, '对照', '默认停在第一个 tab');
-assert.deepEqual(结构.可聚焦, [0, 0, 0], '列表容器应可聚焦以便键盘滚动');
+assert.deepEqual(结构.可聚焦, [0, 0], '列表容器应可聚焦以便键盘滚动');
 assert.deepEqual(
   结构.表头.map(([名, 键, 排序]) => [名, 键, 排序]),
   [
@@ -957,52 +955,6 @@ for (const 列名 of ['偏多', '偏少', '最小']) {
   assert.deepEqual(榜排序后[列名].行, 榜[列名].行, `主表排序不应影响${列名}榜`);
 }
 
-// —— 单字视图：两张表共用一个滚动容器，各自按自己的行数撑高 ——
-await 求值(`
-  [...document.querySelectorAll('.词频标签')].find((b) => b.dataset.视图 === '1').click();
-  return 1;
-`);
-await pause(150);
-const 重复窗 = await 读窗口('#单字重复列表');
-const 一次窗 = await 读窗口('#单字一次列表');
-断言窗口连续(重复窗, '单字重复');
-断言窗口连续(一次窗, '单字一次');
-assert.equal(重复窗.序号[0], 0);
-assert.equal(一次窗.序号[0], 0);
-assert.ok(重复窗.DOM行数 < 分析.重复数 / 4, '重复表也应虚拟');
-assert.ok(
-  Math.abs(重复窗.表体高 - 分析.重复数 * 重复窗.行高) <= 重复窗.行高,
-  `重复表表体高应≈自己的行数：${重复窗.表体高} vs ${分析.重复数 * 重复窗.行高}`,
-);
-assert.ok(
-  Math.abs(一次窗.表体高 - 分析.一次数 * 一次窗.行高) <= 一次窗.行高,
-  `一次表表体高应≈自己的行数：${一次窗.表体高} vs ${分析.一次数 * 一次窗.行高}`,
-);
-assert.ok(
-  重复窗.容器滚动高 >= Math.max(分析.重复数, 分析.一次数) * 重复窗.行高 &&
-    重复窗.容器滚动高 <=
-      Math.max(分析.重复数, 分析.一次数) * 重复窗.行高 + 3 * 重复窗.行高,
-  `容器总高应由较长的那张表决定：${重复窗.容器滚动高}`,
-);
-assert.equal(
-  重复窗.行[0][2],
-  计数.get(重复窗.行[0][1]).toLocaleString('zh-CN'),
-  '重复表首行频次应与节点计数一致',
-);
-if (分析.一次数 < 分析.重复数 - 20) {
-  await 滚到('#单字双列表', 一次窗.表体高 + 重复窗.行高 * 30);
-  const 后段 = {
-    重复: await 读窗口('#单字重复列表'),
-    一次: await 读窗口('#单字一次列表'),
-  };
-  assert.equal(后段.一次.DOM行数, 0, '一次表读完后不应再渲染真实行');
-  assert.equal(后段.一次.占位数, 1, '一次表读完后应只剩一条底部占位行');
-  assert.ok(后段.重复.DOM行数 > 0 && 后段.重复.序号[0] > 0, '重复表应继续渲染中段');
-  断言窗口连续(后段.重复, '单字重复后段');
-} else {
-  console.log(`（一次表 ${分析.一次数} 行不比重复表短，跳过「读完只剩占位」分支）`);
-}
-
 // —— 二字视图：同样虚拟，且排名与频次正确 ——
 await 求值(`
   [...document.querySelectorAll('.词频标签')].find((b) => b.dataset.视图 === '2').click();
@@ -1052,15 +1004,17 @@ assert.deepEqual(
     return {
       当前: [...document.querySelectorAll('.词频标签')].find((b) => b.classList.contains('当前')).dataset.视图,
       对照隐藏: document.querySelector('#字频对照视图').hidden,
-      单字显示: !document.querySelector('#单字双列表').hidden,
+      组合显示: !document.querySelector('#词频表格容器').hidden,
+      弹窗加宽: document.querySelector('#词频弹窗').classList.contains('宽对照'),
     };
   `),
-  { 当前: '1', 对照隐藏: true, 单字显示: true },
+  { 当前: '2', 对照隐藏: true, 组合显示: true, 弹窗加宽: false },
+  '右方向键应从对照切到二字（已无单字档），并收回弹窗宽度',
 );
 await 求值(`
-  const 单字 = [...document.querySelectorAll('.词频标签')].find((b) => b.dataset.视图 === '1');
-  单字.focus();
-  单字.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+  const 二字 = [...document.querySelectorAll('.词频标签')].find((b) => b.dataset.视图 === '2');
+  二字.focus();
+  二字.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
   return 1;
 `);
 await pause(150);
@@ -1074,7 +1028,7 @@ assert.equal(回对照摘要, 回对照前摘要, '切 tab 不应丢掉当前排
 console.log(
   `\nOK：${目标文本} ${汉字总数.toLocaleString('zh-CN')} 汉字 / ${分析.单字数.toLocaleString('zh-CN')} 去重字；` +
     `默认序滚遍全表逐行比对五格全对（缺表 ${缺表字数} 字，本书列合计 ${本书列合计.toFixed(0)}‱），` +
-    `四列点击排序 + 反向全对且缺表字恒垫底；三视图均虚拟（对照 ${首屏.DOM行数} 行 / 单字 ${重复窗.DOM行数}+${一次窗.DOM行数} 行 / 二字 ${二字窗.DOM行数} 行，` +
-    `全量 ${分析.单字数} / ${分析.重复数}+${分析.一次数} / ${分析.二字数}），翻页控件已移除`,
+    `对照与二字均虚拟（${首屏.DOM行数} 行 / ${二字窗.DOM行数} 行，全量 ${分析.单字数} / ${分析.二字数}），` +
+    `单字 tab 与翻页控件都已移除`,
 );
 收尾();
