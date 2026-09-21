@@ -75,4 +75,6 @@ npm start
 
 服务对所有资源发送 `Cache-Control: no-cache`：浏览器每次刷新都会回源校验，文件没变走 304，改完代码**普通刷新即可看到最新版**，无需强制刷新，也无需在 `index.html` 里维护 `?v=` 版本号。（若仍用 `python3 -m http.server` 起服务，它不发送缓存头，浏览器只能启发式缓存 JS/CSS，普通刷新经常拿到旧代码，需要强制刷新。）
 
+目录请求（如 `./txt/`）在没有 `index.html` 时会返回 HTML 目录列表，右下角「阅读内容」弹窗就是靠解析这个列表得到文本清单的；新增 txt 无需改代码，放进入目录即可。回归可用 `node tmp/verify-txt-directory-listing.mjs`（自带无头 Chrome，`SITE_PORT` 指定服务端口）。
+
 本机浏览器打开 `http://localhost:15921`；同一局域网内可使用本机的局域网 IP 访问，例如 `http://192.168.0.101:15921`。
