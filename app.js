@@ -423,10 +423,10 @@ function 绑定事件() {
   元素.滚动容器.addEventListener('pointerout', 处理高亮移出);
   元素.滚动容器.addEventListener('contextmenu', 处理高亮上下文点击);
   元素.滚动容器.addEventListener('keyup', 处理正文键盘选择);
-  元素.自动滚动按钮.addEventListener('mouseenter', 开始自动滚动);
-  元素.自动滚动按钮.addEventListener('focus', 开始自动滚动);
+  // 悬停不再启动自动滚动：滚动按钮只剩速度显示 + 点击切换全屏。
+  // 键盘聚焦（Tab）仍作为无障碍启动入口，鼠标点击聚焦不会误触发。
+  元素.自动滚动按钮.addEventListener('focus', 处理自动滚动按钮聚焦);
   元素.自动滚动按钮.addEventListener('click', 切换全屏模式);
-  元素.自动滚动按钮.addEventListener('mouseleave', 处理自动滚动按钮移出);
   元素.自动滚动按钮.addEventListener('blur', 处理自动滚动按钮失焦);
   元素.内容选择按钮.addEventListener('click', 打开内容选择弹窗);
   元素.阅读统计按钮.addEventListener('click', 打开阅读统计);
@@ -768,11 +768,17 @@ function 绑定事件() {
 
   window.addEventListener(语音事件.自动滚动, 处理语音自动滚动);
 
-  function 处理自动滚动按钮移出() {
-    停止自动滚动('鼠标移出滚动按钮');
+  function 处理自动滚动按钮聚焦() {
+    // 只有键盘聚焦（:focus-visible）才启动滚动：鼠标点击按钮是为切换全屏，
+    // 浏览器同样会派发 focus，不能顺带把自动滚动开起来。
+    if (元素.自动滚动按钮.matches(':focus-visible')) {
+      开始自动滚动();
+    }
   }
 
   function 处理自动滚动按钮失焦() {
+    // 指针仍停在按钮上时不停止：鼠标点击按钮切换全屏会先 focus 再 blur()
+    // （见 切换全屏模式），这条判断保证它不会误停掉键盘启动的滚动。
     if (!元素.自动滚动按钮.matches(':hover')) {
       停止自动滚动('滚动按钮失去焦点');
     }
