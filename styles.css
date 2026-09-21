@@ -2897,6 +2897,124 @@ dialog,
   outline-offset: -2px;
 }
 
+/* 对照视图右侧的差异榜：主表 + 两栏各 30 行，弹窗在对照视图下加宽 */
+.词频弹窗.宽对照 {
+  width: min(1080px, calc(100vw - 32px));
+}
+
+.字频对照视图 {
+  display: flex;
+  align-items: stretch;
+  min-height: 0;
+  max-height: calc(100dvh - 176px);
+}
+
+.字频对照视图[hidden] {
+  display: none;
+}
+
+.字频对照容器 {
+  flex: 1 1 420px;
+  min-width: 0;
+  border-right: 1px solid var(--边线色);
+}
+
+.字频差异模块 {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  min-height: 0;
+  /* flex 行的交叉轴尺寸取子项的固有高度，不各自封顶的话
+     30 行会把模块撑到比弹窗还高，底部那些行就被裁掉且滚不到 */
+  max-height: calc(100dvh - 176px);
+}
+
+.字频差异说明 {
+  margin: 0;
+  padding: 7px 12px;
+  color: var(--次要墨色);
+  font-size: 11px;
+  line-height: 15px;
+  border-bottom: 1px solid var(--边线色);
+}
+
+.字频差异栏列表 {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.字频差异栏 {
+  display: flex;
+  width: 224px;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.字频差异栏 + .字频差异栏 {
+  border-left: 1px solid var(--边线色);
+}
+
+.字频差异标题 {
+  margin: 0;
+  padding: 8px 10px;
+  color: var(--墨色);
+  font-size: 12px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--边线色);
+  background: #f2f2f2;
+}
+
+/* 两栏各自独立滚动，与主表的虚拟滚动互不影响 */
+.字频差异滚动 {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  scrollbar-color: #8c8c8c transparent;
+  scrollbar-width: thin;
+}
+
+.字频差异表格 {
+  font-size: 12px;
+}
+
+.字频差异表格 th,
+.字频差异表格 td {
+  height: 26px;
+  padding-inline: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.字频差异表格 th:first-child,
+.字频差异表格 td:first-child {
+  width: 34px;
+  padding-inline: 8px 2px;
+  color: var(--墨色);
+  font-size: 14px;
+  text-align: center;
+}
+
+.字频差异表格 th:not(:first-child),
+.字频差异表格 td:not(:first-child) {
+  width: 46px;
+  text-align: right;
+}
+
+.字频差异表格 td:nth-child(2),
+.字频差异表格 td:nth-child(3) {
+  color: var(--次要墨色);
+}
+
+.字频差异表格 td:last-child {
+  width: 56px;
+  font-weight: 600;
+}
+
+.字频差异表格 td.字频偏知乎 {
+  color: var(--次要墨色);
+  font-weight: 400;
+}
+
 .上下文标题栏 {
   display: flex;
   align-items: center;

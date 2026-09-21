@@ -1,6 +1,8 @@
 import { 是汉字 } from './文本工具.js';
 import { 让出主线程, 按需让出主线程 } from './调度.js';
 import { 元素, 状态 } from './状态.js';
+import { 显示名次, 格式化万分率 } from './万分率.js';
+import { 渲染字频差异榜 } from './字频差异.js';
 import { 创建虚拟列表 } from './虚拟列表.js';
 import { 取知乎万分率, 取知乎序号, 知乎字频说明 } from './知乎字频.js';
 
@@ -64,6 +66,7 @@ export async function 打开词频弹窗() {
   if (!元素.词频弹窗.open) {
     元素.词频弹窗.showModal();
   }
+  应用当前视图布局();
   if (状态.词频分析) {
     渲染词频页();
     return;
@@ -187,19 +190,26 @@ export function 处理词频标签键盘(事件) {
   目标标签.focus();
 }
 
-function 切换词频视图(视图) {
-  当前词频视图 = 视图;
-  const 是单字 = 视图 === '1';
-  const 是对照 = 视图 === 对照视图;
-  元素.字频对照容器.hidden = !是对照;
+// 视图显隐只有一处实现：切换标签和每次打开弹窗都走它，避免默认视图与布局脱节
+function 应用当前视图布局() {
+  const 是单字 = 当前词频视图 === '1';
+  const 是对照 = 当前词频视图 === 对照视图;
+  元素.字频对照视图.hidden = !是对照;
+  // 对照视图右侧还要挂差异榜，弹窗加宽；其他 tab 维持原来的窄尺寸
+  元素.词频弹窗.classList.toggle('宽对照', 是对照);
   元素.单字双列表.hidden = !是单字;
   元素.词频表格容器.hidden = 是单字 || 是对照;
   for (const 标签 of 元素.词频标签栏.querySelectorAll('.词频标签')) {
-    const 是当前 = 标签.dataset.视图 === 视图;
+    const 是当前 = 标签.dataset.视图 === 当前词频视图;
     标签.classList.toggle('当前', 是当前);
     标签.setAttribute('aria-selected', String(是当前));
     标签.tabIndex = 是当前 ? 0 : -1;
   }
+}
+
+function 切换词频视图(视图) {
+  当前词频视图 = 视图;
+  应用当前视图布局();
   渲染词频页();
 }
 
@@ -213,6 +223,7 @@ function 渲染词频页() {
   if (当前词频视图 === 对照视图) {
     取对照虚拟列表().设置数据([排序对照行(分析)]);
     更新对照表头排序标记();
+    渲染字频差异榜(分析); // 右侧模块：固定 30+30 行，不进虚拟列表
     元素.词频摘要.textContent =
       `${知乎字频说明} · 单位：万分之 · 本书 ${去重汉字数} 字中 ` +
       `${统计现代表命中字数(分析).toLocaleString('zh-CN')} 字有对照值 · ` +
@@ -352,25 +363,6 @@ function 创建字频对照行(统计项, 序号) {
     本书个数单元格,
   );
   return 行;
-}
-
-function 显示名次(值) {
-  return 值 === undefined ? '—' : 值.toLocaleString('zh-CN');
-}
-
-// 万分之口径：≥10 向下取整（源表「的」为 403.89，显示 403），
-// 1~10 与不足 1 的都取 3 位有效数字，低频字不会被抹成 0，也不会出现 0.999→「1.00」的假象。
-function 格式化万分率(值) {
-  if (值 === undefined) {
-    return '—';
-  }
-  if (值 === 0) {
-    return '0';
-  }
-  if (值 >= 10) {
-    return String(Math.floor(值));
-  }
-  return 值.toPrecision(3);
 }
 
 async function 统计全文词频(全文, 任务仍然有效) {

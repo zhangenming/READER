@@ -335,6 +335,7 @@
           六字
         </button>
       </div>
+      <div id="字频对照视图" class="字频对照视图">
       <div
         id="字频对照容器"
         class="词频表格容器 字频对照容器"
@@ -402,6 +403,56 @@
           </thead>
           <tbody id="字频对照列表"></tbody>
         </table>
+      </div>
+      <aside
+        id="字频差异模块"
+        class="字频差异模块"
+        aria-label="知乎字频与本书字频差异榜"
+      >
+        <p id="字频差异说明" class="字频差异说明">正在计算差异</p>
+        <div class="字频差异栏列表">
+          <div class="字频差异栏">
+            <h3 id="字频差异最大标题" class="字频差异标题">差异最大 30</h3>
+            <div
+              id="字频差异最大滚动"
+              class="字频差异滚动"
+              aria-label="差异最大的字，可滚动"
+            >
+              <table class="词频表格 字频差异表格">
+                <thead>
+                  <tr>
+                    <th scope="col">字</th>
+                    <th scope="col">知乎</th>
+                    <th scope="col">本书</th>
+                    <th scope="col">倍数</th>
+                  </tr>
+                </thead>
+                <tbody id="字频差异最大列表"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="字频差异栏">
+            <h3 id="字频差异最小标题" class="字频差异标题">差异最小 30</h3>
+            <div
+              id="字频差异最小滚动"
+              class="字频差异滚动"
+              aria-label="差异最小的字，可滚动"
+            >
+              <table class="词频表格 字频差异表格">
+                <thead>
+                  <tr>
+                    <th scope="col">字</th>
+                    <th scope="col">知乎</th>
+                    <th scope="col">本书</th>
+                    <th scope="col">倍数</th>
+                  </tr>
+                </thead>
+                <tbody id="字频差异最小列表"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </aside>
       </div>
       <div
         id="单字双列表"

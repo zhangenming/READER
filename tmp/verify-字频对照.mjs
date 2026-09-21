@@ -11,6 +11,17 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { 取知乎序号, 取知乎万分率 } from '../js/知乎字频.js';
 
+function 杀掉端口(端口) {
+  // 上一轮断言抛出时子进程不会随 node 退出而死掉，残留的旧 Chrome / 旧服务
+  // 会让下一次运行连到改动前的页面上，测出假的不一致。
+  try {
+    const pid列表 = execSync(`lsof -ti :${端口}`, { encoding: 'utf8' }).trim();
+    if (pid列表) execSync(`kill -9 ${pid列表.split('\n').join(' ')}`);
+  } catch {}
+}
+杀掉端口(Number(process.env.VERIFY_CDP_PORT || 9412));
+杀掉端口(Number(process.env.SITE_PORT || 15998));
+
 async function 取空闲端口(首选) {
   // 上一轮残留进程可能还占着固定端口，服务 bind 失败是静默的（stdio 被忽略），
   // 表现就是 Chrome 拿到错误页、回归以「页面没加载」失败。这里先探一次，占用就换随机端口。
@@ -85,6 +96,56 @@ function 期望显示(值) {
   return 值.toPrecision(3);
 }
 const 显示名次 = (值) => (值 === undefined ? '—' : 值.toLocaleString('zh-CN'));
+function 期望倍数(比值) {
+  if (!Number.isFinite(比值) || 比值 <= 0) return '—';
+  const 前缀 = 比值 >= 1 ? '×' : '÷';
+  const 倍数 = 比值 >= 1 ? 比值 : 1 / 比值;
+  const 位数 = 倍数 >= 100 ? 0 : 倍数 >= 10 ? 1 : 2;
+  const 数值 = Math.round(倍数 * 10 ** 位数) / 10 ** 位数;
+  return (
+    前缀 +
+    数值.toLocaleString('zh-CN', {
+      minimumFractionDigits: 位数,
+      maximumFractionDigits: 位数,
+    })
+  );
+}
+
+// 右侧差异榜：与页面同一门槛（本书 ≥5 次、知乎 ≥1），按 |log2 倍数| 排序
+function 计算榜行列表() {
+  const 行列表 = [];
+  for (const [字, 数量] of 计数) {
+    if (数量 < 5) continue;
+    const 现代 = 取知乎万分率(字);
+    if (现代 === undefined || 现代 < 1) continue;
+    const 本书 = (数量 / 汉字总数) * 10000;
+    行列表.push({
+      字,
+      现代,
+      本书,
+      比值: 本书 / 现代,
+      对数差: Math.abs(Math.log2(本书 / 现代)),
+    });
+  }
+  return 行列表;
+}
+
+function 期望榜(取最大) {
+  const 行列表 = 计算榜行列表().sort((左, 右) => {
+    const 差 = 取最大 ? 右.对数差 - 左.对数差 : 左.对数差 - 右.对数差;
+    if (差 !== 0) return 差;
+    return (
+      右.现代 - 左.现代 || 左.字.localeCompare(右.字, 'zh-CN')
+    );
+  });
+  return 行列表.slice(0, 30).map((行) => [
+    行.字,
+    期望显示(行.现代),
+    期望显示(行.本书),
+    期望倍数(行.比值),
+  ]);
+}
+
 
 // 期望的一行六格：汉字 | 知乎万分之 | 知乎序号 | 本书万分之 | 本书序号 | 字符个数
 function 期望行(字) {
@@ -127,17 +188,6 @@ let 汉字总数 = 0;
 let 计数 = new Map();
 let 本书名次 = new Map();
 
-function 清理端口() {
-  // 断言抛出时子进程不会随 node 退出而死掉，残留的旧 Chrome / 旧服务会让下一次
-  // 运行连到改动前的页面上，测出假的不一致。开跑前先把这两个端口清空。
-  for (const 端口 of [站点端口, CDP端口]) {
-    try {
-      const pid列表 = execSync(`lsof -ti :${端口}`, { encoding: 'utf8' }).trim();
-      if (pid列表) execSync(`kill -9 ${pid列表.split('\n').join(' ')}`);
-    } catch {}
-  }
-}
-清理端口();
 await new Promise((等) => setTimeout(等, 600)); // 给被杀的进程一点时间释放端口
 const 服务日志 = [];
 const 服务 = spawn(process.execPath, ['server.mjs', String(站点端口)], {
@@ -285,18 +335,37 @@ function 断言窗口内容(窗口, 期望顺序, 说明) {
   });
 }
 
-let 页面就绪 = false;
-for (let i = 0; i < 200; i++) {
-  页面就绪 = await 求值(
-    `return !!document.querySelector('#内容选择按钮') &&
-        (!document.querySelector('#载入状态') || document.querySelector('#载入状态').hidden);`,
-  );
-  if (页面就绪) break;
-  await pause(200);
+async function 等待首屏(轮数) {
+  let 状态文本 = '';
+  for (let i = 0; i < 轮数; i++) {
+    // 首屏会自动恢复上次的书，新书（几十万字）排版可能要几十秒
+    状态文本 = await 求值(`
+    return JSON.stringify({
+      有工具条: !!document.querySelector('#内容选择按钮'),
+      载入中: document.querySelector('#载入状态') &&
+        !document.querySelector('#载入状态').hidden
+          ? (document.querySelector('#载入状态').textContent || '').trim().slice(0, 60)
+          : '',
+    });
+  `);
+    const { 有工具条, 载入中 } = JSON.parse(状态文本);
+    if (有工具条 && !载入中) {
+      return { 就绪: true, 状态: 状态文本 };
+    }
+    await pause(200);
+  }
+  return { 就绪: false, 状态: 状态文本 };
+}
+let 首屏结果 = await 等待首屏(600);
+if (!首屏结果.就绪) {
+  // 偶发：Chrome 首帧导航没拿到响应（服务刚起），重导一次再等
+  console.log(`首屏未就绪（${首屏结果.状态}），重新导航再试`);
+  await 发送('Page.navigate', { url: 地址 });
+  首屏结果 = await 等待首屏(600);
 }
 assert.ok(
-  页面就绪,
-  `页面应已加载出阅读器工具条（服务端口 ${站点端口}）：${服务日志.join('').slice(0, 400)}`,
+  首屏结果.就绪,
+  `页面应加载完首屏（服务端口 ${站点端口}，状态 ${首屏结果.状态}）：${服务日志.join('').slice(0, 300)}`,
 );
 
 // —— 走真实入口载入正文 ——
@@ -518,6 +587,92 @@ assert.equal(
   '知乎序号列的「—」应与知乎万分之列一致',
 );
 
+// —— 右侧差异榜：30 + 30 行，完全独立于主表的虚拟滚动 ——
+async function 读榜() {
+  return 求值(`
+    const 读栏 = (表体选择) => {
+      const 表体 = document.querySelector(表体选择);
+      const 滚动 = 表体.closest('.字频差异滚动');
+      return {
+        行数: 表体.children.length,
+        行: [...表体.children].map((行) => [...行.children].map((格) => 格.textContent)),
+        占位数: 表体.querySelectorAll('.虚拟占位').length,
+        滚动高: 滚动.scrollHeight,
+        视口高: 滚动.clientHeight,
+        顶: 滚动.scrollTop,
+      };
+    };
+    return {
+      弹窗加宽: document.querySelector('#词频弹窗').classList.contains('宽对照'),
+      模块隐藏: document.querySelector('#字频差异模块').closest('[hidden]') !== null,
+      说明: document.querySelector('#字频差异说明').textContent,
+      最大标题: document.querySelector('#字频差异最大标题').textContent,
+      最小标题: document.querySelector('#字频差异最小标题').textContent,
+      最大: 读栏('#字频差异最大列表'),
+      最小: 读栏('#字频差异最小列表'),
+      主表顶: document.querySelector('#字频对照容器').scrollTop,
+    };
+  `);
+}
+const 榜 = await 读榜();
+assert.equal(榜.弹窗加宽, true, '对照视图下弹窗应加宽放下右侧模块');
+assert.equal(榜.模块隐藏, false, '对照视图下差异榜应可见');
+assert.equal(榜.最大.行数, 30, '差异最大榜应为 30 行');
+assert.equal(榜.最小.行数, 30, '差异最小榜应为 30 行');
+assert.equal(榜.最大.占位数 + 榜.最小.占位数, 0, '差异榜不走虚拟列表，不该有占位行');
+assert.deepEqual(榜.最大.行, 期望榜(true), '差异最大榜与节点侧独立计算不一致');
+assert.deepEqual(榜.最小.行, 期望榜(false), '差异最小榜与节点侧独立计算不一致');
+assert.equal(榜.最大标题, '差异最大 30');
+assert.equal(榜.最小标题, '差异最小 30');
+assert.match(榜.说明, /本书 ≥5 次且知乎 ≥1/);
+assert.ok(榜.最大.滚动高 > 榜.最大.视口高, '差异榜应有自己的滚动条');
+// 「差异最小」必须真的接近 1 倍：整榜显示同一个「×1」就等于没信息
+assert.ok(
+  new Set(榜.最小.行.map((行) => 行[3])).size >= 5,
+  `差异最小榜的倍数区分度不够：${[...new Set(榜.最小.行.map((行) => 行[3]))].join(' ')}`,
+);
+const 最小榜末位 = 计算榜行列表()
+  .sort((左, 右) => 左.对数差 - 右.对数差)
+  .slice(0, 30)
+  .at(-1);
+assert.ok(
+  最小榜末位.对数差 < 0.2,
+  `差异最小第 30 名应很接近 1 倍，实得 |log2|=${最小榜末位.对数差.toFixed(3)}`,
+);
+assert.ok(
+  new Set(榜.最大.行.map((行) => 行[3])).size >= 20,
+  '差异最大榜的倍数应各不相同（按差异递减）',
+);
+for (const 行 of [...榜.最大.行, ...榜.最小.行]) {
+  const 次数 = 计数.get(行[0]);
+  assert.ok(次数 >= 5, `${行[0]} 出现 ${次数} 次，不该入榜`);
+  const 基准 = 期望行(行[0]);
+  assert.deepEqual(
+    [行[1], 行[2]],
+    [基准[1], 基准[3]],
+    `${行[0]} 榜内数值应与主表同字的两列一致`,
+  );
+}
+assert.ok(
+  new Set(榜.最大.行.map((行) => 行[0])).has('很') === true ||
+    榜.最大.行.length === 30,
+);
+// 主表滚动与两栏滚动互不影响
+await 滚到('#字频对照容器', 12345);
+await 求值(`
+  document.querySelector('#字频差异最大滚动').scrollTop = 200;
+  document.querySelector('#字频差异最小滚动').scrollTop = 300;
+  return 1;
+`);
+await pause(120);
+const 榜滚后 = await 读榜();
+assert.equal(榜滚后.主表顶, 12345, '滚动差异榜不应带动主表');
+assert.equal(榜滚后.最大.顶, 200, '左栏应保留自己的滚动位置');
+assert.equal(榜滚后.最小.顶, 300, '右栏应保留自己的滚动位置');
+assert.equal(榜滚后.最大.行数, 30, '滚动后行数不变（不是虚拟窗口）');
+assert.deepEqual(榜滚后.最大.行, 榜.最大.行, '滚动不应改变榜单内容');
+await 截图('字频对照-含差异榜.png');
+
 // —— 四个可排序列：点一次自然序、再点反向；缺表字始终垫底；窗口仍虚拟 ——
 async function 验证排序(键, 方向, 说明) {
   const 期望顺序 = 期望序列(键, 方向);
@@ -583,6 +738,10 @@ assert.equal(
   '知乎万分之升序时缺表字仍应排在最后',
 );
 await 截图('字频对照-知乎万分之升序.png');
+
+const 榜排序后 = await 读榜();
+assert.deepEqual(榜排序后.最大.行, 榜.最大.行, '主表排序不应影响差异榜');
+assert.deepEqual(榜排序后.最小.行, 榜.最小.行, '主表排序不应影响差异榜');
 
 // —— 单字视图：两张表共用一个滚动容器，各自按自己的行数撑高 ——
 await 求值(`
@@ -678,7 +837,7 @@ assert.deepEqual(
   await 求值(`
     return {
       当前: [...document.querySelectorAll('.词频标签')].find((b) => b.classList.contains('当前')).dataset.视图,
-      对照隐藏: document.querySelector('#字频对照容器').hidden,
+      对照隐藏: document.querySelector('#字频对照视图').hidden,
       单字显示: !document.querySelector('#单字双列表').hidden,
     };
   `),
