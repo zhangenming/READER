@@ -20,6 +20,22 @@ export function 显示名次(值) {
   return 值 === undefined ? '—' : 值.toLocaleString('zh-CN');
 }
 
+/** 本书出现次数：千分位；过万改用「万」，与 格式化倍数 同一口径。
+ *  差异榜的「差异最小」列里高频字（的、一、是）完全可能上榜，一本 50 万字的书
+ *  「的」能到 1.9 万次，六位括号会把列撑破、把行高顶开。精确次数留在行 title 里。 */
+export function 格式化次数(次数) {
+  if (!Number.isFinite(次数)) {
+    return '—';
+  }
+  if (次数 >= 10000) {
+    return `${(Math.round(次数 / 1000) / 10).toLocaleString('zh-CN', {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    })}万`;
+  }
+  return 次数.toLocaleString('zh-CN');
+}
+
 /** 本书是知乎的多少倍：≥1 显示 ×N，<1 显示 ÷N。
  *  接近 1 的那一端要留到两位小数，否则「差异最小」整榜都显示 ×1，看不出谁更接近；
  *  另一端可以大到六位数（知乎计 0 次的字），过万改用「万」免得撑破列宽。 */

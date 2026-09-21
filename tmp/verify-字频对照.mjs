@@ -49,7 +49,8 @@ async function 取空闲端口(首选) {
 const CDP端口 = await 取空闲端口(Number(process.env.VERIFY_CDP_PORT || 9412));
 const 站点端口 = await 取空闲端口(Number(process.env.SITE_PORT || 15998));
 const 地址 = `http://127.0.0.1:${站点端口}/`;
-// 默认跑小书快；TARGET_TEXT=白鹿原.txt 可换大部头压一遍括号宽度与行高
+// 榜单内容断言（倍数区分度等）是按《成吉思汗》的数据校准的，换书只适合量布局；
+// 想压括号宽度和行高，用 tmp/量-差异榜列宽.mjs（BOOK=白鹿原.txt）。
 const 目标文本 = process.env.TARGET_TEXT || '成吉思汗.txt';
 const 缓冲行数 = 8; // 与 js/常量.js 的 虚拟列表缓冲行数 一致
 
@@ -686,7 +687,7 @@ assert.ok(
 );
 assert.ok(榜.说明.includes('三列'), `说明应写明三列：${榜.说明}`);
 assert.ok(
-  榜.说明.includes('括号内是它在本书的出现次数'),
+  榜.说明.includes('本书列括号内为出现次数'),
   `说明应解释本书列括号里的数：${榜.说明}`,
 );
 assert.ok(!/≥\s*5 次/.test(榜.说明), `说明里不该再有次数门槛：${榜.说明}`);
@@ -796,45 +797,75 @@ assert.ok(
   主表尺寸.滚动宽 <= 主表尺寸.容器宽 + 1,
   `主表不该横向滚动：${JSON.stringify(主表尺寸)}`,
 );
-// 本书列加了括号：行高不能被撑开，文字也不能溢出到倍数列上面
+// 本书列加了括号：行高不能被撑开、文字不能溢出压到倍数列、括号右边要留得住边距
 const 榜布局 = await 求值(`
   const 量 = (键) => {
     const 表体 = document.querySelector('#字频差异' + 键 + '列表');
-    const 行 = [...表体.children].map((r) => ({
-      高: r.getBoundingClientRect().height,
-      本书格: r.children[2],
-      倍数格: r.children[3],
-    }));
-    const 最宽 = 行.reduce((最佳, r) => {
-      const 个数 = r.本书格.querySelector('.本书个数').getBoundingClientRect();
-      const 余量 = r.本书格.getBoundingClientRect().right - 个数.right;
-      return 余量 < 最佳.余量 ? { 余量, 文本: r.本书格.textContent } : 最佳;
-    }, { 余量: Infinity, 文本: '' });
-    const 压列 = 行.filter((r) => {
-      const 个数 = r.本书格.querySelector('.本书个数').getBoundingClientRect();
-      return 个数.right > r.倍数格.getBoundingClientRect().left + 0.5;
-    }).length;
+    const 行列表 = [...表体.children];
+    let 最小余量 = Infinity;
+    let 最宽文本 = '';
+    let 压列 = 0;
+    let 溢出 = 0;
+    const 高 = [];
+    for (const 行 of 行列表) {
+      const 格 = 行.children[2];
+      const 格框 = 格.getBoundingClientRect();
+      const 个数框 = 格.querySelector('.本书个数').getBoundingClientRect();
+      const 余量 = 格框.right - 个数框.right;
+      if (余量 < 最小余量) {
+        最小余量 = 余量;
+        最宽文本 = 格.textContent;
+      }
+      if (个数框.right > 行.children[3].getBoundingClientRect().left + 0.5) 压列++;
+      if (格.scrollWidth > 格.clientWidth + 1) 溢出++;
+      高.push(Math.round(行.getBoundingClientRect().height));
+    }
     return {
-      行高: Math.max(...行.map((r) => r.高)),
-      最小余量: Math.round(最宽.余量 * 10) / 10,
-      最宽单元格: 最宽.文本,
+      行高: Math.max(...高),
+      行高种类: [...new Set(高)],
+      最小余量: Math.round(最小余量 * 10) / 10,
+      最宽单元格: 最宽文本,
       压列行数: 压列,
+      溢出行数: 溢出,
     };
   };
+  // 把括号藏起来量一遍：行高应当一模一样，否则说明 11px 的 span 把行盒顶高了
+  const 样式 = document.createElement('style');
+  样式.textContent = '.本书个数{display:none}';
+  document.head.append(样式);
+  const 基线行高 = Math.round(
+    document.querySelector('#字频差异偏多列表 tr').getBoundingClientRect().height,
+  );
+  样式.remove();
   return {
+    基线行高,
     偏多: 量('偏多'),
     偏少: 量('偏少'),
     最小: 量('最小'),
     栏宽: Math.round(document.querySelector('.字频差异栏').getBoundingClientRect().width),
+    模块宽: Math.round(document.querySelector('#字频差异模块').getBoundingClientRect().width),
+    横向溢出: ['偏多', '偏少', '最小'].map((键) => {
+      const 滚动 = document.querySelector('#字频差异' + 键 + '滚动');
+      return 滚动.scrollWidth - 滚动.clientWidth;
+    }),
+    说明行数: Math.round(
+      document.querySelector('#字频差异说明').getBoundingClientRect().height / 15,
+    ),
   };
 `);
 console.log('差异榜布局:', JSON.stringify(榜布局));
+assert.equal(榜布局.模块宽, 榜布局.栏宽 * 3, '模块宽应等于三栏：说明那行不许把模块撑开');
+// 四列宽之和要留出竖向滚动条的 11px，否则榜单自己会横向滚，倍数列右边缘被滚动条盖住
+assert.deepEqual(榜布局.横向溢出, [0, 0, 0], `差异榜出现了横向滚动：${榜布局.横向溢出}`);
 for (const 列名 of ['偏多', '偏少', '最小']) {
-  assert.equal(榜布局[列名].行高, 26, `${列名}：括号不该把 26px 固定行高撑开`);
-  assert.equal(榜布局[列名].压列行数, 0, `${列名}：本书列括号溢出压到了倍数列`);
+  const 项 = 榜布局[列名];
+  assert.equal(项.行高种类.length, 1, `${列名}：行高被括号撑得不一致：${项.行高种类}`);
+  assert.equal(项.行高, 榜布局.基线行高, `${列名}：括号不该把行高顶离无括号时的 ${榜布局.基线行高}px`);
+  assert.equal(项.压列行数, 0, `${列名}：本书列括号溢出压到了倍数列`);
+  assert.equal(项.溢出行数, 0, `${列名}：本书列内容超出格子宽度`);
   assert.ok(
-    榜布局[列名].最小余量 >= 5,
-    `${列名}：本书列右边距不足 ${榜布局[列名].最小余量}px（最宽「${榜布局[列名].最宽单元格}」）`,
+    项.最小余量 >= 4,
+    `${列名}：本书列右边距不足 ${项.最小余量}px（最宽「${项.最宽单元格}」）`,
   );
 }
 await 截图('字频对照-含差异榜.png');

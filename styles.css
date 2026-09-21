@@ -2899,8 +2899,8 @@ dialog,
 
 /* 对照视图右侧的差异榜：主表 + 两栏各 30 行，弹窗在对照视图下加宽 */
 .词频弹窗.宽对照 {
-  /* 主表六列要 502px、三列榜单要 ~709px，加上边框留一点余量 */
-  width: min(1240px, calc(100vw - 32px));
+  /* 主表六列要 502px、三列榜单要 3×240px，加上边框留一点余量 */
+  width: min(1260px, calc(100vw - 32px));
 }
 
 .字频对照视图 {
@@ -2921,10 +2921,14 @@ dialog,
 }
 
 .字频差异模块 {
+  /* 一栏多宽只写一处：模块宽 = 3 栏，改数字两边一起动 */
+  --差异栏宽: 240px;
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
   min-height: 0;
+  /* 说明那行的 max-content 比三栏还宽（900px+），不锁死模块宽就会把主表挤没 */
+  width: calc(var(--差异栏宽) * 3);
   /* flex 行的交叉轴尺寸取子项的固有高度，不各自封顶的话
      30 行会把模块撑到比弹窗还高，底部那些行就被裁掉且滚不到 */
   max-height: calc(100dvh - 176px);
@@ -2947,7 +2951,7 @@ dialog,
 
 .字频差异栏 {
   display: flex;
-  width: 216px;
+  width: var(--差异栏宽);
   min-height: 0;
   flex-direction: column;
 }
@@ -2986,18 +2990,40 @@ dialog,
   font-variant-numeric: tabular-nums;
 }
 
+/* 四列宽之和必须 ≤ 栏宽 − 11px（竖向滚动条占位），否则榜单自己会横向滚动，
+   倍数列右边缘那些数字正好被滚动条盖住。改任何一列都先算这笔账。 */
 .字频差异表格 th:first-child,
 .字频差异表格 td:first-child {
-  width: 34px;
+  width: 30px;
   padding-inline: 8px 2px;
   color: var(--墨色);
   font-size: 14px;
   text-align: center;
 }
 
-.字频差异表格 th:not(:first-child),
-.字频差异表格 td:not(:first-child) {
-  width: 46px;
+.字频差异表格 th:nth-child(2),
+.字频差异表格 td:nth-child(2) {
+  width: 62px;
+  text-align: right;
+}
+
+/* 本书格是「万分之 (次数)」两段，比知乎列宽；nowrap 是必需的：一换行这格就变成
+   两行高，33px 的行会顶到 51px，30 行的榜单跟着错位 */
+.字频差异表格 th:nth-child(3),
+.字频差异表格 td:nth-child(3) {
+  width: 76px;
+  padding-inline: 4px;
+  white-space: nowrap;
+}
+
+.本书个数 {
+  opacity: 0.78;
+  font-size: 11px;
+}
+
+.字频差异表格 th:last-child,
+.字频差异表格 td:last-child {
+  width: 60px;
   text-align: right;
 }
 
@@ -3007,7 +3033,6 @@ dialog,
 }
 
 .字频差异表格 td:last-child {
-  width: 56px;
   font-weight: 600;
 }
 
