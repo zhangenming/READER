@@ -1,4 +1,4 @@
-// 看一眼右侧轨道当前的真实样子：载入一本小书，滚到指定位置，截整页 + 裁出右边缘 260px。
+// 看一眼左侧轨道当前的真实样子：载入一本书，滚到指定位置，截整页 + 裁出左边缘 260px。
 // 跑法：node tmp/看-轨道.mjs  [BOOK=谁动了我的奶酪.txt] [AT=0.26]
 import { execSync, spawn } from 'node:child_process';
 import { createServer } from 'node:net';
@@ -190,18 +190,24 @@ const 度量 = await 求值(`
 `);
 console.log(JSON.stringify(度量, null, 1));
 
-// —— 交互与边界：百分比盒子必须整个落在轨道内；拖动数字仍改滚动位置；悬停列不压轨道 ——
+// —— 交互与边界：轨道贴在页面左缘；百分比盒子整列落在轨道内、不压指示列；正文不越界 ——
 const assert = await import('node:assert/strict');
 const 轨道右 = 度量.轨道.x + 度量.轨道.w;
-assert.equal(度量.滚动进度.x + 度量.滚动进度.w, 轨道右, '百分比右缘应贴轨道右缘');
+const 指示列左 = 轨道右 - 度量.指示器宽度;
+assert.equal(度量.轨道.x, 0, '轨道应贴在页面左缘');
+assert.equal(度量.滚动进度.x, 0, '百分比应贴屏幕左缘');
+assert.equal(度量.滚动进度.w, 度量.轨道.w - 度量.指示器宽度, '百分比列 = 轨道宽 - 指示列宽');
 assert.ok(
-  度量.滚动进度.x >= 度量.轨道.x + 度量.指示器宽度,
+  度量.滚动进度.x + 度量.滚动进度.w <= 指示列左,
   `百分比不许压在指示列上：${JSON.stringify(度量)}`,
 );
 assert.ok(
   度量.章节刻度.w <= 度量.指示器宽度 && 度量.关键词指示器.w <= 度量.指示器宽度,
   '章节刻度与关键词指示器应各占指示列宽',
 );
+if (!度量.章节刻度.hidden) {
+  assert.equal(度量.章节刻度.x + 度量.章节刻度.w, 轨道右, '指示列应贴着正文一侧');
+}
 const 拖动前 = await 求值(`return (await import('./js/状态.js')).元素.滚动容器.scrollTop;`);
 await 求值(`
   const e = document.querySelector('#滚动进度');
@@ -229,35 +235,34 @@ const 悬停 = await 求值(`
 `);
 console.log('悬停列:', JSON.stringify(悬停), '轨道 x:', 度量.轨道.x);
 if (!悬停.hidden) {
-  assert.ok(悬停.x + 悬停.w <= 度量.轨道.x, '悬停列不该压到轨道');
+  assert.ok(悬停.x >= 轨道右, '悬停列应排在轨道右侧、不压轨道');
   assert.equal(悬停.w, 度量.指示器宽度, '悬停列应与指示列同宽');
 }
-const 正文右缘 = await 求值(`
+const 正文左缘 = await 求值(`
   const 行 = [...document.querySelectorAll('.正文行')].pop();
-  return Math.round(行.getBoundingClientRect().right);
+  return Math.round(行.getBoundingClientRect().left);
 `);
 assert.ok(
-  正文右缘 <= 度量.轨道.x + 1,
-  `正文不该伸进轨道：正文右缘 ${正文右缘} vs 轨道左缘 ${度量.轨道.x}`,
+  正文左缘 >= 轨道右 - 1,
+  `正文不该伸进轨道：正文左缘 ${正文左缘} vs 轨道右缘 ${轨道右}`,
 );
 console.log('交互与边界检查通过');
-const 轨道x = Math.max(0, 度量.轨道.x - 24);
 const { data: 放大 } = await 发送('Page.captureScreenshot', {
   format: 'png',
-  clip: { x: 轨道x, y: 0, width: 24 + 度量.轨道.w, height: 度量.视口[1], scale: 4 },
+  clip: { x: 0, y: 0, width: 度量.轨道.w + 24, height: 度量.视口[1], scale: 4 },
 });
 writeFileSync(resolve(import.meta.dirname, '轨道-放大.png'), Buffer.from(放大, 'base64'));
 const { data: 悬停图 } = await 发送('Page.captureScreenshot', {
   format: 'png',
-  clip: { x: 轨道x - 30, y: 0, width: 30 + 24 + 度量.轨道.w, height: 度量.视口[1], scale: 4 },
+  clip: { x: 0, y: 0, width: 度量.轨道.w + 54, height: 度量.视口[1], scale: 4 },
 });
 writeFileSync(resolve(import.meta.dirname, '轨道-悬停.png'), Buffer.from(悬停图, 'base64'));
 const { data } = await 发送('Page.captureScreenshot', {
   format: 'png',
-  clip: { x: Math.max(0, 度量.视口[0] - 260), y: 0, width: 260, height: 度量.视口[1], scale: 1 },
+  clip: { x: 0, y: 0, width: 260, height: 度量.视口[1], scale: 1 },
 });
-writeFileSync(resolve(import.meta.dirname, '轨道-右缘.png'), Buffer.from(data, 'base64'));
+writeFileSync(resolve(import.meta.dirname, '轨道-左缘.png'), Buffer.from(data, 'base64'));
 const { data: 全 } = await 发送('Page.captureScreenshot', { format: 'png' });
 writeFileSync(resolve(import.meta.dirname, '轨道-整页.png'), Buffer.from(全, 'base64'));
-console.log('已写 tmp/轨道-右缘.png 与 tmp/轨道-整页.png');
+console.log('已写 tmp/轨道-左缘.png 与 tmp/轨道-整页.png');
 收尾();

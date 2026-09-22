@@ -100,7 +100,7 @@
   /* 末次出现标记占一个 0.42em 字格；行尾按字号预留同宽空间。 */
   --末处标记留白比例: 0.42;
   --滚动条宽度: 28px;
-  /* 轨道左列画刻度与滚动块（原 20px 的一半），右列留给收进来的百分比数字 */
+  /* 轨道贴在页面左缘：右列画刻度与滚动块（原 20px 的一半），左列留给收进来的百分比数字 */
   --指示器宽度: 10px;
   --百分比宽度: calc(var(--滚动条宽度) - var(--指示器宽度));
   /* 动画时长：JS（js/跳转动画.js）读取同一变量同步兜底计时器，改这里即两处同时生效 */
@@ -143,7 +143,7 @@ body.自动滚动中 * {
 
 .阅读区域 {
   min-height: 0;
-  padding-right: var(--滚动条宽度);
+  padding-left: var(--滚动条宽度);
 }
 
 .滚动容器 {
@@ -165,7 +165,7 @@ body.自动滚动中 * {
 .自定义滚动条 {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;
   z-index: 6;
   width: var(--滚动条宽度);
   height: 100%;
@@ -194,7 +194,7 @@ body.关键词手势中 .滚动容器 {
 .章节刻度 {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   display: block;
   width: var(--指示器宽度);
   height: 100%;
@@ -209,7 +209,7 @@ body.关键词手势中 .滚动容器 {
 .关键词指示器 {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   display: block;
   width: var(--指示器宽度);
   height: 100%;
@@ -222,8 +222,8 @@ body.关键词手势中 .滚动容器 {
 
 .关键词指示器.悬停关键词指示器 {
   position: fixed;
-  right: calc(var(--滚动条宽度) + 6px);
-  left: auto;
+  left: calc(var(--滚动条宽度) + 6px);
+  right: auto;
   z-index: 6;
   width: var(--指示器宽度);
 }
@@ -231,7 +231,7 @@ body.关键词手势中 .滚动容器 {
 .滚动块 {
   position: absolute;
   top: 0;
-  left: 1px;
+  right: 1px;
   z-index: 1;
   width: calc(var(--指示器宽度) - 2px);
   min-height: 32px;
@@ -253,7 +253,8 @@ body.关键词手势中 .滚动容器 {
 .滚动进度 {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;
+  right: auto;
   z-index: 6;
   display: grid;
   place-items: center;
