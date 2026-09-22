@@ -683,9 +683,9 @@ for (const 列名 of ['偏多', '偏少', '最小']) {
   assert.ok(榜[列名].滚动高 > 榜[列名].视口高, `${列名} 榜应有自己的滚动条`);
   assert.deepEqual(榜[列名].行, 期望榜(列名), `${列名} 榜与节点侧独立计算不一致`);
 }
-assert.equal(榜.偏多.标题, '偏本书 ×30');
-assert.equal(榜.偏少.标题, '偏知乎 ÷30');
-assert.equal(榜.最小.标题, '差异最小 30');
+assert.equal(榜.偏多.标题, '本书多');
+assert.equal(榜.偏少.标题, '本书少');
+assert.equal(榜.最小.标题, '差异最小');
 const { 无数据: 无现代数据字数 } = 计算榜行列表(); // 数组：被排除的字
 assert.ok(
   榜.说明.includes(`${计数.size.toLocaleString('zh-CN')} 字中`),

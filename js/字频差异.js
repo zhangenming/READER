@@ -201,7 +201,7 @@ export function 渲染字频差异榜(分析) {
     `${行列表.length.toLocaleString('zh-CN')} 字入榜，知乎计 0 次或未收录的 ` +
     `${无现代数据字数.toLocaleString('zh-CN')} 字无数据、不入榜` +
     (未计入篇幅 ? `（占全书 ${未计入篇幅} 篇幅）` : '');
-  元素.字频差异偏多标题.textContent = `偏本书 ×${偏多.length}`;
-  元素.字频差异偏少标题.textContent = `偏知乎 ÷${偏少.length}`;
-  元素.字频差异最小标题.textContent = `差异最小 ${最小.length}`;
+  元素.字频差异偏多标题.textContent = '本书多';
+  元素.字频差异偏少标题.textContent = '本书少';
+  元素.字频差异最小标题.textContent = '差异最小';
 }
