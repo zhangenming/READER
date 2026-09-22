@@ -193,6 +193,10 @@ const 度量 = await 求值(`
     指针: (() => { const 拟 = getComputedStyle(q('#滚动进度'), '::before');
       return { 左边框: 拟.borderLeftWidth, 颜色: 拟.borderLeftColor, 高: 拟.height, 宽: 拟.width,
         内容: 拟.content }; })(),
+    数字朝向: getComputedStyle(q('#滚动百分比')).textOrientation,
+    数字墨迹: (() => { const e = q('#滚动百分比'); const b = e.getBoundingClientRect();
+      return { 宽: Math.round(b.width), 高: Math.round(b.height),
+        行数: Math.round(b.height / parseFloat(getComputedStyle(e).fontSize)) }; })(),
     阅读区域: 盒('.阅读区域'), 时间信息: 盒('.时间信息') };
 `);
 console.log(JSON.stringify(度量, null, 1));
@@ -206,13 +210,19 @@ assert.equal(轨道.w, 度量.滚动条宽度, '右侧轨道宽度不变');
 assert.equal(度量.关键词指示器.w, 度量.滚动条宽度, '关键词指示器占满右侧轨道，未减半');
 assert.equal(章节轨道.x, 0, '章节轨道应贴在页面左缘');
 assert.equal(章节轨道.w, 度量.章节刻度宽度 + 度量.百分比宽度, '章节轨道 = 刻度列 + 百分比列');
-assert.equal(章节刻度.w, 度量.章节刻度宽度, '章节刻度列为原轨道宽度的一半');
+assert.equal(章节刻度.w, 度量.章节刻度宽度, '章节刻度列宽');
 assert.equal(章节刻度.x + 章节刻度.w, 窄轨右, '章节刻度应靠正文一侧对齐');
 assert.equal(滚动进度.x, 0, '百分比应贴屏幕左缘');
 assert.equal(滚动进度.w, 度量.百分比宽度, '百分比列宽');
 assert.ok(
   滚动进度.x + 滚动进度.w <= 章节刻度.x,
   `百分比不许压在刻度列上：${JSON.stringify(度量)}`,
+);
+assert.match(度量.百分比文本, /^\d{1,3}%$/, `进度应显示为整数百分比：${度量.百分比文本}`);
+assert.equal(度量.数字朝向, 'upright', '数字要立着逐行堆叠，不是躺倒旋转');
+assert.ok(
+  度量.数字墨迹.宽 <= 度量.百分比宽度,
+  `竖排数字超出百分比列宽：${JSON.stringify(度量.数字墨迹)} vs ${度量.百分比宽度}px`,
 );
 assert.notEqual(度量.指针.内容, 'none', '进度指示器要有位置指针');
 assert.equal(度量.指针.左边框, `${度量.章节刻度宽度}px`, '指针尖端要顶到正文一侧');
@@ -221,6 +231,26 @@ assert.ok(
   Math.abs(滚动进度.y + 滚动进度.h / 2 - (度量.滚动块.y + 度量.滚动块.h / 2)) <= 1,
   `指针应与滚动块同轴：${JSON.stringify(度量)}`,
 );
+// 竖排读数比滚动块高，书首/书尾必须整体留在视口内，不能被裁掉半行
+for (const [说明, 顶] of [['书首', 0], ['书尾', 1e9]]) {
+  await 求值(`(await import('./js/状态.js')).元素.滚动容器.scrollTop = ${顶}; return 1;`);
+  await pause(400);
+  const 端点 = await 求值(`
+    const { 元素, 状态 } = await import('./js/状态.js');
+    const b = 元素.滚动百分比.getBoundingClientRect();
+    const p = 元素.滚动进度.getBoundingClientRect();
+    const t = 元素.滚动块.getBoundingClientRect();
+    return { 上: Math.round(b.top), 下: Math.round(b.bottom), 视口高: innerHeight,
+      文本: 元素.滚动百分比.textContent, 半高: 状态.百分比半高,
+      进度盒: [Math.round(p.top), Math.round(p.height)], 块: [Math.round(t.top), Math.round(t.height)],
+      轨道高: 元素.自定义滚动条.clientHeight, 变换: 元素.滚动进度.style.transform };
+  `);
+  console.log(`${说明}:`, JSON.stringify(端点));
+  assert.ok(
+    端点.上 >= -1 && 端点.下 <= 端点.视口高 + 1,
+    `${说明}进度读数被视口裁掉：${JSON.stringify(端点)}`,
+  );
+}
 const 拖动前 = await 求值(`return (await import('./js/状态.js')).元素.滚动容器.scrollTop;`);
 await 求值(`
   const e = document.querySelector('#滚动进度');

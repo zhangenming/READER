@@ -293,10 +293,10 @@ body.关键词手势中 .滚动容器 {
   will-change: transform;
 }
 
-/* 竖排：数字沿轨道方向读，横向只占左缘窄轨的一列，不再压住正文 */
+/* 竖排：数字立着逐行堆叠（不是躺倒旋转），只占左缘窄轨的一列，不再压住正文 */
 #滚动百分比 {
   writing-mode: vertical-rl;
-  text-orientation: mixed;
+  text-orientation: upright;
 }
 
 /* 位置指针：红色三角铺满刻度列、尖端指向正文，标出滚动块所在的精确高度 */
