@@ -99,7 +99,10 @@
   --正文左留白: 9px;
   /* 末次出现标记占一个 0.42em 字格；行尾按字号预留同宽空间。 */
   --末处标记留白比例: 0.42;
-  --滚动条宽度: 20px;
+  --滚动条宽度: 28px;
+  /* 轨道左列画刻度与滚动块（原 20px 的一半），右列留给收进来的百分比数字 */
+  --指示器宽度: 10px;
+  --百分比宽度: calc(var(--滚动条宽度) - var(--指示器宽度));
   /* 动画时长：JS（js/跳转动画.js）读取同一变量同步兜底计时器，改这里即两处同时生效 */
   --跳转迸发时长: 680ms;
   --衔接线播放时长: 1200ms;
@@ -193,7 +196,7 @@ body.关键词手势中 .滚动容器 {
   top: 0;
   left: 0;
   display: block;
-  width: 100%;
+  width: var(--指示器宽度);
   height: 100%;
   pointer-events: none;
 }
@@ -208,7 +211,7 @@ body.关键词手势中 .滚动容器 {
   top: 0;
   left: 0;
   display: block;
-  width: 100%;
+  width: var(--指示器宽度);
   height: 100%;
   pointer-events: none;
 }
@@ -222,15 +225,15 @@ body.关键词手势中 .滚动容器 {
   right: calc(var(--滚动条宽度) + 6px);
   left: auto;
   z-index: 6;
-  width: var(--滚动条宽度);
+  width: var(--指示器宽度);
 }
 
 .滚动块 {
   position: absolute;
   top: 0;
-  left: 4px;
+  left: 1px;
   z-index: 1;
-  width: calc(100% - 8px);
+  width: calc(var(--指示器宽度) - 2px);
   min-height: 32px;
   background: transparent;
   border: 0;
@@ -250,15 +253,13 @@ body.关键词手势中 .滚动容器 {
 .滚动进度 {
   position: fixed;
   top: 0;
-  right: calc(var(--滚动条宽度) + 4px);
+  right: 0;
   z-index: 6;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
-  width: 5ch;
+  display: grid;
+  place-items: center;
+  width: var(--百分比宽度);
   color: var(--强调色);
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   line-height: 1;
@@ -270,21 +271,10 @@ body.关键词手势中 .滚动容器 {
   will-change: transform;
 }
 
+/* 竖排：数字沿轨道方向读，横向只占轨道右列，不再压住正文 */
 #滚动百分比 {
-  position: relative;
-}
-
-#滚动百分比::after {
-  position: absolute;
-  top: 50%;
-  left: calc(100% + 3px);
-  width: 0;
-  height: 0;
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
-  border-left: 6px solid currentColor;
-  content: '';
-  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
 }
 
 .自定义滚动条:focus-visible ~ .滚动进度 #滚动百分比 {
@@ -612,10 +602,6 @@ body.关键词手势中 .滚动容器 {
 
 .滚动块.悬停关键词时隐藏 {
   visibility: hidden;
-}
-
-.滚动进度.悬停关键词时左移 {
-  right: calc(var(--滚动条宽度) + var(--滚动条宽度) + 15px);
 }
 
 .右下按钮组 {
