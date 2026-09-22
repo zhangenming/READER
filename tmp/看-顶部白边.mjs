@@ -1,4 +1,4 @@
-// 看页面顶部那条 1px 白边：量几何 + 截顶部条 + 用 PIL 逐列扫像素，确认整宽连续且只有 1px。
+// 看页面顶部/底部那两条 1px 白边：量几何 + 截边缘条 + 用 PIL 逐列扫像素，确认整宽连续且只有 1px。
 // 跑法：node tmp/看-顶部白边.mjs  [BOOK=谁动了我的奶酪.txt] [SIZE=1440,1000]
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:net';
@@ -152,31 +152,55 @@ const 度量 = await 求值(`
   return {
     视口: [innerWidth, innerHeight],
     上边框宽: 体.borderTopWidth, 上边框色: 体.borderTopColor, 上边框样式: 体.borderTopStyle,
+    下边框宽: 体.borderBottomWidth, 下边框色: 体.borderBottomColor, 下边框样式: 体.borderBottomStyle,
     body: 盒('body'), 阅读区域: 盒('.阅读区域'), 轨道: 盒('#自定义滚动条'), 章节轨道: 盒('#章节轨道'),
   };
 `);
 console.log(JSON.stringify(度量, null, 1));
-assert.equal(度量.上边框宽, '1px', 'body 上边框应为 1px');
-assert.equal(度量.上边框样式, 'solid', 'body 上边框应为实线');
-assert.equal(度量.上边框色, 'rgb(255, 255, 255)', 'body 上边框应为纯白');
+const 白 = 'rgb(255, 255, 255)';
+for (const [边, 宽, 色, 式] of [
+  ['上', 度量.上边框宽, 度量.上边框色, 度量.上边框样式],
+  ['下', 度量.下边框宽, 度量.下边框色, 度量.下边框样式],
+]) {
+  assert.equal(宽, '1px', `body ${边}边框应为 1px`);
+  assert.equal(式, 'solid', `body ${边}边框应为实线`);
+  assert.equal(色, 白, `body ${边}边框应为纯白`);
+}
 assert.equal(度量.body.y, 0, 'body 仍从视口顶端起');
-assert.equal(度量.阅读区域.y, 1, '阅读区内容应被这条边压下 1px');
+assert.equal(度量.阅读区域.y, 1, '阅读区内容应被上边压下 1px');
+assert.equal(度量.阅读区域.h, 度量.视口[1] - 2, '阅读区上下各让出 1px');
 assert.equal(度量.body.h, 度量.视口[1], 'body 仍占满整屏（border-box，不产生滚动）');
 assert.equal(度量.轨道.h, 度量.视口[1], '右侧轨道仍满高');
 assert.equal(度量.章节轨道.h, 度量.视口[1], '左侧轨道仍满高');
 
-const 截 = async (名字, x, 宽度, 高度, scale = 1) => {
+const 截 = async (名字, x, y, 宽度, 高度, scale = 1) => {
   const { data } = await 发送('Page.captureScreenshot', {
     format: 'png',
-    clip: { x, y: 0, width: 宽度, height: 高度, scale },
+    clip: { x, y, width: 宽度, height: 高度, scale },
     captureBeyondViewport: false,
   });
   const 路径 = resolve(import.meta.dirname, 名字);
   writeFileSync(路径, Buffer.from(data, 'base64'));
   return 路径;
 };
-const 顶部条 = await 截('顶部白边-条.png', 0, 度量.视口[0], 8, 8);
-const 整页 = await 截('顶部白边-整页.png', 0, 度量.视口[0], 度量.视口[1]);
-console.log('已写 tmp/顶部白边-条.png、顶部白边-整页.png');
-console.log(`python3 tmp/扫-顶部白边.py ${顶部条} ${整页}`);
+const 顶部条 = await 截('顶部白边-条.png', 0, 0, 度量.视口[0], 8, 8);
+const 底部条 = await 截(
+  '底部白边-条.png',
+  0,
+  度量.视口[1] - 8,
+  度量.视口[0],
+  8,
+  8,
+);
+const 整页 = await 截(
+  '顶部白边-整页.png',
+  0,
+  0,
+  度量.视口[0],
+  度量.视口[1],
+);
+console.log('已写 tmp/顶部白边-条.png、底部白边-条.png、顶部白边-整页.png');
+console.log(
+  `python3 tmp/扫-顶部白边.py ${顶部条} ${整页} ${底部条}`,
+);
 收尾();
