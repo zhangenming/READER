@@ -1,0 +1,13 @@
+import { readFile } from 'node:fs/promises';
+import { setImmediate } from 'node:timers/promises';
+globalThis.document = { baseURI: 'http://localhost/', querySelector: () => null };
+globalThis.scheduler = { yield: setImmediate };
+const { 创建章节索引 } = await import('../../js/章节索引.js');
+const { 规范化文本 } = await import('../../js/文本管线.js');
+const 有效 = () => true;
+const 原文 = await readFile(process.argv[2], 'utf8');
+const 文本 = await 规范化文本(原文, 有效);
+const 章节 = await 创建章节索引(文本, 有效);
+const 列表 = 章节.章节列表 ?? 章节;
+console.log('规范化后长度', 文本.length, '章节数', 列表.length);
+for (const c of 列表) console.log(`  [${c.类型}] ${c.标题}  @${c.偏移}`);
