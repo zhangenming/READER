@@ -101,8 +101,8 @@
   --末处标记留白比例: 0.42;
   --滚动条宽度: 20px;
   /* 页面左缘另起一条窄轨：只放章节刻度与阅读进度百分比，关键词指示器仍留在右侧轨道 */
-  --章节刻度宽度: 10px;
-  --百分比宽度: 18px;
+  --章节刻度宽度: 8px;
+  --百分比宽度: 16px;
   --章节轨道宽度: calc(var(--章节刻度宽度) + var(--百分比宽度));
   /* 动画时长：JS（js/跳转动画.js）读取同一变量同步兜底计时器，改这里即两处同时生效 */
   --跳转迸发时长: 680ms;
@@ -128,6 +128,7 @@ body {
   margin: 0;
   overflow: hidden;
   background: var(--背景色);
+  border-top: 1px solid #fff;
 }
 
 /* 自动滚动进行中：隐藏鼠标光标，避免干扰阅读；
@@ -296,6 +297,20 @@ body.关键词手势中 .滚动容器 {
 #滚动百分比 {
   writing-mode: vertical-rl;
   text-orientation: mixed;
+}
+
+/* 位置指针：红色三角铺满刻度列、尖端指向正文，标出滚动块所在的精确高度 */
+.滚动进度::before {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: var(--章节刻度宽度) solid var(--强调色);
+  content: '';
+  transform: translateY(-50%);
 }
 
 .自定义滚动条:focus-visible ~ .滚动进度 #滚动百分比 {

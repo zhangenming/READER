@@ -2,7 +2,6 @@ import {
   指示器刻度高度,
   指示器基础透明度,
   章节刻度颜色,
-  章节刻度宽度比例,
 } from './常量.js';
 import { 元素, 状态, 查找关键词 } from './状态.js';
 import { 渲染关键词面板 } from './面板.js';
@@ -169,7 +168,6 @@ function 创建章节刻度底图(画布宽, 画布高, 像素比, 视口度量)
   }
   const 画布比例 = 画布高 / 轨道高度;
   const 刻度高度 = Math.max(1, Math.round(指示器刻度高度 * 像素比));
-  const 刻度宽度 = Math.max(1, Math.round(画布宽 * 章节刻度宽度比例));
   底图上下文.fillStyle = 章节刻度颜色;
   底图上下文.globalAlpha = 指示器基础透明度;
   for (const 章节 of 状态.章节列表) {
@@ -183,7 +181,7 @@ function 创建章节刻度底图(画布宽, 画布高, 像素比, 视口度量)
       0,
       Math.min(画布高 - 刻度高度, Math.round(中心 - 刻度高度 / 2)),
     );
-    底图上下文.fillRect(画布宽 - 刻度宽度, 起点, 刻度宽度, 刻度高度);
+    底图上下文.fillRect(0, 起点, 画布宽, 刻度高度);
   }
   底图上下文.globalAlpha = 1;
   return 底图;

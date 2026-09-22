@@ -190,6 +190,9 @@ const 度量 = await 求值(`
     关键词指示器: 盒('#关键词指示器'), 悬停: 盒('#悬停关键词指示器'), 滚动块: 盒('#滚动块'),
     滚动进度: 盒('#滚动进度'), 百分比文本: q('#滚动百分比')?.textContent,
     竖排: getComputedStyle(q('#滚动百分比')).writingMode,
+    指针: (() => { const 拟 = getComputedStyle(q('#滚动进度'), '::before');
+      return { 左边框: 拟.borderLeftWidth, 颜色: 拟.borderLeftColor, 高: 拟.height, 宽: 拟.width,
+        内容: 拟.content }; })(),
     阅读区域: 盒('.阅读区域'), 时间信息: 盒('.时间信息') };
 `);
 console.log(JSON.stringify(度量, null, 1));
@@ -210,6 +213,13 @@ assert.equal(滚动进度.w, 度量.百分比宽度, '百分比列宽');
 assert.ok(
   滚动进度.x + 滚动进度.w <= 章节刻度.x,
   `百分比不许压在刻度列上：${JSON.stringify(度量)}`,
+);
+assert.notEqual(度量.指针.内容, 'none', '进度指示器要有位置指针');
+assert.equal(度量.指针.左边框, `${度量.章节刻度宽度}px`, '指针尖端要顶到正文一侧');
+assert.equal(度量.指针.颜色, 'rgb(199, 78, 47)', '指针用强调色（朱砂红）');
+assert.ok(
+  Math.abs(滚动进度.y + 滚动进度.h / 2 - (度量.滚动块.y + 度量.滚动块.h / 2)) <= 1,
+  `指针应与滚动块同轴：${JSON.stringify(度量)}`,
 );
 const 拖动前 = await 求值(`return (await import('./js/状态.js')).元素.滚动容器.scrollTop;`);
 await 求值(`
