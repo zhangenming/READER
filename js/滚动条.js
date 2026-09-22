@@ -195,6 +195,7 @@ export function 轨道中心转滚动位置(轨道位置, 度量) {
 export function 更新滚动块位置(度量 = null, 滚动位置 = null) {
   const 轨道 = 元素.自定义滚动条;
   轨道.hidden = false;
+  元素.章节轨道.hidden = false;
   元素.滚动进度.hidden = false;
   const 轨道高度 = 度量?.轨道高度 ?? 轨道.clientHeight;
   const 容器高度 = 度量?.容器高度 ?? 元素.滚动容器.clientHeight;
@@ -205,6 +206,7 @@ export function 更新滚动块位置(度量 = null, 滚动位置 = null) {
   更新章节进度(当前滚动位置, 最大滚动位置);
   if (轨道高度 <= 0 || 最大滚动位置 <= 0) {
     轨道.hidden = true;
+    元素.章节轨道.hidden = true;
     元素.滚动进度.hidden = true;
     return null;
   }

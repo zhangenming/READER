@@ -180,9 +180,13 @@ const 度量 = await 求值(`
   const 盒 = (s) => { const e = q(s); if (!e) return null; const b = e.getBoundingClientRect();
     return { x: Math.round(b.x), y: Math.round(b.y), w: Math.round(b.width), h: Math.round(b.height),
       hidden: e.hidden, display: getComputedStyle(e).display }; };
+  const 变量 = (名) =>
+    parseInt(getComputedStyle(document.documentElement).getPropertyValue(名), 10);
   return { 章节数: 状态.章节列表.length, 关键词数: 状态.关键词列表.length,
-    指示器宽度: parseInt(getComputedStyle(document.documentElement).getPropertyValue('--指示器宽度'), 10),
-    视口: [innerWidth, innerHeight], 轨道: 盒('#自定义滚动条'), 章节刻度: 盒('#章节刻度'),
+    滚动条宽度: 变量('--滚动条宽度'), 章节刻度宽度: 变量('--章节刻度宽度'),
+    百分比宽度: 变量('--百分比宽度'), 章节轨道宽度: 变量('--章节轨道宽度'),
+    视口: [innerWidth, innerHeight], 轨道: 盒('#自定义滚动条'), 章节轨道: 盒('#章节轨道'),
+    章节刻度: 盒('#章节刻度'),
     关键词指示器: 盒('#关键词指示器'), 悬停: 盒('#悬停关键词指示器'), 滚动块: 盒('#滚动块'),
     滚动进度: 盒('#滚动进度'), 百分比文本: q('#滚动百分比')?.textContent,
     竖排: getComputedStyle(q('#滚动百分比')).writingMode,
@@ -190,24 +194,23 @@ const 度量 = await 求值(`
 `);
 console.log(JSON.stringify(度量, null, 1));
 
-// —— 交互与边界：轨道贴在页面左缘；百分比盒子整列落在轨道内、不压指示列；正文不越界 ——
+// —— 边界：右侧关键词轨道保持原样；章节刻度与进度数字搬到左缘窄轨，两边都不许压正文 ——
 const assert = await import('node:assert/strict');
-const 轨道右 = 度量.轨道.x + 度量.轨道.w;
-const 指示列左 = 轨道右 - 度量.指示器宽度;
-assert.equal(度量.轨道.x, 0, '轨道应贴在页面左缘');
-assert.equal(度量.滚动进度.x, 0, '百分比应贴屏幕左缘');
-assert.equal(度量.滚动进度.w, 度量.轨道.w - 度量.指示器宽度, '百分比列 = 轨道宽 - 指示列宽');
+const { 轨道, 章节轨道, 章节刻度, 滚动进度 } = 度量;
+const 窄轨右 = 章节轨道.x + 章节轨道.w;
+assert.equal(轨道.x + 轨道.w, 度量.视口[0], '关键词轨道仍贴在页面右缘');
+assert.equal(轨道.w, 度量.滚动条宽度, '右侧轨道宽度不变');
+assert.equal(度量.关键词指示器.w, 度量.滚动条宽度, '关键词指示器占满右侧轨道，未减半');
+assert.equal(章节轨道.x, 0, '章节轨道应贴在页面左缘');
+assert.equal(章节轨道.w, 度量.章节刻度宽度 + 度量.百分比宽度, '章节轨道 = 刻度列 + 百分比列');
+assert.equal(章节刻度.w, 度量.章节刻度宽度, '章节刻度列为原轨道宽度的一半');
+assert.equal(章节刻度.x + 章节刻度.w, 窄轨右, '章节刻度应靠正文一侧对齐');
+assert.equal(滚动进度.x, 0, '百分比应贴屏幕左缘');
+assert.equal(滚动进度.w, 度量.百分比宽度, '百分比列宽');
 assert.ok(
-  度量.滚动进度.x + 度量.滚动进度.w <= 指示列左,
-  `百分比不许压在指示列上：${JSON.stringify(度量)}`,
+  滚动进度.x + 滚动进度.w <= 章节刻度.x,
+  `百分比不许压在刻度列上：${JSON.stringify(度量)}`,
 );
-assert.ok(
-  度量.章节刻度.w <= 度量.指示器宽度 && 度量.关键词指示器.w <= 度量.指示器宽度,
-  '章节刻度与关键词指示器应各占指示列宽',
-);
-if (!度量.章节刻度.hidden) {
-  assert.equal(度量.章节刻度.x + 度量.章节刻度.w, 轨道右, '指示列应贴着正文一侧');
-}
 const 拖动前 = await 求值(`return (await import('./js/状态.js')).元素.滚动容器.scrollTop;`);
 await 求值(`
   const e = document.querySelector('#滚动进度');
@@ -233,36 +236,36 @@ const 悬停 = await 求值(`
   const b = 元素.悬停关键词指示器.getBoundingClientRect();
   return { hidden: 元素.悬停关键词指示器.hidden, x: Math.round(b.x), w: Math.round(b.width) };
 `);
-console.log('悬停列:', JSON.stringify(悬停), '轨道 x:', 度量.轨道.x);
+console.log('悬停列:', JSON.stringify(悬停), '右侧轨道 x:', 轨道.x);
 if (!悬停.hidden) {
-  assert.ok(悬停.x >= 轨道右, '悬停列应排在轨道右侧、不压轨道');
-  assert.equal(悬停.w, 度量.指示器宽度, '悬停列应与指示列同宽');
+  assert.ok(悬停.x + 悬停.w <= 轨道.x, '悬停列应排在右侧轨道左边、不压轨道');
+  assert.equal(悬停.w, 度量.滚动条宽度, '悬停列应与右侧轨道同宽');
 }
-const 正文左缘 = await 求值(`
+const 正文边缘 = await 求值(`
   const 行 = [...document.querySelectorAll('.正文行')].pop();
-  return Math.round(行.getBoundingClientRect().left);
+  const b = 行.getBoundingClientRect();
+  return { 左: Math.round(b.left), 右: Math.round(b.right) };
 `);
 assert.ok(
-  正文左缘 >= 轨道右 - 1,
-  `正文不该伸进轨道：正文左缘 ${正文左缘} vs 轨道右缘 ${轨道右}`,
+  正文边缘.左 >= 窄轨右 - 1,
+  `正文左缘不该伸进章节轨道：${正文边缘.左} vs ${窄轨右}`,
+);
+assert.ok(
+  正文边缘.右 <= 轨道.x + 1,
+  `正文右缘不该伸进关键词轨道：${正文边缘.右} vs ${轨道.x}`,
 );
 console.log('交互与边界检查通过');
-const { data: 放大 } = await 发送('Page.captureScreenshot', {
-  format: 'png',
-  clip: { x: 0, y: 0, width: 度量.轨道.w + 24, height: 度量.视口[1], scale: 4 },
-});
-writeFileSync(resolve(import.meta.dirname, '轨道-放大.png'), Buffer.from(放大, 'base64'));
-const { data: 悬停图 } = await 发送('Page.captureScreenshot', {
-  format: 'png',
-  clip: { x: 0, y: 0, width: 度量.轨道.w + 54, height: 度量.视口[1], scale: 4 },
-});
-writeFileSync(resolve(import.meta.dirname, '轨道-悬停.png'), Buffer.from(悬停图, 'base64'));
-const { data } = await 发送('Page.captureScreenshot', {
-  format: 'png',
-  clip: { x: 0, y: 0, width: 260, height: 度量.视口[1], scale: 1 },
-});
-writeFileSync(resolve(import.meta.dirname, '轨道-左缘.png'), Buffer.from(data, 'base64'));
-const { data: 全 } = await 发送('Page.captureScreenshot', { format: 'png' });
-writeFileSync(resolve(import.meta.dirname, '轨道-整页.png'), Buffer.from(全, 'base64'));
-console.log('已写 tmp/轨道-左缘.png 与 tmp/轨道-整页.png');
+const 截 = async (名字, x, 宽度, scale = 4) => {
+  const { data } = await 发送('Page.captureScreenshot', {
+    format: 'png',
+    clip: { x, y: 0, width: 宽度, height: 度量.视口[1], scale },
+  });
+  writeFileSync(resolve(import.meta.dirname, 名字), Buffer.from(data, 'base64'));
+};
+await 截('章节轨道-放大.png', 0, 章节轨道.w + 24);
+await 截('轨道-悬停.png', 轨道.x - 34, 34 + 轨道.w + 20);
+await 截('轨道-左缘.png', 0, 260, 1);
+await 截('轨道-右缘.png', 度量.视口[0] - 260, 260, 1);
+await 截('轨道-整页.png', 0, 度量.视口[0], 1);
+console.log('已写 tmp/章节轨道-放大.png、轨道-悬停.png、轨道-左缘/右缘/整页.png');
 收尾();

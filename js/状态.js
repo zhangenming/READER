@@ -194,6 +194,7 @@ export const 元素 = {
   后续词组列表: document.querySelector('#后续词组列表'),
   关闭查找按钮: document.querySelector('#关闭查找按钮'),
   自定义滚动条: document.querySelector('#自定义滚动条'),
+  章节轨道: document.querySelector('#章节轨道'),
   章节刻度: document.querySelector('#章节刻度'),
   滚动块: document.querySelector('#滚动块'),
   滚动进度: document.querySelector('#滚动进度'),
