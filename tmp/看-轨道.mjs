@@ -189,6 +189,7 @@ const 度量 = await 求值(`
     章节刻度: 盒('#章节刻度'),
     关键词指示器: 盒('#关键词指示器'), 悬停: 盒('#悬停关键词指示器'), 滚动块: 盒('#滚动块'),
     滚动进度: 盒('#滚动进度'), 百分比文本: q('#滚动百分比')?.textContent,
+    读数提示: q('#滚动块')?.getAttribute('title') ?? q('#滚动进度')?.getAttribute('title'),
     竖排: getComputedStyle(q('#滚动百分比')).writingMode,
     指针: (() => { const 拟 = getComputedStyle(q('#滚动进度'), '::before');
       return { 左边框: 拟.borderLeftWidth, 颜色: 拟.borderLeftColor, 高: 拟.height, 宽: 拟.width,
@@ -218,7 +219,12 @@ assert.ok(
   滚动进度.x + 滚动进度.w <= 章节刻度.x,
   `百分比不许压在刻度列上：${JSON.stringify(度量)}`,
 );
-assert.match(度量.百分比文本, /^\d{1,3}%$/, `进度应显示为整数百分比：${度量.百分比文本}`);
+assert.match(度量.百分比文本, /^\d{1,3}$/, `窄轨读数只留数字、不带百分号：${度量.百分比文本}`);
+assert.match(
+  度量.读数提示,
+  /^阅读进度 \d{1,3}%$/,
+  `单位要靠悬停提示与 aria 说明：${度量.读数提示}`,
+);
 assert.equal(度量.数字朝向, 'upright', '数字要立着逐行堆叠，不是躺倒旋转');
 assert.ok(
   度量.数字墨迹.宽 <= 度量.百分比宽度,
