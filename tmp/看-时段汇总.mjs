@@ -56,7 +56,13 @@ const 数据 = {
       [秒(10, 20), 秒(10, 24, 45)],
       [秒(10, 30), 秒(10, 33)],
     ],
-    [[秒(10, 22), 秒(10, 22, 1)]],  ],
+    [[秒(10, 22), 秒(10, 22, 1)]],
+  ],
+  // 压力行：段数取存储上限 240，时长取格式化输出的最长一档（24 小时 0 分）
+  '2026-09-19': [
+    Array.from({ length: 240 }, (_, i) => [i * 360, i * 360 + 360]),
+    Array.from({ length: 240 }, (_, i) => [i * 360, i * 360 + 360]),
+  ],
 };
 // 与 js/阅读统计.js 的 格式化时段时长 同口径
 function 时长(总输入) {
@@ -70,7 +76,7 @@ function 时长(总输入) {
 }
 const 期望 = Object.entries(数据).map(
   ([, [滚动, 激活]]) =>
-    `${滚动.length} 段 · ${时长(滚动.reduce((n, [起, 止]) => n + 止 - 起, 0))}` +
+    `${滚动.length} 段·${时长(滚动.reduce((n, [起, 止]) => n + 止 - 起, 0))}` +
     `（${时长(激活.reduce((n, [起, 止]) => n + 止 - 起, 0))}）`,
 );
 
@@ -229,22 +235,27 @@ const 结果 = await 求值(`
     表头: [...表.querySelectorAll('thead th')].map((t) => t.textContent.trim()),
     行: [...表.querySelectorAll('tbody tr')].map((r) => {
       const 格 = r.querySelector('.统计时段汇总');
-      const 括号 = 格.querySelector('.统计时段次要');
-      const 行高 = parseFloat(getComputedStyle(格).lineHeight);
-      const 轨 = r.querySelector('.统计时段轨道');
-      const 文本度量 = document.createRange();
-      文本度量.selectNodeContents(格);
+      const 槽 = (类名) => {
+        const e = 格.querySelector('.' + 类名);
+        const b = e.getBoundingClientRect();
+        return {
+          文本: e.textContent,
+          左: Math.round(b.left),
+          右: Math.round(b.right),
+          挤爆: e.scrollWidth > e.clientWidth + 1,
+        };
+      };
+      const 日期盒 = r.querySelector('.统计时段日期').getBoundingClientRect();
+      const 轨 = r.querySelector('.统计时段轨道').getBoundingClientRect();
       return {
         日期: r.querySelector('.统计时段日期').textContent,
         文本: 格.textContent,
-        子节点数: 格.children.length,
-        括号类: 括号 ? 括号.className : null,
-        格宽: Math.round(格.getBoundingClientRect().width),
-        文本宽: Math.round(文本度量.getBoundingClientRect().width),
-        滚动宽: Math.round(轨.getBoundingClientRect().width),
-        表宽: Math.round(document.querySelector('.统计时段表').width),
-        格高: Math.round(格.getBoundingClientRect().height),
-        行高: Math.round(行高),
+        日期格宽: Math.round(日期盒.width),
+        左空隙: Math.round(轨.left - 日期盒.right),
+        滚动宽: Math.round(轨.width),
+        段: 槽('统计时段读数段'),
+        主: 槽('统计时段读数主'),
+        次: 槽('统计时段读数次'),
         溢出: 格.scrollWidth > 格.clientWidth + 1,
       };
     }),
@@ -253,29 +264,62 @@ const 结果 = await 求值(`
 `);
 console.log(JSON.stringify(结果, null, 1));
 
-assert.equal(结果.行.length, 4, '4 天数据 4 行');
+assert.equal(结果.行.length, 5, '5 天数据 5 行');
 assert.equal(结果.说明节点数, 0, '顶部口径说明段与摘要卡片都已去掉');
 assert.match(结果.弹窗首块, /^书籍明细/, '书籍明细表成为弹窗第一块');
 assert.equal(结果.弹窗宽, 1040, '弹窗加宽到 1040px');
-assert.ok(
-  结果.行[0].滚动宽 > 550,
-  `加宽后轨道应明显变宽：${结果.行[0].滚动宽}px`,
-);
 assert.equal(结果.表头[0], '日期');
 assert.equal(结果.表头[2], '滚动 · 激活', '列头仍标明两个数各是什么');
+
 let 下标 = 0;
 for (const 行 of 结果.行) {
   assert.doesNotMatch(行.文本, /滚动|激活/, `读数里不再出现「滚动/激活」：${行.文本}`);
-  assert.equal(行.子节点数, 1, `每条读数只占一行：${行.文本}`);
-  assert.match(行.文本, /^\d+ 段 · .+（.+）$/, `「N 段 · 时长（时长）」：${行.文本}`);
-  assert.equal(行.括号类, '统计时段次要', '括号里的激活时长是次要墨色');
+  assert.match(行.文本, /^\d+ 段·.+（.+）$/, `「N 段·时长（时长）」：${行.文本}`);
   assert.equal(行.文本, 期望[下标++], '数字与注入的段一致');
-  assert.ok(
-    !行.溢出 && 行.文本宽 <= 行.格宽 + 1,
-    `一行读数放不下（文本 ${行.文本宽}px / 列宽 ${行.格宽}px，溢出 ${行.溢出}）：${行.文本}`,
-  );
+  for (const 名 of ['段', '主', '次']) {
+    assert.ok(!行[名].挤爆, `${名}槽装不下 ${行[名].文本}：${行.日期}`);
+  }
+  assert.ok(!行.溢出, `汇总列横向溢出：${行.文本}`);
 }
-console.log('汇总行文案与单行检查通过');
+
+// —— 1. 右侧读数上下对齐：三枚槽的左右边界必须逐行重合 ——
+const 首行 = 结果.行[0];
+for (const 名 of ['段', '主', '次']) {
+  for (const 行 of 结果.行) {
+    assert.equal(
+      行[名].左,
+      首行[名].左,
+      `「${名}」槽左缘没对齐：${行.日期} ${行[名].文本} @${行[名].左} vs ${首行.日期} @${首行[名].左}`,
+    );
+    assert.equal(
+      行[名].右,
+      首行[名].右,
+      `「${名}」槽右缘没对齐：${行.日期} vs ${首行.日期}`,
+    );
+  }
+}
+assert.ok(
+  首行.次.右 - 首行.段.左 > 240,
+  `三枚槽总宽异常：${首行.段.左} → ${首行.次.右}`,
+);
+console.log('右侧读数逐行对齐', {
+  段: [首行.段.左, 首行.段.右],
+  主: [首行.主.左, 首行.主.右],
+  次: [首行.次.左, 首行.次.右],
+});
+
+// —— 2. 左侧空档：日期列收拢后，日期与轨道之间只该剩单元格内边距 ——
+for (const 行 of 结果.行) {
+  assert.ok(行.日期格宽 < 100, `日期列还是太宽：${行.日期格宽}px`);
+  assert.ok(行.左空隙 <= 20, `日期与轨道之间空档 ${行.左空隙}px（${行.日期}）`);
+  assert.ok(行.滚动宽 > 600, `轨道没拿到腾出来的宽度：${行.滚动宽}px`);
+}
+console.log('左侧空档', {
+  日期格宽: 首行.日期格宽,
+  左空隙: 首行.左空隙,
+  轨道宽: 首行.滚动宽,
+});
+console.log('汇总行文案与对齐检查通过');
 
 // 窄屏（媒体查询把汇总列改回可换行）：不许横向溢出，宁可换行
 async function 量窄屏(宽度) {

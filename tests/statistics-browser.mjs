@@ -221,7 +221,7 @@ try {
     false,
   );
   console.log(
-    'PASS statistics dialog: live entry, opaque theme, paired cards, text-only names, progress, responsive layout and Escape',
+    'PASS statistics dialog: live entry, opaque theme, no summary cards, text-only names, progress, responsive layout and Escape',
   );
 } finally {
   await send('Emulation.clearDeviceMetricsOverride');
