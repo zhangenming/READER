@@ -7,6 +7,7 @@ import {
   查找历史条数上限,
   搭配长按毫秒,
   搭配长按移动死区,
+  回车搭配符,
 } from './常量.js';
 import { 是汉字 } from './文本工具.js';
 import { 让出主线程, 按需让出主线程 } from './调度.js';
@@ -174,7 +175,8 @@ export function 处理上下文行点击(事件) {
 // —— 搭配分析的词组提取（纯函数，供本模块与 tmp/verify-collocations.mjs 共享）——
 // 从全文的 文本偏移 处（关键词起点），向后取「关键词 + 紧随其后的邻接词」。
 // 邻接标点不做特殊处理：按自身归类，只取紧贴关键词的那一个字符；
-// 空白/换行属于排版而非内容，跳过。汉字则取整个词，由 邻接字 归组。
+// 空格属于排版，跳过；换行是内容边界，归到 回车搭配符 自身，不跨行取下一行的字。
+// 汉字则取整个词，由 邻接字 归组。
 
 export function 提取后续词组自文本(全文, 文本偏移, 前缀长度) {
   const 上下文 = 全文.slice(文本偏移, 文本偏移 + 前缀长度 + 词组上下文窗口);
@@ -191,7 +193,11 @@ export function 提取后续词组自文本(全文, 文本偏移, 前缀长度) 
       break;
     }
     if (!片段.segment.trim()) {
-      continue; // 空白/换行跳过，取下一个可见片段
+      if (是回车片段(片段.segment)) {
+        词部分 = 回车搭配符; // 行尾命中：归「回车」，不去取下一行首字
+        break;
+      }
+      continue; // 空格跳过，取下一个可见片段
     }
     词部分 = 片段.isWordLike
       ? 片段.segment
@@ -211,12 +217,20 @@ export function 提取前置词组自文本(全文, 文本偏移) {
       continue;
     }
     if (!片段.segment.trim()) {
-      continue; // 空白/换行跳过，向前找上一个可见片段
+      if (是回车片段(片段.segment)) {
+        return 回车搭配符; // 行首命中：归「回车」，不去取上一行末字
+      }
+      continue; // 空格跳过，向前找上一个可见片段
     }
     // 标点组：只取紧贴关键词的那一个字符
     return 片段.isWordLike ? 片段.segment : 邻接字(片段.segment, false);
   }
   return '';
+}
+
+// 空白片段里只要夹着换行就是行边界（\n、\r\n、行尾空格后的换行都算）
+function 是回车片段(片段文本) {
+  return /[\n\r]/.test(片段文本);
 }
 
 // 取词组紧邻关键词一侧的汉字：后续接续取首字、前置词组取尾字。
@@ -763,7 +777,7 @@ export function 处理搭配点击(事件) {
   }
   const 行 = 事件.target?.closest?.('.分析行');
   const 词组 = 行?.dataset.词组;
-  if (!词组 || !分析结果视图?.关键词) return;
+  if (!词组 || !分析结果视图?.关键词 || 词组 === 回车搭配符) return;
   应用搭配查询(行.dataset.方向, 词组, false);
 }
 
@@ -774,7 +788,7 @@ export function 处理搭配按下(事件) {
   }
   const 行 = 事件.target?.closest?.('.分析行');
   const 词组 = 行?.dataset.词组;
-  if (!词组) {
+  if (!词组 || 词组 === 回车搭配符) {
     return;
   }
   const 方向 = 行.dataset.方向;
@@ -871,9 +885,14 @@ function 追加分析结果行() {
       行.dataset.词组 = 统计项.词组;
       行.dataset.方向 = 区间.方向;
       行.dataset.统计idx = String(idx);
+      // 回车组是行边界，输入框里既打不进换行也打不出 ⏎，只能悬停不能查找
+      const 仅悬停 = 统计项.词组 === 回车搭配符;
+      if (仅悬停) 行.classList.add('仅悬停');
       const 完整词组 = 完整搭配词组(区间.方向, 统计项.词组);
-      行.title = `单击查找 ${统计项.词组} · 长按查找 ${完整词组}`;
-      行.setAttribute('aria-label', `查找 ${完整词组}`);
+      行.title = 仅悬停
+        ? '换行 · 悬停查看每一处上下文'
+        : `单击查找 ${统计项.词组} · 长按查找 ${完整词组}`;
+      行.setAttribute('aria-label', 仅悬停 ? '回车' : `查找 ${完整词组}`);
       const 词组单元格 = document.createElement('span');
       const 数量单元格 = document.createElement('span');
       词组单元格.textContent = 统计项.词组;
