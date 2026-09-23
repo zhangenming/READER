@@ -382,8 +382,10 @@ body.关键词手势中 .滚动容器 {
   bottom: 10px;
   z-index: 5;
   display: grid;
-  grid-template-columns: max-content max-content;
-  gap: 6px 7px;
+  /* label 与数字各占一列，两对读数并排成 4 列。列间距不靠统一 gap，
+     改由各自 padding 控制：label 贴自己的数字，两对之间才留白。 */
+  grid-template-columns: repeat(4, max-content);
+  gap: 6px 0;
   pointer-events: none;
 }
 
@@ -395,14 +397,41 @@ body.关键词手势中 .滚动容器 {
   display: none;
 }
 
-.累计滚动时间 {
+/* 行内顺序即列序：label、数字、label、数字。
+   某一行 hidden 时，另一行仍钉在同一批列上，两行的 label 列与数字列各自竖着对齐。 */
+.时间信息行 > :nth-child(1) {
+  grid-column: 1;
+}
+.时间信息行 > :nth-child(2) {
   grid-column: 2;
+}
+.时间信息行 > :nth-child(3) {
+  grid-column: 3;
+  padding-left: 12px;
+}
+.时间信息行 > :nth-child(4) {
+  grid-column: 4;
+}
+
+.时间标签 {
+  padding-right: 4px;
+  color: rgb(255 255 255 / 62%);
+  font-family: 'Avenir Next', 'PingFang SC', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.累计滚动时间 {
   color: #fff;
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-size: 11px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   line-height: 1;
+  text-align: right;
   white-space: nowrap;
 }
 .阅读统计弹窗 {
@@ -648,7 +677,6 @@ body.关键词手势中 .滚动容器 {
 }
 
 .剩余滚动时间 {
-  grid-column: 1;
   color: #fff;
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-size: 11px;
@@ -661,7 +689,6 @@ body.关键词手势中 .滚动容器 {
 
 /* 自动滚动已持续时长：显示在剩余时长上方一行 */
 .已滚动时间 {
-  grid-column: 1;
   color: #fff;
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-size: 11px;
@@ -686,7 +713,9 @@ body.关键词手势中 .滚动容器 {
 
 .右下按钮组 {
   position: fixed;
-  right: calc(var(--滚动条宽度) + 128px);
+  /* 让位给右下角读数：那四枚数字各带 label 后整块变宽（约 120px），
+     按钮组再往左挪，否则第二行「总和」会压到「统计」按钮上。 */
+  right: calc(var(--滚动条宽度) + 152px);
   bottom: 10px;
   z-index: 5;
   display: grid;
@@ -741,7 +770,8 @@ body.关键词手势中 .滚动容器 {
 }
 
 .当前时间 {
-  grid-column: 1;
+  /* 横跨整块，右缘与「剩余」那枚数字对齐 */
+  grid-column: 1 / -1;
   justify-self: end;
   color: #fff;
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
