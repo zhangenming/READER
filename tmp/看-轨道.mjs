@@ -199,7 +199,7 @@ const 度量 = await 求值(`
         横线宽: 横线.width, 横线高: 横线.height, 横线色: 横线.backgroundColor }; })(),
     指针: (() => { const 三角 = getComputedStyle(q('#滚动进度'), '::after');
       const 横线 = getComputedStyle(q('#滚动进度'), '::before');
-      return { 右边框: 三角.borderRightWidth, 颜色: 三角.borderRightColor, 内容: 三角.content,
+      return { 左边框: 三角.borderLeftWidth, 颜色: 三角.borderLeftColor, 内容: 三角.content,
         横线宽: 横线.width, 横线高: 横线.height, 横线色: 横线.backgroundColor,
         横线内容: 横线.content }; })(),
     数字朝向: getComputedStyle(q('#滚动百分比')).textOrientation,
@@ -249,7 +249,7 @@ assert.ok(
   `竖排数字超出百分比列宽：${JSON.stringify(度量.数字墨迹)} vs ${度量.百分比宽度}px`,
 );
 assert.notEqual(度量.指针.内容, 'none', '进度指示器要有三角指针');
-assert.equal(度量.指针.右边框, `${度量.章节刻度宽度}px`, '左缘三角朝章节刻度（左）指、尖端顶住屏幕左缘');
+assert.equal(度量.指针.左边框, `${度量.章节刻度宽度}px`, '左缘三角朝正文（右）指，与右侧那枚互为镜像');
 assert.equal(度量.指针.颜色, 'rgb(199, 78, 47)', '三角用强调色（朱砂红）');
 assert.notEqual(度量.指针.横线内容, 'none', '三角之外还要有一条横线');
 assert.equal(度量.指针.横线宽, `${度量.百分比宽度}px`, '横线要贯穿数字列，与三角接成一条轴');

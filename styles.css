@@ -308,8 +308,8 @@ body.关键词手势中 .滚动容器 {
   line-height: 0.9;
 }
 
-/* 位置指针：一条 1px 横线贯穿数字列、压在数字下方，左端再接一枚铺满章节刻度列的
-   朱砂红三角，尖端顶住屏幕左缘。横线负责「轴在哪一行」，三角负责「指向章节刻度」。 */
+/* 位置指针：一条 1px 横线贯穿数字列、压在数字下方，右端再接一枚朱砂红三角朝正文（右）指，
+   与右侧轨道那枚朝左的三角互为镜像。横线负责「轴在哪一行」，三角负责「指向正文」。 */
 .滚动进度::before {
   position: absolute;
   top: 50%;
@@ -324,13 +324,13 @@ body.关键词手势中 .滚动容器 {
 .滚动进度::after {
   position: absolute;
   top: 50%;
-  left: auto;
-  right: 100%;
+  left: 100%;
+  right: auto;
   width: 0;
   height: 0;
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
-  border-right: var(--章节刻度宽度) solid var(--强调色);
+  border-left: var(--章节刻度宽度) solid var(--强调色);
   content: '';
   transform: translateY(-50%);
 }
@@ -406,7 +406,7 @@ body.关键词手势中 .滚动容器 {
   white-space: nowrap;
 }
 .阅读统计弹窗 {
-  width: min(720px, calc(100vw - 32px));
+  width: min(860px, calc(100vw - 32px));
   max-height: 80vh;
   overflow: auto;
   overscroll-behavior: contain;
@@ -421,11 +421,6 @@ body.关键词手势中 .滚动容器 {
 }
 .阅读统计弹窗::backdrop {
   background: rgb(0 0 0 / 55%);
-}
-.统计说明 {
-  margin: 8px 0 16px;
-  color: var(--次要墨色);
-  font-size: 12px;
 }
 .统计摘要 {
   display: grid;
