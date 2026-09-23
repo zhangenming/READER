@@ -191,9 +191,11 @@ const 度量 = await 求值(`
     滚动进度: 盒('#滚动进度'), 百分比文本: q('#滚动百分比')?.textContent,
     读数提示: q('#滚动块')?.getAttribute('title') ?? q('#滚动进度')?.getAttribute('title'),
     竖排: getComputedStyle(q('#滚动百分比')).writingMode,
-    指针: (() => { const 拟 = getComputedStyle(q('#滚动进度'), '::before');
-      return { 左边框: 拟.borderLeftWidth, 颜色: 拟.borderLeftColor, 高: 拟.height, 宽: 拟.width,
-        内容: 拟.content }; })(),
+    指针: (() => { const 三角 = getComputedStyle(q('#滚动进度'), '::after');
+      const 横线 = getComputedStyle(q('#滚动进度'), '::before');
+      return { 左边框: 三角.borderLeftWidth, 颜色: 三角.borderLeftColor, 内容: 三角.content,
+        横线宽: 横线.width, 横线高: 横线.height, 横线色: 横线.backgroundColor,
+        横线内容: 横线.content }; })(),
     数字朝向: getComputedStyle(q('#滚动百分比')).textOrientation,
     数字墨迹: (() => { const e = q('#滚动百分比'); const b = e.getBoundingClientRect();
       return { 宽: Math.round(b.width), 高: Math.round(b.height),
@@ -230,9 +232,13 @@ assert.ok(
   度量.数字墨迹.宽 <= 度量.百分比宽度,
   `竖排数字超出百分比列宽：${JSON.stringify(度量.数字墨迹)} vs ${度量.百分比宽度}px`,
 );
-assert.notEqual(度量.指针.内容, 'none', '进度指示器要有位置指针');
-assert.equal(度量.指针.左边框, `${度量.章节刻度宽度}px`, '指针尖端要顶到正文一侧');
-assert.equal(度量.指针.颜色, 'rgb(199, 78, 47)', '指针用强调色（朱砂红）');
+assert.notEqual(度量.指针.内容, 'none', '进度指示器要有三角指针');
+assert.equal(度量.指针.左边框, `${度量.章节刻度宽度}px`, '三角尖端要顶到正文一侧');
+assert.equal(度量.指针.颜色, 'rgb(199, 78, 47)', '三角用强调色（朱砂红）');
+assert.notEqual(度量.指针.横线内容, 'none', '三角之外还要有一条横线');
+assert.equal(度量.指针.横线宽, `${度量.百分比宽度}px`, '横线要贯穿数字列，与三角接成一条轴');
+assert.equal(度量.指针.横线高, '1px', '横线只 1px，不抢数字');
+assert.equal(度量.指针.横线色, 'rgb(199, 78, 47)', '横线与三角同用强调色');
 assert.ok(
   Math.abs(滚动进度.y + 滚动进度.h / 2 - (度量.滚动块.y + 度量.滚动块.h / 2)) <= 1,
   `指针应与滚动块同轴：${JSON.stringify(度量)}`,

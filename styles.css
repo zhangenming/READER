@@ -302,8 +302,20 @@ body.关键词手势中 .滚动容器 {
   line-height: 0.9;
 }
 
-/* 位置指针：红色三角铺满刻度列、尖端指向正文，标出滚动块所在的精确高度 */
+/* 位置指针：一条 1px 横线贯穿整条窄轨、压在数字下方，右端再接一枚铺满刻度列的
+   朱砂红三角，尖端顶到正文。横线负责「轴在哪一行」，三角负责「指向刻度」。 */
 .滚动进度::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--强调色);
+  content: '';
+  transform: translateY(-50%);
+}
+
+.滚动进度::after {
   position: absolute;
   top: 50%;
   left: 100%;
