@@ -174,14 +174,20 @@ async function 求值(代码) {
     );
   return 结果.result.value;
 }
-for (let i = 0; i < 600; i++) {
-  const 就绪 = await 求值(`
+let 页面就绪 = false;
+for (let i = 0; i < 600 && !页面就绪; i++) {
+  // 标签页可能停在 about:blank（服务还没起来时导航失败），自己把它拉回站点
+  页面就绪 = await 求值(`
+    if (!location.href.startsWith(${JSON.stringify(地址)})) {
+      location.href = ${JSON.stringify(地址)};
+      return false;
+    }
     return !!document.querySelector('#阅读统计按钮') &&
       (document.querySelector('#载入状态')?.hidden ?? true);
   `);
-  if (就绪) break;
-  await pause(200);
+  if (!页面就绪) await pause(200);
 }
+if (!页面就绪) throw new Error('页面始终没载入 ' + 地址);
 // app.js 静态 import 了 阅读统计.js；轮询到模块可解析再动手，避免早于 app 启动时抓到半载的模块图
 const 模块地址 = 地址 + 'js/' + encodeURIComponent('阅读统计') + '.js';
 let 模块就绪 = false;
@@ -216,6 +222,9 @@ const 结果 = await 求值(`
   document.querySelector('#阅读统计弹窗').showModal();
   const 表 = document.querySelector('.统计时段表');
   return {
+    说明节点数: document.querySelectorAll('.统计说明').length,
+    摘要提示: document.querySelector('.统计摘要')?.title ?? '',
+    弹窗首块: document.querySelector('#阅读统计内容').firstElementChild?.className,
     表头: [...表.querySelectorAll('thead th')].map((t) => t.textContent.trim()),
     行: [...表.querySelectorAll('tbody tr')].map((r) => {
       const 格 = r.querySelector('.统计时段汇总');
@@ -244,6 +253,14 @@ const 结果 = await 求值(`
 console.log(JSON.stringify(结果, null, 1));
 
 assert.equal(结果.行.length, 4, '4 天数据 4 行');
+assert.equal(结果.说明节点数, 0, '顶部口径说明段已去掉');
+assert.equal(结果.弹窗首块, '统计摘要', '摘要卡片成为弹窗第一块');
+assert.match(结果.摘要提示, /^自动滚动与前台停留分别计时/, '口径说明改挂在摘要卡片的悬停提示上');
+assert.equal(结果.弹窗宽, 860, '弹窗加宽到 860px');
+assert.ok(
+  结果.行[0].滚动宽 > 400,
+  `加宽后轨道应比 720px 时更宽：${结果.行[0].滚动宽}px`,
+);
 assert.equal(结果.表头[0], '日期');
 assert.equal(结果.表头[2], '滚动 · 激活', '列头仍标明两个数各是什么');
 let 下标 = 0;
@@ -298,13 +315,22 @@ const 盒 = await 求值(`
   const b = document.querySelector('.统计时段').getBoundingClientRect();
   return { x: Math.round(b.x) - 6, y: Math.round(b.y) - 6, w: Math.round(b.width) + 12, h: Math.round(b.height) + 12 };
 `);
-const { data } = await 发送('Page.captureScreenshot', {
-  format: 'png',
-  clip: { x: 盒.x, y: 盒.y, width: 盒.w, height: 盒.h, scale: 2 },
-});
-writeFileSync(
-  resolve(import.meta.dirname, '时段汇总-一行.png'),
-  Buffer.from(data, 'base64'),
-);
-console.log('已写 tmp/时段汇总-一行.png');
+const 写图 = async (名字, 盒, scale = 2) => {
+  const { data } = await 发送('Page.captureScreenshot', {
+    format: 'png',
+    clip: { x: 盒.x, y: 盒.y, width: 盒.w, height: 盒.h, scale },
+  });
+  writeFileSync(
+    resolve(import.meta.dirname, 名字),
+    Buffer.from(data, 'base64'),
+  );
+};
+await 写图('时段汇总-一行.png', 盒);
+// 整个弹窗：确认顶部口径说明段已经不占版面
+const 弹窗盒 = await 求值(`
+  const b = document.querySelector('.阅读统计弹窗').getBoundingClientRect();
+  return { x: Math.round(b.x) - 4, y: Math.round(b.y) - 4, w: Math.round(b.width) + 8, h: Math.round(b.height) + 8 };
+`);
+await 写图('统计弹窗-加宽.png', 弹窗盒, 1);
+console.log('已写 tmp/时段汇总-一行.png、tmp/统计弹窗-加宽.png');
 收尾();
