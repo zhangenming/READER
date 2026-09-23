@@ -191,6 +191,11 @@ const 度量 = await 求值(`
     滚动进度: 盒('#滚动进度'), 百分比文本: q('#滚动百分比')?.textContent,
     读数提示: q('#滚动块')?.getAttribute('title') ?? q('#滚动进度')?.getAttribute('title'),
     竖排: getComputedStyle(q('#滚动百分比')).writingMode,
+    进度指针: 盒('#进度指针'),
+    右指针: (() => { const 三角 = getComputedStyle(q('#进度指针'), '::after');
+      const 横线 = getComputedStyle(q('#进度指针'), '::before');
+      return { 右边框: 三角.borderRightWidth, 颜色: 三角.borderRightColor, 内容: 三角.content,
+        横线宽: 横线.width, 横线高: 横线.height, 横线色: 横线.backgroundColor }; })(),
     指针: (() => { const 三角 = getComputedStyle(q('#滚动进度'), '::after');
       const 横线 = getComputedStyle(q('#滚动进度'), '::before');
       return { 左边框: 三角.borderLeftWidth, 颜色: 三角.borderLeftColor, 内容: 三角.content,
@@ -239,6 +244,17 @@ assert.notEqual(度量.指针.横线内容, 'none', '三角之外还要有一条
 assert.equal(度量.指针.横线宽, `${度量.百分比宽度}px`, '横线要贯穿数字列，与三角接成一条轴');
 assert.equal(度量.指针.横线高, '1px', '横线只 1px，不抢数字');
 assert.equal(度量.指针.横线色, 'rgb(199, 78, 47)', '横线与三角同用强调色');
+const 右指针 = 度量.右指针;
+assert.notEqual(右指针.内容, 'none', '右侧轨道也要有指针');
+assert.equal(度量.进度指针.x, 轨道.x, '右侧指针应铺在关键词轨道上');
+assert.equal(度量.进度指针.w, 度量.滚动条宽度, '右侧横线贯穿整条轨道');
+assert.equal(右指针.横线高, '1px', '右侧横线同样只 1px');
+assert.equal(右指针.右边框, `${度量.章节刻度宽度}px`, '右侧三角朝正文（左）指，与左缘相反');
+assert.equal(右指针.颜色, 'rgb(199, 78, 47)', '右侧三角用强调色');
+assert.ok(
+  Math.abs(度量.进度指针.y + 0.5 - (滚动进度.y + 滚动进度.h / 2)) <= 1,
+  `左右两枚指针必须同轴：${JSON.stringify(度量.进度指针)} vs ${JSON.stringify(滚动进度)}`,
+);
 assert.ok(
   Math.abs(滚动进度.y + 滚动进度.h / 2 - (度量.滚动块.y + 度量.滚动块.h / 2)) <= 1,
   `指针应与滚动块同轴：${JSON.stringify(度量)}`,
@@ -254,6 +270,7 @@ for (const [说明, 顶] of [['书首', 0], ['书尾', 1e9]]) {
     const t = 元素.滚动块.getBoundingClientRect();
     return { 上: Math.round(b.top), 下: Math.round(b.bottom), 视口高: innerHeight,
       文本: 元素.滚动百分比.textContent, 半高: 状态.百分比半高,
+      左轴: Math.round(b.top + b.height / 2), 右轴: Math.round(元素.进度指针.getBoundingClientRect().top),
       进度盒: [Math.round(p.top), Math.round(p.height)], 块: [Math.round(t.top), Math.round(t.height)],
       轨道高: 元素.自定义滚动条.clientHeight, 变换: 元素.滚动进度.style.transform };
   `);
@@ -261,6 +278,10 @@ for (const [说明, 顶] of [['书首', 0], ['书尾', 1e9]]) {
   assert.ok(
     端点.上 >= -1 && 端点.下 <= 端点.视口高 + 1,
     `${说明}进度读数被视口裁掉：${JSON.stringify(端点)}`,
+  );
+  assert.ok(
+    Math.abs(端点.左轴 - 端点.右轴) <= 1,
+    `${说明}夹取之后左右指针仍须同轴：${JSON.stringify(端点)}`,
   );
 }
 const 拖动前 = await 求值(`return (await import('./js/状态.js')).元素.滚动容器.scrollTop;`);

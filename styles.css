@@ -328,6 +328,42 @@ body.关键词手势中 .滚动容器 {
   transform: translateY(-50%);
 }
 
+/* 右侧轨道上的镜像指针：与左缘读数由 JS 钉在同一根轴上。
+   容器高 0，top 即轴线；横线贯穿轨道，三角朝正文（左）指，与左缘那枚背向。 */
+.进度指针 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.进度指针::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--强调色);
+  content: '';
+}
+
+.进度指针::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-right: var(--章节刻度宽度) solid var(--强调色);
+  content: '';
+  transform: translateY(calc(-50% + 0.5px));
+}
+
 .自定义滚动条:focus-visible ~ .滚动进度 #滚动百分比 {
   outline: 2px solid var(--选中色);
   outline-offset: 2px;

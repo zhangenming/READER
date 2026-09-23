@@ -199,6 +199,7 @@ export const 元素 = {
   章节轨道: document.querySelector('#章节轨道'),
   章节刻度: document.querySelector('#章节刻度'),
   滚动块: document.querySelector('#滚动块'),
+  进度指针: document.querySelector('#进度指针'),
   滚动进度: document.querySelector('#滚动进度'),
   滚动百分比: document.querySelector('#滚动百分比'),
   剩余滚动时间行: document.querySelector('#剩余滚动时间行'),

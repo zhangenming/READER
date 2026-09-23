@@ -226,12 +226,13 @@ export function 更新滚动块位置(度量 = null, 滚动位置 = null) {
 }
 
 /* 读数盒子按自身内容定高，整枚（含指针）夹在轨道高度内：
-   竖排数字比滚动块高，书首书尾不夹就会被视口裁掉。夹取时指针最多偏离滚动块中心半枚读数。 */
+   竖排数字比滚动块高，书首书尾不夹就会被视口裁掉。夹取时指针最多偏离滚动块中心半枚读数。
+   右侧轨道里那枚镜像指针共用同一根轴，两枚指针永远同高、只是朝向相反。 */
 function 放置读数(读数中心, 轨道高度) {
   const 半高 = 状态.百分比半高;
-  元素.滚动进度.style.transform = `translateY(${
-    Math.min(轨道高度 - 半高, Math.max(半高, 读数中心)) - 半高
-  }px)`;
+  const 夹后中心 = Math.min(轨道高度 - 半高, Math.max(半高, 读数中心));
+  元素.滚动进度.style.transform = `translateY(${夹后中心 - 半高}px)`;
+  元素.进度指针.style.transform = `translateY(${夹后中心}px)`;
 }
 
 export function 更新滚动块文本({
