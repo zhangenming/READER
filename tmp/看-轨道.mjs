@@ -184,6 +184,7 @@ const 度量 = await 求值(`
     parseInt(getComputedStyle(document.documentElement).getPropertyValue(名), 10);
   return { 章节数: 状态.章节列表.length, 关键词数: 状态.关键词列表.length,
     滚动条宽度: 变量('--滚动条宽度'), 章节刻度宽度: 变量('--章节刻度宽度'),
+    关键词宽度: 变量('--关键词宽度'),
     百分比宽度: 变量('--百分比宽度'), 章节轨道宽度: 变量('--章节轨道宽度'),
     视口: [innerWidth, innerHeight], 轨道: 盒('#自定义滚动条'), 章节轨道: 盒('#章节轨道'),
     章节刻度: 盒('#章节刻度'),
@@ -209,22 +210,28 @@ const 度量 = await 求值(`
 `);
 console.log(JSON.stringify(度量, null, 1));
 
-// —— 边界：右侧关键词轨道保持原样；章节刻度与进度数字搬到左缘窄轨，两边都不许压正文 ——
+// —— 边界：左缘三列（章节 / 选中关键词 / 临时关键词）+ 进度数字；右侧只剩轨道与指针 ——
 const assert = await import('node:assert/strict');
-const { 轨道, 章节轨道, 章节刻度, 滚动进度 } = 度量;
+const { 轨道, 章节轨道, 章节刻度, 滚动进度, 关键词指示器 } = 度量;
 const 窄轨右 = 章节轨道.x + 章节轨道.w;
-assert.equal(轨道.x + 轨道.w, 度量.视口[0], '关键词轨道仍贴在页面右缘');
+assert.equal(轨道.x + 轨道.w, 度量.视口[0], '右侧轨道仍贴在页面右缘');
 assert.equal(轨道.w, 度量.滚动条宽度, '右侧轨道宽度不变');
-assert.equal(度量.关键词指示器.w, 度量.滚动条宽度, '关键词指示器占满右侧轨道，未减半');
-assert.equal(章节轨道.x, 0, '章节轨道应贴在页面左缘');
-assert.equal(章节轨道.w, 度量.章节刻度宽度 + 度量.百分比宽度, '章节轨道 = 刻度列 + 百分比列');
-assert.equal(章节刻度.w, 度量.章节刻度宽度, '章节刻度列宽');
-assert.equal(章节刻度.x + 章节刻度.w, 窄轨右, '章节刻度应靠正文一侧对齐');
-assert.equal(滚动进度.x, 0, '百分比应贴屏幕左缘');
-assert.equal(滚动进度.w, 度量.百分比宽度, '百分比列宽');
+assert.equal(章节轨道.x, 0, '左缘竖列应贴在页面左缘');
+assert.equal(
+  章节轨道.w,
+  度量.百分比宽度 + 度量.章节刻度宽度 + 度量.关键词宽度,
+  '左缘 = 数字列 + 章节列 + 关键词列',
+);
+assert.equal(滚动进度.x, 0, '第一格：进度数字贴屏幕左缘');
+assert.equal(滚动进度.w, 度量.百分比宽度, '数字列宽');
+assert.equal(章节刻度.w, 度量.章节刻度宽度, '第二格：章节刻度列宽');
+assert.equal(章节刻度.x, 度量.百分比宽度, '章节刻度紧跟数字列');
+assert.equal(关键词指示器.w, 度量.关键词宽度, '第三格：选中关键词列宽');
+assert.equal(关键词指示器.x, 章节刻度.x + 章节刻度.w, '选中关键词紧跟章节刻度');
+assert.equal(关键词指示器.x + 关键词指示器.w, 窄轨右, '选中关键词排在最右、贴正文');
 assert.ok(
   滚动进度.x + 滚动进度.w <= 章节刻度.x,
-  `百分比不许压在刻度列上：${JSON.stringify(度量)}`,
+  `数字不许压在章节列上：${JSON.stringify(度量)}`,
 );
 assert.match(度量.百分比文本, /^\d{1,3}$/, `窄轨读数只留数字、不带百分号：${度量.百分比文本}`);
 assert.match(
@@ -309,10 +316,10 @@ const 悬停 = await 求值(`
   const b = 元素.悬停关键词指示器.getBoundingClientRect();
   return { hidden: 元素.悬停关键词指示器.hidden, x: Math.round(b.x), w: Math.round(b.width) };
 `);
-console.log('悬停列:', JSON.stringify(悬停), '右侧轨道 x:', 轨道.x);
+console.log('临时关键词列:', JSON.stringify(悬停), '左缘竖列右端 x:', 窄轨右);
 if (!悬停.hidden) {
-  assert.ok(悬停.x + 悬停.w <= 轨道.x, '悬停列应排在右侧轨道左边、不压轨道');
-  assert.equal(悬停.w, 度量.滚动条宽度, '悬停列应与右侧轨道同宽');
+  assert.ok(悬停.x >= 窄轨右, '临时关键词列应排在选中列右侧');
+  assert.equal(悬停.w, 度量.关键词宽度, '临时列与选中关键词列同宽');
 }
 const 正文边缘 = await 求值(`
   const 行 = [...document.querySelectorAll('.正文行')].pop();
@@ -335,10 +342,10 @@ const 截 = async (名字, x, 宽度, scale = 4) => {
   });
   writeFileSync(resolve(import.meta.dirname, 名字), Buffer.from(data, 'base64'));
 };
-await 截('章节轨道-放大.png', 0, 章节轨道.w + 24);
-await 截('轨道-悬停.png', 轨道.x - 34, 34 + 轨道.w + 20);
+await 截('章节轨道-放大.png', 0, 窄轨右 + 度量.关键词宽度 + 12);
+await 截('轨道-右指针.png', 轨道.x - 24, 24 + 轨道.w);
 await 截('轨道-左缘.png', 0, 260, 1);
 await 截('轨道-右缘.png', 度量.视口[0] - 260, 260, 1);
 await 截('轨道-整页.png', 0, 度量.视口[0], 1);
-console.log('已写 tmp/章节轨道-放大.png、轨道-悬停.png、轨道-左缘/右缘/整页.png');
+console.log('已写 tmp/章节轨道-放大.png、轨道-右指针.png、轨道-左缘/右缘/整页.png');
 收尾();
