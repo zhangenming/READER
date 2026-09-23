@@ -214,7 +214,7 @@ const 结果 = await 求值(`
   const 内容 = document.querySelector('#阅读统计内容');
   内容.textContent = '';
   内容.append(创建阅读统计内容({
-    今日: 0, 今日前台: 0, 每日前台: {},
+    每日前台: {},
     书籍: [['x.txt', { 总滚动毫秒: 0, 总前台毫秒: 0 }]],
     文件名: 'x.txt', 进度: 0, 每日: {}, 每日时段, 每日激活时段,
     今天: '2026-09-23',
@@ -222,9 +222,10 @@ const 结果 = await 求值(`
   document.querySelector('#阅读统计弹窗').showModal();
   const 表 = document.querySelector('.统计时段表');
   return {
-    说明节点数: document.querySelectorAll('.统计说明').length,
-    摘要提示: document.querySelector('.统计摘要')?.title ?? '',
-    弹窗首块: document.querySelector('#阅读统计内容').firstElementChild?.className,
+    说明节点数: document.querySelectorAll('.统计说明, .统计摘要, .统计卡片').length,
+    弹窗首块:
+      document.querySelector('#阅读统计内容').firstElementChild?.querySelector('caption')
+        ?.textContent ?? '',
     表头: [...表.querySelectorAll('thead th')].map((t) => t.textContent.trim()),
     行: [...表.querySelectorAll('tbody tr')].map((r) => {
       const 格 = r.querySelector('.统计时段汇总');
@@ -253,13 +254,12 @@ const 结果 = await 求值(`
 console.log(JSON.stringify(结果, null, 1));
 
 assert.equal(结果.行.length, 4, '4 天数据 4 行');
-assert.equal(结果.说明节点数, 0, '顶部口径说明段已去掉');
-assert.equal(结果.弹窗首块, '统计摘要', '摘要卡片成为弹窗第一块');
-assert.match(结果.摘要提示, /^自动滚动与前台停留分别计时/, '口径说明改挂在摘要卡片的悬停提示上');
-assert.equal(结果.弹窗宽, 860, '弹窗加宽到 860px');
+assert.equal(结果.说明节点数, 0, '顶部口径说明段与摘要卡片都已去掉');
+assert.match(结果.弹窗首块, /^书籍明细/, '书籍明细表成为弹窗第一块');
+assert.equal(结果.弹窗宽, 1040, '弹窗加宽到 1040px');
 assert.ok(
-  结果.行[0].滚动宽 > 400,
-  `加宽后轨道应比 720px 时更宽：${结果.行[0].滚动宽}px`,
+  结果.行[0].滚动宽 > 550,
+  `加宽后轨道应明显变宽：${结果.行[0].滚动宽}px`,
 );
 assert.equal(结果.表头[0], '日期');
 assert.equal(结果.表头[2], '滚动 · 激活', '列头仍标明两个数各是什么');

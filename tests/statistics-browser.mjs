@@ -85,8 +85,16 @@ try {
     await evaluate('return document.querySelector("#阅读统计弹窗").open'),
   );
   assert.equal(
-    await evaluate('return document.querySelectorAll(".统计卡片").length'),
-    5,
+    await evaluate(
+      'return document.querySelectorAll(".统计卡片, .统计摘要, .统计说明").length',
+    ),
+    0,
+  );
+  assert.ok(
+    await evaluate(
+      'return document.querySelector("#阅读统计内容").firstElementChild.querySelector("caption").textContent.startsWith("书籍明细")',
+    ),
+    '书籍明细表是弹窗第一块',
   );
   assert.ok(await evaluate('return !!document.querySelector(".统计每日表")'));
   // 深色正文不能污染弹窗主题。
@@ -122,9 +130,11 @@ try {
       'return document.querySelector("#阅读统计内容").textContent.includes("约 50.0%")',
     ),
   );
-  assert.equal(
-    await evaluate('return document.querySelector(".统计卡片 dd").textContent'),
-    '不足 1 分钟',
+  assert.ok(
+    await evaluate(
+      'return document.querySelector(".统计每日").textContent.includes("不足 1 分钟")',
+    ),
+    '45 秒的每日记录仍报「不足 1 分钟」',
   );
   assert.ok(
     await evaluate(
@@ -179,10 +189,13 @@ try {
       ),
       `no overflow at ${width}px: ${JSON.stringify(await evaluate('const d = document.querySelector("#阅读统计弹窗"); const r = d.getBoundingClientRect(); const t = document.querySelector(".统计每日表"); return {left:r.left,right:r.right,width:innerWidth,scroll:d.scrollWidth,client:d.clientWidth,caption:t?.caption?.textContent,tableScroll:t?.scrollWidth,th:t?[...t.querySelectorAll("th")].map(h=>h.clientWidth):null};'))}`,
     );
-    const columns = await evaluate(
-      'return getComputedStyle(document.querySelector(".统计摘要")).gridTemplateColumns.split(" ").length',
+    const 弹窗宽 = await evaluate(
+      'return Math.round(document.querySelector("#阅读统计弹窗").getBoundingClientRect().width)',
     );
-    assert.equal(columns, width === 885 ? 3 : 1);
+    assert.ok(
+      Math.abs(弹窗宽 - (width - 32)) <= 2,
+      `${width}px 视口下弹窗宽 ${弹窗宽}px，应贴着视口只留 32px`,
+    );
     if (process.env.SCREENSHOT_DIR) {
       const { data } = await send('Page.captureScreenshot', { format: 'png' });
       await writeFile(
