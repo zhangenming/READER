@@ -521,6 +521,11 @@ body.关键词手势中 .滚动容器 {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* 汇总列是一整行「N 段 · 滚动时长（激活时长）」，固定列宽会把它挤到溢出：
+   这张表按内容分配宽度，汇总列拿到自身宽度，轨道列吃掉剩下的 */
+.阅读统计内容 .统计时段表 {
+  table-layout: auto;
+}
 .阅读统计内容 .统计时段表 th:first-child,
 .阅读统计内容 .统计时段表 td:first-child {
   width: 16%;
