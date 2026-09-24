@@ -324,7 +324,9 @@ export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
             }
             字元素.classList.add('引文内容');
             字元素.classList.add(
-              (引文idx / 2) % 2 === 0 ? '引文底色一' : '引文底色二',
+              状态.引文底色奇偶列表[引文idx / 2] === 1
+                ? '引文底色二'
+                : '引文底色一',
             );
             字元素.classList.toggle('引文承接上行', 引文跨行状态.承接上行);
             字元素.classList.toggle('引文延续下行', 引文跨行状态.延续下行);

@@ -61,6 +61,7 @@ export const 高亮配色 = [{ 浅色: 默认高亮浅色, 深色: 默认关键�
  * @property {?Uint8Array} 行阶梯索引 每行阶梯缩进层级；未启用阶梯段落为 null
  * @property {?Object} 阶梯断点 阶梯段落断点（起点列表 + 层级列表）；未启用为 null
  * @property {Uint32Array} 引文边界列表 成对引号/书名号边界偏移列表
+ * @property {Uint8Array} 引文底色奇偶列表 每个引文片段的底色奇偶（0=一，1=二）；被插入语切开的同段对话奇偶相同
  * @property {Set} 缩进起点集合 段落缩进起点偏移集合（spk 对话行等）
  * @property {string} 换行键 当前行索引的横向排版参数签名（不含行高）
  * @property {string} 排版键 当前完整排版参数签名（换行键 + 行高）
@@ -123,6 +124,7 @@ export const 状态 = {
   行阶梯索引: null,
   阶梯断点: null,
   引文边界列表: new Uint32Array(),
+  引文底色奇偶列表: new Uint8Array(),
   缩进起点集合: new Set(),
   换行键: '',
   排版键: '',
