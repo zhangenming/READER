@@ -1116,7 +1116,7 @@ body.右下面板展开 .关键词面板开关 {
   outline-offset: 1px;
 }
 
-/* 左侧不绘制边线，避免正文边缘出现无内容的 1px 白线。 */
+/* 左右都不画边线：正文边缘那条 1px 竖线只是压在纸边上，没有信息量。 */
 .虚拟画布 {
   position: relative;
   width: 100%;
@@ -1124,7 +1124,6 @@ body.右下面板展开 .关键词面板开关 {
   margin: 0 auto;
   overflow: hidden;
   background: var(--纸张色);
-  border-right: 1px solid var(--边线色);
   box-shadow: 0 16px 44px rgb(32 37 34 / 8%);
 }
 
@@ -3312,7 +3311,6 @@ dialog,
 
   .虚拟画布 {
     width: 100%;
-    border: 0;
     box-shadow: none;
   }
 
