@@ -6,8 +6,8 @@ import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
-const 目标文本 = '阿里传.txt';
-const 锚点 = '让我想不到的是';
+const 目标文本 = process.env.BOOK || '阿里传.txt';
+const 锚点 = process.env.ANCHOR || '让我想不到的是';
 
 async function 取空闲端口(首选) {
   const 试 = async (端口) => {
