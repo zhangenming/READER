@@ -215,6 +215,13 @@ try {
         };
       });
     };
+    const 内容右缘 = (节点) => {
+      const 框 = 节点.getBoundingClientRect();
+      const 样式 = getComputedStyle(节点);
+      return Math.round(
+        框.right - parseFloat(样式.paddingRight) - parseFloat(样式.borderRightWidth),
+      );
+    };
     return {
       窗口,
       行数: 表.querySelectorAll('.统计时段轨道').length,
@@ -225,7 +232,15 @@ try {
       首尾: [...表.querySelectorAll('.统计时段端点')].map((节点) => 节点.textContent),
       汇总: 行们.map((行) => [
         行.querySelector('.统计时段日期')?.title ?? '',
-        [...(行.querySelector('.统计时段汇总')?.children ?? [])].map((项) => 项.textContent),
+        [...(行.querySelector('.统计时段滚动格')?.children ?? [])].map((项) => 项.textContent),
+        行.querySelector('.统计时段激活格')?.textContent ?? '',
+      ]),
+      表头: [...表.querySelectorAll('thead th')].map((节点) => 节点.textContent.trim()),
+      // 「滚动」「激活」两枚表头要各自压在自己那列读数上（内容区右边缘同轴）
+      表头右缘: [...表.querySelectorAll('thead th')].map((节点) => 内容右缘(节点)),
+      读数右缘: 行们.map((行) => [
+        内容右缘(行.querySelector('.统计时段读数主')),
+        内容右缘(行.querySelector('.统计时段激活格')),
       ]),
       图例: [...document.querySelectorAll('.统计时段图例项')].map((项) => 项.textContent),
       轴标题: 表.querySelector('caption').textContent,
@@ -271,18 +286,31 @@ try {
     渲染.注入[0].左 < 渲染.注入[1].左 && 渲染.注入[0].右 > 渲染.注入[1].右,
     `滚动段应被激活带覆盖：${JSON.stringify(渲染.注入)}`,
   );
-  const 今日行 = 渲染.汇总.find(([日期]) => 日期 === '2026-09-18')?.[1];
+  const 今日行 = 渲染.汇总.find(([日期]) => 日期 === '2026-09-18');
   assert.deepEqual(
     今日行,
-    ['1 段·10 分 0 秒（33 分 20 秒）'],
-    `一行里给出段数、滚动合计与括号内的激活合计：${JSON.stringify(今日行)}`,
+    ['2026-09-18', ['1 段·10 分 0 秒'], '33 分 20 秒'],
+    `滚动列给段数与滚动合计，激活列单列给激活合计（不再套括号）：${JSON.stringify(今日行)}`,
   );
   assert.ok(渲染.今日.some((块) => 块.激活), '今天的真实激活段也画出来了');
   assert.ok(渲染.今日.some((块) => !块.激活), '今天的真实滚动段也画出来了');
   assert.match(
     渲染.汇总.find(([日期]) => 日期 === '2026-09-17')?.[1][0] ?? '',
-    /^2 段·\d+ 分 \d+ 秒（/,
+    /^2 段·\d+ 分 \d+ 秒$/,
   );
+  // 表头两列各自对齐自家读数的右边缘，且每一行都对齐
+  assert.deepEqual(
+    渲染.表头.slice(-2),
+    ['滚动', '激活'],
+    `滚动/激活各占一列表头：${JSON.stringify(渲染.表头)}`,
+  );
+  const [滚动表头右缘, 激活表头右缘] = 渲染.表头右缘.slice(-2);
+  for (const [滚动右缘, 激活右缘] of 渲染.读数右缘) {
+    assert.ok(
+      Math.abs(滚动右缘 - 滚动表头右缘) <= 1 && Math.abs(激活右缘 - 激活表头右缘) <= 1,
+      `表头与读数同轴：滚动 ${滚动表头右缘}/${滚动右缘}，激活 ${激活表头右缘}/${激活右缘}`,
+    );
+  }
 
   // 4) 窄屏不横向溢出
   for (const 宽度 of [885, 375]) {

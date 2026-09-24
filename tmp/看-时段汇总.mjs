@@ -1,4 +1,4 @@
-// 看一眼「页面激活与滚动」汇总表：一行一条，段数+滚动时长在前，激活时长进括号。
+// 看一眼「页面激活与滚动」汇总表：一行一条，滚动列给「N 段·滚动时长」，激活时长自成一列。
 // 跑法：node tmp/看-时段汇总.mjs
 import { createServer } from 'node:net';
 import { mkdtempSync, writeFileSync } from 'node:fs';
@@ -75,9 +75,10 @@ function 时长(总输入) {
   return `${秒数} 秒`;
 }
 const 期望 = Object.entries(数据).map(
-  ([, [滚动, 激活]]) =>
-    `${滚动.length} 段·${时长(滚动.reduce((n, [起, 止]) => n + 止 - 起, 0))}` +
-    `（${时长(激活.reduce((n, [起, 止]) => n + 止 - 起, 0))}）`,
+  ([, [滚动, 激活]]) => [
+    `${滚动.length} 段·${时长(滚动.reduce((n, [起, 止]) => n + 止 - 起, 0))}`,
+    时长(激活.reduce((n, [起, 止]) => n + 止 - 起, 0)),
+  ],
 );
 
 async function 取空闲端口(首选) {
@@ -227,36 +228,45 @@ const 结果 = await 求值(`
   }));
   document.querySelector('#阅读统计弹窗').showModal();
   const 表 = document.querySelector('.统计时段表');
+  const 内容右缘 = (节点) => {
+    const 框 = 节点.getBoundingClientRect();
+    const 样式 = getComputedStyle(节点);
+    return Math.round(
+      框.right - parseFloat(样式.paddingRight) - parseFloat(样式.borderRightWidth),
+    );
+  };
+  const 槽 = (节点) => {
+    const 框 = 节点.getBoundingClientRect();
+    return {
+      文本: 节点.textContent,
+      左: Math.round(框.left),
+      右: Math.round(框.right),
+      内容右: 内容右缘(节点),
+      挤爆: 节点.scrollWidth > 节点.clientWidth + 1,
+    };
+  };
+  const 表头格 = [...表.querySelectorAll('thead th')];
   return {
     说明节点数: document.querySelectorAll('.统计说明, .统计摘要, .统计卡片').length,
     弹窗首块:
       document.querySelector('#阅读统计内容').firstElementChild?.querySelector('caption')
         ?.textContent ?? '',
-    表头: [...表.querySelectorAll('thead th')].map((t) => t.textContent.trim()),
+    表头: 表头格.map((t) => t.textContent.trim()),
+    表头右缘: [内容右缘(表头格[2]), 内容右缘(表头格[3])],
     行: [...表.querySelectorAll('tbody tr')].map((r) => {
-      const 格 = r.querySelector('.统计时段汇总');
-      const 槽 = (类名) => {
-        const e = 格.querySelector('.' + 类名);
-        const b = e.getBoundingClientRect();
-        return {
-          文本: e.textContent,
-          左: Math.round(b.left),
-          右: Math.round(b.right),
-          挤爆: e.scrollWidth > e.clientWidth + 1,
-        };
-      };
+      const 滚动格 = r.querySelector('.统计时段滚动格');
       const 日期盒 = r.querySelector('.统计时段日期').getBoundingClientRect();
       const 轨 = r.querySelector('.统计时段轨道').getBoundingClientRect();
       return {
         日期: r.querySelector('.统计时段日期').textContent,
-        文本: 格.textContent,
+        文本: 滚动格.textContent,
         日期格宽: Math.round(日期盒.width),
         左空隙: Math.round(轨.left - 日期盒.right),
         滚动宽: Math.round(轨.width),
-        段: 槽('统计时段读数段'),
-        主: 槽('统计时段读数主'),
-        次: 槽('统计时段读数次'),
-        溢出: 格.scrollWidth > 格.clientWidth + 1,
+        段: 槽(滚动格.querySelector('.统计时段读数段')),
+        主: 槽(滚动格.querySelector('.统计时段读数主')),
+        次: 槽(r.querySelector('.统计时段激活格')),
+        溢出: 滚动格.scrollWidth > 滚动格.clientWidth + 1,
       };
     }),
     弹窗宽: Math.round(document.querySelector('.阅读统计弹窗').getBoundingClientRect().width),
@@ -269,20 +279,23 @@ assert.equal(结果.说明节点数, 0, '顶部口径说明段与摘要卡片都
 assert.match(结果.弹窗首块, /^书籍明细/, '书籍明细表成为弹窗第一块');
 assert.equal(结果.弹窗宽, 1040, '弹窗加宽到 1040px');
 assert.equal(结果.表头[0], '日期');
-assert.equal(结果.表头[2], '滚动 · 激活', '列头仍标明两个数各是什么');
+assert.deepEqual(结果.表头.slice(2), ['滚动', '激活'], '滚动/激活各占一列表头');
 
 let 下标 = 0;
 for (const 行 of 结果.行) {
-  assert.doesNotMatch(行.文本, /滚动|激活/, `读数里不再出现「滚动/激活」：${行.文本}`);
-  assert.match(行.文本, /^\d+ 段·.+（.+）$/, `「N 段·时长（时长）」：${行.文本}`);
-  assert.equal(行.文本, 期望[下标++], '数字与注入的段一致');
-  for (const 名 of ['段', '主', '次']) {
+  const [滚动期望, 激活期望] = 期望[下标++];
+  assert.doesNotMatch(行.文本, /滚动|激活|（|）/, `滚动列只留数字：${行.文本}`);
+  assert.match(行.文本, /^\d+ 段·.+$/, `「N 段·时长」：${行.文本}`);
+  assert.equal(行.文本, 滚动期望, '滚动列数字与注入的段一致');
+  assert.equal(行.次.文本, 激活期望, '激活列数字与注入的段一致');
+  assert.doesNotMatch(行.次.文本, /[()（）]/, '激活时长不带括号');
+  for (const 名 of ['段', '主']) {
     assert.ok(!行[名].挤爆, `${名}槽装不下 ${行[名].文本}：${行.日期}`);
   }
-  assert.ok(!行.溢出, `汇总列横向溢出：${行.文本}`);
+  assert.ok(!行.溢出, `滚动列横向溢出：${行.文本}`);
 }
 
-// —— 1. 右侧读数上下对齐：三枚槽的左右边界必须逐行重合 ——
+// —— 1. 右侧读数上下对齐：三枚槽的左右边界必须逐行重合，且各自压在自家表头下 ——
 const 首行 = 结果.行[0];
 for (const 名 of ['段', '主', '次']) {
   for (const 行 of 结果.行) {
@@ -298,14 +311,23 @@ for (const 名 of ['段', '主', '次']) {
     );
   }
 }
+for (const [列, 名] of [[0, '主'], [1, '次']]) {
+  for (const 行 of 结果.行) {
+    assert.ok(
+      Math.abs(行[名].内容右 - 结果.表头右缘[列]) <= 1,
+      `表头「${名}」@${结果.表头右缘[列]} 没压在自己那列读数 @${行[名].内容右} 上（${行.日期}）`,
+    );
+  }
+}
 assert.ok(
-  首行.次.右 - 首行.段.左 > 240,
+  首行.次.右 - 首行.段.左 > 200,
   `三枚槽总宽异常：${首行.段.左} → ${首行.次.右}`,
 );
 console.log('右侧读数逐行对齐', {
   段: [首行.段.左, 首行.段.右],
   主: [首行.主.左, 首行.主.右],
   次: [首行.次.左, 首行.次.右],
+  表头右缘: 结果.表头右缘,
 });
 
 // —— 2. 左侧空档：日期列收拢后，日期与轨道之间只该剩单元格内边距 ——
@@ -321,7 +343,7 @@ console.log('左侧空档', {
 });
 console.log('汇总行文案与对齐检查通过');
 
-// 窄屏（媒体查询把汇总列改回可换行）：不许横向溢出，宁可换行
+// 窄屏（媒体查询把两列读数改回可换行）：不许横向溢出，宁可换行
 async function 量窄屏(宽度) {
   await 发送('Emulation.setDeviceMetricsOverride', {
     width: 宽度,
@@ -332,26 +354,30 @@ async function 量窄屏(宽度) {
   await pause(400);
   const 窄 = await 求值(`
     const 表 = document.querySelector('.统计时段表');
-    const 格 = 表.querySelector('.统计时段汇总');
+    const 格 = 表.querySelector('.统计时段滚动格');
     const 轨 = 表.querySelector('.统计时段轨道');
     return {
       弹窗宽: Math.round(document.querySelector('.阅读统计弹窗').getBoundingClientRect().width),
       格宽: Math.round(格.getBoundingClientRect().width),
       格高: Math.round(格.getBoundingClientRect().height),
       滚动宽: Math.round(轨.getBoundingClientRect().width),
-      横向溢出: 格.scrollWidth > 格.clientWidth + 1,
+      横向溢出: [...表.querySelectorAll('tbody tr')].some((r) =>
+        ['统计时段滚动格', '统计时段激活格'].some((类) => {
+          const 格 = r.querySelector('.' + 类);
+          return 格.scrollWidth > 格.clientWidth + 1;
+        })),
       表溢出弹窗: Math.round(表.getBoundingClientRect().right -
         document.querySelector('.阅读统计内容').getBoundingClientRect().right),
     };
   `);
   console.log(`窄屏 ${宽度}px:`, JSON.stringify(窄));
-  assert.ok(!窄.横向溢出, `窄屏汇总列横向溢出：${JSON.stringify(窄)}`);
+  assert.ok(!窄.横向溢出, `窄屏两列读数横向溢出：${JSON.stringify(窄)}`);
   assert.ok(窄.表溢出弹窗 <= 1, `窄屏表格超出弹窗 ${窄.表溢出弹窗}px`);
   assert.ok(窄.滚动宽 > 100, `窄屏轨道被挤没了：${JSON.stringify(窄)}`);
   return 窄;
 }
 const 窄屏 = await 量窄屏(520);
-assert.ok(窄屏.格高 > 21, '窄屏汇总列应换行占两行高');
+assert.ok(窄屏.格高 > 21, '窄屏滚动列应换行占两行高');
 await 发送('Emulation.clearDeviceMetricsOverride');
 await pause(400);
 
