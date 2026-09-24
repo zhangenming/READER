@@ -131,7 +131,7 @@ try {
   const 首章刻度 = await evaluate(`${state}
     const { 读取滚动条度量, 滚动位置转轨道中心 } = await import('./js/滚动条.js');
     const { 查找偏移所在行 } = await import('./js/排版引擎.js');
-    const 轨道高度 = 元素.自定义滚动条.clientHeight;
+    const 轨道高度 = 元素.滚动容器.clientHeight;
     const 度量 = 读取滚动条度量(轨道高度, 元素.滚动容器.clientHeight, 元素.滚动容器.scrollHeight);
     const 章节 = 状态.章节列表[1];
     const 滚动位置 = Math.max(0, 查找偏移所在行(章节.偏移) * 状态.行高 + 状态.行高 / 2 - 元素.滚动容器.clientHeight / 2);
@@ -145,7 +145,7 @@ try {
     const 图像 = 画布.getContext('2d').getImageData(0, 0, 画布.width, 画布.height).data;
     const 行 = [];
     for (let y = 0; y < 画布.height; y++) if (图像[y * 画布.width * 4 + 3] > 0) 行.push(y);
-    return { hidden: 画布.hidden, 行, 像素比: 画布.height / 元素.自定义滚动条.clientHeight };
+    return { hidden: 画布.hidden, 行, 像素比: 画布.height / 元素.滚动容器.clientHeight };
   `);
   assert.equal(刻度.hidden, false);
   assert.equal(刻度.行.length > 0, true);

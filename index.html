@@ -40,9 +40,15 @@
         hidden
       ></canvas>
     </div>
-    <div
-      id="自定义滚动条"
-      class="自定义滚动条"
+    <canvas
+      id="悬停关键词指示器"
+      class="关键词指示器 悬停关键词指示器"
+      aria-hidden="true"
+      hidden
+    ></canvas>
+    <span
+      id="滚动进度"
+      class="滚动进度"
       role="scrollbar"
       aria-label="阅读进度"
       aria-controls="滚动容器"
@@ -53,17 +59,7 @@
       tabindex="0"
       hidden
     >
-      <div id="滚动块" class="滚动块" aria-hidden="true"></div>
-      <div id="进度指针" class="进度指针" aria-hidden="true"></div>
-    </div>
-    <canvas
-      id="悬停关键词指示器"
-      class="关键词指示器 悬停关键词指示器"
-      aria-hidden="true"
-      hidden
-    ></canvas>
-    <span id="滚动进度" class="滚动进度" aria-hidden="true" hidden>
-      <span id="滚动百分比">0.0%</span>
+      <span id="滚动百分比">0</span>
     </span>
     <div class="右下按钮组">
       <aside id="关键词面板" class="关键词面板" aria-label="关键词管理" hidden>

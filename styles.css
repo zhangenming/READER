@@ -99,10 +99,9 @@
   --正文左留白: 9px;
   /* 末次出现标记占一个 0.42em 字格；行尾按字号预留同宽空间。 */
   --末处标记留白比例: 0.42;
-  --滚动条宽度: 20px;
   /* 页面左缘一叠竖列：章节刻度贴屏幕左缘，再往右才是进度数字与选中关键词——
      中间隔着数字列，免得灰色章节刻度与关键词刻度贴在一起分不清。
-     悬停时临时关键词列再往右让出一格。右侧轨道只剩滚动条本体与镜像指针。 */
+     悬停时临时关键词列再往右让出一格。右侧没有轨道，正文直接铺到视口右缘。 */
   --章节刻度宽度: 5px;
   --百分比宽度: 11px;
   --关键词宽度: 12px;
@@ -152,8 +151,7 @@ body.自动滚动中 * {
   outline-offset: 2px;
 }
 
-/* 右侧不为滚动条预留留白：那 20px 通道在深色主题下就是一条贯穿全高的竖条，
-   正文纸面直接铺到视口右缘，轨道改为压在纸上的透明覆盖层（见 .自定义滚动条）。 */
+/* 右侧没有轨道、也不预留通道：正文纸面直接铺到视口右缘。 */
 .阅读区域 {
   min-height: 0;
   padding-left: var(--章节轨道宽度);
@@ -172,24 +170,6 @@ body.自动滚动中 * {
 }
 
 .滚动容器::-webkit-scrollbar {
-  display: none;
-}
-
-/* 右侧轨道：正文已铺到视口右缘，轨道只剩那枚红色镜像指针压在纸上，不再占地。
-   必须 pointer-events: none —— 否则点行尾最后 20px 会被当成拖滚动条、正文当场跳位。
-   拖动进度改由左缘那枚竖排读数承担（滚轮、键盘、左缘读数都还在）。 */
-.自定义滚动条 {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 6;
-  width: var(--滚动条宽度);
-  height: 100%;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.自定义滚动条[hidden] {
   display: none;
 }
 
@@ -260,25 +240,7 @@ body.关键词手势中 .滚动容器 {
   width: var(--关键词宽度);
 }
 
-.滚动块 {
-  position: absolute;
-  top: 0;
-  left: 4px;
-  z-index: 1;
-  width: calc(100% - 8px);
-  min-height: 32px;
-  background: transparent;
-  border: 0;
-  cursor: grab;
-  transform: translateY(0);
-  will-change: transform;
-}
-
-.自定义滚动条.拖动中 .滚动块 {
-  cursor: grabbing;
-}
-
-.自定义滚动条:focus-visible {
+.滚动进度:focus-visible {
   outline: 0;
 }
 
@@ -312,8 +274,8 @@ body.关键词手势中 .滚动容器 {
   line-height: 0.9;
 }
 
-/* 位置指针：一条 2px 横线贯穿数字列、压在数字下方，右端再接一枚正红三角朝正文（右）指，
-   与右侧轨道那枚朝左的三角互为镜像。横线负责「轴在哪一行」，三角负责「指向正文」。
+/* 位置指针：一条 2px 横线贯穿数字列、压在数字下方，右端再接一枚正红三角朝正文（右）指。
+   横线负责「轴在哪一行」，三角负责「指向正文」。
    箭头单独取正红而非 --强调色：数字仍用朱砂，指针要压得住正文才够醒目。 */
 .滚动进度::before {
   position: absolute;
@@ -340,51 +302,14 @@ body.关键词手势中 .滚动容器 {
   transform: translateY(-50%);
 }
 
-/* 右侧轨道上的镜像指针：与左缘读数由 JS 钉在同一根轴上。
-   容器高 0，top 即轴线；横线贯穿轨道，三角朝正文（左）指，与左缘那枚背向。 */
-.进度指针 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  width: 100%;
-  height: 0;
-  pointer-events: none;
-  will-change: transform;
-}
-
-.进度指针::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: #ff0000;
-  content: '';
-}
-
-.进度指针::after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
-  border-right: var(--章节刻度宽度) solid #ff0000;
-  content: '';
-  /* 横线加粗到 2px 后中线落在 y=1，三角跟着下移 1px 保持同轴 */
-  transform: translateY(calc(-50% + 1px));
-}
-
-.自定义滚动条:focus-visible ~ .滚动进度 #滚动百分比 {
+.滚动进度:focus-visible #滚动百分比 {
   outline: 2px solid var(--选中色);
   outline-offset: 2px;
 }
 
 .时间信息 {
   position: fixed;
-  right: calc(var(--滚动条宽度) + 12px);
+  right: 32px;
   bottom: 10px;
   z-index: 5;
   display: grid;
@@ -709,15 +634,11 @@ body.关键词手势中 .滚动容器 {
   display: none;
 }
 
-.滚动块.悬停关键词时隐藏 {
-  visibility: hidden;
-}
-
 .右下按钮组 {
   position: fixed;
   /* 让位给右下角读数：那四枚数字各带 label 后整块变宽（约 120px），
      按钮组再往左挪，否则第二行「总和」会压到「统计」按钮上。 */
-  right: calc(var(--滚动条宽度) + 152px);
+  right: 172px;
   bottom: 10px;
   z-index: 5;
   display: grid;
@@ -3337,7 +3258,7 @@ dialog,
   }
 
   .右下按钮组 {
-    right: calc(var(--滚动条宽度) + 12px);
+    right: 12px;
     bottom: 76px;
   }
 

@@ -212,7 +212,7 @@ export function 动画滚动到(目标位置, 边框跳转 = null) {
   取消滚动动画();
   停止自动滚动钩子();
   const 视口度量 = {
-    轨道高度: 元素.自定义滚动条.clientHeight,
+    轨道高度: 元素.滚动容器.clientHeight,
     容器高度: 元素.滚动容器.clientHeight,
     滚动高度: 元素.滚动容器.scrollHeight,
   };

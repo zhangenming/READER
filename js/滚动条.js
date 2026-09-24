@@ -13,57 +13,16 @@ export function 初始化滚动条拖拽(钩子) {
   拖拽中断 = 钩子;
 }
 
-// —— 自定义滚动条 / 滚动进度的指针拖拽、滚轮与键盘导航 ——
-// 从 app.js 绑定事件() 闭包拆出；拖动状态为模块级私有，语义不变。
+// —— 滚动进度读数的拖拽、滚轮与键盘导航 ——
+// 右侧轨道已删除，左缘那枚竖排读数就是滚动条本体（role=scrollbar、可聚焦、可拖）。
+// 「滚动块」在这里只剩一层几何含义：与视口成比例的窗口在轨道上的高度与行程，
+// 用来把滚动位置换算成读数的落点并夹在视口内，页面上已无对应 DOM。
 
-let 滚动块拖动状态 = null;
 let 滚动进度拖动状态 = null;
 
 export function 重置滚动条拖拽() {
-  滚动块拖动状态 = null;
-  元素.自定义滚动条.classList.remove('拖动中');
   滚动进度拖动状态 = null;
   元素.滚动进度.classList.remove('拖动中');
-}
-
-export function 处理滚动条按下(事件) {
-  if (事件.button !== 0) {
-    return;
-  }
-  事件.preventDefault();
-  拖拽中断.取消滚动动画();
-  拖拽中断.结束跳转会话('拖动滚动条');
-
-  const 滚动块边框 = 元素.滚动块.getBoundingClientRect();
-  const 点在滚动块内 = 元素.滚动块.contains(事件.target);
-  滚动块拖动状态 = {
-    pointerId: 事件.pointerId,
-    块内偏移: 点在滚动块内
-      ? 事件.clientY - 滚动块边框.top
-      : 滚动块边框.height / 2,
-  };
-  元素.自定义滚动条.setPointerCapture(事件.pointerId);
-  元素.自定义滚动条.classList.add('拖动中');
-  根据指针滚动(事件.clientY);
-}
-
-export function 处理滚动条拖动(事件) {
-  if (滚动块拖动状态?.pointerId !== 事件.pointerId) {
-    return;
-  }
-  事件.preventDefault();
-  根据指针滚动(事件.clientY);
-}
-
-export function 结束滚动条拖动(事件) {
-  if (滚动块拖动状态?.pointerId !== 事件.pointerId) {
-    return;
-  }
-  滚动块拖动状态 = null;
-  元素.自定义滚动条.classList.remove('拖动中');
-  if (元素.自定义滚动条.hasPointerCapture(事件.pointerId)) {
-    元素.自定义滚动条.releasePointerCapture(事件.pointerId);
-  }
 }
 
 export function 处理滚动进度按下(事件) {
@@ -143,19 +102,18 @@ export function 处理滚动条键盘(事件) {
 }
 
 function 根据指针滚动(指针Y) {
-  const 块内偏移 =
-    滚动块拖动状态?.块内偏移 ?? 滚动进度拖动状态?.块内偏移 ?? 0;
-  const 轨道边框 = 元素.自定义滚动条.getBoundingClientRect();
+  const 块内偏移 = 滚动进度拖动状态?.块内偏移 ?? 0;
+  const 容器高度 = 元素.滚动容器.clientHeight;
   const 滚动条度量 = 读取滚动条度量(
-    轨道边框.height,
-    元素.滚动容器.clientHeight,
+    容器高度,
+    容器高度,
     元素.滚动容器.scrollHeight,
   );
   if (滚动条度量.滚动块行程 <= 0 || 滚动条度量.最大滚动位置 <= 0) {
     return;
   }
-  const 滚动块中心 =
-    指针Y - 轨道边框.top - 块内偏移 + 滚动条度量.滚动块高度 / 2;
+  // 轨道原先 fixed 满高、顶边即视口顶，故指针 Y 可直接当轨道内坐标用
+  const 滚动块中心 = 指针Y - 块内偏移 + 滚动条度量.滚动块高度 / 2;
   元素.滚动容器.scrollTop = 轨道中心转滚动位置(滚动块中心, 滚动条度量);
 }
 
@@ -193,11 +151,10 @@ export function 轨道中心转滚动位置(轨道位置, 度量) {
 }
 
 export function 更新滚动块位置(度量 = null, 滚动位置 = null) {
-  const 轨道 = 元素.自定义滚动条;
-  轨道.hidden = false;
+  const 读数 = 元素.滚动进度;
   元素.章节轨道.hidden = false;
-  元素.滚动进度.hidden = false;
-  const 轨道高度 = 度量?.轨道高度 ?? 轨道.clientHeight;
+  读数.hidden = false;
+  const 轨道高度 = 度量?.轨道高度 ?? 元素.滚动容器.clientHeight;
   const 容器高度 = 度量?.容器高度 ?? 元素.滚动容器.clientHeight;
   const 滚动高度 = 度量?.滚动高度 ?? 元素.滚动容器.scrollHeight;
   const 滚动条度量 = 读取滚动条度量(轨道高度, 容器高度, 滚动高度);
@@ -205,9 +162,8 @@ export function 更新滚动块位置(度量 = null, 滚动位置 = null) {
   const 当前滚动位置 = 滚动位置 ?? 元素.滚动容器.scrollTop;
   更新章节进度(当前滚动位置, 最大滚动位置);
   if (轨道高度 <= 0 || 最大滚动位置 <= 0) {
-    轨道.hidden = true;
     元素.章节轨道.hidden = true;
-    元素.滚动进度.hidden = true;
+    读数.hidden = true;
     return null;
   }
 
@@ -215,24 +171,24 @@ export function 更新滚动块位置(度量 = null, 滚动位置 = null) {
   const 滚动块偏移 =
     滚动位置转轨道中心(当前滚动位置, 滚动条度量) - 滚动块高度 / 2;
 
-  const 滚动块高度样式 = `${滚动块高度}px`;
-  if (元素.滚动块.style.height !== 滚动块高度样式) {
-    元素.滚动块.style.height = 滚动块高度样式;
-  }
-  元素.滚动块.style.transform = `translateY(${滚动块偏移}px)`;
   const 读数中心 = 滚动块偏移 + 滚动块高度 / 2;
   放置读数(读数中心, 轨道高度);
-  return { 轨道, 最大滚动位置, 进度, 读数中心, 轨道高度 };
+  return {
+    轨道: 读数,
+    最大滚动位置,
+    进度,
+    读数中心,
+    轨道高度,
+  };
 }
 
 /* 读数盒子按自身内容定高，整枚（含指针）夹在轨道高度内：
-   竖排数字比滚动块高，书首书尾不夹就会被视口裁掉。夹取时指针最多偏离滚动块中心半枚读数。
-   右侧轨道里那枚镜像指针共用同一根轴，两枚指针永远同高、只是朝向相反。 */
+   竖排数字比滚动窗口高，书首书尾不夹就会被视口裁掉。
+   夹取时指针最多偏离滚动窗口中心半枚读数。 */
 function 放置读数(读数中心, 轨道高度) {
   const 半高 = 状态.百分比半高;
   const 夹后中心 = Math.min(轨道高度 - 半高, Math.max(半高, 读数中心));
   元素.滚动进度.style.transform = `translateY(${夹后中心 - 半高}px)`;
-  元素.进度指针.style.transform = `translateY(${夹后中心}px)`;
 }
 
 export function 更新滚动块文本({
@@ -247,7 +203,7 @@ export function 更新滚动块文本({
     设置文本(元素.滚动百分比, 百分比); // 窄轨里省掉百分号，单位由 title 与 aria 说明
     // 位数变了竖排高度就变了，当场量一次并重新夹取，避免末尾停在旧高度上被裁掉
     状态.百分比半高 = 元素.滚动百分比.offsetHeight / 2;
-    放置读数(读数中心, 轨道高度 ?? 轨道.clientHeight);
+    放置读数(读数中心, 轨道高度);
   }
   // 剩余时间 = 剩余句段负担 ÷ 基准节奏折算的负担/秒，让「剩余滚动时间」真正表示
   // 「按当前设定节奏的预计剩余阅读时长」：节奏（负担/秒）= 基准速度(px/s)
@@ -274,7 +230,7 @@ export function 更新滚动块文本({
       : 剩余距离 / Math.max(自动滚动最低速度, 状态.自动滚动速度);
   设置文本(元素.剩余滚动时间, 格式化剩余滚动时间(剩余秒数));
   设置文本(元素.本书滚动时间, 今日本书滚动后缀());
-  设置属性(元素.滚动块, 'title', `阅读进度 ${百分比}%`);
+  设置属性(轨道, 'title', `阅读进度 ${百分比}%`);
   设置属性(轨道, 'aria-valuenow', 百分比);
   设置属性(轨道, 'aria-valuetext', `阅读进度 ${百分比}%`);
 }

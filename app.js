@@ -63,13 +63,10 @@ import {
   初始化滚动条拖拽,
   重置滚动条拖拽,
   更新滚动块,
-  处理滚动条按下,
-  处理滚动条拖动,
   处理滚动进度按下,
   处理滚动进度拖动,
   处理滚动条滚轮,
   处理滚动条键盘,
-  结束滚动条拖动,
   结束滚动进度拖动,
 } from './js/滚动条.js';
 import {
@@ -568,18 +565,14 @@ function 绑定事件() {
     passive: false,
   });
   元素.字体选项列表.addEventListener('click', 处理字体选项点击);
-  元素.自定义滚动条.addEventListener('pointerdown', 处理滚动条按下);
-  元素.自定义滚动条.addEventListener('pointermove', 处理滚动条拖动);
-  元素.自定义滚动条.addEventListener('pointerup', 结束滚动条拖动);
-  元素.自定义滚动条.addEventListener('pointercancel', 结束滚动条拖动);
-  元素.自定义滚动条.addEventListener('wheel', 处理滚动条滚轮, {
-    passive: false,
-  });
-  元素.自定义滚动条.addEventListener('keydown', 处理滚动条键盘);
   元素.滚动进度.addEventListener('pointerdown', 处理滚动进度按下);
   元素.滚动进度.addEventListener('pointermove', 处理滚动进度拖动);
   元素.滚动进度.addEventListener('pointerup', 结束滚动进度拖动);
   元素.滚动进度.addEventListener('pointercancel', 结束滚动进度拖动);
+  元素.滚动进度.addEventListener('wheel', 处理滚动条滚轮, {
+    passive: false,
+  });
+  元素.滚动进度.addEventListener('keydown', 处理滚动条键盘);
   window.addEventListener('mouseup', 处理鼠标选择结束);
   window.addEventListener('mousemove', 处理鼠标移动, { passive: true });
   window.addEventListener('blur', 取消交互状态);

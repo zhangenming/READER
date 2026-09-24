@@ -36,7 +36,7 @@ export function 初始化指示器() {
 export function 更新关键词指示器() {
   渲染关键词面板();
   更新滚动块();
-  const 轨道高度 = 元素.自定义滚动条.clientHeight;
+  const 轨道高度 = 元素.滚动容器.clientHeight;
   const 容器高度 = 元素.滚动容器.clientHeight;
   const 滚动高度 = 元素.滚动容器.scrollHeight;
   const 视口度量 = { 轨道高度, 容器高度, 滚动高度 };
@@ -54,7 +54,6 @@ export function 更新关键词指示器() {
     元素.关键词指示器.hidden = true;
     元素.悬停关键词指示器.hidden = true;
     元素.章节刻度.hidden = true;
-    设置悬停指示器状态(false);
     状态.指示器缓存 = null;
     return;
   }
@@ -85,7 +84,6 @@ export function 更新关键词指示器() {
 
   绘制单列指示器(元素.关键词指示器, 当前指示器上下文, 当前关键词, '当前');
   绘制单列指示器(元素.悬停关键词指示器, 悬停指示器上下文, 悬停关键词, '悬停');
-  设置悬停指示器状态(!元素.悬停关键词指示器.hidden);
 
   function 绘制单列指示器(画布, 上下文, 关键词, 类型) {
     if (!关键词?.命中位置.length) {
@@ -120,10 +118,6 @@ export function 更新关键词指示器() {
 
     上下文.clearRect(0, 0, 画布宽, 画布高);
     上下文.drawImage(底图, 0, 0);
-  }
-
-  function 设置悬停指示器状态(正在显示) {
-    元素.滚动块.classList.toggle('悬停关键词时隐藏', 正在显示);
   }
 }
 

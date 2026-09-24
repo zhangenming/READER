@@ -295,7 +295,7 @@ export function 开始自动滚动() {
     衔接线已淡出: false,
     密度目标速度: 状态.自动滚动速度,
     视口度量: {
-      轨道高度: 元素.自定义滚动条.clientHeight,
+      轨道高度: 元素.滚动容器.clientHeight,
       容器高度: 元素.滚动容器.clientHeight,
       滚动高度: 元素.滚动容器.scrollHeight,
     },
@@ -624,7 +624,7 @@ export function 执行自动滚动(当前时间) {
     本次滚动.上次界面时间 = 当前时间;
     // 每个界面节拍只读取一次布局尺寸，并把结果传给后续更新，避免写入后反复强制重排。
     const 视口度量 = {
-      轨道高度: 元素.自定义滚动条.clientHeight,
+      轨道高度: 元素.滚动容器.clientHeight,
       容器高度: 元素.滚动容器.clientHeight,
       滚动高度: 元素.滚动容器.scrollHeight,
     };

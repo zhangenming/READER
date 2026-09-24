@@ -1,5 +1,5 @@
-// 校验：右侧轨道不再预留 20px 通道 —— 正文纸面铺到视口右缘，右缘不留任何竖条；
-// 轨道退为透明覆盖层且不吃指针事件，点行尾不会被当成拖滚动条。
+// 校验：右侧滚动轴整体已删除 —— 页面上不存在轨道/滚动块/进度指针，正文铺到视口右缘，
+// 右缘任意高度都命中正文；滚动条语义（role/tab/aria/拖动/滚轮/键盘）搬到左缘那枚竖排读数上。
 // 跑法：node tmp/verify-右侧白竖条.mjs  [BOOK=解放战争（套装共6册）.txt] [AT=0.3]
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:net';
@@ -140,7 +140,7 @@ async function 主() {
     await pause(200);
   }
 
-  // 用用户那套配色：页面背景中灰、纸面全黑 —— 只要右缘还留着通道，就会是一条灰竖条
+  // 用户那套配色：页面背景中灰、纸面全黑 —— 右缘只要还剩一条通道就会显形
   await 求值(`
     const { 设置页面背景色, 设置纸面色 } = await import('./js/字体设置.js');
     设置页面背景色('#4d4d4d', { 静默: true });
@@ -157,36 +157,38 @@ async function 主() {
   const 度量 = await 求值(`
     const q = (s) => document.querySelector(s);
     const 画布 = q('#虚拟画布').getBoundingClientRect();
-    const 轨道 = q('#自定义滚动条').getBoundingClientRect();
-    const 读数 = q('#滚动进度').getBoundingClientRect();
-    const 命中 = document.elementFromPoint(innerWidth - 10, innerHeight / 2);
+    const 读数盒 = q('#滚动进度');
+    const 读数 = 读数盒.getBoundingClientRect();
     const 描述 = (e) =>
       e ? (e.tagName + '.' + (e.id || e.className)).slice(0, 60) : null;
     return {
       视口: [innerWidth, innerHeight],
+      轨道节点: ['自定义滚动条', '滚动块', '进度指针'].filter((id) => q('#' + id)),
       阅读区域右内边距: getComputedStyle(q('.阅读区域')).paddingRight,
-      轨道背景: getComputedStyle(q('#自定义滚动条')).backgroundColor,
-      轨道指针事件: getComputedStyle(q('#自定义滚动条')).pointerEvents,
       画布右缘: Math.round(画布.right),
-      轨道: { x: Math.round(轨道.x), w: Math.round(轨道.width) },
-      读数: { x: Math.round(读数.x + 读数.width / 2), y: Math.round(读数.y + 读数.height / 2) },
-      右缘命中: 描述(命中),
-      指针线色: getComputedStyle(q('#进度指针'), '::before').backgroundColor,
+      读数: {
+        x: Math.round(读数.x + 读数.width / 2),
+        y: Math.round(读数.y + 读数.height / 2),
+        role: 读数盒.getAttribute('role'),
+        tabindex: 读数盒.getAttribute('tabindex'),
+        valuenow: 读数盒.getAttribute('aria-valuenow'),
+        title: 读数盒.getAttribute('title'),
+        文本: q('#滚动百分比').textContent,
+      },
     };
   `);
   console.log(JSON.stringify(度量, null, 1));
-  assert.equal(度量.阅读区域右内边距, '0px', '阅读区不再为右侧轨道预留通道');
+  assert.deepEqual(度量.轨道节点, [], '右侧轨道、滚动块、镜像指针都不再存在');
+  assert.equal(度量.阅读区域右内边距, '0px', '右侧不预留通道');
   assert.equal(
     度量.画布右缘,
     度量.视口[0],
     `正文纸面必须铺到视口右缘：${度量.画布右缘} vs ${度量.视口[0]}`,
   );
-  assert.equal(度量.轨道指针事件, 'none', '轨道退为覆盖层，不吃指针事件');
-  assert.ok(
-    !/自定义滚动条|滚动块|进度指针/.test(度量.右缘命中 ?? ''),
-    `右缘 10px 处要命中正文而不是轨道：${度量.右缘命中}`,
-  );
-  assert.equal(度量.指针线色, 'rgb(255, 0, 0)', '红色镜像指针仍压在纸上');
+  assert.equal(度量.读数.role, 'scrollbar', '滚动条语义搬到左缘读数');
+  assert.equal(度量.读数.tabindex, '0', '读数可聚焦');
+  assert.match(度量.读数.valuenow ?? '', /^\d+$/, 'aria-valuenow 随进度更新');
+  assert.match(度量.读数.title ?? '', /^阅读进度 \d+%$/, '单位仍在悬停提示里');
 
   // 轨道覆盖区在任意高度都不接事件：命中测试要落到正文
   for (const 比例 of [0.15, 0.5, 0.85]) {
@@ -196,42 +198,95 @@ async function 主() {
     `);
     assert.ok(
       !/自定义滚动条|滚动块|进度指针/.test(命中 ?? ''),
-      `轨道覆盖处 ${比例}H 要命中正文：${命中}`,
+      `右缘 ${比例}H 要命中正文：${命中}`,
     );
-    console.log(`${比例}H 命中:`, 命中);
+    console.log(`右缘 ${比例}H 命中:`, 命中);
   }
 
-  // 拖动进度改由左缘那枚竖排读数承担，它必须还能滚
-  const 读数 = (轴, 类型, 按下) =>
+  // 拖动进度：左缘读数按下拖动要改变 scrollTop
+  const 读数指针 = (轴, 类型, 按下) =>
     求值(`
-      const e = document.querySelector('#滚动进度');
-      e.dispatchEvent(new PointerEvent(${JSON.stringify(类型)}, {
+      document.querySelector('#滚动进度').dispatchEvent(new PointerEvent(${JSON.stringify(类型)}, {
         pointerId: 11, clientX: ${度量.读数.x}, clientY: ${轴}, bubbles: true, isPrimary: true,
         buttons: ${按下 ? 1 : 0}, button: 0 }));
-      return document.elementFromPoint(${度量.读数.x}, ${轴})?.id ?? null;
+      return 1;
     `);
   const 拖前 = await 求值(
     `return (await import('./js/状态.js')).元素.滚动容器.scrollTop;`,
   );
-  const 命中读数 = await 读数(度量.读数.y, 'pointerdown', true);
-  await 读数(Math.round(度量.视口[1] * 0.8), 'pointermove', true);
-  await 读数(Math.round(度量.视口[1] * 0.8), 'pointerup', false);
+  await 读数指针(度量.读数.y, 'pointerdown', true);
+  await 读数指针(Math.round(度量.视口[1] * 0.8), 'pointermove', true);
+  await 读数指针(Math.round(度量.视口[1] * 0.8), 'pointerup', false);
   await pause(400);
   const 拖后 = await 求值(
     `return (await import('./js/状态.js')).元素.滚动容器.scrollTop;`,
   );
-  assert.equal(命中读数, '滚动进度', '左缘读数仍接指针事件');
   assert.ok(
     Math.abs(拖后 - 拖前) > 100,
-    `左缘读数仍要能拖动滚动：${拖前} → ${拖后}`,
+    `左缘读数要能拖动滚动：${拖前} → ${拖后}`,
   );
+
+  // 滚轮落在读数上也要滚
+  await 求值(`
+    const { 元素 } = await import('./js/状态.js');
+    元素.滚动容器.scrollTop = 元素.滚动容器.scrollHeight * ${位置};
+    return 1;
+  `);
+  await pause(300);
+  const 滚前 = await 求值(
+    `return (await import('./js/状态.js')).元素.滚动容器.scrollTop;`,
+  );
+  await 求值(`
+    document.querySelector('#滚动进度').dispatchEvent(new WheelEvent('wheel', {
+      deltaY: 600, bubbles: true, cancelable: true }));
+    return 1;
+  `);
+  await pause(300);
+  const 滚后 = await 求值(
+    `return (await import('./js/状态.js')).元素.滚动容器.scrollTop;`,
+  );
+  assert.ok(滚后 > 滚前, `读数上的滚轮要能滚动正文：${滚前} → ${滚后}`);
+
+  // 键盘：聚焦读数按 End 跳到书尾
+  await 求值(`document.querySelector('#滚动进度').focus(); return 1;`);
+  await 求值(`
+    document.querySelector('#滚动进度').dispatchEvent(new KeyboardEvent('keydown', {
+      key: 'End', bubbles: true, cancelable: true }));
+    return 1;
+  `);
+  await pause(300);
+  const 末尾 = await 求值(`
+    const { 元素 } = await import('./js/状态.js');
+    return { 顶: 元素.滚动容器.scrollTop,
+      最大: 元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight };
+  `);
+  assert.ok(
+    Math.abs(末尾.顶 - 末尾.最大) <= 2,
+    `读数聚焦时 End 要跳到书尾：${JSON.stringify(末尾)}`,
+  );
+
+  // 读数与章节刻度在书首书尾都不被视口裁掉
+  for (const [说明, 顶] of [['书首', 0], ['书尾', 1e9]]) {
+    await 求值(
+      `(await import('./js/状态.js')).元素.滚动容器.scrollTop = ${顶}; return 1;`,
+    );
+    await pause(400);
+    const 端点 = await 求值(`
+      const b = (await import('./js/状态.js')).元素.滚动百分比.getBoundingClientRect();
+      return { 上: Math.round(b.top), 下: Math.round(b.bottom), 视口高: innerHeight };
+    `);
+    assert.ok(
+      端点.上 >= -1 && 端点.下 <= 端点.视口高 + 1,
+      `${说明}读数被视口裁掉：${JSON.stringify(端点)}`,
+    );
+  }
+
   await 求值(`
     const { 元素 } = await import('./js/状态.js');
     元素.滚动容器.scrollTop = 元素.滚动容器.scrollHeight * ${位置};
     return 1;
   `);
   await pause(600);
-
   const { data } = await 发送('Page.captureScreenshot', {
     format: 'png',
     clip: {
