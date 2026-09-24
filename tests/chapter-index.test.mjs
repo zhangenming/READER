@@ -126,6 +126,54 @@ test('maps UTF-16 offsets through BOM, CRLF, astral characters and inserted sent
   assert.deepEqual(结果.缩进起点集合, 无目录.缩进起点集合);
 });
 
+async function 引文片段(原文) {
+  const 文本 = await 规范化文本(原文, 有效);
+  const { 边界列表 } = await 创建引文索引(文本, 有效);
+  const 片段 = [];
+  for (let idx = 0; idx < 边界列表.length; idx += 2) {
+    片段.push(文本.slice(边界列表[idx], 边界列表[idx + 1]));
+  }
+  return 片段;
+}
+
+test('an unclosed quote stops at the end of its own paragraph', async () => {
+  assert.deepEqual(
+    await 引文片段(
+      '他说：“走吧。她坚持改名‘甲”。很麻烦。\n显然他不会让步。\n“好主意。”他说完。',
+    ),
+    ['走吧。她坚持改名‘甲”。很麻烦。', '好主意。'],
+  );
+});
+
+test('a quotation continued by opening quotes still spans paragraphs', async () => {
+  assert.deepEqual(
+    await 引文片段(
+      '他说：“第一段。\n\n“第二段。\n\n“第三段。”他说完。\n后来没事。',
+    ),
+    ['第一段。\n\n“第二段。\n\n“第三段。'],
+  );
+});
+
+test('a nested quote inside a continued quotation does not end it', async () => {
+  assert.deepEqual(
+    await 引文片段(
+      '他续道：“第一段。\n“位列‘青城四秀’之首。\n“末段。”他说完。\n后来没事。',
+    ),
+    ['第一段。\n“位列‘青城四秀’之首。\n“末段。'],
+  );
+});
+
+test('a quote closed at a paragraph end does not gain a blank line', async () => {
+  const 原文 = '他说：“走吧。很麻烦。\n显然他不让步。\n结束。';
+  const 文本 = await 规范化文本(原文, 有效);
+  const 结果 = await 整理句子换行(
+    文本,
+    (await 创建引文索引(文本, 有效)).边界列表,
+    有效,
+  );
+  assert.equal(结果.文本.match(/\n\n/g), null);
+});
+
 test('an inserted newline at a tracked offset counts before that offset', async () => {
   const 结果 = await 整理句子换行('前。第一章', new Uint32Array(), 有效, [
     { 标题: '第一章', 偏移: 2, 类型: '章节' },
