@@ -29,11 +29,7 @@ import {
   书籍每日前台毫秒,
   获取书籍前台毫秒,
 } from './js/前台停留.js';
-import {
-  载入滚动时段统计,
-  结束滚动时段,
-  每日滚动时段,
-} from './js/滚动时段.js';
+import { 载入滚动时段统计, 每日滚动时段 } from './js/滚动时段.js';
 import { 载入激活时段统计, 每日激活时段 } from './js/激活时段.js';
 import { 显示文本处理错误, 显示错误 } from './js/错误提示.js';
 import {
@@ -94,6 +90,8 @@ import {
   处理鼠标移动,
   停止自动滚动,
   自动滚动进行中,
+  关闭滚动会话,
+  恢复滚动会话,
   注册自动滚动滚轮监听,
   注册右下强制显示,
 } from './js/自动滚动.js';
@@ -592,14 +590,15 @@ function 绑定事件() {
   window.addEventListener('mousedown', 标记shift组合);
   window.addEventListener('pagehide', () => {
     更新前台停留计时('', false);
-    结束滚动时段();
+    关闭滚动会话();
     保存持久化状态();
   });
   window.addEventListener('pageshow', () => 更新前台停留计时());
   document.addEventListener('visibilitychange', function () {
     更新前台停留计时();
-    // 页面隐藏时 rAF 停摆，把仍在进行的时间段就地封口，轴上不会留下假空的滚动条
-    if (document.visibilityState === 'hidden') 结束滚动时段();
+    // 页面隐藏时 rAF 停摆：时长和时段一起就地封口，轴上不留假空的滚动条、账上也不虚增
+    if (document.visibilityState === 'hidden') 关闭滚动会话();
+    else 恢复滚动会话();
     if (document.visibilityState === 'hidden' && 状态.文件名) {
       保存持久化状态();
     }
