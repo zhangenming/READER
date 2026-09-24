@@ -1,5 +1,5 @@
-// 校验：右侧轨道（.自定义滚动条）不再铺白底 —— 深色主题下右缘不留贯穿全高的白竖条，
-// 轨道只剩透明的拖拽区与红色指针，且拖拽仍能滚动正文。
+// 校验：右侧轨道不再预留 20px 通道 —— 正文纸面铺到视口右缘，右缘不留任何竖条；
+// 轨道退为透明覆盖层且不吃指针事件，点行尾不会被当成拖滚动条。
 // 跑法：node tmp/verify-右侧白竖条.mjs  [BOOK=解放战争（套装共6册）.txt] [AT=0.3]
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:net';
@@ -140,11 +140,11 @@ async function 主() {
     await pause(200);
   }
 
-  // 切到深色主题：页面背景与纸面都压暗，正是白竖条最扎眼的那一档
+  // 用用户那套配色：页面背景中灰、纸面全黑 —— 只要右缘还留着通道，就会是一条灰竖条
   await 求值(`
     const { 设置页面背景色, 设置纸面色 } = await import('./js/字体设置.js');
-    设置页面背景色('#0b0b0b', { 静默: true });
-    设置纸面色('#141414', { 静默: true });
+    设置页面背景色('#4d4d4d', { 静默: true });
+    设置纸面色('#000000', { 静默: true });
     return 1;
   `);
   await 求值(`
@@ -156,40 +156,74 @@ async function 主() {
 
   const 度量 = await 求值(`
     const q = (s) => document.querySelector(s);
+    const 画布 = q('#虚拟画布').getBoundingClientRect();
     const 轨道 = q('#自定义滚动条').getBoundingClientRect();
+    const 读数 = q('#滚动进度').getBoundingClientRect();
+    const 命中 = document.elementFromPoint(innerWidth - 10, innerHeight / 2);
+    const 描述 = (e) =>
+      e ? (e.tagName + '.' + (e.id || e.className)).slice(0, 60) : null;
     return {
       视口: [innerWidth, innerHeight],
+      阅读区域右内边距: getComputedStyle(q('.阅读区域')).paddingRight,
       轨道背景: getComputedStyle(q('#自定义滚动条')).backgroundColor,
-      页面背景: getComputedStyle(q('#滚动容器')).backgroundColor,
+      轨道指针事件: getComputedStyle(q('#自定义滚动条')).pointerEvents,
+      画布右缘: Math.round(画布.right),
       轨道: { x: Math.round(轨道.x), w: Math.round(轨道.width) },
+      读数: { x: Math.round(读数.x + 读数.width / 2), y: Math.round(读数.y + 读数.height / 2) },
+      右缘命中: 描述(命中),
       指针线色: getComputedStyle(q('#进度指针'), '::before').backgroundColor,
     };
   `);
   console.log(JSON.stringify(度量, null, 1));
-  assert.equal(度量.轨道背景, 'rgba(0, 0, 0, 0)', '右侧轨道不再铺白底');
-  assert.equal(度量.指针线色, 'rgb(255, 0, 0)', '红色指针线仍在轨道上');
-
-  // 轨道仍是拖拽区：在轨道上按下并拖动要能改变 scrollTop
-  const 拖动前 = await 求值(
-    `return (await import('./js/状态.js')).元素.滚动容器.scrollTop;`,
+  assert.equal(度量.阅读区域右内边距, '0px', '阅读区不再为右侧轨道预留通道');
+  assert.equal(
+    度量.画布右缘,
+    度量.视口[0],
+    `正文纸面必须铺到视口右缘：${度量.画布右缘} vs ${度量.视口[0]}`,
   );
-  await 求值(`
-    const e = document.querySelector('#自定义滚动条');
-    const b = e.getBoundingClientRect();
-    const 点 = (t, y) => e.dispatchEvent(new PointerEvent(t, {
-      pointerId: 9, clientX: b.x + b.width / 2, clientY: y, bubbles: true, isPrimary: true }));
-    点('pointerdown', innerHeight * 0.2);
-    点('pointermove', innerHeight * 0.8);
-    点('pointerup', innerHeight * 0.8);
-    return 1;
-  `);
-  await pause(400);
-  const 拖动后 = await 求值(
-    `return (await import('./js/状态.js')).元素.滚动容器.scrollTop;`,
-  );
+  assert.equal(度量.轨道指针事件, 'none', '轨道退为覆盖层，不吃指针事件');
   assert.ok(
-    Math.abs(拖动后 - 拖动前) > 100,
-    `轨道透明后仍要能拖动滚动：${拖动前} → ${拖动后}`,
+    !/自定义滚动条|滚动块|进度指针/.test(度量.右缘命中 ?? ''),
+    `右缘 10px 处要命中正文而不是轨道：${度量.右缘命中}`,
+  );
+  assert.equal(度量.指针线色, 'rgb(255, 0, 0)', '红色镜像指针仍压在纸上');
+
+  // 轨道覆盖区在任意高度都不接事件：命中测试要落到正文
+  for (const 比例 of [0.15, 0.5, 0.85]) {
+    const 命中 = await 求值(`
+      const e = document.elementFromPoint(innerWidth - 10, Math.round(innerHeight * ${比例}));
+      return e ? (e.tagName + '.' + (e.id || e.className)).slice(0, 60) : null;
+    `);
+    assert.ok(
+      !/自定义滚动条|滚动块|进度指针/.test(命中 ?? ''),
+      `轨道覆盖处 ${比例}H 要命中正文：${命中}`,
+    );
+    console.log(`${比例}H 命中:`, 命中);
+  }
+
+  // 拖动进度改由左缘那枚竖排读数承担，它必须还能滚
+  const 读数 = (轴, 类型, 按下) =>
+    求值(`
+      const e = document.querySelector('#滚动进度');
+      e.dispatchEvent(new PointerEvent(${JSON.stringify(类型)}, {
+        pointerId: 11, clientX: ${度量.读数.x}, clientY: ${轴}, bubbles: true, isPrimary: true,
+        buttons: ${按下 ? 1 : 0}, button: 0 }));
+      return document.elementFromPoint(${度量.读数.x}, ${轴})?.id ?? null;
+    `);
+  const 拖前 = await 求值(
+    `return (await import('./js/状态.js')).元素.滚动容器.scrollTop;`,
+  );
+  const 命中读数 = await 读数(度量.读数.y, 'pointerdown', true);
+  await 读数(Math.round(度量.视口[1] * 0.8), 'pointermove', true);
+  await 读数(Math.round(度量.视口[1] * 0.8), 'pointerup', false);
+  await pause(400);
+  const 拖后 = await 求值(
+    `return (await import('./js/状态.js')).元素.滚动容器.scrollTop;`,
+  );
+  assert.equal(命中读数, '滚动进度', '左缘读数仍接指针事件');
+  assert.ok(
+    Math.abs(拖后 - 拖前) > 100,
+    `左缘读数仍要能拖动滚动：${拖前} → ${拖后}`,
   );
   await 求值(`
     const { 元素 } = await import('./js/状态.js');

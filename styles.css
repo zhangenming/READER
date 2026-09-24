@@ -152,10 +152,11 @@ body.自动滚动中 * {
   outline-offset: 2px;
 }
 
+/* 右侧不为滚动条预留留白：那 20px 通道在深色主题下就是一条贯穿全高的竖条，
+   正文纸面直接铺到视口右缘，轨道改为压在纸上的透明覆盖层（见 .自定义滚动条）。 */
 .阅读区域 {
   min-height: 0;
   padding-left: var(--章节轨道宽度);
-  padding-right: var(--滚动条宽度);
 }
 
 .滚动容器 {
@@ -174,8 +175,9 @@ body.自动滚动中 * {
   display: none;
 }
 
-/* 右侧轨道不再铺白底：它压在 --背景色 上，铺白便在深色主题下成为一条贯穿全高的白竖条。
-   透明后轨道只剩滚动条拖拽区与那枚红色指针，页面留白与正文底色连成一片。 */
+/* 右侧轨道：正文已铺到视口右缘，轨道只剩那枚红色镜像指针压在纸上，不再占地。
+   必须 pointer-events: none —— 否则点行尾最后 20px 会被当成拖滚动条、正文当场跳位。
+   拖动进度改由左缘那枚竖排读数承担（滚轮、键盘、左缘读数都还在）。 */
 .自定义滚动条 {
   position: fixed;
   top: 0;
@@ -184,10 +186,7 @@ body.自动滚动中 * {
   width: var(--滚动条宽度);
   height: 100%;
   overflow: hidden;
-  background: transparent;
-  cursor: default;
-  touch-action: none;
-  user-select: none;
+  pointer-events: none;
 }
 
 .自定义滚动条[hidden] {
