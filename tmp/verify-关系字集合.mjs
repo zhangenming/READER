@@ -1,5 +1,6 @@
-// 校验：「定」不再吃关系字特殊样式（内置色 + 加粗），同类的「将/再/最」仍保留。
-// 自启 server + headless Chrome，滚到正文里第一枚「定」，读回它的 class 与计算样式。
+// 校验：关系字判定已搬到 js/常量.js 的 关系字集合，且逐字判定与重构前的内联字面量完全一致；
+// 顺带回归「定」不再吃关系字特殊样式（内置色 + 加粗），同类的「将/再」仍保留。
+// 自启 server + headless Chrome：全书逐字比对集合与旧字面量，再滚到样本字读回 class 与计算样式。
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:net';
 import { mkdtempSync } from 'node:fs';
@@ -119,6 +120,15 @@ for (let i = 0; i < 600; i++) {
 const 报告 = await 求值(`
   const { 元素, 状态 } = await import('./js/状态.js');
   const 渲染 = await import('./js/虚拟渲染.js');
+  const { 关系字集合 } = await import('./js/常量.js');
+  // 重构前的写法：内联字面量 + 子串匹配。逐字比对，证明「搬到常量 + 换集合」是等价改写。
+  const 旧字面量 =
+    '已经但是却又而且虽然所以如果即使也则乃既甚最更太很还着仍只才就便连或因其之把被者该必仅刚正每在为跟使将再至于乎这那怎么竟都和亦';
+  const 判定差异 = [];
+  const 候选 = new Set([...状态.文本, ...旧字面量]);
+  for (const 字 of 候选) {
+    if (关系字集合.has(字) !== 旧字面量.includes(字)) 判定差异.push(字);
+  }
   const 定位 = (字) => {
     const 偏移 = 状态.文本.indexOf(字);
     if (偏移 < 0) return null;
@@ -145,6 +155,10 @@ const 报告 = await 求值(`
   };
   return {
     书名: 状态.文件名,
+    集合大小: 关系字集合.size,
+    字面量字数: [...new Set(旧字面量)].length,
+    字面量重复: [...旧字面量].length - [...new Set(旧字面量)].length,
+    判定差异,
     定: await 取样('定'),
     将: await 取样('将'),
     再: await 取样('再'),
@@ -155,6 +169,10 @@ const 报告 = await 求值(`
 console.log(JSON.stringify(报告, null, 2));
 
 const 失败 = [];
+if (报告.判定差异.length)
+  失败.push(`集合判定与旧字面量不一致: ${报告.判定差异.join('')}`);
+if (报告.集合大小 !== 报告.字面量字数)
+  失败.push(`集合去重后 ${报告.集合大小}，字面量 ${报告.字面量字数} 字`);
 if (报告.定?.缺失) 失败.push('正文里找不到「定」样本');
 else if (报告.定.类.includes('关系字特殊')) 失败.push('「定」仍带关系字特殊类');
 if (报告.将?.缺失) 失败.push('正文里找不到「将」样本');
@@ -165,5 +183,7 @@ else if (!报告.再.类.includes('关系字特殊'))
   失败.push('「再」的关系字特殊类被误删');
 
 if (失败.length) 收尾(new Error(失败.join('；')));
-console.log('OK: 「定」已退出关系字特殊集合，其余字不受影响');
+console.log(
+  `OK: 关系字已搬到 js/常量.js（${报告.集合大小} 字），逐字判定与旧内联字面量完全一致`,
+);
 收尾();
