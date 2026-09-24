@@ -64,20 +64,17 @@ const 数据 = {
     Array.from({ length: 240 }, (_, i) => [i * 360, i * 360 + 360]),
   ],
 };
-// 与 js/阅读统计.js 的 格式化时段时长 同口径
-function 时长(总输入) {
+// 与 js/阅读统计.js 的 格式化时长到分 同口径（两列读数只到分）
+function 到分(总输入) {
   const 总 = Math.floor(总输入);
-  const 小时 = Math.floor(总 / 3600);
-  const 分 = Math.floor(总 / 60) % 60;
-  const 秒数 = 总 % 60;
-  if (小时) return `${小时} 小时 ${分} 分`;
-  if (分) return `${分} 分 ${秒数} 秒`;
-  return `${秒数} 秒`;
+  if (总 > 0 && 总 < 60) return '不足 1 分钟';
+  const 分钟 = Math.floor(总 / 60);
+  return 分钟 < 60 ? `${分钟} 分` : `${Math.floor(分钟 / 60)} 小时 ${分钟 % 60} 分`;
 }
 const 期望 = Object.entries(数据).map(
   ([, [滚动, 激活]]) => [
-    `${滚动.length} 段·${时长(滚动.reduce((n, [起, 止]) => n + 止 - 起, 0))}`,
-    时长(激活.reduce((n, [起, 止]) => n + 止 - 起, 0)),
+    `${滚动.length} 段·${到分(滚动.reduce((n, [起, 止]) => n + 止 - 起, 0))}`,
+    到分(激活.reduce((n, [起, 止]) => n + 止 - 起, 0)),
   ],
 );
 
@@ -284,11 +281,11 @@ assert.deepEqual(结果.表头.slice(2), ['滚动', '激活'], '滚动/激活各
 let 下标 = 0;
 for (const 行 of 结果.行) {
   const [滚动期望, 激活期望] = 期望[下标++];
-  assert.doesNotMatch(行.文本, /滚动|激活|（|）/, `滚动列只留数字：${行.文本}`);
+  assert.doesNotMatch(行.文本, /滚动|激活|（|）|\d+ 秒/, `滚动列只到分、不带括号：${行.文本}`);
   assert.match(行.文本, /^\d+ 段·.+$/, `「N 段·时长」：${行.文本}`);
   assert.equal(行.文本, 滚动期望, '滚动列数字与注入的段一致');
   assert.equal(行.次.文本, 激活期望, '激活列数字与注入的段一致');
-  assert.doesNotMatch(行.次.文本, /[()（）]/, '激活时长不带括号');
+  assert.doesNotMatch(行.次.文本, /[()（）]|\d+ 秒/, '激活列不带括号、不到秒');
   for (const 名 of ['段', '主']) {
     assert.ok(!行[名].挤爆, `${名}槽装不下 ${行[名].文本}：${行.日期}`);
   }

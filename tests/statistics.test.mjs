@@ -11,6 +11,7 @@ import {
   格式化时段时刻,
   格式化轴时刻,
   格式化时段时长,
+  格式化时长到分,
 } from '../js/阅读统计.js';
 
 test('statistics duration handles invalid values and minute/hour boundaries', () => {
@@ -93,4 +94,18 @@ test('segment clock and duration read to the second', () => {
   assert.equal(格式化时段时长(346), '5 分 46 秒');
   assert.equal(格式化时段时长(7380), '2 小时 3 分');
   assert.equal(格式化时段时长(-5), '0 秒');
+});
+
+// 两列读数到分为止：秒数被抹掉，但 0 与「不到一分钟」要分得开
+test('column readouts round durations down to the minute', () => {
+  assert.equal(格式化时长到分(46), '不足 1 分钟');
+  assert.equal(格式化时长到分(59), '不足 1 分钟');
+  assert.equal(格式化时长到分(60), '1 分');
+  assert.equal(格式化时长到分(346), '5 分');
+  assert.equal(格式化时长到分(2_665), '44 分');
+  assert.equal(格式化时长到分(7_380), '2 小时 3 分');
+  assert.equal(格式化时长到分(86_400), '24 小时 0 分');
+  assert.equal(格式化时长到分(0), '0 分');
+  assert.equal(格式化时长到分(-5), '0 分');
+  assert.equal(格式化时长到分(NaN), '0 分');
 });
