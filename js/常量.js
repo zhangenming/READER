@@ -1,4 +1,4 @@
-export const 文本目录的址 = new URL('./txt/', document.baseURI);
+export const 文本目录地址 = new URL('./txt/', document.baseURI);
 export const 默认文件名 =
   '嫌疑人X的献身 (东野圭吾) (z-library.sk, 1lib.sk, z-lib.sk).txt';
 export const 持久化键 = '原文阅读器:阅读状态:v2';
