@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { readFile, readdir } from 'node:fs/promises';
 import { setImmediate } from 'node:timers/promises';
+import { TextDecoder } from 'node:util';
 
 // The pipeline imports shared browser state, but these tests exercise only text transforms.
 globalThis.document = {
@@ -237,3 +238,19 @@ for (const [前缀, 数量, 首章, 行号] of 实书断言) {
     }
   });
 }
+
+test('all bundled text files are valid UTF-8', async () => {
+  const 无效文件 = [];
+  for (const 文件名 of 实书文件.filter((名称) =>
+    名称.toLowerCase().endsWith('.txt'),
+  )) {
+    try {
+      new TextDecoder('utf-8', { fatal: true }).decode(
+        await readFile(new URL(文件名, 实书目录)),
+      );
+    } catch {
+      无效文件.push(文件名);
+    }
+  }
+  assert.deepEqual(无效文件, []);
+});
