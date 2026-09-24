@@ -236,7 +236,6 @@ export const 元素 = {
   内容选择按钮: document.querySelector('#内容选择按钮'),
   阅读统计按钮: document.querySelector('#阅读统计按钮'),
   阅读统计弹窗: document.querySelector('#阅读统计弹窗'),
-  关闭阅读统计按钮: document.querySelector('#关闭阅读统计按钮'),
   阅读统计内容: document.querySelector('#阅读统计内容'),
   内容选择弹窗: document.querySelector('#内容选择弹窗'),
   内容选择摘要: document.querySelector('#内容选择摘要'),

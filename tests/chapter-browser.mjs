@@ -283,7 +283,9 @@ try {
     await evaluate(`${state} return 元素.滚动容器.scrollTop`),
     statsTop,
   );
-  await click('#关闭阅读统计按钮');
+  await evaluate(
+    'document.querySelector("#阅读统计弹窗").dispatchEvent(new PointerEvent("pointerdown", {bubbles: true, clientX: 4, clientY: 4}));',
+  );
   console.log(
     'PASS merged content, chapter and statistics controls remain usable without overlap',
   );

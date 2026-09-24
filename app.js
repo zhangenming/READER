@@ -429,9 +429,6 @@ function 绑定事件() {
   元素.自动滚动按钮.addEventListener('blur', 处理自动滚动按钮失焦);
   元素.内容选择按钮.addEventListener('click', 打开内容选择弹窗);
   元素.阅读统计按钮.addEventListener('click', 打开阅读统计);
-  元素.关闭阅读统计按钮.addEventListener('click', () =>
-    元素.阅读统计弹窗.close(),
-  );
   // 点击遮罩关闭：真实点击 ::backdrop 时事件目标是 html 而非 dialog 本身，
   // 因此用坐标命中判断，落在弹窗矩形之外即关闭
   document.addEventListener('pointerdown', (事件) => {
