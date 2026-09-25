@@ -1,4 +1,4 @@
-import { shift双击中阈值 } from './常量.js';
+import { shift双击中阈值, 整屏翻页跳行比例 } from './常量.js';
 import { 元素, 状态, 查找关键词 } from './状态.js';
 import { 有弹窗打开 } from './面板.js';
 import { 关闭字体弹窗, 打开字体弹窗 } from './字体设置.js';
@@ -67,10 +67,26 @@ export function 翻页整屏(向上) {
   const 最大顶部行idx = Math.round(
     (元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight) / 状态.行高,
   );
-  const 目标行idx = Math.min(
+  let 目标行idx = Math.min(
     最大顶部行idx,
     Math.max(0, 当前行idx + (向上 ? -滚动行数 : 滚动行数)),
   );
+  let 底部残行已跳过 = false;
+  // 向前翻页时看视口底边落在哪一行：底边在某行内部，该行只露出上半截。
+  // 露出超过 整屏翻页跳行比例（80%）即视为这行已经读完，翻页时整行跳过，
+  // 不再保留为下一页的第一行重复阅读；底边恰好对齐行界（露出 0）则不触发。
+  // 用 max 兜底：手动滚动到任意位置后翻页，也只会跳过这个已大半露出的行。
+  if (!向上) {
+    const 视口底部 = 元素.滚动容器.scrollTop + 元素.滚动容器.clientHeight;
+    const 底部露出比例 = (视口底部 % 状态.行高) / 状态.行高;
+    if (底部露出比例 > 整屏翻页跳行比例) {
+      const 底部行idx = Math.floor(视口底部 / 状态.行高);
+      if (底部行idx + 1 > 目标行idx) {
+        目标行idx = Math.min(最大顶部行idx, 底部行idx + 1);
+        底部残行已跳过 = true;
+      }
+    }
+  }
   元素.滚动容器.scrollTop = 目标行idx * 状态.行高;
   渲染可见行(true);
   安排保存持久化状态();
@@ -79,6 +95,7 @@ export function 翻页整屏(向上) {
     起始行: 当前行idx,
     目标行: 目标行idx,
     滚动行数: Math.abs(目标行idx - 当前行idx),
+    底部残行已跳过,
   });
 }
 
