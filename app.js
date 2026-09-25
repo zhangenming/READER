@@ -200,6 +200,7 @@ import {
   设置右下强制显示,
   设置右下聚焦,
 } from './js/右下控件.js';
+import { 安排刷新时钟遮挡, 刷新时钟遮挡 } from './js/时钟遮挡.js';
 
 import { 创建章节索引 } from './js/章节索引.js';
 import { 初始化章节目录, 关闭章节目录 } from './js/章节目录.js';
@@ -232,6 +233,9 @@ function 启动() {
     const 现在 = new Date();
     元素.当前时间.dateTime = 现在.toISOString();
     元素.当前时间.textContent = 时间格式器.format(现在);
+    // 每秒兜底一次遮挡判定：载入、字号/行距重排等不走滚动事件的变化，
+    // 最迟 1s 内收敛；滚动路径由 scroll 监听实时驱动。
+    刷新时钟遮挡();
   }
 
   // 重建行索引只负责「建索引 + 提交 + 保持阅读位置」，
@@ -260,6 +264,7 @@ function 启动() {
       const 新排版 = 读取正文排版();
       if (新排版.键 !== 状态.排版键) {
         重建并刷新(新排版);
+        安排刷新时钟遮挡();
         return;
       }
 
@@ -270,6 +275,7 @@ function 启动() {
       } catch (错误) {
         显示文本处理错误(错误);
       }
+      安排刷新时钟遮挡();
     }, 尺寸重排防抖毫秒);
   }
 }
@@ -400,9 +406,13 @@ function 绑定事件() {
   注册自动滚动停止钩子(停止自动滚动);
 
   // ===== 右下角控件：默认隐藏，仅在鼠标靠近 / 触摸 / 聚焦 / 自动滚动时显示 =====
-  // 热区判定与显示状态机在 js/右下控件.js；时间（#当前时间）固定显示，不受影响。
+  // 热区判定与显示状态机在 js/右下控件.js；时间浮层贴角常驻，
+  // 但正文滚进其下方时整体隐藏（js/时钟遮挡.js），不遮挡正文。
 
   元素.滚动容器.addEventListener('scroll', 处理滚动, { passive: true });
+  // 时间浮层遮挡判定独立于 处理滚动 的状态机：自动滚动 / 跳转动画期间
+  // 处理滚动 会提前返回，但 scrollTop 变化仍会触发 scroll 事件。
+  元素.滚动容器.addEventListener('scroll', 安排刷新时钟遮挡, { passive: true });
   元素.滚动容器.addEventListener('wheel', 处理手动滚动, { passive: true });
   元素.滚动容器.addEventListener('touchstart', 取消滚动动画, { passive: true });
   元素.滚动容器.addEventListener('touchmove', 处理手动滚动, { passive: true });

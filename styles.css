@@ -311,8 +311,9 @@ body.关键词手势中 .滚动容器 {
 
 .时间信息 {
   position: fixed;
-  right: 32px;
-  bottom: 10px;
+  /* 紧贴右下角：正文纸面满幅铺到视口右缘，读数也以视口角落为锚 */
+  right: 0;
+  bottom: 0;
   z-index: 5;
   display: grid;
   /* label 与数字各占一列，两对读数并排成 4 列。列间距不靠统一 gap，
@@ -320,6 +321,14 @@ body.关键词手势中 .滚动容器 {
   grid-template-columns: repeat(4, max-content);
   gap: 6px 0;
   pointer-events: none;
+}
+
+/* 正文滚进浮层下方时由 js/时钟遮挡.js 挂 .被正文遮挡。
+   必须用 visibility 而非 display:none：判定依赖对浮层矩形做命中测试，
+   display:none 会把 getBoundingClientRect 归零，浮层一旦隐藏就再也无法
+   在原位探测、自行恢复；visibility 保留几何，且不参与命中测试与绘制。 */
+.时间信息.被正文遮挡 {
+  visibility: hidden;
 }
 
 .时间信息行 {
@@ -841,7 +850,8 @@ body.关键词手势中 .滚动容器 {
 }
 
 /* ===== 右下角控件：默认隐藏，仅在鼠标靠近 / 触摸 / 聚焦 / 自动滚动时显示 =====
-   时间（.当前时间）固定显示，不在此列；隐藏时 pointer-events:none 不遮挡正文选择。 */
+   时间浮层不在此列：它贴角常驻，但正文滚进其下方时整体隐藏（js/时钟遮挡.js）。
+   按钮组隐藏时 pointer-events:none 不遮挡正文选择。 */
 .自动滚动按钮,
 .关键词面板开关,
 .内容选择按钮 {
