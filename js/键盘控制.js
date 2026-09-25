@@ -56,46 +56,42 @@ export function 重置键盘导航() {
 }
 
 // ===== 整屏翻页：Space / Enter / 方向键 / 语音翻页共用的翻页原语 =====
+// 翻页目标是「底对齐」：视口底边贴齐行界，最后一行完整，第一行可残缺。
+// 锚点取视口底边所在行 b = floor((scrollTop+视口高)/行高)，o 为底边在该行内
+// 已露出的像素；R 为视口高除以行高的余数（底对齐后下一页顶部会重复上一页
+// 末行的 R 像素）。默认一次前进 N = floor(视口高/行高) 行；当 R + o 达到
+// 整屏翻页跳行比例×行高（照搬将重复展示的内容超过一行的 80%）时多跳一行，
+// 代价是底边行未读部分损失不足 (1-比例)×行高 —— 宁可损失不足两成的一行，
+// 也不整行重复。向上翻页用同一步长，保证原路返回。
 export function 翻页整屏(向上) {
   取消滚动动画();
   结束跳转会话('语音翻页');
-  const 滚动行数 = Math.max(
-    1,
-    Math.floor(元素.滚动容器.clientHeight / 状态.行高),
+  const 容器 = 元素.滚动容器;
+  const 行高 = 状态.行高;
+  const 视口高 = 容器.clientHeight;
+  const 整行数 = Math.max(1, Math.floor(视口高 / 行高));
+  const 底边 = 容器.scrollTop + 视口高;
+  // +1e-6 行：抵消 scrollTop 往返的浮点噪声，避免恰好贴齐行界时行号差一
+  const 底边行idx = Math.floor(底边 / 行高 + 1e-6);
+  const 底边露出 = 底边 - 底边行idx * 行高;
+  const 视口残留 = 视口高 - 整行数 * 行高;
+  const 步长 =
+    整行数 + (底边露出 + 视口残留 >= 行高 * 整屏翻页跳行比例 ? 1 : 0);
+  const 目标底边行idx = 底边行idx + (向上 ? -步长 : 步长);
+  const 最大scrollTop = Math.max(0, 容器.scrollHeight - 视口高);
+  容器.scrollTop = Math.min(
+    最大scrollTop,
+    Math.max(0, 目标底边行idx * 行高 - 视口高),
   );
-  const 当前行idx = Math.round(元素.滚动容器.scrollTop / 状态.行高);
-  const 最大顶部行idx = Math.round(
-    (元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight) / 状态.行高,
-  );
-  let 目标行idx = Math.min(
-    最大顶部行idx,
-    Math.max(0, 当前行idx + (向上 ? -滚动行数 : 滚动行数)),
-  );
-  let 底部残行已跳过 = false;
-  // 向前翻页时看视口底边落在哪一行：底边在某行内部，该行只露出上半截。
-  // 露出超过 整屏翻页跳行比例（80%）即视为这行已经读完，翻页时整行跳过，
-  // 不再保留为下一页的第一行重复阅读；底边恰好对齐行界（露出 0）则不触发。
-  // 用 max 兜底：手动滚动到任意位置后翻页，也只会跳过这个已大半露出的行。
-  if (!向上) {
-    const 视口底部 = 元素.滚动容器.scrollTop + 元素.滚动容器.clientHeight;
-    const 底部露出比例 = (视口底部 % 状态.行高) / 状态.行高;
-    if (底部露出比例 > 整屏翻页跳行比例) {
-      const 底部行idx = Math.floor(视口底部 / 状态.行高);
-      if (底部行idx + 1 > 目标行idx) {
-        目标行idx = Math.min(最大顶部行idx, 底部行idx + 1);
-        底部残行已跳过 = true;
-      }
-    }
-  }
-  元素.滚动容器.scrollTop = 目标行idx * 状态.行高;
   渲染可见行(true);
   安排保存持久化状态();
   console.info('[阅读器] 已按整页翻动', {
     指令: 向上 ? '上一页（向后翻）' : '下一页（向前翻）',
-    起始行: 当前行idx,
-    目标行: 目标行idx,
-    滚动行数: Math.abs(目标行idx - 当前行idx),
-    底部残行已跳过,
+    起始底边行: 底边行idx,
+    目标底边行: Math.round((容器.scrollTop + 视口高) / 行高),
+    滚动行数: 步长,
+    底边露出: +底边露出.toFixed(3),
+    视口残留: +视口残留.toFixed(3),
   });
 }
 
