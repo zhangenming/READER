@@ -166,6 +166,17 @@ async function 主() {
       探针.remove();
       return 宽;
     };
+    const 列盒 = (选择器) => {
+      const 元素 = q(选择器);
+      if (!元素) return null;
+      const b = 元素.getBoundingClientRect();
+      return {
+        x: Math.round(b.x * 10) / 10,
+        w: Math.round(b.width * 10) / 10,
+        right: Math.round(b.right * 10) / 10,
+        hidden: 元素.hidden,
+      };
+    };
     const 行样式 = getComputedStyle(q('.正文行'));
     const 行们 = [...document.querySelectorAll('.可见内容 .正文行')].filter(
       (r) => r.getBoundingClientRect().bottom > 0 && r.getBoundingClientRect().top < innerHeight,
@@ -195,6 +206,9 @@ async function 主() {
       行内边距: { 左: 行样式.paddingLeft, 右: 行样式.paddingRight },
       章节轨道宽度: Math.round(q('#章节轨道').getBoundingClientRect().width),
       章节轨道变量: 变量px('--章节轨道宽度'),
+      章节刻度: 列盒('#章节刻度'),
+      滚动进度: 列盒('#滚动进度'),
+      关键词指示器: 列盒('#关键词指示器'),
       行盒右缘: Math.round(q('.正文行').getBoundingClientRect().right),
       最右末字: Math.round(最右末字),
       最左首字: Math.round(最左首字),
@@ -227,6 +241,32 @@ async function 主() {
   assert.ok(
     度量.最左首字 >= 度量.章节轨道宽度 - 2,
     `首字应紧贴白轴右缘，中间不再有段落色带黑边：${度量.最左首字} vs ${度量.章节轨道宽度}`,
+  );
+
+  // 三列平分白轴：章节刻度 [0, W/3]、进度数字 [W/3, 2W/3]、关键词 [2W/3, W]
+  const 列宽 = 度量.章节轨道宽度 / 3;
+  const 近似 = (实际, 期望, 说明) =>
+    assert.ok(
+      Math.abs(实际 - 期望) <= 1.5,
+      `${说明}：${实际} vs ${期望}（白轴 ${度量.章节轨道宽度}px）`,
+    );
+  for (const [名, 期望x] of [
+    ['章节刻度', 0],
+    ['滚动进度', 列宽],
+    ['关键词指示器', 列宽 * 2],
+  ]) {
+    const 盒子 = 度量[名];
+    if (!盒子 || 盒子.hidden || 盒子.w === 0) {
+      console.log(`（${名}当前隐藏，跳过平分断言）`);
+      continue;
+    }
+    近似(盒子.x, 期望x, `${名}列起点应落在平分线上`);
+    近似(盒子.w, 列宽, `${名}列宽应为白轴的三分之一`);
+  }
+  近似(
+    度量.滚动进度.x + 度量.滚动进度.w,
+    列宽 * 2,
+    '进度数字列右缘应压在第二条平分线上',
   );
 
   const { data } = await 发送('Page.captureScreenshot', {
