@@ -161,6 +161,16 @@ async function 主() {
     return 1;
   `);
   await pause(900);
+  // 激活悬停关键词，让第三列的蓝色悬停刻度显形
+  await 求值(`
+    const { 状态 } = await import('./js/状态.js');
+    const { 更新关键词指示器 } = await import('./js/指示器.js');
+    状态.悬停关键词id =
+      状态.关键词列表.find((k) => k.id !== 状态.当前关键词id)?.id ?? null;
+    更新关键词指示器();
+    return 1;
+  `);
+  await pause(400);
 
   const 度量 = await 求值(`
     const q = (s) => document.querySelector(s);
@@ -184,6 +194,27 @@ async function 主() {
     };
   `);
   console.log(JSON.stringify(度量, null, 1));
+
+  const assert = await import('node:assert/strict');
+  const 列宽 = 度量.白轴 / 3;
+  const 近似 = (实际, 期望, 说明) =>
+    assert.ok(
+      Math.abs(实际 - 期望) <= 1.5,
+      `${说明}：${实际} vs ${期望}（白轴 ${度量.白轴}px）`,
+    );
+  近似(度量.章节刻度.x, 0, '第一列：章节刻度贴左缘（与进度数字共用）');
+  近似(度量.滚动进度.x, 0, '第一列：进度数字贴左缘');
+  近似(度量.滚动进度.right, 列宽, '进度数字右缘压在第一条平分线上');
+  近似(度量.关键词指示器.x, 列宽, '第二列：当前关键词（黑）刻度');
+  近似(度量.关键词指示器.right, 列宽 * 2, '黑色刻度右缘压在第二条平分线上');
+  assert.ok(
+    !度量.悬停指示器.hidden,
+    '悬停关键词刻度应已激活显示',
+  );
+  近似(度量.悬停指示器.x, 列宽 * 2, '第三列：悬停关键词（蓝）刻度');
+  近似(度量.悬停指示器.right, 度量.白轴, '蓝色刻度右缘贴白轴右缘（首字左缘）');
+  近似(度量.首字左缘, 度量.白轴, '首字应紧贴白轴右缘');
+  console.log('三列平分与黑/蓝列位断言通过');
 
   const { data } = await 发送('Page.captureScreenshot', {
     format: 'png',
