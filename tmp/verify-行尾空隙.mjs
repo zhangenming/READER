@@ -1,5 +1,6 @@
 // 校验：行尾不留空隙 —— 正文最后一个字紧贴视口右缘，原先 0.42em 的右留白挪到了行首。
 // 同时确认折行句竖条 / 首处标记 ◀ 在加宽的行首留白里没被裁掉，排版内容宽度与 padding 同步。
+// 行首留白已整体划给左缘白轴：#章节轨道 白底吞下这段，首字应紧贴白轴右缘，中间不再露出段落色带。
 // 跑法：node tmp/verify-行尾空隙.mjs  [BOOK=解放战争（套装共6册）.txt] [AT=0.3]
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:net';
@@ -156,6 +157,15 @@ async function 主() {
   const 度量 = await 求值(`
     const q = (s) => document.querySelector(s);
     const 变量 = (名) => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(名));
+    // calc() 形式的自定义属性 parseFloat 不动（返回 NaN），用探针元素量出实际像素
+    const 变量px = (名) => {
+      const 探针 = document.createElement('div');
+      探针.style.cssText = 'position:absolute;visibility:hidden;width:var(' + 名 + ');';
+      document.body.append(探针);
+      const 宽 = 探针.getBoundingClientRect().width;
+      探针.remove();
+      return 宽;
+    };
     const 行样式 = getComputedStyle(q('.正文行'));
     const 行们 = [...document.querySelectorAll('.可见内容 .正文行')].filter(
       (r) => r.getBoundingClientRect().bottom > 0 && r.getBoundingClientRect().top < innerHeight,
@@ -184,6 +194,7 @@ async function 主() {
       标记留白比例: 变量('--末处标记留白比例'),
       行内边距: { 左: 行样式.paddingLeft, 右: 行样式.paddingRight },
       章节轨道宽度: Math.round(q('#章节轨道').getBoundingClientRect().width),
+      章节轨道变量: 变量px('--章节轨道宽度'),
       行盒右缘: Math.round(q('.正文行').getBoundingClientRect().right),
       最右末字: Math.round(最右末字),
       最左首字: Math.round(最左首字),
@@ -207,9 +218,15 @@ async function 主() {
     Math.abs(parseFloat(度量.行内边距.左) - 期望左留白) <= 1,
     `行首留白应等于「正文左留白 + 0.42em」，与 padding 同步：${度量.行内边距.左} vs ${期望左留白}`,
   );
+  const 期望轨道右缘 =
+    度量.章节轨道变量 + 度量.正文左留白 + 度量.正文字号 * 度量.标记留白比例;
   assert.ok(
-    度量.最左首字 >= 度量.章节轨道宽度 + 度量.正文左留白 - 1,
-    `首字不许压进折行句竖条的留白：${度量.最左首字}`,
+    Math.abs(度量.章节轨道宽度 - 期望轨道右缘) <= 1,
+    `白轴应吞下行首留白、右缘顶到首字：${度量.章节轨道宽度} vs ${期望轨道右缘}`,
+  );
+  assert.ok(
+    度量.最左首字 >= 度量.章节轨道宽度 - 2,
+    `首字应紧贴白轴右缘，中间不再有段落色带黑边：${度量.最左首字} vs ${度量.章节轨道宽度}`,
   );
 
   const { data } = await 发送('Page.captureScreenshot', {
@@ -225,7 +242,21 @@ async function 主() {
     clip: { x: 0, y: 0, width: 260, height: 度量.视口[1], scale: 1 },
   });
   writeFileSync(resolve(import.meta.dirname, '行尾空隙-左缘.png'), Buffer.from(左, 'base64'));
-  console.log('已写 tmp/行尾空隙-右缘.png、tmp/行尾空隙-左缘.png');
+  const { data: 放大 } = await 发送('Page.captureScreenshot', {
+    format: 'png',
+    clip: {
+      x: 0,
+      y: 度量.视口[1] * 0.3,
+      width: 110,
+      height: 220,
+      scale: 4,
+    },
+  });
+  writeFileSync(
+    resolve(import.meta.dirname, '行首白轴-放大.png'),
+    Buffer.from(放大, 'base64'),
+  );
+  console.log('已写 tmp/行尾空隙-右缘.png、tmp/行尾空隙-左缘.png、tmp/行首白轴-放大.png');
 }
 
 let 错误 = null;
