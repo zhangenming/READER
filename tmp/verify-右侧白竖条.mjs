@@ -187,8 +187,8 @@ async function 主() {
   );
   assert.equal(度量.读数.role, 'scrollbar', '滚动条语义搬到左缘读数');
   assert.equal(度量.读数.tabindex, '0', '读数可聚焦');
-  assert.match(度量.读数.valuenow ?? '', /^\d+$/, 'aria-valuenow 随进度更新');
-  assert.match(度量.读数.title ?? '', /^阅读进度 \d+%$/, '单位仍在悬停提示里');
+  assert.match(度量.读数.valuenow ?? '', /^\d+\.\d$/, 'aria-valuenow 随进度更新（一位小数）');
+  assert.match(度量.读数.title ?? '', /^阅读进度 \d+\.\d%$/, '单位仍在悬停提示里');
 
   // 轨道覆盖区在任意高度都不接事件：命中测试要落到正文
   for (const 比例 of [0.15, 0.5, 0.85]) {
