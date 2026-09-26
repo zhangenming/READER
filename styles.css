@@ -1149,11 +1149,28 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 /* 章节标题行：点击跳到下一章，Shift + 点击 跳到上一章。
-   悬停时才在行尾浮出方向提示（文案由 data-chapter-hint 给出）——不吃行高、
-   不加底色块；折行的长标题不浮出提示，因为那种行已写满行宽，提示会压在字上。
-   字色取次要墨色并压到 0.75 不透明度，深浅主题下都不抢正文。 */
+   悬停时整条标题转朱砂红并压出下划线（见下方 :hover 规则），行尾同时浮出方向提示
+   （文案由 data-chapter-hint 给出）——不吃行高、不加底色块；折行的长标题不浮出提示，
+   因为那种行已写满行宽，提示会压在字上。提示默认取次要墨色（随纸面自适应）。 */
 .正文行.章节标题行 {
   cursor: pointer;
+}
+
+.正文行.章节标题行 .字 {
+  transition: color 120ms ease;
+}
+
+/* 悬停高亮：整条标题转朱砂红，并压出一条同色下划线；命中词不参与，
+   它自带黑底白字，再叠一条线只会更花。下划线用负偏移留在行盒内——
+   .正文行 是 overflow:hidden 且行高等于字号，正偏移会被底边裁掉。 */
+.正文行.章节标题行:hover .字:not(.命中) {
+  color: var(--强调色);
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in oklab, var(--强调色) 60%, transparent);
+  text-decoration-skip-ink: none;
+  text-decoration-style: solid;
+  text-decoration-thickness: 2px;
+  text-underline-offset: -0.12em;
 }
 
 .正文行.章节标题行::after {
@@ -1174,7 +1191,8 @@ body.右下面板展开 .关键词面板开关 {
 }
 
 .正文行.章节标题行:hover::after {
-  opacity: 0.75;
+  color: var(--强调色);
+  opacity: 1;
 }
 
 /* 相邻行会用自己的不透明底色盖住上一行溢出到本行的装饰，因此这几档层叠顺序

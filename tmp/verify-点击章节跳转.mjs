@@ -244,15 +244,24 @@ try {
       if (!行) return null;
       const 字 = 行.querySelector('.字');
       const 盒 = (字 || 行).getBoundingClientRect();
-      return {
+      const 强调探针 = document.createElement('span');
+      强调探针.style.cssText = 'position:absolute;left:-9999px;color:var(--强调色)';
+      document.body.append(强调探针);
+      const 结果 = {
         x: 盒.left + 盒.width / 2,
         y: 盒.top + 盒.height / 2,
         类: 行.className,
         提示: getComputedStyle(行, '::after').content,
         提示透明度: getComputedStyle(行, '::after').opacity,
+        提示色: getComputedStyle(行, '::after').color,
         光标: getComputedStyle(行).cursor,
+        字色: 字 ? getComputedStyle(字).color : '',
+        下划线: 字 ? getComputedStyle(字).textDecorationLine : '',
+        强调色: getComputedStyle(强调探针).color,
         视口内: 盒.top >= 0 && 盒.bottom <= 元素.滚动容器.clientHeight + 元素.滚动容器.getBoundingClientRect().top,
-      };`);
+      };
+      强调探针.remove();
+      return 结果;`);
   }
 
   async function 移动鼠标到(x, y) {
@@ -296,6 +305,11 @@ try {
   assert.equal(首行.光标, 'pointer', 失败('① 标题行光标应为 pointer'));
   assert.ok(首行.提示.includes('下一章'), 失败(`① 悬停提示应为「下一章 →」：${首行.提示}`));
   assert.equal(首行.提示透明度, '0', 失败('① 未悬停时提示应完全透明'));
+  assert.notEqual(首行.字色, 首行.强调色, 失败(`① 未悬停时标题字色不应是强调色：${首行.字色}`));
+  assert.ok(
+    !/underline/.test(首行.下划线),
+    失败(`① 未悬停时不应有下划线：${首行.下划线}`),
+  );
   // 普通正文行不带标记
   const 普通行 = await 求值(`${状态前缀}
     const 行 = [...document.querySelectorAll('.正文行')].find(r => !r.dataset.chapterIndex && r.textContent);
@@ -303,13 +317,26 @@ try {
   assert.ok(!普通行.类.includes('章节标题行'), 失败('① 普通正文行不应被标记为标题行'));
   assert.equal(普通行.光标, 'auto', 失败(`① 普通正文行光标应保持默认：${普通行.光标}`));
 
-  // ② 悬停浮出提示（顺带截图给用户看）
+  // ② 悬停高亮：整条标题转强调色 + 下划线，行尾提示浮出并同色
   await 移动鼠标到(首行.x, 首行.y);
   const 悬停后 = await 取标题行(0);
   assert.ok(
     Number(悬停后.提示透明度) > 0.5,
     失败(`② 悬停后提示应浮出，实际透明度 ${悬停后.提示透明度}`),
   );
+  assert.equal(悬停后.提示透明度, '1', 失败(`② 悬停后提示应完全不透明：${悬停后.提示透明度}`));
+  assert.equal(悬停后.提示色, 悬停后.强调色, 失败(`② 提示应与标题同为强调色：${悬停后.提示色} vs ${悬停后.强调色}`));
+  assert.equal(悬停后.字色, 悬停后.强调色, 失败(`② 悬停后标题字色应为强调色：${悬停后.字色}`));
+  assert.ok(
+    /underline/.test(悬停后.下划线),
+    失败(`② 悬停后标题应有下划线：${悬停后.下划线}`),
+  );
+  // 移出后应退回原样（不残留高亮）
+  await 移动鼠标到(悬停后.x, 悬停后.y - 300);
+  const 移出后 = await 取标题行(0);
+  assert.notEqual(移出后.字色, 移出后.强调色, 失败('② 移出后标题字色应退回正文色'));
+  await 移动鼠标到(首行.x, 首行.y);
+  await pause(200);
   const 截图 = await 发送('Page.captureScreenshot', { format: 'png' });
   writeFileSync(截图路径, Buffer.from(截图.data, 'base64'));
   console.log('悬停提示截图已写入:', 截图路径);
@@ -411,6 +438,26 @@ try {
     return { x: 盒.left + 盒.width / 2, y: 盒.top + 盒.height / 2, 命中数: 状态.关键词列表[0].命中位置.length };`);
   assert.ok(命中坐标, 失败('⑧ 第 2 章标题行内应出现命中字'));
   assert.equal(命中坐标.命中数, 2, 失败('⑧ fixture 应让「潮水」出现两次'));
+  // 悬停标题行时，命中字不参与强调色（它自带黑底白字，叠色只会更花）
+  await 移动鼠标到(命中坐标.x, 命中坐标.y);
+  const 命中字样式 = await 求值(`${状态前缀}
+    const 行 = document.querySelector('.正文行[data-chapter-index="1"]');
+    const 命中字 = 行.querySelector('.字.命中');
+    const 普通字 = [...行.querySelectorAll('.字')].find((字) => !字.classList.contains('命中'));
+    const 探针 = document.createElement('span');
+    探针.style.cssText = 'position:absolute;left:-9999px;color:var(--强调色)';
+    document.body.append(探针);
+    const 结果 = {
+      命中色: getComputedStyle(命中字).color,
+      普通色: getComputedStyle(普通字).color,
+      强调色: getComputedStyle(探针).color,
+      命中下划线: getComputedStyle(命中字).textDecorationLine,
+    };
+    探针.remove();
+    return 结果;`);
+  assert.notEqual(命中字样式.命中色, 命中字样式.强调色, 失败(`⑧ 悬停时命中字不应变强调色：${命中字样式.命中色}`));
+  assert.equal(命中字样式.普通色, 命中字样式.强调色, 失败(`⑧ 悬停时标题普通字应变强调色：${命中字样式.普通色}`));
+  assert.ok(!/underline/.test(命中字样式.命中下划线), 失败('⑧ 命中字不应被压上下划线'));
   await 点击(命中坐标.x, 命中坐标.y);
   await 等待落位('⑧ 标题内命中词单击');
   assert.notEqual(
