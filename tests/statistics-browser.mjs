@@ -96,7 +96,21 @@ try {
     ),
     '书籍明细表是弹窗第一块',
   );
-  assert.ok(await evaluate('return !!document.querySelector(".统计每日表")'));
+  assert.equal(
+    await evaluate(
+      'return document.querySelectorAll("#阅读统计内容 table").length',
+    ),
+    2,
+    '弹窗只剩两块：书籍明细 + 时间轴',
+  );
+  // 「每日阅读」整块已撤下：书名行不再点选，也不留选中态与光标样式
+  assert.equal(
+    await evaluate(
+      'return document.querySelectorAll(".统计每日, .统计每日表, .统计可点, .统计选中书").length',
+    ),
+    0,
+    '每日明细模块与其点选交互整体消失',
+  );
   // 深色正文不能污染弹窗主题。
   await evaluate(
     'document.documentElement.style.setProperty("--背景色", "#000"); document.documentElement.style.setProperty("--纸张色", "#000");',
@@ -111,13 +125,11 @@ try {
   await evaluate(`const { 创建阅读统计内容 } = await import('./js/阅读统计.js');
     const 长名 = '很长的书名'.repeat(16) + '<b>特别版</b>.txt';
     document.querySelector('#阅读统计内容').replaceChildren(创建阅读统计内容({
-      今日: 45000, 今日前台: 180000, 文件名: '当前书.txt', 进度: 2.9, 今天: '2026-09-17',
-      书籍: [['当前书.txt', {总滚动毫秒: 11820000, 总前台毫秒: 180000}], [长名, {总滚动毫秒: 2700000, 阅读偏移: 50, 文本长度: 100}]],
-      每日前台: { '当前书.txt': [['2026-09-17', 120000], ['2026-09-15', 60000]] },
-      每日: {
-        '当前书.txt': [['2026-09-17', 45000], ['2026-09-16', 11820000]],
-        [长名]: [['2026-09-10', 2700000]],
-      },
+      文件名: '当前书.txt', 进度: 2.9, 今天: '2026-09-17',
+      书籍: [
+        ['当前书.txt', { 总滚动毫秒: 11820000, 总前台毫秒: 180000 }],
+        [长名, { 总滚动毫秒: 2700000, 总前台毫秒: 90000, 阅读偏移: 50, 文本长度: 100 }],
+      ],
     }));`);
   assert.equal(
     await evaluate(
@@ -131,50 +143,32 @@ try {
     ),
   );
   assert.ok(
-    await evaluate(
-      'return document.querySelector(".统计每日").textContent.includes("不足 1 分钟")',
-    ),
-    '45 秒的每日记录仍报「不足 1 分钟」',
+    await evaluate('return !!document.querySelector(".统计当前标记")'),
+    '当前书仍带「当前」标记',
   );
-  assert.ok(
-    await evaluate(
-      'return document.querySelector(".统计每日 caption").textContent.includes("当前书.txt")',
-    ),
+  // 撤下「每日阅读」整块后，每本书的累计滚动 / 前台停留 / 进度仍留在书籍明细里
+  const 明细 = await evaluate(`
+    const 表 = document.querySelector('#阅读统计内容 table');
+    return [...表.querySelectorAll('tbody tr')].map((行) =>
+      [...行.cells].slice(1).map((格) => 格.textContent));
+  `);
+  assert.deepEqual(
+    明细,
+    [
+      ['3 小时 17 分钟', '3 分钟', '2.9%'],
+      ['45 分钟', '1 分钟', '约 50.0%'],
+    ],
+    `书籍明细三列读数：${JSON.stringify(明细)}`,
   );
-  assert.ok(
-    await evaluate(
-      'return document.querySelector(".统计每日").textContent.includes("今天")',
-    ),
-  );
-  assert.ok(
-    await evaluate(
-      'return document.querySelector(".统计每日").textContent.includes("9月16日")',
-    ),
-  );
-  assert.deepEqual(await evaluate(`return [...document.querySelectorAll('.统计每日 tbody tr')]
-    .map(row => [...row.cells].map(cell => cell.textContent))`), [
-    ['今天', '不足 1 分钟', '2 分钟'],
-    ['9月16日', '3 小时 17 分钟', '0 分钟'],
-    ['9月15日', '0 分钟', '1 分钟'],
-  ]);
   await evaluate(
-    'document.querySelector("#阅读统计内容 tr.统计可点:not(.统计选中书)").click()',
-  );
-  assert.ok(
-    await evaluate(
-      'return document.querySelector(".统计每日 caption").textContent.includes("特别版")',
-    ),
-  );
-  assert.ok(
-    await evaluate(
-      'return document.querySelector(".统计每日").textContent.includes("9月10日")',
-    ),
+    "document.querySelector('#阅读统计内容 table tbody tr:last-child').click()",
   );
   assert.equal(
     await evaluate(
-      'return document.querySelectorAll("#阅读统计内容 b").length',
+      'return document.querySelectorAll("#阅读统计内容 .统计选中书, #阅读统计内容 [aria-selected], #阅读统计内容 [tabindex]").length',
     ),
     0,
+    '点书名行不产生选中态，也没有可聚焦的残留',
   );
   for (const width of [885, 375]) {
     await send('Emulation.setDeviceMetricsOverride', {
@@ -187,7 +181,7 @@ try {
       await evaluate(
         'const d = document.querySelector("#阅读统计弹窗"); const r = d.getBoundingClientRect(); return r.left >= 0 && r.right <= innerWidth && d.scrollWidth <= d.clientWidth;',
       ),
-      `no overflow at ${width}px: ${JSON.stringify(await evaluate('const d = document.querySelector("#阅读统计弹窗"); const r = d.getBoundingClientRect(); const t = document.querySelector(".统计每日表"); return {left:r.left,right:r.right,width:innerWidth,scroll:d.scrollWidth,client:d.clientWidth,caption:t?.caption?.textContent,tableScroll:t?.scrollWidth,th:t?[...t.querySelectorAll("th")].map(h=>h.clientWidth):null};'))}`,
+      `no overflow at ${width}px: ${JSON.stringify(await evaluate('const d = document.querySelector("#阅读统计弹窗"); const r = d.getBoundingClientRect(); const t = document.querySelector(".统计时段表"); return {left:r.left,right:r.right,width:innerWidth,scroll:d.scrollWidth,client:d.clientWidth,caption:t?.caption?.textContent,tableScroll:t?.scrollWidth,th:t?[...t.querySelectorAll("th")].map(h=>h.clientWidth):null};'))}`,
     );
     const 弹窗宽 = await evaluate(
       'return Math.round(document.querySelector("#阅读统计弹窗").getBoundingClientRect().width)',

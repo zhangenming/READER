@@ -218,9 +218,8 @@ const 结果 = await 求值(`
   const 内容 = document.querySelector('#阅读统计内容');
   内容.textContent = '';
   内容.append(创建阅读统计内容({
-    每日前台: {},
     书籍: [['x.txt', { 总滚动毫秒: 0, 总前台毫秒: 0 }]],
-    文件名: 'x.txt', 进度: 0, 每日: {}, 每日时段, 每日激活时段,
+    文件名: 'x.txt', 进度: 0, 每日时段, 每日激活时段,
     今天: '2026-09-23',
   }));
   document.querySelector('#阅读统计弹窗').showModal();

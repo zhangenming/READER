@@ -134,21 +134,14 @@ export function 格式化时长到分(秒数) {
 }
 
 export function 创建阅读统计内容({
-  每日前台 = {},
   书籍,
   文件名,
   进度,
-  每日 = {},
   每日时段 = {},
   每日激活时段 = {},
   今天 = '',
 }) {
   const 片段 = document.createDocumentFragment();
-
-  const 书籍名列表 = 书籍.map(([名]) => 名);
-  let 选中书名 = 书籍名列表.includes(文件名) ? 文件名 : (书籍名列表[0] ?? '');
-  let 每日标题;
-  let 每日表体;
 
   const 表格 = 创建节点('table');
   表格.append(创建节点('caption', `书籍明细 · ${书籍.length} 本`));
@@ -171,11 +164,7 @@ export function 创建阅读统计内容({
     ([, a], [, b]) => b.总滚动毫秒 - a.总滚动毫秒,
   )) {
     const 当前 = 名 === 文件名;
-    const 行 = 创建节点('tr', '', '统计可点');
-    if (名 === 选中书名) 行.classList.add('统计选中书');
-    行.dataset.文件名 = 名;
-    行.tabIndex = 0;
-    行.setAttribute('aria-selected', 名 === 选中书名 ? 'true' : 'false');
+    const 行 = 创建节点('tr');
     const 书名 = 创建节点('td');
     if (当前) 书名.append(创建节点('span', '当前', '统计当前标记'));
     书名.append(创建节点('span', 名));
@@ -210,91 +199,8 @@ export function 创建阅读统计内容({
     表体.append(行);
   }
   表格.append(表头, 表体);
-  表体.addEventListener('click', 处理书籍点击);
-  表体.addEventListener('keydown', 处理书籍按键);
-
-  片段.append(表格);
-  if (选中书名) 片段.append(创建每日模块());
-  片段.append(创建时段模块());
+  片段.append(表格, 创建时段模块());
   return 片段;
-
-  function 处理书籍点击(事件) {
-    const 行 = 事件.target.closest('tr[data-文件名]');
-    if (行) 切换选中(行.dataset.文件名);
-  }
-
-  function 处理书籍按键(事件) {
-    if (事件.key !== 'Enter' && 事件.key !== ' ') return;
-    const 行 = 事件.target.closest('tr[data-文件名]');
-    if (!行) return;
-    事件.preventDefault();
-    切换选中(行.dataset.文件名);
-  }
-
-  function 切换选中(书名) {
-    if (!书名 || 书名 === 选中书名) return;
-    选中书名 = 书名;
-    for (const 行 of 表体.querySelectorAll('tr[data-文件名]')) {
-      const 选中 = 行.dataset.文件名 === 选中书名;
-      行.classList.toggle('统计选中书', 选中);
-      行.setAttribute('aria-selected', 选中 ? 'true' : 'false');
-    }
-    更新每日模块();
-  }
-
-  function 创建每日模块() {
-    const 区块 = 创建节点('section', '', '统计每日');
-    const 每日表 = 创建节点('table', '', '统计每日表');
-    每日标题 = 创建节点('caption');
-    const 每日表头 = 创建节点('thead');
-    const 每日标题行 = 创建节点('tr');
-    for (const [标题, 口径] of [
-      ['日期', ''],
-      ['滚动', '这本书当天持续滚动的起止时长之和，与下方时间轴同一起止时刻'],
-      ['前台停留', '这本书当天页面可见的时长'],
-    ]) {
-      const 列 = 创建节点('th', 标题);
-      列.scope = 'col';
-      if (口径) 列.title = 口径;
-      每日标题行.append(列);
-    }
-    每日表头.append(每日标题行);
-    每日表体 = 创建节点('tbody');
-    每日表.append(每日标题, 每日表头, 每日表体);
-    区块.append(每日表);
-    更新每日模块();
-    return 区块;
-  }
-
-  function 更新每日模块() {
-    if (!每日标题 || !每日表体) return;
-    每日标题.textContent = `每日阅读 · ${选中书名}`;
-    每日标题.title = 选中书名;
-    每日表体.replaceChildren();
-    const 滚动记录 = new Map(每日[选中书名] ?? []);
-    const 前台记录 = new Map(每日前台[选中书名] ?? []);
-    const 记录 = [...new Set([...滚动记录.keys(), ...前台记录.keys()])]
-      .sort((左, 右) => 右.localeCompare(左));
-    if (!记录.length) {
-      const 行 = 创建节点('tr');
-      const 提示 = 创建节点('td', '还没有按日记录', '统计空状态');
-      提示.colSpan = 3;
-      行.append(提示);
-      每日表体.append(行);
-      return;
-    }
-    for (const 日期 of 记录) {
-      const 行 = 创建节点('tr');
-      const 日期列 = 创建节点('td', 格式化统计日期(日期, 今天));
-      日期列.title = 日期;
-      行.append(
-        日期列,
-        创建节点('td', 格式化统计时长(滚动记录.get(日期))),
-        创建节点('td', 格式化统计时长(前台记录.get(日期))),
-      );
-      每日表体.append(行);
-    }
-  }
 
   function 创建时段模块() {
     const 滚动条目 = new Map(取有时段的条目(每日时段));

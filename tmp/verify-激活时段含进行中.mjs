@@ -52,7 +52,14 @@ console.log('地址:', 地址, 'CDP:', CDP端口, 'profile:', profile);
 
 const 服务 = spawn(process.execPath, ['server.mjs', String(站点端口)], {
   cwd: 项目根,
-  stdio: 'ignore',
+  stdio: 'pipe',
+});
+// 必须 drain：server.mjs 请求日志写满管道会把服务挂住（见 verify 脚本残留进程的教训）
+服务.stdout.resume();
+服务.stderr.resume();
+let 服务退出 = null;
+服务.once('exit', (码) => {
+  服务退出 = 码;
 });
 const chrome = spawn(
   '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
@@ -92,12 +99,18 @@ async function 收尾() {
 let ws = null;
 try {
   for (let n = 0; n < 100; n += 1) {
+    if (服务退出 !== null)
+      throw new Error(`server.mjs 退出（码 ${服务退出}），多半是 15921 已被上一次运行或别的会话占用`);
     try {
       if ((await fetch(地址, { signal: AbortSignal.timeout(1000) })).ok) break;
     } catch {}
     if (n === 99) throw new Error('server.mjs 没有起来');
     await pause(100);
   }
+  // 站点端口写死在回归脚本里：上一轮的进程若还没退干净，这里绑不上却被旧服务答了 200，
+  // 中途旧服务一死，回归就会连到半路断源。所以起完必须确认自己这个服务还活着。
+  await pause(200); // 让 EADDRINUSE 的 exit 事件落地再判
+  assert.equal(服务退出, null, '本次启动的 server.mjs 仍在监听 15921');
 
   let 目标 = null;
   for (let n = 0; n < 150 && !目标; n += 1) {
@@ -180,6 +193,17 @@ try {
     if (就绪) break;
     await pause(200);
     if (n === 599) throw new Error('正文没有载入完成');
+  }
+
+  // 顺手出一张真实数据下的弹窗截图（SHOT=路径），肉眼确认撤掉的那块没有留下空槽
+  if (process.env.SHOT) {
+    await 求值(`document.querySelector('#阅读统计按钮').click(); return 1;`);
+    await pause(400);
+    const { data } = await 发送('Page.captureScreenshot', { format: 'png' });
+    const { writeFileSync } = await import('node:fs');
+    writeFileSync(process.env.SHOT, Buffer.from(data, 'base64'));
+    console.log('截图 →', process.env.SHOT);
+    await 求值(`document.querySelector('#阅读统计弹窗').close(); return 1;`);
   }
 
   // 回归本体：CDP_PORT 交给它复用这个已打开的阅读器标签；可换跑其它浏览器回归脚本

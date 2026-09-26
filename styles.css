@@ -430,13 +430,6 @@ body.关键词手势中 .滚动容器 {
   width: 40%;
   text-align: left;
 }
-.统计可点 {
-  cursor: pointer;
-}
-.统计可点:hover,
-.统计选中书 {
-  background: var(--背景色);
-}
 .统计当前标记 {
   display: inline-block;
   margin-right: 6px;
@@ -450,17 +443,6 @@ body.关键词手势中 .滚动容器 {
   padding: 24px 8px;
   color: var(--次要墨色);
   text-align: center;
-}
-.统计每日 {
-  margin-top: 20px;
-}
-.统计每日 caption {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.阅读统计内容 .统计每日表 th:first-child,
-.阅读统计内容 .统计每日表 td:first-child {
-  width: 36%;
 }
 /* —— 滚动时间段：一天一行，所有行共用一条只覆盖有数据范围的时间轴 —— */
 .统计时段 {
