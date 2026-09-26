@@ -4,7 +4,6 @@ import { 二分句段起点 } from './排版引擎.js';
 import { 设置属性, 设置文本 } from './虚拟渲染.js';
 import { 今日本书滚动后缀, 格式化剩余滚动时间 } from './统计展示.js';
 import { 更新章节进度 } from './章节目录.js';
-import { 正文可视高, 白线高 } from './白线.js';
 
 // 拖拽中断钩子：由 app 注入 取消滚动动画 / 结束跳转会话。
 // 断环：跳转动画 → 本模块（更新滚动块），故本模块不能反向 import 跳转动画。
@@ -71,7 +70,7 @@ export function 处理滚动条滚轮(事件) {
     事件.deltaMode === WheelEvent.DOM_DELTA_LINE
       ? 状态.行高
       : 事件.deltaMode === WheelEvent.DOM_DELTA_PAGE
-        ? 正文可视高()
+        ? 元素.滚动容器.clientHeight
         : 1;
   元素.滚动容器.scrollTop += 事件.deltaY * 滚动单位;
 }
@@ -82,8 +81,8 @@ export function 处理滚动条键盘(事件) {
   // ArrowUp / ArrowDown 不在此按行滚动：它们已全局接管为整屏翻页（等同 Space / Shift+Space），
   // 事件会冒泡到 window 的键盘处理统一执行
   const 键盘滚动表 = {
-    PageUp: -正文可视高(),
-    PageDown: 正文可视高(),
+    PageUp: -元素.滚动容器.clientHeight,
+    PageDown: 元素.滚动容器.clientHeight,
     Home: -Infinity,
     End: Infinity,
   };
@@ -104,19 +103,17 @@ export function 处理滚动条键盘(事件) {
 
 function 根据指针滚动(指针Y) {
   const 块内偏移 = 滚动进度拖动状态?.块内偏移 ?? 0;
-  const 可视高度 = 正文可视高();
+  const 容器高度 = 元素.滚动容器.clientHeight;
   const 滚动条度量 = 读取滚动条度量(
-    可视高度,
-    可视高度,
+    容器高度,
+    容器高度,
     元素.滚动容器.scrollHeight,
   );
   if (滚动条度量.滚动块行程 <= 0 || 滚动条度量.最大滚动位置 <= 0) {
     return;
   }
-  // 轨道顶边已按白线内缩，指针 Y 要减去它才是轨道内坐标；量实际矩形而不是读
-  // 白线变量，白线正在过渡时才不会差一截
-  const 轨道顶边 = 元素.章节轨道?.getBoundingClientRect?.().top ?? 白线高().顶;
-  const 滚动块中心 = 指针Y - 轨道顶边 - 块内偏移 + 滚动条度量.滚动块高度 / 2;
+  // 轨道 fixed 满高、顶边即视口顶（不随白线收放），故指针 Y 可直接当轨道内坐标用
+  const 滚动块中心 = 指针Y - 块内偏移 + 滚动条度量.滚动块高度 / 2;
   元素.滚动容器.scrollTop = 轨道中心转滚动位置(滚动块中心, 滚动条度量);
 }
 
@@ -157,8 +154,8 @@ export function 更新滚动块位置(度量 = null, 滚动位置 = null) {
   const 读数 = 元素.滚动进度;
   元素.章节轨道.hidden = false;
   读数.hidden = false;
-  const 轨道高度 = 度量?.轨道高度 ?? 正文可视高();
-  const 容器高度 = 度量?.容器高度 ?? 正文可视高();
+  const 轨道高度 = 度量?.轨道高度 ?? 元素.滚动容器.clientHeight;
+  const 容器高度 = 度量?.容器高度 ?? 元素.滚动容器.clientHeight;
   const 滚动高度 = 度量?.滚动高度 ?? 元素.滚动容器.scrollHeight;
   const 滚动条度量 = 读取滚动条度量(轨道高度, 容器高度, 滚动高度);
   const { 最大滚动位置, 滚动块高度 } = 滚动条度量;

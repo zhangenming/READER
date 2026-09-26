@@ -7,7 +7,6 @@ import {
 } from './常量.js';
 import { 元素, 状态, 查找关键词 } from './状态.js';
 import { 渲染关键词面板 } from './面板.js';
-import { 正文可视高 } from './白线.js';
 import { 查找偏移所在行 } from './排版引擎.js';
 import {
   获取关键词配色,
@@ -35,11 +34,10 @@ export function 初始化指示器() {
 export function 更新关键词指示器() {
   渲染关键词面板();
   更新滚动块();
-  // 轨道与「一屏」都按正文可视高算：白线是浮层，轨道已按白线内缩（styles.css
-  // .章节轨道 的 top/height），这里再量容器高就会比轨道实际高度多两条白线，
-  // 刻度越靠下偏得越多（见 js/白线.js）。
-  const 轨道高度 = 正文可视高();
-  const 容器高度 = 正文可视高();
+  // 轨道按整窗高（clientHeight）换算：左侧这条白轴不随上下白线收放，
+  // 它的 CSS 也是 top:0 / height:100%，两边一致，刻度才不会整体偏移（styles.css .章节轨道）。
+  const 轨道高度 = 元素.滚动容器.clientHeight;
+  const 容器高度 = 元素.滚动容器.clientHeight;
   const 滚动高度 = 元素.滚动容器.scrollHeight;
   const 视口度量 = { 轨道高度, 容器高度, 滚动高度 };
   const 当前关键词 = 查找关键词(状态.当前关键词id);
