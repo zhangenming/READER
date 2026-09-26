@@ -1,5 +1,8 @@
-// 左缘进度读数实测：数字整列排在红色指针线之上（不再被横线穿过），
-// 且显示格式为 ??.?%（一位小数 + 百分号）。
+// 左缘进度读数的四条不变量（headless Chrome 实测）：
+//   ① 格式 ??.?%（一位小数 + 百分号）
+//   ② 横向一行、正红，且排在红色指针线之上（线仍钉在真实进度位置）
+//   ③ 数字永远不溢出白轴 —— 轴窄就压字号，绝不压到正文首字上
+//   ④ 书首书尾整枚读数夹在轨道内，不被视口裁掉
 // 跑法：node tmp/verify-进度读数-红线之上.mjs  [BOOK=从0到1：开启商业与未来的秘密.txt]
 // 按 AGENTS.md：profile 路径存下来，成功/异常/超时都走 finally 删除并确认不存在。
 import { spawn } from 'node:child_process';
@@ -184,31 +187,36 @@ async function 截(名字, x, 宽度, 高度, scale = 4) {
   writeFileSync(resolve(import.meta.dirname, 名字), Buffer.from(data, 'base64'));
 }
 
-// 一次量全：读数文本、数字列盒、读数盒（=红线所在）、期望锚点、轨道可视高
+// 一次量全：文本/颜色/字号、数字列盒、读数盒（盒底边 = 红线）、期望锚点、正文首字左缘。
+// 期望锚点直接取 更新滚动块位置() 的返回值：轨道高度怎么来的（视口高 / 扣掉两条白线的
+// 正文可视高）由 js/滚动条.js 自己定，测试不跟着抄一遍，免得它改了这里就假失败。
 const 量读数 = () =>
   求值(`
     const { 状态, 元素 } = await import('./js/状态.js');
-    const { 读取滚动条度量, 滚动位置转轨道中心 } = await import('./js/滚动条.js');
-    const 容器 = 元素.滚动容器;
-    const 轨道高度 = 容器.clientHeight;
-    const 度量 = 读取滚动条度量(轨道高度, 容器.clientHeight, 容器.scrollHeight);
-    const 进度 = Math.min(1, Math.max(0, 容器.scrollTop / 度量.最大滚动位置));
-    const 期望锚点 = 滚动位置转轨道中心(容器.scrollTop, 度量);
+    const { 更新滚动块位置 } = await import('./js/滚动条.js');
+    const 块 = 更新滚动块位置();
     const 根 = getComputedStyle(document.documentElement);
     const 盒 = (e) => { const b = e.getBoundingClientRect();
-      return { 上: b.top, 下: b.bottom, 高: b.height, 左: b.left, 宽: b.width }; };
+      return { 上: b.top, 下: b.bottom, 高: b.height, 左: b.left, 右: b.right, 宽: b.width }; };
+    const 首行 = [...document.querySelectorAll('.正文行')].find((r) => r.childElementCount);
     return {
       文本: 元素.滚动百分比.textContent,
       title: 元素.滚动进度.getAttribute('title'),
       valuenow: 元素.滚动进度.getAttribute('aria-valuenow'),
       数字: 盒(元素.滚动百分比),
       读数: 盒(元素.滚动进度),
-      期望锚点, 轨道高度,
+      期望锚点: 块?.读数中心 ?? null,
+      轨道高度: 块?.轨道高度 ?? null,
       进度读数高度: 状态.进度读数高度,
       指针间距: parseFloat(根.getPropertyValue('--进度指针间距')),
+      字号: parseFloat(getComputedStyle(元素.滚动进度).fontSize),
+      数字色: getComputedStyle(元素.滚动进度).color,
+      线色: getComputedStyle(元素.滚动进度, '::before').backgroundColor,
       线top: getComputedStyle(元素.滚动进度, '::before').top,
-      线高: getComputedStyle(元素.滚动进度, '::before').height,
       竖排: getComputedStyle(元素.滚动百分比).writingMode,
+      行高: getComputedStyle(元素.滚动百分比).lineHeight,
+      轴宽: 元素.章节轨道.getBoundingClientRect().width,
+      首字左: 首行 ? 首行.firstElementChild.getBoundingClientRect().left : null,
     };`);
 
 async function 滚到(比例) {
@@ -220,95 +228,158 @@ async function 滚到(比例) {
   await pause(500);
 }
 
+// 四条不变量一起判，返回量到的数据供打印
+function 判(名, 量) {
+  console.log(
+    `${名}: 「${量.文本}」 字号${量.字号} 数字[${量.数字.左.toFixed(1)}→${量.数字.右.toFixed(1)}]×` +
+      `[${量.数字.上.toFixed(1)}→${量.数字.下.toFixed(1)}] 轴宽${量.轴宽} 读数盒高${量.读数.高} ` +
+      `锚点${量.期望锚点?.toFixed(1)} 线在${量.读数.下.toFixed(1)}`,
+  );
+  // ① 格式
+  assert.match(量.文本, /^\d+\.\d%$/, `${名}：格式应为 ??.?%，实得「${量.文本}」`);
+  assert.match(量.title, /^阅读进度 \d+\.\d%$/, `${名}：title 同读数：${量.title}`);
+  assert.match(
+    量.valuenow,
+    /^\d+\.\d$/,
+    `${名}：aria-valuenow 不带百分号：${量.valuenow}`,
+  );
+  // ② 横向 + 正红 + 在线之上
+  assert.equal(量.竖排, 'horizontal-tb', `${名}：读数应横向一行`);
+  assert.equal(量.数字色, 'rgb(255, 0, 0)', `${名}：数字应正红，实得 ${量.数字色}`);
+  assert.equal(量.线色, 'rgb(255, 0, 0)', `${名}：横线应正红，实得 ${量.线色}`);
+  assert.ok(
+    Math.abs(parseFloat(量.线top) - 量.读数.高) <= 1,
+    `${名}：横线应钉在盒底边：top=${量.线top} vs 盒高 ${量.读数.高}`,
+  );
+  assert.ok(
+    量.数字.下 <= 量.读数.下 - 量.指针间距 / 2,
+    `${名}：数字要在红线之上：数字底 ${量.数字.下.toFixed(1)} vs 线 ${量.读数.下.toFixed(1)}`,
+  );
+  // ③ 不溢出白轴、不压正文首字
+  assert.ok(
+    量.数字.左 >= 量.读数.左 - 0.5 && 量.数字.右 <= 量.读数.右 + 0.5,
+    `${名}：数字溢出白轴（会压住正文）：[${量.数字.左.toFixed(1)}, ${量.数字.右.toFixed(1)}] vs 轴 [${量.读数.左}, ${量.读数.右.toFixed(1)}]`,
+  );
+  if (量.首字左 !== null)
+    assert.ok(
+      量.数字.右 <= 量.首字左 + 0.5,
+      `${名}：数字压到正文首字：${量.数字.右.toFixed(1)} > ${量.首字左.toFixed(1)}`,
+    );
+  // ④ 夹在轨道内 + 未夹取处红线指在真实进度上
+  assert.ok(量.数字.上 >= -0.5, `${名}：数字被视口顶边裁掉：${量.数字.上}`);
+  assert.ok(
+    量.期望锚点 !== null && 量.轨道高度 !== null,
+    `${名}：更新滚动块位置() 没返回读数状态，量不了`,
+  );
+  assert.ok(
+    量.读数.下 <= 量.轨道高度 + 0.5 && 量.读数.上 >= -0.5,
+    `${名}：读数越出轨道：[${量.读数.上.toFixed(1)}, ${量.读数.下.toFixed(1)}] vs 轨道高 ${量.轨道高度}`,
+  );
+  if (量.期望锚点 > 量.进度读数高度 && 量.期望锚点 < 量.轨道高度)
+    assert.ok(
+      Math.abs(量.读数.下 - 量.期望锚点) <= 1,
+      `${名}：红线偏离真实进度：${量.读数.下.toFixed(1)} vs ${量.期望锚点.toFixed(1)}`,
+    );
+}
+
 let 失败 = null;
 try {
   await 连接页面();
   await 载入一本书();
   await pause(600);
 
-  const 格式 = /^\d+\.\d%$/;
-  const 用例 = [
+  // —— 1. 五档进度：格式 / 横向 / 正红 / 线之上 / 不裁 ——
+  for (const [比例, 名] of [
     [0, '书首'],
     [0.03, '3%'],
     [0.35, '35%'],
     [0.999, '文末前'],
     [1, '书尾'],
-  ];
-  const 记录 = [];
-  for (const [比例, 名] of 用例) {
+  ]) {
     await 滚到(比例);
-    const 量 = await 量读数();
-    记录.push([名, 量]);
-    console.log(
-      `${名}: 文本=${量.文本} 数字[${量.数字.上.toFixed(1)}, ${量.数字.下.toFixed(1)}] ` +
-        `读数盒[${量.读数.上.toFixed(1)}, ${量.读数.下.toFixed(1)}] 锚点=${量.期望锚点.toFixed(1)} ` +
-        `线top=${量.线top} 状态高=${量.进度读数高度}`,
-    );
-
-    // —— 1. 格式 ??.?% ——
-    assert.match(量.文本, 格式, `${名}：进度读数格式应为 ??.?%，实得「${量.文本}」`);
-    assert.match(
-      量.title ?? '',
-      /^阅读进度 \d+\.\d%$/,
-      `${名}：title 应带同一份读数：${量.title}`,
-    );
-    assert.match(
-      量.valuenow ?? '',
-      /^\d+\.\d$/,
-      `${名}：aria-valuenow 应为不带百分号的一位小数：${量.valuenow}`,
-    );
-    assert.equal(量.竖排, 'vertical-rl', `${名}：读数仍是竖排 upright 一列`);
-
-    // —— 2. 数字整列在红线之上 ——
-    const 红线中心 = 量.读数.下; // ::before 在盒底边、translateY(-50%) 居中
-    assert.ok(
-      Math.abs(parseFloat(量.线top) - 量.读数.高) <= 1,
-      `${名}：横线应钉在读数盒底边：top=${量.线top} vs 盒高 ${量.读数.高}`,
-    );
-    assert.ok(
-      量.数字.下 <= 红线中心 - 量.指针间距 / 2,
-      `${名}：数字底缘要留在红线之上，实得数字底 ${量.数字.下.toFixed(1)} vs 线 ${红线中心.toFixed(1)}`,
-    );
-    assert.ok(
-      Math.abs(量.读数.高 - (量.数字.高 + 量.指针间距)) <= 1,
-      `${名}：读数盒高应 = 数字列高 + 指针间距：${量.读数.高} vs ${量.数字.高}+${量.指针间距}`,
-    );
-
-    // —— 3. 不被视口裁掉、且锚在轨道内 ——
-    assert.ok(量.数字.上 >= -0.5, `${名}：数字顶部被裁：${量.数字.上}`);
-    assert.ok(
-      量.读数.下 <= 量.轨道高度 + 0.5,
-      `${名}：读数底边越过轨道：${量.读数.下} vs ${量.轨道高度}`,
-    );
-    assert.ok(量.读数.上 >= -0.5, `${名}：读数盒顶越过轨道顶：${量.读数.上}`);
-
-    // —— 4. 未夹取时红线仍指在真实进度上 ——
-    const 夹住 = 量.期望锚点 < 量.进度读数高度 || 量.期望锚点 > 量.轨道高度;
-    if (!夹住) {
-      assert.ok(
-        Math.abs(量.读数.下 - 量.期望锚点) <= 1,
-        `${名}：红线偏离真实进度 ${量.读数.下} vs ${量.期望锚点}`,
-      );
-    }
+    判(名, await 量读数());
   }
 
-  // 中间档截一张左缘放大图，肉眼确认「数字在上、红线在下」
-  await 滚到(0.35);
   const 中 = await 量读数();
-  const 截图高 = Math.min(窗口[1], 中.读数.下 + 40);
-  await 截('进度读数-红线之上-35.png', 0, 中.读数.宽 + 40, 截图高);
-  await 滚到(1);
-  const 尾 = await 量读数();
-  await 截('进度读数-红线之上-100.png', 0, 尾.读数.宽 + 40, Math.min(窗口[1], 尾.读数.下 + 40));
-  await 滚到(0);
-  const 首 = await 量读数();
-  await 截('进度读数-红线之上-0.png', 0, 首.读数.宽 + 40, Math.min(窗口[1], 首.读数.下 + 40));
-  await 截('进度读数-红线之上-整页.png', 0, 窗口[0], 窗口[1], 1);
+  await 滚到(0.35);
+  await 截('进度读数-横向-35.png', 0, 中.读数.宽 + 60, 窗口[1]);
+
+  // —— 2. 视口扫一遍：轴宽随视口跳，字号必须跟着压、且始终不溢出 ——
+  const 轴宽集 = new Set();
+  for (const [宽, 高] of [
+    [1440, 1000],
+    [1200, 900],
+    [980, 820],
+    [760, 700],
+    [520, 700],
+    [375, 780],
+  ]) {
+    await 发送('Emulation.setDeviceMetricsOverride', {
+      width: 宽,
+      height: 高,
+      deviceScaleFactor: 1,
+      mobile: false,
+    });
+    await 求值(`window.dispatchEvent(new Event('resize')); return 1;`);
+    await pause(1200);
+    await 滚到(0.42);
+    const 量 = await 量读数();
+    轴宽集.add(Math.round(量.轴宽));
+    判(`视口 ${宽}×${高}`, 量);
+    assert.ok(
+      量.字号 <= 12 + 1e-6,
+      `视口 ${宽}：字号不该超过上限 12px，实得 ${量.字号}`,
+    );
+    assert.ok(
+      量.字号 <= 量.轴宽 / 3.9 + 0.01,
+      `视口 ${宽}：字号没跟着轴宽压（${量.字号} vs 轴宽 ${量.轴宽}）`,
+    );
+  }
+  await 发送('Emulation.clearDeviceMetricsOverride');
+  await 求值(`window.dispatchEvent(new Event('resize')); return 1;`);
+  await pause(1200);
+  console.log('扫过的白轴宽度:', [...轴宽集].sort((a, b) => a - b).join('px, ') + 'px');
+
+  // —— 3. 字号档位扫一遍（走 重建行索引，和白轴一列那条用例同一路子）——
+  for (const 字号 of [16, 24, 44]) {
+    await 求值(`
+      document.documentElement.style.setProperty('--正文字号', '${字号}px');
+      document.documentElement.style.setProperty('--行高', '${字号}px');
+      (await import('./js/排版引擎.js')).重建行索引();
+      return 1;`);
+    await pause(1400);
+    await 滚到(0.42);
+    const 量 = await 量读数();
+    判(`正文字号 ${字号}`, 量);
+  }
+  await 求值(`
+    document.documentElement.style.removeProperty('--正文字号');
+    document.documentElement.style.removeProperty('--行高');
+    (await import('./js/排版引擎.js')).重建行索引();
+    return 1;`);
+  await pause(1400);
+
+  // —— 4. 最窄那一档留一张放大图，肉眼确认「小但不遮字」 ——
+  await 发送('Emulation.setDeviceMetricsOverride', {
+    width: 375,
+    height: 780,
+    deviceScaleFactor: 1,
+    mobile: false,
+  });
+  await 求值(`window.dispatchEvent(new Event('resize')); return 1;`);
+  await pause(1400);
+  await 滚到(0.42);
+  const 窄 = await 量读数();
+  判('窄视口留图', 窄);
+  await 截('进度读数-横向-窄375.png', 0, 窄.读数.宽 + 60, 780);
+  await 发送('Emulation.clearDeviceMetricsOverride');
 
   const 噪音 = (条) => /wss:\/\/localhost:15941|ERR_CERT_AUTHORITY_INVALID/.test(条);
   const 真错误 = 控制台错误.filter((条) => !噪音(条));
   assert.deepEqual(真错误, [], `控制台不应报错：${真错误.join(' | ')}`);
-  console.log('\n全部通过：格式 ??.?%、数字整列在红线之上、两端不被裁、红线钉在真实进度');
+  console.log(
+    '\n全部通过：??.?% 横向正红、排在红线之上、字号随轴宽压小、任何档位都不溢出白轴压正文',
+  );
 } catch (错误) {
   失败 = 错误;
   console.error(错误);
