@@ -99,7 +99,7 @@ export const 高亮配色 = [{ 浅色: 默认高亮浅色, 深色: 默认关键�
  * @property {number} 下一个关键词id 下一个待分配关键词 id
  * @property {?number} 查找临时关键词id 查找命中的临时关键词 id；无为 null
  * @property {?Object} 指示器缓存 关键词指示器绘制缓存；脏时为 null 待重建
- * @property {number} 百分比半高 竖排进度读数自身高度的一半，用于把它夹在轨道内不被视口裁掉
+ * @property {number} 进度读数高度 竖排进度读数盒（数字 + 底边到红线的留白）的高度，用于把它夹在轨道内不被视口裁掉
  * @property {boolean} 关键词面板展开 关键词管理面板是否展开
  * @property {string} 关键词面板签名 面板渲染签名，变化即需重渲染面板行列表（含排序与当前项）
  * @property {string} 关键词排序 面板排序方式（'数量' / 首次出现 / 拼音等）
@@ -152,7 +152,7 @@ export const 状态 = {
   跳转起点: null,
   查找临时关键词id: null,
   指示器缓存: null,
-  百分比半高: 0,
+  进度读数高度: 0,
   当前命中位置计时器: 0,
   关键词面板展开: false,
   关键词面板签名: '',
