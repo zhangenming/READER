@@ -2754,6 +2754,70 @@ dialog,
   display: none;
 }
 
+/* ===== 批量导入关键词：面板右上角入口 + 弹窗 ===== */
+/* 入口沿用 .关键词排序钮 的字号与 hover 底，只靠 margin-left:auto 推到排序栏右端，
+   不与「数量 / 位置 / 拼音」三枚排序钮争视觉重量。 */
+.关键词批量钮 {
+  margin-left: auto;
+}
+
+.批量导入弹窗 {
+  width: min(420px, calc(100vw - 32px));
+  max-height: min(600px, calc(100dvh - 80px));
+}
+
+/* 一行一个词：行高钉成 22px 的整数倍，弹窗高度变化时只多行少行，不出现半行字。 */
+.批量导入输入框 {
+  min-height: 154px;
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 10px 16px;
+  color: var(--墨色);
+  font:
+    13px/22px 'Avenir Next',
+    'PingFang SC',
+    sans-serif;
+  font-variant-numeric: tabular-nums;
+  background: var(--纸张色);
+  border: 0;
+  border-bottom: 1px solid var(--边线色);
+  border-radius: 0;
+  outline: 0;
+  resize: none;
+  scrollbar-color: #8c8c8c transparent;
+  scrollbar-width: thin;
+}
+
+.批量导入输入框::placeholder {
+  color: var(--次要墨色);
+}
+
+.批量导入计数 {
+  margin: 0;
+  padding: 8px 16px 0;
+  color: var(--次要墨色);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  line-height: 18px;
+}
+
+.批量导入计数:empty {
+  display: none;
+}
+
+.批量导入结果 {
+  color: var(--墨色);
+}
+
+.批量导入底部 {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 10px 16px 12px;
+}
+
 @keyframes 内容选择弹窗进入 {
   from {
     opacity: 0;

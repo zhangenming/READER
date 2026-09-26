@@ -13,6 +13,7 @@ export function 有弹窗打开() {
     元素.词频弹窗.open ||
     元素.内容选择弹窗.open ||
     元素.章节目录弹窗.open ||
+    元素.批量导入弹窗.open ||
     元素.阅读统计弹窗.open ||
     !元素.字体弹窗.hidden
   );
@@ -164,6 +165,14 @@ export function 渲染关键词面板() {
       按钮.setAttribute('aria-pressed', String(状态.关键词排序 === 排序方式));
       排序栏.append(按钮);
     }
+    // 排序栏右端＝面板右上角：批量导入入口，与排序钮同一档字号留白，不抢排序的视觉重量。
+    const 批量钮 = document.createElement('button');
+    批量钮.type = 'button';
+    批量钮.className = '关键词排序钮 关键词批量钮';
+    批量钮.dataset.batchImport = '1';
+    批量钮.textContent = '批量';
+    批量钮.title = '批量导入关键词（一行一个）';
+    排序栏.append(批量钮);
     return 排序栏;
   }
 

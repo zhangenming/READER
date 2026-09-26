@@ -20,6 +20,7 @@ const 默认用例 = [
   'tests/keyword-longpress-browser.mjs',
   'tests/statistics-browser.mjs',
   'tests/scroll-segments-browser.mjs',
+  'tests/batch-import-browser.mjs',
 ];
 const 用例列表 = process.argv.slice(2).length ? process.argv.slice(2) : 默认用例;
 const pause = (毫秒) => new Promise((r) => setTimeout(r, 毫秒));

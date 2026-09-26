@@ -520,6 +520,40 @@
       </div>
     </dialog>
 
+    <dialog
+      id="批量导入弹窗"
+      class="内容选择弹窗 批量导入弹窗"
+      aria-labelledby="批量导入标题"
+    >
+      <div class="内容选择标题栏">
+        <div>
+          <h2 id="批量导入标题" class="内容选择标题">批量导入关键词</h2>
+          <p class="内容选择摘要">一行一个，重复与本书未出现的不会导入</p>
+        </div>
+        <button
+          id="关闭批量导入按钮"
+          class="关闭查找按钮"
+          type="button"
+          aria-label="关闭批量导入"
+          title="关闭"
+        >×</button>
+      </div>
+      <textarea
+        id="批量导入输入框"
+        class="批量导入输入框"
+        rows="8"
+        spellcheck="false"
+        autocomplete="off"
+        placeholder="一行一个关键词"
+        aria-label="批量导入关键词，一行一个"
+      ></textarea>
+      <p id="批量导入反馈" class="批量导入计数" role="status"></p>
+      <p id="批量导入结果" class="批量导入计数 批量导入结果" role="status"></p>
+      <div class="批量导入底部">
+        <button id="批量导入确认按钮" class="查找导航按钮" type="button">导入</button>
+      </div>
+    </dialog>
+
     <div id="字体遮罩" class="字体遮罩" hidden></div>
     <div
       id="字体弹窗"
