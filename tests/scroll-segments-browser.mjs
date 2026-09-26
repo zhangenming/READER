@@ -67,6 +67,12 @@ function 格式化时刻(当日秒) {
   return `${补零(Math.floor(当日秒 / 3600))}:${补零(Math.floor(当日秒 / 60) % 60)}:${补零(当日秒 % 60)}`;
 }
 
+// 色块悬停提示是「HH:MM:SS → HH:MM:SS · 时长」，取回当日秒用来核对进行中段的段尾
+function 解析轴时刻(文本) {
+  const [时, 分, 秒] = String(文本).split(':').map(Number);
+  return 时 * 3600 + 分 * 60 + 秒;
+}
+
 let 备份 = null;
 try {
   await send('Page.enable');
@@ -183,6 +189,14 @@ try {
   assert.deepEqual(读回.旧格式, [[7_200, 7_300]], '旧版带「种类」的段照常读回，多余一位丢掉');
 
   // 3) 统计弹窗：一天一行、两类时段共用一条轴、浅色激活带垫底、深色滚动块压上
+  //    打开前先空转 12 秒：这段时间只存在于「进行中」的激活段里，还没封口。
+  //    轴若只画已封口的段，段尾就会停在这 12 秒之前，下面的段尾断言当场失败；
+  //    画得出来，段尾即打开弹窗的此刻，与上表「前台停留」同一时刻（2026-09-26 的 33 分 vs 17 分）。
+  await 等待(12_000);
+  const 点击前 = await evaluate(`
+    const 刻 = new Date();
+    return 刻.getHours() * 3600 + 刻.getMinutes() * 60 + 刻.getSeconds();
+  `);
   await evaluate(`document.querySelector('#阅读统计按钮').click()`);
   assert.ok(await evaluate('return document.querySelector("#阅读统计弹窗").open'));
   const 渲染 = await evaluate(`
@@ -190,6 +204,7 @@ try {
     const m = await import('./js/滚动时段.js');
     const a = await import('./js/激活时段.js');
     const 今天 = new Date().toLocaleDateString('sv');
+    const 刻 = new Date();
     const 表 = document.querySelector('.统计时段表');
     const 全部 = new Map();
     const 并入 = (映射) => {
@@ -224,6 +239,7 @@ try {
     };
     return {
       窗口,
+      现在: 刻.getHours() * 3600 + 刻.getMinutes() * 60 + 刻.getSeconds(),
       行数: 表.querySelectorAll('.统计时段轨道').length,
       日期列: [...表.querySelectorAll('.统计时段日期')].map((节点) => 节点.textContent),
       日期标题: [...表.querySelectorAll('.统计时段日期')].map((节点) => 节点.title),
@@ -256,19 +272,27 @@ try {
   assert.equal(渲染.轨道宽.length, 1, '所有行共用同一条轴（轨道等宽）');
   assert.deepEqual(渲染.色块类名, ['统计时段块 统计时段块-激活', '统计时段块'], '激活带在滚动块之前绘制');
   assert.deepEqual(渲染.图例, ['页面激活', '持续滚动'], '图例两项');
-  // 共用轴窗口把两类时段一起算进来：最早/最晚都由注入或今天的激活段决定
-  assert.deepEqual([渲染.窗口.起秒, 渲染.窗口.止秒], [
+  // 共用轴窗口把两类时段一起算进来：最早由注入的 00:30 激活段决定；
+  // 最晚则是「已封口段的最晚止」与「打开弹窗的此刻」中较大的那个（进行中那段也上了轴）。
+  const 已封口止秒 = Math.max(
+    51_000,
+    ...读回.今日.map((段) => 段[1]),
+    ...读回.今日激活.map((段) => 段[1]),
+  );
+  assert.equal(
+    渲染.窗口.起秒,
     Math.min(
       1_800,
       ...读回.今日.map((段) => 段[0]),
       ...读回.今日激活.map((段) => 段[0]),
     ),
-    Math.max(
-      51_000,
-      ...读回.今日.map((段) => 段[1]),
-      ...读回.今日激活.map((段) => 段[1]),
-    ),
-  ], `轴范围含激活段：${渲染.轴标题}`);
+    `轴起点仍由注入的 00:30 激活段决定：${渲染.轴标题}`,
+  );
+  assert.ok(
+    渲染.窗口.止秒 === 已封口止秒 ||
+      (渲染.窗口.止秒 >= 点击前 && 渲染.窗口.止秒 <= 渲染.现在 + 1),
+    `轴尾应为已封口最晚止(${已封口止秒})或此刻(${点击前}–${渲染.现在})：${渲染.窗口.止秒}`,
+  );
   assert.ok(渲染.窗口.起秒 <= 1_800, '00:30 的激活段把轴往左撑开');
   assert.ok(渲染.刻度标签.length >= 1 && 渲染.刻度标签.length <= 6, `整点刻度 ${渲染.刻度标签}`);
   assert.deepEqual(渲染.首尾, [
@@ -294,6 +318,13 @@ try {
   );
   assert.ok(渲染.今日.some((块) => 块.激活), '今天的真实激活段也画出来了');
   assert.ok(渲染.今日.some((块) => !块.激活), '今天的真实滚动段也画出来了');
+  // 进行中（还没封口）的那段激活必须上轴：它的段尾就是打开弹窗的此刻，与上表「前台停留」同时刻
+  const 最后激活带 = 渲染.今日.filter((块) => 块.激活).at(-1);
+  const 带尾 = 解析轴时刻(最后激活带.标题.split(' → ')[1].split(' · ')[0]);
+  assert.ok(
+    带尾 >= 点击前 - 1 && 带尾 <= 渲染.现在 + 1,
+    `进行中的激活段画到此刻：${最后激活带.标题}，打开弹窗于 ${格式化时刻(点击前)}–${格式化时刻(渲染.现在)}`,
+  );
   assert.match(
     渲染.汇总.find(([日期]) => 日期 === '2026-09-17')?.[1][0] ?? '',
     /^2 段·\d+ 分$/,
