@@ -1,13 +1,15 @@
-// 一次性验证脚本：底部白线高度自适应 → 正文视口高恰好是整数个行高。
-// 于是空格翻页每屏都是整行，首行与末行都不会被视口边线切成半截
-// （js/排版引擎.js 应用整行视口 / styles.css --底部白线高）。
-// 断言四件事：
-//  ① 任意窗口高度 × 任意字号/行距下：视口高 % 行高 ≈ 0，且底线在 [1px, 1px+行高)
+// 一次性验证脚本：上下两条白线均分「视口高 ÷ 行高」的余数 → 正文视口高恰好是
+// 整数个行高。于是空格翻页每屏都是整行，首行与末行都不会被边线切成半截，
+// 且上下对称（js/排版引擎.js 应用整行视口 / styles.css --顶部白线高 --底部白线高）。
+// 断言五件事：
+//  ① 任意窗口高度 × 任意字号/行距下：视口高 % 行高 ≈ 0，两条线相等且各在 [1px, 1+半行高)
 //  ② 左缘白轴（.章节轨道）与正文容器同顶同底 —— 刻度 canvas 按 clientHeight 换算，
 //     轨道仍钉在视口满高就会被拉高几像素，越靠下偏得越多；右下角那组白字读数
 //     也要贴着正文底边，否则厚白线会把白字吃掉（同色）
 //  ③ 连续翻页后视口内没有任何「半行」正文行（上下两条边线都不切字）
 //  ④ 三下三上回到原点，且白线值稳定不抖（收敛，不来回改）
+//  ⑤ 自动滚动会话中两条线动画收到 1px（连续滚动本就有半行，让出整行给正文），
+//     停止后又动画回到均分值
 // 自启 server.mjs + headless Chrome（CDP），用 Emulation.setDeviceMetricsOverride
 // 换视口高度。按 AGENTS.md 规范：reader-* 一次性 profile 在 try/finally 中停进程后删除。
 import assert from 'node:assert/strict';
@@ -165,6 +167,11 @@ try {
     });
   }
   await 发送('Runtime.enable');
+  // headless Chrome 默认把 prefers-reduced-motion 报成 reduce，而样式在该模式下
+  // 会关掉白线过渡（尊重系统设置）。本用例要量的就是这条过渡，显式改回不减弱。
+  await 发送('Emulation.setEmulatedMedia', {
+    features: [{ name: 'prefers-reduced-motion', value: 'no-preference' }],
+  });
 
   async function 求值(代码) {
     const 结果 = await 发送('Runtime.evaluate', {
@@ -184,7 +191,6 @@ try {
   const 量 = () => 求值(`
     const c = document.querySelector('#滚动容器');
     const 轨 = document.querySelector('#章节轨道');
-    const 根 = getComputedStyle(document.documentElement);
     const 行高 = parseFloat(getComputedStyle(document.querySelector('.正文行')).height);
     const 界 = c.getBoundingClientRect();
     const 半行 = [...document.querySelectorAll('.正文行')].filter((行) => {
@@ -194,10 +200,11 @@ try {
     }).length;
     return {
       行高,
+      窗口高: window.innerHeight,
       视口: c.clientHeight,
       容器顶: 界.top,
-      顶线: parseFloat(根.getPropertyValue('--顶部白线高')),
-      底线: parseFloat(根.getPropertyValue('--底部白线高')),
+      顶线: parseFloat(getComputedStyle(document.body).borderTopWidth),
+      底线: parseFloat(getComputedStyle(document.body).borderBottomWidth),
       轨道顶: 轨 ? 轨.getBoundingClientRect().top : null,
       轨道高: 轨 ? 轨.getBoundingClientRect().height : null,
       读数底: document.querySelector('.时间信息')?.getBoundingClientRect().bottom ?? null,
@@ -217,6 +224,28 @@ try {
       mobile: false,
     });
     await pause(320); // 尺寸重排防抖 100ms + 白线二次收敛 + 渲染
+  }
+
+  // 白线带 220ms 过渡，且要等尺寸重排防抖（100ms）之后才开始写：
+  // 一次固定 sleep 很容易量到过渡中的中间态。连读两帧，视口高与两条线都不再变
+  // 且已是整数行时才返回；等不到就把最后一帧交回断言去报失败。
+  async function 等整行稳定() {
+    let 上 = null;
+    for (let i = 0; i < 40; i++) {
+      const g = await 量();
+      if (
+        上 &&
+        上.视口 === g.视口 &&
+        上.顶线 === g.顶线 &&
+        上.底线 === g.底线 &&
+        偏移(g.视口, g.行高) < 0.6
+      ) {
+        return g;
+      }
+      上 = g;
+      await pause(120);
+    }
+    return 上;
   }
 
   async function 按键(key, code, keyCode, 修饰 = 0) {
@@ -246,8 +275,21 @@ try {
       `${说明}：正文视口高 ${g.视口}px 不是行高 ${g.行高}px 的整数倍（偏 ${偏移(g.视口, g.行高).toFixed(2)}px）`,
     );
     assert.ok(
-      g.底线 >= 0.99 && g.底线 < g.行高 + 1.01,
-      `${说明}：底部白线 ${g.底线}px 应在 [1, 1+行高) 内`,
+      g.顶线 >= 0.99 && g.顶线 < g.行高 / 2 + 1.01,
+      `${说明}：顶部白线 ${g.顶线}px 应在 [1, 1+半行高) 内`,
+    );
+    assert.ok(
+      g.底线 >= 0.99 && g.底线 < g.行高 / 2 + 1.01,
+      `${说明}：底部白线 ${g.底线}px 应在 [1, 1+半行高) 内`,
+    );
+    assert.ok(
+      Math.abs(g.顶线 - g.底线) <= 1.01,
+      `${说明}：余数要上下均分（整数像素，最多差 1px），实际顶 ${g.顶线} / 底 ${g.底线}`,
+    );
+    // 三条边加起来必须正好是窗口高，否则说明有像素被浏览器吞了（残行的来源）
+    assert.ok(
+      Math.abs(g.顶线 + g.底线 + g.视口 - g.窗口高) < 1.01,
+      `${说明}：顶 ${g.顶线} + 底 ${g.底线} + 正文 ${g.视口} 应等于窗口高 ${g.窗口高}`,
     );
     if (g.轨道高 != null && g.轨道顶 != null) {
       assert.ok(
@@ -283,7 +325,7 @@ try {
   // ① 窗口高度扫一遍：每种高度都要把底线收成整行
   for (const h of [900, 863, 780, 700, 640, 523, 400, 1080]) {
     await 设视口高度(h);
-    const g = await 量();
+    const g = await 等整行稳定();
     assert.ok(g.总滚动 > 60 * g.行高, `窗口 ${h}：总滚动高度不足`);
     断言整行(g, `窗口高 ${h}（视口 ${g.视口} / 行高 ${g.行高} / 底线 ${g.底线}）`);
     console.log(
@@ -309,7 +351,7 @@ try {
       `(await import('./js/字体设置.js')).调整字号(${字号}); return 1;`,
     );
     await pause(420);
-    const g = await 量();
+    const g = await 等整行稳定();
     断言整行(g, `字号 ${字号}`);
     console.log(
       `字号 ${字号}: 行高 ${g.行高}，视口 ${g.视口} = ${Math.round(g.视口 / g.行高)} 行，底线 ${g.底线}px`,
@@ -322,7 +364,7 @@ try {
       `(await import('./js/字体设置.js')).调整行高(${行距}); return 1;`,
     );
     await pause(320);
-    const g = await 量();
+    const g = await 等整行稳定();
     断言整行(g, `行距 ${行距}`);
     console.log(`行距 ${行距}: 行高 ${g.行高}，视口 ${g.视口}，底线 ${g.底线}px`);
   }
@@ -337,7 +379,7 @@ try {
   await 设视口高度(760);
   await 求值(`document.querySelector('#滚动容器').scrollTop = 0;`);
   await pause(200);
-  const 起始 = await 量();
+  const 起始 = await 等整行稳定();
   断言整行(起始, '翻页前');
   assert.equal(起始.半行, 0, '翻页前视口内不该有半行');
   let 位置 = 0;
@@ -397,16 +439,72 @@ try {
     `底部白线应收敛为定值，实际 ${底线序列.join(' / ')}`,
   );
 
+  // ⑧ 自动滚动会话：两条白线收到 1px 让给正文，且是过渡动画不是跳变；停止后回到均分
+  const 收紧前 = await 等整行稳定();
+  const 过渡属性 = await 求值(
+    `return getComputedStyle(document.body).transitionProperty;`,
+  );
+  assert.ok(
+    过渡属性.includes('border-top-width') &&
+      过渡属性.includes('border-bottom-width'),
+    `白线收放要有过渡动画，实际 transition-property: ${过渡属性}`,
+  );
+  await 求值(
+    `(await import('./js/自动滚动.js')).开始自动滚动(); return 1;`,
+  );
+  const 收紧采样 = [];
+  for (let i = 0; i < 6; i++) {
+    收紧采样.push((await 量()).底线);
+    await pause(35);
+  }
+  const 收紧时 = await 量();
+  assert.ok(
+    收紧时.顶线 <= 1.01 && 收紧时.底线 <= 1.01,
+    `自动滚动中两条白线应收到 1px，实际 ${收紧时.顶线} / ${收紧时.底线}`,
+  );
+  assert.ok(
+    new Set(收紧采样.map((值) => 值.toFixed(2))).size >= 2,
+    `白线应逐帧收拢（过渡），采样 ${收紧采样.join(' / ')}`,
+  );
+  assert.ok(
+    收紧采样.some((值) => 值 > 1.05 && 值 < 收紧前.底线 - 0.05),
+    `采样里应有介于 1px 与原均分值之间的中间态，实际 ${收紧采样.join(' / ')}（原 ${收紧前.底线}）`,
+  );
+  if (收紧前.底线 > 1.5) {
+    assert.ok(
+      收紧时.视口 >= 收紧前.视口 + 1,
+      `收紧后正文应多出一截，实际 ${收紧前.视口} → ${收紧时.视口}`,
+    );
+  }
+  console.log(
+    `自动滚动中: 白线 ${收紧前.底线} → ${收紧采样.map((v) => v.toFixed(1)).join('→')}，正文 ${收紧前.视口} → ${收紧时.视口}`,
+  );
+  await 求值(
+    `(await import('./js/自动滚动.js')).停止自动滚动('整行视口验证'); return 1;`,
+  );
+  await pause(600); // 过渡 220ms + 尺寸重排防抖 100ms
+  const 恢复后 = await 等整行稳定();
+  断言整行(恢复后, '停止自动滚动后');
+  assert.ok(
+    Math.abs(恢复后.底线 - 收紧前.底线) < 0.51,
+    `停止后应回到均分值 ${收紧前.底线}，实际 ${恢复后.底线}`,
+  );
+  console.log(
+    `停止自动滚动: 白线回到 ${恢复后.顶线}/${恢复后.底线}，正文 ${恢复后.视口} = ${Math.round(恢复后.视口 / 恢复后.行高)} 行`,
+  );
+
   await 发送('Emulation.clearDeviceMetricsOverride');
   await pause(400);
-  const 最后 = await 量();
+  const 最后 = await 等整行稳定();
   断言整行(最后, '清掉视口覆盖后');
   const 截图 = await 发送('Page.captureScreenshot', { format: 'png' });
   writeFileSync(
     join(项目根, 'tmp', '整行视口-底边.png'),
     Buffer.from(截图.data, 'base64'),
   );
-  console.log('\nOK：底线自适应后视口恒为整数行，翻页无半行，轨道同顶同底，值已收敛');
+  console.log(
+    '\nOK：余数上下均分，翻页无半行，轨道同顶同底，自动滚动中白线动画收到 1px、停止后复原',
+  );
   console.log(
     '页面日志尾部:\n' + 页面日志.filter((l) => l.includes('白线')).slice(-4).join('\n'),
   );

@@ -309,6 +309,11 @@ export function 开始自动滚动() {
   自动滚动滚轮监听设置?.(true);
   更新自动滚动按钮(true);
   document.body.classList.add('自动滚动中');
+  // 白线收紧：整行视口是为「一屏一屏翻」服务的，连续滚动本来就有半行，
+  // 上下两条白线在这段会话里让给正文，多出一整行可读（见 styles.css body.白线收紧）。
+  // 不能复用 .自动滚动中：空格翻页也会挂它（只为藏光标，见 js/键盘控制.js），
+  // 翻页时收线会把刚对齐的整行视口又打散。
+  document.body.classList.add('白线收紧');
   console.info('[阅读器] 自动滚动已启动', {
     速度: 状态.自动滚动速度,
     帧调度: 'requestAnimationFrame',
@@ -675,6 +680,8 @@ export function 停止自动滚动(原因) {
   更新自动滚动按钮(false);
   隐藏衔接线();
   document.body.classList.remove('自动滚动中');
+  // 会话一结束就把白线还回去：上下两条线重新按整行视口均分（CSS 里过渡回弹）
+  document.body.classList.remove('白线收紧');
   console.info('[阅读器] 自动滚动已停止', {
     原因,
     滚动位置: Math.round(元素.滚动容器.scrollTop),
