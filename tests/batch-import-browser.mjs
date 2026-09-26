@@ -276,6 +276,27 @@ try {
     true,
     '右下角控件已显形（截图可用）',
   );
+
+  // 刷新后仍在：批量导入的词与正文选词走同一份持久化关键词列表（防抖 120ms，已等过）。
+  await send('Page.reload', { ignoreCache: true });
+  let 再次就绪 = false;
+  for (let n = 0; n < 200; n++) {
+    await pause(100);
+    再次就绪 = await evaluate(
+      'return document.querySelector("#载入状态")?.hidden === true',
+    );
+    if (再次就绪) break;
+  }
+  assert.ok(再次就绪, '刷新后正文重新载入');
+  const 刷新后关键词 = await evaluate(`
+    const { 状态 } = await import('./js/状态.js');
+    return 状态.关键词列表.filter((k) => !k.临时).map((k) => k.文本).join(',');
+  `);
+  assert.equal(
+    刷新后关键词,
+    [种子词, 新词].join(','),
+    '刷新后批量导入的关键词仍在面板上',
+  );
 } finally {
   ws.close();
 }
