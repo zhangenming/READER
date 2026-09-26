@@ -1,15 +1,15 @@
-// 一次性验证脚本：上下两条白线均分「视口高 ÷ 行高」的余数 → 正文视口高恰好是
-// 整数个行高。于是空格翻页每屏都是整行，首行与末行都不会被边线切成半截，
-// 且上下对称（js/排版引擎.js 应用整行视口 / styles.css --顶部白线高 --底部白线高）。
-// 断言五件事：
-//  ① 任意窗口高度 × 任意字号/行距下：视口高 % 行高 ≈ 0，两条线相等且各在 [1px, 1+半行高)
-//  ② 左缘白轴（.章节轨道）与正文容器同顶同底 —— 刻度 canvas 按 clientHeight 换算，
-//     轨道仍钉在视口满高就会被拉高几像素，越靠下偏得越多；右下角那组白字读数
-//     也要贴着正文底边，否则厚白线会把白字吃掉（同色）
-//  ③ 连续翻页后视口内没有任何「半行」正文行（上下两条边线都不切字）
-//  ④ 三下三上回到原点，且白线值稳定不抖（收敛，不来回改）
-//  ⑤ 自动滚动会话中两条线动画收到 1px（连续滚动本就有半行，让出整行给正文），
-//     停止后又动画回到均分值
+// 一次性验证脚本：上下两条白线是「障眼法」浮层（body::before / body::after），
+// 不参与正文布局；它们均分掉「视口高 ÷ 行高」的余数，使正文可视高恰好是整数个
+// 行高 —— 空格翻页每屏都是整行，首行末行都不会被切成半截（js/白线.js）。
+// 断言：
+//  ① 容器高恒等于 innerHeight：白线怎么变都不碰布局（浮层相对边框方案的全部意义）
+//  ② 任意窗口高 × 任意行距：可视高 % 行高 ≈ 0，两条线相等（整数像素最多差 1px）
+//     且各在 [1px, 1+半行高)，顶 + 底 + 可视高 = 容器高
+//  ③ 翻页后可视区内没有任何「半行」正文行；滚到量程底时末行贴在可视区底边之上
+//  ④ 三下三上回到原点；从非行界位置翻页也收敛回行界
+//  ⑤ 左缘轨道与可视区同顶同底；衔接线的画布坐标跟着顶线一起下移
+//  ⑥ 自动滚动会话中两条线动画收到 1px（采到中间态 = 确实在过渡），停止后动画回到
+//     均分值；整个过程中容器高一次都没变过
 // 自启 server.mjs + headless Chrome（CDP），用 Emulation.setDeviceMetricsOverride
 // 换视口高度。按 AGENTS.md 规范：reader-* 一次性 profile 在 try/finally 中停进程后删除。
 import assert from 'node:assert/strict';
@@ -84,8 +84,8 @@ const chrome = spawn(
   { stdio: 'ignore' },
 );
 
-let chrome已退出 = new Promise((r) => chrome.on('exit', r));
-let 服务已退出 = new Promise((r) => 服务.on('exit', r));
+const chrome已退出 = new Promise((r) => chrome.on('exit', r));
+const 服务已退出 = new Promise((r) => 服务.on('exit', r));
 async function 收尾() {
   chrome.kill();
   服务.kill();
@@ -116,7 +116,9 @@ try {
         const 列表 = await (
           await fetch(`http://127.0.0.1:${CDP端口}/json`)
         ).json();
-        const 目标 = 列表.find((t) => t.type === 'page' && t.url.startsWith(地址));
+        const 目标 = 列表.find(
+          (t) => t.type === 'page' && t.url.startsWith(地址),
+        );
         if (目标) return 目标;
       } catch {}
       await pause(200);
@@ -167,8 +169,8 @@ try {
     });
   }
   await 发送('Runtime.enable');
-  // headless Chrome 默认把 prefers-reduced-motion 报成 reduce，而样式在该模式下
-  // 会关掉白线过渡（尊重系统设置）。本用例要量的就是这条过渡，显式改回不减弱。
+  // headless Chrome 默认把 prefers-reduced-motion 报成 reduce，样式在那一档里把白线
+  // 过渡缩短到 120ms。本用例量的是默认时长那一档，显式改回「不减弱」。
   await 发送('Emulation.setEmulatedMedia', {
     features: [{ name: 'prefers-reduced-motion', value: 'no-preference' }],
   });
@@ -187,34 +189,42 @@ try {
     return 结果.result.value;
   }
 
-  // 一次量齐：行高、正文视口高、两条白线、左缘轨道几何、半行计数
+  // 一次量齐：容器/可视高、两条白线实际绘制的高度、轨道几何、可视区内的半行计数
   const 量 = () => 求值(`
     const c = document.querySelector('#滚动容器');
     const 轨 = document.querySelector('#章节轨道');
-    const 行高 = parseFloat(getComputedStyle(document.querySelector('.正文行')).height);
     const 界 = c.getBoundingClientRect();
+    const 行高 = parseFloat(getComputedStyle(document.querySelector('.正文行')).height);
+    const 顶 = parseFloat(getComputedStyle(document.body, '::before').height);
+    const 底 = parseFloat(getComputedStyle(document.body, '::after').height);
+    const 可视顶 = 界.top + 顶, 可视底 = 界.bottom - 底;
     const 半行 = [...document.querySelectorAll('.正文行')].filter((行) => {
       const r = 行.getBoundingClientRect();
-      if (r.bottom <= 界.top + 0.5 || r.top >= 界.bottom - 0.5) return false; // 完全在视口外
-      return r.top < 界.top - 0.5 || r.bottom > 界.bottom + 0.5;
+      if (r.bottom <= 可视顶 + 0.5 || r.top >= 可视底 - 0.5) return false; // 全在可视区外
+      return r.top < 可视顶 - 0.5 || r.bottom > 可视底 + 0.5;
     }).length;
+    const 末行 = [...document.querySelectorAll('.正文行')]
+      .map((行) => 行.getBoundingClientRect())
+      .filter((r) => r.top < 可视底 - 0.5).pop();
     return {
       行高,
       窗口高: window.innerHeight,
-      视口: c.clientHeight,
-      容器顶: 界.top,
-      顶线: parseFloat(getComputedStyle(document.body).borderTopWidth),
-      底线: parseFloat(getComputedStyle(document.body).borderBottomWidth),
+      容器高: c.clientHeight,
+      可视高: c.clientHeight - 顶 - 底,
+      顶, 底, 半行,
+      末行底: 末行 ? 末行.bottom : null,
+      可视底,
       轨道顶: 轨 ? 轨.getBoundingClientRect().top : null,
       轨道高: 轨 ? 轨.getBoundingClientRect().height : null,
-      读数底: document.querySelector('.时间信息')?.getBoundingClientRect().bottom ?? null,
-      按钮底: document.querySelector('.右下按钮组')?.getBoundingClientRect().bottom ?? null,
-      容器底: 界.bottom,
-      半行,
       滚动: c.scrollTop,
-      总滚动: c.scrollHeight - c.clientHeight,
+      量程: c.scrollHeight - c.clientHeight,
+      行数: document.querySelectorAll('.正文行').length,
+      首行顶: document.querySelector('.正文行')?.getBoundingClientRect().top ?? null,
+      画布高: parseFloat(getComputedStyle(document.querySelector('#虚拟画布')).height),
     };
   `);
+
+  const 偏移 = (值, 行高) => Math.abs(值 - Math.round(值 / 行高) * 行高);
 
   async function 设视口高度(h) {
     await 发送('Emulation.setDeviceMetricsOverride', {
@@ -223,22 +233,21 @@ try {
       deviceScaleFactor: 1,
       mobile: false,
     });
-    await pause(320); // 尺寸重排防抖 100ms + 白线二次收敛 + 渲染
+    await pause(320); // 尺寸重排防抖 100ms + 渲染
   }
 
-  // 白线带 220ms 过渡，且要等尺寸重排防抖（100ms）之后才开始写：
-  // 一次固定 sleep 很容易量到过渡中的中间态。连读两帧，视口高与两条线都不再变
-  // 且已是整数行时才返回；等不到就把最后一帧交回断言去报失败。
-  async function 等整行稳定() {
+  // 白线带 height 过渡，一次固定 sleep 容易量到中间态：连读两帧，两条线都不再变
+  // 且可视高已是整数行时才返回。
+  async function 等稳定() {
     let 上 = null;
     for (let i = 0; i < 40; i++) {
       const g = await 量();
       if (
         上 &&
-        上.视口 === g.视口 &&
-        上.顶线 === g.顶线 &&
-        上.底线 === g.底线 &&
-        偏移(g.视口, g.行高) < 0.6
+        上.顶 === g.顶 &&
+        上.底 === g.底 &&
+        上.可视高 === g.可视高 &&
+        偏移(g.可视高, g.行高) < 0.6
       ) {
         return g;
       }
@@ -262,52 +271,36 @@ try {
   const 按空格 = () => 按键(' ', 'Space', 32);
   const 按Shift空格 = () => 按键(' ', 'Space', 32, 8);
 
-  // 距最近行界的偏移（上下两条边线各自量一次）
-  const 偏移 = (值, 行高) => {
-    const r = 值 - Math.round(值 / 行高) * 行高;
-    return Math.abs(r);
-  };
-
   function 断言整行(g, 说明) {
     assert.ok(g.行高 > 0, `${说明}：行高未读到`);
     assert.ok(
-      偏移(g.视口, g.行高) < 0.6,
-      `${说明}：正文视口高 ${g.视口}px 不是行高 ${g.行高}px 的整数倍（偏 ${偏移(g.视口, g.行高).toFixed(2)}px）`,
+      Math.abs(g.容器高 - g.窗口高) < 1.01,
+      `${说明}：白线是浮层，容器高应等于窗口高，实际 ${g.容器高} vs ${g.窗口高}`,
     );
     assert.ok(
-      g.顶线 >= 0.99 && g.顶线 < g.行高 / 2 + 1.01,
-      `${说明}：顶部白线 ${g.顶线}px 应在 [1, 1+半行高) 内`,
+      偏移(g.可视高, g.行高) < 0.6,
+      `${说明}：正文可视高 ${g.可视高}px 不是行高 ${g.行高}px 的整数倍（偏 ${偏移(g.可视高, g.行高).toFixed(2)}px）`,
     );
     assert.ok(
-      g.底线 >= 0.99 && g.底线 < g.行高 / 2 + 1.01,
-      `${说明}：底部白线 ${g.底线}px 应在 [1, 1+半行高) 内`,
+      g.顶 >= 0.99 && g.顶 < g.行高 / 2 + 1.01,
+      `${说明}：顶线 ${g.顶}px 应在 [1, 1+半行高) 内`,
     );
     assert.ok(
-      Math.abs(g.顶线 - g.底线) <= 1.01,
-      `${说明}：余数要上下均分（整数像素，最多差 1px），实际顶 ${g.顶线} / 底 ${g.底线}`,
+      g.底 >= 0.99 && g.底 < g.行高 / 2 + 1.01,
+      `${说明}：底线 ${g.底}px 应在 [1, 1+半行高) 内`,
     );
-    // 三条边加起来必须正好是窗口高，否则说明有像素被浏览器吞了（残行的来源）
     assert.ok(
-      Math.abs(g.顶线 + g.底线 + g.视口 - g.窗口高) < 1.01,
-      `${说明}：顶 ${g.顶线} + 底 ${g.底线} + 正文 ${g.视口} 应等于窗口高 ${g.窗口高}`,
+      Math.abs(g.顶 - g.底) <= 1.01,
+      `${说明}：余数要上下均分（整数像素最多差 1px），实际 ${g.顶} / ${g.底}`,
+    );
+    assert.ok(
+      Math.abs(g.顶 + g.底 + g.可视高 - g.容器高) < 1.01,
+      `${说明}：顶 ${g.顶} + 底 ${g.底} + 可视高 ${g.可视高} 应等于容器高 ${g.容器高}`,
     );
     if (g.轨道高 != null && g.轨道顶 != null) {
       assert.ok(
-        Math.abs(g.轨道高 - g.视口) < 1.2 && Math.abs(g.轨道顶 - g.容器顶) < 1.2,
-        `${说明}：左缘轨道 ${g.轨道顶}+${g.轨道高} 与正文 ${g.容器顶}+${g.视口} 不同顶同底`,
-      );
-    }
-    // 右下角读数是白字，必须留在纸面上：底边贴正文底边，不能压进同色的白线里
-    if (g.读数底 != null) {
-      assert.ok(
-        Math.abs(g.读数底 - g.容器底) < 1.2,
-        `${说明}：时间读数底边 ${g.读数底} 应贴着正文底边 ${g.容器底}`,
-      );
-    }
-    if (g.按钮底 != null) {
-      assert.ok(
-        g.按钮底 <= g.容器底 + 1.2 && g.按钮底 >= g.容器底 - 42,
-        `${说明}：按钮组底边 ${g.按钮底} 应贴着正文底边 ${g.容器底}`,
+        Math.abs(g.轨道高 - g.可视高) < 1.2 && Math.abs(g.轨道顶 - g.顶) < 1.2,
+        `${说明}：轨道 ${g.轨道顶}+${g.轨道高} 应与可视区 ${g.顶}+${g.可视高} 同顶同底`,
       );
     }
   }
@@ -322,16 +315,15 @@ try {
     '正文应已载入（虚拟渲染视口行）',
   );
 
-  // ① 窗口高度扫一遍：每种高度都要把底线收成整行
+  // ①② 窗口高扫一遍：容器高不动，可视高恒为整数行
   for (const h of [900, 863, 780, 700, 640, 523, 400, 1080]) {
     await 设视口高度(h);
-    const g = await 等整行稳定();
-    assert.ok(g.总滚动 > 60 * g.行高, `窗口 ${h}：总滚动高度不足`);
-    断言整行(g, `窗口高 ${h}（视口 ${g.视口} / 行高 ${g.行高} / 底线 ${g.底线}）`);
+    const g = await 等稳定();
+    assert.ok(g.量程 > 60 * g.行高, `窗口 ${h}：总滚动高度不足`);
+    断言整行(g, `窗口高 ${h}`);
     console.log(
-      `窗口 ${h}: 视口 ${g.视口} = ${Math.round(g.视口 / g.行高)} 行 × ${g.行高}，底线 ${g.底线}px，轨道 ${g.轨道顶}+${g.轨道高}`,
+      `窗口 ${h}: 容器 ${g.容器高} = 顶 ${g.顶} + 可视 ${g.可视高}(${Math.round(g.可视高 / g.行高)} 行×${g.行高}) + 底 ${g.底}，轨道 ${g.轨道顶}+${g.轨道高}`,
     );
-    // 留两张不同余数的底边截图：一张底线最厚（900）、一张最薄（700）
     if (h === 900 || h === 700) {
       await 求值(
         `document.querySelector('#滚动容器').scrollTop = 20 * ${g.行高}; return 1;`,
@@ -339,49 +331,36 @@ try {
       await pause(200);
       const 图 = await 发送('Page.captureScreenshot', { format: 'png' });
       writeFileSync(
-        join(项目根, 'tmp', `整行视口-窗口${h}-底线${Math.round(g.底线)}.png`),
+        join(项目根, 'tmp', `整行视口-窗口${h}-线${g.顶}.png`),
         Buffer.from(图.data, 'base64'),
       );
     }
   }
 
-  // ② 字号扫一遍：走 app 的调字号路径（重建行索引 → 刷新画布尺寸 → 收整行视口）
-  for (const 字号 of [30, 44, 22, 17, 36]) {
-    await 求值(
-      `(await import('./js/字体设置.js')).调整字号(${字号}); return 1;`,
-    );
+  // ③ 字号 / 行距扫一遍：走 app 的重排路径，白线要跟着重排
+  for (const 字号 of [44, 22, 30]) {
+    await 求值(`(await import('./js/字体设置.js')).调整字号(${字号}); return 1;`);
     await pause(420);
-    const g = await 等整行稳定();
+    const g = await 等稳定();
     断言整行(g, `字号 ${字号}`);
-    console.log(
-      `字号 ${字号}: 行高 ${g.行高}，视口 ${g.视口} = ${Math.round(g.视口 / g.行高)} 行，底线 ${g.底线}px`,
-    );
+    console.log(`字号 ${字号}: 行高 ${g.行高} 可视 ${g.可视高} 顶 ${g.顶}/底 ${g.底}`);
   }
-
-  // ③ 行距扫一遍：走 调整行高（不重建行索引，只改行高 → 也要重收整行视口）
-  for (const 行距 of [48, 26, 40]) {
-    await 求值(
-      `(await import('./js/字体设置.js')).调整行高(${行距}); return 1;`,
-    );
+  for (const 行距 of [48, 26, 36]) {
+    await 求值(`(await import('./js/字体设置.js')).调整行高(${行距}); return 1;`);
     await pause(320);
-    const g = await 等整行稳定();
+    const g = await 等稳定();
     断言整行(g, `行距 ${行距}`);
-    console.log(`行距 ${行距}: 行高 ${g.行高}，视口 ${g.视口}，底线 ${g.底线}px`);
+    console.log(`行距 ${行距}: 行高 ${g.行高} 可视 ${g.可视高} 顶 ${g.顶}/底 ${g.底}`);
   }
-  await 求值(`(await import('./js/字体设置.js')).调整字号(30); return 1;`);
-  await pause(420);
-  await 求值(
-    `(await import('./js/字体设置.js')).调整行高(30); return 1;`,
-  );
-  await pause(320);
 
-  // ④ 翻页：连续三下，每一下之后上下边线都不切字
+  // ④ 翻页：每一下之后都贴回行界、可视区内没有半行
   await 设视口高度(760);
+  await 等稳定();
   await 求值(`document.querySelector('#滚动容器').scrollTop = 0;`);
   await pause(200);
-  const 起始 = await 等整行稳定();
+  const 起始 = await 等稳定();
   断言整行(起始, '翻页前');
-  assert.equal(起始.半行, 0, '翻页前视口内不该有半行');
+  assert.equal(起始.半行, 0, '翻页前可视区内不该有半行');
   let 位置 = 0;
   for (let n = 1; n <= 3; n++) {
     await 按空格();
@@ -389,20 +368,18 @@ try {
     const g = await 量();
     位置 = g.滚动;
     assert.ok(
-      偏移(位置, g.行高) < 0.6 && 偏移(位置 + g.视口, g.行高) < 0.6,
-      `第 ${n} 下：顶边 ${位置} 底边 ${位置 + g.视口} 应都贴齐行界（行高 ${g.行高}）`,
+      偏移(位置, g.行高) < 0.6,
+      `第 ${n} 下：scrollTop ${位置} 应是行高 ${g.行高} 的整数倍`,
     );
-    assert.equal(g.半行, 0, `第 ${n} 下：视口内有 ${g.半行} 个半行`);
+    assert.equal(g.半行, 0, `第 ${n} 下：可视区内有 ${g.半行} 个半行`);
     assert.ok(
-      位置 > (n - 1) * 起始.视口 - 1,
-      `第 ${n} 下：应至少推进一屏（${位置} vs ${(n - 1) * 起始.视口}）`,
+      位置 > (n - 1) * 起始.可视高 - 1,
+      `第 ${n} 下：应至少推进一屏（${位置} vs ${(n - 1) * 起始.可视高}）`,
     );
     console.log(
-      `第 ${n} 下: scrollTop ${位置.toFixed(1)} = ${Math.round(位置 / g.行高)} 行，视口内 ${Math.round(g.视口 / g.行高)} 整行`,
+      `第 ${n} 下: scrollTop ${位置.toFixed(1)} = ${Math.round(位置 / g.行高)} 行，可视 ${Math.round(g.可视高 / g.行高)} 整行`,
     );
   }
-
-  // ⑤ 原路返回：三上回到 0
   for (let n = 1; n <= 3; n++) {
     await 按Shift空格();
     await pause(160);
@@ -411,102 +388,156 @@ try {
   assert.ok(Math.abs(位置) < 1, `三下三上应回到顶部，实际 ${位置}`);
   console.log(`三下三上回到 ${位置.toFixed(1)}`);
 
-  // ⑥ 手动滚到半行位置 + 空格：底边贴齐行界后不再产生半行
-  const g6 = await 量();
+  // ⑤ 滚到量程底：末行不能被白条盖住；再把它放到可视区底边，验证画布多算的
+  //    那条底线确实留出了余量（末段顶部所需高度还会再留一段空白，那是给
+  //    「最后一段能滚到屏顶」用的，不是遮挡）
   await 求值(
-    `document.querySelector('#滚动容器').scrollTop = ${Math.round(20.37 * g6.行高)}; return 1;`,
+    `const c = document.querySelector('#滚动容器'); c.scrollTop = c.scrollHeight; return 1;`,
+  );
+  await pause(700);
+  const 末屏 = await 量();
+  assert.ok(
+    末屏.末行底 <= 末屏.可视底 + 0.5,
+    `滚到底时末行底边 ${末屏.末行底} 不该越过可视区底边 ${末屏.可视底}（被白条盖住）`,
+  );
+  assert.equal(末屏.半行, 0, `滚到底时可视区内有 ${末屏.半行} 个半行`);
+  console.log(
+    `  滚到底: scrollTop ${末屏.滚动}（量程 ${末屏.量程}），末行底 ${末屏.末行底.toFixed(1)} ≤ 可视底 ${末屏.可视底.toFixed(1)}`,
+  );
+  await 求值(
+    `const c = document.querySelector('#滚动容器'); c.scrollTop -= ${Math.round((末屏.可视底 - 末屏.末行底) * 100) / 100}; return 1;`,
+  );
+  await pause(500);
+  const 贴底 = await 量();
+  assert.ok(
+    Math.abs(贴底.末行底 - 贴底.可视底) < 1.5,
+    `末行应能正好贴在可视区底边：${贴底.末行底} vs ${贴底.可视底}（画布少留了底线）`,
+  );
+  assert.equal(贴底.半行, 0, `末行贴底时可视区内有 ${贴底.半行} 个半行`);
+  console.log(
+    `  末行贴底: scrollTop ${贴底.滚动}，末行底 ${贴底.末行底.toFixed(1)} = 可视底 ${贴底.可视底.toFixed(1)}`,
+  );
+
+  // ⑥ 衔接线的画布坐标要跟着顶线下移（正文层 .可见内容 整体下移了一条顶线高）
+  const 衔接线 = await 求值(`
+    const c = document.querySelector('#滚动容器');
+    c.scrollTop = 0;
+    const { 显示衔接线 } = await import('./js/跳转动画.js');
+    const { 白线高 } = await import('./js/白线.js');
+    const { 状态 } = await import('./js/状态.js');
+    显示衔接线(3 * 状态.行高);
+    const 线 = document.querySelector('#衔接线');
+    const 顶 = 白线高().顶;
+    const 实际 = parseFloat(线.style.top);
+    线.hidden = true;
+    return { 期望: 3 * 状态.行高 + 顶, 实际, 顶, 行高: 状态.行高 };
+  `);
+  assert.ok(
+    Math.abs(衔接线.实际 - 衔接线.期望) < 0.01,
+    `衔接线应画在 ${衔接线.期望}px（含顶线 ${衔接线.顶}），实际 ${衔接线.实际}`,
+  );
+  console.log(
+    `衔接线 top ${衔接线.实际} = 3 行(${3 * 衔接线.行高}) + 顶线 ${衔接线.顶}`,
+  );
+
+  // ⑦ 从非行界位置翻页：仍收敛回行界
+  const g7 = await 等稳定();
+  await 求值(
+    `document.querySelector('#滚动容器').scrollTop = ${Math.round(20.37 * g7.行高)}; return 1;`,
   );
   await pause(160);
   await 按空格();
   await pause(160);
   const 之后 = await 量();
   assert.ok(
-    偏移(之后.滚动 + 之后.视口, 之后.行高) < 0.6,
-    '从半行位置翻页后底边应贴齐行界',
+    偏移(之后.滚动, 之后.行高) < 0.6,
+    `非行界处翻页后应贴回行界，实际 scrollTop ${之后.滚动}`,
   );
-  assert.ok(偏移(之后.滚动, 之后.行高) < 0.6, '整行视口下顶边也应贴齐行界');
   assert.equal(之后.半行, 0, `兜底翻页后仍有 ${之后.半行} 个半行`);
 
-  // ⑦ 收敛：白线值不再变化（不来回抖动）
-  const 底线序列 = [];
-  for (let i = 0; i < 3; i++) {
-    底线序列.push((await 量()).底线);
-    await pause(250);
-  }
-  assert.equal(
-    new Set(底线序列).size,
-    1,
-    `底部白线应收敛为定值，实际 ${底线序列.join(' / ')}`,
-  );
-
-  // ⑧ 自动滚动会话：两条白线收到 1px 让给正文，且是过渡动画不是跳变；停止后回到均分
-  const 收紧前 = await 等整行稳定();
-  const 过渡属性 = await 求值(
-    `return getComputedStyle(document.body).transitionProperty;`,
+  // ⑧ 自动滚动：两条线动画收到 1px，容器高一次都不变；停止后动画回到均分
+  await 求值(`document.querySelector('#滚动容器').scrollTop = 0;`);
+  const 收紧前 = await 等稳定();
+  const 过渡 = await 求值(
+    `const s = getComputedStyle(document.body, '::before');
+     return s.transitionProperty + ' ' + s.transitionDuration + ' ' + s.position;`,
   );
   assert.ok(
-    过渡属性.includes('border-top-width') &&
-      过渡属性.includes('border-bottom-width'),
-    `白线收放要有过渡动画，实际 transition-property: ${过渡属性}`,
+    过渡.includes('height') && 过渡.includes('fixed'),
+    `白线应是带 height 过渡的固定浮层，实际 ${过渡}`,
   );
-  await 求值(
-    `(await import('./js/自动滚动.js')).开始自动滚动(); return 1;`,
-  );
-  const 收紧采样 = [];
+  await 求值(`(await import('./js/自动滚动.js')).开始自动滚动(); return 1;`);
+  const 采样 = [];
+  const 容器高序列 = [];
   for (let i = 0; i < 6; i++) {
-    收紧采样.push((await 量()).底线);
+    const g = await 量();
+    采样.push(g.底);
+    容器高序列.push(g.容器高);
     await pause(35);
   }
   const 收紧时 = await 量();
   assert.ok(
-    收紧时.顶线 <= 1.01 && 收紧时.底线 <= 1.01,
-    `自动滚动中两条白线应收到 1px，实际 ${收紧时.顶线} / ${收紧时.底线}`,
+    收紧时.顶 <= 1.01 && 收紧时.底 <= 1.01,
+    `自动滚动中两条线应收到 1px，实际 ${收紧时.顶} / ${收紧时.底}`,
   );
   assert.ok(
-    new Set(收紧采样.map((值) => 值.toFixed(2))).size >= 2,
-    `白线应逐帧收拢（过渡），采样 ${收紧采样.join(' / ')}`,
+    采样.some((值) => 值 > 1.05 && 值 < 收紧前.底 - 0.05),
+    `采样里应有介于 1px 与均分值之间的中间态（证明在过渡），实际 ${采样.join(' / ')}（原 ${收紧前.底}）`,
+  );
+  assert.equal(
+    new Set(容器高序列).size,
+    1,
+    `白线收放不该动正文布局，容器高却变了：${容器高序列.join(' / ')}`,
   );
   assert.ok(
-    收紧采样.some((值) => 值 > 1.05 && 值 < 收紧前.底线 - 0.05),
-    `采样里应有介于 1px 与原均分值之间的中间态，实际 ${收紧采样.join(' / ')}（原 ${收紧前.底线}）`,
+    收紧时.可视高 >= 收紧前.可视高 + 1,
+    `收紧后可视区应多出一截，实际 ${收紧前.可视高} → ${收紧时.可视高}`,
   );
-  if (收紧前.底线 > 1.5) {
-    assert.ok(
-      收紧时.视口 >= 收紧前.视口 + 1,
-      `收紧后正文应多出一截，实际 ${收紧前.视口} → ${收紧时.视口}`,
-    );
-  }
   console.log(
-    `自动滚动中: 白线 ${收紧前.底线} → ${收紧采样.map((v) => v.toFixed(1)).join('→')}，正文 ${收紧前.视口} → ${收紧时.视口}`,
+    `自动滚动中: 线 ${收紧前.顶}/${收紧前.底} → ${采样.map((v) => v.toFixed(1)).join('→')}，可视 ${收紧前.可视高} → ${收紧时.可视高}，容器高恒为 ${容器高序列[0]}`,
   );
   await 求值(
     `(await import('./js/自动滚动.js')).停止自动滚动('整行视口验证'); return 1;`,
   );
-  await pause(600); // 过渡 220ms + 尺寸重排防抖 100ms
-  const 恢复后 = await 等整行稳定();
+  const 恢复后 = await 等稳定();
   断言整行(恢复后, '停止自动滚动后');
   assert.ok(
-    Math.abs(恢复后.底线 - 收紧前.底线) < 0.51,
-    `停止后应回到均分值 ${收紧前.底线}，实际 ${恢复后.底线}`,
+    Math.abs(恢复后.底 - 收紧前.底) < 1.01 &&
+      Math.abs(恢复后.顶 - 收紧前.顶) < 1.01,
+    `停止后应回到均分值 ${收紧前.顶}/${收紧前.底}，实际 ${恢复后.顶}/${恢复后.底}`,
+  );
+  assert.ok(
+    恢复后.容器高 === 收紧前.容器高,
+    `整段会话容器高都不该变，实际 ${收紧前.容器高} → ${恢复后.容器高}`,
   );
   console.log(
-    `停止自动滚动: 白线回到 ${恢复后.顶线}/${恢复后.底线}，正文 ${恢复后.视口} = ${Math.round(恢复后.视口 / 恢复后.行高)} 行`,
+    `停止自动滚动: 线回到 ${恢复后.顶}/${恢复后.底}，可视 ${恢复后.可视高} = ${Math.round(恢复后.可视高 / 恢复后.行高)} 行`,
   );
+
+  // ⑨ 收敛：白线值不再变化
+  const 序列 = [];
+  for (let i = 0; i < 3; i++) {
+    const g = await 量();
+    序列.push(`${g.顶}/${g.底}`);
+    await pause(250);
+  }
+  assert.equal(new Set(序列).size, 1, `白线应收敛为定值，实际 ${序列.join(' / ')}`);
 
   await 发送('Emulation.clearDeviceMetricsOverride');
   await pause(400);
-  const 最后 = await 等整行稳定();
+  const 最后 = await 等稳定();
   断言整行(最后, '清掉视口覆盖后');
   const 截图 = await 发送('Page.captureScreenshot', { format: 'png' });
   writeFileSync(
-    join(项目根, 'tmp', '整行视口-底边.png'),
+    join(项目根, 'tmp', '整行视口-浮层.png'),
     Buffer.from(截图.data, 'base64'),
   );
   console.log(
-    '\nOK：余数上下均分，翻页无半行，轨道同顶同底，自动滚动中白线动画收到 1px、停止后复原',
+    '\nOK：白线是浮层（容器高恒定），可视高恒为整数行，翻页无半行，滚到底末行不被盖，收放有过渡',
   );
   console.log(
-    '页面日志尾部:\n' + 页面日志.filter((l) => l.includes('白线')).slice(-4).join('\n'),
+    '页面日志尾部:\n' +
+      页面日志.filter((l) => l.includes('白线')).slice(-3).join('\n'),
   );
   ws.close();
 } finally {

@@ -72,7 +72,9 @@ const 总高度 = 提交行索引({
 
 assert.equal(状态.行高, 36, '在途任务不应覆盖当前行高');
 assert.equal(总高度, 108, '总高度应按当前行高重算');
-assert.equal(虚拟画布.style.height, '108px');
+// 桩里容器高为 0（未显示），白线停在 CSS 默认的 1px/1px：画布要在正文之上多算
+// 这两条（顶线让开第 0 行、底线让末行不被浮层压住），故 108 + 1 + 1 = 110。
+assert.equal(虚拟画布.style.height, '110px');
 assert.equal(状态.换行键, '宽度:800|字号:30');
 assert.equal(状态.排版键, 创建排版键(状态.换行键, 36));
 assert.equal(状态.全文负担密度, 0.5);
