@@ -420,6 +420,7 @@ export function 处理高亮移入(事件) {
   if (状态.正文悬停已暂停) {
     return;
   }
+  更新章节悬停(事件.target);
   const 字元素 = 事件.target.closest('.字.命中');
   if (!字元素 || !元素.滚动容器.contains(字元素)) {
     return;
@@ -438,6 +439,9 @@ export function 处理高亮移出(事件) {
   if (状态.正文悬停已暂停) {
     return;
   }
+  // 移到标题行之外（含移出正文、移到普通行）就收回章节地图；
+  // 必须排在下面的命中词判定之前，非命中字的移出不走那条分支。
+  更新章节悬停(事件.relatedTarget);
   const 字元素 = 事件.target.closest('.字.命中');
   if (
     !字元素 ||
@@ -457,6 +461,19 @@ export function 处理高亮移出(事件) {
   } else {
     切换同组高亮(null, null);
   }
+}
+
+/* 悬停章节标题行 → 左缘那一列换成全书签章地图（绘制见 js/指示器.js）。
+   pointerover 会逐字触发，只在索引真的变了时重绘一次。 */
+function 更新章节悬停(目标) {
+  const 行元素 = 目标?.closest?.('.正文行.章节标题行');
+  const 索引 = 行元素 ? Number(行元素.dataset.chapterIndex) : -1;
+  const 新值 = 索引 >= 0 ? 索引 : null;
+  if (状态.悬停章节索引 === 新值) {
+    return;
+  }
+  状态.悬停章节索引 = 新值;
+  更新关键词指示器();
 }
 
 export function 切换同组高亮(关键词id, 命中idx) {
@@ -509,6 +526,11 @@ export function 处理正文指针移动(事件) {
   处理高亮移入(事件);
 }
 
+/* 悬停章节标题行时左缘那一列整列换成章节地图，所以只要还停在标题行上，
+   关键词悬停的任何变化都会改变这一列该显什么，必须重绘（否则红枚会盖住关键词刻度不放）。 */
 function 悬停影响指示器(悬停id) {
-  return 悬停id !== null && 悬停id !== 状态.当前关键词id;
+  return (
+    (悬停id !== null && 悬停id !== 状态.当前关键词id) ||
+    状态.悬停章节索引 !== null
+  );
 }

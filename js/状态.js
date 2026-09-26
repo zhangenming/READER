@@ -94,6 +94,7 @@ export const 高亮配色 = [{ 浅色: 默认高亮浅色, 深色: 默认关键�
  * @property {?number} 当前关键词id 当前关键词 id；无为 null
  * @property {?number} 悬停关键词id 悬停中的关键词 id；无为 null
  * @property {?number} 悬停命中idx 悬停命中的序号；无为 null
+ * @property {?number} 悬停章节索引 悬停中的章节标题行所属章节索引（左缘列改显全书签章地图）；无为 null
  * @property {boolean} 正文悬停已暂停 正文悬停提示是否被暂停（如弹窗打开）
  * @property {number} 下一个关键词id 下一个待分配关键词 id
  * @property {?number} 查找临时关键词id 查找命中的临时关键词 id；无为 null
@@ -145,6 +146,7 @@ export const 状态 = {
   当前关键词id: null,
   悬停关键词id: null,
   悬停命中idx: null,
+  悬停章节索引: null,
   正文悬停已暂停: false,
   下一个关键词id: 1,
   跳转起点: null,

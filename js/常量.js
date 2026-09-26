@@ -32,6 +32,11 @@ export const 迸发最小尺寸 = 4;
 export const 迸发尺寸差 = 5;
 export const 指示器刻度高度 = 3;
 export const 指示器基础透明度 = 0.45;
+// 悬停章节标题行时，左缘那一列临时换成全书签章地图：每章一枚发丝线（弱于关键词刻度），
+// 被悬停的那章用与正文标题变色同一支朱砂红（styles.css 的 --强调色）加粗标出。
+export const 章节刻度颜色 = '#9a938a';
+export const 章节刻度悬停颜色 = '#c74e2f';
+export const 章节刻度发丝高 = 1;
 export const 当前命中位置提示时长 = 1000;
 export const 上下文分块行数 = 200;
 export const 上下文最大初始行数 = 2000;
