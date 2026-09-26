@@ -597,8 +597,6 @@ export function 设置画布高度(总高度) {
 }
 
 export function 读取正文排版() {
-  const 画布宽度 =
-    元素.虚拟画布.clientWidth || Math.min(940, window.innerWidth);
   const 根样式 = getComputedStyle(document.documentElement);
   const CSS变量回退列表 = [];
 
@@ -632,7 +630,21 @@ export function 读取正文排版() {
       左留白,
     });
   }
-  const 内容宽度 = Math.max(正文字号, 画布宽度 - 左留白);
+  /* 正文宽度按「整数个字」取：视口扣掉行首留白后不足一字的余量，整份划给左缘白轴
+     （写回 --章节轨道宽度，.阅读区域 的 padding 与 .章节轨道 的宽度都跟着它走），
+     于是内容宽度恰好等于正文字号的整数倍，末字永远贴着视口右缘收尾，行尾不再留下
+     不到一个字的空白。白轴只剩关键词刻度一列，这点余量落在白轴上不可见。
+     视口宽取 documentElement.clientWidth 而非画布 clientWidth：后者本身随轨道宽度变化，
+     用它反推轨道宽度会随首帧旧值抖动。 */
+  const 视口宽度 =
+    document.documentElement.clientWidth || Math.min(940, window.innerWidth);
+  const 每行字数 = Math.max(1, Math.floor((视口宽度 - 左留白) / 正文字号));
+  const 内容宽度 = 每行字数 * 正文字号;
+  const 轨道宽度 = Math.max(0, 视口宽度 - 左留白 - 内容宽度);
+  document.documentElement.style.setProperty(
+    '--章节轨道宽度',
+    `${轨道宽度.toFixed(2)}px`,
+  );
   const 换行键 = [
     内容宽度.toFixed(2),
     正文字号,

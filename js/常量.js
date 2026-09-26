@@ -32,7 +32,6 @@ export const 迸发最小尺寸 = 4;
 export const 迸发尺寸差 = 5;
 export const 指示器刻度高度 = 3;
 export const 指示器基础透明度 = 0.45;
-export const 章节刻度颜色 = '#9a938a'; // 左缘窄轨上的章节边界刻度；与轨道白底同明度，弱于关键词刻度
 export const 当前命中位置提示时长 = 1000;
 export const 上下文分块行数 = 200;
 export const 上下文最大初始行数 = 2000;

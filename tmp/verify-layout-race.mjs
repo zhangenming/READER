@@ -15,7 +15,16 @@ const css变量 = new Map([
 ]);
 globalThis.document = {
   baseURI: 'http://localhost/',
-  documentElement: {},
+  // 排版引擎会把「不足一字的余量」写回 --章节轨道宽度：桩里让它落进同一张变量表，
+  // 读回来即是刚写下的值，与浏览器里 setProperty → getComputedStyle 的往返一致。
+  documentElement: {
+    clientWidth: 800,
+    style: {
+      setProperty(变量名, 值) {
+        css变量.set(变量名, 值);
+      },
+    },
+  },
   querySelector(选择器) {
     if (选择器 === '#滚动容器') {
       return 滚动容器;

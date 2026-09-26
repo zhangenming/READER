@@ -36,7 +36,16 @@ function 元素替身(选择器) {
 }
 globalThis.document = {
   baseURI: 'http://localhost/',
-  documentElement: {},
+  // 排版引擎按视口宽反推「不足一字的余量」并写回 --章节轨道宽度：
+  // 桩里给上 clientWidth 与 setProperty，写入落进同一张变量表，读得到刚写的值。
+  documentElement: {
+    clientWidth: 800,
+    style: {
+      setProperty(名称, 值) {
+        css变量.set(名称, 值);
+      },
+    },
+  },
   querySelector: 元素替身,
   createElement: () => ({
     getContext: () => ({

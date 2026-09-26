@@ -135,26 +135,16 @@ try {
     const 度量 = 读取滚动条度量(轨道高度, 元素.滚动容器.clientHeight, 元素.滚动容器.scrollHeight);
     const 章节 = 状态.章节列表[1];
     const 滚动位置 = Math.max(0, 查找偏移所在行(章节.偏移) * 状态.行高 + 状态.行高 / 2 - 元素.滚动容器.clientHeight / 2);
-    return { 偏移: 章节.偏移, 期望中心: 滚动位置转轨道中心(滚动位置, 度量), 章节数: 状态.章节列表.length };
+    return { 偏移: 章节.偏移, 期望中心: 滚动位置转轨道中心(滚动位置, 度量), 章节数: 状态.章节列表.length, 轨道高度 };
   `);
-  const 刻度 = await evaluate(`${state}
-    元素.章节刻度.hidden = false;
-    元素.章节刻度.width = 0;
-    (await import('./js/指示器.js')).更新关键词指示器();
-    const 画布 = 元素.章节刻度;
-    const 图像 = 画布.getContext('2d').getImageData(0, 0, 画布.width, 画布.height).data;
-    const 行 = [];
-    for (let y = 0; y < 画布.height; y++) if (图像[y * 画布.width * 4 + 3] > 0) 行.push(y);
-    return { hidden: 画布.hidden, 行, 像素比: 画布.height / 元素.滚动容器.clientHeight };
-  `);
-  assert.equal(刻度.hidden, false);
-  assert.equal(刻度.行.length > 0, true);
-  assert.equal(
-    刻度.行.some((y) => Math.abs((y + 0.5) / 刻度.像素比 - 首章刻度.期望中心) < 2),
-    true,
-    `chapter tick near expected track center ${首章刻度.期望中心}`,
+  // 章节刻度已从白轴撤下（左缘只剩关键词刻度一列），这里只保住「章节偏移 → 轨道中心」
+  // 这条坐标映射：它与关键词刻度、进度数字共用，映射错了三处一起偏。
+  assert.ok(首章刻度.章节数 > 1);
+  assert.ok(
+    首章刻度.期望中心 > 0 && 首章刻度.期望中心 < 首章刻度.轨道高度,
+    `chapter maps onto the track: ${首章刻度.期望中心} of ${首章刻度.轨道高度}`,
   );
-  console.log('PASS chapter ticks on scrollbar track (aligned with thumb center mapping)');
+  console.log('PASS chapter offset maps onto scrollbar track center');
 
   await openToc();
   await evaluate(
@@ -257,10 +247,14 @@ try {
   await send('Emulation.setEmulatedMedia', { features: [] });
   console.log('PASS Escape dismissal and reduced-motion instant navigation');
 
+  const 右下三钮 = await evaluate(
+    'const r = ["内容选择按钮", "章节目录按钮", "阅读统计按钮"].map(id => { const e = document.getElementById(id); const b = e.getBoundingClientRect(); const s = getComputedStyle(e); return { id, left: Math.round(b.left), right: Math.round(b.right), top: Math.round(b.top), display: s.display, visibility: s.visibility }; }); return { r, innerWidth };',
+  );
   assert.ok(
-    await evaluate(
-      'const r = ["内容选择按钮", "章节目录按钮", "阅读统计按钮"].map(id => document.getElementById(id).getBoundingClientRect()); return r.every(x => x.left >= 0 && x.right <= innerWidth) && r[0].right <= r[1].left && r[1].right <= r[2].left;',
-    ),
+    右下三钮.r.every((x) => x.left >= 0 && x.right <= 右下三钮.innerWidth) &&
+      右下三钮.r[0].right <= 右下三钮.r[1].left &&
+      右下三钮.r[1].right <= 右下三钮.r[2].left,
+    `右下三钮要左右有序且不越界：${JSON.stringify(右下三钮)}`,
   );
   await click('#阅读统计按钮');
   assert.equal(
@@ -407,15 +401,10 @@ try {
   );
   console.log('PASS narrow-screen dialog fits viewport');
   await click('#关闭章节目录按钮');
-  // 无章节文本：章节刻度画布保持隐藏
+  // 无章节文本：章节列表为空，定位按钮禁用（章节刻度已随左缘那一列撤下）
   fixture = '没有章节的短文本。\n普通正文内容。';
   await resetReload();
   await evaluate(`(await import('./js/指示器.js')).更新关键词指示器();`);
-  assert.equal(
-    await evaluate('return document.querySelector("#章节刻度").hidden'),
-    true,
-  );
-  console.log('PASS chapter ticks hidden for chapterless text');
   await openToc();
   assert.equal(await evaluate(`${state} return 状态.章节列表.length`), 0);
   assert.equal(
