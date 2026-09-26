@@ -54,6 +54,7 @@ export const 高亮配色 = [{ 浅色: 默认高亮浅色, 深色: 默认关键�
  * ① 文本与排版数据
  * @property {string} 文本 当前载入的全文文本
  * @property {string} 文件名 当前文本文件名（空串表示未载入）
+ * @property {number} 内容哈希 文件解码后原文的 32 位指纹（FNV-1a），持久化恢复的身份判据；0 表示未载入
  * @property {Uint32Array} 行起点列表 每行起点文本偏移
  * @property {Uint32Array} 行终点列表 每行终点文本偏移（不含）
  * @property {Uint32Array} 行逻辑索引 每行对应的逻辑行号（跨重排稳定）
@@ -118,6 +119,7 @@ export const 高亮配色 = [{ 浅色: 默认高亮浅色, 深色: 默认关键�
 export const 状态 = {
   文本: '',
   文件名: '',
+  内容哈希: 0,
   章节列表: [],
   行起点列表: new Uint32Array(),
   行终点列表: new Uint32Array(),

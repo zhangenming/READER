@@ -152,18 +152,8 @@ async function 连接页面(路径前缀) {
 }
 
 let 退出码 = 0;
-try {
-  await 连接页面(`/txt/`);
-  // 在同一 origin 的目录列表页上预置线上那份记录（长度是漂移前的旧值）
-  await 求值(`
-    localStorage.setItem(${JSON.stringify(持久化键名)}, ${JSON.stringify(
-      JSON.stringify({
-        当前文件名: 书名,
-        文本状态: { [书名]: 原记录 },
-      }),
-    )});
-    return localStorage.getItem(${JSON.stringify(持久化键名)}).length;
-  `);
+
+async function 导航到(url, 等待选择器) {
   await 发送('Page.enable');
   const 已加载 = new Promise((resolve) => {
     const 处理 = (事件) => {
@@ -175,8 +165,28 @@ try {
     };
     ws.addEventListener('message', 处理);
   });
-  await 发送('Page.navigate', { url: `http://127.0.0.1:${站点端口}/` });
+  await 发送('Page.navigate', { url });
   await 已加载;
+  if (等待选择器) {
+    await 求值(`return new Promise(r => {
+      const t = setInterval(() => {
+        if (${等待选择器}) { clearInterval(t); r(1); }
+      }, 200);
+      setTimeout(() => (clearInterval(t), r(0)), 60000);
+    });`);
+  }
+}
+
+// 跑一轮：注入给定记录 → 载入那本书 → 回报页面与落盘读数
+async function 跑一轮(标签, 注入记录) {
+  日志.length = 0;
+  await 导航到(`http://127.0.0.1:${站点端口}/txt/`);
+  await 求值(`
+    localStorage.setItem(${JSON.stringify(持久化键名)}, ${JSON.stringify(
+      JSON.stringify({ 当前文件名: 书名, 文本状态: { [书名]: 注入记录 } }),
+    )});
+    return 1;`);
+  await 导航到(`http://127.0.0.1:${站点端口}/`);
 
   const 状态前缀 = 'const { 状态 } = await import("./js/状态.js");';
   let 载入好 = false;
@@ -191,53 +201,113 @@ try {
     }
     await pause(1000);
   }
-  assert.ok(载入好, '正文未在 120 秒内载入');
+  assert.ok(载入好, `${标签}：正文未在 120 秒内载入`);
 
   const 读回 = await 求值(`${状态前缀}
     const 词 = 状态.关键词列表;
     return {
       文件名: 状态.文件名,
       当前长度: 状态.文本.length,
+      当前指纹: 状态.内容哈希,
+      偏移: (await import('./js/持久化.js')).读取阅读位置().阅读偏移,
       词数: 词.length,
       有命中: 词.filter(k => k.命中位置.length > 0).length,
-      样本: 词.slice(0, 3).map(k => ({ 文本: k.文本, 命中: k.命中位置.length, 当前: k.当前命中idx })),
       scrollTop: document.querySelector('#滚动容器').scrollTop,
-      scrollHeight: document.querySelector('#滚动容器').scrollHeight,
+      漂移日志: (window.__漂移日志 ?? []).join(' | '),
     };`);
-  console.log('页面读数:', JSON.stringify(读回, null, 1));
+  const 落盘 = await 求值(`${状态前缀}
+    (await import('./js/持久化.js')).保存持久化状态();
+    const 记录 = JSON.parse(localStorage.getItem(${JSON.stringify(
+      持久化键名,
+    )})).文本状态[状态.文件名];
+    return { 长度: 记录.文本长度, 指纹: 记录.内容哈希 ?? null, 词数: 记录.关键词列表.length, 偏移: 记录.阅读偏移 };`);
+  console.log(`[${标签}] 页面`, JSON.stringify(读回), '落盘', JSON.stringify(落盘));
+  return { 读回, 落盘, 日志: 读回.漂移日志 };
+}
 
-  assert.equal(读回.文件名, 书名, '应自动载入持久化里的那本书');
+try {
+  await 连接页面('/txt/');
+  await 发送('Page.enable');
+  // console.info 的对象参数在 CDP 里只是 preview，直接在页面里把日志收拢成字符串
+  await 发送('Page.addScriptToEvaluateOnNewDocument', {
+    source: `
+      window.__漂移日志 = [];
+      const 原info = console.info.bind(console);
+      console.info = function (...参数) {
+        try {
+          window.__漂移日志.push(参数.map(项 =>
+            typeof 项 === 'object' && 项 ? JSON.stringify(项) : String(项)).join(' '));
+        } catch {}
+        return 原info(...参数);
+      };`,
+  });
+  const 词数 = 原记录.关键词列表.length;
+
+  // 轮 1：用户线上那份真实记录 —— 加指纹之前的旧格式，没有 内容哈希，
+  // 且文本长度停在 45a85cd 之前（673001），当前管线算出 672998。
+  const 旧格式 = await 跑一轮('旧记录·无指纹', 原记录);
+  assert.equal(旧格式.读回.文件名, 书名, '应自动载入持久化里的那本书');
   assert.notEqual(
-    读回.当前长度,
+    旧格式.读回.当前长度,
     原记录.文本长度,
     '前置条件：正文长度确实漂移了（否则这条用例是假通过）',
   );
-  assert.equal(
-    读回.词数,
-    原记录.关键词列表.length,
-    `漂移后必须带回全部 ${原记录.关键词列表.length} 个关键词`,
-  );
-  assert.ok(读回.有命中 > 读回.词数 * 0.9, '绝大多数关键词都要在当前正文里重扫到命中');
-  assert.ok(读回.scrollTop > 0, '阅读位置要按比例折算回来，不能回到页首');
+  assert.equal(旧格式.读回.词数, 词数, `无指纹漂移必须带回全部 ${词数} 个关键词`);
+  assert.ok(旧格式.读回.有命中 > 词数 * 0.9, '绝大多数关键词都要重扫到命中');
+  assert.ok(旧格式.读回.scrollTop > 0, '阅读位置要折算回来，不能回到页首');
   assert.ok(
-    日志.some((行) => 行.includes('持久化正文长度已漂移')),
-    '漂移要留下可对账的日志',
+    旧格式.日志.includes('持久化指纹与当前内容不一致'),
+    `漂移要留下可对账的日志，实际：${旧格式.日志 || '（无）'}`,
+  );
+  assert.ok(
+    旧格式.日志.includes('无指纹'),
+    `日志要如实标出这是"旧记录没有指纹"，而不是文件换了：${旧格式.日志}`,
+  );
+  assert.equal(旧格式.落盘.词数, 词数, '落盘不得少一个关键词');
+  assert.equal(旧格式.落盘.长度, 旧格式.读回.当前长度, '长度指纹自愈为当前值');
+  assert.ok(
+    Number.isInteger(旧格式.落盘.指纹) && 旧格式.落盘.指纹 > 0,
+    `保存时必须补上内容指纹，实际 ${旧格式.落盘.指纹}`,
+  );
+  assert.ok(
+    Math.abs(旧格式.落盘.偏移 - 原记录.阅读偏移) <= 200,
+    `3 个字符的漂移不该挪动阅读偏移，实际 ${旧格式.落盘.偏移} vs ${原记录.阅读偏移}`,
   );
 
-  // 保存一次：记录必须自愈成新长度，且关键词一个不少
-  const 保存后 = await 求值(`${状态前缀}
-    (await import('./js/持久化.js')).保存持久化状态();
-    const 数据 = JSON.parse(localStorage.getItem(${JSON.stringify(
-      持久化键名,
-    )}));
-    const 记录 = 数据.文本状态[状态.文件名];
-    return { 长度: 记录.文本长度, 词数: 记录.关键词列表.length, 偏移: 记录.阅读偏移 };`);
-  console.log('落盘读数:', JSON.stringify(保存后));
-  assert.equal(保存后.长度, 读回.当前长度, '落盘后长度指纹自愈为当前正文长度');
-  assert.equal(保存后.词数, 原记录.关键词列表.length, '落盘不得少一个关键词');
+  // 轮 2：同一份文件（指纹正确）但正文长度被人为改错 —— 纯管道变更。
+  await 导航到(`http://127.0.0.1:${站点端口}/txt/`);
+  const 页内指纹 = await 求值(`
+    const 响应 = await fetch(${JSON.stringify('/txt/' + encodeURIComponent(书名))});
+    const 文本 = await 响应.text();
+    const { 计算内容哈希 } = await import('/js/文本工具.js');
+    return 计算内容哈希(文本);`);
+  assert.equal(
+    页内指纹,
+    旧格式.落盘.指纹,
+    '页内自算的指纹必须与落盘的指纹一致（否则本轮是假通过）',
+  );
+  const 管道轮 = await 跑一轮('同一文件·管道改长度', {
+    ...原记录,
+    内容哈希: 页内指纹,
+    文本长度: 旧格式.读回.当前长度 + 4000,
+  });
+  assert.equal(管道轮.读回.词数, 词数, '同一份文件、只是管道改了长度：词必须全回');
+  assert.ok(
+    管道轮.日志.includes('管道'),
+    `这一轮要被判成「管道」而不是「文件」：${管道轮.日志}`,
+  );
+  assert.ok(
+    !/"漂移类型":"文件"/.test(管道轮.日志),
+    `同一份文件绝不该报成换了文件：${管道轮.日志}`,
+  );
+  assert.ok(
+    Math.abs(管道轮.读回.偏移 - 原记录.阅读偏移) <= 200,
+    `折算后偏移仍要贴着原位置，实际 ${管道轮.读回.偏移} vs ${原记录.阅读偏移}`,
+  );
 
   console.log(
-    `\n结论：${原记录.关键词列表.length} 个关键词在正文长度漂移后全部恢复（其中 ${读回.有命中} 个在当前正文里重扫到命中）。`,
+    `\n结论：${词数} 个关键词在两种漂移下都全部恢复；旧记录补上了内容指纹，` +
+      `同一份文件被改长度时判为「管道」而非「文件」，阅读偏移 ${原记录.阅读偏移} 未挪动。`,
   );
 } catch (错误) {
   console.error('验证失败:', 错误.message);
