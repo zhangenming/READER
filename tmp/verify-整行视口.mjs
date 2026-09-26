@@ -13,6 +13,8 @@
 //  ⑥ 自动滚动会话中两条线动画收到 1px（采到中间态 = 确实在过渡），停止后回到均分值；
 //     整个过程中容器高 / 可视高 / 画布高 / scrollTop / 正文首行位置逐项不变 —— 开关不抖；
 //     左侧进度读数的位移在会话中与按空闲量法重算的结果逐字符相同（红箭头不跳）
+//  ⑨ 鼠标滚轮滚动（真实 wheel 事件）同样把两条线收到 1px，按空格整屏翻页才滑回均分值，
+//     收放全程布局量与正文位置一个都不动；收紧可反复挂卸（轮 → 空格 → 再轮）
 // 自启 server.mjs + headless Chrome（CDP），用 Emulation.setDeviceMetricsOverride
 // 换视口高度。按 AGENTS.md 规范：reader-* 一次性 profile 在 try/finally 中停进程后删除。
 import assert from 'node:assert/strict';
@@ -276,6 +278,19 @@ try {
   }
   const 按空格 = () => 按键(' ', 'Space', 32);
   const 按Shift空格 = () => 按键(' ', 'Space', 32, 8);
+
+  // 真实滚轮事件：落在正文区中央（避开左缘白轴与右下控件组），
+  // 触发 app.js 绑定在滚动容器上的 处理手动滚动
+  async function 滚轮(deltaY, x = 640, y = 450) {
+    await 发送('Input.dispatchMouseEvent', {
+      type: 'mouseWheel',
+      x,
+      y,
+      deltaX: 0,
+      deltaY,
+      pointerType: 'mouse',
+    });
+  }
 
   function 断言整行(g, 说明) {
     assert.ok(g.行高 > 0, `${说明}：行高未读到`);
@@ -607,7 +622,106 @@ try {
     `停止自动滚动: 线回到 ${恢复后.顶}/${恢复后.底}，可视 ${恢复后.可视高} = ${Math.round(恢复后.可视高 / 恢复后.行高)} 行`,
   );
 
-  // ⑨ 收敛：白线值不再变化
+  // ⑨ 鼠标滚轮滚动：上下白边同样收到 1px，按空格整屏翻页才滑回自适应均分值。
+  //    走真实 wheel 事件（app.js 处理手动滚动 → js/白线.js 设置白线收紧），
+  //    先确认收线过程在过渡、再确认布局量一个都没动（收线不许让正文跳）。
+  await 求值(`document.querySelector('#滚动容器').scrollTop = 0;`);
+  const 滚前 = await 等稳定();
+  assert.ok(滚前.底 >= 6, `这一档白线应当有厚度可看，实际 ${滚前.顶}/${滚前.底}`);
+  await 滚轮(240);
+  const 收线采样 = [];
+  for (let i = 0; i < 6; i++) {
+    收线采样.push((await 量()).底);
+    await pause(35);
+  }
+  const 滚后 = await 等稳定();
+  assert.ok(
+    滚后.顶 <= 1.01 && 滚后.底 <= 1.01,
+    `滚轮滚动后上下白边应收到 1px，实际 ${滚后.顶} / ${滚后.底}`,
+  );
+  assert.ok(
+    收线采样.some((值) => 值 > 1.05 && 值 < 滚前.底 - 0.05),
+    `采样里应有介于 1px 与均分值之间的中间态（证明在过渡），实际 ${收线采样.join(' / ')}（原 ${滚前.底}）`,
+  );
+  assert.ok(
+    await 求值(`return document.body.classList.contains('白线收紧');`),
+    '滚轮滚动应挂上 body.白线收紧 这个纯绘制类',
+  );
+  assert.ok(滚后.滚动 > 100, `滚轮应真的滚动了页面，实际 scrollTop ${滚后.滚动}`);
+  for (const 字段 of [
+    '容器高',
+    '可视高',
+    '布局顶',
+    '布局底',
+    '画布高',
+    '量程',
+    '轨道顶',
+    '轨道高',
+  ]) {
+    assert.ok(
+      Math.abs(滚后[字段] - 滚前[字段]) < 0.01,
+      `滚轮收白线不许动 ${字段}（动了就是正文在跳）：${滚前[字段]} → ${滚后[字段]}`,
+    );
+  }
+  // 正文只应随 scrollTop 平移：首行顶 + scrollTop 是布局量，滚前滚后必须相等
+  assert.ok(
+    Math.abs(滚后.首行顶 + 滚后.滚动 - (滚前.首行顶 + 滚前.滚动)) < 0.6,
+    `滚轮滚动后正文应只随 scrollTop 平移：首行顶 ${滚前.首行顶}→${滚后.首行顶}，scrollTop ${滚前.滚动}→${滚后.滚动}`,
+  );
+  console.log(
+    `滚轮 ${滚前.顶}/${滚前.底} → ${滚后.顶}/${滚后.底}（过渡 ${收线采样.map((v) => v.toFixed(1)).join('→')}），scrollTop ${滚前.滚动}→${滚后.滚动}，布局量与正文位置逐项不变`,
+  );
+  const 滚轮截图 = await 发送('Page.captureScreenshot', { format: 'png' });
+  writeFileSync(
+    join(项目根, 'tmp', '整行视口-滚轮收线.png'),
+    Buffer.from(滚轮截图.data, 'base64'),
+  );
+
+  // 按空格：白边滑回均分值（采中间态），且这一屏仍落在行界上
+  await 按空格();
+  const 放开采样 = [];
+  for (let i = 0; i < 6; i++) {
+    放开采样.push((await 量()).底);
+    await pause(35);
+  }
+  assert.ok(
+    放开采样.some(
+      (值) => 值 > 1.05 && 值 < 滚前.底 - 0.05,
+    ),
+    `按空格后应有介于 1px 与均分值之间的中间态（证明在过渡），实际 ${放开采样.join(' / ')}（原 ${滚前.底}）`,
+  );
+  const 空格后 = await 等稳定();
+  断言整行(空格后, '滚轮滚动后按空格');
+  assert.ok(
+    Math.abs(空格后.底 - 滚前.底) < 1.01 &&
+      Math.abs(空格后.顶 - 滚前.顶) < 1.01,
+    `按空格后白边应回到均分值 ${滚前.顶}/${滚前.底}，实际 ${空格后.顶}/${空格后.底}`,
+  );
+  assert.ok(
+    偏移(空格后.滚动, 空格后.行高) < 0.6,
+    `按空格后 scrollTop ${空格后.滚动} 应贴回行高 ${空格后.行高} 的整数倍`,
+  );
+  assert.equal(空格后.半行, 0, `按空格后可视区内有 ${空格后.半行} 个半行`);
+  console.log(
+    `按空格: 线 ${放开采样.map((v) => v.toFixed(1)).join('→')} 回到 ${空格后.顶}/${空格后.底}，scrollTop ${空格后.滚动.toFixed(1)} = ${Math.round(空格后.滚动 / 空格后.行高)} 行，半行 0`,
+  );
+
+  // 轮 → 空格 → 再轮：收紧可反复挂卸（不是一次性的）
+  await 滚轮(-180);
+  await pause(420);
+  const 再滚 = await 量();
+  assert.ok(
+    再滚.顶 <= 1.01 && 再滚.底 <= 1.01,
+    `再次滚轮滚动应重新收到 1px，实际 ${再滚.顶} / ${再滚.底}`,
+  );
+  await 按Shift空格();
+  const 回退后 = await 等稳定();
+  断言整行(回退后, '再次滚轮后按 Shift + 空格');
+  console.log(
+    `再滚 ${再滚.顶}/${再滚.底} → Shift+空格 回到 ${回退后.顶}/${回退后.底}，scrollTop ${回退后.滚动.toFixed(1)}`,
+  );
+
+  // ⑩ 收敛：白线值不再变化
   const 序列 = [];
   for (let i = 0; i < 3; i++) {
     const g = await 量();
@@ -626,7 +740,7 @@ try {
     Buffer.from(截图.data, 'base64'),
   );
   console.log(
-    '\nOK：白线是浮层（容器高恒定），可视高恒为整数行，翻页无半行，滚到底末行不被盖，收放有过渡',
+    '\nOK：白线是浮层（容器高恒定），可视高恒为整数行，翻页无半行，滚到底末行不被盖，收放有过渡；滚轮滚动收到 1px、按空格回到均分值',
   );
   console.log(
     '页面日志尾部:\n' +
