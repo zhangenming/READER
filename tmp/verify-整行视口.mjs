@@ -11,7 +11,8 @@
 //  ⑤ 左侧白轴整窗高、顶边贴视口顶，白线收放一像素都不挪它；衔接线的画布坐标
 //     跟着顶线一起下移
 //  ⑥ 自动滚动会话中两条线动画收到 1px（采到中间态 = 确实在过渡），停止后回到均分值；
-//     整个过程中容器高 / 可视高 / 画布高 / scrollTop / 正文首行位置逐项不变 —— 开关不抖
+//     整个过程中容器高 / 可视高 / 画布高 / scrollTop / 正文首行位置逐项不变 —— 开关不抖；
+//     左侧进度读数的位移在会话中与按空闲量法重算的结果逐字符相同（红箭头不跳）
 // 自启 server.mjs + headless Chrome（CDP），用 Emulation.setDeviceMetricsOverride
 // 换视口高度。按 AGENTS.md 规范：reader-* 一次性 profile 在 try/finally 中停进程后删除。
 import assert from 'node:assert/strict';
@@ -523,8 +524,65 @@ try {
   );
   console.log(`放开: 线 ${采样.map((v) => v.toFixed(1)).join('→')} 回到 ${收紧前.底}`);
 
+  // 把起点挪到轨道中段（≈ 用户截图那枚 13.6%）：书首书尾读数被夹取，
+  // 两套量法算出来都是 0，测不出差别
+  await 求值(`
+    const c = document.querySelector('#滚动容器');
+    c.scrollTop = Math.round((c.scrollHeight - c.clientHeight) * 0.136);
+    return 1;
+  `);
+  await pause(300);
   await 求值(`(await import('./js/自动滚动.js')).开始自动滚动(); return 1;`);
   await pause(460);
+  // 会话每 50ms 用「视口度量」重排左侧读数；空闲时 更新滚动块() 自己量一次。
+  // 两套量法必须一致，否则一进会话红箭头就跳一下（用户报的那个抖动）：
+  // 取会话写下的实际位移，再用空闲量法对同一 scrollTop 重算一遍，比对字符串。
+  const 读数对照 = await 求值(`
+    const c = document.querySelector('#滚动容器');
+    const 读数 = document.querySelector('#滚动进度');
+    const 读数位移 = () => new DOMMatrix(getComputedStyle(读数).transform).f;
+    const 实际 = 读数位移();
+    const { 更新滚动块位置 } = await import('./js/滚动条.js');
+    更新滚动块位置(null, c.scrollTop);
+    return { 实际, 应有: 读数位移(), 滚动: Math.round(c.scrollTop) };
+  `);
+  assert.ok(
+    读数对照.实际 > 0.5,
+    `读数还贴在轨道顶端（被夹取），这一档测不出两套量法的差别：${读数对照.实际}`,
+  );
+  assert.ok(
+    Math.abs(读数对照.实际 - 读数对照.应有) < 0.5,
+    `会话量法与空闲量法不一致 → 红箭头会跳（scrollTop ${读数对照.滚动}）：会话 ${读数对照.实际.toFixed(2)} vs 空闲 ${读数对照.应有.toFixed(2)}`,
+  );
+  console.log(
+    `会话中读数位移 ${读数对照.实际.toFixed(2)}px 与空闲重算 ${读数对照.应有.toFixed(2)}px 一致（scrollTop ${读数对照.滚动}）`,
+  );
+  // 反向对照：把「轨道按正文可视高」这套旧量法再算一遍，必须与现量法不同 ——
+  // 否则上面那条一致断言就是恒真的，抓不住红箭头跳动这个 bug。
+  const 差别 = await 求值(`
+    const c = document.querySelector('#滚动容器');
+    const 读数 = document.querySelector('#滚动进度');
+    const { 更新滚动块位置 } = await import('./js/滚动条.js');
+    const { 正文可视高 } = await import('./js/白线.js');
+    const 可视 = 正文可视高();
+    更新滚动块位置(
+      { 轨道高度: 可视, 容器高度: 可视, 滚动高度: c.scrollHeight },
+      c.scrollTop,
+    );
+    const 读数位移 = () =>
+      new DOMMatrix(getComputedStyle(读数).transform).f;
+    const 旧量法 = 读数位移();
+    更新滚动块位置(null, c.scrollTop);
+    return { 旧量法, 现量法: 读数位移() };
+  `);
+  assert.notEqual(
+    差别.旧量法.toFixed(2),
+    差别.现量法.toFixed(2),
+    '轨道按可视高与按整窗高算出的读数位置相同 → 这条回归没有牙，测试位置选得太靠边',
+  );
+  console.log(
+    `反向对照：轨道按可视高会把读数放在 ${差别.旧量法.toFixed(1)}px，按整窗高是 ${差别.现量法.toFixed(1)}px —— 一进会话红箭头就跳 ${Math.abs(差别.旧量法 - 差别.现量法).toFixed(1)}px`,
+  );
   const 会话中 = await 量();
   assert.ok(
     会话中.顶 <= 1.01 && 会话中.底 <= 1.01,
