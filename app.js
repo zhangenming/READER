@@ -186,6 +186,8 @@ import {
   处理鼠标选择结束,
   处理非鼠标选择结束,
   处理正文键盘选择,
+  处理正文复制,
+  处理正文复制按键,
   处理高亮上下文点击,
   处理高亮点击,
   处理高亮双击,
@@ -427,6 +429,10 @@ function 绑定事件() {
   元素.滚动容器.addEventListener('pointerout', 处理高亮移出);
   元素.滚动容器.addEventListener('contextmenu', 处理高亮上下文点击);
   元素.滚动容器.addEventListener('keyup', 处理正文键盘选择);
+  // 拖选期间的复制要取消随后的关键词增删：copy 事件覆盖菜单复制与真实快捷键，
+  // Ctrl/Command + C 的 keydown 覆盖 Ctrl↔Win 对调与 headless 环境（两条都只打标记，不拦默认行为）。
+  document.addEventListener('copy', 处理正文复制);
+  window.addEventListener('keydown', 处理正文复制按键);
   // 悬停不再启动自动滚动：滚动按钮只剩速度显示 + 点击切换全屏。
   // 键盘聚焦（Tab）仍作为无障碍启动入口，鼠标点击聚焦不会误触发。
   元素.自动滚动按钮.addEventListener('focus', 处理自动滚动按钮聚焦);

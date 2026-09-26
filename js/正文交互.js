@@ -16,8 +16,8 @@ import { 安排保存持久化状态, 读取阅读位置 } from './持久化.js'
 import { 跳到章节索引 } from './章节目录.js';
 
 // 正文选择与命中点击/悬停交互：从 app.js 绑定事件() 闭包拆出。
-// 含拖选会话收尾（含双击放弃建词）、单击前进的延迟判定（每次单击各排一个计时器，
-// 双击统一清空挂起项）、双击跳上一处 / 复制整行、同组悬停高亮与悬停暂停恢复、
+// 含拖选会话收尾（含双击放弃建词、拖选期间复制放弃建词）、单击前进的延迟判定（每次单击
+// 各排一个计时器，双击统一清空挂起项）、双击跳上一处 / 复制整行、同组悬停高亮与悬停暂停恢复、
 // 章节标题行单击跳下一章 / Shift + 单击 跳上一章（与命中单击共用同一份挂起列表）。
 // 模块级私有状态（双击待定 / 待定单击列表）语义不变；
 // 事件监听仍由 app.js 组合根绑定，本模块只实现交互语义。
@@ -59,6 +59,7 @@ export function 处理正文按下(事件) {
   状态.拖选状态 = {
     滚动位置: 元素.滚动容器.scrollTop,
     已阻止滚动: false,
+    拖选中已复制: false,
   };
   if (状态.滚动帧) {
     cancelAnimationFrame(状态.滚动帧);
@@ -85,6 +86,15 @@ export function 处理鼠标选择结束() {
       return;
     }
 
+    if (本次拖选.拖选中已复制) {
+      // 拖选中按过 Ctrl/Command + C：复制才是这次选区的意图，
+      // 松手时不再把选区当作关键词增删，只收尾清选区。
+      window.getSelection()?.removeAllRanges();
+      状态.拖选状态 = null;
+      console.info('[阅读器] 拖选期间已复制，跳过关键词增删');
+      return;
+    }
+
     读取选择关键词();
     状态.拖选状态 = null;
     if (本次拖选.已阻止滚动) {
@@ -95,9 +105,47 @@ export function 处理鼠标选择结束() {
   });
 }
 
+/* 拖选期间发生复制（Ctrl/Command + C，或右键菜单「复制」）：只在这一次拖选的会话对象上
+   打标记，松手时由 处理鼠标选择结束 决定不建词。不拦默认行为，原生复制照常写入剪贴板。
+   标记挂在会话上，下一次 mousedown 自然换新会话，无需手动复位。 */
+function 标记拖选复制() {
+  if (状态.拖选状态) {
+    状态.拖选状态.拖选中已复制 = true;
+  }
+}
+
+export function 处理正文复制() {
+  标记拖选复制();
+}
+
+/* 键盘上的 Ctrl/Command + C：认按键而不是只等 copy 事件——用户机器存在 Ctrl↔Win 对调
+   （物理 Ctrl 以 Meta 送达），合成快捷键在 headless 验证里也不保证派发 copy 事件。
+   要求当前有非折叠选区，避免「没选中东西的 Ctrl+C」把下一次建词也吞掉。 */
+export function 处理正文复制按键(事件) {
+  if (
+    (事件.key === 'c' || 事件.key === 'C') &&
+    (事件.ctrlKey || 事件.metaKey) &&
+    !事件.altKey &&
+    !事件.isComposing
+  ) {
+    const 选择 = window.getSelection();
+    if (选择 && !选择.isCollapsed) {
+      标记拖选复制();
+    }
+  }
+}
+
 export function 处理非鼠标选择结束(事件) {
   if (事件.pointerType !== 'mouse') {
-    window.setTimeout(读取选择关键词);
+    const 本次拖选 = 状态.拖选状态;
+    window.setTimeout(function 完成非鼠标选择() {
+      // 触摸 / 笔拖选同理：会话期间复制过就不再增删关键词
+      if (本次拖选?.拖选中已复制) {
+        window.getSelection()?.removeAllRanges();
+        return;
+      }
+      读取选择关键词();
+    });
   }
 }
 
