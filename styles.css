@@ -2805,6 +2805,7 @@ dialog,
   font-size: 11px;
   font-weight: 700;
   text-align: left;
+  vertical-align: top;
   background: #f2f2f2;
 }
 
@@ -2884,6 +2885,23 @@ dialog,
 }
 
 .内容排序列:first-child .内容排序按钮 {
+  text-align: left;
+}
+
+/* 表头第二行的合计：压在自家那一列读数上，比列名矮一档，
+   当前列的列名会加深（aria-sort），合计不参与——它始终是次要信息。 */
+.内容表头合计 {
+  display: block;
+  padding-bottom: 6px;
+  color: var(--次要墨色);
+  font-weight: 600;
+  line-height: 15px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.内容排序列:first-child .内容表头合计 {
   text-align: left;
 }
 
@@ -3717,6 +3735,11 @@ dialog,
   .内容表格 th,
   .内容表格 td {
     padding: 0 5px;
+  }
+
+  /* 合计要到三位数才撑得住 56px 的已阅读列，先压字号，不去挤书名那一列 */
+  .内容表头合计 {
+    font-size: 10px;
   }
 
   .内容表格 th:first-child,

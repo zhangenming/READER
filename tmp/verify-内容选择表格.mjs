@@ -172,10 +172,41 @@ async function 主() {
         + parseFloat(算.paddingLeft) + parseFloat(算.borderLeftWidth);
     };
     const 表头 = [...表格.querySelectorAll('thead th')];
+    const 文字框 = (节点) => {
+      const 域 = document.createRange();
+      域.selectNodeContents(节点);
+      return 域.getBoundingClientRect();
+    };
+    const 内容宽 = (格) => {
+      const 算 = getComputedStyle(格);
+      return 格.getBoundingClientRect().width
+        - parseFloat(算.paddingLeft) - parseFloat(算.paddingRight)
+        - parseFloat(算.borderLeftWidth) - parseFloat(算.borderRightWidth);
+    };
+    const 合计格 = (列) =>
+      表头[列].querySelector('.内容表头合计');
     return {
       摘要: document.querySelector('#内容选择摘要').textContent,
       弹窗宽: Math.round(document.querySelector('#内容选择弹窗').getBoundingClientRect().width),
       表头文字: 表头.map((格) => 格.querySelector('.内容排序按钮').textContent),
+      表头合计: 表头.map((格) => [
+        格.dataset.排序,
+        格.querySelector('.内容表头合计')?.textContent ?? '',
+        格.title,
+      ]),
+      表头高: Math.round(表头[0].getBoundingClientRect().height),
+      各表头高: [...new Set(表头.map((格) => Math.round(格.getBoundingClientRect().height)))],
+      已阅读列: 行列表.map((行) => 行.children[2].textContent.trim()),
+      合计对齐: {
+        本数左缘: Math.round(文字框(合计格(0)).left),
+        书名内容左缘: Math.round(内容左缘(表头[0])),
+        时长右缘: Math.round(文字框(合计格(2)).right),
+        已阅读内容右缘: Math.round(内容右缘(表头[2])),
+        时长溢出: Math.round(文字框(合计格(2)).width - 内容宽(表头[2])),
+        本数溢出: Math.round(文字框(合计格(0)).width - 内容宽(表头[0])),
+        合计底缘: Math.round(合计格(2).getBoundingClientRect().bottom),
+        表头底缘: Math.round(表头[2].getBoundingClientRect().bottom),
+      },
       排序属性: 表头.map((格) => 格.getAttribute('aria-sort')),
       条目数: 行列表.length,
       行高: [...new Set(行列表.slice(0, 6).map((行) => Math.round(行.getBoundingClientRect().height)))],
@@ -219,6 +250,53 @@ async function 主() {
     );
   }
 
+  // —— 表头合计：只有书名/已阅读两列有，格式「共 X」，口径进悬停 ——
+  assert.deepEqual(
+    几何.表头合计.map(([键, 文本]) => [键, /^共 .+$/.test(文本)]),
+    [
+      ['书名', true],
+      ['字数', false],
+      ['已阅读', true],
+      ['进度', false],
+      ['状态', false],
+    ],
+    '合计只跟在书名与已阅读两个标题下面',
+  );
+  const 本数 = Number(几何.表头合计[0][1].match(/\d+/)[0]);
+  assert.equal(本数, 几何.条目数, '书名合计的本数要等于行数');
+  assert.equal(
+    本数,
+    Number(几何.摘要.split(' ')[0]),
+    '书名合计要和摘要同一本账',
+  );
+  assert.match(几何.表头合计[0][2], /＝/, '书名合计的口径要写进悬停提示');
+  assert.match(几何.表头合计[2][2], /各行相加/, '已阅读合计要说明是各行相加');
+  assert.deepEqual(几何.各表头高, [几何.表头高], '五列表头要等高');
+  assert.ok(
+    几何.表头高 >= 45 && 几何.表头高 <= 58,
+    `两行表头高度异常：${几何.表头高}px`,
+  );
+  assert.ok(
+    Math.abs(几何.合计对齐.本数左缘 - 几何.合计对齐.书名内容左缘) <= 1,
+    '本数合计要压在书名列左缘上',
+  );
+  assert.ok(
+    Math.abs(几何.合计对齐.时长右缘 - 几何.合计对齐.已阅读内容右缘) <= 1,
+    '时长合计的右缘要压在该列数字右缘上',
+  );
+  assert.ok(
+    几何.合计对齐.时长溢出 <= 0,
+    `时长合计撑破了已阅读列 ${几何.合计对齐.时长溢出}px`,
+  );
+  assert.ok(
+    几何.合计对齐.本数溢出 <= 0,
+    `本数合计撑破了书名列 ${几何.合计对齐.本数溢出}px`,
+  );
+  assert.ok(
+    Math.abs(几何.合计对齐.合计底缘 - 几何.合计对齐.表头底缘) <= 1,
+    '合计要贴住表头下缘',
+  );
+
   // 表头吸顶：滚到底部时表头仍贴在容器上缘
   const 吸顶 = await 求值(`
     const 列表 = document.querySelector('#内容选择列表');
@@ -253,6 +331,19 @@ async function 主() {
       return [...document.querySelectorAll('#内容选择列表 thead th')].map((格) =>
         [格.dataset.排序, 格.getAttribute('aria-sort')]);
     `);
+  }
+  // 合计那一行也在表头格子里：点它要同样排序，不能是死区
+  async function 点表头合计(键) {
+    await 求值(`
+      document.querySelector('.内容排序列[data-排序=${JSON.stringify(键)}] .内容表头合计')
+        .dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      return 1;
+    `);
+    await pause(250);
+    return 求值(
+      `return document.querySelector('.内容排序列[data-排序=${JSON.stringify(键)}]')
+        .getAttribute('aria-sort');`,
+    );
   }
   function 断言单调(值列表, 说明, 允许降) {
     for (let i = 1; i < 值列表.length; i++) {
@@ -307,6 +398,30 @@ async function 主() {
 
   // 等字数统计回填（万字列不再是「…」），排序要按真实字数比
   await 等待字数统计();
+
+  // —— 合计对账：表头那个数要等于这一列各行显示值相加 ——
+  const 合计对账 = await 求值(`
+    const 表头 = [...document.querySelectorAll('#内容选择列表 thead th')];
+    const 合计 = 表头[2].querySelector('.内容表头合计').textContent;
+    const 各行 = [...document.querySelectorAll('#内容选择列表 tbody tr')]
+      .map((行) => 行.children[2].textContent.trim())
+      .filter(Boolean)
+      .map((文字) => Number(文字.replace('h', '')));
+    return {
+      合计,
+      各行,
+      相加: Number(各行.reduce((总, 值) => 总 + 值, 0).toFixed(1)),
+    };
+  `);
+  assert.ok(
+    合计对账.各行.length >= 3,
+    `造出的阅读记录没回填到表里：${合计对账.各行.length}`,
+  );
+  assert.equal(
+    Number(合计对账.合计.replace(/[^\d.]/g, '')),
+    合计对账.相加,
+    `已阅读合计要等于各行相加：${合计对账.合计} vs ${合计对账.各行.join('+')}=${合计对账.相加}`,
+  );
 
   const 万字排序 = await 点表头('字数');
   assert.deepEqual(
@@ -389,6 +504,19 @@ async function 主() {
   );
   const 降序书名 = (await 读列(0)).map(([, 名]) => 名);
   assert.deepEqual(降序书名, [...升序书名].reverse(), '书名降序应是升序的镜像');
+
+  // 表头第二行的合计不是死区：点它同样反向
+  assert.equal(
+    await 点表头合计('书名'),
+    'ascending',
+    '点书名表头的合计那一行要反向为升序',
+  );
+  assert.deepEqual(
+    (await 读列(0)).map(([, 名]) => 名),
+    升序书名,
+    '点合计行反向后要回到那一份升序',
+  );
+  await 点表头('书名'); // 停在降序：下面的持久化断言要的是「书名 + 降」
 
   // —— 排序方式要持久化：点定的「列 + 方向」刷新后仍是那一个 ——
   await pause(600); // 等 安排保存持久化状态 的 120ms 防抖落盘
