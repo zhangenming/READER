@@ -251,7 +251,18 @@ try {
         [...(行.querySelector('.统计时段滚动格')?.children ?? [])].map((项) => 项.textContent),
         行.querySelector('.统计时段激活格')?.textContent ?? '',
       ]),
-      表头: [...表.querySelectorAll('thead th')].map((节点) => 节点.textContent.trim()),
+      表头: [...表.querySelectorAll('thead th')].map(
+        (节点) => 节点.querySelector('.统计时段表头名')?.textContent.trim() ?? '',
+      ),
+      // 表头第二行是这一列的合计（没有数据时不渲染）
+      表头合计: Object.fromEntries(
+        [...表.querySelectorAll('thead th')]
+          .map((节点) => [
+            节点.querySelector('.统计时段表头名')?.textContent.trim() ?? '',
+            节点.querySelector('.统计时段合计')?.textContent.trim() ?? '',
+          ])
+          .filter(([名, 合计]) => 名 && 合计),
+      ),
       // 「滚动」「激活」两枚表头要各自压在自己那列读数上（内容区右边缘同轴）
       表头右缘: [...表.querySelectorAll('thead th')].map((节点) => 内容右缘(节点)),
       读数右缘: 行们.map((行) => [
@@ -343,6 +354,50 @@ try {
       `表头与读数同轴：滚动 ${滚动表头右缘}/${滚动右缘}，激活 ${激活表头右缘}/${激活右缘}`,
     );
   }
+
+  // 表头第二行是这一列的合计：拿计算器把这一列竖着加，必须加得出同一个数
+  // （每行只到分、秒舍掉，所以合计按「各行显示值」相加，不是先加秒再取整）
+  const 到分钟 = (文本) => {
+    if (!文本 || 文本.includes('不足')) return 0; // 不足 1 分钟显示出来是字，账上是 0
+    const 时 = /(\d+) 小时/.exec(文本);
+    const 分 = /(\d+) 分/.exec(文本);
+    return (时 ? +时[1] * 60 : 0) + (分 ? +分[1] : 0);
+  };
+  assert.ok(渲染.表头合计.滚动 && 渲染.表头合计.激活, `两列表头都要有合计：${JSON.stringify(渲染.表头合计)}`);
+  assert.match(渲染.表头合计.滚动, /^合计 \d+ 段 · /, `滚动合计要走「N 段 · 时长」：${渲染.表头合计.滚动}`);
+  // 滚动格只有一枚 div，文本形如「3 段·10 分」，到分钟 从里面挑「X 分」
+  const 滚动列 = 渲染.汇总.map(([, 滚动格]) => 滚动格.join(''));
+  const 滚动列分 = 滚动列.reduce((总, 文本) => 总 + 到分钟(文本), 0);
+  const 激活列分 = 渲染.汇总.reduce((总, [, , 激活格]) => 总 + 到分钟(激活格), 0);
+  assert.equal(
+    到分钟(渲染.表头合计.滚动),
+    滚动列分,
+    `滚动合计与各行相加对不上：${渲染.表头合计.滚动} vs ${滚动列分} 分`,
+  );
+  assert.equal(
+    到分钟(渲染.表头合计.激活),
+    激活列分,
+    `激活合计与各行相加对不上：${渲染.表头合计.激活} vs ${激活列分} 分`,
+  );
+  const 段数列 = 滚动列.reduce((总, 文本) => 总 + Number(/^(\d+) 段/.exec(文本)[1]), 0);
+  assert.equal(
+    Number(/^合计 (\d+) 段/.exec(渲染.表头合计.滚动)[1]),
+    段数列,
+    `段数合计与各行相加对不上：${渲染.表头合计.滚动} vs ${段数列} 段`,
+  );
+
+  // 每日数据条压矮：行高＝20px 轨道＋上下留白，不许退回 44px 那种散排
+  const 行距 = await evaluate(`
+    const 行 = [...document.querySelectorAll('.统计时段表 tbody tr')];
+    const 轨 = (节点) => 节点.querySelector('.统计时段轨道').getBoundingClientRect();
+    return {
+      行高: 行.map((r) => Math.round(r.getBoundingClientRect().height)),
+      间距: 行.length > 1 ? Math.round(轨(行[1]).top - 轨(行[0]).bottom) : -1,
+    };
+  `);
+  assert.ok(Math.max(...行距.行高) <= 34, `每日数据条还是太高：${JSON.stringify(行距)}`);
+  assert.ok(行距.间距 >= 0, `两行轨道叠在一起了：${JSON.stringify(行距)}`);
+  console.log('表头合计与各行相加对账通过；行高', 行距.行高);
 
   // 4) 窄屏不横向溢出
   for (const 宽度 of [885, 375]) {

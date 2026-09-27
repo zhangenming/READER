@@ -554,9 +554,24 @@ body.关键词手势中 .滚动容器 {
   table-layout: auto;
 }
 /* 每天之间的分割线撤掉：轨道自带一圈描边，一行一条已经分得清了，
-   再压一条横线会把「白底轨道」读成表格里的一格 */
+   再压一条横线会把「白底轨道」读成表格里的一格。
+   行距同时压矮：44px 一行太散，30px 才像一条一张的作息轴 */
 .阅读统计内容 .统计时段表 tbody td {
+  padding-top: 5px;
+  padding-bottom: 5px;
   border-bottom: 0;
+}
+/* 表头那两列：名字在上、合计在下，两行都靠右压在自家那列读数上 */
+.统计时段表头名 {
+  display: block;
+}
+.统计时段合计 {
+  display: block;
+  margin-top: 2px;
+  color: var(--次要墨色);
+  font-size: 11px;
+  font-weight: 400;
+  white-space: nowrap;
 }
 /* 日期列与两列读数都按内容收拢（1% 是「缩到内容宽」的写法，配合 nowrap 生效），
    整张表的空档全部让给中间那条时间轴 */
@@ -717,6 +732,10 @@ body.关键词手势中 .滚动容器 {
   .统计时段激活格 {
     white-space: normal;
     font-size: 12px;
+  }
+  /* 窄屏那一列装不下「合计 N 段 · X 小时 Y 分」一整行，让它换行而不是撑破表头 */
+  .统计时段合计 {
+    white-space: normal;
   }
   /* 窄屏放不下两枚对齐槽（合计约 9.6em），撤掉等宽让读数换行，别横向溢出 */
   .统计时段读数 {

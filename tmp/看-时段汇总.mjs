@@ -71,10 +71,22 @@ function 到分(总输入) {
   const 分钟 = Math.floor(总 / 60);
   return 分钟 < 60 ? `${分钟} 分` : `${Math.floor(分钟 / 60)} 小时 ${分钟 % 60} 分`;
 }
+// 灰带按「激活 ∪ 滚动」画，激活列也是这份并集的总秒（滚动必然发生在页面开着的时候）
+function 并段(...组们) {
+  const 段 = 组们.flat().filter(([起, 止]) => 止 > 起).map(([起, 止]) => [起, 止]);
+  段.sort((左, 右) => 左[0] - 右[0] || 左[1] - 右[1]);
+  const 出 = [];
+  for (const [起, 止] of 段) {
+    const 末 = 出[出.length - 1];
+    if (末 && 起 <= 末[1]) 末[1] = Math.max(末[1], 止);
+    else 出.push([起, 止]);
+  }
+  return 出;
+}
 const 期望 = Object.entries(数据).map(
   ([, [滚动, 激活]]) => [
     `${滚动.length} 段·${到分(滚动.reduce((n, [起, 止]) => n + 止 - 起, 0))}`,
-    到分(激活.reduce((n, [起, 止]) => n + 止 - 起, 0)),
+    到分(并段(激活, 滚动).reduce((n, [起, 止]) => n + 止 - 起, 0)),
   ],
 );
 
@@ -247,7 +259,8 @@ const 结果 = await 求值(`
     弹窗首块:
       document.querySelector('#阅读统计内容').firstElementChild?.querySelector('caption')
         ?.textContent ?? '',
-    表头: 表头格.map((t) => t.textContent.trim()),
+    表头: 表头格.map((t) => t.querySelector('.统计时段表头名')?.textContent.trim() ?? ''),
+    表头合计: 表头格.map((t) => t.querySelector('.统计时段合计')?.textContent.trim() ?? ''),
     表头右缘: [内容右缘(表头格[2]), 内容右缘(表头格[3])],
     行: [...表.querySelectorAll('tbody tr')].map((r) => {
       const 滚动格 = r.querySelector('.统计时段滚动格');
