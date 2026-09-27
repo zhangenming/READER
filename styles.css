@@ -551,6 +551,11 @@ body.关键词手势中 .滚动容器 {
 .阅读统计内容 .统计时段表 {
   table-layout: auto;
 }
+/* 每天之间的分割线撤掉：轨道自带一圈描边，一行一条已经分得清了，
+   再压一条横线会把「白底轨道」读成表格里的一格 */
+.阅读统计内容 .统计时段表 tbody td {
+  border-bottom: 0;
+}
 /* 日期列与两列读数都按内容收拢（1% 是「缩到内容宽」的写法，配合 nowrap 生效），
    整张表的空档全部让给中间那条时间轴 */
 .阅读统计内容 .统计时段表 th:first-child,
@@ -609,23 +614,25 @@ body.关键词手势中 .滚动容器 {
 .统计时段轨道 {
   position: relative;
   height: 20px;
+  overflow: hidden; /* 撑满整行的激活带会被圆角裁掉两角，短段也不许探出轨道 */
   border-radius: 4px;
-  background: var(--背景色);
+  background: var(--纸张色); /* 未激活 = 与弹窗同色的留白，靠描边看出轨道边界 */
   box-shadow: inset 0 0 0 1px var(--边线色);
 }
+/* 自动滚动必然发生在页面开着的时候，所以激活是「底」、滚动是「底上的针」：
+   激活带撑满整行涂灰，滚动块只占 70% 高、上下各留 15% 居中压上去，一眼分得开两层。 */
 .统计时段块 {
   position: absolute;
-  top: 3px;
-  bottom: 3px;
+  top: 15%;
+  bottom: 15%;
   min-width: 3px; /* 秒级短段在长轴上也要看得见 */
   border-radius: 2px;
   background: var(--墨色); /* 自动与按键同算一段，不再分色 */
 }
-/* 页面激活是"底色"，滚动块压在它上面，所以比滚动块上下各多留 1px */
 .统计时段块-激活 {
-  top: 2px;
-  bottom: 2px;
-  background: color-mix(in oklab, var(--墨色) 16%, transparent);
+  top: 0;
+  bottom: 0;
+  background: color-mix(in oklab, var(--墨色) 24%, var(--纸张色));
 }
 .统计时段图例 {
   display: flex;
@@ -643,12 +650,13 @@ body.关键词手势中 .滚动容器 {
 }
 .统计时段图例块 {
   width: 14px;
-  height: 8px;
+  height: 8px; /* 滚动块只占轨道 70% 高 */
   border-radius: 2px;
   background: var(--墨色);
 }
 .统计时段图例块-激活 {
-  background: color-mix(in oklab, var(--墨色) 16%, transparent);
+  height: 12px; /* 激活带撑满整行，图例里就画得比滚动块高 */
+  background: color-mix(in oklab, var(--墨色) 24%, var(--纸张色));
 }
 .统计时段图例说明 {
   margin-left: auto;
