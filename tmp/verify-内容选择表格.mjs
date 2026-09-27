@@ -1,10 +1,12 @@
 // 校验「阅读内容」弹窗的表格形态与列头排序：
-// 1) 一行一本书、六列各管一个量；行高等宽、不横向溢出、表头吸顶
+// 1) 一行一本书、五列各管一个量；行高等宽、不横向溢出、表头吸顶
 // 2) 表头文字的右缘压在该列数字的右缘上（左对齐的书名列压左缘）
 // 3) 点一次排该列自然序，再点反向；缺值（未统计/无记录）永远钉在尾部
 // 4) 点行、聚焦行按 Enter 都能载入那本书
 // 5) 点过的「列 + 方向」会落盘：刷新后仍是那一列那一向，再点才反向
 // 6) 时间拆成「激活 / 滚动」两列：两列各自对账，且每一行激活 ≥ 滚动
+// 7) 标题下不再报「N 个文本」（和书名合计那一格重复），也不再单列「状态」：
+//    在读哪本靠行底色 + 左侧色条，读没读过靠两格时间有没有数
 // 跑法：node tmp/verify-内容选择表格.mjs
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
@@ -187,7 +189,12 @@ async function 主() {
     const 合计格 = (列) =>
       表头[列].querySelector('.内容表头合计');
     return {
-      摘要: document.querySelector('#内容选择摘要').textContent,
+      有摘要节点: !!document.querySelector('#内容选择摘要'),
+      标题栏高: Math.round(
+        document
+          .querySelector('#内容选择弹窗 .内容选择标题栏')
+          .getBoundingClientRect().height,
+      ),
       弹窗宽: Math.round(document.querySelector('#内容选择弹窗').getBoundingClientRect().width),
       表头文字: 表头.map((格) => 格.querySelector('.内容排序按钮').textContent),
       表头合计: 表头.map((格) => [
@@ -231,30 +238,19 @@ async function 主() {
     };
   `);
   console.log('几何:', JSON.stringify(几何, null, 2));
-  assert.deepEqual(几何.表头文字, [
-    '书名',
-    '万字',
-    '激活',
-    '滚动',
-    '进度',
-    '状态',
-  ]);
+  assert.equal(几何.有摘要节点, false, '标题下那行「N 个文本」要撤掉，本数看书名合计');
+  assert.ok(几何.标题栏高 >= 44, `撤掉摘要后标题栏塌了：${几何.标题栏高}px`);
+  assert.deepEqual(几何.表头文字, ['书名', '万字', '激活', '滚动', '进度']);
   assert.deepEqual(几何.排序属性, [
     'ascending',
     'none',
     'none',
     'none',
     'none',
-    'none',
   ]);
   assert.deepEqual(几何.行高, [34], '行高要全部相等');
-  assert.deepEqual(几何.每行格数, [6], '每行要恰好六个格子');
+  assert.deepEqual(几何.每行格数, [5], '每行要恰好五个格子');
   assert.ok(几何.条目数 >= 10, `条目过少：${几何.条目数}`);
-  assert.equal(
-    几何.条目数,
-    Number(几何.摘要.split(' ')[0]),
-    '条目数应与摘要一致',
-  );
   assert.ok(几何.横向溢出 <= 0, `表格横向溢出 ${几何.横向溢出}px`);
   assert.equal(几何.当前行数, 1, '要且只要一行标为当前');
   assert.ok(几何.可聚焦, '每行要能用键盘聚焦');
@@ -274,16 +270,14 @@ async function 主() {
       ['激活', true],
       ['滚动', true],
       ['进度', false],
-      ['状态', false],
     ],
     '合计只跟在书名与两列时间的标题下面',
   );
   const 本数 = Number(几何.表头合计[0][1].match(/\d+/)[0]);
-  assert.equal(本数, 几何.条目数, '书名合计的本数要等于行数');
   assert.equal(
     本数,
-    Number(几何.摘要.split(' ')[0]),
-    '书名合计要和摘要同一本账',
+    几何.条目数,
+    '撤掉摘要后书名合计是本数的唯一出口，要等于行数',
   );
   assert.match(几何.表头合计[0][2], /＝/, '书名合计的口径要写进悬停提示');
   assert.match(几何.表头合计[2][2], /页面可见/, '激活合计要说明是页面可见时长');
@@ -295,7 +289,7 @@ async function 主() {
       '时间合计要说明是各行相加',
     );
   }
-  assert.deepEqual(几何.各表头高, [几何.表头高], '六列表头要等高');
+  assert.deepEqual(几何.各表头高, [几何.表头高], '五列表头要等高');
   assert.ok(
     几何.表头高 >= 45 && 几何.表头高 <= 58,
     `两行表头高度异常：${几何.表头高}px`,
@@ -529,7 +523,6 @@ async function 主() {
       ['激活', 'none'],
       ['滚动', 'none'],
       ['进度', 'none'],
-      ['状态', 'none'],
     ],
     '点万字要按万字降序',
   );
@@ -587,19 +580,6 @@ async function 主() {
     );
   }
 
-  const 状态排序 = await 点表头('状态');
-  assert.equal(状态排序[5][1], 'ascending', '状态首点为升序（加载在前）');
-  {
-    const 列 = (await 读列(5)).map(([文字]) => 文字);
-    const 序 = { 加载: 0, 继续: 1, 当前: 2 };
-    断言单调(
-      列.map((名) => 序[名]),
-      '状态升序',
-      false,
-    );
-    assert.equal(列[列.length - 1], '当前', '当前这本要排在状态升序的末尾');
-  }
-
   const 进度排序 = await 点表头('进度');
   assert.equal(进度排序[4][1], 'descending');
   {
@@ -607,7 +587,7 @@ async function 主() {
     const 有值 = 列.filter((数) => Number.isFinite(数) && 数 > 0);
     assert.ok(有值.length >= 3, `有进度的书太少：${有值.length}`);
     断言单调(有值, '进度降序', true);
-    // 没有阅读记录的行（状态=加载）不许混进有进度的一头
+    // 没读过的行（两格时间都空白）不许混进有进度的一头
     const 行列表 = await 读列(4);
     const 首个空白 = 行列表.findIndex(([文字]) => !文字);
     const 最后有值 = 行列表.findLastIndex(([文字]) => 文字);
@@ -677,7 +657,6 @@ async function 主() {
       ['激活', 'none'],
       ['滚动', 'none'],
       ['进度', 'none'],
-      ['状态', 'none'],
     ],
     '刷新后表头仍标在书名列的降序上',
   );
@@ -775,18 +754,23 @@ async function 主() {
     const 算 = getComputedStyle(行.children[0]);
     return {
       书名: 行.dataset.fileName,
-      状态: 行.children[5].textContent,
       色条: 算.boxShadow,
-      状态色: getComputedStyle(行.children[5]).color,
+      末列文字: 行.lastElementChild.textContent,
+      末列色: getComputedStyle(行.lastElementChild).color,
       底色: getComputedStyle(行).backgroundColor,
       aria: 行.getAttribute('aria-current'),
     };
   `);
   console.log('当前行:', 当前行);
-  assert.equal(当前行.状态, '当前');
-  assert.equal(当前行.aria, 'true');
-  assert.match(当前行.色条, /inset/);
-  assert.notEqual(当前行.底色, 'rgba(0, 0, 0, 0)');
+  // 「状态」那一列撤了：在读哪本只剩行底色 + 左侧色条 + aria-current 三处出口
+  assert.equal(当前行.aria, 'true', '当前这本要靠 aria-current 说给读屏');
+  assert.match(当前行.色条, /inset/, '当前行要有左侧色条');
+  assert.notEqual(当前行.底色, 'rgba(0, 0, 0, 0)', '当前行要有行底色');
+  assert.notEqual(
+    当前行.末列色,
+    'rgb(0, 0, 0)',
+    '撤掉状态列后末列（进度）只是普通读数，不该再被选中色染黑',
+  );
   await 截图('阅读内容-表格-当前行.png');
   await 求值(
     `document.querySelector('#内容选择列表').scrollTop = 0; return 1;`,
@@ -794,7 +778,7 @@ async function 主() {
   await 点表头('字数');
   await 截图('阅读内容-表格-万字降序.png');
 
-  // 窄屏：六列压不破容器，书名仍然是最后被挤的那一个
+  // 窄屏：列压不破容器，书名仍然是最后被挤的那一个
   await 发送('Emulation.setDeviceMetricsOverride', {
     width: 375,
     height: 812,
@@ -824,7 +808,7 @@ async function 主() {
       弹窗宽: Math.round(document.querySelector('#内容选择弹窗').getBoundingClientRect().width),
       横向溢出: 列表.scrollWidth - 列表.clientWidth,
       书名列宽: Math.round(首行.children[0].getBoundingClientRect().width),
-      状态列宽: Math.round(首行.children[5].getBoundingClientRect().width),
+      进度列宽: Math.round(首行.children[4].getBoundingClientRect().width),
       行高: Math.round(首行.getBoundingClientRect().height),
       合计文本: [2, 3].map((列) =>
         表头[列].querySelector('.内容表头合计').textContent),

@@ -2635,7 +2635,7 @@ dialog,
 }
 
 .内容选择弹窗 {
-  width: min(660px, calc(100vw - 32px));
+  width: min(600px, calc(100vw - 32px));
   max-height: min(540px, calc(100dvh - 80px));
   margin: auto 32px 48px auto;
   padding: 0;
@@ -2780,7 +2780,7 @@ dialog,
   color: var(--选中色);
 }
 
-/* 「阅读内容」表格：一行一本书，六个量各占一列，列头点击排序。
+/* 「阅读内容」表格：一行一本书，五个量各占一列，列头点击排序。
    列宽写死 + table-layout: fixed，书名吃掉剩余宽度并省略号收尾。
    宽度挂在 th[data-排序] 上而不是 nth-child：拆一列出来不必重排一遍下标。 */
 .内容表格 {
@@ -2788,7 +2788,6 @@ dialog,
   --内容列宽-激活: 74px;
   --内容列宽-滚动: 74px;
   --内容列宽-进度: 58px;
-  --内容列宽-状态: 62px;
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
@@ -2846,10 +2845,6 @@ dialog,
   width: var(--内容列宽-进度);
 }
 
-.内容表格 th[data-排序='状态'] {
-  width: var(--内容列宽-状态);
-}
-
 /* 数字右对齐，书名以外的列都一样 */
 .内容表格 td:not(:first-child) {
   color: var(--次要墨色);
@@ -2875,10 +2870,6 @@ dialog,
 
 .内容行.当前 td:first-child {
   box-shadow: inset 3px 0 0 var(--选中色);
-}
-
-.内容行.当前 td:last-child {
-  color: var(--选中色);
 }
 
 .内容行:focus-visible {
@@ -3737,19 +3728,18 @@ dialog,
   .内容选择弹窗 {
     width: calc(100vw - 16px);
     /* dialog 的 UA 样式带 max-width: calc(100% - 6px - 2em)，窄屏上比上面的 width 还窄，
-       六列要抢的那几像素全被它吃掉，先放开再由 width 自己管 */
+       数字列要抢的那几像素全被它吃掉，先放开再由 width 自己管 */
     max-width: none;
     max-height: min(70dvh, 540px);
     margin: auto 12px 44px auto;
   }
 
-  /* 窄屏放不下六列：先把列宽和字号压下来，书名仍然是最后被挤的那一个 */
+  /* 窄屏放不下这些列：先把列宽和字号压下来，书名仍然是最后被挤的那一个 */
   .内容表格 {
     --内容列宽-字数: 46px;
-    --内容列宽-激活: 46px;
-    --内容列宽-滚动: 46px;
+    --内容列宽-激活: 50px;
+    --内容列宽-滚动: 50px;
     --内容列宽-进度: 40px;
-    --内容列宽-状态: 40px;
     font-size: 12px;
   }
 
@@ -3758,10 +3748,9 @@ dialog,
     padding: 0 5px;
   }
 
-  /* 两列时间各只到 46px：合计里的「共」加上两位数的时数要再矮一档才塞得下，
-     不去挤书名那一列 */
+  /* 合计比列名矮一档就够：数字列只到 50px，「共」加上两位数的时数压不住就挤书名了 */
   .内容表头合计 {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .内容表格 th:first-child,

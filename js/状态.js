@@ -241,7 +241,6 @@ export const 元素 = {
   阅读统计弹窗: document.querySelector('#阅读统计弹窗'),
   阅读统计内容: document.querySelector('#阅读统计内容'),
   内容选择弹窗: document.querySelector('#内容选择弹窗'),
-  内容选择摘要: document.querySelector('#内容选择摘要'),
   内容选择列表: document.querySelector('#内容选择列表'),
   关闭内容选择按钮: document.querySelector('#关闭内容选择按钮'),
   关键词面板: document.querySelector('#关键词面板'),

@@ -88,7 +88,6 @@ const 结果 = await 求值(`
   const 列表 = document.querySelector('#内容选择列表');
   return {
     打开: 弹窗.open,
-    摘要: document.querySelector('#内容选择摘要').textContent,
     条目: [...列表.querySelectorAll('[data-file-name]')].map((b) => b.dataset.fileName),
     提示: [...列表.querySelectorAll('.内容选择提示')].map((p) => p.textContent),
   };
@@ -133,7 +132,7 @@ for (let i = 0; i < 100; i++) {
 assert.ok(载入完成, `点击条目后应载入正文：${JSON.stringify(载入诊断)}`);
 
 console.log(
-  `\nOK：读到 ${结果.条目.length} 个文本，摘要「${结果.摘要}」，点击条目载入 ${载入诊断.文本字数} 字`,
+  `\nOK：读到 ${结果.条目.length} 个文本，点击条目载入 ${载入诊断.文本字数} 字`,
 );
 
 ws.close();
