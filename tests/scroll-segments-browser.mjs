@@ -237,6 +237,16 @@ try {
         框.right - parseFloat(样式.paddingRight) - parseFloat(样式.borderRightWidth),
       );
     };
+    // 文字基线：Chrome 给文本 Range 的矩形＝[基线-升部, 基线+降部]，反推回基线
+    const 画布 = document.createElement('canvas').getContext('2d');
+    const 基线 = (节点) => {
+      const 样式 = getComputedStyle(节点);
+      画布.font = \`\${样式.fontStyle} \${样式.fontWeight} \${样式.fontSize} \${样式.fontFamily}\`;
+      const 量 = 画布.measureText(节点.textContent.trim());
+      const 区 = document.createRange();
+      区.selectNodeContents(节点);
+      return +(区.getBoundingClientRect().top + 量.fontBoundingBoxAscent).toFixed(2);
+    };
     return {
       窗口,
       现在: 刻.getHours() * 3600 + 刻.getMinutes() * 60 + 刻.getSeconds(),
@@ -254,15 +264,21 @@ try {
       表头: [...表.querySelectorAll('thead th')].map(
         (节点) => 节点.querySelector('.统计时段表头名')?.textContent.trim() ?? '',
       ),
-      // 表头第二行是这一列的合计（没有数据时不渲染）
-      表头合计: Object.fromEntries(
+      // 合计不占表头一行，只留在列名的悬停提示里
+      表头合计节点: 表.querySelectorAll('thead .统计时段合计').length,
+      表头提示: Object.fromEntries(
         [...表.querySelectorAll('thead th')]
           .map((节点) => [
             节点.querySelector('.统计时段表头名')?.textContent.trim() ?? '',
-            节点.querySelector('.统计时段合计')?.textContent.trim() ?? '',
+            节点.title ?? '',
           ])
-          .filter(([名, 合计]) => 名 && 合计),
+          .filter(([名, 提示]) => 名 && 提示),
       ),
+      // 时间刻度不许浮在表头中间：和「日期/滚动/激活」压在同一条基线上
+      表头基线: {
+        列名: [...表.querySelectorAll('thead th .统计时段表头名')].map(基线),
+        刻度: [...表.querySelectorAll('.统计时段刻度标签, .统计时段端点')].map(基线),
+      },
       // 「滚动」「激活」两枚表头要各自压在自己那列读数上（内容区右边缘同轴）
       表头右缘: [...表.querySelectorAll('thead th')].map((节点) => 内容右缘(节点)),
       读数右缘: 行们.map((行) => [
@@ -355,7 +371,8 @@ try {
     );
   }
 
-  // 表头第二行是这一列的合计：拿计算器把这一列竖着加，必须加得出同一个数
+  // 表头只留列名：合计那行撤掉了，数字进悬停提示。
+  // 提示里的合计仍要拿计算器把这一列竖着加得出同一个数
   // （每行只到分、秒舍掉，所以合计按「各行显示值」相加，不是先加秒再取整）
   const 到分钟 = (文本) => {
     if (!文本 || 文本.includes('不足')) return 0; // 不足 1 分钟显示出来是字，账上是 0
@@ -363,27 +380,42 @@ try {
     const 分 = /(\d+) 分/.exec(文本);
     return (时 ? +时[1] * 60 : 0) + (分 ? +分[1] : 0);
   };
-  assert.ok(渲染.表头合计.滚动 && 渲染.表头合计.激活, `两列表头都要有合计：${JSON.stringify(渲染.表头合计)}`);
-  assert.match(渲染.表头合计.滚动, /^合计 \d+ 段 · /, `滚动合计要走「N 段 · 时长」：${渲染.表头合计.滚动}`);
+  assert.equal(渲染.表头合计节点, 0, '表头不再有合计那一行');
+  const 表头合计 = {};
+  for (const [名, 提示] of Object.entries(渲染.表头提示)) {
+    const 合计 = /合计 [^；]+/.exec(提示);
+    if (合计) 表头合计[名] = 合计[0];
+  }
+  assert.ok(表头合计.滚动 && 表头合计.激活, `两列提示都要有合计：${JSON.stringify(渲染.表头提示)}`);
+  assert.match(表头合计.滚动, /^合计 \d+ 段 · /, `滚动合计要走「N 段 · 时长」：${表头合计.滚动}`);
   // 滚动格只有一枚 div，文本形如「3 段·10 分」，到分钟 从里面挑「X 分」
   const 滚动列 = 渲染.汇总.map(([, 滚动格]) => 滚动格.join(''));
   const 滚动列分 = 滚动列.reduce((总, 文本) => 总 + 到分钟(文本), 0);
   const 激活列分 = 渲染.汇总.reduce((总, [, , 激活格]) => 总 + 到分钟(激活格), 0);
   assert.equal(
-    到分钟(渲染.表头合计.滚动),
+    到分钟(表头合计.滚动),
     滚动列分,
-    `滚动合计与各行相加对不上：${渲染.表头合计.滚动} vs ${滚动列分} 分`,
+    `滚动合计与各行相加对不上：${表头合计.滚动} vs ${滚动列分} 分`,
   );
   assert.equal(
-    到分钟(渲染.表头合计.激活),
+    到分钟(表头合计.激活),
     激活列分,
-    `激活合计与各行相加对不上：${渲染.表头合计.激活} vs ${激活列分} 分`,
+    `激活合计与各行相加对不上：${表头合计.激活} vs ${激活列分} 分`,
   );
   const 段数列 = 滚动列.reduce((总, 文本) => 总 + Number(/^(\d+) 段/.exec(文本)[1]), 0);
   assert.equal(
-    Number(/^合计 (\d+) 段/.exec(渲染.表头合计.滚动)[1]),
+    Number(/^合计 (\d+) 段/.exec(表头合计.滚动)[1]),
     段数列,
-    `段数合计与各行相加对不上：${渲染.表头合计.滚动} vs ${段数列} 段`,
+    `段数合计与各行相加对不上：${表头合计.滚动} vs ${段数列} 段`,
+  );
+
+  // 时间刻度与列名同一条基线（贴底，不许浮在表头中间）
+  const 列名基线 = Math.max(...渲染.表头基线.列名);
+  const 基线差 = 渲染.表头基线.刻度.map((值) => +(值 - 列名基线).toFixed(2));
+  assert.ok(
+    渲染.表头基线.刻度.length > 0 &&
+      Math.max(...基线差.map(Math.abs)) <= 1,
+    `刻度没和列名压在同一基线上：列名 ${列名基线}，刻度 ${渲染.表头基线.刻度}`,
   );
 
   // 每日数据条压矮：行高＝20px 轨道＋上下留白，不许退回 44px 那种散排

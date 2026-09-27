@@ -561,18 +561,7 @@ body.关键词手势中 .滚动容器 {
   padding-bottom: 5px;
   border-bottom: 0;
 }
-/* 表头那两列：名字在上、合计在下，两行都靠右压在自家那列读数上 */
-.统计时段表头名 {
-  display: block;
-}
-.统计时段合计 {
-  display: block;
-  margin-top: 2px;
-  color: var(--次要墨色);
-  font-size: 11px;
-  font-weight: 400;
-  white-space: nowrap;
-}
+/* 表头那两列只有一行列名，靠右压在自家那列读数上 */
 /* 日期列与两列读数都按内容收拢（1% 是「缩到内容宽」的写法，配合 nowrap 生效），
    整张表的空档全部让给中间那条时间轴 */
 .阅读统计内容 .统计时段表 th:first-child,
@@ -608,12 +597,14 @@ body.关键词手势中 .滚动容器 {
 }
 .统计时段标尺 {
   position: relative;
-  height: 14px;
+  /* 一只线盒＝表头那一行文字（th 12px × line-height 1.5）：刻度贴这条线盒的底，
+     和「日期 / 滚动 / 激活」压在同一基线上，不许浮在表头中间 */
+  height: 1lh;
 }
 .统计时段端点,
 .统计时段刻度标签 {
   position: absolute;
-  top: 0;
+  bottom: 0;
   color: var(--次要墨色);
   font-size: 11px;
   font-variant-numeric: tabular-nums;
@@ -737,10 +728,6 @@ body.关键词手势中 .滚动容器 {
   .统计时段激活格 {
     white-space: normal;
     font-size: 12px;
-  }
-  /* 窄屏那一列装不下「合计 N 段 · X 小时 Y 分」一整行，让它换行而不是撑破表头 */
-  .统计时段合计 {
-    white-space: normal;
   }
   /* 窄屏放不下两枚对齐槽（合计约 9.6em），撤掉等宽让读数换行，别横向溢出 */
   .统计时段读数 {
