@@ -164,7 +164,7 @@ try {
     await 移动鼠标(Math.round(内容.left + 30), Math.round(cy));
     await pause(100);
     await 移动鼠标(240, 200);
-    await pause(150);
+    await pause(700); // 出区宽限期 350ms 之后才该收
     const 远处 = await 显示中();
     console.log(远处 ? 'FAIL: 移到正文远处仍显示（热区没收）' : 'OK   移到正文远处已隐藏');
 

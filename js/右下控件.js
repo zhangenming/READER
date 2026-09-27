@@ -36,11 +36,14 @@ function 在右下热区(x, y) {
     return false;
   }
   const 矩形 = 按钮组.getBoundingClientRect();
+  // 常量文件与模块文件是两次独立请求，任一侧留在旧缓存里都会给出 undefined，
+  // 而 undefined 参与减法得到 NaN，整条矩形判定会静默失效 → 退回内置值。
+  const 外扩 = Number.isFinite(右下控件外扩) ? 右下控件外扩 : 12;
   return (
-    x >= 矩形.left - 右下控件外扩 &&
-    x <= 矩形.right + 右下控件外扩 &&
-    y >= 矩形.top - 右下控件外扩 &&
-    y <= 矩形.bottom + 右下控件外扩
+    x >= 矩形.left - 外扩 &&
+    x <= 矩形.right + 外扩 &&
+    y >= 矩形.top - 外扩 &&
+    y <= 矩形.bottom + 外扩
   );
 }
 
@@ -66,11 +69,14 @@ function 应用悬停判定(在热区) {
   if (出区宽限计时器 || !右下悬停) {
     return;
   }
-  出区宽限计时器 = window.setTimeout(function 宽限结束再隐藏() {
-    出区宽限计时器 = 0;
-    右下悬停 = false;
-    刷新右下控件可见性();
-  }, 右下出区宽限毫秒);
+  出区宽限计时器 = window.setTimeout(
+    function 宽限结束再隐藏() {
+      出区宽限计时器 = 0;
+      右下悬停 = false;
+      刷新右下控件可见性();
+    },
+    Number.isFinite(右下出区宽限毫秒) ? 右下出区宽限毫秒 : 350,
+  );
 }
 
 export function 设置右下强制显示(正在滚动) {
