@@ -2620,7 +2620,7 @@ dialog,
 }
 
 .内容选择弹窗 {
-  width: min(560px, calc(100vw - 32px));
+  width: min(660px, calc(100vw - 32px));
   max-height: min(540px, calc(100dvh - 80px));
   margin: auto 32px 48px auto;
   padding: 0;
@@ -2765,11 +2765,13 @@ dialog,
   color: var(--选中色);
 }
 
-/* 「阅读内容」表格：一行一本书，五个量各占一列，列头点击排序。
-   列宽写死 + table-layout: fixed，书名吃掉剩余宽度并省略号收尾。 */
+/* 「阅读内容」表格：一行一本书，六个量各占一列，列头点击排序。
+   列宽写死 + table-layout: fixed，书名吃掉剩余宽度并省略号收尾。
+   宽度挂在 th[data-排序] 上而不是 nth-child：拆一列出来不必重排一遍下标。 */
 .内容表格 {
-  --内容列宽-万字: 72px;
-  --内容列宽-已阅读: 78px;
+  --内容列宽-字数: 72px;
+  --内容列宽-激活: 74px;
+  --内容列宽-滚动: 74px;
   --内容列宽-进度: 58px;
   --内容列宽-状态: 62px;
   width: 100%;
@@ -2813,23 +2815,23 @@ dialog,
   font-variant-numeric: tabular-nums;
 }
 
-.内容表格 th:nth-child(2),
-.内容表格 td:nth-child(2) {
-  width: var(--内容列宽-万字);
+.内容表格 th[data-排序='字数'] {
+  width: var(--内容列宽-字数);
 }
 
-.内容表格 th:nth-child(3),
-.内容表格 td:nth-child(3) {
-  width: var(--内容列宽-已阅读);
+.内容表格 th[data-排序='激活'] {
+  width: var(--内容列宽-激活);
 }
 
-.内容表格 th:nth-child(4),
-.内容表格 td:nth-child(4) {
+.内容表格 th[data-排序='滚动'] {
+  width: var(--内容列宽-滚动);
+}
+
+.内容表格 th[data-排序='进度'] {
   width: var(--内容列宽-进度);
 }
 
-.内容表格 th:nth-child(5),
-.内容表格 td:nth-child(5) {
+.内容表格 th[data-排序='状态'] {
   width: var(--内容列宽-状态);
 }
 
@@ -3718,17 +3720,21 @@ dialog,
   }
 
   .内容选择弹窗 {
-    width: calc(100vw - 24px);
+    width: calc(100vw - 16px);
+    /* dialog 的 UA 样式带 max-width: calc(100% - 6px - 2em)，窄屏上比上面的 width 还窄，
+       六列要抢的那几像素全被它吃掉，先放开再由 width 自己管 */
+    max-width: none;
     max-height: min(70dvh, 540px);
     margin: auto 12px 44px auto;
   }
 
-  /* 窄屏放不下五列：先把列宽和字号压下来，书名仍然是最后被挤的那一个 */
+  /* 窄屏放不下六列：先把列宽和字号压下来，书名仍然是最后被挤的那一个 */
   .内容表格 {
-    --内容列宽-万字: 50px;
-    --内容列宽-已阅读: 56px;
-    --内容列宽-进度: 44px;
-    --内容列宽-状态: 44px;
+    --内容列宽-字数: 46px;
+    --内容列宽-激活: 46px;
+    --内容列宽-滚动: 46px;
+    --内容列宽-进度: 40px;
+    --内容列宽-状态: 40px;
     font-size: 12px;
   }
 
@@ -3737,9 +3743,10 @@ dialog,
     padding: 0 5px;
   }
 
-  /* 合计要到三位数才撑得住 56px 的已阅读列，先压字号，不去挤书名那一列 */
+  /* 两列时间各只到 46px：合计里的「共」加上两位数的时数要再矮一档才塞得下，
+     不去挤书名那一列 */
   .内容表头合计 {
-    font-size: 10px;
+    font-size: 9px;
   }
 
   .内容表格 th:first-child,
