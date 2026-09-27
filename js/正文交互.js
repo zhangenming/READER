@@ -486,6 +486,11 @@ export function 切换同组高亮(关键词id, 命中idx) {
   for (const 行元素 of 元素.可见内容.querySelectorAll('.正文行.含悬停命中')) {
     行元素.classList.remove('含悬停命中');
   }
+  for (const 行元素 of 元素.可见内容.querySelectorAll('.正文行.含悬停徽标')) {
+    行元素.classList.remove('含悬停徽标');
+  }
+  // 悬停揭示：光标停在命中上时，除被悬停关键词自身外，屏上其余命中一律显示 x/y。
+  元素.可见内容.classList.toggle('悬停揭示中', 关键词id !== null);
   for (const 命中元素 of 元素.可见内容.querySelectorAll('.字.命中')) {
     const 是悬停关键词 = Number(命中元素.dataset.keywordId) === 关键词id;
     const 是悬停命中 =
@@ -504,6 +509,9 @@ export function 切换同组高亮(关键词id, 命中idx) {
     );
     if (是悬停命中) {
       命中元素.closest('.正文行').classList.add('含悬停命中');
+    } else if (关键词id !== null && !是悬停关键词 && 命中元素.dataset.hitPosition) {
+      // 徽标向上溢出行顶，所在行需要放行溢出并抬高层叠序。
+      命中元素.closest('.正文行').classList.add('含悬停徽标');
     }
   }
   // 关键词指示器的悬停列只在该关键词“非当前关键词”时才出现：

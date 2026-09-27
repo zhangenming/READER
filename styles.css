@@ -1278,6 +1278,8 @@ body.右下面板展开 .关键词面板开关 {
 /* 相邻行会用自己的不透明底色盖住上一行溢出到本行的装饰，因此这几档层叠顺序
    必须严格递增、且按「越需要压住后继行」排在越后面：
    全文单字标记（行内）< 当前命中准星外框（向下溢出行盒 0.2em）< 悬停徽标（向上溢出行盒）。
+   悬停揭示时带徽标的行（含悬停徽标）与 含悬停命中 同档——徽标只向上溢出，
+   压住上一行即可，同批行之间靠 DOM 靠后取胜。
    同一行可能同时带多个此类名，靠源码顺序决出最终值。 */
 .正文行.含全文单字 {
   position: relative;
@@ -1299,6 +1301,15 @@ body.右下面板展开 .关键词面板开关 {
 
 /* 悬停命中项的 x/y 徽标会溢出行顶，避免被相邻行裁掉。 */
 .正文行.含悬停命中 {
+  position: relative;
+  z-index: 3;
+  overflow: visible;
+  contain: layout style;
+}
+
+/* 悬停揭示期间满屏徽标同样溢出行顶，逐行放行溢出、与 含悬停命中 同档：
+   同一批行层叠序相同，靠 DOM 靠后取胜，正好压住上一行的不透明底色。 */
+.正文行.含悬停徽标 {
   position: relative;
   z-index: 3;
   overflow: visible;
@@ -1698,7 +1709,9 @@ body.右下面板展开 .关键词面板开关 {
   text-decoration-color: rgb(0 0 0 / 85%);
 }
 
-.字.命中:is(.当前命中, .悬停命中)[data-hit-position]::after {
+/* x/y 徽标的样式底座：每个多命中关键词的末字都带 data-hit-position，
+   默认不显示，由下面几条规则按状态放行。 */
+.字.命中[data-hit-position]::after {
   position: absolute;
   top: -7px;
   right: -3px;
@@ -1726,8 +1739,16 @@ body.右下面板展开 .关键词面板开关 {
     visibility 0s linear 180ms;
 }
 
-.字.命中.当前命中[data-hit-position]::after,
-.字.命中.悬停命中[data-hit-position]::after {
+.字.命中:is(.当前命中, .悬停命中)[data-hit-position]::after {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* 悬停揭示：鼠标停在某一处命中上时，被悬停的那个关键词仍只在光标这一处显示序号，
+   屏上其余关键词（含当前关键词组）的每一处命中都显示自己的 x/y。
+   被悬停关键词的其余命中带 同组悬停，正好被这条规则排除。 */
+.可见内容.悬停揭示中 .字.命中[data-hit-position]:not(.同组悬停)::after {
   opacity: 1;
   visibility: visible;
   transition-delay: 0s;
