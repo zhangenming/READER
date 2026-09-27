@@ -539,6 +539,8 @@ body.关键词手势中 .滚动容器 {
 }
 /* —— 滚动时间段：一天一行，所有行共用一条只覆盖有数据范围的时间轴 —— */
 .统计时段 {
+  /* 灰带色只在这里定义一次：轨道里的带子、滚动块的灰底、图例那两枚共用同一档 */
+  --灰带色: color-mix(in oklab, var(--墨色) 24%, var(--纸张色));
   margin-top: 20px;
 }
 .统计时段 caption {
@@ -619,20 +621,37 @@ body.关键词手势中 .滚动容器 {
   background: var(--纸张色); /* 未激活 = 与弹窗同色的留白，靠描边看出轨道边界 */
   box-shadow: inset 0 0 0 1px var(--边线色);
 }
-/* 自动滚动必然发生在页面开着的时候，所以激活是「底」、滚动是「底上的针」：
-   激活带撑满整行涂灰，滚动块只占 70% 高、上下各留 15% 居中压上去，一眼分得开两层。 */
+/* 滚动块：整条涂灰当底（黑块底下不许踩白轨），黑色只画中间 70% 高、上下居中的那枚芯。
+   灰底宽度＝这块自己的真实宽度（含 3px 兜底），不虚涨到别处。 */
 .统计时段块 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  min-width: 3px; /* 秒级短段在长轴上也要看得见、也要点得到 */
+  border-radius: 2px;
+  background: var(--灰带色);
+}
+.统计时段块::before {
+  content: '';
   position: absolute;
   top: 15%;
   bottom: 15%;
-  min-width: 3px; /* 秒级短段在长轴上也要看得见 */
+  left: 0;
+  right: 0;
   border-radius: 2px;
   background: var(--墨色); /* 自动与按键同算一段，不再分色 */
 }
+/* 灰带是「面积」：宽度必须严格按时长，不许像滚动块那样兜底加宽。
+   实测 24 小时轴上 1px≈2 分 10 秒，3px 兜底会把 44 段里的 34 段抬成 6 分半，
+   整行着色面积虚增到 2.4 倍（账面 2 小时 27 分看上去 5 小时 46 分）。
+   短到亚像素的激活段就让它看不见，精确起止看悬停。 */
 .统计时段块-激活 {
-  top: 0;
-  bottom: 0;
-  background: color-mix(in oklab, var(--墨色) 24%, var(--纸张色));
+  min-width: 0;
+  background: var(--灰带色);
+}
+/* 激活带也带 .统计时段块 这个类，上面那条 ::before 会跟着命中——带子上不许有黑芯，撤掉 */
+.统计时段块-激活::before {
+  content: none;
 }
 .统计时段图例 {
   display: flex;
@@ -648,15 +667,26 @@ body.关键词手势中 .滚动容器 {
   align-items: center;
   gap: 5px;
 }
+/* 图例两枚照搬轨道里的真实画法：灰底撑满，滚动那枚中间再压一枚 70% 高的黑芯 */
 .统计时段图例块 {
+  position: relative;
   width: 14px;
-  height: 8px; /* 滚动块只占轨道 70% 高 */
+  height: 12px;
+  border-radius: 2px;
+  background: var(--灰带色);
+}
+.统计时段图例块::before {
+  content: '';
+  position: absolute;
+  top: 15%;
+  bottom: 15%;
+  left: 0;
+  right: 0;
   border-radius: 2px;
   background: var(--墨色);
 }
-.统计时段图例块-激活 {
-  height: 12px; /* 激活带撑满整行，图例里就画得比滚动块高 */
-  background: color-mix(in oklab, var(--墨色) 24%, var(--纸张色));
+.统计时段图例块-激活::before {
+  content: none;
 }
 .统计时段图例说明 {
   margin-left: auto;

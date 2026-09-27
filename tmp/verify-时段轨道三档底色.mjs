@@ -63,7 +63,7 @@ for (let n = 0; n < 200; n++) {
 }
 
 const 量 = await 求值(`
-  const { 创建阅读统计内容 } = await import('./js/阅读统计.js');
+  const { 创建阅读统计内容, 计算时段窗口 } = await import('./js/阅读统计.js');
   const 秒 = (h, m, s = 0) => h * 3600 + m * 60 + s;
   const 每日时段 = {
     // 带内两根滚动：用来量「黑块 70% 居中、上下露出灰带」
@@ -75,7 +75,7 @@ const 量 = await 求值(`
     '2026-09-20': [[秒(3, 0), 秒(3, 20)], [秒(4, 0), 秒(4, 5)]],
   };
   const 每日激活时段 = {
-    '2026-09-23': [[秒(7, 50), 秒(12, 0)], [秒(19, 40), 秒(20, 20)]],
+    '2026-09-23': [[秒(7, 50), 秒(12, 0)], [秒(19, 40), 秒(20, 20)], [秒(15, 0, 30), 秒(15, 0, 50)]],
     '2026-09-22': [[秒(0, 30), 秒(23, 30)]],
     '2026-09-21': [[秒(0, 0), 秒(2, 0)], [秒(23, 0), 秒(23, 59)]],
     '2026-09-20': [],
@@ -102,23 +102,34 @@ const 量 = await 求值(`
   };
   const 盒 = (节点) => { const b = 节点.getBoundingClientRect();
     return { x: b.x, y: b.y, w: b.width, h: b.height }; };
+  const 轴 = 计算时段窗口(Object.entries(每日时段).concat(Object.entries(每日激活时段)));
+  const 到秒 = (串) => 串.split(':').map(Number).reduce((总, 段) => 总 * 60 + 段, 0);
   const 表 = document.querySelector('.统计时段表');
   const 轨道们 = [...表.querySelectorAll('tbody tr')].map((行) => {
     const 轨道 = 行.querySelector('.统计时段轨道');
     const 格 = 行.querySelector('td');
     const 样式 = getComputedStyle(格);
     const 轨道样式 = getComputedStyle(轨道);
+    const 轨宽 = 轨道.getBoundingClientRect().width;
     return {
       日期: 行.querySelector('.统计时段日期').textContent,
       激活列文本: 行.querySelector('.统计时段激活格').textContent,
       轨道: 盒(轨道),
       轨道底色: RGB(轨道样式.backgroundColor),
-      块: [...轨道.children].map((块) => ({
-        激活: 块.classList.contains('统计时段块-激活'),
-        盒: 盒(块),
-        底色: RGB(getComputedStyle(块).backgroundColor),
-        标题: 块.title,
-      })),
+      块: [...轨道.children].map((块) => {
+        const [起, 止] = 块.title.split(' · ')[0].split(' → ');
+        const 秒数 = 到秒(止) - 到秒(起);
+        const 芯 = getComputedStyle(块, '::before');
+        return {
+          激活: 块.classList.contains('统计时段块-激活'),
+          盒: 盒(块),
+          底色: RGB(getComputedStyle(块).backgroundColor),
+          芯: { 高: parseFloat(芯.height), 内容: 芯.content, 色: RGB(芯.backgroundColor) },
+          秒数,
+          真实宽: +((秒数 / (轴.止秒 - 轴.起秒)) * 轨宽).toFixed(2),
+          标题: 块.title,
+        };
+      }),
       下边框宽: 样式.borderBottomWidth,
       下边框样式: 样式.borderBottomStyle,
     };
@@ -128,6 +139,7 @@ const 量 = await 求值(`
     弹窗底色: RGB(getComputedStyle(document.querySelector('.阅读统计弹窗')).backgroundColor),
     墨色: RGB(getComputedStyle(document.querySelector('.统计当前标记')).backgroundColor),
     时段区块: 盒(document.querySelector('.统计时段')),
+    轴,
     轨道们,
     书籍表下边框宽: 书籍表行
       ? getComputedStyle(书籍表行.querySelector('td')).borderBottomWidth
@@ -152,63 +164,90 @@ writeFileSync(
 );
 const 亮度 = (色) => +(0.2126 * 色.r + 0.7152 * 色.g + 0.0722 * 色.b).toFixed(1);
 
-// —— 判据 1：几何三档（激活撑满、滚动 70% 居中） ——
+// —— 判据 1：几何两档（灰底都撑满轨道，黑色只画中间 70% 的芯） ——
 assert.equal(量.轨道们.length, 4, '4 天 4 行');
 for (const 行 of 量.轨道们) {
   for (const 块 of 行.块) {
     const 比 = 块.盒.h / 行.轨道.h;
+    assert.ok(Math.abs(比 - 1) < 0.02, `灰底没撑满轨道：${行.日期} ${块.激活 ? '带' : '块'} ${比.toFixed(3)}`);
+    assert.ok(块.盒.y - 行.轨道.y < 0.5, `灰底顶边没贴轨道顶：${行.日期}`);
     const 中心差 = Math.abs(块.盒.y + 块.盒.h / 2 - (行.轨道.y + 行.轨道.h / 2));
+    assert.ok(中心差 <= 0.6, `灰底没在轨道里居中：${行.日期} 偏 ${中心差.toFixed(2)}px`);
     if (块.激活) {
-      assert.ok(Math.abs(比 - 1) < 0.02, `激活带没撑满轨道：${行.日期} ${比.toFixed(3)}`);
-      assert.ok(块.盒.y - 行.轨道.y < 0.5, `激活带顶边没贴轨道顶：${行.日期}`);
+      assert.equal(块.芯.内容, 'none', `激活带上不该有黑芯：${行.日期} ${块.标题}`);
     } else {
-      assert.ok(Math.abs(比 - 0.7) < 0.02, `滚动块不是 70% 高：${行.日期} ${比.toFixed(3)}`);
-      assert.ok(中心差 <= 0.6, `滚动块没在轨道里居中：${行.日期} 偏 ${中心差.toFixed(2)}px`);
+      const 芯比 = 块.芯.高 / 行.轨道.h;
+      assert.ok(Math.abs(芯比 - 0.7) < 0.02, `黑芯不是 70% 高：${行.日期} ${芯比.toFixed(3)}`);
     }
   }
 }
 
-// —— 判据 2：底色三档 白 > 灰 > 黑，灰要真是中性灰 ——
+// —— 判据 2：三档底色 白（未激活）> 灰（激活带 & 滚动块灰底）> 黑（滚动芯） ——
 const 激活们 = 量.轨道们.flatMap((行) => 行.块.filter((块) => 块.激活));
 const 滚动们 = 量.轨道们.flatMap((行) => 行.块.filter((块) => !块.激活));
 assert.ok(激活们.length >= 4 && 滚动们.length >= 4, '两类样本都得有');
 const 白 = 亮度(量.弹窗底色);
 const 黑 = 亮度(量.墨色);
+const 灰样本 = [...激活们, ...滚动们].map((块) => 亮度(块.底色));
+const 灰 = 灰样本[0];
 for (const 行 of 量.轨道们) {
   assert.equal(亮度(行.轨道底色), 白, `未激活的轨道底不是留白：${行.日期} ${行.轨道底色.串}`);
 }
-for (const 块 of 激活们) {
-  const L = 亮度(块.底色);
-  assert.ok(L < 白 - 30, `激活带不够灰（离白太近）：${块.底色.串} 亮度 ${L} vs 白 ${白}`);
-  assert.ok(L > 黑 + 60, `激活带压成黑了：${块.底色.串} 亮度 ${L} vs 黑 ${黑}`);
+for (const 块 of [...激活们, ...滚动们]) {
+  assert.equal(亮度(块.底色), 灰, `灰底不是同一档：${块.标题} ${块.底色.串}`);
+  assert.ok(灰 < 白 - 30, `灰底离白太近，分不出激活：${块.底色.串} 亮度 ${灰} vs 白 ${白}`);
+  assert.ok(灰 > 黑 + 60, `灰底压成黑了：${块.底色.串} 亮度 ${灰} vs 黑 ${黑}`);
   assert.ok(
     Math.max(块.底色.r, 块.底色.g, 块.底色.b) - Math.min(块.底色.r, 块.底色.g, 块.底色.b) <= 20,
-    `激活带该是中性（暖）灰，色偏太大：${JSON.stringify(块.底色)}`,
+    `灰底该是中性（暖）灰，色偏太大：${JSON.stringify(块.底色)}`,
   );
 }
 for (const 块 of 滚动们) {
-  assert.equal(亮度(块.底色), 黑, `滚动块不是墨色：${块.底色.串}`);
+  assert.equal(亮度(块.芯.色), 黑, `滚动芯不是墨色：${块.芯.色.串}`);
 }
-console.log('三档底色与几何判据通过', { 白, 黑 });
+console.log('两档灰底 + 黑芯与几何判据通过', { 白, 灰, 黑 });
 
-// —— 判据 2.5：黑块底下必须有灰带，包括「只有滚动、没有激活账」的那一天 ——
-for (const 行 of 量.轨道们) {
-  const 带 = 行.块.filter((块) => 块.激活);
-  for (const 块 of 行.块.filter((块) => !块.激活)) {
-    const 坐进 = 带.find(
-      (条) =>
-        条.盒.x - 0.6 <= 块.盒.x && 块.盒.x + 块.盒.w <= 条.盒.x + 条.盒.w + 0.6,
-    );
-    assert.ok(坐进, `黑块踩在白轨上：${行.日期} ${块.标题}`);
-  }
+// —— 判据 2.5：面积要说真话。灰带宽度严格按时长，只有滚动块允许 3px 兜底 ——
+const 兜底 = 3;
+for (const 块 of 激活们) {
+  assert.ok(
+    块.盒.w <= 块.真实宽 + 0.6,
+    `灰带被 min-width 抬起：${块.标题} 真实 ${块.真实宽}px 绘制 ${块.盒.w.toFixed(2)}px`,
+  );
 }
+const 短带 = 激活们.find((块) => 块.秒数 <= 30);
+assert.ok(短带, '缺样本：20 秒的短激活段');
+assert.ok(
+  短带.盒.w < 1,
+  `20 秒的短带仍被画成 ${短带.盒.w.toFixed(2)}px（真实 ${短带.真实宽}px），面积仍在虚涨`,
+);
+for (const 块 of 滚动们) {
+  assert.ok(
+    块.盒.w >= Math.min(块.真实宽, 兜底) - 0.6 && 块.盒.w <= Math.max(块.真实宽, 兜底) + 0.6,
+    `滚动块宽度越界：${块.标题} 真实 ${块.真实宽}px 绘制 ${块.盒.w.toFixed(2)}px`,
+  );
+}
+for (const 行 of 量.轨道们) {
+  const 真实 = 行.块.reduce((总, 块) => 总 + 块.真实宽, 0);
+  const 绘制 = 行.块.reduce((总, 块) => 总 + 块.盒.w, 0);
+  assert.ok(
+    绘制 <= 真实 * 1.15 + 2 * 兜底,
+    `整行着色面积虚涨：${行.日期} 真实 ${真实.toFixed(1)}px 绘制 ${绘制.toFixed(1)}px`,
+  );
+}
+console.log('灰带宽度严格按时长，短带不再被抬成面积');
+
+// —— 判据 3：黑芯底下必须有灰底（滚动块自己那层灰），缺激活账的日子也一样 ——
 const 裸滚动日 = 量.轨道们.find((行) => 行.日期 === '9月20日');
 assert.ok(裸滚动日, '缺样本：只有滚动没有激活账的那一天');
 assert.equal(裸滚动日.块.filter((块) => 块.激活).length, 2, '灰带由两段滚动补出来');
 assert.equal(裸滚动日.激活列文本, '25 分', '激活读数与灰带同账（20 分 + 5 分）');
-console.log('滚动段全部坐在灰带里，缺激活账的日子按滚动补带');
+for (const 块 of 滚动们) {
+  assert.ok(亮度(块.底色) < 白 - 30, `黑芯踩在白轨上：${块.标题}`);
+}
+console.log('滚动块自带灰底，黑芯底下不露白');
 
-// —— 判据 3：每天之间的分割线撤掉，书籍明细表那条不动 ——
+// —— 判据 4：每天之间的分割线撤掉，书籍明细表那条不动 ——
 for (const 行 of 量.轨道们) {
   assert.equal(行.下边框宽, '0px', `每天之间的分割线还在：${行.日期}`);
   assert.equal(行.下边框样式, 'none', `下边框样式没撤干净：${行.日期}`);
@@ -217,13 +256,12 @@ assert.equal(量.书籍表下边框宽, '1px', '书籍明细表的行线被误�
 console.log('每天之间的分割线已撤，书籍明细表行线保留');
 
 console.log(JSON.stringify({
-  弹窗底色: 量.弹窗底色,
-  墨色: 量.墨色,
-  灰带: 激活们[0].底色,
-  轨道高与块高: 量.轨道们.map((行) => [
+  三档亮度: { 白, 灰, 黑 },
+  每行真实与绘制宽: 量.轨道们.map((行) => [
     行.日期,
-    行.轨道.h,
-    行.块.map((块) => [块.激活 ? '激活' : '滚动', +块.盒.h.toFixed(1), 亮度(块.底色)]),
+    `真实 ${行.块.reduce((总, 块) => 总 + 块.真实宽, 0).toFixed(1)}px`,
+    `绘制 ${行.块.reduce((总, 块) => 总 + 块.盒.w, 0).toFixed(1)}px`,
+    行.块.map((块) => [块.激活 ? '带' : '块', +块.盒.w.toFixed(2), 块.激活 ? 0 : 块.芯.高]),
   ]),
 }, null, 1));
 console.log('已写 tmp/时段轨道三档-截图.png');
