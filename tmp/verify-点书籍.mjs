@@ -191,6 +191,23 @@ try {
     console.log(`${抖动 && 抖动后 ? 'OK  ' : 'FAIL'} 途中抖出热区 60ms 又回来 → 仍显示=${抖动}（停稳后=${抖动后}）`);
     console.log(`${开了 ? 'OK  ' : 'FAIL'} 直接点击书籍 → 弹窗打开=${开了}（一次 mousemove 都没预先发的情况下）`);
     console.log(通过 && 开了 && 强制撤 && !走开 && 抖动 && 抖动后 ? 'PASS: 书籍可悬停且可点击' : 'FAIL: 仍有进不去/点不上的情况');
+
+    // 交给用户粘进控制台的同款自检：合成一次落在书籍中心的 mousemove，看运行中的页面判不判为热区
+    const 自检 = await 求值(`
+      return (async()=>{const b=document.querySelector('#内容选择按钮').getBoundingClientRect();
+        const x=(b.left+b.right)/2,y=(b.top+b.bottom)/2;
+        document.body.classList.remove('右下控件显示');
+        dispatchEvent(new MouseEvent('mousemove',{clientX:x,clientY:y,bubbles:true}));
+        await new Promise(r=>setTimeout(r,400));
+        const 显示=document.body.classList.contains('右下控件显示');
+        const c=await import('/js/常量.js');
+        const s=await fetch('/js/右下控件.js').then(r=>r.text());
+        return {运行中代码: 显示?'新':(s.includes('在右下热区')?'文件新/页面旧':'文件旧/页面旧'),
+          热区宽:c.右下热区宽度, 外扩:c.右下控件外扩, 宽限:c.右下出区宽限毫秒,
+          书籍中心:[Math.round(x),Math.round(y)], 视口:[innerWidth,innerHeight],
+          组左缘距右: Math.round(innerWidth-document.querySelector('.右下按钮组').getBoundingClientRect().left)};})()`);
+    console.log('自检输出:', JSON.stringify(自检));
+    console.log(自检.运行中代码 === '新' ? 'PASS: 自检判定为运行新代码' : 'FAIL: 自检判定页面仍是旧代码');
   } finally {
     ws?.close(); ws = null;
     chrome.kill(); 服务.kill();
