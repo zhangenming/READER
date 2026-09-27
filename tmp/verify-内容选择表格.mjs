@@ -3,6 +3,7 @@
 // 2) 表头文字的右缘压在该列数字的右缘上（左对齐的书名列压左缘）
 // 3) 点一次排该列自然序，再点反向；缺值（未统计/无记录）永远钉在尾部
 // 4) 点行、聚焦行按 Enter 都能载入那本书
+// 5) 点过的「列 + 方向」会落盘：刷新后仍是那一列那一向，再点才反向
 // 跑法：node tmp/verify-内容选择表格.mjs
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
@@ -110,13 +111,46 @@ async function 主() {
     return 结果.result.value;
   }
 
-  for (let i = 0; i < 600; i++) {
-    const 就绪 = await 求值(`
-      return !!document.querySelector('#内容选择按钮') &&
-        (document.querySelector('#载入状态')?.hidden ?? true);
+  await 等待就绪();
+
+  async function 等待就绪() {
+    for (let i = 0; i < 600; i++) {
+      let 就绪 = false;
+      try {
+        就绪 = await 求值(`
+          return !!document.querySelector('#内容选择按钮') &&
+            (document.querySelector('#载入状态')?.hidden ?? true);
+        `);
+      } catch {
+        // 导航中的执行上下文已销毁，下一轮再问
+      }
+      if (就绪) return;
+      await pause(200);
+    }
+    throw new Error('页面未就绪');
+  }
+
+  async function 还在统计字数() {
+    return 求值(`
+      const 行列表 = [...document.querySelectorAll('#内容选择列表 tbody tr')];
+      return {
+        行数: 行列表.length,
+        卡住: 行列表
+          .filter((行) => 行.children[1].textContent.trim() === '…')
+          .map((行) => 行.dataset.fileName),
+      };
     `);
-    if (就绪) break;
-    await pause(200);
+  }
+
+  async function 等待字数统计() {
+    let 状态读数 = { 行数: 0, 卡住: [] };
+    for (let i = 0; i < 300; i++) {
+      状态读数 = await 还在统计字数();
+      if (状态读数.行数 > 10 && !状态读数.卡住.length) break;
+      await pause(500);
+    }
+    assert.deepEqual(状态读数.卡住, [], '字数应已全部回填');
+    assert.ok(状态读数.行数 > 10, `表格没有渲染出行：${状态读数.行数}`);
   }
 
   await 求值(`document.querySelector('#内容选择按钮').click(); return 1;`);
@@ -272,21 +306,7 @@ async function 主() {
   await pause(1200);
 
   // 等字数统计回填（万字列不再是「…」），排序要按真实字数比
-  for (let i = 0; i < 300; i++) {
-    const 还在统计 = await 求值(
-      `return [...document.querySelectorAll('#内容选择列表 tbody td:nth-child(2)')]
-        .some((格) => 格.textContent.trim() === '…');`,
-    );
-    if (!还在统计) break;
-    await pause(500);
-  }
-  assert.ok(
-    !(await 求值(
-      `return [...document.querySelectorAll('#内容选择列表 tbody td:nth-child(2)')]
-        .some((格) => 格.textContent.trim() === '…');`,
-    )),
-    '字数应已全部回填',
-  );
+  await 等待字数统计();
 
   const 万字排序 = await 点表头('字数');
   assert.deepEqual(
@@ -370,6 +390,65 @@ async function 主() {
   const 降序书名 = (await 读列(0)).map(([, 名]) => 名);
   assert.deepEqual(降序书名, [...升序书名].reverse(), '书名降序应是升序的镜像');
 
+  // —— 排序方式要持久化：点定的「列 + 方向」刷新后仍是那一个 ——
+  await pause(600); // 等 安排保存持久化状态 的 120ms 防抖落盘
+  assert.deepEqual(
+    await 求值(`
+      const { 持久化键 } = await import('./js/常量.js');
+      return JSON.parse(localStorage.getItem(持久化键)).内容排序;
+    `),
+    { 键: '书名', 方向: '降' },
+    '点过的列与方向要写进持久化数据',
+  );
+  await 发送('Page.enable');
+  await 发送('Page.reload');
+  await 等待就绪();
+  await 求值(`document.querySelector('#内容选择按钮').click(); return 1;`);
+  // 只等表格出来：书名序不依赖万字回填，而 58 本书重新统计字数要一分多钟
+  for (let i = 0; i < 200; i++) {
+    const 行数 = await 求值(
+      `return document.querySelectorAll('#内容选择列表 tbody tr').length;`,
+    );
+    if (行数 > 10) break;
+    await pause(200);
+  }
+  const 刷新后 = await 求值(`
+    return {
+      排序属性: [...document.querySelectorAll('#内容选择列表 thead th')].map((格) =>
+        [格.dataset.排序, 格.getAttribute('aria-sort')]),
+      书名序: [...document.querySelectorAll('#内容选择列表 tbody tr')]
+        .map((行) => 行.dataset.fileName),
+    };
+  `);
+  assert.deepEqual(
+    刷新后.排序属性,
+    [
+      ['书名', 'descending'],
+      ['字数', 'none'],
+      ['已阅读', 'none'],
+      ['进度', 'none'],
+      ['状态', 'none'],
+    ],
+    '刷新后表头仍标在书名列的降序上',
+  );
+  assert.deepEqual(
+    刷新后.书名序,
+    降序书名,
+    '刷新后的行顺序要和刷新前那一次降序完全一致',
+  );
+  // 恢复的是「列 + 方向」两个量：再点一次书名要反向，不能退回默认序
+  assert.equal(
+    (await 点表头('书名'))[0][1],
+    'ascending',
+    '刷新后再点书名要回到升序',
+  );
+  assert.deepEqual(
+    (await 读列(0)).map(([, 名]) => 名),
+    升序书名,
+    '再点后的升序要和刷新前一致',
+  );
+  await 点表头('书名'); // 停在降序：后面「书名序」截图那一步会再点一次回到升序
+
   // —— 载入 ——
   const 目标书名 = 升序书名[3];
   await 求值(
@@ -419,6 +498,7 @@ async function 主() {
 
   // 截图留证：默认书名序 + 一次万字降序
   await 求值(`document.querySelector('#内容选择按钮').click(); return 1;`);
+  await 等待字数统计();
   await pause(1200);
   async function 截图(文件名) {
     const 框 = await 求值(`

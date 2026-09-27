@@ -115,6 +115,7 @@ export const 高亮配色 = [{ 浅色: 默认高亮浅色, 深色: 默认关键�
  * @property {Set} 全文单字 全文出现过的单字集合（词频分析用缓存）
  * @property {Array} 文本目录 ./txt/ 目录文件清单（文件名、字符数等）
  * @property {Map} 文本字数 各文本的非空白字符数缓存（文件名 → 字数）
+ * @property {{键: string, 方向: string}} 内容排序 「阅读内容」表格的排序列与方向（全局偏好，跨书与刷新保留）
  */
 export const 状态 = {
   文本: '',
@@ -172,6 +173,7 @@ export const 状态 = {
   全文单字: new Set(),
   文本目录: [],
   文本字数: new Map(),
+  内容排序: { 键: '书名', 方向: '升' },
 };
 
 // DOM 元素引用表：模块加载时一次性 querySelector 缓存，运行期不再查找。
