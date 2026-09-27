@@ -102,7 +102,7 @@ for (let i = 0; i < 150; i++) {
 async function 列表快照() {
   return 求值(`
     const 列表 = document.querySelector('#内容选择列表');
-    const 当前 = 列表.querySelector('.内容选项.当前');
+    const 当前 = 列表.querySelector('.内容行.当前');
     const 列表框 = 列表.getBoundingClientRect();
     const 当前框 = 当前?.getBoundingClientRect();
     return {
@@ -110,10 +110,10 @@ async function 列表快照() {
       scrollTop: 列表.scrollTop,
       可滚动高度: 列表.scrollHeight,
       视口高度: 列表.clientHeight,
-      条目数: 列表.querySelectorAll('button[data-file-name]').length,
+      条目数: 列表.querySelectorAll('[data-file-name]').length,
       当前书名: 当前?.dataset.fileName ?? null,
       当前序号: 当前
-        ? [...列表.querySelectorAll('button[data-file-name]')].indexOf(当前)
+        ? [...列表.querySelectorAll('[data-file-name]')].indexOf(当前)
         : null,
       在视口内: 当前框
         ? 当前框.bottom > 列表框.top + 1 && 当前框.top < 列表框.bottom - 1
@@ -123,7 +123,7 @@ async function 列表快照() {
             当前框.top + 当前框.height / 2 - (列表框.top + 列表框.height / 2),
           )
         : null,
-      字数文字: 当前?.querySelector('.内容选项字数').textContent ?? null,
+      字数文字: 当前?.querySelector('td:nth-child(2)').textContent ?? null,
     };
   `);
 }
@@ -132,7 +132,7 @@ async function 列表快照() {
 await 求值(`document.querySelector('#内容选择按钮').click(); return 1;`);
 await pause(1200);
 const 书名列表 = await 求值(
-  `return [...document.querySelectorAll('#内容选择列表 button[data-file-name]')]
+  `return [...document.querySelectorAll('#内容选择列表 [data-file-name]')]
     .map((b) => b.dataset.fileName);`,
 );
 assert.ok(书名列表.length > 10, `目录条目过少：${书名列表.length}`);
@@ -141,7 +141,7 @@ const 目标书名 = 书名列表[目标序号];
 console.log(`目标：第 ${目标序号 + 1}/${书名列表.length} 项 ${目标书名}`);
 await 求值(
   `
-  [...document.querySelectorAll('#内容选择列表 button[data-file-name]')]
+  [...document.querySelectorAll('#内容选择列表 [data-file-name]')]
     .find((b) => b.dataset.fileName === ${JSON.stringify(目标书名)}).click();
   return 1;
 `,
@@ -192,16 +192,16 @@ assert.ok(
 await 求值(`document.querySelector('#内容选择列表').scrollTop = 300; return 1;`);
 for (let i = 0; i < 200; i++) {
   const 快照 = await 列表快照();
-  if (快照.字数文字 && 快照.字数文字 !== '正在统计') break;
+  if (快照.字数文字 && 快照.字数文字 !== '…') break;
   await pause(200);
 }
 await pause(400);
 const 二次 = await 列表快照();
 console.log('字数回来后:', 二次);
-assert.notEqual(二次.字数文字, '正在统计', '字数应已统计完成并重渲染');
+assert.notEqual(二次.字数文字, '…', '字数应已统计完成并重渲染');
 assert.equal(二次.scrollTop, 300, '重渲染后应保留用户手动滚动的位置');
 
-// 冷启动一遍：字数表是空的，弹窗会先渲染「正在统计」再渲染真实字数。
+// 冷启动一遍：字数表是空的，弹窗会先渲染「…」再渲染真实字数。
 // 第一次渲染（此刻还没有任何字数）就应当已经把当前书居中。
 await 发送('Page.reload');
 for (let i = 0; i < 150; i++) {
@@ -221,7 +221,7 @@ await 求值(`document.querySelector('#内容选择按钮').click(); return 1;`)
 await pause(120);
 const 冷启动 = await 列表快照();
 console.log('冷启动首次渲染:', 冷启动);
-assert.equal(冷启动.字数文字, '正在统计', '应抓到字数未回的首次渲染');
+assert.equal(冷启动.字数文字, '…', '应抓到字数未回的首次渲染');
 assert.equal(冷启动.当前书名, 目标书名, '冷启动后仍应认得当前书');
 assert.ok(冷启动.在视口内, `首次渲染就应把当前书滚进视口，scrollTop=${冷启动.scrollTop}`);
 assert.ok(
@@ -231,13 +231,13 @@ assert.ok(
 const 冷启动位置 = 冷启动.scrollTop;
 for (let i = 0; i < 200; i++) {
   const 快照 = await 列表快照();
-  if (快照.字数文字 && 快照.字数文字 !== '正在统计') break;
+  if (快照.字数文字 && 快照.字数文字 !== '…') break;
   await pause(200);
 }
 await pause(300);
 const 冷启动二次 = await 列表快照();
 console.log('冷启动字数回来后:', 冷启动二次);
-assert.notEqual(冷启动二次.字数文字, '正在统计', '字数应已回填并重渲染');
+assert.notEqual(冷启动二次.字数文字, '…', '字数应已回填并重渲染');
 assert.equal(
   冷启动二次.scrollTop,
   冷启动位置,

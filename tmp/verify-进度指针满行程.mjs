@@ -164,14 +164,14 @@ async function 载入一本书() {
   for (let i = 0; i < 200; i++) {
     if (
       await 求值(`
-        return [...document.querySelectorAll('#内容选择列表 button[data-file-name]')]
+        return [...document.querySelectorAll('#内容选择列表 [data-file-name]')]
           .some((b) => b.dataset.fileName === ${JSON.stringify(目标文本)});`)
     )
       break;
     await pause(200);
   }
   await 求值(`
-    [...document.querySelectorAll('#内容选择列表 button[data-file-name]')]
+    [...document.querySelectorAll('#内容选择列表 [data-file-name]')]
       .find((b) => b.dataset.fileName === ${JSON.stringify(目标文本)}).click();
     return 1;`);
   for (let i = 0; i < 900; i++) {

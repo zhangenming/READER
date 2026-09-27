@@ -168,6 +168,7 @@ import {
   初始化内容选择弹窗,
   处理内容选择弹窗点击,
   处理内容选择列表点击,
+  处理内容选择列表按键,
   关闭内容选择弹窗,
   打开内容选择弹窗,
 } from './js/内容选择弹窗.js';
@@ -463,6 +464,7 @@ function 绑定事件() {
   元素.关闭内容选择按钮.addEventListener('click', 关闭内容选择弹窗);
   元素.内容选择弹窗.addEventListener('click', 处理内容选择弹窗点击);
   元素.内容选择列表.addEventListener('click', 处理内容选择列表点击);
+  元素.内容选择列表.addEventListener('keydown', 处理内容选择列表按键);
   元素.查找表单.addEventListener('submit', 处理查找提交);
   元素.查找输入框.addEventListener('input', 处理查找输入);
   元素.查找输入框.addEventListener('compositionstart', 标记合成开始);

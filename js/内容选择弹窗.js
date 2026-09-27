@@ -13,6 +13,18 @@ import { 保存持久化状态, 读取持久化数据或新建 } from './持久�
 let 文本字数任务 = new Map();
 let 注入回调 = null;
 
+// 一行一本书，一列一个量：原来书名/字数/已阅读三行堆在一枚按钮里，
+// 几十本书要滚很久，「继续 · 4%」还把进度和状态挤成一句话。
+// 排序状态是模块级的：弹窗反复开关时保持用户上一次点的列。
+const 内容排序列 = {
+  书名: { 名: '书名', 自然方向: '升', 取文本: (行) => 行.名称 },
+  字数: { 名: '万字', 自然方向: '降', 取值: (行) => 行.字数 },
+  已阅读: { 名: '已阅读', 自然方向: '降', 取值: (行) => 行.已阅读毫秒 },
+  进度: { 名: '进度', 自然方向: '降', 取值: (行) => 行.进度 },
+  状态: { 名: '状态', 自然方向: '升', 取值: (行) => 行.状态序 },
+};
+let 内容排序 = { 键: '书名', 方向: '升' };
+
 export function 初始化内容选择弹窗({ 载入文本, 创建文本地址 }) {
   注入回调 = { 载入文本, 创建文本地址 };
 }
@@ -124,13 +136,47 @@ export function 处理内容选择弹窗点击(事件) {
 }
 
 export function 处理内容选择列表点击(事件) {
-  const 按钮 = 事件.target.closest('button[data-file-name]');
-  if (!按钮) {
+  const 表头 = 事件.target.closest('.内容排序按钮');
+  if (表头) {
+    切换内容排序(表头.closest('.内容排序列').dataset.排序);
     return;
   }
-  const 文件名 = 按钮.dataset.fileName;
+  const 行 = 事件.target.closest('[data-file-name]');
+  if (!行) {
+    return;
+  }
+  载入内容行(行.dataset.fileName);
+}
+
+// 行是 <tr> 而不是按钮，键盘要自己接住：Enter 和空格都当「载入这本」。
+export function 处理内容选择列表按键(事件) {
+  if (事件.key !== 'Enter' && 事件.key !== ' ') {
+    return;
+  }
+  const 行 = 事件.target.closest('tr[data-file-name]');
+  if (!行) {
+    return;
+  }
+  事件.preventDefault();
+  载入内容行(行.dataset.fileName);
+}
+
+function 载入内容行(文件名) {
   关闭内容选择弹窗();
   void 取注入回调().载入文本(文件名);
+}
+
+function 切换内容排序(键) {
+  const 列 = 内容排序列[键];
+  if (!列) {
+    return;
+  }
+  内容排序 =
+    内容排序.键 === 键
+      ? { 键, 方向: 内容排序.方向 === '降' ? '升' : '降' }
+      : { 键, 方向: 列.自然方向 };
+  渲染内容选择列表();
+  元素.内容选择列表.scrollTop = 0;
 }
 
 async function 读取文本目录() {
@@ -174,67 +220,144 @@ async function 读取文本目录() {
 
 function 渲染内容选择列表() {
   const 持久化数据 = 读取持久化数据或新建();
-  const 片段 = document.createDocumentFragment();
+  const 行列表 = 状态.文本目录.map(function 创建行数据(文件名, 序) {
+    return 创建内容行数据(文件名, 序, 持久化数据.文本状态[文件名]);
+  });
+
   元素.内容选择摘要.textContent = `${状态.文本目录.length} 个文本`;
+  const 表格 = document.createElement('table');
+  表格.className = '内容表格';
+  表格.append(创建内容表头(), 创建内容表体(排序内容行(行列表)));
+  元素.内容选择列表.replaceChildren(表格);
+}
 
-  for (const 文件名 of 状态.文本目录) {
-    const 文本状态 = 持久化数据.文本状态[文件名];
-    const 是当前文本 = 文件名 === 状态.文件名;
-    const 按钮 = document.createElement('button');
-    按钮.className = '内容选项';
-    按钮.type = 'button';
-    按钮.dataset.fileName = 文件名;
-    按钮.title = 文件名;
-    if (是当前文本) {
-      按钮.classList.add('当前');
-      按钮.setAttribute('aria-current', 'true');
+function 创建内容行数据(文件名, 序, 文本状态) {
+  const 统计字数 = 状态.文本字数.get(文件名);
+  const 是当前 = 文件名 === 状态.文件名;
+  return {
+    文件名,
+    序,
+    是当前,
+    名称: 文件名.replace(/\.txt$/i, ''),
+    // null = 这一格没有可比的数（还没统计出来 / 统计失败 / 从没打开过），排序时钉在尾部
+    字数: Number.isFinite(统计字数) ? 统计字数 : null,
+    统计中: 统计字数 === undefined,
+    已阅读毫秒: 文本状态 ? Math.max(0, 文本状态.总滚动毫秒 ?? 0) : null,
+    进度: 计算已保存阅读比例(文本状态),
+    状态: 是当前 ? '当前' : 文本状态 ? '继续' : '加载',
+    状态序: 是当前 ? 2 : 文本状态 ? 1 : 0,
+  };
+}
+
+function 排序内容行(行列表) {
+  const 列 = 内容排序列[内容排序.键];
+  const 符号 = 内容排序.方向 === '降' ? -1 : 1;
+  return 行列表.slice().sort(function 比较行(左, 右) {
+    const 同序 = 左.序 - 右.序; // 书名列表本身按拼音排，任何并列都回落到这个顺序
+    if (列.取文本) {
+      return 拼音排序器.compare(列.取文本(左), 列.取文本(右)) * 符号 || 同序;
     }
+    const 左值 = 列.取值(左);
+    const 右值 = 列.取值(右);
+    if (左值 === null || 右值 === null) {
+      // 缺值不随方向跳到最前：升到「还没统计」的书前面去等于把空壳顶到第一行
+      return 左值 === 右值 ? 同序 : 左值 === null ? 1 : -1;
+    }
+    return 左值 !== 右值 ? (左值 - 右值) * 符号 : 同序;
+  });
+}
 
-    const 名称 = document.createElement('span');
-    名称.className = '内容选项名称';
-    名称.textContent = 文件名.replace(/\.txt$/i, '');
+function 创建内容表头() {
+  const 行 = document.createElement('tr');
+  for (const [键, 列] of Object.entries(内容排序列)) {
+    const 单元格 = document.createElement('th');
+    单元格.scope = 'col';
+    单元格.className = '内容排序列';
+    单元格.dataset.排序 = 键;
+    单元格.setAttribute(
+      'aria-sort',
+      内容排序.键 === 键
+        ? 内容排序.方向 === '降'
+          ? 'descending'
+          : 'ascending'
+        : 'none',
+    );
 
-    const 字数 = document.createElement('span');
-    字数.className = '内容选项字数';
-    const 统计字数 = 状态.文本字数.get(文件名);
-    字数.textContent =
-      统计字数 === undefined
-        ? '正在统计'
-        : 统计字数 === null
-          ? '统计失败'
-          : `${(统计字数 / 10_000).toFixed(1)} 万字`;
-
-    const 已阅读时间 = document.createElement('span');
-    已阅读时间.className = '内容选项时长';
-    已阅读时间.textContent = `已阅读 · ${格式化滚动小时(
-      文本状态?.总滚动毫秒 ?? 0,
-    )}`;
-
-    const 文本信息 = document.createElement('span');
-    文本信息.className = '内容选项信息';
-    文本信息.append(名称, 字数, 已阅读时间);
-
-    const 状态文字 = document.createElement('span');
-    状态文字.className = '内容选项状态';
-    const 阅读进度 = 计算已保存阅读进度(文本状态);
-    状态文字.textContent = 是当前文本
-      ? `当前 · ${阅读进度}`
-      : 文本状态
-        ? `继续 · ${阅读进度}`
-        : '加载';
-
-    按钮.append(文本信息, 状态文字);
-    片段.append(按钮);
+    const 按钮 = document.createElement('button');
+    按钮.type = 'button';
+    按钮.className = '内容排序按钮';
+    按钮.textContent = 列.名;
+    按钮.title = `按${列.名}排序`;
+    单元格.append(按钮);
+    行.append(单元格);
   }
-  元素.内容选择列表.replaceChildren(片段);
+  const 表头组 = document.createElement('thead');
+  表头组.append(行);
+  return 表头组;
+}
+
+function 创建内容表体(行列表) {
+  const 片段 = document.createDocumentFragment();
+  for (const 行数据 of 行列表) {
+    片段.append(创建内容行元素(行数据));
+  }
+  const 表体 = document.createElement('tbody');
+  表体.append(片段);
+  return 表体;
+}
+
+function 创建内容行元素(行数据) {
+  const 行 = document.createElement('tr');
+  行.className = '内容行';
+  行.dataset.fileName = 行数据.文件名;
+  行.tabIndex = 0;
+  if (行数据.是当前) {
+    行.classList.add('当前');
+    行.setAttribute('aria-current', 'true');
+  }
+
+  const 名称 = 创建内容单元格(行数据.名称, '内容行名称');
+  名称.title = 行数据.文件名;
+
+  const 字数 = 创建内容单元格(
+    行数据.统计中
+      ? '…'
+      : 行数据.字数 === null
+        ? '—'
+        : (行数据.字数 / 10_000).toFixed(1),
+  );
+
+  // 没读过、没进度都留白而不是写 0：一屏「0.0h」和「0%」是杂讯，
+  // 有没有阅读记录由「状态」那一列说清楚。
+  const 已阅读 = 创建内容单元格(
+    行数据.已阅读毫秒 ? 格式化滚动小时(行数据.已阅读毫秒) : '',
+  );
+
+  const 进度 = 创建内容单元格(
+    行数据.进度 === null || 行数据.进度 === 0
+      ? ''
+      : `${Math.round(行数据.进度 * 100)}%`,
+  );
+
+  行.append(名称, 字数, 已阅读, 进度, 创建内容单元格(行数据.状态));
+  return 行;
+}
+
+function 创建内容单元格(文字, 类名) {
+  const 单元格 = document.createElement('td');
+  单元格.textContent = 文字;
+  if (类名) {
+    单元格.className = 类名;
+  }
+  return 单元格;
 }
 
 // 打开弹窗后把当前在读的书滚到列表中间。只在首次渲染后调用一次：
 // 字数统计完成会重渲染一遍，那时用户可能已经自己滚走了，再居中会把人拽回来。
-// 两次渲染的行高一致（字数行始终有内容），所以 scrollTop 会自然保留。
+// 表格行高固定，两次渲染的 scrollTop 会自然保留。
 function 滚动到当前文本() {
   const 容器 = 元素.内容选择列表;
-  const 当前项 = 容器.querySelector('.内容选项.当前');
+  const 当前项 = 容器.querySelector('.内容行.当前');
   if (!当前项) {
     return;
   }
@@ -256,15 +379,14 @@ function 创建内容载入提示(文字) {
   return 提示;
 }
 
-function 计算已保存阅读进度(文本状态) {
+function 计算已保存阅读比例(文本状态) {
   if (
     !文本状态 ||
     !Number.isFinite(文本状态.文本长度) ||
     文本状态.文本长度 <= 0 ||
     !Number.isFinite(文本状态.阅读偏移)
   ) {
-    return '0%';
+    return null;
   }
-  const 比例 = Math.min(1, Math.max(0, 文本状态.阅读偏移 / 文本状态.文本长度));
-  return `${Math.round(比例 * 100)}%`;
+  return Math.min(1, Math.max(0, 文本状态.阅读偏移 / 文本状态.文本长度));
 }

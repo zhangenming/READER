@@ -156,7 +156,7 @@ await 求值(`document.querySelector('#内容选择按钮').click(); return 1;`)
 let 有条目 = false;
 for (let i = 0; i < 200; i++) {
   有条目 = await 求值(`
-    return [...document.querySelectorAll('#内容选择列表 button[data-file-name]')]
+    return [...document.querySelectorAll('#内容选择列表 [data-file-name]')]
       .some((b) => b.dataset.fileName === ${JSON.stringify(目标文本)});
   `);
   if (有条目) break;
@@ -164,7 +164,7 @@ for (let i = 0; i < 200; i++) {
 }
 assert.ok(有条目, `内容选择列表里找不到 ${目标文本}`);
 await 求值(`
-  [...document.querySelectorAll('#内容选择列表 button[data-file-name]')]
+  [...document.querySelectorAll('#内容选择列表 [data-file-name]')]
     .find((b) => b.dataset.fileName === ${JSON.stringify(目标文本)}).click();
   return 1;
 `);

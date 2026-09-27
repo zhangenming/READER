@@ -124,7 +124,7 @@ await 求值(`document.querySelector('#内容选择按钮').click(); return 1;`)
 let 载入书名 = '';
 for (let i = 0; i < 150 && !载入书名; i++) {
   载入书名 = await 求值(`
-    const 按钮 = [...document.querySelectorAll('#内容选择列表 button[data-file-name]')]
+    const 按钮 = [...document.querySelectorAll('#内容选择列表 [data-file-name]')]
       .find((b) => !b.dataset.fileName.startsWith('.'));
     if (!按钮) return '';
     按钮.click();

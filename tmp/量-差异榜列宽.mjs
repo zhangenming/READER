@@ -87,7 +87,7 @@ for (let i = 0; i < 200; i++) {
 await 求值(`document.querySelector('#内容选择按钮').click(); return 1;`);
 await pause(1500);
 await 求值(
-  `[...document.querySelectorAll('#内容选择列表 button[data-file-name]')].find(b=>b.dataset.fileName===${JSON.stringify(书名)})?.click(); return 1;`,
+  `[...document.querySelectorAll('#内容选择列表 [data-file-name]')].find(b=>b.dataset.fileName===${JSON.stringify(书名)})?.click(); return 1;`,
 );
 for (let i = 0; i < 300; i++) {
   const 状态 = await 求值(

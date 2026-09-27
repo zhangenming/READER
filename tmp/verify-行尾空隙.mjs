@@ -121,14 +121,14 @@ async function 主() {
   await 求值(`document.querySelector('#内容选择按钮').click(); return 1;`);
   for (let i = 0; i < 150; i++) {
     const 有 = await 求值(`
-      return [...document.querySelectorAll('#内容选择列表 button[data-file-name]')]
+      return [...document.querySelectorAll('#内容选择列表 [data-file-name]')]
         .some((b) => b.dataset.fileName === ${JSON.stringify(目标文本)});
     `);
     if (有) break;
     await pause(200);
   }
   await 求值(`
-    [...document.querySelectorAll('#内容选择列表 button[data-file-name]')]
+    [...document.querySelectorAll('#内容选择列表 [data-file-name]')]
       .find((b) => b.dataset.fileName === ${JSON.stringify(目标文本)}).click();
     return 1;
   `);

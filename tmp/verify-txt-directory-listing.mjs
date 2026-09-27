@@ -89,7 +89,7 @@ const 结果 = await 求值(`
   return {
     打开: 弹窗.open,
     摘要: document.querySelector('#内容选择摘要').textContent,
-    条目: [...列表.querySelectorAll('button[data-file-name]')].map((b) => b.dataset.fileName),
+    条目: [...列表.querySelectorAll('[data-file-name]')].map((b) => b.dataset.fileName),
     提示: [...列表.querySelectorAll('.内容选择提示')].map((p) => p.textContent),
   };
 `);
@@ -109,7 +109,7 @@ assert.ok(
 
 // 点击条目应当真的把对应文本载入进来。
 await 求值(`
-  [...document.querySelectorAll('#内容选择列表 button[data-file-name]')]
+  [...document.querySelectorAll('#内容选择列表 [data-file-name]')]
     .find((b) => b.dataset.fileName === '白鹿原.txt').click();
   return 1;
 `);

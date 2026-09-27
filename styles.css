@@ -2628,7 +2628,7 @@ dialog,
 }
 
 .内容选择弹窗 {
-  width: min(380px, calc(100vw - 32px));
+  width: min(560px, calc(100vw - 32px));
   max-height: min(540px, calc(100dvh - 80px));
   margin: auto 32px 48px auto;
   padding: 0;
@@ -2771,6 +2771,164 @@ dialog,
 
 .内容选项.当前 .内容选项状态 {
   color: var(--选中色);
+}
+
+/* 「阅读内容」表格：一行一本书，五个量各占一列，列头点击排序。
+   列宽写死 + table-layout: fixed，书名吃掉剩余宽度并省略号收尾。 */
+.内容表格 {
+  --内容列宽-万字: 72px;
+  --内容列宽-已阅读: 78px;
+  --内容列宽-进度: 58px;
+  --内容列宽-状态: 62px;
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 13px;
+}
+
+.内容表格 th,
+.内容表格 td {
+  height: 34px;
+  padding: 0 8px;
+  border-bottom: 1px solid #e6e6e6;
+  white-space: nowrap;
+}
+
+.内容表格 th:first-child,
+.内容表格 td:first-child {
+  padding-left: 16px;
+}
+
+.内容表格 th:last-child,
+.内容表格 td:last-child {
+  padding-right: 16px;
+}
+
+.内容表格 th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  height: 30px;
+  color: var(--次要墨色);
+  font-size: 11px;
+  font-weight: 700;
+  text-align: left;
+  background: #f2f2f2;
+}
+
+.内容表格 td {
+  font-variant-numeric: tabular-nums;
+}
+
+.内容表格 th:nth-child(2),
+.内容表格 td:nth-child(2) {
+  width: var(--内容列宽-万字);
+}
+
+.内容表格 th:nth-child(3),
+.内容表格 td:nth-child(3) {
+  width: var(--内容列宽-已阅读);
+}
+
+.内容表格 th:nth-child(4),
+.内容表格 td:nth-child(4) {
+  width: var(--内容列宽-进度);
+}
+
+.内容表格 th:nth-child(5),
+.内容表格 td:nth-child(5) {
+  width: var(--内容列宽-状态);
+}
+
+/* 数字右对齐，书名以外的列都一样 */
+.内容表格 td:not(:first-child) {
+  color: var(--次要墨色);
+  text-align: right;
+}
+
+.内容行名称 {
+  overflow: hidden;
+  min-width: 0;
+  color: var(--墨色);
+  font-weight: 650;
+  text-overflow: ellipsis;
+}
+
+/* 当前行不参与悬停：#f7f7f7 比它自己的底色更浅，掠过会把「在读这本」的底色抹掉 */
+.内容表格 tbody tr.内容行:hover:not(.当前) {
+  background: #f7f7f7;
+}
+
+.内容行.当前 {
+  background: rgb(0 0 0 / 7%);
+}
+
+.内容行.当前 td:first-child {
+  box-shadow: inset 3px 0 0 var(--选中色);
+}
+
+.内容行.当前 td:last-child {
+  color: var(--选中色);
+}
+
+.内容行:focus-visible {
+  outline: 2px solid var(--选中色);
+  outline-offset: -2px;
+}
+
+/* 可排序列头：整格可点，当前列加深并带箭头（↓ = 从大到小）。
+   内边距留给 th 自己（与 td 同一套），按钮只占内容盒，表头文字的右缘才压得住数字的右缘。 */
+.内容排序按钮 {
+  display: block;
+  width: 100%;
+  height: 30px;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: right;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.内容排序列:first-child .内容排序按钮 {
+  text-align: left;
+}
+
+.内容排序按钮:hover {
+  color: var(--墨色);
+  text-decoration: underline;
+}
+
+.内容排序按钮:focus-visible {
+  outline: 2px solid var(--选中色);
+  outline-offset: -2px;
+}
+
+.内容排序列[aria-sort='descending'],
+.内容排序列[aria-sort='ascending'] {
+  color: var(--墨色);
+  background: #e4e4e4;
+}
+
+/* 箭头贴在列自己的对齐边上：右对齐列把箭头放文字左侧，
+   否则表头文字会被推离它要对齐的数字右缘。书名左对齐，反过来放右侧。 */
+.内容排序列:not(:first-child)[aria-sort='ascending']
+  .内容排序按钮::before {
+  content: '↑ ';
+}
+
+.内容排序列:not(:first-child)[aria-sort='descending']
+  .内容排序按钮::before {
+  content: '↓ ';
+}
+
+.内容排序列:first-child[aria-sort='ascending'] .内容排序按钮::after {
+  content: ' ↑';
+}
+
+.内容排序列:first-child[aria-sort='descending'] .内容排序按钮::after {
+  content: ' ↓';
 }
 
 .内容选择提示 {
@@ -3553,6 +3711,30 @@ dialog,
     width: calc(100vw - 24px);
     max-height: min(70dvh, 540px);
     margin: auto 12px 44px auto;
+  }
+
+  /* 窄屏放不下五列：先把列宽和字号压下来，书名仍然是最后被挤的那一个 */
+  .内容表格 {
+    --内容列宽-万字: 50px;
+    --内容列宽-已阅读: 56px;
+    --内容列宽-进度: 44px;
+    --内容列宽-状态: 44px;
+    font-size: 12px;
+  }
+
+  .内容表格 th,
+  .内容表格 td {
+    padding: 0 5px;
+  }
+
+  .内容表格 th:first-child,
+  .内容表格 td:first-child {
+    padding-left: 12px;
+  }
+
+  .内容表格 th:last-child,
+  .内容表格 td:last-child {
+    padding-right: 12px;
   }
 
   .章节目录弹窗 {
