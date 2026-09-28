@@ -1,6 +1,6 @@
 import { 文本目录地址, 拼音排序器 } from './常量.js';
 import { 按需让出主线程 } from './调度.js';
-import { 是有效文本文件名 } from './文本工具.js';
+import { 是有效文本相对路径名, 取文本显示名 } from './文本工具.js';
 import { 元素, 状态 } from './状态.js';
 import { 格式化滚动小时, 书籍时间账 } from './统计展示.js';
 import { 汇总书籍时间账 } from './阅读统计.js';
@@ -241,36 +241,64 @@ function 切换内容排序(键) {
 }
 
 async function 读取文本目录() {
-  const 响应 = await fetch(文本目录地址, { cache: 'no-store' });
-  if (!响应.ok) {
-    throw new Error(`HTTP ${响应.status} ${响应.statusText}`);
+  const 根响应 = await fetch(文本目录地址, { cache: 'no-store' });
+  if (!根响应.ok) {
+    throw new Error(`HTTP ${根响应.status} ${根响应.statusText}`);
   }
 
-  const 目录文档 = new DOMParser().parseFromString(
-    await 响应.text(),
+  const 根地址 = new URL(根响应.url);
+  const 根路径 = 根地址.pathname.endsWith('/')
+    ? 根地址.pathname
+    : 根地址.pathname + '/';
+  const 根目录文档 = new DOMParser().parseFromString(
+    await 根响应.text(),
     'text/html',
   );
-  const 目录地址 = new URL(响应.url);
-  const 目录路径 = 目录地址.pathname.endsWith('/')
-    ? 目录地址.pathname
-    : 目录地址.pathname + '/';
-  const 文件名集合 = new Set();
 
-  for (const 链接 of 目录文档.querySelectorAll('a[href]')) {
-    const 文件地址 = new URL(链接.getAttribute('href'), 目录地址);
-    if (
-      文件地址.origin !== 目录地址.origin ||
-      !文件地址.pathname.startsWith(目录路径)
-    ) {
-      continue;
-    }
-    const 文件名 = decodeURIComponent(文件地址.pathname.slice(目录路径.length));
-    if (是有效文本文件名(文件名)) {
-      文件名集合.add(文件名);
+  const 文件名集合 = new Set();
+  // 广度遍历子目录：队列元素 [目录地址, 已解析文档]，根目录复用首次响应。
+  const 待读目录 = [[根地址, 根目录文档]];
+  while (待读目录.length) {
+    const [当前目录地址, 当前文档] = 待读目录.shift();
+    for (const 链接 of 当前文档.querySelectorAll('a[href]')) {
+      const 文件地址 = new URL(链接.getAttribute('href'), 当前目录地址);
+      if (
+        文件地址.origin !== 根地址.origin ||
+        !文件地址.pathname.startsWith(根路径)
+      ) {
+        continue;
+      }
+      const 相对路径 = decodeURIComponent(
+        文件地址.pathname.slice(根路径.length),
+      );
+      if (相对路径.endsWith('/')) {
+        // 子目录：深度封顶（去掉末尾斜杠后最多 3 段），空段与父目录链接已被上面的路径过滤排除。
+        const 段 = 相对路径.slice(0, -1).split('/');
+        if (段.length <= 3 && 段.every((s) => s.length > 0)) {
+          const 子响应 = await fetch(文件地址, { cache: 'no-store' });
+          if (子响应.ok) {
+            const 子文档 = new DOMParser().parseFromString(
+              await 子响应.text(),
+              'text/html',
+            );
+            待读目录.push([文件地址, 子文档]);
+          }
+        }
+      } else if (是有效文本相对路径名(相对路径)) {
+        文件名集合.add(相对路径);
+      }
     }
   }
 
-  const 文件列表 = [...文件名集合].sort(function 按文件名排序(左, 右) {
+  // 默认序＝先按目录拼音、再按文件名拼音：书名排序的分组顺序与任何并列回落都以它为准。
+  const 文件列表 = [...文件名集合].sort(function 按目录与文件名排序(左, 右) {
+    const 左斜杠 = 左.lastIndexOf('/');
+    const 右斜杠 = 右.lastIndexOf('/');
+    const 左目录 = 左斜杠 >= 0 ? 左.slice(0, 左斜杠) : '';
+    const 右目录 = 右斜杠 >= 0 ? 右.slice(0, 右斜杠) : '';
+    if (左目录 !== 右目录) {
+      return 拼音排序器.compare(左目录, 右目录);
+    }
     return 拼音排序器.compare(左, 右);
   });
   if (!文件列表.length) {
@@ -297,14 +325,18 @@ function 渲染内容选择列表() {
 function 创建内容行数据(文件名, 序, 文本状态, 账表) {
   const 统计字数 = 状态.文本字数.get(文件名);
   const 是当前 = 文件名 === 状态.文件名;
+  const 斜杠位置 = 文件名.lastIndexOf('/');
+  const 目录 = 斜杠位置 >= 0 ? 文件名.slice(0, 斜杠位置) : '';
   // 从没打开过的书不取账：两列各自为 null，排序钉在尾部、格子里留白
   const 时间账 =
     文本状态 || 账表?.has(文件名) ? 书籍时间账(文件名, 账表) : null;
   return {
     文件名,
+    目录,
     序,
     是当前,
-    名称: 文件名.replace(/\.txt$/i, ''),
+    // 名称只留书名本身，目录归属由分组标题行承担
+    名称: 取文本显示名(文件名),
     // null = 这一格没有可比的数（还没统计出来 / 统计失败 / 从没打开过），排序时钉在尾部
     字数: Number.isFinite(统计字数) ? 统计字数 : null,
     统计中: 统计字数 === undefined,
@@ -319,8 +351,16 @@ function 排序内容行(行列表) {
   const 列 = 内容排序列[状态.内容排序.键];
   const 符号 = 状态.内容排序.方向 === '降' ? -1 : 1;
   return 行列表.slice().sort(function 比较行(左, 右) {
-    const 同序 = 左.序 - 右.序; // 书名列表本身按拼音排，任何并列都回落到这个顺序
+    const 同序 = 左.序 - 右.序; // 书名列表本身按目录+拼音排，任何并列都回落到这个顺序
     if (列.取文本) {
+      if (状态.内容排序.键 === '书名') {
+        // 层级只在书名排序时成立：先按目录分组（根目录空串自然在最前），组内再按书名。
+        const 目录序 = 拼音排序器.compare(左.目录, 右.目录);
+        if (目录序) return 目录序 * 符号;
+        return (
+          拼音排序器.compare(左.名称, 右.名称) * 符号 || 同序
+        );
+      }
       return 拼音排序器.compare(列.取文本(左), 列.取文本(右)) * 符号 || 同序;
     }
     const 左值 = 列.取值(左);
@@ -373,19 +413,73 @@ function 创建内容表头(行列表) {
 
 function 创建内容表体(行列表) {
   const 片段 = document.createDocumentFragment();
+  // 层级只在书名排序时展示：目录标题行 + 同组背景色；其他排序一律平铺，不分组。
+  const 展示层级 = 状态.内容排序.键 === '书名';
+  let 当前目录 = null;
+  let 目录组序 = -1;
   for (const 行数据 of 行列表) {
-    片段.append(创建内容行元素(行数据));
+    let 本组序 = null;
+    if (展示层级 && 行数据.目录 !== 当前目录) {
+      当前目录 = 行数据.目录;
+      if (当前目录) {
+        目录组序 += 1;
+        片段.append(创建目录标题行(当前目录, 目录组序, 行列表));
+      }
+    }
+    if (展示层级 && 当前目录) {
+      本组序 = 目录组序;
+    }
+    片段.append(创建内容行元素(行数据, 本组序));
   }
   const 表体 = document.createElement('tbody');
   表体.append(片段);
   return 表体;
 }
 
-function 创建内容行元素(行数据) {
+// 目录标题行：每组第一行，带「目录」明白标记与该组本数；不是文件行，
+// 没有 data-file-name，点击与键盘都不会触发载入。
+function 创建目录标题行(目录名, 组序, 行列表) {
+  const 行 = document.createElement('tr');
+  行.className = '内容目录标题行';
+  行.classList.add(组序 % 2 === 0 ? '层级组-偶' : '层级组-奇');
+
+  const 单元格 = document.createElement('td');
+  单元格.colSpan = Object.keys(内容排序列).length;
+  单元格.className = '内容目录标题格';
+
+  const 标记 = document.createElement('span');
+  标记.className = '内容目录标记';
+  标记.textContent = '目录';
+
+  const 名 = document.createElement('span');
+  名.className = '内容目录名';
+  名.textContent = 目录名;
+
+  const 本数 = document.createElement('span');
+  本数.className = '内容目录本数';
+  const n = 行列表.reduce(
+    (总, r) => 总 + (r.目录 === 目录名 ? 1 : 0),
+    0,
+  );
+  本数.textContent = `${n} 本`;
+
+  单元格.append(标记, 名, 本数);
+  行.append(单元格);
+  return 行;
+}
+
+function 创建内容行元素(行数据, 目录组序 = null) {
   const 行 = document.createElement('tr');
   行.className = '内容行';
   行.dataset.fileName = 行数据.文件名;
   行.tabIndex = 0;
+  // 同一目录的书挂同一组 class，背景色按组序奇偶区分；根目录的书（组序 null）不着色。
+  if (目录组序 !== null) {
+    行.classList.add(
+      '层级组',
+      目录组序 % 2 === 0 ? '层级组-偶' : '层级组-奇',
+    );
+  }
   if (行数据.是当前) {
     行.classList.add('当前');
     行.setAttribute('aria-current', 'true');

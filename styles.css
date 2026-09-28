@@ -3016,6 +3016,71 @@ dialog,
   color: #9f3526;
 }
 
+/* ===== 书名排序时的目录分组：标题行 + 同组背景色（其他排序下这些 class 不出现）===== */
+
+.内容表格 tbody tr.层级组-偶:not(.当前) {
+  background: #f1f6fb;
+}
+
+.内容表格 tbody tr.层级组-奇:not(.当前) {
+  background: #e6eff8;
+}
+
+/* 组内行的 hover 用同色系加深，特异性压过普通行 hover 的灰底 */
+.内容表格 tbody tr.内容行.层级组-偶:hover:not(.当前) {
+  background: #e2ecf6;
+}
+
+.内容表格 tbody tr.内容行.层级组-奇:hover:not(.当前) {
+  background: #d7e5f2;
+}
+
+/* 每组第一行的目录标题行：比组内书行底色更深，和上下书行用细边框隔开 */
+.内容表格 tbody tr.内容目录标题行 {
+  height: 30px;
+}
+
+.内容表格 tbody tr.内容目录标题行.层级组-偶 {
+  background: #dce9f6;
+}
+
+.内容表格 tbody tr.内容目录标题行.层级组-奇 {
+  background: #d2e3f2;
+}
+
+.内容目录标题格 {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 0 8px;
+  border-top: 1px solid #c9dbee;
+  border-bottom: 1px solid #c9dbee;
+  white-space: nowrap;
+}
+
+.内容目录标记 {
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: var(--选中色);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.内容目录名 {
+  overflow: hidden;
+  color: #1f3a57;
+  font-weight: 700;
+  text-overflow: ellipsis;
+}
+
+.内容目录本数 {
+  margin-left: auto;
+  color: #5f7185;
+  font-size: 11px;
+}
+
 .阅读统计按钮 {
   grid-area: 统计;
 }

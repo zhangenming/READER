@@ -19,7 +19,7 @@ import { 查找偏移所在行 } from './排版引擎.js';
 import { 前台停留统计快照 } from './前台停留.js';
 import { 滚动时段统计快照 } from './滚动时段.js';
 import { 可见时段统计快照 } from './可见时段.js';
-import { 是有效文本文件名 } from './文本工具.js';
+import { 是有效文本相对路径名 } from './文本工具.js';
 
 let 持久化缓存 = null;
 let 持久化回退 = null;
@@ -124,7 +124,7 @@ function 解析持久化快照({ 原始数据, 旧原始数据 }) {
   if (!旧状态 || typeof 旧状态 !== 'object') {
     throw new TypeError('旧版持久化阅读状态格式无效');
   }
-  if (!是有效文本文件名(旧状态.文件名)) {
+  if (!是有效文本相对路径名(旧状态.文件名)) {
     const 数据 = { 当前文件名: '', 文本状态: {} };
     持久化缓存 = {
       版本: 'v1',

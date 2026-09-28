@@ -7,7 +7,8 @@ import {
   语音事件,
 } from './js/常量.js';
 import {
-  是有效文本文件名,
+  是有效文本相对路径名,
+  取文本显示名,
   计算内容哈希,
   清除文本字素分段缓存,
 } from './js/文本工具.js';
@@ -239,7 +240,7 @@ function 启动() {
   window.setInterval(更新当前时间, 1000);
   new ResizeObserver(处理尺寸变化).observe(元素.滚动容器);
   void 载入文本(
-    是有效文本文件名(持久化数据.当前文件名)
+    是有效文本相对路径名(持久化数据.当前文件名)
       ? 持久化数据.当前文件名
       : 默认文件名,
   );
@@ -296,7 +297,7 @@ function 启动() {
 }
 
 async function 载入文本(文件名) {
-  if (!是有效文本文件名(文件名)) {
+  if (!是有效文本相对路径名(文件名)) {
     throw new TypeError(`无效的文本文件名：${文件名}`);
   }
   if (文件名 === 状态.文件名) {
@@ -310,7 +311,7 @@ async function 载入文本(文件名) {
   元素.载入状态.classList.remove('错误');
   元素.载入状态.querySelector('.载入线').hidden = false;
   元素.载入状态.querySelector('p').textContent =
-    `正在打开《${文件名.replace(/\.txt$/i, '')}》`;
+    `正在打开《${取文本显示名(文件名)}》`;
   元素.载入状态.hidden = false;
 
   let 数据;
@@ -360,7 +361,10 @@ async function 载入文本(文件名) {
 }
 
 function 创建文本地址(文件名) {
-  return new URL(encodeURIComponent(文件名), 文本目录地址);
+  // 分段编码：整串 encodeURIComponent 会把「/」编成 %2F，
+  // 子目录文件会被服务器当成一个怪文件名而 404。
+  const 编码路径 = 文件名.split('/').map(encodeURIComponent).join('/');
+  return new URL(编码路径, 文本目录地址);
 }
 
 function 绑定事件() {

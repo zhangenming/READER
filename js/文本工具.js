@@ -26,6 +26,30 @@ export function 是有效文本文件名(文件名) {
   );
 }
 
+// 允许子目录相对路径（如「子目录/书.txt」）：txt 目录支持一层分组后，
+// 目录读取、载入、持久化都要接受带「/」的名字；但禁止反斜杠、「..」与空段，
+// 深度封顶，避免路径跳出 txt 目录。
+export function 是有效文本相对路径名(文件名) {
+  if (
+    typeof 文件名 !== 'string' ||
+    !文件名.toLowerCase().endsWith('.txt') ||
+    文件名.includes('\\') ||
+    文件名.includes('..')
+  ) {
+    return false;
+  }
+  const 段 = 文件名.split('/');
+  return 段.length <= 4 && 段.every((s) => s.length > 0);
+}
+
+// 列表与载入提示只显示书名本身（去掉目录前缀与 .txt），
+// 目录归属由分组标题行承担，不重复堆在名字里。
+export function 取文本显示名(文件名) {
+  const 斜杠位置 = 文件名.lastIndexOf('/');
+  const 基名 = 斜杠位置 >= 0 ? 文件名.slice(斜杠位置 + 1) : 文件名;
+  return 基名.replace(/\.txt$/i, '');
+}
+
 export function 是汉字(字) {
   const 码点 = 字.codePointAt(0);
   return (
