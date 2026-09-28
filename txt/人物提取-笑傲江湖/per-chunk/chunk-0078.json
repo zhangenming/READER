@@ -1,0 +1,26 @@
+{
+  "chunk": 78,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐少侠", "老弟"], "identity": "恒山派掌门，悬空寺遭贾布毒水伏击，得盈盈相救脱险，同赴黑木崖", "mentioned_only": false, "evidence": "令狐冲心下一片混乱，只盼冲虚所言非实"},
+    {"name": "方证", "aliases": ["方丈大师"], "identity": "少林寺方丈，与令狐冲约定三月十五率众赴嵩山助威", "mentioned_only": false, "evidence": "方证微笑道：“莆田少林寺中的《葵花宝典》早已毁了。"},
+    {"name": "冲虚", "aliases": ["冲虚道长"], "identity": "武当派掌门，劝令狐冲必要时不可推辞五岳派掌门之位", "mentioned_only": false, "evidence": "冲虚道：“下月十五，左冷禅召集五岳剑派齐集嵩山推举掌门"},
+    {"name": "红叶禅师", "aliases": [], "identity": "莆田少林寺方丈，临圆寂时焚毁《葵花宝典》并留书嵩山本寺", "mentioned_only": true, "evidence": "红叶禅师临圆寂之时，召集门人弟子"},
+    {"name": "左冷禅", "aliases": ["左掌门"], "identity": "嵩山派掌门、五岳盟主，召集三月十五嵩山并派大会", "mentioned_only": true, "evidence": "下月十五，左冷禅召集五岳剑派齐集嵩山推举掌门"},
+    {"name": "定闲", "aliases": ["定闲师太"], "identity": "恒山派前掌门，将门下弟子托付令狐冲", "mentioned_only": true, "evidence": "定闲师太交在你手上的这许多弟子"},
+    {"name": "岳不群", "aliases": ["岳先生"], "identity": "华山派掌门，疑手握《葵花宝典》部分武功，为左冷禅所图", "mentioned_only": true, "evidence": "一是想杀了岳先生，便于他归并五岳剑派"},
+    {"name": "岳夫人", "aliases": ["师娘"], "identity": "岳不群之妻、令狐冲师娘（书中真名宁中则）", "mentioned_only": true, "evidence": "那时你师父、师娘、师弟、师妹，左冷禅一定也容他们不得。"},
+    {"name": "贾布", "aliases": ["黄面尊者", "贾叔叔"], "identity": "日月神教青龙堂长老，悬空寺伏击失败，被方证掷下山谷而死", "mentioned_only": false, "evidence": "伏在灵龟阁中说话之人，正是东方不败派来送礼道贺的那个黄面尊者贾布。"},
+    {"name": "上官云", "aliases": ["雕侠", "上官叔叔", "上官兄弟"], "identity": "日月神教白虎堂长老，被盈盈收服，服三尸脑神丹归顺任我行", "mentioned_only": false, "evidence": "江湖上多说‘雕侠’上官云武功既高，为人又极耿直"},
+    {"name": "盈盈", "aliases": ["任大小姐", "圣姑"], "identity": "任我行之女，持黑木令破贾布毒水伏击，收服上官云", "mentioned_only": false, "evidence": "跟着便似有一团绿云冉冉从阁顶飘落，挡在令狐冲身前，正是盈盈。"},
+    {"name": "东方不败", "aliases": ["东方教主"], "identity": "日月神教教主，遣贾布上官云行伏击，又欲以令狐冲要胁盈盈", "mentioned_only": true, "evidence": "东方教主叫你杀我吗？"},
+    {"name": "老头子", "aliases": ["老先生"], "identity": "江湖豪客，随盈盈援救令狐冲", "mentioned_only": false, "evidence": "只见老头子、祖千秋等数十人已候在阁下。"},
+    {"name": "祖千秋", "aliases": [], "identity": "江湖豪客，随盈盈援救令狐冲", "mentioned_only": false, "evidence": "只见老头子、祖千秋等数十人已候在阁下。"},
+    {"name": "任我行", "aliases": ["任教主", "爹爹"], "identity": "日月神教前教主，与令狐冲盈盈同赴黑木崖谋复位", "mentioned_only": false, "evidence": "任我行和向问天走进房来。"},
+    {"name": "向问天", "aliases": ["向兄弟", "向大哥"], "identity": "日月神教元老，同行赴黑木崖夺位", "mentioned_only": false, "evidence": "任我行和向问天走进房来。"},
+    {"name": "杨莲亭", "aliases": ["姓杨的小子", "杨总管"], "identity": "东方不败男宠，日月教总管，把持教务残害教众", "mentioned_only": true, "evidence": "那姓杨的叫做杨莲亭，只二十来岁年纪"},
+    {"name": "魔教十长老", "aliases": ["神教十长老"], "collective": true, "identity": "日月神教十长老，其中六人已服任我行的三尸脑神丹归其节制", "mentioned_only": true, "evidence": "神教十长老之中，已有六人服了我爹爹给他们的三尸脑神丹"},
+    {"name": "林远图", "aliases": ["渡元禅师"], "identity": "本为莆田少林渡元禅师，还俗创福威镖局，《辟邪剑谱》录于袈裟", "mentioned_only": true, "evidence": "原来林远图前辈本是和尚"},
+    {"name": "岳肃", "aliases": [], "identity": "华山气宗之祖，曾与蔡子峰同阅《葵花宝典》", "mentioned_only": true, "evidence": "他在华山与岳肃、蔡子峰两位前辈探讨葵花宝典"},
+    {"name": "蔡子峰", "aliases": [], "identity": "华山剑宗之祖，曾与岳肃同阅《葵花宝典》", "mentioned_only": true, "evidence": "他在华山与岳肃、蔡子峰两位前辈探讨葵花宝典"}
+  ]
+}

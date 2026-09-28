@@ -1,0 +1,17 @@
+{
+  "chunk": 80,
+  "characters": [
+    {"name": "令狐冲", "aliases": [], "identity": "恒山派掌门，与东方不败激战，左眉中针，以独孤剑法缠斗强敌", "mentioned_only": false, "evidence": "令狐冲知道自己左眉已为他绣花针所刺中"},
+    {"name": "盈盈", "aliases": ["任大小姐"], "identity": "任我行之女，刺伤杨莲亭乱敌心神，助众人杀死东方不败", "mentioned_only": false, "evidence": "盈盈在旁观战，越来越担心"},
+    {"name": "任我行", "aliases": ["任教主"], "identity": "日月神教前教主，与东方不败决战报仇", "mentioned_only": false, "evidence": "任我行缓缓拔出长剑，说道：“东方不败，恭喜你练成了《葵花宝典》上的武功。”"},
+    {"name": "向问天", "aliases": ["向兄弟"], "identity": "日月神教元老，以软鞭参战，胸口被绣花针刺中", "mentioned_only": false, "evidence": "向问天刷的一鞭，卷住了杨莲亭的双足"},
+    {"name": "上官云", "aliases": [], "identity": "白虎堂长老，拔刀助战，右目被东方不败刺瞎", "mentioned_only": false, "evidence": "上官云拔出单刀，冲上助战，以四敌一。"},
+    {"name": "杨莲亭", "aliases": ["莲弟"], "identity": "东方不败男宠，被盈盈刺伤仍硬挺不出声，累东方不败分心落败", "mentioned_only": false, "evidence": "杨莲亭这时已知她用意"},
+    {"name": "童百熊", "aliases": ["童大哥", "童兄"], "identity": "风雷堂长老，因不肯得罪杨莲亭，被东方不败绣花针瞬息杀死", "mentioned_only": false, "evidence": "只见童百熊张大了口，忽然身子向前直扑下去"},
+    {"name": "东方不败", "aliases": [], "identity": "日月神教教主，自宫练《葵花宝典》，扮女子深闺刺绣，绣花针武功天下第一，此役被杀", "mentioned_only": false, "evidence": "东首一张梳妆台畔坐着一人，身穿粉红衣衫"},
+    {"name": "假东方不败", "aliases": ["姓包的", "姓包汉子"], "identity": "冒充东方不败坐于成德殿的男子，姓包，真名未及说完即被识破", "mentioned_only": false, "evidence": "任我行哈哈大笑，叫道：“这东方不败是假货。”"},
+    {"name": "罗长老", "aliases": [], "identity": "日月神教朱雀堂长老，因不服东方不败接位被童百熊一刀杀死", "mentioned_only": true, "evidence": "朱雀堂罗长老心中不服，啰里啰唆，是你一刀将罗长老杀了。"},
+    {"name": "潞东七虎", "aliases": [], "collective": true, "identity": "太行山七名匪豪，昔年围攻东方不败致其重伤，为童百熊所救", "mentioned_only": true, "evidence": "想当年在太行山之时，潞东七虎向我围攻。"},
+    {"name": "江南四友", "aliases": [], "collective": true, "identity": "孤山梅庄看守任我行的四友（黄钟公、黑白子、秃笔翁、丹青生）", "mentioned_only": true, "evidence": "只须我叫江南四友不送水给你喝，你能挨得十天半月吗？"}
+  ]
+}

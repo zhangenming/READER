@@ -1,0 +1,14 @@
+{
+  "chunk": 79,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐大侠"], "identity": "恒山派掌门，假扮重伤俘虏随上官云混上黑木崖", "mentioned_only": false, "evidence": "令狐冲好奇之心大起，道：“好妹子，你便说给我听听。”"},
+    {"name": "盈盈", "aliases": ["任大小姐"], "identity": "任我行之女，男装涂脸随行，共谋上黑木崖诛东方不败", "mentioned_only": false, "evidence": "盈盈喜叫：“爹爹！”快步过去开门。"},
+    {"name": "杨莲亭", "aliases": ["杨总管", "姓杨的"], "identity": "东方不败男宠，日月教总管，把持教务残害教众，此块中现身", "mentioned_only": false, "evidence": "这人果然便是杨莲亭！"},
+    {"name": "东方不败", "aliases": ["东方教主", "东方兄弟"], "identity": "日月神教教主；本块成德殿上所坐“长须老者”实为冒牌货，真身未现身", "mentioned_only": true, "evidence": "江湖上又向来传言，天下武功以东方不败为第一"},
+    {"name": "任我行", "aliases": ["爹爹", "任老弟"], "identity": "日月神教前教主，潜回总坛谋复位，扮作抬担架教众", "mentioned_only": false, "evidence": "任我行和向问天走进房来。"},
+    {"name": "向问天", "aliases": ["向兄弟"], "identity": "日月神教元老，与任我行同行谋复位", "mentioned_only": false, "evidence": "任我行和向问天走进房来。"},
+    {"name": "上官云", "aliases": ["上官叔叔", "上官兄弟", "上官雕侠", "雕侠"], "identity": "白虎堂长老，献计押“俘虏”令狐冲上崖进见，满口谀词", "mentioned_only": false, "evidence": "向问天转身出房，随即和上官云一起进来。"},
+    {"name": "童百熊", "aliases": ["童伯伯", "童老"], "identity": "风雷堂长老，东方不败八拜之交，因拒背叛东方不败而被擒押过市", "mentioned_only": false, "evidence": "风雷堂长老童百熊勾结敌人，谋叛本教，立即擒拿归坛"},
+    {"name": "贾布", "aliases": ["贾长老"], "identity": "日月神教青龙堂长老，已死于翠屏山下深谷，令旨中称其“成功而归”", "mentioned_only": true, "evidence": "贾布、上官云遵奉令旨，成功而归，殊堪嘉尚"}
+  ]
+}

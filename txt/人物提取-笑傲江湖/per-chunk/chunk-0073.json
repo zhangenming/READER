@@ -1,0 +1,27 @@
+{
+  "chunk": 73,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["冲儿", "小贼", "令狐大侠", "令狐少侠"], "identity": "华山派弃徒，已允接任恒山派掌门，助任我行驱寒毒", "mentioned_only": false, "evidence": "令狐冲心头一震，万料不到她竟会说出这一句话来"},
+    {"name": "盈盈", "aliases": ["婆婆"], "identity": "任我行之女，日月神教圣姑，令狐冲恋人", "mentioned_only": false, "evidence": "盈盈双足一点，身子弹出数尺，沉着脸道"},
+    {"name": "任我行", "aliases": ["爹爹", "任教主"], "identity": "日月神教教主（复位途中），盈盈之父，中左冷禅寒冰真气", "mentioned_only": false, "evidence": "突见雪地之中，任我行和向问天并肩而立"},
+    {"name": "向问天", "aliases": ["向叔叔"], "identity": "日月神教元老，助任我行抵挡寒气", "mentioned_only": false, "evidence": "突见雪地之中，任我行和向问天并肩而立"},
+    {"name": "东方不败", "aliases": ["东方叔叔"], "identity": "日月神教教主，篡夺任我行教主之位", "mentioned_only": true, "evidence": "后来东方叔叔……不，东方不败，我一直叫他叔叔"},
+    {"name": "左冷禅", "aliases": [], "identity": "嵩山派掌门，五岳剑派盟主，以寒冰真气伤任我行，疑害死定闲定逸", "mentioned_only": true, "evidence": "父亲中了左冷禅的“寒冰真气”后，一直强自抑制"},
+    {"name": "鲍大楚", "aliases": [], "identity": "日月神教长老，曾服三尸脑神丹", "mentioned_only": true, "evidence": "鲍大楚、秦伟邦等人一见任我行那几颗火红色的“三尸脑神丹”"},
+    {"name": "秦伟邦", "aliases": [], "identity": "日月神教长老，曾服三尸脑神丹", "mentioned_only": true, "evidence": "鲍大楚、秦伟邦等人一见任我行那几颗火红色的“三尸脑神丹”"},
+    {"name": "绿竹翁", "aliases": [], "identity": "盈盈师侄，洛阳绿竹巷隐居高人", "mentioned_only": true, "evidence": "前年春天，我叫师侄绿竹翁陪伴，出来游山玩水"},
+    {"name": "定闲", "aliases": [], "identity": "恒山派掌门师太，在少林寺遇害", "mentioned_only": true, "evidence": "直到定闲、定逸两位师太来到少林，方丈要我去相见"},
+    {"name": "定逸", "aliases": [], "identity": "恒山派师太，与定闲同在少林寺遇害", "mentioned_only": true, "evidence": "直到定闲、定逸两位师太来到少林，方丈要我去相见"},
+    {"name": "田伯光", "aliases": ["万里独行"], "identity": "绰号万里独行，向盈盈报信令狐冲率众上少林", "mentioned_only": true, "evidence": "后来在山下遇到一个叫甚么万里独行田伯光的"},
+    {"name": "老头子", "aliases": [], "identity": "江湖豪客，盈盈属下，姓老", "mentioned_only": true, "evidence": "为甚么老头子、祖千秋他们，会对你怕得这么厉害"},
+    {"name": "祖千秋", "aliases": [], "identity": "江湖豪客，盈盈属下", "mentioned_only": true, "evidence": "为甚么老头子、祖千秋他们，会对你怕得这么厉害"},
+    {"name": "岳不群", "aliases": ["师父"], "identity": "华山派掌门，令狐冲师父，绰号君子剑，与岳夫人骑马雪中叙话", "mentioned_only": false, "evidence": "正是师父岳不群的声音"},
+    {"name": "岳夫人", "aliases": ["师妹", "师娘", "师母"], "identity": "岳不群之妻（宁中则），令狐冲师娘，为令狐冲分辩", "mentioned_only": false, "evidence": "岳夫人哼的一声，似是余怒未息"},
+    {"name": "岳灵珊", "aliases": ["珊儿", "小师妹"], "identity": "岳不群之女，令狐冲小师妹，与林平之骑马寻父母并在雪人上题字", "mentioned_only": false, "evidence": "岳灵珊忽然叫道：“小林子，你瞧这四个雪人儿多好玩，手拉手的站成一排。”"},
+    {"name": "林平之", "aliases": ["平之", "平儿", "小林子"], "identity": "林震南之子，华山派弟子，岳灵珊意中人，家传辟邪剑谱", "mentioned_only": false, "evidence": "林平之道：“好啊，堆一个男的，一个女的，也要手拉手的。”"},
+    {"name": "方证", "aliases": ["方证方丈", "方丈大师"], "identity": "少林寺方丈，曾欲传令狐冲易筋经", "mentioned_only": true, "evidence": "咱们把少林派方证方丈、武当派冲虚道长两位都请了出来"},
+    {"name": "冲虚", "aliases": ["冲虚道长"], "identity": "武当派掌门", "mentioned_only": true, "evidence": "咱们把少林派方证方丈、武当派冲虚道长两位都请了出来"},
+    {"name": "风清扬", "aliases": ["风师叔"], "identity": "华山剑宗前辈，令狐冲剑法授业人", "mentioned_only": true, "evidence": "都说他的精妙剑法是得自风师叔的真传"},
+    {"name": "恒山三尼", "aliases": [], "identity": "指恒山派定字辈三师太：定闲、定逸、定静", "mentioned_only": true, "evidence": "嵩山派数次围攻恒山三尼不成", "collective": true}
+  ]
+}
