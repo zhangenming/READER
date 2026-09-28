@@ -1,0 +1,214 @@
+{
+  "chunk": 105,
+  "characters": [
+    {
+      "name": "令狐冲",
+      "aliases": [
+        "令狐兄弟",
+        "令狐掌门",
+        "冲哥"
+      ],
+      "identity": "恒山派掌门，本书主角，入观音堂与盈盈密谈订婚，三年后与盈盈在梅庄成亲",
+      "mentioned_only": false,
+      "evidence": "令狐冲道：“晚辈令狐冲拜见任教主。”"
+    },
+    {
+      "name": "盈盈",
+      "aliases": [
+        "任大小姐",
+        "任教主"
+      ],
+      "identity": "任我行之女，父亲死后继任日月神教教主，假扮教主乘轿上恒山与令狐冲盟誓，三年后成亲",
+      "mentioned_only": false,
+      "evidence": "盈盈赠送二人重礼，送给令狐冲的却是衣履用品"
+    },
+    {
+      "name": "任我行",
+      "aliases": [
+        "任教主",
+        "任老魔头",
+        "任老先生",
+        "爹爹"
+      ],
+      "identity": "日月神教教主，已在朝阳峰仙人掌上摔下毙命，轿中所坐实为盈盈（本块追述）",
+      "mentioned_only": true,
+      "evidence": "任我行一代怪杰，虽然生平恶行不少，但如此下场，亦令人为之叹息。"
+    },
+    {
+      "name": "方证",
+      "aliases": [
+        "方证大师",
+        "方丈大师"
+      ],
+      "identity": "少林寺方丈，以金刚禅狮子吼震倒桃谷六仙解炸药之危，受赠梵文《金刚经》",
+      "mentioned_only": false,
+      "evidence": "方证大师眼见危机只在顷刻之间，可又不能出声劝阻，泄漏了机关"
+    },
+    {
+      "name": "冲虚",
+      "aliases": [
+        "冲虚道长"
+      ],
+      "identity": "武当派掌门，力保炸药机关不泄，受归真武剑与《太极拳经》，三年后与方证梅庄贺喜",
+      "mentioned_only": false,
+      "evidence": "冲虚道长只觉头脑一晕，险些摔倒。"
+    },
+    {
+      "name": "向问天",
+      "aliases": [
+        "向大哥"
+      ],
+      "identity": "日月教左使，随轿护卫传话赠礼，任我行死后与盈盈接住其身，后接任日月神教教主",
+      "mentioned_only": false,
+      "evidence": "向问天弯下腰来，俯耳轿边，听取轿中人的指示"
+    },
+    {
+      "name": "绿竹翁",
+      "aliases": [],
+      "identity": "洛阳绿竹巷隐世高手，称盈盈“姑姑”，随行护轿进入无色庵",
+      "mentioned_only": false,
+      "evidence": "向问天和绿竹翁陪着进去，却和众轿伕一起退了出来"
+    },
+    {
+      "name": "清虚",
+      "aliases": [],
+      "identity": "武当派冲虚师弟，埋设九龙椅炸药机关，事成后奉命割断药引",
+      "mentioned_only": false,
+      "evidence": "动手埋药的清虚、成高等此刻都在峰腰相候"
+    },
+    {
+      "name": "成高",
+      "aliases": [],
+      "identity": "武当派冲虚师侄，埋设炸药地雷，事成后奉命割断药引",
+      "mentioned_only": false,
+      "evidence": "动手埋药的清虚、成高等此刻都在峰腰相候"
+    },
+    {
+      "name": "桃谷六仙",
+      "aliases": [],
+      "identity": "桃根、桃干、桃枝、桃叶、桃花、桃实六兄弟，两度闯祸偷听，把令狐冲盈盈的密谈当八字经传扬",
+      "collective": true,
+      "mentioned_only": false,
+      "evidence": "桃谷六仙不知何时闯进了无色庵中，正在争坐这张九龙宝椅"
+    },
+    {
+      "name": "桃花仙",
+      "aliases": [],
+      "identity": "桃谷六仙之一，争坐九龙宝椅、供桌下偷听并喊冤",
+      "mentioned_only": false,
+      "evidence": "桃花仙道：“冤枉，冤枉！"
+    },
+    {
+      "name": "桃枝仙",
+      "aliases": [],
+      "identity": "桃谷六仙之一，争坐九龙宝椅并嘟囔“偏你和任大小姐说得”",
+      "mentioned_only": false,
+      "evidence": "桃枝仙叽哩咕噜：“不说就不说。"
+    },
+    {
+      "name": "桃干仙",
+      "aliases": [],
+      "identity": "桃谷六仙之一，学着盈盈语气传述任我行死讯与传功真相",
+      "mentioned_only": false,
+      "evidence": "桃干仙幽幽叹了口气，学着盈盈的语气说道"
+    },
+    {
+      "name": "桃实仙",
+      "aliases": [],
+      "identity": "桃谷六仙之一，逼嗓子学盈盈说话被冲虚打断",
+      "mentioned_only": false,
+      "evidence": "桃实仙逼紧了嗓子道：“冲哥，我……”"
+    },
+    {
+      "name": "桃根仙",
+      "aliases": [],
+      "identity": "桃谷六仙之一，追问日月教八字经改了说不说得",
+      "mentioned_only": false,
+      "evidence": "桃根仙道：“不过日月教圣教主那两句八字经改了，说不说得？”"
+    },
+    {
+      "name": "仪清",
+      "aliases": [],
+      "identity": "恒山派二大弟子之一，三年后接掌恒山派掌门之位",
+      "mentioned_only": false,
+      "evidence": "这时令狐冲已将恒山派掌门之位交给了仪清接掌。"
+    },
+    {
+      "name": "仪琳",
+      "aliases": [],
+      "identity": "恒山派女弟子，让掌门之位不居，急得当众大哭",
+      "mentioned_only": false,
+      "evidence": "但仪琳说甚么也不肯，急得当众大哭。"
+    },
+    {
+      "name": "莫大先生",
+      "aliases": [
+        "莫大师伯"
+      ],
+      "identity": "衡山派掌门，装死脱身后于令狐冲婚礼外在墙外奏《凤求凰》道贺（本块作“莫大师伯”）",
+      "mentioned_only": false,
+      "evidence": "莫大师伯果然没死，他今日来奏此曲，是贺我和盈盈的新婚。"
+    },
+    {
+      "name": "刘正风",
+      "aliases": [],
+      "identity": "衡山派前辈，与曲洋合撰《笑傲江湖》之曲，双双毙命（本块回忆提及）",
+      "mentioned_only": true,
+      "evidence": "初聆衡山派刘正风和日月教长老曲洋合奏此曲。"
+    },
+    {
+      "name": "曲洋",
+      "aliases": [],
+      "identity": "日月教长老、琴曲名家，与刘正风合撰《笑傲江湖》之曲（本块回忆提及）",
+      "mentioned_only": true,
+      "evidence": "初聆衡山派刘正风和日月教长老曲洋合奏此曲。"
+    },
+    {
+      "name": "张三丰",
+      "aliases": [],
+      "identity": "武当派创派之祖，其真武剑与手书《太极拳经》被任我行归还武当（本块追述）",
+      "mentioned_only": true,
+      "evidence": "武当派创派之祖张三丰先师所用佩剑名叫“真武剑”"
+    },
+    {
+      "name": "鸠摩罗什",
+      "aliases": [
+        "鸠摩罗甚"
+      ],
+      "identity": "东晋高僧、《金刚经》汉译者（本块文字讹作“鸠摩罗甚”）",
+      "mentioned_only": true,
+      "evidence": "只是所读到的是东晋时高僧鸠摩罗甚的中文译本"
+    },
+    {
+      "name": "劳德诺",
+      "aliases": [],
+      "identity": "练辟邪剑法自废武功，被盈盈锁上两只大马猴放归华山，永受拖拽之苦",
+      "mentioned_only": false,
+      "evidence": "却见群猴之中赫然有一个人，凝目看去，竟是劳德诺。"
+    },
+    {
+      "name": "风清扬",
+      "aliases": [
+        "风太师叔",
+        "太师叔"
+      ],
+      "identity": "华山派隐居前辈、令狐冲太师叔，婚后夫妇寻遍华山不见其踪（本块追述）",
+      "mentioned_only": true,
+      "evidence": "令狐冲要带同妻子去拜见太师叔风清扬，叩谢他传剑授功之德。"
+    },
+    {
+      "name": "林平之",
+      "aliases": [],
+      "identity": "被令狐冲终身安置于梅庄地底黑牢照顾（本块言及）",
+      "mentioned_only": true,
+      "evidence": "你将林平之关在梅庄地底的黑牢之中，确是安排得十分聪明。"
+    },
+    {
+      "name": "于嫂",
+      "aliases": [],
+      "identity": "恒山派弟子，代收任我行赠给恒山派的礼物",
+      "mentioned_only": false,
+      "evidence": "命恒山派于嫂等收了过来。"
+    }
+  ]
+}

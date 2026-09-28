@@ -1,0 +1,24 @@
+{
+  "chunk": 92,
+  "characters": [
+    {"name": "林平之", "aliases": ["平弟", "平儿"], "identity": "福州林家子弟，岳灵珊之夫，自宫练成辟邪剑法", "mentioned_only": false, "evidence": "林平之道：“其实说穿了也不奇怪。"},
+    {"name": "岳灵珊", "aliases": ["珊儿", "岳姑娘"], "identity": "华山派掌门岳不群之女，林平之之妻", "mentioned_only": false, "evidence": "只听岳灵珊又道：“咱们曾祖远图公少年时曾出过家"},
+    {"name": "令狐冲", "aliases": ["冲哥", "冲儿", "冲郎", "大师哥"], "identity": "华山派弃徒，恒山派掌门", "mentioned_only": false, "evidence": "令狐冲坐起身来，说道：“咱们慢慢过去"},
+    {"name": "盈盈", "aliases": ["姓任的姑娘"], "identity": "日月神教教主任我行之女，圣姑", "mentioned_only": false, "evidence": "盈盈生怕令狐冲有失，急展轻功"},
+    {"name": "岳不群", "aliases": [], "identity": "华山派掌门、五岳派掌门，岳灵珊之父，盗谱自宫练剑", "mentioned_only": true, "evidence": "无怪岳不群和这林平之的剑法，竟然和东方不败如此近似"},
+    {"name": "任我行", "aliases": ["爹爹"], "identity": "日月神教教主，盈盈之父，曾被东方不败囚于西湖湖底", "mentioned_only": true, "evidence": "爹爹曾道，这《辟邪剑谱》，其实和我教的《葵花宝典》同出一源"},
+    {"name": "向问天", "aliases": ["向叔叔"], "identity": "日月教重要人物，任我行心腹", "mentioned_only": true, "evidence": "向叔叔却还道爹爹颟顸懵憧，给东方不败蒙在鼓里"},
+    {"name": "上官云", "aliases": [], "identity": "日月教人物，曾随盈盈等攻黑木崖", "mentioned_only": true, "evidence": "爹爹、向叔叔、上官云和我四人，一上来就给东方不败杀了"},
+    {"name": "东方不败", "aliases": [], "identity": "日月神教前教主，自宫练葵花宝典武功，已被杀", "mentioned_only": true, "evidence": "又若无杨莲亭在旁乱他心神，东方不败仍是不败。"},
+    {"name": "杨莲亭", "aliases": [], "identity": "东方不败的男宠，黑木崖总管", "mentioned_only": true, "evidence": "又若无杨莲亭在旁乱他心神，东方不败仍是不败。"},
+    {"name": "余沧海", "aliases": [], "identity": "青城派掌门，已被林平之杀死", "mentioned_only": true, "evidence": "我杀余沧海，杀木高峰，数日之内，便将传遍武林"},
+    {"name": "木高峰", "aliases": [], "identity": "塞北明驼，已被林平之杀死", "mentioned_only": true, "evidence": "杀木高峰，数日之内，便将传遍武林，天下皆知。"},
+    {"name": "左冷禅", "aliases": [], "identity": "嵩山派掌门，图并五岳派，封禅台败于岳不群", "mentioned_only": true, "evidence": "左冷禅意图吞并四派，其心昭然若揭"},
+    {"name": "方证", "aliases": ["方证和尚"], "identity": "少林寺方丈", "mentioned_only": true, "evidence": "甚么方证和尚、冲虚道士，都不是我的对手。"},
+    {"name": "冲虚", "aliases": ["冲虚道士"], "identity": "武当派掌门道长", "mentioned_only": true, "evidence": "甚么方证和尚、冲虚道士，都不是我的对手。"},
+    {"name": "岳夫人", "aliases": ["妈妈", "你妈", "你娘", "师娘"], "identity": "华山派岳不群之妻宁中则", "mentioned_only": true, "evidence": "世上真正信得过他的，只有妈妈一人。"},
+    {"name": "远图公", "aliases": [], "identity": "林平之曾祖，曾为和尚，录辟邪剑谱于袈裟", "mentioned_only": true, "evidence": "远图公一见剑谱之后，当然立即就练。"},
+    {"name": "朱元璋", "aliases": [], "identity": "明朝开国皇帝太祖（岳灵珊引述的史实人物）", "mentioned_only": true, "evidence": "明朝开国皇帝太祖朱元璋，小时候便曾在皇觉寺出家为僧。"},
+    {"name": "黄衫老人", "aliases": [], "identity": "嵩山派打扮的蒙面老者，会使辟邪剑法（即劳德诺，本块未揭示）", "mentioned_only": false, "evidence": "这人身披黄衫，似是嵩山派打扮，脸上蒙了青布"}
+  ]
+}

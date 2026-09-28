@@ -1,0 +1,22 @@
+{
+  "chunk": 12,
+  "characters": [
+    {"name": "田伯光", "aliases": ["万里独行"], "identity": "采花大盗，在群玉院中先斗余沧海、后气走定逸", "mentioned_only": false, "evidence": "正是那恶人“万里独行”田伯光。"},
+    {"name": "曲非烟", "aliases": ["非非"], "identity": "曲洋孙女，带仪琳入群玉院救令狐冲", "mentioned_only": false, "evidence": "曲非烟道：“田伯光，你在江湖上也算是一号人物"},
+    {"name": "仪琳", "aliases": ["仪琳小师太", "仪琳姊姊"], "identity": "恒山派定逸弟子，小尼姑，救活重伤的令狐冲", "mentioned_only": false, "evidence": "仪琳低声道：“是那田……田伯光！"},
+    {"name": "令狐冲", "aliases": ["令狐大哥", "令狐侠士"], "identity": "华山派大弟子，重伤未死，藏身群玉院装宿娼退敌", "mentioned_only": false, "evidence": "正便是昨日回雁楼头的令狐冲。"},
+    {"name": "定逸", "aliases": ["定逸师太"], "identity": "恒山派师太，仪琳的师父，寻到群玉院外叫阵", "mentioned_only": false, "evidence": "却是定逸师太的声音。"},
+    {"name": "余沧海", "aliases": ["余观主"], "identity": "青城派掌门，入群玉院搜查并与田伯光交手", "mentioned_only": false, "evidence": "却是青城掌门余沧海到了。"},
+    {"name": "刘正风", "aliases": [], "identity": "衡山派刘三爷，率弟子查抄群玉院", "mentioned_only": false, "evidence": "忽听得刘正风的声音说道：“余观主，田伯光这厮做恶多端"},
+    {"name": "向大年", "aliases": ["大年"], "identity": "刘正风门下大弟子，搜查群玉院", "mentioned_only": false, "evidence": "向大年和米为义齐声答应。"},
+    {"name": "米为义", "aliases": ["为义"], "identity": "刘正风门下二弟子，搜查群玉院", "mentioned_only": false, "evidence": "向大年和米为义诸人将妓院中龟头和鸨儿打得杀猪价叫。"},
+    {"name": "彭人骐", "aliases": [], "identity": "青城派弟子，余沧海门下，被田伯光杀死", "mentioned_only": true, "evidence": "田伯光，我弟子彭人骐，可是你害死的？"},
+    {"name": "玉宝儿", "aliases": [], "identity": "群玉院妓女，田伯光相好", "mentioned_only": true, "evidence": "这个千娇百媚的小粉头玉宝儿便让给你"},
+    {"name": "洪人雄", "aliases": ["人雄"], "identity": "青城派弟子，余沧海门下，随师搜院", "mentioned_only": false, "evidence": "当先一人正是青城派弟子洪人雄。"},
+    {"name": "罗人杰", "aliases": [], "identity": "青城派弟子，众人以为他已杀死令狐冲", "mentioned_only": true, "evidence": "但均知他已为罗人杰所杀"},
+    {"name": "林平之", "aliases": ["假驼子"], "identity": "福威镖局少镖头，扮驼子躲在墙角，喊出“以大欺小，好不要脸”", "mentioned_only": false, "evidence": "那驼子正是林平之所扮。"},
+    {"name": "木高峰", "aliases": ["塞北明驼"], "identity": "绰号“塞北明驼”的驼子，携林平之到群玉院外窥看", "mentioned_only": false, "evidence": "正是那正牌驼子“塞北明驼”木高峰"},
+    {"name": "岳不群", "aliases": ["君子剑", "岳先生"], "identity": "华山派掌门，本块被称作“君子剑”岳先生（真名岳不群）", "mentioned_only": true, "evidence": "你是华山派掌门大弟子，‘君子剑’岳先生的嫡派传人"},
+    {"name": "曲洋", "aliases": ["曲非烟的爷爷", "爷爷"], "identity": "救走令狐冲尸身并救治他的老人，曲非烟的爷爷（本块未具名，即魔教长老曲洋）", "mentioned_only": true, "evidence": "我爷爷说，你甚么事情都看不开，是不能做尼姑的。"}
+  ]
+}

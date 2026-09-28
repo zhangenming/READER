@@ -1,0 +1,21 @@
+{
+  "chunk": 59,
+  "characters": [
+    {"name": "令狐冲", "aliases": [], "identity": "华山派弃徒，乔装将军“吴天德”乱打乱撞助恒山派突围", "mentioned_only": false, "evidence": "令狐冲哈哈大笑，说道：“多谢，多谢。"},
+    {"name": "定静", "aliases": ["定静师太"], "identity": "恒山派“恒山三定”之一，率众入闽的领队师太", "mentioned_only": false, "evidence": "恒山老尼定静，不敢请问少侠高姓大名"},
+    {"name": "仪和", "aliases": [], "identity": "恒山派女尼，性急好斗", "mentioned_only": false, "evidence": "仪和、仪清双双抢上"},
+    {"name": "仪清", "aliases": [], "identity": "恒山派女弟子", "mentioned_only": false, "evidence": "仪清道：“将军，你可砸伤了吗"},
+    {"name": "仪琳", "aliases": [], "identity": "恒山派小尼姑", "mentioned_only": false, "evidence": "偷眼看仪琳时，见她吃了一惊"},
+    {"name": "仪质", "aliases": [], "identity": "恒山派女弟子，背负信鸽竹笼，放飞定静告急书信", "mentioned_only": false, "evidence": "仪质答应了，从背上所负竹笼中取出一只信鸽"},
+    {"name": "仪真", "aliases": [], "identity": "恒山派女弟子，奉命留守客店照料伤者", "mentioned_only": false, "evidence": "仪质、仪真，你们留在这里"},
+    {"name": "秦绢", "aliases": ["绢儿"], "identity": "恒山派定静师太所收关门弟子，年纪最小", "mentioned_only": false, "evidence": "这少女秦绢是定静师太所收的关门弟子"},
+    {"name": "郑萼", "aliases": [], "identity": "恒山派俗家女弟子，能说会道，惯与外人打交道", "mentioned_only": false, "evidence": "女弟子郑萼当下便上前敲门"},
+    {"name": "于嫂", "aliases": [], "identity": "原恒山白云庵佣妇，后被定闲师太收为弟子", "mentioned_only": false, "evidence": "于嫂是个四十来岁的中年妇人"},
+    {"name": "定闲", "aliases": ["定闲师太"], "identity": "恒山派掌门，“恒山三定”之一", "mentioned_only": true, "evidence": "原是恒山白云庵中服侍定闲师太的佣妇"},
+    {"name": "吴天德", "aliases": [], "identity": "河北沧州游击升泉州参将；本块中为令狐冲冒名自称", "mentioned_only": true, "evidence": "本将军姓吴，官名天德，天恩浩荡之天"},
+    {"name": "东方不败", "aliases": ["东方必败"], "identity": "日月神教教主，定静以辱其名号诱魔教现身", "mentioned_only": true, "evidence": "甚么东方不败，只不过是东方必败而已"},
+    {"name": "钟镇", "aliases": ["九曲剑", "钟师兄"], "identity": "嵩山派左掌门师弟，绰号“九曲剑”，率众暗伏廿八铺救援定静", "mentioned_only": false, "evidence": "是嵩山派左掌门的师弟，姓钟名镇"},
+    {"name": "七星使者", "aliases": [], "identity": "魔教中七名身分隐秘的高手，围攻定静师太的七人", "mentioned_only": false, "evidence": "定静师太以一敌七，力斗魔教的‘七星使者’", "collective": true},
+    {"name": "左冷禅", "aliases": ["左掌门"], "identity": "嵩山派掌门，五岳剑派盟主", "mentioned_only": true, "evidence": "是嵩山派左掌门的师弟，姓钟名镇"}
+  ]
+}

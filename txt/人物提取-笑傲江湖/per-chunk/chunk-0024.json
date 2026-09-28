@@ -1,0 +1,15 @@
+{
+  "chunk": 24,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐大侠"], "identity": "华山派大弟子，思过崖面壁，与田伯光赌斗三十招，屡败屡战", "mentioned_only": false, "evidence": "令狐冲怒道：“你存着擒我之心，早已得罪我了"},
+    {"name": "田伯光", "aliases": ["万里独行"], "identity": "万里独行采花淫贼，被点死穴下剧毒，奉命来请令狐冲下山见仪琳", "mentioned_only": false, "evidence": "声音甚是熟悉，竟然便是“万里独行”田伯光"},
+    {"name": "岳不群", "aliases": ["岳先生"], "identity": "华山派掌门（本块称“岳先生”），被田伯光故意犯案引开，未出场", "mentioned_only": true, "evidence": "尊师岳先生倘若到来，只好轮到田某脚底抹油"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻宁中则，随夫在外追捕田伯光（本块仅被提及）", "mentioned_only": true, "evidence": "可是岳先生与岳夫人此刻尚在陕东五百里外"},
+    {"name": "仪琳", "aliases": [], "identity": "恒山派女弟子，田伯光奉命请令狐冲去见的小师父（本块未出场）", "mentioned_only": true, "evidence": "却原来是奉了你师父仪琳小尼姑之命"},
+    {"name": "莫大先生", "aliases": [], "identity": "衡山派掌门，荒山之夜力杀嵩山派费彬（本块仅被提及）", "mentioned_only": true, "evidence": "那日荒山之夜，莫大先生力杀大嵩阳手费彬"},
+    {"name": "费彬", "aliases": [], "identity": "嵩山派高手“大嵩阳手”，被莫大先生所杀（本块仅被提及）", "mentioned_only": true, "evidence": "那日荒山之夜，莫大先生力杀大嵩阳手费彬"},
+    {"name": "天松道长", "aliases": [], "identity": "泰山派道长，曾被田伯光所伤（本块仅被提及）", "mentioned_only": true, "evidence": "田伯光伤过泰山派的天松道长"},
+    {"name": "平一指", "aliases": ["杀人名医"], "identity": "“杀人名医”，天下惟一可能解田伯光死穴奇毒之人（本块仅被提及）", "mentioned_only": true, "evidence": "天下只怕惟有‘杀人名医’平一指一人"},
+    {"name": "李太白", "aliases": [], "identity": "唐代诗人，书中典故：昔年常醉饮长安谪仙楼（非本书虚构人物）", "mentioned_only": true, "evidence": "当年李太白时时去喝得大醉的‘谪仙楼’"}
+  ]
+}

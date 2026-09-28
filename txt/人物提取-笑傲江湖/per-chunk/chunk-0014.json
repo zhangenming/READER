@@ -1,0 +1,16 @@
+{
+  "chunk": 14,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐大哥"], "identity": "华山派大弟子，养伤时与仪琳谈笑、吃西瓜、观瀑布", "mentioned_only": false, "evidence": "令狐冲微笑道：“还好！你歇一歇罢！”"},
+    {"name": "仪琳", "aliases": ["师妹", "小师妹"], "identity": "恒山派定逸弟子，小尼姑，为令狐冲偷西瓜、讲故事、念经", "mentioned_only": false, "evidence": "仪琳大喜，道：“好啦，好啦，伤口麻痒是痊愈之象"},
+    {"name": "田伯光", "aliases": [], "identity": "采花大盗，曾与令狐冲在回雁楼比武", "mentioned_only": true, "evidence": "我又怎会给田伯光这厮打得全无还手之力？"},
+    {"name": "定逸", "aliases": ["定逸师伯"], "identity": "恒山派师太，仪琳的师父", "mentioned_only": true, "evidence": "定逸师伯一定教过你，练功时过分勇猛精进，会有大碍"},
+    {"name": "定静", "aliases": ["定静师伯"], "identity": "恒山派师太，仪琳的师伯，门下多俗家女弟子", "mentioned_only": true, "evidence": "定静、定闲两位师伯门下倒有不少年轻活泼的俗家女弟子"},
+    {"name": "定闲", "aliases": ["定闲师伯"], "identity": "恒山派师太，仪琳的师伯，门下多俗家女弟子", "mentioned_only": true, "evidence": "定静、定闲两位师伯门下倒有不少年轻活泼的俗家女弟子"},
+    {"name": "陆大有", "aliases": ["六师弟"], "identity": "华山派六弟子，令狐冲师弟，最会说笑话", "mentioned_only": true, "evidence": "那时坐在她左边的，是我六师弟陆大有"},
+    {"name": "岳灵珊", "aliases": ["灵珊师妹", "小师妹", "灵珊姊姊", "灵珊妹子"], "identity": "岳不群之女，华山派小师妹，与令狐冲自幼一同长大、共创冲灵剑法", "mentioned_only": true, "evidence": "今年元宵，我们师兄妹相聚饮酒，灵珊师妹出了个灯谜"},
+    {"name": "岳不群", "aliases": ["岳师伯"], "identity": "华山派掌门，令狐冲的师父", "mentioned_only": true, "evidence": "站着打，田伯光是天下第十四，岳师伯是第八"},
+    {"name": "仪净", "aliases": ["仪净师姊"], "identity": "恒山派弟子，仪琳的师姊", "mentioned_only": true, "evidence": "仪净师姊说，有人看到流星，如果在衣带上打一个结"},
+    {"name": "伽斯那", "aliases": [], "identity": "天竺高僧，《百喻经》作者（仪琳转述典故人物）", "mentioned_only": true, "evidence": "是天竺国一位高僧伽斯那作的"}
+  ]
+}

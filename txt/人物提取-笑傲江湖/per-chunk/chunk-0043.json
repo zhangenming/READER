@@ -1,0 +1,30 @@
+{
+  "chunk": 43,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐公子"], "identity": "华山派大师兄，五霸冈上千余豪杰为其治病而来，与群豪共饮结交", "mentioned_only": false, "collective": false, "evidence": "令狐冲无奈，只得坐入轿中"},
+    {"name": "岳不群", "aliases": ["岳先生"], "identity": "华山派掌门，疑群豪欲诱令狐冲入伙", "mentioned_only": false, "collective": false, "evidence": "岳不群身为华山派掌门二十余年"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻宁中则", "mentioned_only": false, "collective": false, "evidence": "岳夫人笑道：“他们迎接的只是令狐冲公子，可不是你师娘。”"},
+    {"name": "岳灵珊", "aliases": [], "identity": "岳不群之女", "mentioned_only": false, "collective": false, "evidence": "岳灵珊甚是好奇，说道：“爹，咱们也瞧瞧去"},
+    {"name": "平一指", "aliases": ["平大夫", "平先生", "杀人名医"], "identity": "开封“杀人名医”，在五霸冈为令狐冲诊脉后自知无力回天，一夜白头，呕血而死", "mentioned_only": false, "collective": false, "evidence": "见是‘杀人名医’平一指到了"},
+    {"name": "黄伯流", "aliases": ["黄帮主", "银髯蛟", "银髯老蛟", "老黄"], "identity": "天河帮帮主，中原武林前辈耆宿，五霸冈聚会的接待者，事后求令狐冲隐讳此事", "mentioned_only": false, "collective": false, "evidence": "天河帮帮主黄伯流道：“令狐公子，请到前边草棚中休息。”"},
+    {"name": "司马大", "aliases": ["司马岛主"], "identity": "长鲸岛岛主，魁梧大汉，事毕求令狐冲勿提其名", "mentioned_only": false, "collective": false, "evidence": "长鲸岛司马大岛主的部属一同步行"},
+    {"name": "张夫人", "aliases": [], "identity": "围攻余沧海的七人之一，随众赴五霸冈", "mentioned_only": false, "collective": false, "evidence": "让给岳不群、岳夫人、张夫人、仇松年、桃谷六仙等一干人乘坐"},
+    {"name": "仇松年", "aliases": [], "identity": "长发头陀，围攻余沧海的七人之一，随众赴五霸冈", "mentioned_only": false, "collective": false, "evidence": "让给岳不群、岳夫人、张夫人、仇松年、桃谷六仙等一干人乘坐"},
+    {"name": "玉灵", "aliases": ["玉灵道人"], "identity": "使狼牙锤的道人，围攻余沧海的七人之一", "mentioned_only": false, "collective": false, "evidence": "可是这司马大以及张夫人、仇松年、玉灵道人等一干人"},
+    {"name": "严三星", "aliases": ["双蛇恶乞"], "identity": "双蛇恶乞，围攻余沧海的七人之一", "mentioned_only": false, "collective": false, "evidence": "只听双蛇恶乞严三星道：“银髯老蛟，你是地头蛇"},
+    {"name": "桐柏双奇", "aliases": [], "identity": "眇目男女二人合称，围攻余沧海的七人之二", "mentioned_only": false, "collective": true, "evidence": "仇松年、严三星、桐柏双奇、桃谷六仙等纷纷一拥而出"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "桃根/桃干/桃枝/桃叶/桃花/桃实六兄弟合称；本块中单独出场者为桃根、桃干、桃花三仙", "mentioned_only": false, "collective": true, "evidence": "便只余下华山派岳不群师徒与桃谷六仙"},
+    {"name": "桃根仙", "aliases": [], "identity": "桃谷六仙老大，探头催令狐冲喝酒", "mentioned_only": false, "collective": false, "evidence": "豁喇一声，又有一人探头进来，却是桃根仙"},
+    {"name": "桃干仙", "aliases": [], "identity": "桃谷六仙老二，探头催令狐冲喝酒", "mentioned_only": false, "collective": false, "evidence": "豁喇一声，一个人探头进来，正是桃干仙"},
+    {"name": "桃花仙", "aliases": [], "identity": "桃谷六仙老五，端酒催诊被平一指喝退", "mentioned_only": false, "collective": false, "evidence": "桃花仙双手拿了两大碗酒，走到竹棚口"},
+    {"name": "祖千秋", "aliases": [], "identity": "黄河老祖之一，求令狐冲别说见过他", "mentioned_only": false, "collective": false, "evidence": "令狐冲见是祖千秋，凄然道：“祖前辈，平大夫死了。”"},
+    {"name": "蓝凤凰", "aliases": ["蓝教主"], "identity": "云南五仙教（五毒教）教主，被平一指怒骂胡乱进补", "mentioned_only": true, "collective": false, "evidence": "那五毒教蓝凤凰的毒药当真厉害"},
+    {"name": "老头子", "aliases": [], "identity": "黄河老祖之一，令狐冲盼其女喝血后痊愈", "mentioned_only": true, "collective": false, "evidence": "只盼老头子的女儿老不死姑娘喝了我的血后"},
+    {"name": "不死", "aliases": ["老不死"], "identity": "老头子之女，令狐冲放血所救的病人", "mentioned_only": true, "collective": false, "evidence": "只盼老头子的女儿老不死姑娘喝了我的血后"},
+    {"name": "田伯光", "aliases": [], "identity": "采花大盗，被岳不群引以类比拟聚五霸冈的旁门人物", "mentioned_only": true, "collective": false, "evidence": "尽是田伯光一类的家伙"},
+    {"name": "刘正风", "aliases": [], "identity": "衡山派前辈，结交邪徒身败名裂，被岳不群引为前车之辙", "mentioned_only": true, "collective": false, "evidence": "衡山派刘正风前车之辙"},
+    {"name": "风清扬", "aliases": ["风太师叔"], "identity": "华山派前辈高人，令狐冲猜想托平一指治病的是否此人（本块仅以称谓提及）", "mentioned_only": true, "collective": false, "evidence": "难道是风太师叔？"},
+    {"name": "圣姑", "aliases": [], "identity": "黄伯流欲言又止不敢出口的尊称，当指群豪所畏敬的魔教圣姑任盈盈（即本块末弹琴的“婆婆”）", "mentioned_only": true, "collective": false, "evidence": "何况圣……圣……神通广大……啊哟！"},
+    {"name": "婆婆", "aliases": [], "identity": "洛阳绿竹巷弹琴的“婆婆”，只闻琴声未见其面；即魔教圣姑任盈盈（真名于本书后文揭示）", "mentioned_only": false, "collective": false, "evidence": "正是洛阳城那位婆婆所弹的《清心普善咒》"}
+  ]
+}

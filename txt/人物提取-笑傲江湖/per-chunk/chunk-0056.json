@@ -1,0 +1,24 @@
+{
+  "chunk": 56,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["风二中", "令狐兄弟"], "identity": "华山派弃徒，互换衣衫冒充黑白子逃出梅庄地牢，练成吸星大法", "mentioned_only": false, "evidence": "令狐冲抓住他手腕，只不过想吓他一吓"},
+    {"name": "任我行", "aliases": ["任前辈", "任教主"], "identity": "日月神教前任教主，被囚西湖地牢十二年，脱困复出", "mentioned_only": false, "evidence": "这一位便是日月神教的任教主"},
+    {"name": "向问天", "aliases": ["向兄弟"], "identity": "日月神教光明左使，任我行心腹，设计营救任我行", "mentioned_only": false, "evidence": "正是向问天的声音"},
+    {"name": "黑白子", "aliases": ["二弟", "二庄主"], "identity": "梅庄二庄主，江南四友之一，被令狐冲擒住铐在地牢、内力被吸", "mentioned_only": false, "evidence": "令狐冲听得是黑白子的叫声"},
+    {"name": "黄钟公", "aliases": [], "identity": "梅庄大庄主，江南四友之首", "mentioned_only": false, "evidence": "只见黄钟公、秃笔翁、丹青生三人各挺兵刃"},
+    {"name": "秃笔翁", "aliases": [], "identity": "梅庄三庄主，江南四友之一", "mentioned_only": false, "evidence": "秃笔翁和丹青生同时急退两步"},
+    {"name": "丹青生", "aliases": [], "identity": "梅庄四庄主，江南四友之一，令狐冲的酒中知己", "mentioned_only": false, "evidence": "丹青生大叫：“二哥，二哥，快回来"},
+    {"name": "鲍大楚", "aliases": ["鲍长老"], "identity": "日月神教长老，奉教主之命率众赴梅庄查问要犯脱逃之事", "mentioned_only": false, "evidence": "鲍大楚森然道：“你说黑白子不在庄中"},
+    {"name": "秦伟邦", "aliases": [], "identity": "日月神教十长老之一，原江西任青旗旗主，欲逃被擒、被逼服三尸脑神丹", "mentioned_only": false, "evidence": "那秦伟邦却是从中级头目升上来的"},
+    {"name": "王诚", "aliases": [], "identity": "日月神教长老（矮胖老者）", "mentioned_only": false, "evidence": "那矮胖老者王诚道"},
+    {"name": "桑三娘", "aliases": [], "identity": "日月神教长老（中年妇人），擅短打擒拿", "mentioned_only": false, "evidence": "那中年妇人桑三娘躬身道"},
+    {"name": "丁坚", "aliases": ["一字电剑"], "identity": "梅庄庄主属下高手，被越狱的令狐冲撞断肋骨", "mentioned_only": false, "evidence": "见是一字电剑丁坚"},
+    {"name": "施令威", "aliases": [], "identity": "梅庄管家，黄钟公属下", "mentioned_only": false, "evidence": "施令威，将丁坚抬来"},
+    {"name": "东方不败", "aliases": ["东方教主"], "identity": "日月神教现任教主，篡任我行之位", "mentioned_only": true, "evidence": "自必是号称当世武功第一的东方不败"},
+    {"name": "薛香主", "aliases": [], "identity": "日月神教香主，被人五指插胸挖心而死，据称除任我行外无人能为", "mentioned_only": true, "evidence": "薛香主一身金钟罩、铁布衫的横练功夫"},
+    {"name": "方生", "aliases": [], "identity": "少林寺高僧，少林寺疗伤时曾注内力入令狐冲体内", "mentioned_only": true, "evidence": "方生大师注入他体内的内力"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "桃谷六兄弟，曾将异种真气注入令狐冲体内", "mentioned_only": true, "evidence": "桃谷六仙和不戒和尚的内力又回入了丹田", "collective": true},
+    {"name": "不戒和尚", "aliases": [], "identity": "狂僧，仪琳之父，曾将真气注入令狐冲体内", "mentioned_only": true, "evidence": "桃谷六仙和不戒和尚的七道真气"},
+    {"name": "江南四友", "aliases": [], "identity": "黄钟公、黑白子、秃笔翁、丹青生四兄弟，奉东方不败之命驻守梅庄看管要犯", "mentioned_only": false, "evidence": "他命江南四友在此看守要犯", "collective": true}
+  ]
+}

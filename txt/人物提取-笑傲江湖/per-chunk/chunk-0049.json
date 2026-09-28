@@ -1,0 +1,20 @@
+{
+  "chunk": 49,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["风二中", "风兄弟"], "identity": "与向问天义结金兰，同赴杭州梅庄", "mentioned_only": false, "evidence": "令狐冲笑道：“打架倒也不必，向兄既执意如此"},
+    {"name": "向问天", "aliases": ["童化金", "向兄", "向大哥", "向先生", "老向"], "identity": "化名“童化金”，携令狐冲往梅庄访“江南四友”", "mentioned_only": false, "evidence": "向问天哈哈大笑，声震山谷"},
+    {"name": "盈盈", "aliases": [], "identity": "令狐冲梦中相见的姑娘", "mentioned_only": true, "evidence": "忽见盈盈手持三只烤熟了的青蛙"},
+    {"name": "任我行", "aliases": [], "identity": "魔教中使“吸星大法”之人（本块只说出半个“任”字）", "mentioned_only": true, "evidence": "难道那任……任……又出来了？"},
+    {"name": "田伯光", "aliases": [], "identity": "采花大盗，令狐冲结交之友", "mentioned_only": true, "evidence": "我连田伯光这等采花大盗也结交为友"},
+    {"name": "风清扬", "aliases": ["风太师叔", "风师兄"], "identity": "令狐冲的太师叔，剑法通神", "mentioned_only": true, "evidence": "除了太师叔风清扬外，生平从所未睹"},
+    {"name": "方生", "aliases": ["方生大师"], "identity": "少林高僧", "mentioned_only": true, "evidence": "方生大师即看得出，向大哥自也看得出。"},
+    {"name": "岳不群", "aliases": [], "identity": "华山掌门", "mentioned_only": true, "evidence": "这一位风兄弟，是当今华山掌门岳不群的师叔。"},
+    {"name": "左冷禅", "aliases": ["左盟主", "左师侄"], "identity": "嵩山派左盟主，五岳令旗之主", "mentioned_only": true, "evidence": "他既是左冷禅的师叔，武功自必不低"},
+    {"name": "虞允文", "aliases": [], "identity": "南宋破金大功臣，“梅庄”题署者", "mentioned_only": true, "evidence": "不知虞允文是南宋破金的大功臣"},
+    {"name": "丁坚", "aliases": ["一字电剑", "丁大哥", "丁兄"], "identity": "梅庄仆役，昔年江湖辣手人物，绰号“一字电剑”", "mentioned_only": false, "evidence": "一个叫丁坚，一个叫施令威"},
+    {"name": "施令威", "aliases": ["五路神", "施九哥", "施兄"], "identity": "梅庄仆役，绰号“五路神”", "mentioned_only": false, "evidence": "‘一字电剑’丁大哥和‘五路神’施九哥的名头"},
+    {"name": "江南四友", "aliases": [], "identity": "梅庄四位庄主的合称（本块未露真名）", "mentioned_only": true, "collective": true, "evidence": "有事求见江南四友，四位前辈。"},
+    {"name": "王崇古", "aliases": [], "identity": "追兵中人物（“活盾牌”咒骂的对象）", "mentioned_only": true, "evidence": "王崇古，他妈的你不讲义气"},
+    {"name": "张芙蓉", "aliases": [], "identity": "追兵中发射袖箭的女子", "mentioned_only": true, "evidence": "张芙蓉你这骚狐狸"}
+  ]
+}

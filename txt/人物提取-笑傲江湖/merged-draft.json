@@ -1,0 +1,4933 @@
+{
+ "book": "笑傲江湖",
+ "characters": [
+  {
+   "canonical": "任盈盈",
+   "aliases": [
+    "任大小姐",
+    "任姑娘",
+    "任小姐",
+    "任氏小姐",
+    "圣姑",
+    "姓任的姑娘",
+    "婆婆",
+    "盈儿",
+    "盈盈",
+    "那婆婆"
+   ],
+   "importance": "重要配角",
+   "identity": "日月神教圣姑，任我行之女，与令狐冲相恋",
+   "chunk_count": 43,
+   "first_chunk": 35,
+   "first_pct": 0.3228,
+   "direct_chunks": 32,
+   "mention_chunks": 11,
+   "evidence": "我便跟向大哥学，又或是跟盈盈学"
+  },
+  {
+   "canonical": "岳夫人",
+   "aliases": [
+    "华山玉女",
+    "宁中则",
+    "宁女侠",
+    "宁氏",
+    "岳师母",
+    "师母"
+   ],
+   "importance": "重要配角",
+   "identity": "岳不群之妻兼同门师妹，华山派师娘，创“无双无对，宁氏一剑”",
+   "chunk_count": 43,
+   "first_chunk": 19,
+   "first_pct": 0.1706,
+   "direct_chunks": 28,
+   "mention_chunks": 15,
+   "evidence": "岳夫人替令狐冲新缝一套棉衣，命陆大有送上峰来给他"
+  },
+  {
+   "canonical": "不戒和尚",
+   "aliases": [
+    "不戒",
+    "不戒大师",
+    "不戒夫妇",
+    "不戒贼秃",
+    "疯僧",
+    "颠和尚"
+   ],
+   "importance": "重要配角",
+   "identity": "仪琳之父，屠夫出身、不守戒律的胖大和尚，以真气压住令狐冲体内六道真气",
+   "chunk_count": 22,
+   "first_chunk": 31,
+   "first_pct": 0.2848,
+   "direct_chunks": 8,
+   "mention_chunks": 14,
+   "evidence": "似乎是不戒和尚所注"
+  },
+  {
+   "canonical": "天门道人",
+   "aliases": [
+    "天门",
+    "天门师伯",
+    "天门师兄",
+    "天门真人",
+    "天门道兄",
+    "天门道长"
+   ],
+   "importance": "次要人物",
+   "identity": "泰山派掌门，闻令狐冲死讯怒气稍息，当场试演扳断剑尖的指力",
+   "chunk_count": 8,
+   "first_chunk": 5,
+   "first_pct": 0.0378,
+   "direct_chunks": 6,
+   "mention_chunks": 6,
+   "evidence": "听说泰山派掌门人天门真人亲身驾到，已到了刘府。"
+  },
+  {
+   "canonical": "天松道人",
+   "aliases": [
+    "天松",
+    "天松师伯",
+    "天松师叔",
+    "天松道长"
+   ],
+   "importance": "次要人物",
+   "identity": "泰山派好手，坐着挨田伯光二三十招后中刀，重伤在门板上长叹不语",
+   "chunk_count": 2,
+   "first_chunk": 7,
+   "first_pct": 0.0567,
+   "direct_chunks": 2,
+   "mention_chunks": 1,
+   "evidence": "是泰山派的天松道人受了重伤，还有一个是谁？"
+  },
+  {
+   "canonical": "解风",
+   "aliases": [
+    "丐帮帮主",
+    "丐帮解帮主",
+    "解大帮主",
+    "解帮主"
+   ],
+   "importance": "次要人物",
+   "identity": "丐帮帮主，其两名私生儿子被向问天查知",
+   "chunk_count": 4,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 2,
+   "mention_chunks": 2,
+   "evidence": "丐帮帮主解风武功及名望均高，人人都敬他三分。"
+  },
+  {
+   "canonical": "左冷禅",
+   "aliases": [
+    "姓左的",
+    "左兄",
+    "左先生",
+    "左大掌门",
+    "左师伯",
+    "左师侄",
+    "左师兄",
+    "左师哥",
+    "左掌门",
+    "左盟主"
+   ],
+   "importance": "重要配角",
+   "identity": "即嵩山派掌门左冷禅（真名本块未出现），五岳剑派盟主，来信约岳不群议事",
+   "chunk_count": 45,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 11,
+   "mention_chunks": 34,
+   "evidence": "刘正风识得此人是嵩山派掌门左冷禅的第四师弟费彬"
+  },
+  {
+   "canonical": "木高峰",
+   "aliases": [
+    "塞北明驼",
+    "姓木的",
+    "木兄",
+    "木先生",
+    "木前辈",
+    "木大侠",
+    "木驼子",
+    "驼子"
+   ],
+   "importance": "次要人物",
+   "identity": "绰号“塞北明驼”的驼子，塞北武林高手，趋炎附势、心狠手辣",
+   "chunk_count": 14,
+   "first_chunk": 10,
+   "first_pct": 0.0852,
+   "direct_chunks": 6,
+   "mention_chunks": 8,
+   "evidence": "余观主，怎地兴致这么好，欺侮起木高峰的孙子来着？"
+  },
+  {
+   "canonical": "林远图",
+   "aliases": [
+    "曾祖",
+    "林前辈",
+    "渡元",
+    "渡元禅师",
+    "远图公"
+   ],
+   "importance": "仅提及",
+   "identity": "林平之曾祖，福威镖局创办人，七十二路辟邪剑法创始人，威震江湖",
+   "chunk_count": 7,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 0,
+   "mention_chunks": 7,
+   "evidence": "你曾祖远图公创下七十二路辟邪剑法，当年威震江湖"
+  },
+  {
+   "canonical": "计无施",
+   "aliases": [
+    "夜猫子",
+    "无计可施",
+    "钟馗爷爷"
+   ],
+   "importance": "次要人物",
+   "identity": "头戴尖帽手持白幡、自号“钟馗爷爷”诱开桃谷四仙的汉子（本块未点名，下章揭示为“夜猫子”计无施）",
+   "chunk_count": 15,
+   "first_chunk": 39,
+   "first_pct": 0.3607,
+   "direct_chunks": 14,
+   "mention_chunks": 1,
+   "evidence": "只见说话之人头戴尖帽，手持白幡。"
+  },
+  {
+   "canonical": "黄钟公",
+   "aliases": [
+    "大庄主"
+   ],
+   "importance": "次要人物",
+   "identity": "梅庄大庄主，善琴，“七弦无形剑”败于令狐冲",
+   "chunk_count": 7,
+   "first_chunk": 50,
+   "first_pct": 0.4649,
+   "direct_chunks": 5,
+   "mention_chunks": 2,
+   "evidence": "我大哥道号黄钟公，风少侠想必早已知闻。"
+  },
+  {
+   "canonical": "英白罗",
+   "aliases": [
+    "八师兄",
+    "八师哥",
+    "八师弟"
+   ],
+   "importance": "次要人物",
+   "identity": "华山派岳不群门下八弟子，遭人杀害灭口（真名本块未出现）",
+   "chunk_count": 4,
+   "first_chunk": 13,
+   "first_pct": 0.1136,
+   "direct_chunks": 3,
+   "mention_chunks": 1,
+   "evidence": "此外七师兄陶钧、八师兄英白罗是两个年轻弟子。"
+  },
+  {
+   "canonical": "玉灵道人",
+   "aliases": [
+    "玉灵"
+   ],
+   "importance": "次要人物",
+   "identity": "道人，使八角狼牙锤，围攻余沧海的七人之一",
+   "chunk_count": 3,
+   "first_chunk": 42,
+   "first_pct": 0.3891,
+   "direct_chunks": 3,
+   "mention_chunks": 0,
+   "evidence": "乃是仇松年、张夫人、西宝和尚、玉灵道人这一伙七人"
+  },
+  {
+   "canonical": "汤英颚",
+   "aliases": [
+    "汤七侠",
+    "汤师弟",
+    "汤老英雄",
+    "汤英鹗"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派第七太保",
+   "chunk_count": 2,
+   "first_chunk": 32,
+   "first_pct": 0.2942,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "嵩山派第七太保汤英颚道"
+  },
+  {
+   "canonical": "侯人英",
+   "aliases": [
+    "侯人雄"
+   ],
+   "importance": "次要人物",
+   "identity": "青城四秀之一，去年腊月与洪人雄在汉中被令狐冲踢下楼",
+   "chunk_count": 4,
+   "first_chunk": 5,
+   "first_pct": 0.0378,
+   "direct_chunks": 2,
+   "mention_chunks": 2,
+   "evidence": "去年腊月里，大师哥在汉中打了青城派的侯人英、洪人雄……"
+  },
+  {
+   "canonical": "冲虚",
+   "aliases": [
+    "冲虑道人",
+    "冲虚道人",
+    "冲虚道兄",
+    "冲虚道士",
+    "冲虚道长",
+    "掌门道长"
+   ],
+   "importance": "重要配角",
+   "identity": "武当山脚下与令狐冲比剑的老者，树下劝其弃吸星大法、以易筋经相易（即冲虚道长，本块未言明）",
+   "chunk_count": 22,
+   "first_chunk": 67,
+   "first_pct": 0.6261,
+   "direct_chunks": 12,
+   "mention_chunks": 10,
+   "evidence": "以示对武当派掌门人冲虚道长尊重之意"
+  },
+  {
+   "canonical": "成高",
+   "aliases": [
+    "挑菜汉子"
+   ],
+   "importance": "次要人物",
+   "identity": "武当山脚下扮作挑菜的武当高手，两仪剑法一刚一柔之一（名字本块未出现）",
+   "chunk_count": 2,
+   "first_chunk": 67,
+   "first_pct": 0.6261,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "这位是我师侄，道号成高。"
+  },
+  {
+   "canonical": "清虚",
+   "aliases": [
+    "挑柴汉子"
+   ],
+   "importance": "次要人物",
+   "identity": "武当山脚下扮作挑柴的武当高手，与挑菜汉子同使两仪剑法（名字本块未出现）",
+   "chunk_count": 2,
+   "first_chunk": 67,
+   "first_pct": 0.6261,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "这位是清虚师弟。"
+  },
+  {
+   "canonical": "哑婆婆",
+   "aliases": [
+    "不戒夫妇",
+    "又聋又哑的仆妇",
+    "太师娘",
+    "太师母",
+    "那婆婆"
+   ],
+   "importance": "次要人物",
+   "identity": "不戒和尚之妻、仪琳之母（本块仪琳以“我妈妈/你娘”谈及，不知其即哑婆婆）",
+   "chunk_count": 8,
+   "first_chunk": 75,
+   "first_pct": 0.7024,
+   "direct_chunks": 6,
+   "mention_chunks": 2,
+   "evidence": "悬空寺中有个又聋又哑的仆妇"
+  },
+  {
+   "canonical": "白乐天",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "唐诗人（白乐天），令狐冲引其咏梨花沽酒诗句",
+   "chunk_count": 1,
+   "first_chunk": 38,
+   "first_pct": 0.3512,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "白乐天杭州春望诗云：“红袖织绫夸柿叶"
+  },
+  {
+   "canonical": "关云长",
+   "aliases": [
+    "关王爷"
+   ],
+   "importance": "仅提及",
+   "identity": "历史人物，教众谀词中称其匹夫之勇、任我行自负单打独斗亦能胜之",
+   "chunk_count": 1,
+   "first_chunk": 103,
+   "first_pct": 0.9687,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "关王爷是匹夫之勇，哪有圣教主的智谋？"
+  },
+  {
+   "canonical": "鸠摩罗甚",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "东晋高僧、《金刚经》汉译者（本块文字讹作“鸠摩罗甚”）",
+   "chunk_count": 1,
+   "first_chunk": 105,
+   "first_pct": 0.9876,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "只是所读到的是东晋时高僧鸠摩罗甚的中文译本"
+  },
+  {
+   "canonical": "劳德诺",
+   "aliases": [
+    "二师兄",
+    "二师哥",
+    "二师弟",
+    "劳二哥",
+    "劳兄",
+    "劳师弟",
+    "劳得诺",
+    "劳贤侄",
+    "姓萨的老头",
+    "德诺",
+    "萨老头",
+    "蒙面老者",
+    "黄衫老人",
+    "黄衫老者",
+    "黄袍老贼"
+   ],
+   "importance": "重要配角",
+   "identity": "华山派掌门门下二弟子，乔装自称姓萨的白发老人，携“孙女”卖酒窥察福威镖局（本块未具名，真名后文揭示）",
+   "chunk_count": 37,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 32,
+   "mention_chunks": 5,
+   "evidence": "不瞒众位客官说，小老儿姓萨，原是本地人氏"
+  },
+  {
+   "canonical": "方证",
+   "aliases": [
+    "方丈",
+    "方丈大师",
+    "方证和尚",
+    "方证大师",
+    "方证方丈"
+   ],
+   "importance": "重要配角",
+   "identity": "少林寺方丈，曾言只有《易筋经》可化令狐冲体内异种真气",
+   "chunk_count": 29,
+   "first_chunk": 44,
+   "first_pct": 0.4082,
+   "direct_chunks": 16,
+   "mention_chunks": 13,
+   "evidence": "方证道：“很好。”"
+  },
+  {
+   "canonical": "西宝和尚",
+   "aliases": [
+    "西宝"
+   ],
+   "importance": "次要人物",
+   "identity": "僧人，披血红僧衣，使纯钢钵钹，围攻余沧海的七人之一",
+   "chunk_count": 3,
+   "first_chunk": 42,
+   "first_pct": 0.3891,
+   "direct_chunks": 3,
+   "mention_chunks": 0,
+   "evidence": "乃是仇松年、张夫人、西宝和尚、玉灵道人这一伙七人"
+  },
+  {
+   "canonical": "觉月",
+   "aliases": [
+    "觉月禅师"
+   ],
+   "importance": "次要人物",
+   "identity": "少林派僧人，方生师侄，使方便铲，为婆婆所杀",
+   "chunk_count": 2,
+   "first_chunk": 45,
+   "first_pct": 0.4176,
+   "direct_chunks": 1,
+   "mention_chunks": 1,
+   "evidence": "这僧人法名觉月，这是黄国柏师侄"
+  },
+  {
+   "canonical": "不死",
+   "aliases": [
+    "不儿",
+    "不死姑娘",
+    "老不死",
+    "老姑娘"
+   ],
+   "importance": "次要人物",
+   "identity": "老头子独女，自娘胎身患怪病，靠令狐冲放血相救",
+   "chunk_count": 3,
+   "first_chunk": 39,
+   "first_pct": 0.3607,
+   "direct_chunks": 2,
+   "mention_chunks": 1,
+   "evidence": "老头子的女儿芳名‘不死’，岂不作‘老不死’？"
+  },
+  {
+   "canonical": "风清扬",
+   "aliases": [
+    "太师叔",
+    "姓风那位前辈",
+    "老风",
+    "风前辈",
+    "风太师叔",
+    "风师兄",
+    "风师叔",
+    "风老",
+    "风老先生",
+    "风老前辈"
+   ],
+   "importance": "重要配角",
+   "identity": "华山剑宗耆宿，独孤九剑传人，令狐冲的太师叔",
+   "chunk_count": 33,
+   "first_chunk": 19,
+   "first_pct": 0.1706,
+   "direct_chunks": 4,
+   "mention_chunks": 29,
+   "evidence": "只见石壁左侧刻着“风清扬”三个大字"
+  },
+  {
+   "canonical": "王夫人",
+   "aliases": [
+    "林夫人"
+   ],
+   "importance": "次要人物",
+   "identity": "林震南之妻、林平行之母，洛阳金刀王家之女（本块未具名，仅称“夫人”）",
+   "chunk_count": 4,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 4,
+   "mention_chunks": 0,
+   "evidence": "林震南跟夫人商量，大舅子是六月初的生日"
+  },
+  {
+   "canonical": "岳灵珊",
+   "aliases": [
+    "丑女",
+    "丑姑娘",
+    "卖酒丑女",
+    "卖酒少女",
+    "卖酒的姑娘",
+    "姓岳的小师妹",
+    "宛儿",
+    "小丫头",
+    "小师妹",
+    "岳大小姐",
+    "岳姑娘",
+    "岳小姐",
+    "林夫人",
+    "灵珊",
+    "灵珊妹子",
+    "灵珊姊姊",
+    "灵珊小师妹",
+    "灵珊师妹",
+    "珊儿",
+    "那丑女",
+    "那姑娘",
+    "那少女",
+    "青衣少女"
+   ],
+   "importance": "重要配角",
+   "identity": "岳不群与宁中则之女，令狐冲的小师妹，后嫁林平之",
+   "chunk_count": 71,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 47,
+   "mention_chunks": 24,
+   "evidence": "那老人道：“是，是，宛儿，打三斤竹叶青。"
+  },
+  {
+   "canonical": "林平之",
+   "aliases": [
+    "假驼子",
+    "姓林的",
+    "姓林的小子",
+    "小君子剑",
+    "小林子",
+    "少镖头",
+    "平之",
+    "平之表弟",
+    "平儿",
+    "平弟",
+    "木兄弟",
+    "木先生",
+    "林兄弟",
+    "林公子",
+    "林少侠",
+    "林师弟",
+    "林表弟",
+    "臭林子",
+    "驼子"
+   ],
+   "importance": "重要配角",
+   "identity": "福威镖局少镖头，随父母弃局南逃，中途被青城派擒获，幸得卖酒丑女救走",
+   "chunk_count": 59,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 40,
+   "mention_chunks": 19,
+   "evidence": "五骑马一出城门，少镖头林平之双腿轻轻一挟"
+  },
+  {
+   "canonical": "林震南",
+   "aliases": [
+    "总镖头",
+    "林伯父",
+    "林姑丈",
+    "林总镖头"
+   ],
+   "importance": "次要人物",
+   "identity": "福威镖局总镖头，力战于人豪，见对方会使辟邪剑法而斗志全消被擒",
+   "chunk_count": 13,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 5,
+   "mention_chunks": 8,
+   "evidence": "林震南面色甚愉，问道：“去打猎了？打到了野猪没有？”"
+  },
+  {
+   "canonical": "史镖头",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "福威镖局镖头，尸身被掘出于小酒店菜园，所埋四川人尸首反失踪",
+   "chunk_count": 2,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "史镖头道：“少镖头这一鞭，别说野鸡，便大兀鹰也打下来了！”"
+  },
+  {
+   "canonical": "郑镖头",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "福威镖局镖头，陪林平之打猎，与姓余汉子交手落败",
+   "chunk_count": 2,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "郑镖头纵马赶到，笑道：“少镖头，好箭！”"
+  },
+  {
+   "canonical": "白二",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "福威镖局趟子手，前夜暴毙，本块中众人口中谈及",
+   "chunk_count": 2,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 1,
+   "mention_chunks": 1,
+   "evidence": "只听得趟子手白二在左首林中叫道：“少镖头，快来"
+  },
+  {
+   "canonical": "陈七",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "福威镖局趟子手，随林震南父子夜探小酒店，怯懦怕鬼",
+   "chunk_count": 2,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "史、郑两名镖头和趟子手白二、陈七凑少镖头的兴"
+  },
+  {
+   "canonical": "祝镖头",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "福威镖局镖头，查验白二尸身",
+   "chunk_count": 1,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "问站在旁边的祝镖头道：“没伤痕？”"
+  },
+  {
+   "canonical": "小李",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "福威镖局趟子手，最先发现白二尸身",
+   "chunk_count": 1,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "刚才小李上毛厕，见到白二躺在毛厕旁的菜园里"
+  },
+  {
+   "canonical": "董先生",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "福威镖局帐房，受命给白二料理丧事",
+   "chunk_count": 1,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "通知帐房董先生，叫他给白二料理丧事"
+  },
+  {
+   "canonical": "老蔡",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "小酒店原主人，三十两银子把店卖给萨老头",
+   "chunk_count": 1,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "刚好这家酒店的老蔡不想干了，三十两银子卖了给小老儿。"
+  },
+  {
+   "canonical": "余人彦",
+   "aliases": [
+    "余兄弟",
+    "余师弟",
+    "姓余的"
+   ],
+   "importance": "次要人物",
+   "identity": "青城派掌门余沧海之子，在酒店调戏卖酒少女，被林平之失手杀死（本块仅称“姓余的”，真名后文揭示）",
+   "chunk_count": 4,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 1,
+   "mention_chunks": 3,
+   "evidence": "那姓余的扑地而倒，身子抽搐了几下，就此不动了。"
+  },
+  {
+   "canonical": "贾人达",
+   "aliases": [
+    "姓贾汉子",
+    "姓贾的",
+    "贾师弟",
+    "贾老二"
+   ],
+   "importance": "次要人物",
+   "identity": "青城派弟子，余人彦同伴，见同伴死负伤遁走（本块仅称“姓贾的”，真名后文揭示）",
+   "chunk_count": 5,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 4,
+   "mention_chunks": 1,
+   "evidence": "贾老二，人家在骂街哪，你猜这兔儿爷是在骂谁？"
+  },
+  {
+   "canonical": "余沧海",
+   "aliases": [
+    "余矮子",
+    "余老道",
+    "余观主",
+    "松风观观主",
+    "青城矮子"
+   ],
+   "importance": "重要配角",
+   "identity": "川西青城派松风观观主，多年来拒收林家厚礼，此次忽收礼并遣四弟子回拜（本块仅提及，真名后文揭示）",
+   "chunk_count": 33,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 16,
+   "mention_chunks": 17,
+   "evidence": "川西青城派松风观余观主，已收了咱们送去的礼物"
+  },
+  {
+   "canonical": "张镖头",
+   "aliases": [
+    "姓张的镖头"
+   ],
+   "importance": "仅提及",
+   "identity": "福威镖局湖南分局主事镖头，从湖南送信报告青城派收礼",
+   "chunk_count": 2,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "刚才张镖头从湖南送了信来"
+  },
+  {
+   "canonical": "林仲雄",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "林远图之子、林震南之父，家传剑法传至其手威名已衰（本块仅称“祖父”，名讳后文揭示）",
+   "chunk_count": 2,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "但传到你祖父手里，威名就不及远图公了"
+  },
+  {
+   "canonical": "金光上人",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "峨嵋派掌门，住金顶寺，肯接见林家送礼镖头但仍退回礼物",
+   "chunk_count": 1,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "峨嵋派的金光上人，还肯接见我派去的镖头"
+  },
+  {
+   "canonical": "崔镖头",
+   "aliases": [
+    "老崔"
+   ],
+   "importance": "次要人物",
+   "identity": "林震南亲信镖师，老成持重，撞开酒店门验查",
+   "chunk_count": 1,
+   "first_chunk": 2,
+   "first_pct": 0.0095,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "崔镖头双掌拍出，喀喇一声，门闩折断"
+  },
+  {
+   "canonical": "季镖头",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "林震南亲信镖师，掘出史镖头尸身",
+   "chunk_count": 1,
+   "first_chunk": 2,
+   "first_pct": 0.0095,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "季镖头道：“有个屁用？亏你是吃镖行饭的！”"
+  },
+  {
+   "canonical": "王元霸",
+   "aliases": [
+    "东翁",
+    "岳父",
+    "王老爷子",
+    "金刀无敌"
+   ],
+   "importance": "次要人物",
+   "identity": "王夫人之父，洛阳金刀门高手，林震南拟绕道往投（本块仅称“岳父”）",
+   "chunk_count": 6,
+   "first_chunk": 2,
+   "first_pct": 0.0095,
+   "direct_chunks": 3,
+   "mention_chunks": 3,
+   "evidence": "谁都瞧在她父亲金刀无敌王元霸的脸上让她三分"
+  },
+  {
+   "canonical": "富镖头",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "福威镖局镖头，奉派查访遇害，尸首停在大厅",
+   "chunk_count": 1,
+   "first_chunk": 2,
+   "first_pct": 0.0095,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "其中有富镖头、钱镖头、吴镖头。尸首停在大厅上。"
+  },
+  {
+   "canonical": "钱镖头",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "福威镖局镖头，同批遇害",
+   "chunk_count": 1,
+   "first_chunk": 2,
+   "first_pct": 0.0095,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "其中有富镖头、钱镖头、吴镖头。尸首停在大厅上。"
+  },
+  {
+   "canonical": "吴镖头",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "福威镖局镖头，同批遇害",
+   "chunk_count": 1,
+   "first_chunk": 2,
+   "first_pct": 0.0095,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "其中有富镖头、钱镖头、吴镖头。尸首停在大厅上。"
+  },
+  {
+   "canonical": "高镖头",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "福威镖局镖头，为人忠厚，死在街上由街坊抬回",
+   "chunk_count": 1,
+   "first_chunk": 2,
+   "first_pct": 0.0095,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "唉，高镖头为人向来忠厚，想不到也给恶鬼索了命去。"
+  },
+  {
+   "canonical": "褚镖头",
+   "aliases": [
+    "褚贤弟",
+    "褚镖师"
+   ],
+   "importance": "次要人物",
+   "identity": "福威镖局镖师，尸身由识途马驮回，林震南抱尸挥泪立誓报仇",
+   "chunk_count": 1,
+   "first_chunk": 2,
+   "first_pct": 0.0095,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "果见马背上横卧着一具死尸，正是褚镖头"
+  },
+  {
+   "canonical": "狄镖头",
+   "aliases": [
+    "狄兄弟"
+   ],
+   "importance": "次要人物",
+   "identity": "福威镖局镖头，奉命买棺材请和尚，逃回报讯后毒发气绝",
+   "chunk_count": 1,
+   "first_chunk": 2,
+   "first_pct": 0.0095,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "见是适才奉命去棺材铺三名镖头中的狄镖头"
+  },
+  {
+   "canonical": "班和尚",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "福州西城天宁寺和尚，拟请来作法事超度亡魂",
+   "chunk_count": 1,
+   "first_chunk": 2,
+   "first_pct": 0.0095,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "再到西城天宁寺，去请班和尚来作几日法事"
+  },
+  {
+   "canonical": "黄先生",
+   "aliases": [
+    "黄夫子"
+   ],
+   "importance": "次要人物",
+   "identity": "福威镖局帐房先生，拟写寿帖邀亲友来镖局",
+   "chunk_count": 2,
+   "first_chunk": 2,
+   "first_pct": 0.0095,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "他走进帐房，向帐房黄先生道：“黄夫子，请你写几张帖子"
+  },
+  {
+   "canonical": "林福",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "福威镖局仆人，奉命买棺材，死于东小街转角",
+   "chunk_count": 1,
+   "first_chunk": 2,
+   "first_pct": 0.0095,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "刚才帐房先生叫林福去买棺材"
+  },
+  {
+   "canonical": "华师傅",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "福威镖局厨子，冬瓜盅、佛跳墙等驰誉福州，死于后门十步之外",
+   "chunk_count": 2,
+   "first_chunk": 2,
+   "first_pct": 0.0095,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "华师傅怎地好端端的也死了？"
+  },
+  {
+   "canonical": "霍镖头",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "福威镖局镖头，随众弃局逃走遇害，尸身被剖，心震成八九片，证实青城派摧心掌",
+   "chunk_count": 1,
+   "first_chunk": 3,
+   "first_pct": 0.019,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "认得是霍镖头，他日间和四名镖头一起乘马逃去"
+  },
+  {
+   "canonical": "刘镖头",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "福威镖局浙江/江西分局主事镖头，总局嘱溃散人手往投",
+   "chunk_count": 1,
+   "first_chunk": 3,
+   "first_pct": 0.019,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "那边刘镖头、易镖头自不会怠慢了各位。"
+  },
+  {
+   "canonical": "易镖头",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "福威镖局江西/浙江分局主事镖头，总局嘱溃散人手往投",
+   "chunk_count": 1,
+   "first_chunk": 3,
+   "first_pct": 0.019,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "那边刘镖头、易镖头自不会怠慢了各位。"
+  },
+  {
+   "canonical": "于人豪",
+   "aliases": [
+    "于少侠",
+    "于师弟",
+    "于英雄"
+   ],
+   "importance": "次要人物",
+   "identity": "青城派松风观四大弟子（“英雄豪杰，青城四秀”）之一，以松风剑法加辟邪剑招击败林震南",
+   "chunk_count": 4,
+   "first_chunk": 3,
+   "first_pct": 0.019,
+   "direct_chunks": 3,
+   "mention_chunks": 1,
+   "evidence": "这才说道：“我姓于，叫于人豪。”"
+  },
+  {
+   "canonical": "方人智",
+   "aliases": [
+    "方师哥"
+   ],
+   "importance": "次要人物",
+   "identity": "青城派弟子，与于人豪押解林震南夫妇，追赶救人的蒙面老者与丑女",
+   "chunk_count": 5,
+   "first_chunk": 3,
+   "first_pct": 0.019,
+   "direct_chunks": 4,
+   "mention_chunks": 1,
+   "evidence": "那人道：“不敢，区区在下方人智。”"
+  },
+  {
+   "canonical": "皮师哥",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "青城派弟子，火烧南昌福威镖局分局，殃及数十家邻舍",
+   "chunk_count": 1,
+   "first_chunk": 4,
+   "first_pct": 0.0283,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "皮师哥他们在南昌一把火烧了龟儿镖局"
+  },
+  {
+   "canonical": "姓申的",
+   "aliases": [
+    "申师哥"
+   ],
+   "importance": "次要人物",
+   "identity": "青城派弟子，占据长沙分局，识破棺中藏宝，拟以劫得玉马孝敬师父并作刘正风贺礼",
+   "chunk_count": 1,
+   "first_chunk": 4,
+   "first_pct": 0.0283,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "那姓申的笑道：“礼物我早备下了，你放心"
+  },
+  {
+   "canonical": "姓吉的",
+   "aliases": [
+    "吉师弟"
+   ],
+   "importance": "次要人物",
+   "identity": "青城派弟子，与姓申的同占长沙分局，倒挂招牌挂烂裤羞辱福威镖局",
+   "chunk_count": 1,
+   "first_chunk": 4,
+   "first_pct": 0.0283,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "那姓吉的一声惊呼，叫道：“了不起！申师哥神通广大"
+  },
+  {
+   "canonical": "蒋师哥",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "青城派弟子，奉派去挑广州分局",
+   "chunk_count": 1,
+   "first_chunk": 4,
+   "first_pct": 0.0283,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "蒋师哥他们去挑广州分局，马师哥他们去挑杭州分局"
+  },
+  {
+   "canonical": "马师哥",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "青城派弟子，奉派去挑杭州分局",
+   "chunk_count": 1,
+   "first_chunk": 4,
+   "first_pct": 0.0283,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "蒋师哥他们去挑广州分局，马师哥他们去挑杭州分局"
+  },
+  {
+   "canonical": "刘正风",
+   "aliases": [
+    "刘三爷",
+    "刘公公",
+    "刘大爷",
+    "刘师兄",
+    "刘师叔",
+    "刘师弟",
+    "刘贤弟"
+   ],
+   "importance": "重要配角",
+   "identity": "衡山派刘三爷，金盆洗手的主角，本块中众人议论纷纷而本人未出场",
+   "chunk_count": 27,
+   "first_chunk": 4,
+   "first_pct": 0.0283,
+   "direct_chunks": 10,
+   "mention_chunks": 17,
+   "evidence": "咱们明日去衡山给刘正风道喜，得带些甚么礼物才好？"
+  },
+  {
+   "canonical": "莫大先生",
+   "aliases": [
+    "卖唱老者",
+    "潇湘夜雨",
+    "莫兄",
+    "莫大",
+    "莫大师伯",
+    "莫师伯",
+    "莫师哥",
+    "莫某人"
+   ],
+   "importance": "重要配角",
+   "identity": "衡山派掌门，琴中藏剑、剑发琴音，乔装落拓卖唱老者，一剑削断七只茶杯示警",
+   "chunk_count": 30,
+   "first_chunk": 4,
+   "first_pct": 0.0283,
+   "direct_chunks": 11,
+   "mention_chunks": 19,
+   "evidence": "号称衡山派第二把高手，只比掌门人莫大先生稍逊一筹。"
+  },
+  {
+   "canonical": "彭大哥",
+   "aliases": [
+    "姓彭的",
+    "花白胡子"
+   ],
+   "importance": "次要人物",
+   "identity": "衡山茶馆中的花白胡子江湖汉子，自称非为结交刘正风而来",
+   "chunk_count": 1,
+   "first_chunk": 4,
+   "first_pct": 0.0283,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "那姓彭的花白胡子冷笑道：“结交五岳剑派，你配么？”"
+  },
+  {
+   "canonical": "王二叔",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "衡山茶馆中的老者，为年轻人剖析金盆洗手种种缘由",
+   "chunk_count": 2,
+   "first_chunk": 4,
+   "first_pct": 0.0283,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "那王二叔道：“学武的人，一辈子动刀动枪"
+  },
+  {
+   "canonical": "陆大有",
+   "aliases": [
+    "六师兄",
+    "六师哥",
+    "六师弟",
+    "六猴儿",
+    "大有",
+    "陆师弟"
+   ],
+   "importance": "重要配角",
+   "identity": "华山派六弟子，外号六猴儿，肩头带着偷来的小猴儿",
+   "chunk_count": 26,
+   "first_chunk": 5,
+   "first_pct": 0.0378,
+   "direct_chunks": 18,
+   "mention_chunks": 8,
+   "evidence": "反不如我老老实实的叫做‘陆大有’，甚么事也没有。"
+  },
+  {
+   "canonical": "施戴子",
+   "aliases": [
+    "四师兄",
+    "四师哥",
+    "戴子"
+   ],
+   "importance": "次要人物",
+   "identity": "华山派四弟子，脚夫打扮，淳朴木讷（本块仅称“四师哥”，名讳后文揭示）",
+   "chunk_count": 12,
+   "first_chunk": 5,
+   "first_pct": 0.0378,
+   "direct_chunks": 12,
+   "mention_chunks": 0,
+   "evidence": "我不跟你说了，四师哥，只有你是好人，大师哥呢？"
+  },
+  {
+   "canonical": "高根明",
+   "aliases": [
+    "五师兄",
+    "五师哥",
+    "根明",
+    "高明根"
+   ],
+   "importance": "次要人物",
+   "identity": "华山派五弟子，手拿算盘做买卖打扮（本块仅称“五师哥”，名讳后文揭示）",
+   "chunk_count": 13,
+   "first_chunk": 5,
+   "first_pct": 0.0378,
+   "direct_chunks": 12,
+   "mention_chunks": 1,
+   "evidence": "那少女道：“五师哥，你不用激我。"
+  },
+  {
+   "canonical": "梁发",
+   "aliases": [
+    "三师兄",
+    "梁三哥",
+    "阿发",
+    "高个子"
+   ],
+   "importance": "次要人物",
+   "identity": "华山派三弟子，身材高高，起初沉默寡言（本块仅称“高个子”，名讳后文揭示）",
+   "chunk_count": 11,
+   "first_chunk": 5,
+   "first_pct": 0.0378,
+   "direct_chunks": 9,
+   "mention_chunks": 2,
+   "evidence": "那高个子道：“瞧你这副德性，一点也没悔改之心"
+  },
+  {
+   "canonical": "令狐冲",
+   "aliases": [
+    "令狐世兄",
+    "令狐仁兄",
+    "令狐侠士",
+    "令狐兄",
+    "令狐兄弟",
+    "令狐先生",
+    "令狐公公",
+    "令狐公子",
+    "令狐半仙",
+    "令狐国冲",
+    "令狐大侠",
+    "令狐大哥",
+    "令狐小兄弟",
+    "令狐少侠",
+    "令狐少君",
+    "令狐师傅",
+    "令狐师兄",
+    "令狐师哥",
+    "令狐掌门",
+    "令狐爷爷",
+    "令狐老弟",
+    "令狐贤侄",
+    "令狐贤弟",
+    "公子爷",
+    "冲儿",
+    "冲哥",
+    "冲郎",
+    "吴天德",
+    "吴将军",
+    "大师哥",
+    "姓风的小子",
+    "小兄弟",
+    "小贼",
+    "掌门师兄",
+    "掌门师叔",
+    "老弟",
+    "风二中",
+    "风兄",
+    "风兄弟",
+    "风大侠",
+    "风少侠",
+    "风朋友",
+    "风爷"
+   ],
+   "importance": "主角",
+   "identity": "华山派大师哥（本块仅称“大师哥”，名讳后文揭示），在衡阳与众同门分手，因猴儿酒大醉未至",
+   "chunk_count": 102,
+   "first_chunk": 5,
+   "first_pct": 0.0378,
+   "direct_chunks": 95,
+   "mention_chunks": 7,
+   "evidence": "我们昨儿跟大师哥在衡阳分手，他叫我们先来。"
+  },
+  {
+   "canonical": "洪人雄",
+   "aliases": [
+    "人雄"
+   ],
+   "importance": "次要人物",
+   "identity": "青城四秀之一，对劳德诺几番出言讥嘲",
+   "chunk_count": 6,
+   "first_chunk": 5,
+   "first_pct": 0.0378,
+   "direct_chunks": 4,
+   "mention_chunks": 2,
+   "evidence": "侯人英、洪人雄两个家伙给大师哥踢得连跌七八个筋斗"
+  },
+  {
+   "canonical": "罗人杰",
+   "aliases": [
+    "人杰",
+    "罗师兄"
+   ],
+   "importance": "次要人物",
+   "identity": "余沧海徒儿，青城四秀之一，被杀后尸身小腹插剑抬入刘府，剑上刻“华山令狐冲”",
+   "chunk_count": 9,
+   "first_chunk": 6,
+   "first_pct": 0.0473,
+   "direct_chunks": 3,
+   "mention_chunks": 6,
+   "evidence": "有号称‘青城四秀’的侯人英、洪人雄、于人豪和罗人杰四人在内。"
+  },
+  {
+   "canonical": "长青子",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "余沧海之师，青城派前辈，少年时败于林远图辟邪剑下，引为毕生奇耻，三十六岁郁郁而终",
+   "chunk_count": 5,
+   "first_chunk": 6,
+   "first_pct": 0.0473,
+   "direct_chunks": 0,
+   "mention_chunks": 5,
+   "evidence": "余观主的师父长青子少年之时，曾栽在林远图的辟邪剑下？"
+  },
+  {
+   "canonical": "定逸",
+   "aliases": [
+    "定逸师伯",
+    "定逸师叔",
+    "定逸师太",
+    "定逸师妹"
+   ],
+   "importance": "重要配角",
+   "identity": "恒山白云庵庵主，恒山派掌门定闲之师妹，威名甚盛脾气暴躁，上门索要令狐冲与仪琳",
+   "chunk_count": 32,
+   "first_chunk": 7,
+   "first_pct": 0.0567,
+   "direct_chunks": 11,
+   "mention_chunks": 21,
+   "evidence": "劳德诺等一见此人，都认得这老尼姑道号定逸，是恒山白云庵庵主"
+  },
+  {
+   "canonical": "定闲",
+   "aliases": [
+    "定闲师伯",
+    "定闲师太",
+    "定闲师妹"
+   ],
+   "importance": "重要配角",
+   "identity": "恒山派掌门，令狐冲谎骂“老胡涂”的对象之一（本块仅提及）",
+   "chunk_count": 28,
+   "first_chunk": 7,
+   "first_pct": 0.0567,
+   "direct_chunks": 3,
+   "mention_chunks": 25,
+   "evidence": "是恒山白云庵庵主，恒山派掌门定闲师太的师妹"
+  },
+  {
+   "canonical": "定静",
+   "aliases": [
+    "定静师伯",
+    "定静师太"
+   ],
+   "importance": "次要人物",
+   "identity": "恒山派师太，令狐冲谎骂对象之一（本块仅提及）",
+   "chunk_count": 17,
+   "first_chunk": 7,
+   "first_pct": 0.0567,
+   "direct_chunks": 4,
+   "mention_chunks": 13,
+   "evidence": "平日连大师姊定静、掌门师姊定闲，也都容让她三分"
+  },
+  {
+   "canonical": "仪光",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "恒山派定逸门下中年尼姑，转述泰山派讯息并代赔碗钱",
+   "chunk_count": 2,
+   "first_chunk": 7,
+   "first_pct": 0.0567,
+   "direct_chunks": 1,
+   "mention_chunks": 1,
+   "evidence": "仪光，泰山派的人跟你说甚么来？"
+  },
+  {
+   "canonical": "迟百城",
+   "aliases": [
+    "姓迟的",
+    "迟师侄"
+   ],
+   "importance": "次要人物",
+   "identity": "泰山派少年英雄，回雁楼骂贼拔剑，瞬间被田伯光一刀杀死（本块仅被谈及）",
+   "chunk_count": 2,
+   "first_chunk": 7,
+   "first_pct": 0.0567,
+   "direct_chunks": 1,
+   "mention_chunks": 1,
+   "evidence": "当时迟百城贤侄便忍耐不住，拍桌骂道"
+  },
+  {
+   "canonical": "天柏",
+   "aliases": [
+    "天柏师叔"
+   ],
+   "importance": "仅提及",
+   "identity": "泰山派天门师弟，率本门弟子在衡阳搜寻田伯光、令狐冲",
+   "chunk_count": 1,
+   "first_chunk": 7,
+   "first_pct": 0.0567,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "天柏师叔传了讯息来，说道他率领本门弟子"
+  },
+  {
+   "canonical": "田伯光",
+   "aliases": [
+    "万里独行",
+    "不可不戒",
+    "田兄",
+    "田君",
+    "田大爷",
+    "田师傅"
+   ],
+   "importance": "重要配角",
+   "identity": "采花淫贼，与令狐冲约定坐斗：先站起者输，输了拜小尼姑为师、自做太监（本块未在场，仪琳口述）",
+   "chunk_count": 40,
+   "first_chunk": 7,
+   "first_pct": 0.0567,
+   "direct_chunks": 20,
+   "mention_chunks": 20,
+   "evidence": "这万里独行田伯光贻害江湖，老尼非为天下除此大害不可。"
+  },
+  {
+   "canonical": "仪琳",
+   "aliases": [
+    "仪琳姊姊",
+    "仪琳小师太",
+    "仪琳小师妹",
+    "仪琳师妹",
+    "小尼姑",
+    "小师太",
+    "小师妹",
+    "小师父",
+    "琳儿",
+    "阿琳"
+   ],
+   "importance": "重要配角",
+   "identity": "定逸高足，美貌小尼姑，奉观音之名立誓，细述被田伯光掳劫与令狐冲舍身相救的经过",
+   "chunk_count": 47,
+   "first_chunk": 7,
+   "first_pct": 0.0567,
+   "direct_chunks": 36,
+   "mention_chunks": 11,
+   "evidence": "定逸脸色斗变，喝道：“是仪琳？快给我滚进来！”"
+  },
+  {
+   "canonical": "何三七",
+   "aliases": [
+    "何师伯"
+   ],
+   "importance": "次要人物",
+   "identity": "浙南雁荡山高手，自幼卖馄饨为生，挑馄饨担游行江湖，收账分文不少",
+   "chunk_count": 6,
+   "first_chunk": 7,
+   "first_pct": 0.0567,
+   "direct_chunks": 5,
+   "mention_chunks": 1,
+   "evidence": "他猜到这卖馄饨的老人是浙南雁荡山高手何三七。"
+  },
+  {
+   "canonical": "向大年",
+   "aliases": [
+    "大年"
+   ],
+   "importance": "次要人物",
+   "identity": "刘正风弟子，奉师命持灯笼迎接定逸师伯",
+   "chunk_count": 5,
+   "first_chunk": 7,
+   "first_pct": 0.0567,
+   "direct_chunks": 5,
+   "mention_chunks": 0,
+   "evidence": "晚辈向大年，这是我师弟米为义，向师伯请安。"
+  },
+  {
+   "canonical": "米为义",
+   "aliases": [
+    "为义"
+   ],
+   "importance": "次要人物",
+   "identity": "刘正风门下二弟子，奉命搜查群玉院",
+   "chunk_count": 5,
+   "first_chunk": 7,
+   "first_pct": 0.0567,
+   "direct_chunks": 5,
+   "mention_chunks": 0,
+   "evidence": "晚辈向大年，这是我师弟米为义，向师伯请安。"
+  },
+  {
+   "canonical": "岳不群",
+   "aliases": [
+    "伪君子",
+    "君子剑",
+    "岳兄",
+    "岳先生",
+    "岳君子",
+    "岳大侠",
+    "岳大掌门",
+    "岳居士",
+    "岳师伯",
+    "岳师兄",
+    "岳掌门",
+    "岳老儿",
+    "岳老弟"
+   ],
+   "importance": "重要配角",
+   "identity": "华山掌门（本块称“岳老儿”“岳先生”），令狐冲谎称其站着打排名第八",
+   "chunk_count": 78,
+   "first_chunk": 7,
+   "first_pct": 0.0567,
+   "direct_chunks": 42,
+   "mention_chunks": 36,
+   "evidence": "我师父常日称道华山派岳师伯座下众位师兄英雄了得"
+  },
+  {
+   "canonical": "闻先生",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "陕南人，一对判官笔出神入化的点穴打穴高手，黑须书生（名讳书中未详）",
+   "chunk_count": 3,
+   "first_chunk": 8,
+   "first_pct": 0.0662,
+   "direct_chunks": 2,
+   "mention_chunks": 1,
+   "evidence": "她知这须生姓闻，人人都叫他闻先生"
+  },
+  {
+   "canonical": "东方不败",
+   "aliases": [
+    "东方兄弟",
+    "东方先生",
+    "东方叔叔",
+    "东方必败",
+    "东方教主"
+   ],
+   "importance": "重要配角",
+   "identity": "日月神教教主，为杨莲亭所惑，绣花闺阁终老",
+   "chunk_count": 32,
+   "first_chunk": 9,
+   "first_pct": 0.0757,
+   "direct_chunks": 2,
+   "mention_chunks": 30,
+   "evidence": "令狐大哥道：‘那是魔教教主东方不败！’"
+  },
+  {
+   "canonical": "黎师弟",
+   "aliases": [
+    "姓黎的恶人",
+    "姓黎的青城派弟子",
+    "黎世兄"
+   ],
+   "importance": "次要人物",
+   "identity": "青城派弟子，姓黎（名不详），罗人杰的师弟，同上回雁楼",
+   "chunk_count": 1,
+   "first_chunk": 10,
+   "first_pct": 0.0852,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "罗人杰向他师弟道：“黎师弟，你对付这小尼姑。”"
+  },
+  {
+   "canonical": "申人俊",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "青城派弟子，被点穴掷入刘府花厅",
+   "chunk_count": 1,
+   "first_chunk": 10,
+   "first_pct": 0.0852,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "余沧海伸手将一名弟子翻过身来，见是弟子申人俊"
+  },
+  {
+   "canonical": "吉人通",
+   "aliases": [
+    "吉师弟"
+   ],
+   "importance": "次要人物",
+   "identity": "青城派弟子，与申人俊焦孟不离",
+   "chunk_count": 2,
+   "first_chunk": 10,
+   "first_pct": 0.0852,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "自是与申人俊焦孟不离的吉人通了。"
+  },
+  {
+   "canonical": "曲非烟",
+   "aliases": [
+    "女娃娃",
+    "女娃子",
+    "女童",
+    "绿衫女童",
+    "非非"
+   ],
+   "importance": "次要人物",
+   "identity": "席间出言捉弄青城派的小女童（本块未具名，作“绿衫女童”，即后文之曲非烟）",
+   "chunk_count": 7,
+   "first_chunk": 10,
+   "first_pct": 0.0852,
+   "direct_chunks": 7,
+   "mention_chunks": 0,
+   "evidence": "只见一个绿衫女童站在席边，一伸手便抓住了她的手臂。"
+  },
+  {
+   "canonical": "曲洋",
+   "aliases": [
+    "曲前辈",
+    "曲大哥",
+    "曲洋前辈",
+    "曲长老"
+   ],
+   "importance": "次要人物",
+   "identity": "带曲非烟旁观回雁楼之斗、救走令狐冲尸身的老人（本块仅作“爷爷”，未具名，即魔教长老曲洋）",
+   "chunk_count": 15,
+   "first_chunk": 11,
+   "first_pct": 0.0947,
+   "direct_chunks": 2,
+   "mention_chunks": 13,
+   "evidence": "我爷爷叫我非非，你也叫我非非好啦。"
+  },
+  {
+   "canonical": "彭人骐",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "青城派弟子，余沧海门下，被田伯光所杀",
+   "chunk_count": 2,
+   "first_chunk": 11,
+   "first_pct": 0.0947,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "田伯光，我弟子彭人骐，可是你害死的？"
+  },
+  {
+   "canonical": "玉宝儿",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "群玉院妓女，田伯光相好",
+   "chunk_count": 1,
+   "first_chunk": 12,
+   "first_pct": 0.1041,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "这个千娇百媚的小粉头玉宝儿便让给你"
+  },
+  {
+   "canonical": "陶钧",
+   "aliases": [
+    "七师兄"
+   ],
+   "importance": "次要人物",
+   "identity": "华山派年幼弟子",
+   "chunk_count": 3,
+   "first_chunk": 13,
+   "first_pct": 0.1136,
+   "direct_chunks": 3,
+   "mention_chunks": 0,
+   "evidence": "此外七师兄陶钧、八师兄英白罗是两个年轻弟子。"
+  },
+  {
+   "canonical": "仪净",
+   "aliases": [
+    "仪净师姊"
+   ],
+   "importance": "仅提及",
+   "identity": "恒山派弟子，仪琳的师姊",
+   "chunk_count": 1,
+   "first_chunk": 14,
+   "first_pct": 0.1231,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "仪净师姊说，有人看到流星，如果在衣带上打一个结"
+  },
+  {
+   "canonical": "伽斯那",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "天竺高僧，《百喻经》作者（仪琳转述典故人物）",
+   "chunk_count": 1,
+   "first_chunk": 14,
+   "first_pct": 0.1231,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "是天竺国一位高僧伽斯那作的"
+  },
+  {
+   "canonical": "张金鳌",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "丐帮副帮主，宾客，坐首席右首",
+   "chunk_count": 1,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "右首是丐帮副帮主张金鳌。"
+  },
+  {
+   "canonical": "夏老拳师",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "郑州六合门拳师，年寿最高的宾客，坐首席左首",
+   "chunk_count": 1,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "左首是年寿最高的六合门夏老拳师"
+  },
+  {
+   "canonical": "铁老老",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "川鄂三峡神女峰高手，金盆洗手会宾客",
+   "chunk_count": 1,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "川鄂三峡神女峰铁老老"
+  },
+  {
+   "canonical": "潘吼",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "东海海砂帮帮主，金盆洗手会宾客",
+   "chunk_count": 1,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "东海海砂帮帮主潘吼"
+  },
+  {
+   "canonical": "白克",
+   "aliases": [
+    "神刀"
+   ],
+   "importance": "次要人物",
+   "identity": "曲江二友之一，绰号神刀，金盆洗手会宾客",
+   "chunk_count": 1,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "曲江二友神刀白克、神笔卢西思等人先后到来。"
+  },
+  {
+   "canonical": "卢西思",
+   "aliases": [
+    "神笔"
+   ],
+   "importance": "次要人物",
+   "identity": "曲江二友之一，绰号神笔，金盆洗手会宾客",
+   "chunk_count": 1,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "曲江二友神刀白克、神笔卢西思等人先后到来。"
+  },
+  {
+   "canonical": "张大人",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "来宣旨的官员，为刘正风授参将之职",
+   "chunk_count": 1,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "多谢张大人栽培提拔。"
+  },
+  {
+   "canonical": "方千驹",
+   "aliases": [
+    "方贤弟"
+   ],
+   "importance": "次要人物",
+   "identity": "刘正风门下弟子，代备送张大人的礼物",
+   "chunk_count": 1,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "刘正风转头向方千驹道：“方贤弟，奉敬张大人的礼物呢？”"
+  },
+  {
+   "canonical": "史登达",
+   "aliases": [
+    "千丈松",
+    "史贤侄"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派弟子，绰号千丈松，奉令旗拦阻金盆洗手",
+   "chunk_count": 4,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 4,
+   "mention_chunks": 0,
+   "evidence": "那汉子正是嵩山派门下的弟子千丈松史登达"
+  },
+  {
+   "canonical": "万大平",
+   "aliases": [
+    "万师弟"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派弟子，看守刘家眷属",
+   "chunk_count": 2,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "嵩山门下弟子万大平，参见刘师叔。"
+  },
+  {
+   "canonical": "刘菁",
+   "aliases": [
+    "刘姊姊",
+    "刘姑娘",
+    "刘家姊姊",
+    "菁儿"
+   ],
+   "importance": "次要人物",
+   "identity": "刘正风之女，与曲非烟在后堂（本块作菁儿/刘姑娘，未用全名）",
+   "chunk_count": 2,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "哪一个大胆狂徒到我家来撒野，居然敢向我菁儿无礼？"
+  },
+  {
+   "canonical": "费彬",
+   "aliases": [
+    "大嵩阳手",
+    "姓费的",
+    "费师兄",
+    "费师叔",
+    "费师弟",
+    "费贤弟"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派第四师弟，绰号大嵩阳手，追杀曲洋一行、刺死曲非烟，终被莫大先生所杀",
+   "chunk_count": 15,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 4,
+   "mention_chunks": 11,
+   "evidence": "费彬微微一笑，说道：“刘师兄何须出言挑拨离间？"
+  },
+  {
+   "canonical": "丁勉",
+   "aliases": [
+    "丁二侠",
+    "丁师兄",
+    "丁师哥",
+    "丁老二",
+    "托塔手"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派掌门人的二师弟，绰号托塔手，银针射杀向大年",
+   "chunk_count": 10,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 8,
+   "mention_chunks": 2,
+   "evidence": "定逸师太等认得他是嵩山派掌门人的二师弟托塔手丁勉"
+  },
+  {
+   "canonical": "陆柏",
+   "aliases": [
+    "仙鹤手",
+    "陆三侠",
+    "陆师兄"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派第三把交椅，绰号仙鹤手，下令屠杀刘门",
+   "chunk_count": 11,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 10,
+   "mention_chunks": 1,
+   "evidence": "西首那人却极高极瘦，是嵩山派中坐第三把交椅的仙鹤手陆柏"
+  },
+  {
+   "canonical": "刘夫人",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "刘正风之妻，与子女一起被嵩山派挟持",
+   "chunk_count": 2,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "却是刘正风的夫人，他的两个幼子，以及刘门的七名弟子"
+  },
+  {
+   "canonical": "狄修",
+   "aliases": [
+    "狄师兄"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派左冷禅大弟子，被神志失常的左冷禅斩杀",
+   "chunk_count": 3,
+   "first_chunk": 16,
+   "first_pct": 0.142,
+   "direct_chunks": 3,
+   "mention_chunks": 0,
+   "evidence": "陆柏哼了一声，说道：“狄修，预备着。”"
+  },
+  {
+   "canonical": "刘芹",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "刘正风十五岁幼子，吓跪求饶并指斥父亲求活",
+   "chunk_count": 2,
+   "first_chunk": 16,
+   "first_pct": 0.142,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "刘门徒弟子女已只剩下刘正风最心爱的十五岁幼子刘芹。"
+  },
+  {
+   "canonical": "刘公子",
+   "aliases": [
+    "刘正风长子"
+   ],
+   "importance": "次要人物",
+   "identity": "刘正风的长子，被狄修一剑刺入心窝而死",
+   "chunk_count": 1,
+   "first_chunk": 16,
+   "first_pct": 0.142,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "狄修短剑往前一送，自刘公子的背心直刺入他心窝。"
+  },
+  {
+   "canonical": "舒奇",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "华山派年幼弟子，替师父传话",
+   "chunk_count": 3,
+   "first_chunk": 19,
+   "first_pct": 0.1706,
+   "direct_chunks": 3,
+   "mention_chunks": 0,
+   "evidence": "就算是年纪最幼的舒奇，林平之也得称他一声师兄"
+  },
+  {
+   "canonical": "于老拳师",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "江西拳师，一家二十三口被魔教钉死树上（本块仅被提及）",
+   "chunk_count": 1,
+   "first_chunk": 19,
+   "first_pct": 0.1706,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "江西于老拳师一家二十三口被魔教擒住了"
+  },
+  {
+   "canonical": "赵登魁",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "济南府龙凤刀掌门，娶媳宴上遭魔教割去新婚夫妇首级（本块仅被提及）",
+   "chunk_count": 1,
+   "first_chunk": 19,
+   "first_pct": 0.1706,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "济南府龙凤刀掌门人赵登魁娶儿媳妇"
+  },
+  {
+   "canonical": "郝老英雄",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "汉阳老英雄，七十寿宴遭魔教炸药暗算（本块仅被提及）",
+   "chunk_count": 1,
+   "first_chunk": 19,
+   "first_pct": 0.1706,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "汉阳郝老英雄做七十大寿"
+  },
+  {
+   "canonical": "纪师叔",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "泰山派弟子，与魔教一役断送一条膀子（真名本块未出现）",
+   "chunk_count": 1,
+   "first_chunk": 19,
+   "first_pct": 0.1706,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "泰山派的纪师叔便在这一役中断送了一条膀子"
+  },
+  {
+   "canonical": "孙师叔",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "嵩山派弟子，被魔教截断双手双足、挖去双眼（真名本块未出现）",
+   "chunk_count": 1,
+   "first_chunk": 19,
+   "first_pct": 0.1706,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "两年前在郑州大路上遇到嵩山派的孙师叔"
+  },
+  {
+   "canonical": "范松",
+   "aliases": [
+    "大力神魔"
+   ],
+   "importance": "仅提及",
+   "identity": "魔教十长老之一，后洞石壁破五岳剑派图形的刻制者（仅存名于石壁）",
+   "chunk_count": 3,
+   "first_chunk": 21,
+   "first_pct": 0.1899,
+   "direct_chunks": 0,
+   "mention_chunks": 3,
+   "evidence": "范松赵鹤破恒山剑法于此"
+  },
+  {
+   "canonical": "赵鹤",
+   "aliases": [
+    "飞天神魔"
+   ],
+   "importance": "仅提及",
+   "identity": "魔教十长老之一，后洞石壁破五岳剑派图形的刻制者（仅存名于石壁）",
+   "chunk_count": 3,
+   "first_chunk": 21,
+   "first_pct": 0.1899,
+   "direct_chunks": 0,
+   "mention_chunks": 3,
+   "evidence": "范松赵鹤破恒山剑法于此"
+  },
+  {
+   "canonical": "张乘云",
+   "aliases": [
+    "白猿神魔"
+   ],
+   "importance": "仅提及",
+   "identity": "魔教十长老之一，后洞石壁破五岳剑派图形的刻制者（仅存名于石壁）",
+   "chunk_count": 3,
+   "first_chunk": 21,
+   "first_pct": 0.1899,
+   "direct_chunks": 0,
+   "mention_chunks": 3,
+   "evidence": "张乘云张乘风尽破华山剑法"
+  },
+  {
+   "canonical": "张乘风",
+   "aliases": [
+    "金猴神魔"
+   ],
+   "importance": "仅提及",
+   "identity": "魔教十长老之一，后洞石壁破五岳剑派图形的刻制者（仅存名于石壁）",
+   "chunk_count": 3,
+   "first_chunk": 21,
+   "first_pct": 0.1899,
+   "direct_chunks": 0,
+   "mention_chunks": 3,
+   "evidence": "张乘云张乘风尽破华山剑法"
+  },
+  {
+   "canonical": "平一指",
+   "aliases": [
+    "平先生",
+    "平前辈",
+    "平大夫",
+    "平老先生",
+    "杀人名医"
+   ],
+   "importance": "次要人物",
+   "identity": "“杀人名医”，天下惟一可能解田伯光死穴奇毒之人（本块仅被提及）",
+   "chunk_count": 14,
+   "first_chunk": 24,
+   "first_pct": 0.2182,
+   "direct_chunks": 2,
+   "mention_chunks": 12,
+   "evidence": "天下只怕惟有‘杀人名医’平一指一人"
+  },
+  {
+   "canonical": "李太白",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "唐代诗人，书中典故：昔年常醉饮长安谪仙楼（非本书虚构人物）",
+   "chunk_count": 1,
+   "first_chunk": 24,
+   "first_pct": 0.2182,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "当年李太白时时去喝得大醉的‘谪仙楼’"
+  },
+  {
+   "canonical": "独孤求败",
+   "aliases": [
+    "独孤前辈",
+    "独孤大侠"
+   ],
+   "importance": "仅提及",
+   "identity": "独孤九剑创制者，毕生求一败而不可得的绝世前辈（本块仅被提及）",
+   "chunk_count": 5,
+   "first_chunk": 26,
+   "first_pct": 0.2372,
+   "direct_chunks": 0,
+   "mention_chunks": 5,
+   "evidence": "创制这套剑法的独孤求败前辈"
+  },
+  {
+   "canonical": "封不平",
+   "aliases": [
+    "封兄",
+    "封先生"
+   ],
+   "importance": "次要人物",
+   "identity": "华山派剑宗弃徒，持五岳旗令回来争夺掌门之位",
+   "chunk_count": 10,
+   "first_chunk": 27,
+   "first_pct": 0.2468,
+   "direct_chunks": 4,
+   "mention_chunks": 6,
+   "evidence": "第一人满脸戾气，一张黄焦焦的面皮，想必是陆大有所说的那个封不平"
+  },
+  {
+   "canonical": "鲁连荣",
+   "aliases": [
+    "金眼乌鸦",
+    "金眼雕",
+    "鲁师伯"
+   ],
+   "importance": "次要人物",
+   "identity": "衡山派第一代人物，正号“金眼雕”、背称“金眼乌鸦”，附和封不平",
+   "chunk_count": 2,
+   "first_chunk": 27,
+   "first_pct": 0.2468,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "这老儿叫鲁连荣，正式外号叫作‘金眼雕’"
+  },
+  {
+   "canonical": "桃根仙",
+   "aliases": [],
+   "importance": "重要配角",
+   "identity": "桃谷六仙老大",
+   "chunk_count": 25,
+   "first_chunk": 27,
+   "first_pct": 0.2468,
+   "direct_chunks": 25,
+   "mention_chunks": 0,
+   "evidence": "我是大哥，叫做桃根仙。"
+  },
+  {
+   "canonical": "桃干仙",
+   "aliases": [],
+   "importance": "重要配角",
+   "identity": "桃谷六仙老二",
+   "chunk_count": 21,
+   "first_chunk": 27,
+   "first_pct": 0.2468,
+   "direct_chunks": 21,
+   "mention_chunks": 0,
+   "evidence": "我是二哥，叫做桃干仙。"
+  },
+  {
+   "canonical": "桃枝仙",
+   "aliases": [],
+   "importance": "重要配角",
+   "identity": "桃谷六仙老三（与桃叶仙不知谁大）",
+   "chunk_count": 21,
+   "first_chunk": 27,
+   "first_pct": 0.2468,
+   "direct_chunks": 21,
+   "mention_chunks": 0,
+   "evidence": "我不知是三哥还是四哥，叫做桃枝仙。"
+  },
+  {
+   "canonical": "桃叶仙",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "桃谷六仙老四（与桃枝仙不知谁大）",
+   "chunk_count": 19,
+   "first_chunk": 27,
+   "first_pct": 0.2468,
+   "direct_chunks": 19,
+   "mention_chunks": 0,
+   "evidence": "他不知是三哥还是四哥，叫做桃叶仙。"
+  },
+  {
+   "canonical": "桃花仙",
+   "aliases": [],
+   "importance": "重要配角",
+   "identity": "桃谷六仙老五",
+   "chunk_count": 23,
+   "first_chunk": 27,
+   "first_pct": 0.2468,
+   "direct_chunks": 23,
+   "mention_chunks": 0,
+   "evidence": "我五哥叫桃花仙。"
+  },
+  {
+   "canonical": "桃实仙",
+   "aliases": [],
+   "importance": "重要配角",
+   "identity": "桃谷六仙成员，本块被岳夫人一剑刺穿胸口",
+   "chunk_count": 21,
+   "first_chunk": 27,
+   "first_pct": 0.2468,
+   "direct_chunks": 20,
+   "mention_chunks": 1,
+   "evidence": "我是六弟，叫做桃实仙。"
+  },
+  {
+   "canonical": "成不忧",
+   "aliases": [
+    "成兄",
+    "成师傅"
+   ],
+   "importance": "次要人物",
+   "identity": "华山派剑宗弟子，封不平同党；本块被桃谷四仙分尸",
+   "chunk_count": 7,
+   "first_chunk": 28,
+   "first_pct": 0.2562,
+   "direct_chunks": 1,
+   "mention_chunks": 6,
+   "evidence": "这矮子名叫成不忧。"
+  },
+  {
+   "canonical": "丛不弃",
+   "aliases": [
+    "丛师弟"
+   ],
+   "importance": "次要人物",
+   "identity": "华山派剑宗弟子，封不平师弟，肩胛被令狐冲一剑穿过",
+   "chunk_count": 1,
+   "first_chunk": 33,
+   "first_pct": 0.3039,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "丛不弃，你今日杀我"
+  },
+  {
+   "canonical": "王伯奋",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "王元霸长子，林平之的舅父",
+   "chunk_count": 3,
+   "first_chunk": 34,
+   "first_pct": 0.3132,
+   "direct_chunks": 3,
+   "mention_chunks": 0,
+   "evidence": "王伯奋、王仲强齐声答应，屈膝下拜。"
+  },
+  {
+   "canonical": "王仲强",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "王元霸次子，被绿竹翁震飞数丈",
+   "chunk_count": 3,
+   "first_chunk": 34,
+   "first_pct": 0.3132,
+   "direct_chunks": 3,
+   "mention_chunks": 0,
+   "evidence": "王伯奋、王仲强齐声答应，屈膝下拜。"
+  },
+  {
+   "canonical": "王家驹",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "王仲强幼子，林平之表兄，扭脱令狐冲双臂",
+   "chunk_count": 3,
+   "first_chunk": 34,
+   "first_pct": 0.3132,
+   "direct_chunks": 3,
+   "mention_chunks": 0,
+   "evidence": "王仲强的小儿子王家驹兴冲冲的走进房来"
+  },
+  {
+   "canonical": "王家骏",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "王仲强长子，林平之表兄，诬指令狐冲吞没剑谱",
+   "chunk_count": 3,
+   "first_chunk": 34,
+   "first_pct": 0.3132,
+   "direct_chunks": 3,
+   "mention_chunks": 0,
+   "evidence": "却是王仲强的长子王家骏。"
+  },
+  {
+   "canonical": "陈歪嘴",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "洛阳城中无赖，与令狐冲赌钱殴斗",
+   "chunk_count": 1,
+   "first_chunk": 34,
+   "first_pct": 0.3132,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "令狐冲向身旁一名无赖陈歪嘴道"
+  },
+  {
+   "canonical": "易师爷",
+   "aliases": [
+    "易老弟"
+   ],
+   "importance": "次要人物",
+   "identity": "金刀王家帐房师爷，通晓音律",
+   "chunk_count": 1,
+   "first_chunk": 35,
+   "first_pct": 0.3228,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "咱们帐房里的易师爷会吹箫"
+  },
+  {
+   "canonical": "绿竹翁",
+   "aliases": [
+    "竹侄",
+    "竹翁",
+    "竹贤侄",
+    "老篾匠"
+   ],
+   "importance": "次要人物",
+   "identity": "洛阳绿竹巷篾匠，隐世高手，教令狐冲学琴并震退王家父子",
+   "chunk_count": 10,
+   "first_chunk": 35,
+   "first_pct": 0.3228,
+   "direct_chunks": 4,
+   "mention_chunks": 6,
+   "evidence": "东城的绿竹翁，他既会抚琴，又会吹箫"
+  },
+  {
+   "canonical": "莫星",
+   "aliases": [
+    "莫亲家"
+   ],
+   "importance": "仅提及",
+   "identity": "郑州八卦刀掌门人，与金刀王家数代姻亲",
+   "chunk_count": 1,
+   "first_chunk": 35,
+   "first_pct": 0.3228,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "郑州八卦刀的掌门人莫星与洛阳金刀王家是数代姻亲"
+  },
+  {
+   "canonical": "华老镖头",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "开封府武师，岳不群夫妇口中提及",
+   "chunk_count": 1,
+   "first_chunk": 36,
+   "first_pct": 0.3324,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "像华老镖头、海老拳师、豫中三英这些人"
+  },
+  {
+   "canonical": "海老拳师",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "开封府武师，岳不群夫妇口中提及",
+   "chunk_count": 1,
+   "first_chunk": 36,
+   "first_pct": 0.3324,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "像华老镖头、海老拳师、豫中三英这些人"
+  },
+  {
+   "canonical": "平夫人",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "平一指之妻（本块未点名，为相助缝伤的高瘦妇人）",
+   "chunk_count": 2,
+   "first_chunk": 37,
+   "first_pct": 0.3417,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "只见一个高高瘦瘦的妇人走进房来"
+  },
+  {
+   "canonical": "祖千秋",
+   "aliases": [
+    "祖先生",
+    "祖贤弟"
+   ],
+   "importance": "重要配角",
+   "identity": "黄河老祖之一，偷“续命八丸”骗令狐冲服下以救老不死，赶来向老头子说明真情",
+   "chunk_count": 23,
+   "first_chunk": 38,
+   "first_pct": 0.3512,
+   "direct_chunks": 17,
+   "mention_chunks": 6,
+   "evidence": "晚生姓祖，祖宗之祖。当年祖逖闻鸡起舞"
+  },
+  {
+   "canonical": "老头子",
+   "aliases": [],
+   "importance": "重要配角",
+   "identity": "肉球般矮胖的异人，为救爱女炼“续命八丸”（本块未点名，下章揭示为黄河老祖之“老头子”）",
+   "chunk_count": 23,
+   "first_chunk": 38,
+   "first_pct": 0.3512,
+   "direct_chunks": 15,
+   "mention_chunks": 8,
+   "evidence": "但见一个肉球气喘吁吁的滚来，越滚越近"
+  },
+  {
+   "canonical": "白熊",
+   "aliases": [
+    "大个儿",
+    "大个子"
+   ],
+   "importance": "次要人物",
+   "identity": "漠北双熊之一：掳走岳灵珊的白肤巨汉（本块未点名，下章揭示为漠北双熊）",
+   "chunk_count": 5,
+   "first_chunk": 39,
+   "first_pct": 0.3607,
+   "direct_chunks": 3,
+   "mention_chunks": 2,
+   "evidence": "见那巨人一手一个，已抓了林平之和岳灵珊，向前奔出。"
+  },
+  {
+   "canonical": "黑熊",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "漠北双熊之一：吃人肉的光头和尚，以血写“五霸冈上，还你的臭女儿”（本块未点名）",
+   "chunk_count": 5,
+   "first_chunk": 39,
+   "first_pct": 0.3607,
+   "direct_chunks": 3,
+   "mention_chunks": 2,
+   "evidence": "那人竟是个和尚。他头顶鲜血直冒"
+  },
+  {
+   "canonical": "毒不死人",
+   "aliases": [
+    "诸师伯"
+   ],
+   "importance": "仅提及",
+   "identity": "百药门掌门，姓诸，外号“毒不死人”（本块未现身）",
+   "chunk_count": 1,
+   "first_chunk": 39,
+   "first_pct": 0.3607,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "此人外号‘毒不死人’，据说他下毒的本领高明之极"
+  },
+  {
+   "canonical": "蓝凤凰",
+   "aliases": [
+    "蓝姑娘",
+    "蓝教主"
+   ],
+   "importance": "次要人物",
+   "identity": "云南五仙教（五毒教）教主，苗家女子，以水蛭转血之法为令狐冲疗伤",
+   "chunk_count": 12,
+   "first_chunk": 41,
+   "first_pct": 0.3796,
+   "direct_chunks": 9,
+   "mention_chunks": 3,
+   "evidence": "我便是蓝凤凰，你不早知道了么？"
+  },
+  {
+   "canonical": "仇松年",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "长发头陀，使一对虎头弯刀，围攻余沧海的七人之一",
+   "chunk_count": 5,
+   "first_chunk": 42,
+   "first_pct": 0.3891,
+   "direct_chunks": 5,
+   "mention_chunks": 0,
+   "evidence": "游迅也认得长发头陀仇松年"
+  },
+  {
+   "canonical": "张夫人",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "使短刀的白发老妇，牙齿脱落大半，围攻余沧海的七人之一",
+   "chunk_count": 6,
+   "first_chunk": 42,
+   "first_pct": 0.3891,
+   "direct_chunks": 5,
+   "mention_chunks": 1,
+   "evidence": "张夫人白了他一眼，喝道：“油腔滑调，给我走开些。”"
+  },
+  {
+   "canonical": "严三星",
+   "aliases": [
+    "双蛇恶乞",
+    "双龙神丐"
+   ],
+   "importance": "次要人物",
+   "identity": "乞丐，肩颈盘双蛇，外号“双蛇恶乞”，围攻余沧海的七人之一",
+   "chunk_count": 4,
+   "first_chunk": 42,
+   "first_pct": 0.3891,
+   "direct_chunks": 4,
+   "mention_chunks": 0,
+   "evidence": "那乞丐名叫严三星，外号本来叫作“双蛇恶乞”"
+  },
+  {
+   "canonical": "游迅",
+   "aliases": [
+    "油浸泥鳅",
+    "游兄",
+    "游大老板",
+    "滑不留手"
+   ],
+   "importance": "次要人物",
+   "identity": "富商模样的消息贩子，外号“滑不留手”，轻功了得、无孔不入，卖剑谱消息不成被围",
+   "chunk_count": 7,
+   "first_chunk": 42,
+   "first_pct": 0.3891,
+   "direct_chunks": 7,
+   "mention_chunks": 0,
+   "evidence": "兄弟有个难听的外号，叫作‘滑不留手’"
+  },
+  {
+   "canonical": "黄伯流",
+   "aliases": [
+    "老黄",
+    "银髯老蛟",
+    "银髯蛟",
+    "黄帮主",
+    "黄老帮主"
+   ],
+   "importance": "次要人物",
+   "identity": "天河帮帮主，中原武林前辈耆宿，五霸冈聚会的接待者，事后求令狐冲隐讳此事",
+   "chunk_count": 10,
+   "first_chunk": 42,
+   "first_pct": 0.3891,
+   "direct_chunks": 8,
+   "mention_chunks": 2,
+   "evidence": "帮主黄伯流是中原武林中的一位前辈耆宿"
+  },
+  {
+   "canonical": "司马大",
+   "aliases": [
+    "司马岛主",
+    "阿大"
+   ],
+   "importance": "次要人物",
+   "identity": "岛主（下章言长鲸岛），自幼生得身材高大的魁梧大汉",
+   "chunk_count": 6,
+   "first_chunk": 42,
+   "first_pct": 0.3891,
+   "direct_chunks": 3,
+   "mention_chunks": 3,
+   "evidence": "小人司马大，前来迎接公子去五霸冈上和群雄相见。"
+  },
+  {
+   "canonical": "辛国梁",
+   "aliases": [
+    "辛兄"
+   ],
+   "importance": "次要人物",
+   "identity": "少林派弟子（俗家），声音宏亮，方生师侄",
+   "chunk_count": 4,
+   "first_chunk": 44,
+   "first_pct": 0.4082,
+   "direct_chunks": 2,
+   "mention_chunks": 2,
+   "evidence": "那少林派的大个子辛国梁，剑法还比他强些。"
+  },
+  {
+   "canonical": "易国梓",
+   "aliases": [
+    "易兄"
+   ],
+   "importance": "次要人物",
+   "identity": "少林派弟子，辛国梁师弟，方生师侄，蛮不讲理与令狐冲动手落败",
+   "chunk_count": 3,
+   "first_chunk": 44,
+   "first_pct": 0.4082,
+   "direct_chunks": 2,
+   "mention_chunks": 1,
+   "evidence": "他师弟叫做易国梓，那就无赖得紧了"
+  },
+  {
+   "canonical": "谭迪人",
+   "aliases": [
+    "谭兄"
+   ],
+   "importance": "次要人物",
+   "identity": "昆仑派第二代弟子好手，口中溅到令狐冲毒血而昏厥",
+   "chunk_count": 1,
+   "first_chunk": 44,
+   "first_pct": 0.4082,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "这谭迪人是昆仑派第二代弟子中的好手"
+  },
+  {
+   "canonical": "方生",
+   "aliases": [
+    "方生大师",
+    "方生师弟"
+   ],
+   "importance": "次要人物",
+   "identity": "少林派“方”字辈第一代高僧，与“婆婆”激战，师侄四人丧命仍赠灵药，劝令狐冲赴少林习内功",
+   "chunk_count": 16,
+   "first_chunk": 44,
+   "first_pct": 0.4082,
+   "direct_chunks": 6,
+   "mention_chunks": 10,
+   "evidence": "那老僧道：“老衲法名方生。”"
+  },
+  {
+   "canonical": "黄国柏",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "少林派弟子，方生师侄，使刀，为婆婆所杀",
+   "chunk_count": 2,
+   "first_chunk": 45,
+   "first_pct": 0.4176,
+   "direct_chunks": 1,
+   "mention_chunks": 1,
+   "evidence": "这僧人法名觉月，这是黄国柏师侄"
+  },
+  {
+   "canonical": "向问天",
+   "aliases": [
+    "向兄",
+    "向兄弟",
+    "向先生",
+    "向叔叔",
+    "向右使",
+    "向大哥",
+    "向左使",
+    "向老前辈",
+    "向老头",
+    "天王老子",
+    "姓向的",
+    "童兄",
+    "童化金",
+    "童大哥",
+    "童老兄",
+    "老向",
+    "老童"
+   ],
+   "importance": "重要配角",
+   "identity": "魔教高手，双手系铁链被教众与正派数百人围困于凉亭",
+   "chunk_count": 32,
+   "first_chunk": 47,
+   "first_pct": 0.4366,
+   "direct_chunks": 21,
+   "mention_chunks": 11,
+   "evidence": "向问天嘿的一声，举杯喝了一口酒，却发出呛啷一声响。"
+  },
+  {
+   "canonical": "乐厚",
+   "aliases": [
+    "乐兄",
+    "乐前辈",
+    "乐师伯",
+    "乐老师",
+    "大阴阳手"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派好手，绰号大阴阳手，传左冷禅令旗被盈盈夺旗毒伤",
+   "chunk_count": 3,
+   "first_chunk": 48,
+   "first_pct": 0.4462,
+   "direct_chunks": 2,
+   "mention_chunks": 1,
+   "evidence": "那人道：“我是孝感乐厚。”"
+  },
+  {
+   "canonical": "天乙",
+   "aliases": [
+    "天乙道人"
+   ],
+   "importance": "次要人物",
+   "identity": "泰山派道人，使“七星落长空”被吓得晕死",
+   "chunk_count": 1,
+   "first_chunk": 48,
+   "first_pct": 0.4462,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "那道人道号天乙，和天门、天松等道人乃是同辈"
+  },
+  {
+   "canonical": "王崇古",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "追兵中人物，被“活盾牌”临死咒骂不讲义气",
+   "chunk_count": 2,
+   "first_chunk": 48,
+   "first_pct": 0.4462,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "王崇古，他妈的你不讲义气"
+  },
+  {
+   "canonical": "张芙蓉",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "追兵中以袖箭射杀“活盾牌”的女子",
+   "chunk_count": 2,
+   "first_chunk": 48,
+   "first_pct": 0.4462,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "张芙蓉你这骚狐狸，你……你借刀杀人。"
+  },
+  {
+   "canonical": "姓何的",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "掷飞锥的暗器高手（本块仅知姓何）",
+   "chunk_count": 1,
+   "first_chunk": 48,
+   "first_pct": 0.4462,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "姓何的，你也来蹚这浑水干甚么？"
+  },
+  {
+   "canonical": "任我行",
+   "aliases": [
+    "任先生",
+    "任前辈",
+    "任施主",
+    "任老先生",
+    "任老前辈",
+    "任老弟",
+    "任老怪",
+    "任老魔头",
+    "圣教主",
+    "姓任的",
+    "姓任的前辈",
+    "岳父大人",
+    "教主",
+    "泰山老儿"
+   ],
+   "importance": "重要配角",
+   "identity": "日月神教前教主，任盈盈之父，囚于梅庄湖底，后重掌魔教",
+   "chunk_count": 41,
+   "first_chunk": 49,
+   "first_pct": 0.4556,
+   "direct_chunks": 15,
+   "mention_chunks": 26,
+   "evidence": "难道那任……任……又出来了？"
+  },
+  {
+   "canonical": "丁坚",
+   "aliases": [
+    "一字电剑",
+    "丁兄",
+    "丁大哥",
+    "丁管家"
+   ],
+   "importance": "次要人物",
+   "identity": "梅庄仆役，昔年江湖辣手人物，绰号“一字电剑”",
+   "chunk_count": 5,
+   "first_chunk": 49,
+   "first_pct": 0.4556,
+   "direct_chunks": 4,
+   "mention_chunks": 1,
+   "evidence": "一个叫丁坚，一个叫施令威"
+  },
+  {
+   "canonical": "施令威",
+   "aliases": [
+    "五路神",
+    "施九哥",
+    "施兄",
+    "施管家"
+   ],
+   "importance": "次要人物",
+   "identity": "梅庄仆役，绰号“五路神”",
+   "chunk_count": 4,
+   "first_chunk": 49,
+   "first_pct": 0.4556,
+   "direct_chunks": 4,
+   "mention_chunks": 0,
+   "evidence": "‘一字电剑’丁大哥和‘五路神’施九哥的名头"
+  },
+  {
+   "canonical": "丹青生",
+   "aliases": [
+    "四太爷",
+    "四庄主"
+   ],
+   "importance": "次要人物",
+   "identity": "梅庄四庄主，好酒好画好剑人称三绝",
+   "chunk_count": 8,
+   "first_chunk": 50,
+   "first_pct": 0.4649,
+   "direct_chunks": 7,
+   "mention_chunks": 1,
+   "evidence": "那四庄主丹青生斜着一双醉眼"
+  },
+  {
+   "canonical": "黑白子",
+   "aliases": [
+    "二庄主"
+   ],
+   "importance": "次要人物",
+   "identity": "梅庄二庄主，爱棋成痴，“玄天指”化水成冰",
+   "chunk_count": 10,
+   "first_chunk": 50,
+   "first_pct": 0.4649,
+   "direct_chunks": 7,
+   "mention_chunks": 3,
+   "evidence": "原来这老者是梅庄二庄主黑白子"
+  },
+  {
+   "canonical": "秃笔翁",
+   "aliases": [
+    "三庄主",
+    "秃头老三"
+   ],
+   "importance": "次要人物",
+   "identity": "梅庄三庄主，痴于书法，兵刃判官笔",
+   "chunk_count": 8,
+   "first_chunk": 50,
+   "first_pct": 0.4649,
+   "direct_chunks": 7,
+   "mention_chunks": 1,
+   "evidence": "这位是我三哥秃笔翁"
+  },
+  {
+   "canonical": "莫花尔彻",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "西域剑豪，以美酒换丹青生三招剑法",
+   "chunk_count": 1,
+   "first_chunk": 50,
+   "first_pct": 0.4649,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "我是用三招剑法向西域剑豪莫花尔彻换来的秘诀"
+  },
+  {
+   "canonical": "守戒",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "镇江金山寺大和尚，赠丹青生竹叶青",
+   "chunk_count": 1,
+   "first_chunk": 52,
+   "first_pct": 0.4838,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "寺中大和尚守戒不饮酒，送了一瓶给我。"
+  },
+  {
+   "canonical": "送饭老人",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "梅庄地牢送饭的哑仆（耳聋、舌被割半截），本块未出现名字",
+   "chunk_count": 1,
+   "first_chunk": 54,
+   "first_pct": 0.5029,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "只见一个满头白发的老者左手提灯，右手拿着木盘"
+  },
+  {
+   "canonical": "鲍大楚",
+   "aliases": [
+    "包长老",
+    "鲍长老"
+   ],
+   "importance": "次要人物",
+   "identity": "日月神教长老，先奉东方不败、后归附任我行并服三尸脑神丹",
+   "chunk_count": 8,
+   "first_chunk": 56,
+   "first_pct": 0.5218,
+   "direct_chunks": 6,
+   "mention_chunks": 2,
+   "evidence": "鲍大楚森然道：“你说黑白子不在庄中"
+  },
+  {
+   "canonical": "秦伟邦",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "日月神教十长老之一，原江西任青旗旗主，被向问天长鞭拖回、强服去壳三尸脑神丹",
+   "chunk_count": 5,
+   "first_chunk": 56,
+   "first_pct": 0.5218,
+   "direct_chunks": 4,
+   "mention_chunks": 1,
+   "evidence": "那秦伟邦却是从中级头目升上来的"
+  },
+  {
+   "canonical": "王诚",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "日月神教长老（矮胖老者），归附任我行",
+   "chunk_count": 2,
+   "first_chunk": 56,
+   "first_pct": 0.5218,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "那矮胖老者王诚道"
+  },
+  {
+   "canonical": "桑三娘",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "日月神教长老（中年妇人），擅短打擒拿，归附任我行",
+   "chunk_count": 3,
+   "first_chunk": 56,
+   "first_pct": 0.5218,
+   "direct_chunks": 3,
+   "mention_chunks": 0,
+   "evidence": "那中年妇人桑三娘躬身道"
+  },
+  {
+   "canonical": "薛香主",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "日月神教香主，被人五指插胸挖心而死，据称除任我行外无人能为",
+   "chunk_count": 1,
+   "first_chunk": 56,
+   "first_pct": 0.5218,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "薛香主一身金钟罩、铁布衫的横练功夫"
+  },
+  {
+   "canonical": "郝贤弟",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "日月神教旧部，任我行称其“郝贤弟”，被东方不败处决",
+   "chunk_count": 1,
+   "first_chunk": 57,
+   "first_pct": 0.5312,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "早一年东方不败处决了郝贤弟"
+  },
+  {
+   "canonical": "丘长老",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "日月神教长老，不明不白死于甘肃，实为东方不败毒计",
+   "chunk_count": 1,
+   "first_chunk": 57,
+   "first_pct": 0.5312,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "丘长老不明不白的死在甘肃"
+  },
+  {
+   "canonical": "文长老",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "日月神教长老，被革出教后遭嵩山、泰山、衡山三派高手围攻而死",
+   "chunk_count": 1,
+   "first_chunk": 57,
+   "first_pct": 0.5312,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "文长老被革出教，受嵩山派、泰山派、衡山派三派高手围攻而死"
+  },
+  {
+   "canonical": "吴天德",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "河北沧州游击、新任泉州参将，横蛮军官，被令狐冲剥去衣冠、冒用其名",
+   "chunk_count": 5,
+   "first_chunk": 57,
+   "first_pct": 0.5312,
+   "direct_chunks": 2,
+   "mention_chunks": 3,
+   "evidence": "写明委任河北沧州游击吴天德升任福建泉州府参将"
+  },
+  {
+   "canonical": "仪和",
+   "aliases": [],
+   "importance": "重要配角",
+   "identity": "恒山派女尼，性急，中伏被迷倒",
+   "chunk_count": 26,
+   "first_chunk": 58,
+   "first_pct": 0.5408,
+   "direct_chunks": 25,
+   "mention_chunks": 1,
+   "evidence": "那女尼法名仪和，性子却毫不和气"
+  },
+  {
+   "canonical": "仪清",
+   "aliases": [],
+   "importance": "重要配角",
+   "identity": "恒山派女弟子，领队点灯中伏",
+   "chunk_count": 26,
+   "first_chunk": 58,
+   "first_pct": 0.5408,
+   "direct_chunks": 23,
+   "mention_chunks": 3,
+   "evidence": "仪清师姊，你别催将军了"
+  },
+  {
+   "canonical": "仪质",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "恒山派女弟子，背负信鸽竹笼，放飞定静告急书信",
+   "chunk_count": 5,
+   "first_chunk": 59,
+   "first_pct": 0.5504,
+   "direct_chunks": 4,
+   "mention_chunks": 1,
+   "evidence": "仪质答应了，从背上所负竹笼中取出一只信鸽"
+  },
+  {
+   "canonical": "仪真",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "恒山派女弟子，奉命留守客店照料伤者",
+   "chunk_count": 8,
+   "first_chunk": 59,
+   "first_pct": 0.5504,
+   "direct_chunks": 7,
+   "mention_chunks": 1,
+   "evidence": "仪质、仪真，你们留在这里"
+  },
+  {
+   "canonical": "秦绢",
+   "aliases": [
+    "秦师妹",
+    "绢儿"
+   ],
+   "importance": "次要人物",
+   "identity": "恒山派定静关门弟子，年最幼，被迷倒后获救",
+   "chunk_count": 17,
+   "first_chunk": 59,
+   "first_pct": 0.5504,
+   "direct_chunks": 15,
+   "mention_chunks": 2,
+   "evidence": "这少女秦绢是定静师太所收的关门弟子"
+  },
+  {
+   "canonical": "郑萼",
+   "aliases": [
+    "萼儿",
+    "郑姑娘",
+    "郑师妹"
+   ],
+   "importance": "次要人物",
+   "identity": "恒山派俗家女弟子，能说会道，惯与外人打交道",
+   "chunk_count": 19,
+   "first_chunk": 59,
+   "first_pct": 0.5504,
+   "direct_chunks": 19,
+   "mention_chunks": 0,
+   "evidence": "女弟子郑萼当下便上前敲门"
+  },
+  {
+   "canonical": "于嫂",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "原白云庵佣妇出身的恒山派弟子，率众救援中伏",
+   "chunk_count": 10,
+   "first_chunk": 59,
+   "first_pct": 0.5504,
+   "direct_chunks": 8,
+   "mention_chunks": 2,
+   "evidence": "于嫂是个四十来岁的中年妇人"
+  },
+  {
+   "canonical": "钟镇",
+   "aliases": [
+    "九曲剑",
+    "烂铁剑",
+    "钟师兄",
+    "钟师弟"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派左冷禅师弟，奉命赴闽逼恒山派答允五派合并，闻“吸星大法”而逃",
+   "chunk_count": 5,
+   "first_chunk": 59,
+   "first_pct": 0.5504,
+   "direct_chunks": 4,
+   "mention_chunks": 1,
+   "evidence": "是嵩山派左掌门的师弟，姓钟名镇"
+  },
+  {
+   "canonical": "邓八公",
+   "aliases": [
+    "神鞭",
+    "邓八婆"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派钟镇师弟，绰号“神鞭”，使软鞭",
+   "chunk_count": 3,
+   "first_chunk": 60,
+   "first_pct": 0.5599,
+   "direct_chunks": 3,
+   "mention_chunks": 0,
+   "evidence": "一个叫做“神鞭”邓八公"
+  },
+  {
+   "canonical": "高克新",
+   "aliases": [
+    "癞皮猫",
+    "锦毛狮"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派钟镇师弟，绰号“锦毛狮”，识破令狐冲会使吸星大法",
+   "chunk_count": 3,
+   "first_chunk": 60,
+   "first_pct": 0.5599,
+   "direct_chunks": 3,
+   "mention_chunks": 0,
+   "evidence": "另一个叫“锦毛狮”高克新"
+  },
+  {
+   "canonical": "卜沉",
+   "aliases": [
+    "白头仙翁",
+    "白头妖翁"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派旁枝高手，绰号“白头仙翁”（白发老者），夺袈裟剑谱后为令狐冲所杀",
+   "chunk_count": 3,
+   "first_chunk": 62,
+   "first_pct": 0.5788,
+   "direct_chunks": 1,
+   "mention_chunks": 2,
+   "evidence": "“白头仙翁”卜沉，“秃鹰”沙天江，这两人可是你杀的？"
+  },
+  {
+   "canonical": "沙天江",
+   "aliases": [
+    "秃枭",
+    "秃鹰"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派旁枝高手，绰号“秃鹰”（秃头老者），宁死不屈自插匕首身亡",
+   "chunk_count": 3,
+   "first_chunk": 62,
+   "first_pct": 0.5788,
+   "direct_chunks": 1,
+   "mention_chunks": 2,
+   "evidence": "秃鹰岂是投降之人？"
+  },
+  {
+   "canonical": "白剥皮",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "福州道中某镇大财主，姓白，绰号“白剥皮”，开当铺米行，被恒山派假化缘",
+   "chunk_count": 4,
+   "first_chunk": 63,
+   "first_pct": 0.5883,
+   "direct_chunks": 0,
+   "mention_chunks": 4,
+   "evidence": "本镇只有一个大财主，姓白，外号叫做白剥皮"
+  },
+  {
+   "canonical": "仪灵",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "恒山派弟子，随仪真回福州送药",
+   "chunk_count": 2,
+   "first_chunk": 64,
+   "first_pct": 0.5977,
+   "direct_chunks": 1,
+   "mention_chunks": 1,
+   "evidence": "仪灵师妹，你陪我同去。"
+  },
+  {
+   "canonical": "赵师兄",
+   "aliases": [
+    "姓赵的老者",
+    "赵某人"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派三名隐秘高手之一，三十年前横行冀北，奉命冒充魔教围攻恒山派",
+   "chunk_count": 1,
+   "first_chunk": 65,
+   "first_pct": 0.6072,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "令狐冲剑尖指在那姓赵矮小老者喉头，喝道：“撤剑！”"
+  },
+  {
+   "canonical": "张师兄",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "嵩山派三名隐秘高手之一，与赵、司马同奉左冷禅之命行事",
+   "chunk_count": 1,
+   "first_chunk": 65,
+   "first_pct": 0.6072,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "赵师兄、张师兄、司马师兄，我恒山派和贵派无怨无仇"
+  },
+  {
+   "canonical": "司马师兄",
+   "aliases": [
+    "姓司马的",
+    "姓司马的高大汉子"
+   ],
+   "importance": "次要人物",
+   "identity": "嵩山派三名隐秘高手之一，失言供出钟镇与左掌门分兵之命",
+   "chunk_count": 1,
+   "first_chunk": 65,
+   "first_pct": 0.6072,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "那姓司马的高大汉子道：“我们是奉命差遣"
+  },
+  {
+   "canonical": "清晓师太",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "水月庵住持，危急中将龙泉宝剑分交二定御敌，因护友殉难",
+   "chunk_count": 1,
+   "first_chunk": 65,
+   "first_pct": 0.6072,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "住持清晓师太在危急中将宝剑分交定闲"
+  },
+  {
+   "canonical": "仪文",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "定闲师太座下二弟子，述说水月庵遇敌与清晓师太殉难经过",
+   "chunk_count": 5,
+   "first_chunk": 65,
+   "first_pct": 0.6072,
+   "direct_chunks": 4,
+   "mention_chunks": 1,
+   "evidence": "定闲师太座下的二弟子仪文说道：“师叔"
+  },
+  {
+   "canonical": "易堂主",
+   "aliases": [
+    "姓易的",
+    "易大哥"
+   ],
+   "importance": "次要人物",
+   "identity": "九江白蛟帮堂主，满脸胡子，人称长江双飞鱼之一",
+   "chunk_count": 1,
+   "first_chunk": 65,
+   "first_pct": 0.6072,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "那胡子正是姓易，奇道：“我……我姓易，你怎么知道？"
+  },
+  {
+   "canonical": "齐堂主",
+   "aliases": [
+    "姓齐的"
+   ],
+   "importance": "次要人物",
+   "identity": "九江白蛟帮堂主，尖脸汉子，人称长江双飞鱼之一",
+   "chunk_count": 1,
+   "first_chunk": 65,
+   "first_pct": 0.6072,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "那姓齐的道：“‘万里独行’田伯光，不知师太是否和他相熟？"
+  },
+  {
+   "canonical": "史帮主",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "九江白蛟帮帮主，与田伯光是朋友，将率帮众赴少林救任大小姐",
+   "chunk_count": 2,
+   "first_chunk": 65,
+   "first_pct": 0.6072,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "阁下姓易还是姓齐？史帮主可好？"
+  },
+  {
+   "canonical": "西域豪士",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "借宝刀给令狐冲削断铁和尚手腕的黄须豪士（名字本块未出现）",
+   "chunk_count": 1,
+   "first_chunk": 69,
+   "first_pct": 0.6451,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "那人高鼻深目，颏下一部黄须，似是西域人氏"
+  },
+  {
+   "canonical": "青莲使者",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "丐帮中人，据称是解帮主的私生儿子",
+   "chunk_count": 1,
+   "first_chunk": 70,
+   "first_pct": 0.6547,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "丐帮中的青莲使者、白莲使者两位，虽然不姓解"
+  },
+  {
+   "canonical": "白莲使者",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "丐帮中人，据称是解帮主的私生儿子",
+   "chunk_count": 1,
+   "first_chunk": 70,
+   "first_pct": 0.6547,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "丐帮中的青莲使者、白莲使者两位，虽然不姓解"
+  },
+  {
+   "canonical": "震山子",
+   "aliases": [
+    "乾坤一剑"
+   ],
+   "importance": "次要人物",
+   "identity": "昆仑派掌门，有一脉单传的孙子，被任我行点出眷属",
+   "chunk_count": 3,
+   "first_chunk": 70,
+   "first_pct": 0.6547,
+   "direct_chunks": 2,
+   "mention_chunks": 1,
+   "evidence": "昆仑派乾坤一剑震山子有个一脉单传的孙子"
+  },
+  {
+   "canonical": "卢老大",
+   "aliases": [
+    "卢大哥"
+   ],
+   "importance": "次要人物",
+   "identity": "任我行属下江湖豪客头目，率众袭击岳灵珊林平之，被令狐冲刺伤一眼",
+   "chunk_count": 1,
+   "first_chunk": 74,
+   "first_pct": 0.6929,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "旁边一人问道：“卢大哥，为甚么浪得虚名？”"
+  },
+  {
+   "canonical": "闵老二",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "卢老大手下豪客",
+   "chunk_count": 1,
+   "first_chunk": 74,
+   "first_pct": 0.6929,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "闵老二，你说她一身细皮白肉，老子可就不信"
+  },
+  {
+   "canonical": "史老三",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "卢老大手下豪客，中剑受伤",
+   "chunk_count": 1,
+   "first_chunk": 74,
+   "first_pct": 0.6929,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "这妞儿下手好狠，史老三，我跟你报仇。"
+  },
+  {
+   "canonical": "仪识",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "恒山派弟子，被派接应于嫂仪文",
+   "chunk_count": 1,
+   "first_chunk": 75,
+   "first_pct": 0.7024,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "当下又派了两名弟子仪光、仪识前去接应。"
+  },
+  {
+   "canonical": "贾布",
+   "aliases": [
+    "贾叔叔",
+    "贾长老",
+    "黄面尊者"
+   ],
+   "importance": "次要人物",
+   "identity": "日月神教青龙堂长老，已死于翠屏山下深谷，令旨中称其“成功而归”",
+   "chunk_count": 4,
+   "first_chunk": 76,
+   "first_pct": 0.7118,
+   "direct_chunks": 2,
+   "mention_chunks": 2,
+   "evidence": "左首那人是“黄面尊者”贾布"
+  },
+  {
+   "canonical": "上官云",
+   "aliases": [
+    "上官兄弟",
+    "上官叔叔",
+    "上官雕侠",
+    "雕侠"
+   ],
+   "importance": "次要人物",
+   "identity": "日月神教白虎堂长老，被盈盈收服，服三尸脑神丹归顺任我行",
+   "chunk_count": 10,
+   "first_chunk": 76,
+   "first_pct": 0.7118,
+   "direct_chunks": 7,
+   "mention_chunks": 3,
+   "evidence": "右首那人复姓上官，单名一个云字，外号叫做“雕侠”"
+  },
+  {
+   "canonical": "晓风师太",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "恒山派创派之祖，传下四件法器",
+   "chunk_count": 1,
+   "first_chunk": 76,
+   "first_pct": 0.7118,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "四件法器，乃恒山派创派之祖晓风师太所传"
+  },
+  {
+   "canonical": "红叶禅师",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "福建莆田少林寺下院方丈，《葵花宝典》原藏者，临终焚毁宝典",
+   "chunk_count": 2,
+   "first_chunk": 77,
+   "first_pct": 0.7212,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "其时莆田少林寺方丈红叶禅师，乃是一位大智大慧的了不起人物"
+  },
+  {
+   "canonical": "岳肃",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "华山气宗之祖，曾偷阅《葵花宝典》，死于魔教十长老之手",
+   "chunk_count": 2,
+   "first_chunk": 77,
+   "first_pct": 0.7212,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "想来便是岳肃和蔡子峰两位华山前辈了？"
+  },
+  {
+   "canonical": "蔡子峰",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "华山剑宗之祖，曾偷阅《葵花宝典》，死于魔教十长老之手",
+   "chunk_count": 2,
+   "first_chunk": 77,
+   "first_pct": 0.7212,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "想来便是岳肃和蔡子峰两位华山前辈了？"
+  },
+  {
+   "canonical": "杨莲亭",
+   "aliases": [
+    "姓杨的",
+    "姓杨的小子",
+    "杨总管",
+    "莲弟"
+   ],
+   "importance": "次要人物",
+   "identity": "东方不败男宠，被盈盈刺伤仍硬挺不出声，累东方不败分心落败",
+   "chunk_count": 9,
+   "first_chunk": 78,
+   "first_pct": 0.7308,
+   "direct_chunks": 3,
+   "mention_chunks": 6,
+   "evidence": "那姓杨的叫做杨莲亭，只二十来岁年纪"
+  },
+  {
+   "canonical": "童百熊",
+   "aliases": [
+    "童伯伯",
+    "童兄",
+    "童大哥",
+    "童老"
+   ],
+   "importance": "次要人物",
+   "identity": "风雷堂长老，东方不败八拜之交，因拒背叛东方不败而被擒押过市",
+   "chunk_count": 3,
+   "first_chunk": 79,
+   "first_pct": 0.7403,
+   "direct_chunks": 2,
+   "mention_chunks": 1,
+   "evidence": "风雷堂长老童百熊勾结敌人，谋叛本教，立即擒拿归坛"
+  },
+  {
+   "canonical": "假东方不败",
+   "aliases": [
+    "姓包汉子",
+    "姓包的"
+   ],
+   "importance": "次要人物",
+   "identity": "冒充东方不败坐于成德殿的男子，姓包，真名未及说完即被识破",
+   "chunk_count": 1,
+   "first_chunk": 80,
+   "first_pct": 0.7497,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "任我行哈哈大笑，叫道：“这东方不败是假货。”"
+  },
+  {
+   "canonical": "罗长老",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "日月神教朱雀堂长老，因不服东方不败接位被童百熊一刀杀死",
+   "chunk_count": 1,
+   "first_chunk": 80,
+   "first_pct": 0.7497,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "朱雀堂罗长老心中不服，啰里啰唆，是你一刀将罗长老杀了。"
+  },
+  {
+   "canonical": "东灵道长",
+   "aliases": [
+    "东灵祖师爷",
+    "东灵道人"
+   ],
+   "importance": "仅提及",
+   "identity": "泰山派创派祖师",
+   "chunk_count": 2,
+   "first_chunk": 82,
+   "first_pct": 0.7686,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "泰山派自祖师爷东灵道长创派以来"
+  },
+  {
+   "canonical": "玉玑子",
+   "aliases": [
+    "玉玑师兄",
+    "玉玑道人",
+    "玉玑道兄"
+   ],
+   "importance": "次要人物",
+   "identity": "泰山派天门道人的师叔，嵩山大会夺任泰山掌门",
+   "chunk_count": 4,
+   "first_chunk": 82,
+   "first_pct": 0.7686,
+   "direct_chunks": 4,
+   "mention_chunks": 0,
+   "evidence": "他是玉玑子，是天门道人的师叔。"
+  },
+  {
+   "canonical": "玉磬子",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "泰山派“玉”字辈耆宿，天门道人的师叔",
+   "chunk_count": 7,
+   "first_chunk": 83,
+   "first_pct": 0.778,
+   "direct_chunks": 3,
+   "mention_chunks": 4,
+   "evidence": "天门道人看这二人时，却是玉磬子、玉音子两个师叔。"
+  },
+  {
+   "canonical": "玉音子",
+   "aliases": [
+    "玉音道长"
+   ],
+   "importance": "次要人物",
+   "identity": "泰山派“玉”字辈耆宿，以泰山剑法斗岳灵珊落败",
+   "chunk_count": 7,
+   "first_chunk": 83,
+   "first_pct": 0.778,
+   "direct_chunks": 3,
+   "mention_chunks": 4,
+   "evidence": "玉音子道：“我们确是亲眼瞧见了。"
+  },
+  {
+   "canonical": "建除",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "泰山派掌门天门道人的第二弟子",
+   "chunk_count": 2,
+   "first_chunk": 83,
+   "first_pct": 0.778,
+   "direct_chunks": 1,
+   "mention_chunks": 1,
+   "evidence": "这中年道人法名建除，是天门道人的第二弟子。"
+  },
+  {
+   "canonical": "青海一枭",
+   "aliases": [
+    "季兄"
+   ],
+   "importance": "次要人物",
+   "identity": "“白板煞星”之徒，袭制天门道人同归于尽的麻衣汉子",
+   "chunk_count": 1,
+   "first_chunk": 83,
+   "first_pct": 0.778,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "你派了‘青海一枭’这等人物来对付天门道人"
+  },
+  {
+   "canonical": "白板煞星",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "恶名远播的无鼻恶人，青海一枭之师",
+   "chunk_count": 1,
+   "first_chunk": 83,
+   "first_pct": 0.778,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "但和这人的师父‘白板煞星’，交情定然大非寻常。"
+  },
+  {
+   "canonical": "阿毛爹",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "盈盈偷衣那家的老农，阿毛之父（无名）",
+   "chunk_count": 1,
+   "first_chunk": 91,
+   "first_pct": 0.8542,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "阿毛爹，别是黄鼠狼来偷鸡。"
+  },
+  {
+   "canonical": "老婆婆",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "盈盈偷衣那家的老妇，阿毛之母（无名）",
+   "chunk_count": 1,
+   "first_chunk": 91,
+   "first_pct": 0.8542,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "老婆婆说：‘阿毛爹，别是黄鼠狼来偷鸡。’"
+  },
+  {
+   "canonical": "史香主",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "日月教香主（名不详）",
+   "chunk_count": 2,
+   "first_chunk": 93,
+   "first_pct": 0.8732,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "史香主四周都查察过了。"
+  },
+  {
+   "canonical": "葛长老",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "日月教长老（名不详），出去诱引岳不群后失踪被杀",
+   "chunk_count": 3,
+   "first_chunk": 93,
+   "first_pct": 0.8732,
+   "direct_chunks": 2,
+   "mention_chunks": 1,
+   "evidence": "此计大妙，薛兄弟，瞧你不出，倒还是智多星呢。"
+  },
+  {
+   "canonical": "薛兄弟",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "日月教成员，姓薛，被称智多星",
+   "chunk_count": 2,
+   "first_chunk": 93,
+   "first_pct": 0.8732,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "葛长老说得好。属下蒙你老人家提拔"
+  },
+  {
+   "canonical": "杜长老",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "日月教长老（名不详），遭岳不群毒手",
+   "chunk_count": 2,
+   "first_chunk": 94,
+   "first_pct": 0.8828,
+   "direct_chunks": 1,
+   "mention_chunks": 1,
+   "evidence": "杜长老笑道：“这婆娘失魂落魄，来到客店之中"
+  },
+  {
+   "canonical": "莫长老",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "日月教长老（名不详）",
+   "chunk_count": 2,
+   "first_chunk": 94,
+   "first_pct": 0.8828,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "莫长老道：“包兄，你胸中想已算定，便请说出来如何？”"
+  },
+  {
+   "canonical": "周孤桐",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "桐柏双奇之男，使黄金拐杖",
+   "chunk_count": 1,
+   "first_chunk": 98,
+   "first_pct": 0.921,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "桐柏双奇男的叫周孤桐，女的叫吴柏英。"
+  },
+  {
+   "canonical": "吴柏英",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "桐柏双奇之女，使黄金拐杖",
+   "chunk_count": 1,
+   "first_chunk": 98,
+   "first_pct": 0.921,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "桐柏双奇男的叫周孤桐，女的叫吴柏英。"
+  },
+  {
+   "canonical": "黄师兄",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "衡山派门人（姓黄，名不详），传讯召同门赴华山观石壁剑招",
+   "chunk_count": 1,
+   "first_chunk": 99,
+   "first_pct": 0.9306,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "幸好黄师兄够交情，传来讯息"
+  },
+  {
+   "canonical": "玉钟子",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "泰山派老成道人，黑暗大乱后倡议众人立誓止杀、自报姓名以求脱险",
+   "chunk_count": 1,
+   "first_chunk": 100,
+   "first_pct": 0.9402,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "贫道是泰山派玉钟子，请各位收起刀剑。"
+  },
+  {
+   "canonical": "大力神魔",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "魔教前辈高手，当年以巨斧开凿山洞中的地道",
+   "chunk_count": 1,
+   "first_chunk": 100,
+   "first_pct": 0.9402,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "那地道是当年魔教的大力神魔以巨斧所开"
+  },
+  {
+   "canonical": "仪敏",
+   "aliases": [],
+   "importance": "次要人物",
+   "identity": "恒山派弟子，跳下地洞扶救同门",
+   "chunk_count": 1,
+   "first_chunk": 101,
+   "first_pct": 0.9498,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "仪清和仪敏忙跳下洞去，将同门扶了出来"
+  },
+  {
+   "canonical": "凌虚",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "武当派中人，冲虚师弟，受命战时掩护武当派退却",
+   "chunk_count": 1,
+   "first_chunk": 104,
+   "first_pct": 0.9781,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "我已吩咐凌虚师弟代我掩护武当派退却。"
+  },
+  {
+   "canonical": "小雪龙",
+   "aliases": [],
+   "importance": "非人类角色",
+   "identity": "林平之的爱马，外婆从洛阳重价觅来的大宛名驹",
+   "chunk_count": 1,
+   "first_chunk": 2,
+   "first_pct": 0.02,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "两年前他十七岁生日时送给他的",
+   "nonhuman": true
+  },
+  {
+   "canonical": "大花",
+   "aliases": [],
+   "importance": "非人类角色",
+   "identity": "老农家从前养的狗",
+   "chunk_count": 1,
+   "first_chunk": 47,
+   "first_pct": 0.44,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "老农家从前养的大花",
+   "nonhuman": true
+  },
+  {
+   "canonical": "老黑",
+   "aliases": [],
+   "importance": "非人类角色",
+   "identity": "老农家的狗",
+   "chunk_count": 1,
+   "first_chunk": 47,
+   "first_pct": 0.44,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "老农家的狗",
+   "nonhuman": true
+  }
+ ],
+ "collectives": [
+  {
+   "canonical": "江南四友",
+   "aliases": [
+    "梅庄四友",
+    "江南四狗"
+   ],
+   "importance": "",
+   "identity": "看守任我行的梅庄四庄主（江南四友：黄钟公、黑白子、秃笔翁、丹青生），欲隐姓埋名而不得（后记举例）",
+   "chunk_count": 8,
+   "first_chunk": 49,
+   "first_pct": 0.4556,
+   "direct_chunks": 4,
+   "mention_chunks": 4,
+   "evidence": "有事求见江南四友，四位前辈。",
+   "collective": true
+  },
+  {
+   "canonical": "恒山三定",
+   "aliases": [
+    "恒山三尼"
+   ],
+   "importance": "",
+   "identity": "指恒山派定字辈三师太：定闲、定逸、定静",
+   "chunk_count": 1,
+   "first_chunk": 58,
+   "first_pct": 0.5408,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "‘恒山三定’，那么是定静师太了",
+   "collective": true
+  },
+  {
+   "canonical": "魔教十长老",
+   "aliases": [
+    "神教十长老"
+   ],
+   "importance": "",
+   "identity": "被囚死于思过崖后洞的十名魔教长老，石壁图形刻制者（本块仅被提及）",
+   "chunk_count": 9,
+   "first_chunk": 25,
+   "first_pct": 0.2277,
+   "direct_chunks": 0,
+   "mention_chunks": 9,
+   "evidence": "这十具骸骨，便是魔教十长老了",
+   "collective": true
+  },
+  {
+   "canonical": "十长老",
+   "aliases": [],
+   "importance": "",
+   "identity": "日月教现任十位长老，随侍任我行与会（非昔年困死华山的前辈十长老）",
+   "chunk_count": 1,
+   "first_chunk": 103,
+   "first_pct": 0.9687,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "向问天和十长老一齐躬身说道",
+   "collective": true
+  },
+  {
+   "canonical": "漠北双熊",
+   "aliases": [
+    "白熊",
+    "黑熊"
+   ],
+   "importance": "",
+   "identity": "塞外漠北两名吃人巨盗白熊与黑熊的合称",
+   "chunk_count": 5,
+   "first_chunk": 41,
+   "first_pct": 0.3796,
+   "direct_chunks": 5,
+   "mention_chunks": 0,
+   "evidence": "塞外漠北有两名巨盗，一个叫白熊，一个叫黑熊",
+   "collective": true
+  },
+  {
+   "canonical": "桐柏双奇",
+   "aliases": [],
+   "importance": "",
+   "identity": "眇目男女二人合称（男瞎左眼、女瞎右眼），各使黄金拐杖，围攻余沧海的七人之二",
+   "chunk_count": 5,
+   "first_chunk": 42,
+   "first_pct": 0.3891,
+   "direct_chunks": 5,
+   "mention_chunks": 0,
+   "evidence": "好久没见‘桐柏双奇’在江湖上行走了",
+   "collective": true
+  },
+  {
+   "canonical": "黄河老祖",
+   "aliases": [],
+   "importance": "",
+   "identity": "老头子（姓老）与祖千秋（姓祖）居于黄河沿岸的合称",
+   "chunk_count": 2,
+   "first_chunk": 40,
+   "first_pct": 0.3701,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "你华山派在我‘黄河老祖’眼中，不值半文钱",
+   "collective": true
+  },
+  {
+   "canonical": "长江双飞鱼",
+   "aliases": [],
+   "importance": "",
+   "identity": "白蛟帮易、齐二堂主的合称，随史帮主上山",
+   "chunk_count": 2,
+   "first_chunk": 65,
+   "first_pct": 0.6072,
+   "direct_chunks": 2,
+   "mention_chunks": 0,
+   "evidence": "白蛟帮易堂主、齐堂主，江湖上人称‘长江双飞鱼’",
+   "collective": true
+  },
+  {
+   "canonical": "点苍双剑",
+   "aliases": [],
+   "importance": "",
+   "identity": "点苍派两位剑客，被向问天偷袭推落山涧",
+   "chunk_count": 1,
+   "first_chunk": 48,
+   "first_pct": 0.4462,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "说甚么‘点苍双剑，剑气冲天’",
+   "collective": true
+  },
+  {
+   "canonical": "嵩山十三太保",
+   "aliases": [],
+   "importance": "",
+   "identity": "左冷禅的十余名师弟合称（费彬死后余十二人）",
+   "chunk_count": 1,
+   "first_chunk": 30,
+   "first_pct": 0.2753,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "武林中号称‘嵩山十三太保’，大嵩阳手费彬虽然逝世",
+   "collective": true
+  },
+  {
+   "canonical": "曲江二友",
+   "aliases": [],
+   "importance": "",
+   "identity": "指白克（神刀）与卢西思（神笔）二人合称",
+   "chunk_count": 1,
+   "first_chunk": 15,
+   "first_pct": 0.1325,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "曲江二友神刀白克、神笔卢西思等人先后到来。",
+   "collective": true
+  },
+  {
+   "canonical": "豫中三英",
+   "aliases": [],
+   "importance": "",
+   "identity": "开封府三位武林人士的合称，岳不群夫妇口中提及",
+   "chunk_count": 1,
+   "first_chunk": 36,
+   "first_pct": 0.3324,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "像华老镖头、海老拳师、豫中三英这些人",
+   "collective": true
+  },
+  {
+   "canonical": "潞东七虎",
+   "aliases": [],
+   "importance": "",
+   "identity": "太行山七名匪豪，昔年围攻东方不败致其重伤，为童百熊所救",
+   "chunk_count": 1,
+   "first_chunk": 80,
+   "first_pct": 0.7497,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "想当年在太行山之时，潞东七虎向我围攻。",
+   "collective": true
+  },
+  {
+   "canonical": "七星使者",
+   "aliases": [],
+   "importance": "",
+   "identity": "魔教中七名身分隐秘的高手，围攻定静师太的七人",
+   "chunk_count": 1,
+   "first_chunk": 59,
+   "first_pct": 0.5504,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "定静师太以一敌七，力斗魔教的‘七星使者’",
+   "collective": true
+  },
+  {
+   "canonical": "众瞎子",
+   "aliases": [],
+   "importance": "",
+   "identity": "左冷禅带入山洞、昔日在破庙外被令狐冲刺瞎的一十五名好手，以骂“滚你奶奶的”作辨别同道暗语",
+   "chunk_count": 1,
+   "first_chunk": 100,
+   "first_pct": 0.9402,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "知是那天夜间在破庙外为自己刺瞎的一十五人",
+   "collective": true
+  },
+  {
+   "canonical": "青城四秀",
+   "aliases": [
+    "英雄豪杰，青城四秀",
+    "青城四兽"
+   ],
+   "importance": "",
+   "identity": "青城派武功最强的四名弟子：侯人英、洪人雄、于人豪、罗人杰",
+   "chunk_count": 1,
+   "first_chunk": 90,
+   "first_pct": 0.8447,
+   "direct_chunks": 1,
+   "mention_chunks": 0,
+   "evidence": "“英雄豪杰，青城四秀”，是青城派武功最强的四名弟子",
+   "collective": true
+  },
+  {
+   "canonical": "桃谷六仙",
+   "aliases": [
+    "六兄弟",
+    "桃谷五仙",
+    "桃谷五怪",
+    "桃谷六小子",
+    "桃谷六怪",
+    "桃谷六鬼",
+    "桃谷四仙",
+    "桃谷诸怪"
+   ],
+   "importance": "",
+   "identity": "六个形貌奇丑的怪人兄弟：桃根仙、桃干仙、桃枝仙、桃叶仙、桃花仙、桃实仙；以六道真气替令狐冲治伤",
+   "chunk_count": 43,
+   "first_chunk": 27,
+   "first_pct": 0.2468,
+   "direct_chunks": 25,
+   "mention_chunks": 18,
+   "evidence": "甚么嵩山派、泰山派，桃谷六仙还真不将他们放在眼里",
+   "collective": true
+  }
+ ],
+ "historical": [
+  {
+   "canonical": "秦穆公",
+   "aliases": [],
+   "importance": "",
+   "identity": "旁白典故中的春秋秦国国君，弄玉之父",
+   "chunk_count": 1,
+   "first_chunk": 72,
+   "first_pct": 0.6737,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "秦穆公有女，小字弄玉，最爱吹箫",
+   "historical": true
+  },
+  {
+   "canonical": "钟会",
+   "aliases": [],
+   "importance": "",
+   "identity": "魏晋权贵，访嵇康受冷落，进谗害之（典故人物）",
+   "chunk_count": 1,
+   "first_chunk": 18,
+   "first_pct": 0.161,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "钟会当时做大官，慕名去拜访他",
+   "historical": true
+  },
+  {
+   "canonical": "荷叔齐",
+   "aliases": [],
+   "importance": "",
+   "identity": "《论语》所记隐者，原文如此（疑为“荷蓧丈人”与“叔齐”连写之讹），后记列举隐者时提及",
+   "chunk_count": 1,
+   "first_chunk": 106,
+   "first_pct": 0.997,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "晨门、楚狂接舆、长沮、桀溺、荷叔齐、虞仲、夷逸、朱张、柳下惠、少连等等",
+   "historical": true
+  },
+  {
+   "canonical": "伯夷",
+   "aliases": [],
+   "importance": "",
+   "identity": "《论语》所记逸民，后记中列为不降其志、不辱其身的隐者典型",
+   "chunk_count": 1,
+   "first_chunk": 106,
+   "first_pct": 0.997,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "像伯夷、叔齐那样，不放弃自己意志，不牺牲自己尊严",
+   "historical": true
+  },
+  {
+   "canonical": "阎罗王",
+   "aliases": [],
+   "importance": "",
+   "identity": "神话中阴间之主，岳夫人转述平一指轶事时提及",
+   "chunk_count": 1,
+   "first_chunk": 37,
+   "first_pct": 0.3417,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "就算阎罗王不加理会，判官小鬼定要和他为难",
+   "historical": true
+  },
+  {
+   "canonical": "魏道武帝",
+   "aliases": [],
+   "importance": "",
+   "identity": "北魏开国皇帝，天兴元年发卒数万人凿恒岭通直道",
+   "chunk_count": 2,
+   "first_chunk": 76,
+   "first_pct": 0.7118,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "魏道武帝天兴元年克燕，将兵自中山归平城",
+   "historical": true
+  },
+  {
+   "canonical": "杨文广",
+   "aliases": [],
+   "importance": "",
+   "identity": "杨家将后人，六仙猜测庙神身份时提及",
+   "chunk_count": 1,
+   "first_chunk": 37,
+   "first_pct": 0.3417,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "或许是杨宗保、杨文广呢？",
+   "historical": true
+  },
+  {
+   "canonical": "般刺密谛",
+   "aliases": [],
+   "importance": "",
+   "identity": "梵僧，在峨嵋山与慧可共研《易筋经》",
+   "chunk_count": 1,
+   "first_chunk": 47,
+   "first_pct": 0.4366,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "在四川峨嵋山得晤梵僧般刺密谛",
+   "historical": true
+  },
+  {
+   "canonical": "少连",
+   "aliases": [],
+   "importance": "",
+   "identity": "《论语》所记逸民，与柳下惠并举（后记）",
+   "chunk_count": 1,
+   "first_chunk": 106,
+   "first_pct": 0.997,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "像柳下惠、少连那样，意志和尊严有所牺牲，但言行合情合理",
+   "historical": true
+  },
+  {
+   "canonical": "孔子",
+   "aliases": [
+    "孔夫子"
+   ],
+   "importance": "",
+   "identity": "历史人物，后记论隐士时引其“知其不可而为之”及对隐者的评价",
+   "chunk_count": 2,
+   "first_chunk": 103,
+   "first_pct": 0.9687,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "孔夫子的武功哪有圣教主高强？",
+   "historical": true
+  },
+  {
+   "canonical": "王质",
+   "aliases": [],
+   "importance": "",
+   "identity": "烂柯山遇仙观棋者",
+   "chunk_count": 1,
+   "first_chunk": 50,
+   "first_pct": 0.4649,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "王质在烂柯山遇仙所见的棋局",
+   "historical": true
+  },
+  {
+   "canonical": "岳飞",
+   "aliases": [
+    "岳武穆",
+    "岳爷爷",
+    "岳鹏举"
+   ],
+   "importance": "",
+   "identity": "南宋抗金名将岳武穆，朱仙镇大破金兵",
+   "chunk_count": 2,
+   "first_chunk": 37,
+   "first_pct": 0.3417,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "是岳鹏举岳爷爷大破金兀术的地方",
+   "historical": true
+  },
+  {
+   "canonical": "骊山仙姥",
+   "aliases": [],
+   "importance": "",
+   "identity": "骊山棋仙，杀得刘仲甫呕血败北",
+   "chunk_count": 1,
+   "first_chunk": 50,
+   "first_pct": 0.4649,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "见到了刘仲甫和骊山仙姥的对弈图谱",
+   "historical": true
+  },
+  {
+   "canonical": "达摩老祖",
+   "aliases": [],
+   "importance": "",
+   "identity": "东土禅宗初祖，《易筋经》所自出（方证所述）",
+   "chunk_count": 4,
+   "first_chunk": 47,
+   "first_pct": 0.4366,
+   "direct_chunks": 0,
+   "mention_chunks": 4,
+   "evidence": "乃东土禅宗初祖达摩老祖所创",
+   "historical": true
+  },
+  {
+   "canonical": "颜真卿",
+   "aliases": [
+    "颜鲁公"
+   ],
+   "importance": "",
+   "identity": "《裴将军诗》帖的书家",
+   "chunk_count": 1,
+   "first_chunk": 51,
+   "first_pct": 0.4744,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "是从颜真卿所书诗帖中变化出来的",
+   "historical": true
+  },
+  {
+   "canonical": "弄玉",
+   "aliases": [],
+   "importance": "",
+   "identity": "旁白典故中秦穆公之女，最爱吹箫，与萧史乘龙仙去",
+   "chunk_count": 1,
+   "first_chunk": 72,
+   "first_pct": 0.6737,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "秦穆公有女，小字弄玉，最爱吹箫",
+   "historical": true
+  },
+  {
+   "canonical": "刘备",
+   "aliases": [],
+   "importance": "",
+   "identity": "三国蜀汉昭烈帝，“刘备借荆州”典故被老头子引用",
+   "chunk_count": 1,
+   "first_chunk": 40,
+   "first_pct": 0.3701,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "老头子哈哈大笑，道：“刘备借荆州，不知何日还。",
+   "historical": true
+  },
+  {
+   "canonical": "李靖",
+   "aliases": [
+    "李卫公"
+   ],
+   "importance": "",
+   "identity": "唐朝开国大功臣，出将入相",
+   "chunk_count": 1,
+   "first_chunk": 47,
+   "first_pct": 0.4366,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "爵封卫公的李靖。李卫公建不世奇功",
+   "historical": true
+  },
+  {
+   "canonical": "杨老令公",
+   "aliases": [
+    "杨令公",
+    "金刀杨老令公"
+   ],
+   "importance": "",
+   "identity": "即北宋名将杨业，北宋年间扼守三关镇兵于此",
+   "chunk_count": 3,
+   "first_chunk": 37,
+   "first_pct": 0.3417,
+   "direct_chunks": 0,
+   "mention_chunks": 3,
+   "evidence": "说不定是后山金刀杨老令公",
+   "historical": true
+  },
+  {
+   "canonical": "叔齐",
+   "aliases": [],
+   "importance": "",
+   "identity": "《论语》所记逸民，与伯夷并举（后记）",
+   "chunk_count": 1,
+   "first_chunk": 106,
+   "first_pct": 0.997,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "像伯夷、叔齐那样，不放弃自己意志，不牺牲自己尊严",
+   "historical": true
+  },
+  {
+   "canonical": "楚狂接舆",
+   "aliases": [],
+   "importance": "",
+   "identity": "《论语》所记楚国狂士隐者，后记列举隐者时提及",
+   "chunk_count": 1,
+   "first_chunk": 106,
+   "first_pct": 0.997,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "晨门、楚狂接舆、长沮、桀溺、荷叔齐、虞仲、夷逸、朱张、柳下惠、少连等等",
+   "historical": true
+  },
+  {
+   "canonical": "仪狄",
+   "aliases": [],
+   "importance": "",
+   "identity": "夏禹时作酒之人",
+   "chunk_count": 1,
+   "first_chunk": 38,
+   "first_pct": 0.3512,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "夏禹时仪狄作酒，禹饮而甘之",
+   "historical": true
+  },
+  {
+   "canonical": "朱张",
+   "aliases": [],
+   "importance": "",
+   "identity": "《论语·微子》所记逸民，后记列举隐者时提及",
+   "chunk_count": 1,
+   "first_chunk": 106,
+   "first_pct": 0.997,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "晨门、楚狂接舆、长沮、桀溺、荷叔齐、虞仲、夷逸、朱张、柳下惠、少连等等",
+   "historical": true
+  },
+  {
+   "canonical": "张飞",
+   "aliases": [],
+   "importance": "",
+   "identity": "蜀汉大将，书《八濛山铭》",
+   "chunk_count": 1,
+   "first_chunk": 51,
+   "first_pct": 0.4744,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "取意于蜀汉大将张飞所书的《八濛山铭》",
+   "historical": true
+  },
+  {
+   "canonical": "虞仲",
+   "aliases": [],
+   "importance": "",
+   "identity": "《论语》所记逸民，后记中列为逃世隐居、放肆直言的隐者典型",
+   "chunk_count": 1,
+   "first_chunk": 106,
+   "first_pct": 0.997,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "像虞仲、夷逸那样，则是逃世隐居，放肆直言，不做坏事，不参与政治",
+   "historical": true
+  },
+  {
+   "canonical": "蔡邕",
+   "aliases": [],
+   "importance": "",
+   "identity": "东汉学者，曲洋自其墓中觅得《广陵散》曲谱（典故人物）",
+   "chunk_count": 2,
+   "first_chunk": 18,
+   "first_pct": 0.161,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "终于在蔡邕的墓中，觅到了《广陵散》的曲谱。",
+   "historical": true
+  },
+  {
+   "canonical": "樊哙",
+   "aliases": [
+    "樊将军"
+   ],
+   "importance": "",
+   "identity": "汉初猛士，鸿门宴故事被祖千秋引来论酒",
+   "chunk_count": 1,
+   "first_chunk": 38,
+   "first_pct": 0.3512,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "樊哙是不是好汉？那日鸿门宴上",
+   "historical": true
+  },
+  {
+   "canonical": "祖逖",
+   "aliases": [],
+   "importance": "",
+   "identity": "东晋闻鸡起舞的名士，祖千秋自称的远祖",
+   "chunk_count": 1,
+   "first_chunk": 38,
+   "first_pct": 0.3512,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "晚生姓祖，祖宗之祖。当年祖逖闻鸡起舞",
+   "historical": true
+  },
+  {
+   "canonical": "金兀术",
+   "aliases": [],
+   "importance": "",
+   "identity": "金国统帅，为岳飞所破",
+   "chunk_count": 1,
+   "first_chunk": 37,
+   "first_pct": 0.3417,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "是岳鹏举岳爷爷大破金兀术的地方",
+   "historical": true
+  },
+  {
+   "canonical": "虞允文",
+   "aliases": [],
+   "importance": "",
+   "identity": "南宋破金大功臣，“梅庄”题署者",
+   "chunk_count": 1,
+   "first_chunk": 49,
+   "first_pct": 0.4556,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "不知虞允文是南宋破金的大功臣",
+   "historical": true
+  },
+  {
+   "canonical": "朱元璋",
+   "aliases": [],
+   "importance": "",
+   "identity": "明朝开国皇帝太祖（岳灵珊引述的史实人物）",
+   "chunk_count": 2,
+   "first_chunk": 91,
+   "first_pct": 0.8542,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "明朝开国皇帝太祖朱元璋，小时候便曾在皇觉寺出家为僧",
+   "historical": true
+  },
+  {
+   "canonical": "张三丰",
+   "aliases": [],
+   "importance": "",
+   "identity": "武当派创派之祖，其真武剑与手书《太极拳经》被任我行归还武当（本块追述）",
+   "chunk_count": 1,
+   "first_chunk": 105,
+   "first_pct": 0.9876,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "武当派创派之祖张三丰先师所用佩剑名叫“真武剑”",
+   "historical": true
+  },
+  {
+   "canonical": "张旭",
+   "aliases": [],
+   "importance": "",
+   "identity": "唐代草书大家“草圣”，《率意帖》作者",
+   "chunk_count": 3,
+   "first_chunk": 50,
+   "first_pct": 0.4649,
+   "direct_chunks": 0,
+   "mention_chunks": 3,
+   "evidence": "真是唐朝……唐朝张旭的《率意帖》",
+   "historical": true
+  },
+  {
+   "canonical": "范宽",
+   "aliases": [
+    "范中立"
+   ],
+   "importance": "",
+   "identity": "北宋画家，《溪山行旅图》作者",
+   "chunk_count": 2,
+   "first_chunk": 50,
+   "first_pct": 0.4649,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "这是北宋范宽的真迹，你……你……却从何处得来？",
+   "historical": true
+  },
+  {
+   "canonical": "长沮",
+   "aliases": [],
+   "importance": "",
+   "identity": "《论语》所记隐者（耦耕者之一），后记列举隐者时提及",
+   "chunk_count": 1,
+   "first_chunk": 106,
+   "first_pct": 0.997,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "晨门、楚狂接舆、长沮、桀溺、荷叔齐、虞仲、夷逸、朱张、柳下惠、少连等等",
+   "historical": true
+  },
+  {
+   "canonical": "郭靖",
+   "aliases": [],
+   "importance": "",
+   "identity": "《射雕英雄传》主人公，后记中以之与令狐冲对比的“知其不可而为之”大侠典型",
+   "chunk_count": 1,
+   "first_chunk": 106,
+   "first_pct": 0.997,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "对于郭靖那样舍身赴难，知其不可而为之的大侠，在道德上当有更大的肯定。",
+   "historical": true
+  },
+  {
+   "canonical": "杨五郎",
+   "aliases": [],
+   "importance": "",
+   "identity": "杨家将五郎，六仙言其五台山出家",
+   "chunk_count": 1,
+   "first_chunk": 37,
+   "first_pct": 0.3417,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "杨五郎五台山出家，你又为甚么不去当和尚？",
+   "historical": true
+  },
+  {
+   "canonical": "唐玄宗",
+   "aliases": [],
+   "importance": "",
+   "identity": "唐朝皇帝，封张果老为通元先生",
+   "chunk_count": 1,
+   "first_chunk": 76,
+   "first_pct": 0.7118,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "唐玄宗封张果老为“通元先生”",
+   "historical": true
+  },
+  {
+   "canonical": "萧史",
+   "aliases": [],
+   "importance": "",
+   "identity": "旁白典故中善箫的青年男子，娶弄玉为妻，“乘龙快婿”典源",
+   "chunk_count": 1,
+   "first_chunk": 72,
+   "first_pct": 0.6737,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "有一青年男子萧史，乘龙而至，奏箫之技精妙入神",
+   "historical": true
+  },
+  {
+   "canonical": "杜甫",
+   "aliases": [],
+   "importance": "",
+   "identity": "作《饮中八仙歌》的诗人",
+   "chunk_count": 2,
+   "first_chunk": 50,
+   "first_pct": 0.4649,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "便是杜甫在《饮中八仙歌》写张旭的。",
+   "historical": true
+  },
+  {
+   "canonical": "杨宗保",
+   "aliases": [],
+   "importance": "",
+   "identity": "杨家将后人，六仙猜测庙神身份时提及",
+   "chunk_count": 1,
+   "first_chunk": 37,
+   "first_pct": 0.3417,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "或许是杨宗保、杨文广呢？",
+   "historical": true
+  },
+  {
+   "canonical": "玄奘",
+   "aliases": [],
+   "importance": "",
+   "identity": "唐代赴天竺取经的高僧",
+   "chunk_count": 1,
+   "first_chunk": 50,
+   "first_pct": 0.4649,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "听说当年玄奘大师到天竺取经",
+   "historical": true
+  },
+  {
+   "canonical": "韩愈",
+   "aliases": [],
+   "importance": "",
+   "identity": "品评张旭书法的文人",
+   "chunk_count": 2,
+   "first_chunk": 50,
+   "first_pct": 0.4649,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "韩愈品评张旭道",
+   "historical": true
+  },
+  {
+   "canonical": "杨六郎",
+   "aliases": [],
+   "importance": "",
+   "identity": "杨家将六郎，六仙猜测庙神身份时提及",
+   "chunk_count": 1,
+   "first_chunk": 37,
+   "first_pct": 0.3417,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "又说不定是杨六郎、杨七郎？",
+   "historical": true
+  },
+  {
+   "canonical": "王积薪",
+   "aliases": [],
+   "importance": "",
+   "identity": "遇狐仙婆媳对局的棋家",
+   "chunk_count": 1,
+   "first_chunk": 50,
+   "first_pct": 0.4649,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "王积薪遇狐仙婆媳的对局",
+   "historical": true
+  },
+  {
+   "canonical": "夷逸",
+   "aliases": [],
+   "importance": "",
+   "identity": "《论语》所记逸民，与虞仲并举（后记）",
+   "chunk_count": 1,
+   "first_chunk": 106,
+   "first_pct": 0.997,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "像虞仲、夷逸那样，则是逃世隐居，放肆直言，不做坏事，不参与政治",
+   "historical": true
+  },
+  {
+   "canonical": "大禹",
+   "aliases": [
+    "夏禹"
+   ],
+   "importance": "",
+   "identity": "上古圣王，相传其时仪狄作酒",
+   "chunk_count": 1,
+   "first_chunk": 38,
+   "first_pct": 0.3512,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "夏禹时仪狄作酒，禹饮而甘之",
+   "historical": true
+  },
+  {
+   "canonical": "司马昭",
+   "aliases": [],
+   "importance": "",
+   "identity": "魏晋权臣，听谗杀嵇康（典故人物）",
+   "chunk_count": 1,
+   "first_chunk": 18,
+   "first_pct": 0.161,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "向司马昭说嵇康的坏话，司马昭便把嵇康杀了。",
+   "historical": true
+  },
+  {
+   "canonical": "晨门",
+   "aliases": [],
+   "importance": "",
+   "identity": "《论语》所记石门守门的隐者，后记列举隐者时提及",
+   "chunk_count": 1,
+   "first_chunk": 106,
+   "first_pct": 0.997,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "晨门、楚狂接舆、长沮、桀溺、荷叔齐、虞仲、夷逸、朱张、柳下惠、少连等等",
+   "historical": true
+  },
+  {
+   "canonical": "杨四郎",
+   "aliases": [],
+   "importance": "",
+   "identity": "杨家将四郎，六仙以其“投降番邦”争辩",
+   "chunk_count": 1,
+   "first_chunk": 37,
+   "first_pct": 0.3417,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "另一人道：“为甚么不能是杨四郎？”",
+   "historical": true
+  },
+  {
+   "canonical": "刘邦",
+   "aliases": [
+    "汉高祖"
+   ],
+   "importance": "",
+   "identity": "汉朝开国皇帝，祖千秋论酒引其斩白蛇故事",
+   "chunk_count": 1,
+   "first_chunk": 38,
+   "first_pct": 0.3512,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "汉高祖刘邦，是不是英雄？",
+   "historical": true
+  },
+  {
+   "canonical": "刘仲甫",
+   "aliases": [],
+   "importance": "",
+   "identity": "骊山遇仙的国手，《呕血谱》主角",
+   "chunk_count": 1,
+   "first_chunk": 50,
+   "first_pct": 0.4649,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "刘仲甫在骊山遇仙对弈的棋局",
+   "historical": true
+  },
+  {
+   "canonical": "杨再兴",
+   "aliases": [],
+   "importance": "",
+   "identity": "南宋抗金名将，杨将军庙所祀（庙额“杨公再兴之神”被六仙误读争论）",
+   "chunk_count": 1,
+   "first_chunk": 37,
+   "first_pct": 0.3417,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "岳灵珊道：“爹，我知道啦，这是杨再兴杨将军的庙”",
+   "historical": true
+  },
+  {
+   "canonical": "张果老",
+   "aliases": [
+    "通元先生"
+   ],
+   "importance": "",
+   "identity": "传说中仙人，曾在通元谷炼丹，谷名由来",
+   "chunk_count": 1,
+   "first_chunk": 76,
+   "first_pct": 0.7118,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "相传唐时仙人张果老曾在此炼丹。",
+   "historical": true
+  },
+  {
+   "canonical": "柳下惠",
+   "aliases": [],
+   "importance": "",
+   "identity": "《论语》所记逸民，后记中两度引其降志辱身而言行合乎伦虑的隐者典型",
+   "chunk_count": 1,
+   "first_chunk": 106,
+   "first_pct": 0.997,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "像柳下惠、少连那样，意志和尊严有所牺牲，但言行合情合理",
+   "historical": true
+  },
+  {
+   "canonical": "诸葛亮",
+   "aliases": [
+    "武侯"
+   ],
+   "importance": "",
+   "identity": "历史人物，教众谀词及任我行自许中与圣教主比智谋（本块一处讹作“诸葛壳”）",
+   "chunk_count": 2,
+   "first_chunk": 1,
+   "first_pct": 0.0,
+   "direct_chunks": 0,
+   "mention_chunks": 2,
+   "evidence": "乃是当年诸葛亮逝世，川人为他戴孝，武侯遗爱甚深",
+   "historical": true
+  },
+  {
+   "canonical": "杨七郎",
+   "aliases": [],
+   "importance": "",
+   "identity": "杨家将七郎，桃花仙认定庙神即杨七郎",
+   "chunk_count": 1,
+   "first_chunk": 37,
+   "first_pct": 0.3417,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "杨七郎啊杨七郎，你只要保佑咱们六弟不死",
+   "historical": true
+  },
+  {
+   "canonical": "怀素",
+   "aliases": [],
+   "importance": "",
+   "identity": "唐代草书僧，《自叙帖》作者",
+   "chunk_count": 1,
+   "first_chunk": 51,
+   "first_pct": 0.4744,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "大书《怀素自叙帖》中的草书",
+   "historical": true
+  },
+  {
+   "canonical": "桀溺",
+   "aliases": [],
+   "importance": "",
+   "identity": "《论语》所记隐者（耦耕者之一），后记列举隐者时提及",
+   "chunk_count": 1,
+   "first_chunk": 106,
+   "first_pct": 0.997,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "晨门、楚狂接舆、长沮、桀溺、荷叔齐、虞仲、夷逸、朱张、柳下惠、少连等等",
+   "historical": true
+  },
+  {
+   "canonical": "嵇康",
+   "aliases": [
+    "嵇中散"
+   ],
+   "importance": "",
+   "identity": "魏晋名士，临刑抚琴叹《广陵散》绝响（曲洋所述典故人物）",
+   "chunk_count": 4,
+   "first_chunk": 17,
+   "first_pct": 0.1515,
+   "direct_chunks": 0,
+   "mention_chunks": 4,
+   "evidence": "昔日嵇康临刑，抚琴一曲，叹息《广陵散》从此绝响。",
+   "historical": true
+  },
+  {
+   "canonical": "陶潜",
+   "aliases": [],
+   "importance": "",
+   "identity": "即陶渊明，东晋诗人，后记中以之为令狐冲所效仿的自由隐士典型",
+   "chunk_count": 1,
+   "first_chunk": 106,
+   "first_pct": 0.997,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "令狐冲不是大侠，是陶潜那样追求自由和个性解放的隐士。",
+   "historical": true
+  },
+  {
+   "canonical": "慧可",
+   "aliases": [
+    "二祖",
+    "神光",
+    "神光大师"
+   ],
+   "importance": "",
+   "identity": "禅宗二祖，本名神光，断臂求法得《易筋经》",
+   "chunk_count": 1,
+   "first_chunk": 47,
+   "first_pct": 0.4366,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "禅宗二祖慧可大师得之于老祖。",
+   "historical": true
+  },
+  {
+   "canonical": "太宗",
+   "aliases": [],
+   "importance": "仅提及",
+   "identity": "即唐太宗李世民，原文作'太宗'（李靖辅佐其平定突厥）",
+   "chunk_count": 1,
+   "first_chunk": 41,
+   "first_pct": 0.39,
+   "direct_chunks": 0,
+   "mention_chunks": 1,
+   "evidence": "后来辅佐太宗，平定突厥",
+   "historical": true
+  }
+ ],
+ "filtered": [
+  {
+   "candidate": "阿毛",
+   "reason": "镇民口语中假设的孩童名，非实际人物"
+  },
+  {
+   "candidate": "大宝",
+   "reason": "同上"
+  },
+  {
+   "candidate": "小宝",
+   "reason": "同上"
+  },
+  {
+   "candidate": "张将军",
+   "reason": "仅见于庙名，无具体人物"
+  },
+  {
+   "candidate": "牛将军",
+   "reason": "仅见于庙名，无具体人物"
+  },
+  {
+   "candidate": "桃萼仙",
+   "reason": "令狐冲对乔装盈盈的一次性戏称"
+  }
+ ]
+}

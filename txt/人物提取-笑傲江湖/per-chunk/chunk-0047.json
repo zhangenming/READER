@@ -1,0 +1,24 @@
+{
+  "chunk": 47,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐少侠", "令狐国冲"], "identity": "华山派首徒，少林寺养伤后被岳不群修书逐出师门", "mentioned_only": false, "evidence": "晚辈既不容于师门，亦无颜改投别派。"},
+    {"name": "盈盈", "aliases": [], "identity": "圣姑，令狐冲昏迷前守在其身边", "mentioned_only": false, "evidence": "盈盈哭道：“你一天比一天瘦，我……我……我也不想活了……”"},
+    {"name": "方生", "aliases": ["方生大师"], "identity": "少林寺高僧，方证师弟，以内功为令狐冲续命三月", "mentioned_only": false, "evidence": "你认得我了，我是方生。"},
+    {"name": "方证", "aliases": ["方证大师", "方证方丈"], "identity": "少林寺方丈，欲传令狐冲《易筋经》", "mentioned_only": false, "evidence": "方证道：“很好。”"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "令狐冲牵挂的华山小师妹，随师门在福建", "mentioned_only": true, "evidence": "一想到岳灵珊，胸口气血翻涌"},
+    {"name": "岳不群", "aliases": ["岳先生"], "identity": "华山派掌门，修书将令狐冲逐出门户", "mentioned_only": true, "evidence": "正是师父岳不群的亲笔。"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻，随华山派群弟子在福建", "mentioned_only": true, "evidence": "听说岳先生、岳夫人和华山派群弟子，眼下都在福建。"},
+    {"name": "风清扬", "aliases": ["风老先生"], "identity": "华山派归隐前辈（风老先生）", "mentioned_only": true, "evidence": "和风清扬所说的剑理颇有相通处。"},
+    {"name": "平一指", "aliases": ["平大夫"], "identity": "名医，曾断言令狐冲内伤无法医治", "mentioned_only": true, "evidence": "当日平一指平大夫对晚辈也这么说。"},
+    {"name": "达摩老祖", "aliases": [], "identity": "东土禅宗初祖，《易筋经》所自出（方证所述）", "mentioned_only": true, "evidence": "乃东土禅宗初祖达摩老祖所创"},
+    {"name": "慧可", "aliases": ["神光", "神光大师", "二祖"], "identity": "禅宗二祖，本名神光，断臂求法得《易筋经》", "mentioned_only": true, "evidence": "禅宗二祖慧可大师得之于老祖。"},
+    {"name": "般刺密谛", "aliases": [], "identity": "梵僧，在峨嵋山与慧可共研《易筋经》", "mentioned_only": true, "evidence": "在四川峨嵋山得晤梵僧般刺密谛"},
+    {"name": "李靖", "aliases": ["李卫公"], "identity": "唐朝开国大功臣，出将入相", "mentioned_only": true, "evidence": "爵封卫公的李靖。李卫公建不世奇功"},
+    {"name": "唐太宗", "aliases": ["太宗"], "identity": "唐朝太宗皇帝，李靖辅佐其平定突厥", "mentioned_only": true, "evidence": "后来辅佐太宗，平定突厥，出将入相"},
+    {"name": "刘正风", "aliases": [], "identity": "欲金盆洗手退出武林，命丧嵩山派之手", "mentioned_only": true, "evidence": "忽然想起刘正风要金盆洗手"},
+    {"name": "曲洋", "aliases": [], "identity": "魔教长老，刘正风所结交", "mentioned_only": true, "evidence": "那日在衡山城外见到魔教长老曲洋"},
+    {"name": "向问天", "aliases": ["向老前辈", "向老头", "姓向的", "向右使"], "identity": "魔教高手，双手系铁链被教众与正派数百人围困于凉亭", "mentioned_only": false, "evidence": "向问天嘿的一声，举杯喝了一口酒，却发出呛啷一声响。"},
+    {"name": "侯人雄", "aliases": [], "identity": "青城派弟子，曾败于令狐冲手下", "mentioned_only": false, "evidence": "认出说话的是青城派弟子侯人雄。"},
+    {"name": "东方不败", "aliases": ["东方教主"], "identity": "魔教教主，下令擒拿叛徒向问天", "mentioned_only": true, "evidence": "咱们奉东方教主之命，擒拿叛徒向问天。"}
+  ]
+}

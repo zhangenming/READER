@@ -1,0 +1,23 @@
+{
+  "chunk": 30,
+  "characters": [
+    {"name": "岳不群", "aliases": ["岳先生"], "identity": "华山派掌门", "mentioned_only": false, "evidence": "岳不群在居中的交椅上坐下"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻兼师妹（即宁中则）", "mentioned_only": false, "evidence": "岳夫人心道：“那五个怪人转眼便到"},
+    {"name": "令狐冲", "aliases": ["大师哥"], "identity": "华山派大弟子，重伤拒练紫霞神功后离山", "mentioned_only": false, "evidence": "见群弟子除令狐冲、陆大有二人外，均已到齐"},
+    {"name": "高根明", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "evidence": "高根明道：“师父，剑宗封不平这些弃徒"},
+    {"name": "劳德诺", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "evidence": "劳德诺、梁发、施戴子等都道"},
+    {"name": "梁发", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "evidence": "劳德诺、梁发、施戴子等都道"},
+    {"name": "施戴子", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "evidence": "劳德诺、梁发、施戴子等都道"},
+    {"name": "左冷禅", "aliases": ["左盟主"], "identity": "嵩山派掌门、五岳剑派盟主", "mentioned_only": true, "evidence": "嵩山掌门左冷禅更是当今武林中了不起的人物"},
+    {"name": "嵩山十三太保", "aliases": [], "identity": "左冷禅的十余名师弟合称（费彬死后余十二人）", "mentioned_only": true, "evidence": "武林中号称‘嵩山十三太保’，大嵩阳手费彬虽然逝世", "collective": true},
+    {"name": "费彬", "aliases": ["大嵩阳手"], "identity": "嵩山十三太保之一，已逝世", "mentioned_only": true, "evidence": "大嵩阳手费彬虽然逝世，也还剩下一十二人。"},
+    {"name": "封不平", "aliases": [], "identity": "华山派剑宗弃徒", "mentioned_only": true, "evidence": "剑宗封不平这些弃徒，早都已入了魔道"},
+    {"name": "陆大有", "aliases": ["大有", "六猴儿", "六师弟"], "identity": "华山派六弟子，奉命留守照料令狐冲，被令狐冲点倒", "mentioned_only": false, "evidence": "当即命陆大有将令狐冲移入后进小舍之中"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "岳不群与岳夫人之女，夜送《紫霞秘笈》回山", "mentioned_only": false, "evidence": "“六猴儿，你在屋里吗？”竟是岳灵珊的口音。"},
+    {"name": "林平之", "aliases": ["林师弟"], "identity": "华山派弟子，林震南之子", "mentioned_only": true, "evidence": "岳灵珊一到天明，便和林平之会合"},
+    {"name": "田伯光", "aliases": ["田兄"], "identity": "采花淫贼，被桃谷六仙痛加折磨重伤", "mentioned_only": false, "evidence": "我是田伯光。哎唷！哎唷！"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "六个怪人兄弟，在华山寻找并折磨田伯光", "mentioned_only": true, "evidence": "原来又是桃谷六仙……啊哟", "collective": true},
+    {"name": "仪琳", "aliases": ["仪琳小师妹", "小师太"], "identity": "恒山派小尼姑，托田伯光与桃谷六仙邀令狐冲相见", "mentioned_only": true, "evidence": "你来邀我去见仪……仪琳小师妹"},
+    {"name": "风清扬", "aliases": ["风老前辈", "风太师叔"], "identity": "华山派剑宗前辈，令狐冲的太师叔", "mentioned_only": true, "evidence": "定是你太师叔风老前辈了。"}
+  ]
+}

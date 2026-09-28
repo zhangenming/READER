@@ -1,0 +1,31 @@
+{
+  "chunk": 40,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐公子", "令狐爷爷", "公子爷", "冲儿"], "identity": "华山派大师兄，割腕放血救老不死，获老头子、祖千秋拜谢", "mentioned_only": false, "collective": false, "evidence": "老头子一把拖了他手，直入女儿房中，向令狐冲纳头便拜"},
+    {"name": "老头子", "aliases": ["老爷"], "identity": "黄河老祖之一，误会令狐冲后纳头便拜，送其回船", "mentioned_only": false, "collective": false, "evidence": "老头子道：“小老儿不知令狐公子和我大恩人有这等渊源"},
+    {"name": "祖千秋", "aliases": ["祖贤弟"], "identity": "黄河老祖之一，向老头子说明偷药骗服的真情", "mentioned_only": false, "collective": false, "evidence": "祖千秋忙将手巾从他口中挖了出来"},
+    {"name": "不死", "aliases": ["老姑娘", "老不死"], "identity": "老头子之女，喝了令狐冲两碗鲜血", "mentioned_only": false, "collective": false, "evidence": "老姑娘又叫了起来，声音虽然微弱"},
+    {"name": "岳不群", "aliases": [], "identity": "华山派掌门，隐身墙外枣树以紫霞神功窃听", "mentioned_only": false, "collective": false, "evidence": "岳不群身在墙外树上，隔着更远"},
+    {"name": "岳夫人", "aliases": ["妈"], "identity": "岳不群之妻宁中则", "mentioned_only": false, "collective": false, "evidence": "岳夫人等见这肉球人前倨后恭"},
+    {"name": "岳灵珊", "aliases": [], "identity": "岳不群之女，被掳后乘轿送回，哭诉大个子吓她", "mentioned_only": false, "collective": false, "evidence": "只听得轿中岳灵珊的声音叫道：“爹，妈！”"},
+    {"name": "林平之", "aliases": ["小林子"], "identity": "华山派弟子，同被送回，讲述和尚吃人手之事", "mentioned_only": false, "collective": false, "evidence": "另一顶轿中坐的，正是林平之"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "桃根/桃干/桃枝/桃叶/桃花/桃实六兄弟合称", "mentioned_only": false, "collective": true, "evidence": "桃谷六仙和他们黄河老祖本来无怨无仇"},
+    {"name": "桃枝仙", "aliases": [], "identity": "桃谷六仙老三，与桃实仙同被渔网所缚后获释", "mentioned_only": false, "collective": false, "evidence": "桃枝仙和桃实仙被老头子所装的渔网所缚"},
+    {"name": "桃实仙", "aliases": [], "identity": "桃谷六仙老六，与桃枝仙同被渔网所缚后获释", "mentioned_only": false, "collective": false, "evidence": "桃枝仙和桃实仙被老头子所装的渔网所缚"},
+    {"name": "桃根仙", "aliases": [], "identity": "桃谷六仙老大，诱敌归来后吹嘘撕了捉鬼汉子", "mentioned_only": false, "collective": false, "evidence": "桃根仙道：“是啊，他功夫实在了不起"},
+    {"name": "桃干仙", "aliases": [], "identity": "桃谷六仙老二", "mentioned_only": false, "collective": false, "evidence": "桃干仙道：“他死都死了，管他叫甚么名字？"},
+    {"name": "桃叶仙", "aliases": [], "identity": "桃谷六仙老四", "mentioned_only": false, "collective": false, "evidence": "桃叶仙拍手道：“这姓固是姓得好，名字也取得妙"},
+    {"name": "桃花仙", "aliases": [], "identity": "桃谷六仙老五", "mentioned_only": false, "collective": false, "evidence": "桃花仙道：“原来计无施还有这等奇门功夫"},
+    {"name": "计无施", "aliases": ["夜猫子"], "identity": "外号“夜猫子”，目力特强、诡计多端，即持白幡诱开桃谷四仙之人", "mentioned_only": false, "collective": false, "evidence": "咱们的夜猫子‘无计可施’计无施。"},
+    {"name": "劳德诺", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "collective": false, "evidence": "岳不群遥遥望见劳德诺和高根明二弟子仗剑守在船头"},
+    {"name": "高根明", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "collective": false, "evidence": "岳不群遥遥望见劳德诺和高根明二弟子仗剑守在船头"},
+    {"name": "黄河老祖", "aliases": [], "identity": "老头子（姓老）与祖千秋（姓祖）居于黄河沿岸的合称", "mentioned_only": false, "collective": true, "evidence": "你华山派在我‘黄河老祖’眼中，不值半文钱"},
+    {"name": "刘备", "aliases": [], "identity": "三国蜀汉昭烈帝，“刘备借荆州”典故被老头子引用", "mentioned_only": true, "collective": false, "evidence": "老头子哈哈大笑，道：“刘备借荆州，不知何日还。"},
+    {"name": "风清扬", "aliases": ["风太师叔"], "identity": "华山派前辈高人，即令狐冲的“风太师叔”（本块仅以称谓提及，未现真名）", "mentioned_only": true, "collective": false, "evidence": "风太师叔虽有这等本事面子，但他老人家隐居不出"},
+    {"name": "不戒和尚", "aliases": ["不戒大师"], "identity": "曾注真气入令狐冲体内的高僧", "mentioned_only": true, "collective": false, "evidence": "是不戒大师么？"},
+    {"name": "田伯光", "aliases": [], "identity": "采花大盗，令狐冲旧友", "mentioned_only": true, "collective": false, "evidence": "是田伯光么？"},
+    {"name": "绿竹翁", "aliases": [], "identity": "洛阳绿竹巷隐士", "mentioned_only": true, "collective": false, "evidence": "是绿竹翁么？"},
+    {"name": "白熊", "aliases": ["大个子"], "identity": "漠北双熊之一：掳走岳灵珊的吃人肉大个子（本块未点名）", "mentioned_only": true, "collective": false, "evidence": "他说，他一不喜欢，便要把人煮来吃了。"},
+    {"name": "黑熊", "aliases": [], "identity": "漠北双熊之一：盘问林平之、嚼食人手的光头和尚（本块未点名）", "mentioned_only": true, "collective": false, "evidence": "那大个子跟那和尚当真是吃人肉的，倒不是空言恫吓。"}
+  ]
+}

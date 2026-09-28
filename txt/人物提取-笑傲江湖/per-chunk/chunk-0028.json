@@ -1,0 +1,25 @@
+{
+  "chunk": 28,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["冲儿", "大师哥"], "identity": "华山派大弟子", "mentioned_only": false, "evidence": "华山大弟子令狐冲在衡山城中胡闹的事"},
+    {"name": "岳不群", "aliases": ["君子剑", "岳先生", "岳师兄"], "identity": "华山派掌门，令狐冲之师", "mentioned_only": false, "evidence": "这位是我师父，华山派掌门岳先生……"},
+    {"name": "岳夫人", "aliases": ["宁女侠"], "identity": "岳不群之妻兼师妹，华山派女侠（即宁中则）", "mentioned_only": false, "evidence": "已和鲁连荣斗在一起，正是岳夫人。"},
+    {"name": "岳灵珊", "aliases": [], "identity": "岳不群与岳夫人之女", "mentioned_only": false, "evidence": "岳灵珊已咭的一声，笑了出来。"},
+    {"name": "劳德诺", "aliases": [], "identity": "华山派弟子，带艺投师", "mentioned_only": false, "evidence": "他知劳德诺带艺投师，拜入华山派之前在江湖上历练已久"},
+    {"name": "陆大有", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "evidence": "这时陆大有已赶到厅外"},
+    {"name": "鲁连荣", "aliases": ["金眼雕", "金眼乌鸦", "鲁师伯"], "identity": "衡山派第一代人物", "mentioned_only": false, "evidence": "这老儿叫鲁连荣，正式外号叫作‘金眼雕’。"},
+    {"name": "陆柏", "aliases": [], "identity": "嵩山派人物（仙鹤手，第三太保），持五岳令旗上华山", "mentioned_only": false, "evidence": "厅上陆柏和封不平等已忍不住脸露微笑。"},
+    {"name": "封不平", "aliases": ["封兄"], "identity": "华山派剑宗弃徒，图谋夺掌门之位", "mentioned_only": false, "evidence": "封不平插口道：“是你师父，那是不错"},
+    {"name": "成不忧", "aliases": ["成兄", "成师傅"], "identity": "华山派剑宗弟子，封不平同党；本块被桃谷四仙分尸", "mentioned_only": false, "evidence": "这矮子名叫成不忧。"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "六个形貌奇丑的怪人兄弟：桃根仙、桃干仙、桃枝仙、桃叶仙、桃花仙、桃实仙；以六道真气替令狐冲治伤", "mentioned_only": false, "evidence": "便已见到站在令狐冲身后的桃谷六仙", "collective": true},
+    {"name": "桃根仙", "aliases": [], "identity": "桃谷六仙老大", "mentioned_only": false, "evidence": "桃根仙道：“你还在胡吹大气呢"},
+    {"name": "桃干仙", "aliases": [], "identity": "桃谷六仙老二", "mentioned_only": false, "evidence": "桃干仙说道：“你们瞧，他大汗停了"},
+    {"name": "桃枝仙", "aliases": [], "identity": "桃谷六仙老三", "mentioned_only": false, "evidence": "桃枝仙道：“不错，不过大哥的法子纵然将他内伤治好了"},
+    {"name": "桃叶仙", "aliases": [], "identity": "桃谷六仙成员", "mentioned_only": false, "evidence": "桃叶仙忽道：“这般以真气在他渊液间来回"},
+    {"name": "桃花仙", "aliases": [], "identity": "桃谷六仙成员", "mentioned_only": false, "evidence": "桃花仙见令狐冲睁开眼睛，喜道"},
+    {"name": "桃实仙", "aliases": [], "identity": "桃谷六仙成员", "mentioned_only": false, "evidence": "桃实仙道：“当然死不了"},
+    {"name": "风清扬", "aliases": ["风太师叔"], "identity": "华山派剑宗前辈，令狐冲的太师叔", "mentioned_only": true, "evidence": "风太师叔只教我练剑，他……他多半是剑宗的。"},
+    {"name": "左冷禅", "aliases": ["左盟主"], "identity": "嵩山派掌门、五岳剑派盟主", "mentioned_only": true, "evidence": "否则左盟主身为五岳剑派的首领"},
+    {"name": "仪琳", "aliases": ["小尼姑", "仪琳小师妹"], "identity": "恒山派小尼姑", "mentioned_only": true, "evidence": "想必那“小尼姑”便是恒山派的仪琳小师妹了"}
+  ]
+}

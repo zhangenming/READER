@@ -1,0 +1,206 @@
+{
+  "chunk": 101,
+  "characters": [
+    {
+      "name": "令狐冲",
+      "aliases": [
+        "令狐大侠",
+        "令狐掌门",
+        "令狐大哥",
+        "冲郎",
+        "冲哥"
+      ],
+      "identity": "恒山派掌门，本书主角，洞中重伤左冷禅林平之出洞，又被岳不群渔网所擒",
+      "mentioned_only": false,
+      "evidence": "令狐冲和盈盈都是“啊”的一声惊呼"
+    },
+    {
+      "name": "盈盈",
+      "aliases": [
+        "任大小姐"
+      ],
+      "identity": "日月教教主任我行之女，令狐冲未婚妻，与令狐冲并肩退敌并同陷渔网",
+      "mentioned_only": false,
+      "evidence": "盈盈伸手在令狐冲腋下一提，低声道：“上去！”"
+    },
+    {
+      "name": "岳不群",
+      "aliases": [
+        "君子剑",
+        "岳先生"
+      ],
+      "identity": "华山派掌门，洞口撒渔网擒令狐冲夫妇逼索三尸脑神丹解药，被仪琳一剑刺死",
+      "mentioned_only": false,
+      "evidence": "令狐冲脱口叫道：“师父！”原来那人却是岳不群。"
+    },
+    {
+      "name": "左冷禅",
+      "aliases": [],
+      "identity": "嵩山派前掌门，双目已盲，洞中伏击失败，被令狐冲以慢剑所杀",
+      "mentioned_only": false,
+      "evidence": "长剑起处，左冷禅眉心、咽喉、胸口三处一一中剑。"
+    },
+    {
+      "name": "林平之",
+      "aliases": [],
+      "identity": "习辟邪剑法、双目已盲，为左冷禅出力追杀令狐冲，上臂筋骨被断",
+      "mentioned_only": false,
+      "evidence": "嗤的一声，林平之上臂筋骨齐断。"
+    },
+    {
+      "name": "仪琳",
+      "aliases": [
+        "小师妹",
+        "小尼姑"
+      ],
+      "identity": "恒山派女弟子、不戒和尚之女，情急中一剑刺死岳不群，又拼死力斗劳德诺",
+      "mentioned_only": false,
+      "evidence": "那少女叫道：“令狐大哥，你没事罢？”正是仪琳。"
+    },
+    {
+      "name": "劳德诺",
+      "aliases": [
+        "黄衫老者",
+        "黄袍老贼"
+      ],
+      "identity": "嵩山派卧底、原华山派二弟子，初学辟邪剑法，被仪琳砍断琵琶骨后逃下山",
+      "mentioned_only": false,
+      "evidence": "一名黄衫老者仗剑奔来，却是劳德诺。"
+    },
+    {
+      "name": "不戒和尚",
+      "aliases": [
+        "爹",
+        "太师父"
+      ],
+      "identity": "仪琳之父、田伯光的太师父，与妻子救出被囚恒山弟子",
+      "mentioned_only": false,
+      "evidence": "那婆婆身后跟着一人，正是不戒和尚，他笑嘻嘻的走近"
+    },
+    {
+      "name": "哑婆婆",
+      "aliases": [
+        "那婆婆",
+        "妈",
+        "娘子",
+        "太师娘"
+      ],
+      "identity": "不戒和尚之妻、仪琳之母，昔在悬空寺佯装聋哑，打跑劳德诺并与令狐冲动手（本块作“那婆婆”）",
+      "mentioned_only": false,
+      "evidence": "正是仪琳之母、在悬空寺中假装聋哑的那个婆婆。"
+    },
+    {
+      "name": "田伯光",
+      "aliases": [
+        "不可不戒",
+        "田兄"
+      ],
+      "identity": "已剃度法名“不可不戒”，凭嗅出女子气息的本事寻获被囚恒山弟子的地洞",
+      "mentioned_only": false,
+      "evidence": "便见田伯光和七名恒山派弟子从山谷中攀援而上"
+    },
+    {
+      "name": "仪清",
+      "aliases": [],
+      "identity": "恒山派二大弟子之一，随田伯光救出被囚同门",
+      "mentioned_only": false,
+      "evidence": "便见田伯光和七名恒山派弟子从山谷中攀援而上，其中有仪清在内。"
+    },
+    {
+      "name": "仪和",
+      "aliases": [],
+      "identity": "恒山派大弟子，被囚地洞中获救",
+      "mentioned_only": false,
+      "evidence": "只见仪和、郑萼、秦绢等均在其内"
+    },
+    {
+      "name": "仪敏",
+      "aliases": [],
+      "identity": "恒山派弟子，跳下地洞扶救同门",
+      "mentioned_only": false,
+      "evidence": "仪清和仪敏忙跳下洞去，将同门扶了出来"
+    },
+    {
+      "name": "郑萼",
+      "aliases": [],
+      "identity": "恒山派女弟子，被囚地洞中获救",
+      "mentioned_only": false,
+      "evidence": "只见仪和、郑萼、秦绢等均在其内"
+    },
+    {
+      "name": "秦绢",
+      "aliases": [],
+      "identity": "恒山派年少女弟子，被囚地洞中获救",
+      "mentioned_only": false,
+      "evidence": "只见仪和、郑萼、秦绢等均在其内"
+    },
+    {
+      "name": "陆大有",
+      "aliases": [
+        "六师弟"
+      ],
+      "identity": "华山派六弟子，因藏《紫霞神功》秘笈被劳德诺杀死，生前常带一只猴儿",
+      "mentioned_only": true,
+      "evidence": "劳德诺为了盗取岳不群的《紫霞神功》秘笈，杀死华山派六弟子陆大有。"
+    },
+    {
+      "name": "任我行",
+      "aliases": [],
+      "identity": "日月教教主，曾在少林寺以吸星大法吸左冷禅内力（本块回忆提及）",
+      "mentioned_only": true,
+      "evidence": "那日任我行在少林寺中以“吸星大法”吸了左冷禅的内力"
+    },
+    {
+      "name": "风清扬",
+      "aliases": [
+        "风太师叔"
+      ],
+      "identity": "华山派剑宗隐居前辈、令狐冲的太师叔，居于华山左近不见外人",
+      "mentioned_only": true,
+      "evidence": "风太师叔便住在左近，不知他老人家身子是否安健。"
+    },
+    {
+      "name": "岳灵珊",
+      "aliases": [
+        "小师妹"
+      ],
+      "identity": "岳不群之女、令狐冲的小师妹，令狐冲曾答应她照料林平之",
+      "mentioned_only": true,
+      "evidence": "盈盈知他答应过岳灵珊，要照料林平之"
+    },
+    {
+      "name": "莫大先生",
+      "aliases": [
+        "莫师伯"
+      ],
+      "identity": "衡山派掌门，洞中生死不明，令狐冲呼唤无应",
+      "mentioned_only": true,
+      "evidence": "纵声叫道：“莫师伯，莫师伯！”却不闻丝毫声息。"
+    },
+    {
+      "name": "桃谷六仙",
+      "aliases": [],
+      "identity": "桃根、桃干、桃枝、桃叶、桃花、桃实六兄弟，不戒夫妇最忌惮的六位怪人",
+      "collective": true,
+      "mentioned_only": true,
+      "evidence": "令狐冲笑着叫道：“桃谷六仙，快救救我！”"
+    },
+    {
+      "name": "魔教十长老",
+      "aliases": [
+        "神教十长老"
+      ],
+      "identity": "当年攻打华山被困此洞、饮恨而终的日月教十位前辈（本块作“神教十长老”）",
+      "collective": true,
+      "mentioned_only": true,
+      "evidence": "当年神教十长老攻打华山，都给堵在这山洞之中"
+    },
+    {
+      "name": "老头子",
+      "aliases": [],
+      "identity": "江湖豪客，岳不群所用渔网的原主",
+      "mentioned_only": true,
+      "evidence": "你这张渔网，是从老头子那里拿来的罢。"
+    }
+  ]
+}

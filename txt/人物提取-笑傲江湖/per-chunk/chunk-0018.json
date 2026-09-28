@@ -1,0 +1,32 @@
+{
+  "chunk": 18,
+  "characters": [
+    {"name": "刘正风", "aliases": ["刘贤弟", "刘师叔"], "identity": "衡山派刘三爷，与曲洋双手相握迸断内息自尽", "mentioned_only": false, "evidence": "刘正风道：“这《笑傲江湖曲》倘能流传于世"},
+    {"name": "曲洋", "aliases": ["曲大哥", "曲前辈"], "identity": "魔教长老，掘蔡邕墓得《广陵散》，与刘正风合创《笑傲江湖曲》，托谱令狐冲后自尽", "mentioned_only": false, "evidence": "曲洋对此事甚是得意，微笑道"},
+    {"name": "令狐冲", "aliases": ["令狐贤弟", "令狐少侠", "冲儿"], "identity": "华山派大弟子，受托曲谱、埋尸、吓走木高峰，送林震南夫妇临终", "mentioned_only": false, "evidence": "小侄是华山派门下令狐冲，现与平之师弟已有同门之谊"},
+    {"name": "仪琳", "aliases": ["小师妹"], "identity": "恒山派定逸弟子，掩埋尸首并为曲非烟诵经超度", "mentioned_only": false, "evidence": "仪琳惊道：“他们……他们都死了？”"},
+    {"name": "嵇康", "aliases": [], "identity": "魏晋名士，遭钟会进谗被司马昭所杀（曲洋所述典故人物）", "mentioned_only": true, "evidence": "嵇康这个人，是很有点意思的"},
+    {"name": "钟会", "aliases": [], "identity": "魏晋权贵，访嵇康受冷落，进谗害之（典故人物）", "mentioned_only": true, "evidence": "钟会当时做大官，慕名去拜访他"},
+    {"name": "司马昭", "aliases": [], "identity": "魏晋权臣，听谗杀嵇康（典故人物）", "mentioned_only": true, "evidence": "向司马昭说嵇康的坏话，司马昭便把嵇康杀了。"},
+    {"name": "蔡邕", "aliases": [], "identity": "东汉学者，曲洋自其墓中觅得《广陵散》曲谱（典故人物）", "mentioned_only": true, "evidence": "终于在蔡邕的墓中，觅到了《广陵散》的曲谱。"},
+    {"name": "费彬", "aliases": ["大嵩阳手"], "identity": "嵩山派第四师弟，被莫大先生杀死后尸身被令狐冲戳烂以灭线索", "mentioned_only": false, "evidence": "一剑又一剑的在费彬的尸体上戳了十七八个窟窿。"},
+    {"name": "曲非烟", "aliases": ["非非"], "identity": "曲洋孙女，被费彬刺死，众人堆石建坟（尸身在场）", "mentioned_only": false, "evidence": "向着曲非烟的石坟道：“小妹子，你倘若不是为了我"},
+    {"name": "莫大先生", "aliases": ["潇湘夜雨"], "identity": "衡山派掌门，杀费彬之事被叮嘱守密", "mentioned_only": true, "evidence": "费彬为莫大先生所杀之事，千万不可泄漏半点风声。"},
+    {"name": "岳不群", "aliases": ["君子剑", "岳大侠"], "identity": "华山派掌门，与余沧海斗剑胜之，赶到土地庙收殓林氏夫妇", "mentioned_only": false, "evidence": "月光下只见一个儒生手执长剑，端立当地，正是师父岳不群"},
+    {"name": "余沧海", "aliases": ["余观主", "余矮子"], "identity": "青城派掌门，与岳不群斗剑落败遁走，酷刑逼问林震南夫妇", "mentioned_only": false, "evidence": "正是青城派掌门余沧海。"},
+    {"name": "林震南", "aliases": ["林总镖头", "林伯父"], "identity": "福威镖局总镖头，林平之之父，重伤弥留，遗言福州向阳巷老宅地窖之秘后气绝", "mentioned_only": false, "evidence": "是福威镖局总镖师林震南。"},
+    {"name": "林夫人", "aliases": ["娘子"], "identity": "林震南之妻，林平之的母亲，撞阶殉夫而亡", "mentioned_only": false, "evidence": "林夫人尖声道：“你说甚么？那跟我平儿又有甚么干系？"},
+    {"name": "木高峰", "aliases": ["塞北明驼", "木前辈", "驼子"], "identity": "绰号“塞北明驼”的驼子，土地庙中逼问辟邪剑谱，被令狐冲借岳不群之名吓走", "mentioned_only": false, "evidence": "令狐冲在群玉院床上，隔窗曾听到过这人说话，知道是塞北明驼木高峰"},
+    {"name": "林平之", "aliases": ["平儿", "林师弟"], "identity": "福威镖局少镖头，新入华山门下，父母双亡立誓报仇", "mentioned_only": false, "evidence": "林平之见到父母的尸身，扑上前去，伏在尸身上放声大哭。"},
+    {"name": "高根明", "aliases": ["根明"], "identity": "华山派五弟子，奉命寻师并买棺木", "mentioned_only": false, "evidence": "不久高根明在庙外叫道：“师父，你老人家在这里么？”"},
+    {"name": "劳德诺", "aliases": ["德诺"], "identity": "华山派二弟子，述说长青子败于林远图的旧事", "mentioned_only": false, "evidence": "这次来的是劳德诺和陆大有。"},
+    {"name": "陆大有", "aliases": ["六猴儿"], "identity": "华山派六弟子，见令狐冲无恙抱住大哭", "mentioned_only": false, "evidence": "陆大有一见令狐冲，也不及先叫师父，冲上去就一把抱住"},
+    {"name": "梁发", "aliases": ["三师兄"], "identity": "华山派三弟子", "mentioned_only": false, "evidence": "跟着三弟子梁发和四弟子施戴子先后进庙。"},
+    {"name": "施戴子", "aliases": ["四师兄"], "identity": "华山派四弟子", "mentioned_only": false, "evidence": "跟着三弟子梁发和四弟子施戴子先后进庙。"},
+    {"name": "陶钧", "aliases": ["七师兄"], "identity": "华山派七弟子", "mentioned_only": false, "evidence": "七弟子陶钧、八师兄英白罗、岳不群之女岳灵珊、以及方入门的林平之一同到来。"},
+    {"name": "英白罗", "aliases": ["八师兄"], "identity": "华山派八弟子", "mentioned_only": false, "evidence": "七弟子陶钧、八师兄英白罗、岳不群之女岳灵珊、以及方入门的林平之一同到来。"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "岳不群之女，华山派弟子，为大师哥担尽心事喜极而泣", "mentioned_only": false, "evidence": "岳灵珊泪眼模糊的瞧着令狐冲"},
+    {"name": "长青子", "aliases": [], "identity": "青城派前掌门，当年败于林远图辟邪剑法之下，种下祸根", "mentioned_only": true, "evidence": "当年青城派掌门长青子败在林师弟曾祖远图公的辟邪剑法之下"},
+    {"name": "林远图", "aliases": ["远图公"], "identity": "林平之曾祖，创辟邪剑法，留遗训子孙不得翻看老宅地窖之物（本块作远图公）", "mentioned_only": true, "evidence": "但他曾祖远图公留有遗训，凡我子孙，不得翻看"}
+  ]
+}

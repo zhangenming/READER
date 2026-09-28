@@ -1,0 +1,32 @@
+{
+  "chunk": 27,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["冲儿"], "identity": "华山派大弟子，闻师门有难赶下山，途中被桃谷六仙抓住，后于正气堂外窥探", "mentioned_only": false, "evidence": "令狐冲和风清扬相处十余日"},
+    {"name": "风清扬", "aliases": [], "identity": "华山派前辈，传剑已毕，从此不见华山派门人（本块开头离场）", "mentioned_only": false, "evidence": "风清扬轻轻抚摸他头，说道：“好孩子，好孩子！”"},
+    {"name": "田伯光", "aliases": [], "identity": "采花淫贼（本块仅被提及），败退下山声言不甘、要烂缠到底", "mentioned_only": true, "evidence": "田伯光那厮败退下山，说道心有不甘"},
+    {"name": "陆大有", "aliases": [], "identity": "华山派六弟子，向令狐冲报讯，被桃谷六仙点了哑穴", "mentioned_only": false, "evidence": "忽听得陆大有的声音叫道：“大师哥，大师哥！”"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "岳不群之女，随众师兄弟在正气堂外候信", "mentioned_only": false, "evidence": "便见劳德诺、梁发、施戴子、岳灵珊、林平之等数十名师弟"},
+    {"name": "魔教十长老", "aliases": [], "identity": "石壁图形刻制者，武功似出自六七个门派（本块仅被提及）", "mentioned_only": true, "evidence": "魔教十长老更似出自六七个不同门派", "collective": true},
+    {"name": "封不平", "aliases": [], "identity": "华山派剑宗弃徒，持五岳旗令回来争夺掌门之位", "mentioned_only": false, "evidence": "第一人满脸戾气，一张黄焦焦的面皮，想必是陆大有所说的那个封不平"},
+    {"name": "岳不群", "aliases": ["君子剑"], "identity": "华山派掌门，外号“君子剑”，遭封不平持旗令逼宫让位", "mentioned_only": false, "evidence": "岳不群早听得门外令狐冲和劳德诺的对答"},
+    {"name": "岳夫人", "aliases": ["宁女侠"], "identity": "岳不群之妻宁中则，被称“宁女侠”，斥鲁连荣并揭衡山派疮疤", "mentioned_only": false, "evidence": "岳夫人手按剑柄，森然道"},
+    {"name": "左盟主", "aliases": [], "identity": "即嵩山派掌门左冷禅（真名本块未出现），五岳盟主，准封不平持旗令夺位", "mentioned_only": true, "evidence": "现下我已禀明五岳盟主左盟主，奉得旗令"},
+    {"name": "陆柏", "aliases": ["仙鹤手"], "identity": "嵩山派高手“仙鹤手”，极力替封不平撑腰", "mentioned_only": false, "evidence": "正是嵩山派的仙鹤手陆柏"},
+    {"name": "鲁连荣", "aliases": ["金眼雕", "金眼乌鸦"], "identity": "衡山派第一代人物，正号“金眼雕”、背称“金眼乌鸦”，附和封不平", "mentioned_only": false, "evidence": "这老儿叫鲁连荣，正式外号叫作‘金眼雕’"},
+    {"name": "莫大先生", "aliases": [], "identity": "衡山派掌门（本块仅被提及），岳夫人说要向他请教", "mentioned_only": true, "evidence": "下次见到莫大先生，倒要向他请教"},
+    {"name": "刘正风", "aliases": [], "identity": "衡山派刘正风，与曲洋双双死于嵩山派之手（本块仅被提及）", "mentioned_only": true, "evidence": "衡山派刘正风和魔教长老曲洋双双死于衡山城外"},
+    {"name": "曲洋", "aliases": [], "identity": "魔教长老，与刘正风同死于衡山城外（本块仅被提及）", "mentioned_only": true, "evidence": "衡山派刘正风和魔教长老曲洋双双死于衡山城外"},
+    {"name": "桃谷六仙", "aliases": ["桃谷六鬼", "桃谷六小子"], "identity": "桃根、桃干、桃枝、桃叶、桃花、桃实六兄弟，受仪琳赌约之托来抓令狐冲去见小尼姑", "mentioned_only": false, "evidence": "甚么嵩山派、泰山派，桃谷六仙还真不将他们放在眼里", "collective": true},
+    {"name": "桃根仙", "aliases": [], "identity": "桃谷六仙老大", "mentioned_only": false, "evidence": "我是大哥，叫做桃根仙。"},
+    {"name": "桃干仙", "aliases": [], "identity": "桃谷六仙老二", "mentioned_only": false, "evidence": "我是二哥，叫做桃干仙。"},
+    {"name": "桃枝仙", "aliases": [], "identity": "桃谷六仙老三（与桃叶仙不知谁大）", "mentioned_only": false, "evidence": "我不知是三哥还是四哥，叫做桃枝仙。"},
+    {"name": "桃叶仙", "aliases": [], "identity": "桃谷六仙老四（与桃枝仙不知谁大）", "mentioned_only": false, "evidence": "他不知是三哥还是四哥，叫做桃叶仙。"},
+    {"name": "桃花仙", "aliases": [], "identity": "桃谷六仙老五", "mentioned_only": false, "evidence": "我五哥叫桃花仙。"},
+    {"name": "桃实仙", "aliases": [], "identity": "桃谷六仙老六，胆小谨慎", "mentioned_only": false, "evidence": "我是六弟，叫做桃实仙。"},
+    {"name": "仪琳", "aliases": [], "identity": "恒山派小师妹，打赌赢了叫桃谷六仙来抓令狐冲（本块未出场）", "mentioned_only": true, "evidence": "原来他们是仪琳小师妹差来的"},
+    {"name": "劳德诺", "aliases": [], "identity": "华山派弟子，在正气堂外迎令狐冲并悄声通报", "mentioned_only": false, "evidence": "劳德诺迎了上来，悄声道：“大师哥，师父和师娘在里面见客。”"},
+    {"name": "梁发", "aliases": [], "identity": "华山派弟子，在正气堂外候信", "mentioned_only": false, "evidence": "便见劳德诺、梁发、施戴子、岳灵珊、林平之等数十名师弟"},
+    {"name": "施戴子", "aliases": [], "identity": "华山派弟子，在正气堂外候信", "mentioned_only": false, "evidence": "便见劳德诺、梁发、施戴子、岳灵珊、林平之等数十名师弟"},
+    {"name": "林平之", "aliases": [], "identity": "华山派弟子，在正气堂外候信", "mentioned_only": false, "evidence": "便见劳德诺、梁发、施戴子、岳灵珊、林平之等数十名师弟"}
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "chunk": 13,
+  "characters": [
+    {"name": "木高峰", "aliases": ["塞北明驼", "木驼子", "木大侠", "木兄"], "identity": "绰号“塞北明驼”的驼子，欲强收林平之为徒夺得辟邪剑谱", "mentioned_only": false, "evidence": "木高峰喝道：“且慢！”飞身而出，伸手抓住了林平之的左腕"},
+    {"name": "林平之", "aliases": ["假驼子", "平之"], "identity": "福威镖局少镖头，自报家门与余沧海结仇，被岳不群救下后拜入华山派", "mentioned_only": false, "evidence": "我便是福州福威镖局的林平之。"},
+    {"name": "余沧海", "aliases": ["余观主"], "identity": "青城派掌门，欲杀林平之报杀子之仇，被木高峰、岳不群先后阻拦", "mentioned_only": false, "evidence": "余沧海展开剑法，嗤嗤嗤声响不绝"},
+    {"name": "令狐冲", "aliases": ["大师哥"], "identity": "华山派大弟子，重伤中在群玉院窗内出声解围", "mentioned_only": false, "evidence": "只见一人凭窗而立，正是令狐冲。"},
+    {"name": "洪人雄", "aliases": ["人雄"], "identity": "青城派弟子，余沧海门下，奉命动手杀林平之", "mentioned_only": false, "evidence": "回头向洪人雄道：“人雄，先宰了这小子"},
+    {"name": "罗人杰", "aliases": [], "identity": "青城派弟子，被令狐冲用辟邪剑谱传闻诱近刺杀", "mentioned_only": true, "evidence": "才在回雁楼头以此引得罗人杰俯身过来，挺剑杀却。"},
+    {"name": "长青子", "aliases": [], "identity": "青城派前掌门，早年败于林远图剑下（青城派寻仇根源）", "mentioned_only": true, "evidence": "长青子早年败在林远图剑下之事，武林中并不知情"},
+    {"name": "林远图", "aliases": [], "identity": "林平之曾祖，辟邪剑法创始人，长青子曾败于其剑下", "mentioned_only": true, "evidence": "长青子早年败在林远图剑下之事，武林中并不知情"},
+    {"name": "岳不群", "aliases": ["君子剑", "岳兄", "岳先生"], "identity": "华山派掌门，绰号“君子剑”，以紫霞功暗中救林平之并收录为徒", "mentioned_only": false, "evidence": "木高峰眼见此人果然便是华山派掌门“君子剑”岳不群"},
+    {"name": "岳灵珊", "aliases": ["珊儿", "小师妹", "卖酒少女"], "identity": "岳不群之女，华山派弟子，曾在福州乔装卖酒少女", "mentioned_only": false, "evidence": "认得说话的是当日那个卖酒少女、华山门下人人叫她作“小师妹”的"},
+    {"name": "劳德诺", "aliases": ["德诺", "二师兄"], "identity": "华山派二弟子，岳不群门下", "mentioned_only": false, "evidence": "老者是二师兄劳德诺，身形魁梧的汉子是三师兄梁发"},
+    {"name": "梁发", "aliases": ["阿发", "三师兄"], "identity": "华山派三弟子", "mentioned_only": false, "evidence": "身形魁梧的汉子是三师兄梁发"},
+    {"name": "施戴子", "aliases": ["四师兄"], "identity": "华山派四弟子", "mentioned_only": false, "evidence": "脚夫模样的是四师兄施戴子"},
+    {"name": "高根明", "aliases": ["根明", "五师兄"], "identity": "华山派五弟子，总拿算盘", "mentioned_only": false, "evidence": "手中总是拿着个算盘的是五师兄高根明"},
+    {"name": "陆大有", "aliases": ["六猴儿", "六师兄"], "identity": "华山派六弟子，令狐冲最要好的师弟", "mentioned_only": false, "evidence": "六师兄六猴儿陆大有，那是谁都一见就不会忘记的人物"},
+    {"name": "陶钧", "aliases": ["七师兄"], "identity": "华山派七弟子", "mentioned_only": false, "evidence": "此外七师兄陶钧、八师兄英白罗是两个年轻弟子。"},
+    {"name": "英白罗", "aliases": ["八师兄"], "identity": "华山派八弟子", "mentioned_only": false, "evidence": "此外七师兄陶钧、八师兄英白罗是两个年轻弟子。"},
+    {"name": "刘正风", "aliases": [], "identity": "衡山派刘三爷，率弟子向东南方搜寻", "mentioned_only": true, "evidence": "刘正风率领众弟子向东南方搜去。"},
+    {"name": "定逸", "aliases": ["定逸师太"], "identity": "恒山派师太，仪琳的师父，向西搜寻仪琳", "mentioned_only": true, "evidence": "这时定逸师太急于找寻仪琳，早已与恒山派群尼向西搜了下去。"},
+    {"name": "曲非烟", "aliases": [], "identity": "曲洋孙女，助令狐冲、仪琳藏匿后离去", "mentioned_only": false, "evidence": "曲非烟忽道：“喂，令狐冲，你会死么？”"},
+    {"name": "仪琳", "aliases": [], "identity": "恒山派定逸弟子，抱令狐冲逃出城外", "mentioned_only": false, "evidence": "曲非烟拉着仪琳，悄悄从被窝中钻出"}
+  ]
+}

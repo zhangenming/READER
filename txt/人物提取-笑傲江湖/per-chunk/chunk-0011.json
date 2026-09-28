@@ -1,0 +1,22 @@
+{
+  "chunk": 11,
+  "characters": [
+    {"name": "仪琳", "aliases": ["仪琳小师太"], "identity": "恒山派定逸弟子，小尼姑，被曲非烟带往群玉院", "mentioned_only": false, "evidence": "仪琳应道：“是！”走过去拉住了那女童的手。"},
+    {"name": "曲非烟", "aliases": ["非非", "小姑娘", "女童"], "identity": "精灵古怪的小女童，捉弄余沧海，自述爹娘已亡，由爷爷抚养", "mentioned_only": false, "evidence": "我姓曲，名叫非烟。我爷爷叫我非非，你也叫我非非好啦。"},
+    {"name": "曲洋", "aliases": ["曲非烟的爷爷", "爷爷"], "identity": "带曲非烟旁观回雁楼之斗、救走令狐冲尸身的老人（本块仅作“爷爷”，未具名，即魔教长老曲洋）", "mentioned_only": true, "evidence": "我爷爷叫我非非，你也叫我非非好啦。"},
+    {"name": "余沧海", "aliases": ["余观主"], "identity": "青城派掌门，当众被小女童捉弄、丢尽颜面", "mentioned_only": false, "evidence": "余沧海大怒，一转头，不等看清是谁说话，循声辨向"},
+    {"name": "定逸", "aliases": ["定逸师太"], "identity": "恒山派师太，仪琳的师父，护住女童怒斥方人智", "mentioned_only": false, "evidence": "定逸师太在旁早已看得大怒，抢步上前"},
+    {"name": "方人智", "aliases": [], "identity": "青城派弟子，余沧海门下，最机灵", "mentioned_only": false, "evidence": "人丛中走出一名青袍汉子，正是青城派中最机灵的方人智。"},
+    {"name": "刘正风", "aliases": [], "identity": "衡山派刘三爷，金盆洗手大会主人", "mentioned_only": false, "evidence": "刘正风给他这么瞧了一眼，立时明白"},
+    {"name": "令狐冲", "aliases": ["令狐大哥"], "identity": "华山派弟子，众人以为已死于罗人杰剑下，尸身失踪", "mentioned_only": true, "evidence": "这位令狐大哥于我有救命大恩，终于为我而死"},
+    {"name": "田伯光", "aliases": ["万里独行"], "identity": "采花大盗，自称已拜仪琳为师，在群玉院养伤", "mentioned_only": false, "evidence": "正是那恶人“万里独行”田伯光。"},
+    {"name": "劳德诺", "aliases": [], "identity": "华山派弟子，令狐冲师弟", "mentioned_only": false, "evidence": "劳德诺道：“不是，这个小妹妹，弟子今日也还是初见"},
+    {"name": "岳不群", "aliases": [], "identity": "华山派掌门，余沧海疑心其暗中指使女童", "mentioned_only": true, "evidence": "是华山派掌门岳不群在暗中捣鬼？"},
+    {"name": "罗人杰", "aliases": [], "identity": "青城派弟子，回雁楼上刺杀令狐冲之人", "mentioned_only": true, "evidence": "青城派有一个罗人杰，是道长的弟子罢？"},
+    {"name": "彭人骐", "aliases": [], "identity": "青城派弟子，余沧海门下，被田伯光所杀", "mentioned_only": true, "evidence": "田伯光，我弟子彭人骐，可是你害死的？"},
+    {"name": "木高峰", "aliases": ["塞北明驼"], "identity": "绰号“塞北明驼”的驼子，与林平之一同从廊上走过", "mentioned_only": false, "evidence": "正是塞北明驼木高峰和林平之。"},
+    {"name": "林平之", "aliases": [], "identity": "福威镖局少镖头，扮作小驼子随木高峰同行", "mentioned_only": false, "evidence": "正是塞北明驼木高峰和林平之。"},
+    {"name": "向大年", "aliases": ["大年"], "identity": "刘正风门下大弟子，奉命搜查群玉院", "mentioned_only": false, "evidence": "大年，为义，大伙进去搜搜，一个人也不许走了。"},
+    {"name": "米为义", "aliases": ["为义"], "identity": "刘正风门下二弟子，奉命搜查群玉院", "mentioned_only": false, "evidence": "刘门弟子向大年和米为义齐声答应。"}
+  ]
+}

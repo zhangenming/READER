@@ -1,0 +1,17 @@
+{
+  "chunk": 44,
+  "characters": [
+    {"name": "令狐冲", "aliases": [], "identity": "华山派大师兄，力抗少林、昆仑三高手以护婆婆，剑术精妙绝伦", "mentioned_only": false, "collective": false, "evidence": "在下华山派令狐冲，参见少林、昆仑派的前辈"},
+    {"name": "婆婆", "aliases": [], "identity": "洛阳绿竹巷弹琴的“婆婆”，武功极高，独退群豪并随口道出诸人师承；即魔教圣姑任盈盈（真名于本书后文揭示）", "mentioned_only": false, "collective": false, "evidence": "棚中一个清亮的女子声音说道"},
+    {"name": "辛国梁", "aliases": ["辛兄"], "identity": "少林派弟子（俗家），声音宏亮，方生师侄", "mentioned_only": false, "collective": false, "evidence": "那少林派的大个子辛国梁，剑法还比他强些。"},
+    {"name": "易国梓", "aliases": ["易兄"], "identity": "少林派弟子，辛国梁师弟，方生师侄，蛮不讲理与令狐冲动手落败", "mentioned_only": false, "collective": false, "evidence": "他师弟叫做易国梓，那就无赖得紧了"},
+    {"name": "谭迪人", "aliases": ["谭兄"], "identity": "昆仑派第二代弟子好手，口中溅到令狐冲毒血而昏厥", "mentioned_only": false, "collective": false, "evidence": "这谭迪人是昆仑派第二代弟子中的好手"},
+    {"name": "方生", "aliases": [], "identity": "少林派“方”字辈第一代高僧，方证大师的师兄弟，赶到五霸冈查究", "mentioned_only": false, "collective": false, "evidence": "那老僧道：“老衲法名方生。”"},
+    {"name": "方证大师", "aliases": [], "identity": "少林派掌门", "mentioned_only": true, "collective": false, "evidence": "少林派掌门人方证大师更是武林中众所钦佩"},
+    {"name": "蓝凤凰", "aliases": ["蓝教主"], "identity": "云南五仙教教主，其注血含毒致谭迪人中毒", "mentioned_only": true, "collective": false, "evidence": "蓝凤凰和手下的四名苗女给你注血"},
+    {"name": "平一指", "aliases": ["平大夫"], "identity": "开封“杀人名医”，已死于五霸冈，婆婆用药化其尸体", "mentioned_only": true, "collective": false, "evidence": "平大夫的遗体在冈上尚未掩埋"},
+    {"name": "黄伯流", "aliases": ["黄帮主"], "identity": "天河帮帮主，因惧婆婆而求令狐冲讳言相见", "mentioned_only": true, "collective": false, "evidence": "黄帮主、司马岛主、祖千秋要我说从来没见过他们"},
+    {"name": "司马大", "aliases": ["司马岛主"], "identity": "长鲸岛岛主，因惧婆婆而求令狐冲讳言相见", "mentioned_only": true, "collective": false, "evidence": "黄帮主、司马岛主、祖千秋要我说从来没见过他们"},
+    {"name": "祖千秋", "aliases": [], "identity": "黄河老祖之一，因惧婆婆而求令狐冲讳言相见", "mentioned_only": true, "collective": false, "evidence": "黄帮主、司马岛主、祖千秋要我说从来没见过他们"}
+  ]
+}

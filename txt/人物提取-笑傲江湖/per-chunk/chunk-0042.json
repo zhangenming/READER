@@ -1,0 +1,30 @@
+{
+  "chunk": 42,
+  "characters": [
+    {"name": "林平之", "aliases": ["小林子"], "identity": "华山派弟子，挺身替杀父仇人余沧海解围以亲手报仇", "mentioned_only": false, "collective": false, "evidence": "忽听得一人大声道：“给我喝！”却是林平之"},
+    {"name": "蓝凤凰", "aliases": [], "identity": "云南五仙教教主，其五宝花蜜酒令众人呕吐（她在本章开头离去）", "mentioned_only": false, "collective": false, "evidence": "蓝凤凰叹了口气道：“华山派中除了令狐冲外，再没第二个英雄好汉了。”"},
+    {"name": "岳灵珊", "aliases": [], "identity": "岳不群之女", "mentioned_only": false, "collective": false, "evidence": "岳灵珊叫道：“小林子，你吃了这脏东西"},
+    {"name": "岳不群", "aliases": ["岳先生", "君子剑"], "identity": "华山派掌门，一剑刺瞎十五名强敌之名被游迅吹捧", "mentioned_only": false, "collective": false, "evidence": "岳不群皱眉道：“将这些酒瓶酒碗都摔入河中。”"},
+    {"name": "岳夫人", "aliases": ["宁女侠"], "identity": "岳不群之妻宁中则", "mentioned_only": false, "collective": false, "evidence": "游迅又道：“岳夫人宁女侠……"},
+    {"name": "令狐冲", "aliases": ["令狐公子"], "identity": "华山派大师兄，为得剑谱下落以言语赚回游迅", "mentioned_only": false, "collective": false, "evidence": "在下令狐冲，山野少年，怎称得上‘公子’二字？"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "桃根/桃干/桃枝/桃叶/桃花/桃实六兄弟合称", "mentioned_only": false, "collective": true, "evidence": "连桃谷六仙和船艄的船公水手也均不免"},
+    {"name": "桃根仙", "aliases": [], "identity": "桃谷六仙老大", "mentioned_only": false, "collective": false, "evidence": "桃根仙道：“谁说不是呢？那妖女见你生得俊，喜欢了你啦。”"},
+    {"name": "桃干仙", "aliases": [], "identity": "桃谷六仙老二", "mentioned_only": false, "collective": false, "evidence": "桃干仙道：“啊哟，不得了！令狐冲喝那碗毒酒"},
+    {"name": "桃枝仙", "aliases": [], "identity": "桃谷六仙老三", "mentioned_only": false, "collective": false, "evidence": "桃枝仙道：“我说不是因为他生得俊，而是因为他赞那妖女年轻貌美。”"},
+    {"name": "桃叶仙", "aliases": [], "identity": "桃谷六仙老四", "mentioned_only": false, "collective": false, "evidence": "桃叶仙道：“他虽然不呕，焉知不是腹中有了五条毒虫之后，中毒更深？"},
+    {"name": "桃花仙", "aliases": [], "identity": "桃谷六仙老五", "mentioned_only": false, "collective": false, "evidence": "桃花仙道：“令狐冲不要紧，我们就要紧了。”"},
+    {"name": "桃实仙", "aliases": [], "identity": "桃谷六仙老六", "mentioned_only": false, "collective": false, "evidence": "桃实仙道：“令狐冲，那妖女对你另眼相看，给你服了解药。”"},
+    {"name": "平一指", "aliases": [], "identity": "开封“杀人名医”，桃谷六仙怕他追究", "mentioned_only": true, "collective": false, "evidence": "倘若因此毙命，平一指追究起来，那便如何是好？"},
+    {"name": "余沧海", "aliases": ["余观主"], "identity": "青城派掌门，矮小道人，被七人围住索取《辟邪剑谱》后受伤断后而逃", "mentioned_only": false, "collective": false, "evidence": "见店堂中端坐着一个矮小道人，正是青城派掌门余沧海"},
+    {"name": "仇松年", "aliases": [], "identity": "长发头陀，使一对虎头弯刀，围攻余沧海的七人之一", "mentioned_only": false, "collective": false, "evidence": "游迅也认得长发头陀仇松年"},
+    {"name": "张夫人", "aliases": [], "identity": "使短刀的白发老妇，牙齿脱落大半，围攻余沧海的七人之一", "mentioned_only": false, "collective": false, "evidence": "张夫人白了他一眼，喝道：“油腔滑调，给我走开些。”"},
+    {"name": "西宝", "aliases": ["西宝和尚"], "identity": "僧人，披血红僧衣，使纯钢钵钹，围攻余沧海的七人之一", "mentioned_only": false, "collective": false, "evidence": "只见西宝和尚与头陀仇松年腿上鲜血直流"},
+    {"name": "玉灵", "aliases": ["玉灵道人"], "identity": "道人，使八角狼牙锤，围攻余沧海的七人之一", "mentioned_only": false, "collective": false, "evidence": "玉灵道人一扬狼牙锤，朗声说道"},
+    {"name": "严三星", "aliases": ["双蛇恶乞", "双龙神丐"], "identity": "乞丐，肩颈盘双蛇，外号“双蛇恶乞”，围攻余沧海的七人之一", "mentioned_only": false, "collective": false, "evidence": "那乞丐名叫严三星，外号本来叫作“双蛇恶乞”"},
+    {"name": "桐柏双奇", "aliases": [], "identity": "眇目男女二人合称（男瞎左眼、女瞎右眼），各使黄金拐杖，围攻余沧海的七人之二", "mentioned_only": false, "collective": true, "evidence": "好久没见‘桐柏双奇’在江湖上行走了"},
+    {"name": "游迅", "aliases": ["滑不留手", "油浸泥鳅", "游大老板"], "identity": "富商模样的消息贩子，外号“滑不留手”，轻功了得、无孔不入，卖剑谱消息不成被围", "mentioned_only": false, "collective": false, "evidence": "兄弟有个难听的外号，叫作‘滑不留手’"},
+    {"name": "东方不败", "aliases": ["东方教主"], "identity": "魔教教主，威震天下（本块仅被游迅借名脱身提及）", "mentioned_only": true, "collective": false, "evidence": "怎么会是威震天下的东方不败东方教主？"},
+    {"name": "黄伯流", "aliases": ["黄老帮主", "银髯蛟", "银髯老蛟"], "identity": "天河帮帮主，八十余岁白须老者，率车马来迎令狐冲", "mentioned_only": false, "collective": false, "evidence": "帮主黄伯流是中原武林中的一位前辈耆宿"},
+    {"name": "司马大", "aliases": ["司马岛主", "阿大"], "identity": "岛主（下章言长鲸岛），自幼生得身材高大的魁梧大汉", "mentioned_only": false, "collective": false, "evidence": "小人司马大，前来迎接公子去五霸冈上和群雄相见。"}
+  ]
+}

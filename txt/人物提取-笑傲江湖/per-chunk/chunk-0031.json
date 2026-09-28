@@ -1,0 +1,17 @@
+{
+  "chunk": 31,
+  "characters": [
+    {"name": "田伯光", "aliases": ["田兄", "田君"], "identity": "采花淫贼，重伤之下与令狐冲握手结交，允诺改过", "mentioned_only": false, "evidence": "田伯光伸出手去，说道：“令狐兄，咱们握一握手再死。"},
+    {"name": "令狐冲", "aliases": ["冲儿", "令狐大哥"], "identity": "华山派大弟子，得不戒治伤", "mentioned_only": false, "evidence": "令狐冲不禁迟疑，田伯光此言"},
+    {"name": "狄修", "aliases": ["狄师兄"], "identity": "嵩山派弟子，奉掌门师伯之命上华山巡查", "mentioned_only": false, "evidence": "你眼力倒好，我是嵩山派狄修。"},
+    {"name": "岳不群", "aliases": ["君子剑"], "identity": "华山派掌门", "mentioned_only": false, "evidence": "你华山派岳不群假仁假义"},
+    {"name": "仪琳", "aliases": ["小师父", "琳儿"], "identity": "恒山派小尼姑，不戒和尚之女", "mentioned_only": false, "evidence": "田伯光听到那女子声音正是仪琳"},
+    {"name": "不戒", "aliases": ["不戒和尚", "不戒大师", "大和尚"], "identity": "仪琳之父，屠夫出身、不守戒律的胖大和尚，以真气压住令狐冲体内六道真气", "mentioned_only": false, "evidence": "我爹爹法名‘不戒’。他老人家虽然身在佛门"},
+    {"name": "岳灵珊", "aliases": ["珊儿"], "identity": "岳不群与岳夫人之女", "mentioned_only": false, "evidence": "珊儿，将佩剑交给大师哥。"},
+    {"name": "定闲", "aliases": [], "identity": "恒山派师太（恒山派掌门）", "mentioned_only": true, "evidence": "定闲、定逸两位师太脸上须不好看。"},
+    {"name": "定逸", "aliases": [], "identity": "恒山派师太，仪琳之师", "mentioned_only": true, "evidence": "定闲、定逸两位师太脸上须不好看。"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "六个怪人兄弟，此前以六道真气替令狐冲治伤", "mentioned_only": true, "evidence": "压制了桃谷六仙的六道真气", "collective": true},
+    {"name": "陆大有", "aliases": ["六猴儿"], "identity": "华山派六弟子，被发现死于屋内", "mentioned_only": false, "evidence": "只见陆大有直挺挺的躺在地下不动。"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻兼师妹（即宁中则），随华山派下山未在山上", "mentioned_only": true, "evidence": "那时师父师娘不在山上。"}
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "chunk": 100,
+  "characters": [
+    {
+      "name": "令狐冲",
+      "aliases": [
+        "令狐大侠",
+        "令狐掌门"
+      ],
+      "identity": "恒山派掌门，本书主角，被困思过崖山洞绝地，黑暗中仗剑求生",
+      "mentioned_only": false,
+      "evidence": "在下恒山派令狐冲。"
+    },
+    {
+      "name": "盈盈",
+      "aliases": [
+        "任大小姐"
+      ],
+      "identity": "日月教教主任我行之女，令狐冲未婚妻，藏身洞中凸岩上掷铜钱击瑶琴传讯",
+      "mentioned_only": false,
+      "evidence": "盈盈纵身跃下，令狐冲抢将上去，掷下长剑，将她搂在怀里。"
+    },
+    {
+      "name": "莫大先生",
+      "aliases": [
+        "莫师伯"
+      ],
+      "identity": "衡山派掌门，混在衡山人群中呆望石壁剑招，大乱后不见踪影",
+      "mentioned_only": false,
+      "evidence": "只见衡山派人群中一人白发萧然，呆呆的望着石壁，正是莫大先生"
+    },
+    {
+      "name": "玉钟子",
+      "aliases": [],
+      "identity": "泰山派老成道人，黑暗大乱后倡议众人立誓止杀、自报姓名以求脱险",
+      "mentioned_only": false,
+      "evidence": "贫道是泰山派玉钟子，请各位收起刀剑。"
+    },
+    {
+      "name": "左冷禅",
+      "aliases": [
+        "左兄"
+      ],
+      "identity": "嵩山派前掌门，双目已盲，本次山洞屠杀陷阱的真正主使，率瞎子入洞清场",
+      "mentioned_only": false,
+      "evidence": "是左冷禅！左冷禅！"
+    },
+    {
+      "name": "林平之",
+      "aliases": [
+        "平之"
+      ],
+      "identity": "岳不群之徒，习辟邪剑法双目已盲，与左冷禅兄弟相称，奉命入洞杀令狐冲",
+      "mentioned_only": false,
+      "evidence": "黑暗中有人应道：“是！”正是林平之的声音。"
+    },
+    {
+      "name": "岳不群",
+      "aliases": [
+        "岳先生"
+      ],
+      "identity": "华山派掌门、五岳派掌门，令狐冲之师，被指以观剑招为名诱骗五派好手入洞",
+      "mentioned_only": true,
+      "evidence": "是岳不群这奸贼的阴谋！"
+    },
+    {
+      "name": "岳灵珊",
+      "aliases": [
+        "小师妹"
+      ],
+      "identity": "岳不群之女、令狐冲的小师妹，曾到此洞观石壁绝招并于封禅台施展（本块仅作“小师妹”，真名未出现）",
+      "mentioned_only": true,
+      "evidence": "当日小师妹在封禅台侧，以此处石壁上所刻的绝招，打败泰山、衡山两派高手"
+    },
+    {
+      "name": "独孤求败",
+      "aliases": [
+        "独孤大侠"
+      ],
+      "identity": "“独孤九剑”创制者，前辈剑魔，令狐冲绝境中念及",
+      "mentioned_only": true,
+      "evidence": "纵然独孤大侠复生，遇上这等情景，只怕也是一筹莫展了。"
+    },
+    {
+      "name": "魔教十长老",
+      "aliases": [],
+      "identity": "当年攻打华山被困此洞、中暗算葬身的日月教十位长老",
+      "collective": true,
+      "mentioned_only": true,
+      "evidence": "魔教十长老个个武功奇高，却中了暗算，葬身于此。"
+    },
+    {
+      "name": "大力神魔",
+      "aliases": [],
+      "identity": "魔教前辈高手，当年以巨斧开凿山洞中的地道",
+      "mentioned_only": true,
+      "evidence": "那地道是当年魔教的大力神魔以巨斧所开"
+    },
+    {
+      "name": "众瞎子",
+      "aliases": [],
+      "identity": "左冷禅带入山洞、昔日在破庙外被令狐冲刺瞎的一十五名好手，以骂“滚你奶奶的”作辨别同道暗语",
+      "collective": true,
+      "mentioned_only": false,
+      "evidence": "知是那天夜间在破庙外为自己刺瞎的一十五人"
+    }
+  ]
+}

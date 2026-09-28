@@ -1,0 +1,301 @@
+{
+  "chunk": 103,
+  "characters": [
+    {
+      "name": "令狐冲",
+      "aliases": [
+        "令狐大侠",
+        "令狐小兄弟",
+        "令狐掌门",
+        "令狐兄弟",
+        "冲哥"
+      ],
+      "identity": "恒山派掌门，本书主角，朝阳峰上拒任副教主、当众求婚盈盈后大醉下峰",
+      "mentioned_only": false,
+      "evidence": "令狐冲道：“正是！”这两字说得斩钉截铁，绝无半分转圜余地。"
+    },
+    {
+      "name": "任我行",
+      "aliases": [
+        "圣教主",
+        "任教主"
+      ],
+      "identity": "日月神教教主，朝阳峰上授副教主之位被拒，定下先灭恒山、再图少林武当的大计，末了猝发异种真气之兆",
+      "mentioned_only": false,
+      "evidence": "任我行越想越怒，大声道：“将五岳剑派那些还没死光的狗崽子，都给我押上峰来。”"
+    },
+    {
+      "name": "盈盈",
+      "aliases": [],
+      "identity": "任我行之女，与令狐冲生离，誓不相负、决意殉情",
+      "mentioned_only": false,
+      "evidence": "盈盈早已珠泪盈眶，这时再也不能忍耐，泪水从面颊上直流下来"
+    },
+    {
+      "name": "向问天",
+      "aliases": [
+        "向左使"
+      ],
+      "identity": "日月教左使，为敬酒之事编话保全令狐冲及群豪，与令狐冲碗酒相送",
+      "mentioned_only": false,
+      "evidence": "向问天和众长老等你瞧瞧我，我瞧瞧你，均感甚是没趣。"
+    },
+    {
+      "name": "上官云",
+      "aliases": [],
+      "identity": "日月教长老，押解四派俘虏并回报山洞检视结果",
+      "mentioned_only": false,
+      "evidence": "只听上官云又道：“泰山派的玉磬子、玉音子等都死在一起。”"
+    },
+    {
+      "name": "鲍大楚",
+      "aliases": [],
+      "identity": "日月教长老，谀颂圣教主“水里水里去，火里火里去”",
+      "mentioned_only": false,
+      "evidence": "鲍大楚道：“圣教主只要小指头儿抬一抬，咱们水里水里去，火里火里去，万死不辞。”"
+    },
+    {
+      "name": "秦伟邦",
+      "aliases": [],
+      "identity": "日月教中人，谀称为圣教主死十万次也快活",
+      "mentioned_only": false,
+      "evidence": "秦伟邦道：“为圣教主办事，就算死十万次，也比胡里胡涂的活着快活得多。”"
+    },
+    {
+      "name": "仪清",
+      "aliases": [],
+      "identity": "恒山派二大弟子之一，朗声报仪琳诛杀岳不群之仇，并率众誓死追随掌门",
+      "mentioned_only": false,
+      "evidence": "恒山派中仪清朗声道：“不！岳不群是我恒山派中一位师妹杀死的。”"
+    },
+    {
+      "name": "仪和",
+      "aliases": [],
+      "identity": "恒山派大弟子，随令狐冲下峰",
+      "mentioned_only": false,
+      "evidence": "仪清、仪和等恒山群弟子跟随下峰。"
+    },
+    {
+      "name": "仪琳",
+      "aliases": [
+        "小师妹"
+      ],
+      "identity": "恒山派女弟子，刺死岳不群为定闲定逸报仇，随不戒夫妇等来到恒山",
+      "mentioned_only": false,
+      "evidence": "不戒夫妇、仪琳、田伯光等四人在华山脚下便已和众人相会，一齐来到恒山。"
+    },
+    {
+      "name": "不戒和尚",
+      "aliases": [
+        "不戒夫妇"
+      ],
+      "identity": "仪琳之父，与妻子、女儿、田伯光同到恒山（本块作“不戒夫妇”之一）",
+      "mentioned_only": false,
+      "evidence": "不戒夫妇、仪琳、田伯光等四人在华山脚下便已和众人相会，一齐来到恒山。"
+    },
+    {
+      "name": "哑婆婆",
+      "aliases": [
+        "不戒夫妇"
+      ],
+      "identity": "不戒和尚之妻、仪琳之母（本块作“不戒夫妇”之一）（本块作“那婆婆”）",
+      "mentioned_only": false,
+      "evidence": "不戒夫妇、仪琳、田伯光等四人在华山脚下便已和众人相会，一齐来到恒山。"
+    },
+    {
+      "name": "田伯光",
+      "aliases": [],
+      "identity": "恒山派“不可不戒”，随不戒夫妇同到恒山",
+      "mentioned_only": false,
+      "evidence": "不戒夫妇、仪琳、田伯光等四人在华山脚下便已和众人相会，一齐来到恒山。"
+    },
+    {
+      "name": "郑萼",
+      "aliases": [],
+      "identity": "恒山派女弟子，阵前直言恒山派力战不屈",
+      "mentioned_only": false,
+      "evidence": "郑萼道：“敌众我寡，我们又入了圈套"
+    },
+    {
+      "name": "老头子",
+      "aliases": [],
+      "identity": "江湖豪客，甘冒杀身之祸出列向令狐冲敬酒",
+      "mentioned_only": false,
+      "evidence": "人丛中走出一个矮胖子来，却是老头子"
+    },
+    {
+      "name": "祖千秋",
+      "aliases": [],
+      "identity": "江湖豪客，相继向令狐冲敬酒",
+      "mentioned_only": false,
+      "evidence": "跟着祖千秋、计无施、蓝凤凰、黄伯流等人一个个过来敬酒。"
+    },
+    {
+      "name": "计无施",
+      "aliases": [],
+      "identity": "江湖豪客，相继向令狐冲敬酒",
+      "mentioned_only": false,
+      "evidence": "跟着祖千秋、计无施、蓝凤凰、黄伯流等人一个个过来敬酒。"
+    },
+    {
+      "name": "蓝凤凰",
+      "aliases": [],
+      "identity": "云南五仙教教主，相继向令狐冲敬酒",
+      "mentioned_only": false,
+      "evidence": "跟着祖千秋、计无施、蓝凤凰、黄伯流等人一个个过来敬酒。"
+    },
+    {
+      "name": "黄伯流",
+      "aliases": [],
+      "identity": "天河帮帮主，相继向令狐冲敬酒",
+      "mentioned_only": false,
+      "evidence": "跟着祖千秋、计无施、蓝凤凰、黄伯流等人一个个过来敬酒。"
+    },
+    {
+      "name": "十长老",
+      "aliases": [],
+      "identity": "日月教现任十位长老，随侍任我行与会（非昔年困死华山的前辈十长老）",
+      "collective": true,
+      "mentioned_only": false,
+      "evidence": "向问天和十长老一齐躬身说道"
+    },
+    {
+      "name": "方证",
+      "aliases": [
+        "方证大师",
+        "方丈大师"
+      ],
+      "identity": "少林寺方丈，受风清扬之托率十名僧人上恒山传讯来援",
+      "mentioned_only": false,
+      "evidence": "见性峰上忽然来了十名僧人，为首的是少林寺方丈方证大师。"
+    },
+    {
+      "name": "方生",
+      "aliases": [
+        "方生大师"
+      ],
+      "identity": "少林寺“方”字辈高僧，随方证同上恒山",
+      "mentioned_only": false,
+      "evidence": "方生大师也来了。”方生微微一笑。"
+    },
+    {
+      "name": "冲虚",
+      "aliases": [
+        "冲虚道长"
+      ],
+      "identity": "武当派掌门，曾与方证、令狐冲在悬空寺晤谈（本块回忆提及）",
+      "mentioned_only": true,
+      "evidence": "那日老衲与冲虚道长、令狐掌门三人在悬空寺中晤谈"
+    },
+    {
+      "name": "风清扬",
+      "aliases": [
+        "风太师叔",
+        "风前辈",
+        "风老前辈"
+      ],
+      "identity": "华山派名宿、令狐冲太师叔，擒住桃谷六仙命其赴少林传书示警",
+      "mentioned_only": true,
+      "evidence": "令狐冲大喜，叫道：“风太师叔！”"
+    },
+    {
+      "name": "桃谷六仙",
+      "aliases": [],
+      "identity": "桃根、桃干、桃枝、桃叶、桃花、桃实六兄弟，被风清扬擒住后派赴少林寺传书",
+      "collective": true,
+      "mentioned_only": true,
+      "evidence": "令狐冲笑道：“是桃谷六仙？”方证笑道：“正是桃谷六仙。”"
+    },
+    {
+      "name": "定闲",
+      "aliases": [
+        "定闲师太"
+      ],
+      "identity": "恒山派前掌门，临终将掌门之位重托令狐冲，灵位供于见性峰",
+      "mentioned_only": true,
+      "evidence": "晚辈受恒山派前掌门定闲师太的重托，出任恒山掌门"
+    },
+    {
+      "name": "定静",
+      "aliases": [
+        "定静师太"
+      ],
+      "identity": "恒山派师太，已殉难，灵位与定闲定逸并列",
+      "mentioned_only": true,
+      "evidence": "向定闲、定静、定逸三位师太的灵位祭告大仇已报。"
+    },
+    {
+      "name": "定逸",
+      "aliases": [
+        "定逸师叔"
+      ],
+      "identity": "恒山派师太，被岳不群所害，灵位供于见性峰",
+      "mentioned_only": true,
+      "evidence": "岳不群害死我派掌门师父和定逸师叔"
+    },
+    {
+      "name": "岳不群",
+      "aliases": [
+        "君子剑",
+        "岳先生"
+      ],
+      "identity": "华山派掌门，已死，恒山派言其为杀师元凶",
+      "mentioned_only": true,
+      "evidence": "不！岳不群是我恒山派中一位师妹杀死的。"
+    },
+    {
+      "name": "左冷禅",
+      "aliases": [],
+      "identity": "嵩山派掌门，已死，与岳不群等自相残杀而死",
+      "mentioned_only": true,
+      "evidence": "不料左冷禅、岳不群以及泰山派中的几名前辈尽皆自相残杀而死"
+    },
+    {
+      "name": "玉磬子",
+      "aliases": [],
+      "identity": "泰山派前辈道人，死于思过崖山洞",
+      "mentioned_only": true,
+      "evidence": "泰山派的玉磬子、玉音子等都死在一起。"
+    },
+    {
+      "name": "玉音子",
+      "aliases": [],
+      "identity": "泰山派前辈道人，死于思过崖山洞",
+      "mentioned_only": true,
+      "evidence": "泰山派的玉磬子、玉音子等都死在一起。"
+    },
+    {
+      "name": "莫大先生",
+      "aliases": [],
+      "identity": "衡山派掌门，洞中大乱后不知去向",
+      "mentioned_only": true,
+      "evidence": "莫大先生不知去向"
+    },
+    {
+      "name": "孔子",
+      "aliases": [
+        "孔夫子"
+      ],
+      "identity": "历史人物，日月教教众谀词中以之与圣教主相比",
+      "mentioned_only": true,
+      "evidence": "孔夫子的武功哪有圣教主高强？"
+    },
+    {
+      "name": "关羽",
+      "aliases": [
+        "关王爷",
+        "关云长"
+      ],
+      "identity": "历史人物，教众谀词中称其匹夫之勇、任我行自负单打独斗亦能胜之",
+      "mentioned_only": true,
+      "evidence": "关王爷是匹夫之勇，哪有圣教主的智谋？"
+    },
+    {
+      "name": "诸葛亮",
+      "aliases": [],
+      "identity": "历史人物，教众谀词及任我行自许中与圣教主比智谋（本块一处讹作“诸葛壳”）",
+      "mentioned_only": true,
+      "evidence": "孔夫子、关王爷、诸葛亮，谁都比不上我们圣教主！"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "chunk": 96,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐大哥"], "identity": "恒山派掌门，乔装悬空寺聋哑仆妇潜入通元谷", "mentioned_only": false, "evidence": "令狐冲慢慢踱回，刚到院子外"},
+    {"name": "计无施", "aliases": ["夜猫子", "无计可施"], "identity": "江湖豪客，救下被吊众人并审问漠北双熊", "mentioned_only": false, "evidence": "计无施走上前去，在漠北双熊背上推拿了几下"},
+    {"name": "祖千秋", "aliases": [], "identity": "江湖豪客，令狐冲旧识", "mentioned_only": false, "evidence": "祖千秋摇头道：“不是，不是，决计不是。”"},
+    {"name": "仇松年", "aliases": [], "identity": "头陀，被吊示众的阴谋集团成员", "mentioned_only": false, "evidence": "仇松年等一得自由，立时污言秽语的破口大骂。"},
+    {"name": "张夫人", "aliases": [], "identity": "江湖恶人，被吊示众的阴谋集团成员", "mentioned_only": false, "evidence": "张夫人一侧头，只见仇松年等七人额头上都用朱笔写着一个字"},
+    {"name": "西宝和尚", "aliases": [], "identity": "江湖恶人，被吊示众的阴谋集团成员", "mentioned_only": false, "evidence": "西宝和尚大声骂道：“甚么阴谋已败"},
+    {"name": "玉灵道人", "aliases": [], "identity": "江湖恶人，被吊示众的阴谋集团成员", "mentioned_only": false, "evidence": "玉灵道人忙摇手阻止，在掌心中吐了一大口唾沫"},
+    {"name": "游迅", "aliases": ["滑不留手", "游兄"], "identity": "江湖恶人“滑不留手”，被吊示众的阴谋集团成员", "mentioned_only": false, "evidence": "游迅微微一笑，说道：“说来惭愧"},
+    {"name": "桐柏双奇", "aliases": [], "identity": "桐柏山双奇，被吊示众的阴谋集团成员", "mentioned_only": false, "collective": true, "evidence": "割断了吊着“桐柏双奇”的绳索。"},
+    {"name": "漠北双熊", "aliases": ["黑熊", "白熊"], "identity": "爱吃人肉的漠北双煞，被点倒于山脚", "mentioned_only": false, "collective": true, "evidence": "赫然有爱吃人肉的漠北双熊在内。"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "桃谷六兄弟，被疑为恶作剧主谋", "mentioned_only": true, "collective": true, "evidence": "你怎知不是桃谷六仙干的？"},
+    {"name": "田伯光", "aliases": ["不可不戒"], "identity": "仪琳弟子，法名不可不戒，被倒吊高树", "mentioned_only": false, "evidence": "一个是不可不戒田伯光，另一个却是不戒和尚。"},
+    {"name": "不戒和尚", "aliases": ["不戒大师", "太师父"], "identity": "仪琳之父，因“负心薄幸”布条羞愤自尽被救", "mentioned_only": false, "evidence": "不戒大师是仪琳小师妹的父亲"},
+    {"name": "仪琳", "aliases": [], "identity": "恒山派弟子，不戒和尚之女，向“哑婆婆”倾诉心事", "mentioned_only": false, "evidence": "见到一张清丽绝俗的脸庞，正是仪琳。"},
+    {"name": "定逸", "aliases": ["定逸师太"], "identity": "恒山派师太，仪琳师父，寄养仪琳于白云庵，已被害死", "mentioned_only": true, "evidence": "你师父定逸师太见你生得可爱，心中欢喜"},
+    {"name": "哑婆婆", "aliases": [], "identity": "不戒和尚之妻、仪琳之母（本块仪琳以“我妈妈/你娘”谈及，不知其即哑婆婆）", "mentioned_only": true, "evidence": "我一见到你娘，就爱得她发狂"},
+    {"name": "秦绢", "aliases": ["秦师妹"], "identity": "恒山派小辈弟子，向仪琳传诸师姊议立掌门之事", "mentioned_only": true, "evidence": "秦绢小师妹跟我说，她曾听到仪和、仪清她们好几位大师姊商议。"},
+    {"name": "仪和", "aliases": [], "identity": "恒山派弟子，督仪琳练剑，砍伤田伯光", "mentioned_only": true, "evidence": "仪和、仪清两位师姊总是督着我练剑。"},
+    {"name": "仪清", "aliases": [], "identity": "恒山派弟子，督仪琳练剑", "mentioned_only": true, "evidence": "仪和、仪清两位师姊总是督着我练剑。"},
+    {"name": "岳不群", "aliases": ["岳先生"], "identity": "五岳派掌门，令魔教众人迷掳恒山派弟子", "mentioned_only": true, "evidence": "岳先生吩咐了的，尼姑们要捉到华山去"},
+    {"name": "左冷禅", "aliases": [], "identity": "嵩山派掌门，被不戒和尚戏称天下第一大瞎子", "mentioned_only": true, "evidence": "不是左冷禅，而是令狐冲。"},
+    {"name": "盈盈", "aliases": ["任大小姐"], "identity": "日月神教教主任我行之女，圣姑", "mentioned_only": true, "evidence": "后来喜欢了魔教的任大小姐。"},
+    {"name": "岳灵珊", "aliases": ["岳姑娘"], "identity": "岳不群之女，令狐冲的小师妹，已嫁林平之", "mentioned_only": true, "evidence": "岳姑娘和任大小姐都比女儿美貌百倍"},
+    {"name": "老头子", "aliases": [], "identity": "江湖豪客，祖千秋、计无施的好友", "mentioned_only": false, "evidence": "祖千秋、老头子、计无施三人面面相觑"}
+  ]
+}

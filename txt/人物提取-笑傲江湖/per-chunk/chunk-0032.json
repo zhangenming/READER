@@ -1,0 +1,28 @@
+{
+  "chunk": 32,
+  "characters": [
+    {"name": "岳不群", "aliases": ["岳先生", "君子剑", "岳老儿"], "identity": "华山派掌门，药王庙被十五蒙面人围攻擒住", "mentioned_only": false, "evidence": "岳不群道：“咱们四下再找一遍。"},
+    {"name": "令狐冲", "aliases": ["大师哥"], "identity": "华山派大弟子，内力全失", "mentioned_only": false, "evidence": "令狐冲双膝一曲，跪在师父面前"},
+    {"name": "岳灵珊", "aliases": [], "identity": "岳不群与岳夫人之女，盗出《紫霞秘笈》", "mentioned_only": false, "evidence": "岳灵珊在炕上、桌旁、门角、椅底，到处寻找"},
+    {"name": "陆大有", "aliases": ["六师弟"], "identity": "华山派六弟子，已死，本块被埋葬", "mentioned_only": false, "evidence": "同门诸师弟之中，六师弟对我情谊最深"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "六个怪人兄弟，曾以六道真气替令狐冲治伤", "mentioned_only": true, "evidence": "那决不是桃谷六仙或不戒和尚取去的了。", "collective": true},
+    {"name": "不戒", "aliases": ["不戒和尚"], "identity": "仪琳之父，以两道真气压住桃谷六仙真气", "mentioned_only": true, "evidence": "那决不是桃谷六仙或不戒和尚取去的了。"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻兼师妹（即宁中则），药王庙受伤被擒", "mentioned_only": false, "evidence": "三人来到白马庙，岳夫人见令狐冲性命无碍"},
+    {"name": "劳德诺", "aliases": ["二师弟"], "identity": "华山派二弟子", "mentioned_only": false, "evidence": "当下岳不群命劳德诺雇了两辆大车"},
+    {"name": "施戴子", "aliases": ["戴子"], "identity": "华山派弟子", "mentioned_only": false, "evidence": "施戴子指着东北角道：“师父，那边树林中有座庙宇"},
+    {"name": "陶钧", "aliases": [], "identity": "华山派年幼弟子", "mentioned_only": false, "evidence": "陶钧、英白罗、舒奇等年幼弟子当先奔去。"},
+    {"name": "英白罗", "aliases": [], "identity": "华山派年幼弟子", "mentioned_only": false, "evidence": "陶钧、英白罗、舒奇等年幼弟子当先奔去。"},
+    {"name": "舒奇", "aliases": [], "identity": "华山派年幼弟子", "mentioned_only": false, "evidence": "陶钧、英白罗、舒奇等年幼弟子当先奔去。"},
+    {"name": "高根明", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "evidence": "高根明、梁发和三名女弟子自去做饭。"},
+    {"name": "梁发", "aliases": [], "identity": "华山派弟子，药王庙夜战中被蒙面人一刀斩首", "mentioned_only": false, "evidence": "横挥一刀，将梁发的脑袋砍了下来"},
+    {"name": "林平之", "aliases": ["小林子", "林公子"], "identity": "华山派弟子，林震南之子，药王庙之战右肩中枪", "mentioned_only": false, "evidence": "岳灵珊和林平之正并肩和一个蒙面敌人相斗。"},
+    {"name": "陆柏", "aliases": ["仙鹤手", "陆三侠"], "identity": "嵩山派第三太保仙鹤手", "mentioned_only": false, "evidence": "嵩山派第三太保仙鹤手陆柏。"},
+    {"name": "丁勉", "aliases": ["托塔手", "丁二侠", "丁师哥"], "identity": "嵩山派第二太保托塔手", "mentioned_only": false, "evidence": "认得是嵩山派第二太保托塔手丁勉。"},
+    {"name": "封不平", "aliases": ["封先生"], "identity": "华山派剑宗弃徒，随嵩山派再来", "mentioned_only": false, "evidence": "赫然是华山派弃徒剑宗的封不平。"},
+    {"name": "汤英颚", "aliases": ["汤七侠", "汤师弟", "汤老英雄"], "identity": "嵩山派第七太保", "mentioned_only": false, "evidence": "嵩山派第七太保汤英颚道"},
+    {"name": "左冷禅", "aliases": ["左盟主"], "identity": "嵩山派掌门、五岳剑派盟主", "mentioned_only": true, "evidence": "那天你不接左盟主的令旗，左盟主甚是不快"},
+    {"name": "林震南", "aliases": ["林总镖头"], "identity": "福威镖局总镖头，林平之之父，已遇害", "mentioned_only": true, "evidence": "总镖头林震南夫妇给人害了"},
+    {"name": "余沧海", "aliases": [], "identity": "青城派掌门，害死林平之父母的凶手之一", "mentioned_only": true, "evidence": "我爹娘是给青城派余沧海与木高峰害死的"},
+    {"name": "木高峰", "aliases": [], "identity": "恶人，与青城派一同加害林平之父母", "mentioned_only": true, "evidence": "青城派余沧海与木高峰害死的"}
+  ]
+}

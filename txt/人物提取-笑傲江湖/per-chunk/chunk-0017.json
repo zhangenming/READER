@@ -1,0 +1,19 @@
+{
+  "chunk": 17,
+  "characters": [
+    {"name": "刘芹", "aliases": [], "identity": "刘正风幼子，当众指斥父亲“该杀”换得活命", "mentioned_only": false, "evidence": "刘芹忙道：“该……该杀！”"},
+    {"name": "史登达", "aliases": [], "identity": "嵩山派弟子，举剑作势砍刘芹", "mentioned_only": false, "evidence": "史登达道：“是！”知道陆柏这句话意在恫吓"},
+    {"name": "陆柏", "aliases": ["仙鹤手"], "identity": "嵩山派第三把交椅，饶刘芹性命并逐出衡山门墙", "mentioned_only": false, "evidence": "陆柏笑道：“很好！饶你不难。"},
+    {"name": "刘正风", "aliases": ["刘贤弟", "刘师叔", "刘公公"], "identity": "衡山派刘三爷，心脉已断，与曲洋合奏《笑傲江湖》后自尽", "mentioned_only": false, "evidence": "刘正风长叹一声，道：“姓陆的，是你赢了！”"},
+    {"name": "曲洋", "aliases": ["曲大哥", "曲长老", "曲前辈"], "identity": "魔教长老，刘正风知己，黑衣人救走刘正风，身受丁勉陆柏掌力重伤", "mentioned_only": false, "evidence": "群雄听他叫出“曲大哥”三字，知道这黑衣人便是魔教长老曲洋"},
+    {"name": "丁勉", "aliases": [], "identity": "嵩山派二高手，与陆柏联手拍击曲洋、刘正风", "mentioned_only": false, "evidence": "丁勉叫道：“黑血神针，快避！”"},
+    {"name": "费彬", "aliases": ["大嵩阳手", "费师叔", "费师兄"], "identity": "嵩山派第四师弟，绰号大嵩阳手，追杀曲洋一行、刺死曲非烟，终被莫大先生所杀", "mentioned_only": false, "evidence": "正是嵩山派的大嵩阳手费彬，嘿嘿一声冷笑"},
+    {"name": "令狐冲", "aliases": ["令狐兄弟", "小兄弟", "令狐贤侄"], "identity": "华山派大弟子，隐伏旁观，挺身拦阻费彬，受托保管《笑傲江湖曲》琴箫谱", "mentioned_only": false, "evidence": "小侄华山派令狐冲，参见费师叔。"},
+    {"name": "仪琳", "aliases": ["仪琳姊姊", "小尼姑", "仪琳师妹"], "identity": "恒山派定逸弟子，现身劝费彬并拼命相护令狐冲", "mentioned_only": false, "evidence": "这人正是仪琳。"},
+    {"name": "曲非烟", "aliases": ["非非", "女娃子", "女娃娃"], "identity": "曲洋孙女，护刘正风被费彬一剑刺入心窝而死", "mentioned_only": false, "evidence": "曲非烟笑道：“傻子，到现在还不明白人家的心意"},
+    {"name": "莫大先生", "aliases": ["潇湘夜雨", "莫大师伯"], "identity": "衡山派掌门，绰号“潇湘夜雨”，以百变千幻衡山云雾十三式杀费彬", "mentioned_only": false, "evidence": "费彬心头一震：“潇湘夜雨莫大先生到了。”"},
+    {"name": "岳灵珊", "aliases": ["灵珊小师妹"], "identity": "岳不群之女，令狐冲的小师妹，濒死时被想起", "mentioned_only": true, "evidence": "却不是我那灵珊小师妹。"},
+    {"name": "定逸", "aliases": ["定逸师太"], "identity": "恒山派师太，仪琳的师父，被令狐冲心中称许", "mentioned_only": true, "evidence": "定逸师太实是个了不起的人物"},
+    {"name": "嵇康", "aliases": [], "identity": "魏晋名士，临刑抚琴叹《广陵散》绝响（曲洋所述典故人物）", "mentioned_only": true, "evidence": "昔日嵇康临刑，抚琴一曲，叹息《广陵散》从此绝响。"}
+  ]
+}

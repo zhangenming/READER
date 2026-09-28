@@ -1,0 +1,14 @@
+{
+  "chunk": 20,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["冲儿"], "identity": "华山派大弟子，在思过崖面壁，与岳灵珊情好日密", "mentioned_only": false, "evidence": "令狐冲又惊又喜，抢到崖边，鹅毛般大雪飘扬之下"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "岳不群之女，天天上崖为令狐冲送饭，又教林平之练剑", "mentioned_only": false, "evidence": "只见岳灵珊手中提着一只饭篮"},
+    {"name": "陆大有", "aliases": ["六猴儿"], "identity": "华山派六弟子，诨名六猴儿，代为送饭报讯", "mentioned_only": false, "evidence": "令狐冲从陆大有口中得知她复原甚快"},
+    {"name": "高根明", "aliases": [], "identity": "华山派弟子，曾代岳灵珊上崖送饭（人名亦作“高明根”）", "mentioned_only": false, "evidence": "当日黄昏，高根明送饭上来"},
+    {"name": "岳不群", "aliases": [], "identity": "华山派掌门，接嵩山派左盟主来信后携妻下山赴嵩山", "mentioned_only": false, "evidence": "直到岳不群夫妇回山，以内功替她驱除风寒"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻宁中则，华山派师娘，教岳灵珊“玉女剑十九式”", "mentioned_only": false, "evidence": "岳夫人替令狐冲新缝一套棉衣，命陆大有送上峰来给他"},
+    {"name": "田伯光", "aliases": [], "identity": "采花淫贼，快刀了得，曾两度与令狐冲交手（本块仅被谈及）", "mentioned_only": true, "evidence": "更默思田伯光的快刀刀法"},
+    {"name": "左盟主", "aliases": [], "identity": "即嵩山派掌门左冷禅（真名本块未出现），五岳剑派盟主，来信约岳不群议事", "mentioned_only": true, "evidence": "爹爹今早突然收到嵩山派左盟主来信"},
+    {"name": "林平之", "aliases": ["小林子"], "identity": "华山派幼弟子，被岳灵珊唤作“小林子”，随她学剑喂招", "mentioned_only": false, "evidence": "啊！是了，林平之这小子见我上来的"}
+  ]
+}

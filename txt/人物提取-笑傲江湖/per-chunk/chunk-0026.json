@@ -1,0 +1,13 @@
+{
+  "chunk": 26,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["冲儿"], "identity": "华山派大弟子，一夜背熟独孤九剑总诀，尽学九剑，终败服田伯光", "mentioned_only": false, "evidence": "令狐冲得风清扬指点后，剑法中有招如无招"},
+    {"name": "风清扬", "aliases": ["风太师叔", "风老前辈"], "identity": "华山派前辈，传毕独孤九剑后飘然下崖，嘱令狐冲今后勿再相见", "mentioned_only": false, "evidence": "风清扬轻轻抚摸他头，说道：“好孩子，好孩子！”"},
+    {"name": "田伯光", "aliases": [], "identity": "采花淫贼，连败于令狐冲剑下，立誓不泄风清扬之事", "mentioned_only": false, "evidence": "不料田伯光这次出手甚狠"},
+    {"name": "陆大有", "aliases": [], "identity": "华山派六弟子，上崖为令狐冲送饭", "mentioned_only": false, "evidence": "眼见天色已晚，陆大有送饭上崖"},
+    {"name": "仪琳", "aliases": [], "identity": "恒山派小尼姑（本块仅被提及，田伯光欲骂而止口）", "mentioned_only": true, "evidence": "他显是想骂仪琳那小尼姑"},
+    {"name": "岳不群", "aliases": ["君子剑"], "identity": "华山派掌门（本块仅被提及），风清扬讥其教剑“狗屁不通”，暗刺其“君子剑”外号", "mentioned_only": true, "evidence": "岳不群那小子，当真是狗屁不通"},
+    {"name": "独孤求败", "aliases": ["独孤前辈", "独孤大侠"], "identity": "独孤九剑创制者，毕生求一败而不可得的绝世前辈（本块仅被提及）", "mentioned_only": true, "evidence": "创制这套剑法的独孤求败前辈"},
+    {"name": "魔教十长老", "aliases": [], "identity": "被囚死于思过崖后洞的十名魔教长老，石壁图形刻制者（本块仅被提及）", "mentioned_only": true, "evidence": "连魔教十长老的武功也已学了不少", "collective": true}
+  ]
+}

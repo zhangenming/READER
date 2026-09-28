@@ -1,0 +1,24 @@
+{
+  "chunk": 71,
+  "characters": [
+    {"name": "令狐冲", "aliases": [], "identity": "藏身匾后观看三战两胜之赌：任我行胜方证（使诈）、负于左冷禅寒冰真气", "mentioned_only": false, "evidence": "令狐冲居高临下，凝神细看"},
+    {"name": "方证", "aliases": ["方证大师", "方丈"], "identity": "少林寺方丈，首战任我行，因慈悲收掌反被拿住膻中穴点倒", "mentioned_only": false, "evidence": "方证大师道：“阿弥陀佛，任施主这句话，大有菩萨心肠。”"},
+    {"name": "任我行", "aliases": ["任先生", "任老怪", "任教主", "任施主", "爹爹"], "identity": "日月神教教主，连胜方证（使诈）后负于左冷禅，盈盈呼其爹爹", "mentioned_only": false, "evidence": "任我行脱口叫道：“千手如来掌！”"},
+    {"name": "左冷禅", "aliases": ["左大掌门", "左师伯", "姓左的"], "identity": "嵩山派掌门，以十余年修练的寒冰真气注入天池穴胜任我行", "mentioned_only": false, "evidence": "左冷禅突然飞身而上，发掌猛向任我行后心击到。"},
+    {"name": "冲虚", "aliases": ["冲虚道长", "冲虚道人"], "identity": "武当派掌门，扶起方证，提议三战两胜，请战向问天", "mentioned_only": false, "evidence": "冲虚道人忙扶起方证大师，拍开他被封的穴道"},
+    {"name": "向问天", "aliases": ["向左使", "向大哥", "天王老子", "向兄弟"], "identity": "日月神教左使，号称天王老子，将接第三战，助任我行回气", "mentioned_only": false, "evidence": "向问天见任我行一口气始终缓不过来，抢到柱旁"},
+    {"name": "余沧海", "aliases": ["余观主", "余矮子"], "identity": "青城派掌门，被任我行突然擒住欲杀，作方证首战之饵", "mentioned_only": false, "evidence": "余沧海道：“呸！你魔教是甚么正宗了？"},
+    {"name": "岳不群", "aliases": ["岳先生"], "identity": "华山派掌门，令狐冲前师父，斥任我行行奸使诈", "mentioned_only": false, "evidence": "岳不群大声道：“任先生行奸使诈，胜得毫不光明正大"},
+    {"name": "岳夫人", "aliases": ["宁女侠"], "identity": "岳不群之妻（即宁中则），任我行欲令盈盈与之比试", "mentioned_only": false, "evidence": "我女儿女的斗女的，便向宁女侠请教"},
+    {"name": "天门道长", "aliases": ["天门道人"], "identity": "泰山派掌门，殿上观战", "mentioned_only": false, "evidence": "两人身后一个是泰山派掌门天门道人"},
+    {"name": "莫大先生", "aliases": [], "identity": "衡山派掌门，殿上始终未出半分声息", "mentioned_only": false, "evidence": "莫大先生来到殿中之后，始终未曾出过半分声息"},
+    {"name": "解风", "aliases": [], "identity": "丐帮帮主，满头白发乞丐，殿上观战", "mentioned_only": false, "evidence": "站在西侧的是一个满头白发的乞丐，当是丐帮帮主解风。"},
+    {"name": "震山子", "aliases": ["乾坤一剑"], "identity": "昆仑派掌门，青衫潇洒，殿上观战", "mentioned_only": false, "evidence": "当是昆仑派掌门乾坤一剑震山子了。"},
+    {"name": "盈盈", "aliases": [], "identity": "任我行之女，赌约所系，观战时脸色雪白，惊叫扶起中毒的父亲", "mentioned_only": false, "evidence": "只见盈盈倚在柱上，娇怯怯地一副弱不禁风模样"},
+    {"name": "东方不败", "aliases": [], "identity": "日月神教现任教主，任我行湖底被囚十年之祸首", "mentioned_only": true, "evidence": "终于为东方不败所困"},
+    {"name": "丁勉", "aliases": ["托塔手"], "identity": "左冷禅师弟，号托塔手，十余年前任左剧斗时现身致任我行罢手", "mentioned_only": true, "evidence": "是左冷禅的师弟托塔手丁勉和大嵩阳手费彬"},
+    {"name": "费彬", "aliases": ["大嵩阳手"], "identity": "嵩山派高手，号大嵩阳手，当年与丁勉同现身后致任我行退出", "mentioned_only": true, "evidence": "是左冷禅的师弟托塔手丁勉和大嵩阳手费彬"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "令狐冲初恋的小师妹，此刻萦绕其心头", "mentioned_only": true, "evidence": "和他想到小师妹岳灵珊时缠绵温柔的心意"},
+    {"name": "风清扬", "aliases": ["风太师叔"], "identity": "华山剑宗前辈，授令狐冲独孤九剑，嘱其二十年后方与高手争雄", "mentioned_only": true, "evidence": "风太师叔说，我要练得二十年后，方可与当世高手一争雄长"}
+  ]
+}

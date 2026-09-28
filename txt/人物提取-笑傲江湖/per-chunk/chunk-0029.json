@@ -1,0 +1,23 @@
+{
+  "chunk": 29,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["冲儿", "大师哥"], "identity": "华山派大弟子，被桃谷六仙以真气胡乱治伤", "mentioned_only": false, "evidence": "令狐冲怒极，心中大喝：“我此次若得不死"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "六个形貌奇丑的怪人兄弟：桃根仙、桃干仙、桃枝仙、桃叶仙、桃花仙、桃实仙；掳令狐冲上华山", "mentioned_only": false, "evidence": "桃谷六仙一面各运真气、各凭己意替令狐冲疗伤", "collective": true},
+    {"name": "桃根仙", "aliases": [], "identity": "桃谷六仙老大", "mentioned_only": false, "evidence": "桃根仙怒道：“要是这小子死了，第一个就怪你。"},
+    {"name": "桃干仙", "aliases": [], "identity": "桃谷六仙老二", "mentioned_only": false, "evidence": "桃干仙道：“你们去对小尼姑说"},
+    {"name": "桃枝仙", "aliases": [], "identity": "桃谷六仙老三", "mentioned_only": false, "evidence": "桃枝仙道：“她如骂我们六个都是蠢人、坏人，那还是骂。"},
+    {"name": "桃叶仙", "aliases": [], "identity": "桃谷六仙成员", "mentioned_only": false, "evidence": "桃叶仙道：“看来这小子不行啦，那怎么办？"},
+    {"name": "桃花仙", "aliases": [], "identity": "桃谷六仙成员", "mentioned_only": false, "evidence": "桃花仙加入战团：“骂人的话，又不必像。"},
+    {"name": "桃实仙", "aliases": [], "identity": "桃谷六仙成员，本块被岳夫人一剑刺穿胸口", "mentioned_only": false, "evidence": "桃实仙道：“我不干啦，再干下去，弄死了他"},
+    {"name": "岳不群", "aliases": [], "identity": "华山派掌门", "mentioned_only": false, "evidence": "华山弟子见到七人，飞奔回去报知岳不群。"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻兼师妹（即宁中则），刺伤桃实仙", "mentioned_only": false, "evidence": "岳夫人忙抢过去察看"},
+    {"name": "岳灵珊", "aliases": ["珊儿"], "identity": "岳不群与岳夫人之女", "mentioned_only": false, "evidence": "岳不群和岳灵珊同时赶到岳夫人身边"},
+    {"name": "林平之", "aliases": ["林师弟", "小林子"], "identity": "华山派弟子，林震南之子", "mentioned_only": false, "evidence": "林平之一听岳灵珊传言，当即进房走到令狐冲榻前"},
+    {"name": "陆大有", "aliases": ["大有"], "identity": "华山派弟子", "mentioned_only": false, "evidence": "命高根明和陆大有将令狐冲抬入内室"},
+    {"name": "高根明", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "evidence": "命高根明和陆大有将令狐冲抬入内室"},
+    {"name": "仪琳", "aliases": ["小尼姑"], "identity": "恒山派小尼姑，托桃谷六仙带令狐冲去见她", "mentioned_only": true, "evidence": "小尼姑要咱们带这小子去见她，怎么带他去华山？"},
+    {"name": "封不平", "aliases": [], "identity": "华山派剑宗弃徒", "mentioned_only": true, "evidence": "封不平要夺掌门之位的事是搁下了"},
+    {"name": "成不忧", "aliases": [], "identity": "华山派剑宗弟子，前被桃谷六仙分尸", "mentioned_only": true, "evidence": "岳夫人想起当日成不忧被这桃谷六仙分尸的情景"},
+    {"name": "陆柏", "aliases": [], "identity": "嵩山派人物", "mentioned_only": true, "evidence": "随同陆柏等扫兴下山"}
+  ]
+}

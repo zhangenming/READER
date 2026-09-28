@@ -1,0 +1,19 @@
+{
+  "chunk": 51,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["风二中", "风兄弟", "风兄", "风大侠", "风少侠"], "identity": "在梅庄连败丁坚、丹青生，与黑白子斗成僵持", "mentioned_only": false, "evidence": "令狐冲觉得此事甚为尴尬，转头去瞧向问天。"},
+    {"name": "向问天", "aliases": ["童兄", "童大哥"], "identity": "以赌局安排令狐冲连斗梅庄高手", "mentioned_only": false, "evidence": "向问天道：“这几句客气话当然是要说的"},
+    {"name": "丹青生", "aliases": ["四庄主"], "identity": "梅庄四庄主，与令狐冲比剑服输", "mentioned_only": false, "evidence": "丹青生放大喉咙叫道：“拿两把剑来！”"},
+    {"name": "黑白子", "aliases": ["二庄主", "二哥"], "identity": "梅庄二庄主，以铁棋枰与令狐冲僵持", "mentioned_only": false, "evidence": "黑白子道：“倘若我梅庄之中，果然无人能胜得风少侠"},
+    {"name": "秃笔翁", "aliases": ["三庄主", "三哥"], "identity": "梅庄三庄主，判官笔法只使出半招", "mentioned_only": false, "evidence": "秃笔翁举起判官笔，微笑道"},
+    {"name": "丁坚", "aliases": ["一字电剑", "丁管家", "丁兄"], "identity": "梅庄仆役，先出场试招败于令狐冲", "mentioned_only": false, "evidence": "丁坚躬身接住长剑，转身向令狐冲道"},
+    {"name": "施令威", "aliases": ["施管家"], "identity": "梅庄仆役", "mentioned_only": false, "evidence": "施令威应了，出去拿了一件兵刃进来"},
+    {"name": "江南四友", "aliases": [], "identity": "梅庄四庄主合称", "mentioned_only": true, "collective": true, "evidence": "一剑连败‘江南四友’，自是名动江湖。"},
+    {"name": "张旭", "aliases": [], "identity": "唐代草圣", "mentioned_only": true, "evidence": "那张旭号称‘草圣’，乃草书之圣"},
+    {"name": "杜甫", "aliases": [], "identity": "《饮中八仙歌》作者", "mentioned_only": true, "evidence": "便是杜甫在《饮中八仙歌》写张旭的。"},
+    {"name": "韩愈", "aliases": [], "identity": "品评张旭的文人", "mentioned_only": true, "evidence": "韩愈品评张旭道"},
+    {"name": "颜真卿", "aliases": ["颜鲁公"], "identity": "《裴将军诗》帖的书家", "mentioned_only": true, "evidence": "是从颜真卿所书诗帖中变化出来的"},
+    {"name": "张飞", "aliases": [], "identity": "蜀汉大将，书《八濛山铭》", "mentioned_only": true, "evidence": "取意于蜀汉大将张飞所书的《八濛山铭》"},
+    {"name": "怀素", "aliases": [], "identity": "唐代草书僧，《自叙帖》作者", "mentioned_only": true, "evidence": "大书《怀素自叙帖》中的草书"}
+  ]
+}

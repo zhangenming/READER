@@ -1,0 +1,22 @@
+{
+  "chunk": 97,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐大哥"], "identity": "恒山派掌门，乔装聋哑仆妇被哑婆婆擒住剃度", "mentioned_only": false, "evidence": "令狐冲险些笑了出来"},
+    {"name": "仪琳", "aliases": [], "identity": "恒山派弟子，向哑婆婆倾诉对令狐冲的相思", "mentioned_only": false, "evidence": "仪琳幽幽的道：“哑婆婆，我常跟你说"},
+    {"name": "哑婆婆", "aliases": [], "identity": "不戒和尚之妻、仪琳之母，隐于悬空寺装聋作哑，逼令狐冲娶仪琳", "mentioned_only": false, "evidence": "哑婆婆，原来……原来是你，这可……这可吓了我一大跳。"},
+    {"name": "盈盈", "aliases": ["任大小姐"], "identity": "日月神教教主任我行之女，圣姑，被哑婆婆擒来", "mentioned_only": false, "evidence": "手中提着一个女子，手足被缚，正便是盈盈。"},
+    {"name": "东方不败", "aliases": [], "identity": "日月神教前教主，身法迅捷，已死", "mentioned_only": true, "evidence": "东方不败在对敌时身形犹如电闪，快速无伦"},
+    {"name": "岳不群", "aliases": [], "identity": "五岳派掌门，令狐冲的师父", "mentioned_only": true, "evidence": "真实功夫固然远不及岳不群、左冷禅"},
+    {"name": "左冷禅", "aliases": [], "identity": "嵩山派掌门，双目已盲", "mentioned_only": true, "evidence": "和左冷禅、任教主他们相比，那还差得很远。"},
+    {"name": "任我行", "aliases": ["任教主"], "identity": "日月神教教主，盈盈之父", "mentioned_only": true, "evidence": "和左冷禅、任教主他们相比，那还差得很远。"},
+    {"name": "方证", "aliases": ["方证大师"], "identity": "少林寺方丈", "mentioned_only": true, "evidence": "连方证大师、冲虚道长、盈盈、上官云这等大行家"},
+    {"name": "冲虚", "aliases": ["冲虚道长"], "identity": "武当派掌门道长", "mentioned_only": true, "evidence": "连方证大师、冲虚道长、盈盈、上官云这等大行家"},
+    {"name": "上官云", "aliases": [], "identity": "日月教人物", "mentioned_only": true, "evidence": "连方证大师、冲虚道长、盈盈、上官云这等大行家"},
+    {"name": "于嫂", "aliases": [], "identity": "恒山派老一辈人物", "mentioned_only": true, "evidence": "便如是于嫂一般的人物"},
+    {"name": "定静", "aliases": [], "identity": "恒山派师太前辈", "mentioned_only": true, "evidence": "说不定当年是服侍定静、定闲等人之师父的。"},
+    {"name": "定闲", "aliases": [], "identity": "恒山派前掌门师太", "mentioned_only": true, "evidence": "说不定当年是服侍定静、定闲等人之师父的。"},
+    {"name": "张夫人", "aliases": [], "identity": "江湖恶人，曾扮仆妇卧底恒山", "mentioned_only": true, "evidence": "倘若她以为我也是张夫人之类"},
+    {"name": "田伯光", "aliases": ["不可不戒"], "identity": "仪琳弟子，曾被不戒和尚所阉", "mentioned_only": true, "evidence": "还要将我阉了，便似不可不戒一般"},
+    {"name": "不戒和尚", "aliases": ["不戒"], "identity": "仪琳之父，哑婆婆之夫，为娶尼姑妻子而出家", "mentioned_only": true, "evidence": "你是不戒和尚的老婆！"}
+  ]
+}

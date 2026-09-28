@@ -1,0 +1,32 @@
+{
+  "chunk": 38,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐少侠", "令狐公子", "令狐兄", "令狐仁兄", "冲儿"], "identity": "华山派大师兄，被平一指断为只有百日之命", "mentioned_only": false, "collective": false, "evidence": "令狐冲举目往声音来处望去"},
+    {"name": "岳不群", "aliases": ["岳先生"], "identity": "华山派掌门，令狐冲之师", "mentioned_only": false, "collective": false, "evidence": "岳不群在船舱中凝神看这八名汉子"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻宁中则，华山掌门夫人", "mentioned_only": false, "collective": false, "evidence": "岳夫人想到江湖上第一名医平一指也治不了令狐冲的伤"},
+    {"name": "岳灵珊", "aliases": ["珊儿"], "identity": "岳不群与岳夫人之女", "mentioned_only": false, "collective": false, "evidence": "说话之人正是岳灵珊，她伸着右手食指，刮自己右颊"},
+    {"name": "劳德诺", "aliases": ["劳得诺"], "identity": "华山派弟子", "mentioned_only": false, "collective": false, "evidence": "劳德诺道：“师父，防人之心不可无。"},
+    {"name": "平一指", "aliases": ["平大夫", "杀人名医"], "identity": "开封“杀人名医”，本块中已上岸，由平夫人代为传令", "mentioned_only": true, "collective": false, "evidence": "平大夫早就上岸去了，你们可以乱说乱动了！"},
+    {"name": "平夫人", "aliases": [], "identity": "平一指之妻，代夫传令命桃谷六仙服侍令狐冲到死", "mentioned_only": false, "collective": false, "evidence": "那妇人冷冷的道：“有甚么好笑？我就是他老婆！”"},
+    {"name": "桃谷六仙", "aliases": ["桃谷五仙", "桃谷四仙"], "identity": "桃根/桃干/桃枝/桃叶/桃花/桃实六兄弟合称；文中“五仙/四仙”指其中数人", "mentioned_only": false, "collective": true, "evidence": "桃谷六仙皱眉道：“服侍到他死为止？"},
+    {"name": "桃根仙", "aliases": [], "identity": "桃谷六仙老大", "mentioned_only": false, "collective": false, "evidence": "桃根仙道：“乖乖的坐着，甚么也不干。"},
+    {"name": "桃干仙", "aliases": [], "identity": "桃谷六仙老二", "mentioned_only": false, "collective": false, "evidence": "桃干仙道：“平一指叫我们在船舱中乖乖的坐着"},
+    {"name": "桃枝仙", "aliases": [], "identity": "桃谷六仙老三", "mentioned_only": false, "collective": false, "evidence": "桃枝仙道：“男儿汉为朋友双胁插刀，尚且不辞"},
+    {"name": "桃叶仙", "aliases": [], "identity": "桃谷六仙老四", "mentioned_only": false, "collective": false, "evidence": "桃叶仙道：“桃谷六仙本来便是彬彬君子，天下知名"},
+    {"name": "桃花仙", "aliases": [], "identity": "桃谷六仙老五", "mentioned_only": false, "collective": false, "evidence": "桃花仙摇头道：“不行，不行！万一他瞧见我们乱说乱动"},
+    {"name": "桃实仙", "aliases": [], "identity": "桃谷六仙老六，伤后由平夫人提担架送回", "mentioned_only": false, "collective": false, "evidence": "桃实仙躺在担架之上，说道：“瞧你相貌，比我们更加人不像人、鬼不像鬼。”"},
+    {"name": "不戒和尚", "aliases": [], "identity": "曾注真气入令狐冲体内的高僧，被岳不群夫妇疑为托平一指治病之人", "mentioned_only": true, "collective": false, "evidence": "他骂不戒和尚为‘他妈的老混蛋’"},
+    {"name": "田伯光", "aliases": [], "identity": "万里独行采花大盗，被岳不群疑为送礼之人", "mentioned_only": true, "collective": false, "evidence": "岳不群沉吟道：“莫非是田伯光？"},
+    {"name": "绿竹翁", "aliases": [], "identity": "洛阳绿竹巷隐士，曾授令狐冲酒道琴艺", "mentioned_only": true, "collective": false, "evidence": "令狐冲自得绿竹翁悉心指点"},
+    {"name": "祖千秋", "aliases": ["祖先生"], "identity": "落魄书生模样的酒道行家，黄河老祖之一，偷“续命八丸”混酒骗令狐冲服下", "mentioned_only": false, "collective": false, "evidence": "晚生姓祖，祖宗之祖。当年祖逖闻鸡起舞"},
+    {"name": "祖逖", "aliases": [], "identity": "东晋闻鸡起舞的名士，祖千秋自称的远祖", "mentioned_only": true, "collective": false, "evidence": "晚生姓祖，祖宗之祖。当年祖逖闻鸡起舞"},
+    {"name": "刘邦", "aliases": ["汉高祖"], "identity": "汉朝开国皇帝，祖千秋论酒引其斩白蛇故事", "mentioned_only": true, "collective": false, "evidence": "汉高祖刘邦，是不是英雄？"},
+    {"name": "樊哙", "aliases": ["樊将军"], "identity": "汉初猛士，鸿门宴故事被祖千秋引来论酒", "mentioned_only": true, "collective": false, "evidence": "樊哙是不是好汉？那日鸿门宴上"},
+    {"name": "岳飞", "aliases": ["岳武穆"], "identity": "南宋抗金名将，其词被祖千秋引来论酒", "mentioned_only": true, "collective": false, "evidence": "岳武穆词云：“壮志饥餐胡虏肉，笑谈渴饮匈奴血"},
+    {"name": "白乐天", "aliases": [], "identity": "唐代诗人白居易，其诗被祖千秋引来论酒", "mentioned_only": true, "collective": false, "evidence": "白乐天杭州春望诗云：“红袖织绫夸柿叶"},
+    {"name": "大禹", "aliases": ["夏禹", "禹"], "identity": "上古圣王，相传其时仪狄作酒", "mentioned_only": true, "collective": false, "evidence": "夏禹时仪狄作酒，禹饮而甘之"},
+    {"name": "仪狄", "aliases": [], "identity": "夏禹时作酒之人", "mentioned_only": true, "collective": false, "evidence": "夏禹时仪狄作酒，禹饮而甘之"},
+    {"name": "老头子", "aliases": [], "identity": "肉球般矮胖的异人，为救爱女炼“续命八丸”（本块未点名，下章揭示为黄河老祖之“老头子”）", "mentioned_only": false, "collective": false, "evidence": "但见一个肉球气喘吁吁的滚来，越滚越近"},
+    {"name": "成不忧", "aliases": [], "identity": "华山派剑宗弟子，曾被桃谷六仙撕成四块", "mentioned_only": true, "collective": false, "evidence": "华山派众人见过桃谷四仙手撕成不忧的惨状"}
+  ]
+}

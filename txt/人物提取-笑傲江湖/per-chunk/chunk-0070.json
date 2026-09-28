@@ -1,0 +1,30 @@
+{
+  "chunk": 70,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐少侠", "令狐公子"], "identity": "藏身殿上木匾之后，目睹任我行、向问天、盈盈与正教十高人对峙", "mentioned_only": false, "evidence": "令狐冲窜入树林，随即纵身上树"},
+    {"name": "向问天", "aliases": ["向大哥", "向左使"], "identity": "日月神教左使，随任我行救出盈盈，与正教诸人对质", "mentioned_only": false, "evidence": "声音清亮，正是向问天的口音"},
+    {"name": "任我行", "aliases": ["任教主", "任先生", "任老先生"], "identity": "日月神教教主，被囚多年后复出，率向问天救女，评点当世高人三个半", "mentioned_only": false, "evidence": "另一人身材高大，却是任我行"},
+    {"name": "盈盈", "aliases": ["盈儿", "任小姐", "任大小姐"], "identity": "任我行之女，被少林释放后随父现身殿中，自述被嵩山派劫持又被救经过", "mentioned_only": false, "evidence": "身形婀娜，正是多日不见的盈盈。"},
+    {"name": "方证", "aliases": ["方证大师", "方丈大师"], "identity": "少林寺方丈，与任我行等引见周旋，提出留三人在少室山", "mentioned_only": false, "evidence": "只听得方证大师说道：“阿弥陀佛！"},
+    {"name": "冲虚", "aliases": ["冲虚道长"], "identity": "武当派掌门，即武当山脚骑驴比剑的老者，提议三战两胜之赌", "mentioned_only": false, "evidence": "这一位是武当派掌门道长，道号上冲下虚。"},
+    {"name": "左冷禅", "aliases": ["左大掌门", "左先生"], "identity": "嵩山派掌门，五岳剑派盟主，被任我行列为不佩服之首", "mentioned_only": false, "evidence": "左冷禅道：“江湖上武功与任先生相埒的，数亦不少。"},
+    {"name": "天门道长", "aliases": [], "identity": "泰山派掌门，殿上正教十高人之一", "mentioned_only": false, "evidence": "这位是泰山派掌门天门道长，这位是华山派掌门岳先生"},
+    {"name": "岳不群", "aliases": ["岳先生", "岳君子"], "identity": "华山派掌门，令狐冲前师父，与任我行针锋相对", "mentioned_only": false, "evidence": "岳不群淡然道：“晚生贱名，原不足以辱任先生清听。"},
+    {"name": "岳夫人", "aliases": ["宁女侠"], "identity": "岳不群之妻，当年的宁女侠（即宁中则），任我行称只知宁女侠", "mentioned_only": false, "evidence": "这位岳夫人，便是当年的宁女侠"},
+    {"name": "余沧海", "aliases": ["余观主"], "identity": "青城派掌门，讥刺群豪在少林留下牛矢马溺，与向问天斗口", "mentioned_only": false, "evidence": "辨出是青城派掌门余沧海"},
+    {"name": "东方不败", "aliases": [], "identity": "日月神教现任教主，任我行所佩服的当世第一人", "mentioned_only": true, "evidence": "是篡了我日月神教教主之位的东方不败"},
+    {"name": "风清扬", "aliases": ["风老先生", "风师叔"], "identity": "华山剑宗前辈，任我行衷心佩服之人，归隐数十年", "mentioned_only": true, "evidence": "乃是剑术通神的风清扬风老先生"},
+    {"name": "丁勉", "aliases": ["托塔手"], "identity": "左冷禅师弟，号托塔手，十余年前任我行与左冷禅剧斗时在场", "mentioned_only": true, "evidence": "是左冷禅的师弟托塔手丁勉和大嵩阳手费彬"},
+    {"name": "费彬", "aliases": ["大嵩阳手"], "identity": "嵩山派高手，号大嵩阳手，当年任左剧斗时与丁勉同现身后", "mentioned_only": true, "evidence": "是左冷禅的师弟托塔手丁勉和大嵩阳手费彬"},
+    {"name": "解风", "aliases": ["解帮主", "解大帮主"], "identity": "丐帮帮主，其两名私生儿子被向问天查知", "mentioned_only": true, "evidence": "还有这位丐帮的解大帮主呢"},
+    {"name": "青莲使者", "aliases": [], "identity": "丐帮中人，据称是解帮主的私生儿子", "mentioned_only": true, "evidence": "丐帮中的青莲使者、白莲使者两位，虽然不姓解"},
+    {"name": "白莲使者", "aliases": [], "identity": "丐帮中人，据称是解帮主的私生儿子", "mentioned_only": true, "evidence": "丐帮中的青莲使者、白莲使者两位，虽然不姓解"},
+    {"name": "震山子", "aliases": ["乾坤一剑"], "identity": "昆仑派掌门，有一脉单传的孙子，被任我行点出眷属", "mentioned_only": true, "evidence": "昆仑派乾坤一剑震山子有个一脉单传的孙子"},
+    {"name": "莫大先生", "aliases": ["莫大师伯"], "identity": "衡山派掌门，已到殿上，有老父老母在堂被任我行点出", "mentioned_only": true, "evidence": "原来莫大师伯也到了"},
+    {"name": "计无施", "aliases": [], "identity": "群豪谋士，与令狐冲作别", "mentioned_only": false, "evidence": "计无施问道：“公子，你要到哪里去？”"},
+    {"name": "老头子", "aliases": [], "identity": "黄河老祖之一，与令狐冲作别散去", "mentioned_only": false, "evidence": "当下向计无施、老头子、祖千秋、蓝凤凰、黄伯流等一干人作别"},
+    {"name": "祖千秋", "aliases": [], "identity": "黄河老祖之一，与令狐冲作别散去", "mentioned_only": false, "evidence": "当下向计无施、老头子、祖千秋、蓝凤凰、黄伯流等一干人作别"},
+    {"name": "蓝凤凰", "aliases": [], "identity": "五毒教教主，与令狐冲作别散去", "mentioned_only": false, "evidence": "当下向计无施、老头子、祖千秋、蓝凤凰、黄伯流等一干人作别"},
+    {"name": "黄伯流", "aliases": [], "identity": "天河帮帮主，与令狐冲作别散去", "mentioned_only": false, "evidence": "当下向计无施、老头子、祖千秋、蓝凤凰、黄伯流等一干人作别"}
+  ]
+}

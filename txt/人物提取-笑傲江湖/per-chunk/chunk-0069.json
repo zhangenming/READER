@@ -1,0 +1,28 @@
+{
+  "chunk": 69,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐公子"], "identity": "率群豪突围不成退回寺中，经达摩像下地道脱险后与众豪作别，独回少林", "mentioned_only": false, "evidence": "令狐冲奔出数里，便听得几声锣响"},
+    {"name": "计无施", "aliases": [], "identity": "群豪中调度指挥者，分派八路突围、劝令狐冲独自脱险", "mentioned_only": false, "evidence": "计无施叫道：“盟主，敌人弓箭厉害"},
+    {"name": "祖千秋", "aliases": [], "identity": "黄河老祖之一，以大炮仗传讯、选三百好手夜冲", "mentioned_only": false, "evidence": "祖千秋取出一枚大炮仗，晃火折点燃了"},
+    {"name": "田伯光", "aliases": [], "identity": "万里独行田伯光，随群豪乘夜突围", "mentioned_only": false, "evidence": "计无施、祖千秋、田伯光、漠北双熊，以及那三百名精选的豪士"},
+    {"name": "漠北双熊", "aliases": [], "identity": "白熊与黑熊二人的合称，随众突围", "mentioned_only": false, "collective": true, "evidence": "漠北双熊中的黑熊说道：“盟主，那些王八羔子只道咱们仍在寺中"},
+    {"name": "黑熊", "aliases": [], "identity": "漠北双熊之一，主张攻敌屁股出口恶气", "mentioned_only": false, "evidence": "黑熊说道：“盟主，那些王八羔子只道咱们仍在寺中"},
+    {"name": "白熊", "aliases": [], "identity": "漠北双熊之一，扬言要捉人吃", "mentioned_only": false, "evidence": "白熊道：“哼，好歹我要捉几个王八蛋来吃了"},
+    {"name": "蓝凤凰", "aliases": [], "identity": "五毒教教主，突围时左腿左肩中箭，被令狐冲护送下山", "mentioned_only": false, "evidence": "却是蓝凤凰左腿、左肩同时中箭，倒在地下"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "桃根、桃干、桃枝、桃叶、桃花、桃实六兄弟，引令狐冲发现达摩像后地道", "mentioned_only": false, "collective": true, "evidence": "令狐冲和计无施一听，便知桃谷六仙"},
+    {"name": "桃根仙", "aliases": [], "identity": "桃谷六仙老大", "mentioned_only": false, "evidence": "桃根仙过去点燃了供桌上的油灯"},
+    {"name": "桃干仙", "aliases": [], "identity": "桃谷六仙之一", "mentioned_only": false, "evidence": "桃干仙道：“菩萨的背后，就是咱们七人"},
+    {"name": "桃枝仙", "aliases": [], "identity": "桃谷六仙之一", "mentioned_only": false, "evidence": "桃枝仙叫道：“果然有个洞！"},
+    {"name": "桃花仙", "aliases": [], "identity": "桃谷六仙之一，拉动达摩石像开启机关", "mentioned_only": false, "evidence": "桃花仙走在最前，急忙后跃，重重撞在桃实仙胸前"},
+    {"name": "桃叶仙", "aliases": [], "identity": "桃谷六仙之一", "mentioned_only": false, "evidence": "桃叶仙道：“既是黑漆漆的，又怎知一定很深？"},
+    {"name": "桃实仙", "aliases": [], "identity": "桃谷六仙老六", "mentioned_only": false, "evidence": "桃实仙道：“我怎地没瞧见？”"},
+    {"name": "达摩老祖", "aliases": [], "identity": "少林寺祖师、禅宗初祖，达摩堂供其面壁石像，像后藏秘密地道", "mentioned_only": true, "evidence": "他知达摩老祖乃少林寺的祖师"},
+    {"name": "西域豪士", "aliases": [], "identity": "借宝刀给令狐冲削断铁和尚手腕的黄须豪士（名字本块未出现）", "mentioned_only": false, "evidence": "那人高鼻深目，颏下一部黄须，似是西域人氏"},
+    {"name": "方生", "aliases": [], "identity": "少林派大师，当年曾引令狐冲去见方丈", "mentioned_only": true, "evidence": "想起当日方生大师引着自己去见方丈"},
+    {"name": "盈盈", "aliases": ["圣姑"], "identity": "群豪所寻的圣姑，未在此地道中寻获", "mentioned_only": true, "evidence": "看来盈盈便是囚在其中"},
+    {"name": "定闲", "aliases": [], "identity": "恒山派掌门，死于少林寺中，死因待查", "mentioned_only": true, "evidence": "其次是须得查明定闲、定逸两位师太是何人所害"},
+    {"name": "定逸", "aliases": [], "identity": "恒山派师太，死于少林寺中，死因待查", "mentioned_only": true, "evidence": "其次是须得查明定闲、定逸两位师太是何人所害"},
+    {"name": "老头子", "aliases": [], "identity": "黄河老祖之一，与众豪作别分头寻访圣姑", "mentioned_only": false, "evidence": "当下向计无施、老头子、祖千秋、蓝凤凰、黄伯流等一干人作别"},
+    {"name": "黄伯流", "aliases": [], "identity": "天河帮帮主，与众豪作别分头寻访圣姑", "mentioned_only": false, "evidence": "当下向计无施、老头子、祖千秋、蓝凤凰、黄伯流等一干人作别"}
+  ]
+}

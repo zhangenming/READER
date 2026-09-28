@@ -1,0 +1,19 @@
+{
+  "chunk": 58,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐师兄"], "identity": "华山派弃徒，乔装军官暗中随行，发觉魔教在仙霞岭伏击恒山派", "mentioned_only": false, "evidence": "令狐冲早已付了茶钱，站起身来"},
+    {"name": "吴天德", "aliases": [], "identity": "河北沧州游击、新任泉州参将，横蛮军官，被令狐冲剥去衣冠、冒用其名", "mentioned_only": false, "evidence": "你便是吴天德么？"},
+    {"name": "任我行", "aliases": ["任教主"], "identity": "日月神教前任教主，其铁板法门被令狐冲依习", "mentioned_only": true, "evidence": "依照任我行在铁板上所刻的法门"},
+    {"name": "黑白子", "aliases": [], "identity": "梅庄二庄主，其真气留在令狐冲体内", "mentioned_only": true, "evidence": "这时又多了黑白子的真气"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "岳不群之女，令狐冲的小师妹", "mentioned_only": true, "evidence": "一想到岳灵珊，登时全身皆热"},
+    {"name": "仪琳", "aliases": [], "identity": "恒山派小尼姑，为令狐冲向定静师太辩解", "mentioned_only": false, "evidence": "知道说话之人是恒山派的小尼姑仪琳"},
+    {"name": "定静", "aliases": ["定静师太"], "identity": "恒山派“恒山三定”之一，奉掌门之命率众入闽", "mentioned_only": false, "evidence": "‘恒山三定’，那么是定静师太了"},
+    {"name": "恒山三定", "aliases": [], "identity": "恒山派三位师太定闲、定逸、定静的合称", "mentioned_only": true, "evidence": "‘恒山三定’，那么是定静师太了", "collective": true},
+    {"name": "岳不群", "aliases": ["岳先生"], "identity": "华山派掌门，传书天下将令狐冲逐出门墙", "mentioned_only": true, "evidence": "难道华山派掌门岳先生的来信是假的"},
+    {"name": "左冷禅", "aliases": ["左盟主"], "identity": "嵩山派掌门，五岳剑派盟主，传讯魔教大举入闽欲夺《辟邪剑谱》", "mentioned_only": true, "evidence": "这次嵩山左盟主传来讯息"},
+    {"name": "东方不败", "aliases": ["东方必败"], "identity": "日月神教教主，正教中人常以“东方必败”称之", "mentioned_only": true, "evidence": "魔教教主东方不败神功无敌，自称不败"},
+    {"name": "仪和", "aliases": [], "identity": "恒山派女尼，性子急躁", "mentioned_only": false, "evidence": "那女尼法名仪和，性子却毫不和气"},
+    {"name": "仪清", "aliases": [], "identity": "恒山派女弟子，仪和师妹", "mentioned_only": false, "evidence": "仪清师姊，你别催将军了"},
+    {"name": "林平之", "aliases": [], "identity": "福州林家之子（本块称“福州姓林的孩子”），已投入岳不群门下", "mentioned_only": true, "evidence": "那福州姓林的孩子已投入岳先生门下"}
+  ]
+}

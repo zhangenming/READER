@@ -1,0 +1,24 @@
+{
+  "chunk": 72,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["冲儿", "令狐少侠"], "identity": "应任我行点名出战，冲虚自承不敌认输，被师父岳不群逼战，误伤其腕后遭踢昏，山洞中与盈盈定情", "mentioned_only": false, "evidence": "令狐冲更为惊讶，一时手足无措，狼狈之极"},
+    {"name": "任我行", "aliases": [], "identity": "日月神教教主，点名令狐冲出战并称其为女婿，携盈盈、令狐冲下山", "mentioned_only": false, "evidence": "任我行突然说道：“且慢！向兄弟，你且退下。”"},
+    {"name": "向问天", "aliases": ["向兄弟", "向大哥"], "identity": "日月神教左使，与任我行为令狐冲战局深忧", "mentioned_only": false, "evidence": "任我行和向问天相对瞧了一眼，都是深有忧色"},
+    {"name": "冲虚", "aliases": ["冲虚道长", "冲虚道人"], "identity": "武当派掌门，自承数日前武当山下已输给令狐冲，不战认负", "mentioned_only": false, "evidence": "武当掌门冲虚道人走上两步"},
+    {"name": "方证", "aliases": ["方证大师", "方丈"], "identity": "少林寺方丈，早已察觉令狐冲藏身匾后并辨其武功家数", "mentioned_only": false, "evidence": "方证呵呵笑道：“原来是令狐少侠。"},
+    {"name": "解风", "aliases": [], "identity": "丐帮帮主，与方证以指力在柱上刻字，点破令狐冲藏身处", "mentioned_only": false, "evidence": "丐帮帮主解风忽道：“令狐冲，你来瞧瞧这几个字。”"},
+    {"name": "岳不群", "aliases": ["君子剑", "岳先生"], "identity": "华山派掌门，令狐冲前师父，使冲灵剑法暗示许婚，缠斗中被刺中右腕，踢伤令狐冲并震断腿骨", "mentioned_only": false, "evidence": "岳不群却泰然自若，说道：“人家说你蒙本门前辈风师叔的指点"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻（即宁中则），观战时伤心欲涕，暗自盼比试作罢", "mentioned_only": false, "evidence": "岳夫人心中一酸，泪水盈眶"},
+    {"name": "盈盈", "aliases": ["任大小姐", "婆婆"], "identity": "任我行之女，山洞中以恒山治伤灵药照料苏醒的令狐冲，两人互诉衷情", "mentioned_only": false, "evidence": "听得盈盈欢声叫道：“你……你醒转来啦！”"},
+    {"name": "莫大先生", "aliases": [], "identity": "衡山派掌门，受令狐冲磕头而不愿旁人知两人旧谊", "mentioned_only": false, "evidence": "令狐冲又过去向莫大先生行礼"},
+    {"name": "余沧海", "aliases": [], "identity": "青城派掌门，殿上观战，自度武功不及冲虚", "mentioned_only": false, "evidence": "解风、震山子、余沧海、天门道人等自知武功不及冲虚道人"},
+    {"name": "震山子", "aliases": [], "identity": "昆仑派掌门，殿上观战，自度武功不及冲虚", "mentioned_only": false, "evidence": "解风、震山子、余沧海、天门道人等自知武功不及冲虚道人"},
+    {"name": "天门道长", "aliases": ["天门道人"], "identity": "泰山派掌门，殿上观战，自度武功不及冲虚", "mentioned_only": false, "evidence": "解风、震山子、余沧海、天门道人等自知武功不及冲虚道人"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "令狐冲的小师妹，冲灵剑法的共创者，今已情断", "mentioned_only": true, "evidence": "乃是令狐冲和岳灵珊二人练剑时私下所创的“冲灵剑法”"},
+    {"name": "林平之", "aliases": [], "identity": "与岳灵珊相恋正浓，令狐冲情场之敌", "mentioned_only": true, "evidence": "他自然知道岳灵珊和林平之情爱正浓"},
+    {"name": "风清扬", "aliases": ["风前辈", "风师叔"], "identity": "华山剑宗前辈，独孤九剑真传之源", "mentioned_only": true, "evidence": "令狐小兄弟深得风清扬风前辈剑法真传"},
+    {"name": "秦穆公", "aliases": [], "identity": "旁白典故中的春秋秦国国君，弄玉之父", "mentioned_only": true, "evidence": "秦穆公有女，小字弄玉，最爱吹箫"},
+    {"name": "弄玉", "aliases": [], "identity": "旁白典故中秦穆公之女，最爱吹箫，与萧史乘龙仙去", "mentioned_only": true, "evidence": "秦穆公有女，小字弄玉，最爱吹箫"},
+    {"name": "萧史", "aliases": [], "identity": "旁白典故中善箫的青年男子，娶弄玉为妻，“乘龙快婿”典源", "mentioned_only": true, "evidence": "有一青年男子萧史，乘龙而至，奏箫之技精妙入神"}
+  ]
+}

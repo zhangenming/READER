@@ -1,0 +1,19 @@
+{
+  "chunk": 22,
+  "characters": [
+    {"name": "陆大有", "aliases": ["六猴儿"], "identity": "华山派六弟子，与林平之拆招受伤，为令狐冲送饭、探病", "mentioned_only": false, "evidence": "陆大有气愤愤的道：“大师哥，不是我敢瞒你"},
+    {"name": "令狐冲", "aliases": ["冲儿"], "identity": "华山派大弟子，思过崖面壁，发现后洞石壁剑招，因岳灵珊积郁成病", "mentioned_only": false, "evidence": "刹那之间，令狐冲心头感到一阵强烈的酸苦"},
+    {"name": "林平之", "aliases": ["小林子"], "identity": "华山派幼弟子，以“有凤来仪”伤陆大有，遭师父责罚（本块未直接出场）", "mentioned_only": true, "evidence": "现下居然将这招变化繁复的“有凤来仪”教会了林平之"},
+    {"name": "岳灵珊", "aliases": ["珊儿"], "identity": "岳不群之女，偷传林平之剑法，因师父责罚林平之而迁怒令狐冲", "mentioned_only": false, "evidence": "忽听得脚步声响，岳灵珊提了饭篮上来"},
+    {"name": "岳不群", "aliases": [], "identity": "华山派掌门，上崖探望并考较令狐冲，责其内功退步", "mentioned_only": false, "evidence": "岳不群眉头微皱，他素知这个大弟子率性任情"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻宁中则，与丈夫从关外回来上崖探望令狐冲", "mentioned_only": false, "evidence": "岳夫人伸手将令狐冲扶起，见他容色憔悴"},
+    {"name": "劳德诺", "aliases": [], "identity": "华山派弟子，与梁发先上崖探令狐冲的病", "mentioned_only": false, "evidence": "先由劳德诺和梁发两人上去"},
+    {"name": "梁发", "aliases": [], "identity": "华山派弟子，与劳德诺先上崖探病", "mentioned_only": false, "evidence": "先由劳德诺和梁发两人上去"},
+    {"name": "施戴子", "aliases": [], "identity": "华山派弟子，随岳不群夫妇上崖观看考校", "mentioned_only": false, "evidence": "同来的还有施戴子、陆大有与岳灵珊三人"},
+    {"name": "余沧海", "aliases": [], "identity": "青城派掌门，曾一掌几乎毙令狐冲（本块仅被提及）", "mentioned_only": true, "evidence": "那日我险些被余沧海一掌击毙"},
+    {"name": "范松", "aliases": [], "identity": "魔教十长老之一，后洞石壁破五岳剑派图形的刻制者（仅存名于石壁）", "mentioned_only": true, "evidence": "范松、赵鹤、张乘风、张乘云这些人，到底是甚么来头"},
+    {"name": "赵鹤", "aliases": [], "identity": "魔教十长老之一，后洞石壁破五岳剑派图形的刻制者（仅存名于石壁）", "mentioned_only": true, "evidence": "范松、赵鹤、张乘风、张乘云这些人，到底是甚么来头"},
+    {"name": "张乘风", "aliases": [], "identity": "魔教十长老之一，后洞石壁破五岳剑派图形的刻制者（仅存名于石壁）", "mentioned_only": true, "evidence": "范松、赵鹤、张乘风、张乘云这些人，到底是甚么来头"},
+    {"name": "张乘云", "aliases": [], "identity": "魔教十长老之一，后洞石壁破五岳剑派图形的刻制者（仅存名于石壁）", "mentioned_only": true, "evidence": "范松、赵鹤、张乘风、张乘云这些人，到底是甚么来头"}
+  ]
+}

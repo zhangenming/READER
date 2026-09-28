@@ -1,0 +1,19 @@
+{
+  "chunk": 53,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["风二中", "风少侠", "风兄弟"], "identity": "被引下地牢与“任先生”论剑", "mentioned_only": false, "evidence": "令狐冲心下骇然：“此人机智无比，料事如神"},
+    {"name": "向问天", "aliases": ["童兄", "童大哥"], "identity": "先行一步赴嘉兴府", "mentioned_only": false, "evidence": "向问天连连摇头，说道：“这场比赛，你们志在必胜。"},
+    {"name": "黄钟公", "aliases": ["大庄主", "大哥"], "identity": "梅庄大庄主，引令狐冲下地牢", "mentioned_only": false, "evidence": "黄钟公对着那方孔朗声道"},
+    {"name": "黑白子", "aliases": ["二庄主", "二哥", "二弟", "老二"], "identity": "梅庄二庄主", "mentioned_only": false, "evidence": "黑白子道：“风少侠，我陪你去。"},
+    {"name": "秃笔翁", "aliases": ["三庄主", "三哥", "秃头老三"], "identity": "梅庄三庄主", "mentioned_only": false, "evidence": "秃笔翁道：“大哥，任先生决不是此人的敌手。"},
+    {"name": "丹青生", "aliases": ["四庄主", "老四"], "identity": "梅庄四庄主，提醒令狐冲小心", "mentioned_only": false, "evidence": "丹青生道：“你说错了一个字。"},
+    {"name": "丁坚", "aliases": ["一字电剑", "丁管家"], "identity": "梅庄仆役（被囚人评其剑法华而不实）", "mentioned_only": true, "evidence": "叫甚么‘一字电剑’丁坚。"},
+    {"name": "任我行", "aliases": ["任先生", "任老先生", "姓任的"], "identity": "被囚梅庄湖底地牢的前辈高人（本块未露真名），外号“闻风而逃”", "mentioned_only": false, "evidence": "任先生，黄钟公四兄弟拜访你来啦。"},
+    {"name": "风清扬", "aliases": ["风老先生", "老风", "风老"], "identity": "任我行所畏惧的华山前辈", "mentioned_only": true, "evidence": "此人剑法得自华山派风清扬老先生的真传。"},
+    {"name": "岳不群", "aliases": [], "identity": "华山派掌门，被任我行斥为假正经", "mentioned_only": true, "evidence": "华山派的掌门人还是岳不群罢？"},
+    {"name": "宁中则", "aliases": ["华山玉女"], "identity": "岳不群之妻，令狐冲师娘", "mentioned_only": true, "evidence": "啊，是了，叫作宁中则。"},
+    {"name": "林平之", "aliases": ["林师弟"], "identity": "令狐冲的师弟，岳灵珊所嫁", "mentioned_only": true, "evidence": "她嫁了师弟林平之"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "令狐冲的小师妹", "mentioned_only": true, "evidence": "隐隐似乎那女子便是小师妹岳灵珊"},
+    {"name": "江南四友", "aliases": [], "identity": "梅庄四庄主，奉命看守任先生", "mentioned_only": false, "collective": true, "evidence": "江南四友只想激得你和我比剑"}
+  ]
+}

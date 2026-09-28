@@ -1,0 +1,21 @@
+{
+  "chunk": 61,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["大师哥"], "identity": "华山派弃徒，护送恒山派至福州无相庵，向定静临终自陈身份", "mentioned_only": false, "evidence": "令狐冲见她眼神涣散，呼吸极微"},
+    {"name": "定静", "aliases": ["定静师太"], "identity": "恒山派“恒山三定”之一，力战受伤，临终托付弟子后圆寂", "mentioned_only": false, "evidence": "力敌七人，正是定静师太"},
+    {"name": "仪和", "aliases": [], "identity": "恒山派女尼，为首弟子之一", "mentioned_only": false, "evidence": "仪和、仪清、仪质、仪真等几名为首的弟子都向他合十行礼"},
+    {"name": "仪清", "aliases": [], "identity": "恒山派女弟子，为首弟子之一", "mentioned_only": false, "evidence": "仪和、仪清、仪质、仪真等几名为首的弟子"},
+    {"name": "仪质", "aliases": [], "identity": "恒山派女弟子，为首弟子之一", "mentioned_only": false, "evidence": "仪和、仪清、仪质、仪真等几名为首的弟子"},
+    {"name": "仪真", "aliases": [], "identity": "恒山派女弟子，为首弟子之一", "mentioned_only": false, "evidence": "仪和、仪清、仪质、仪真等几名为首的弟子"},
+    {"name": "秦绢", "aliases": [], "identity": "恒山派定静关门弟子，欲买馒头给师父吃", "mentioned_only": false, "evidence": "秦绢将本门治伤灵药服侍师父服下"},
+    {"name": "郑萼", "aliases": [], "identity": "恒山派俗家女弟子", "mentioned_only": false, "evidence": "仪琳和郑萼分别解开众师姊的绑缚"},
+    {"name": "仪琳", "aliases": [], "identity": "恒山派小尼姑", "mentioned_only": false, "evidence": "仪琳和郑萼分别解开众师姊的绑缚"},
+    {"name": "任我行", "aliases": ["任教主"], "identity": "日月神教前任教主，蒙面人假其名号退敌，定静临终误认令狐冲为其弟子", "mentioned_only": true, "evidence": "你若是任我行，我恒山派纵然一败涂地"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "岳不群之女，与林平之亲热异常，同寻辟邪剑谱", "mentioned_only": false, "evidence": "只见岳灵珊苗条的背影在左"},
+    {"name": "林平之", "aliases": ["小林子", "林师弟", "臭林子"], "identity": "福威镖局林家后人，岳不群弟子，在向阳巷老宅搜寻辟邪剑谱", "mentioned_only": false, "evidence": "只听林平之道：“我没功夫。"},
+    {"name": "岳夫人", "aliases": ["宁氏"], "identity": "华山派掌门岳不群之妻宁中则，令狐冲师娘（本块仅经“宁氏一剑”间接提及）", "mentioned_only": true, "evidence": "便挡不住那“无双无对，宁氏一剑”"},
+    {"name": "风清扬", "aliases": ["风太师叔"], "identity": "华山派前辈高人，独孤九剑的传授者，令狐冲允诺不泄漏其行迹", "mentioned_only": true, "evidence": "偏生自己后来得风太师叔传授"},
+    {"name": "吴天德", "aliases": [], "identity": "泉州府参将；令狐冲冒用其名，因江湖闻名而弃用此伪装", "mentioned_only": true, "evidence": "泉州府参将吴天德这副大胡子模样"},
+    {"name": "达摩老祖", "aliases": [], "identity": "佛门武学之祖（传说人物，对话及图画中提及）", "mentioned_only": true, "evidence": "达摩老祖是武学之祖，佛经中藏有剑谱"}
+  ]
+}

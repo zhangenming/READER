@@ -1,0 +1,28 @@
+{
+  "chunk": 64,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐少侠", "令狐大哥", "令狐师兄"], "identity": "被逐出华山的浪子，率恒山派弟子赴龙泉救援，向岳灵珊剖白辟邪剑谱下落", "mentioned_only": false, "evidence": "令狐冲一回头，只见仪琳一双妙目正注视着自己"},
+    {"name": "仪琳", "aliases": ["仪琳师妹"], "identity": "恒山派小尼姑，随令狐冲同行，月下重提许愿旧事", "mentioned_only": false, "evidence": "仪琳避开他的眼光，低声道"},
+    {"name": "仪和", "aliases": [], "identity": "恒山派弟子，性子火爆，化缘途中一招‘金针渡劫’斩伤岳灵珊左膀", "mentioned_only": false, "evidence": "仪和道：“这当儿去龙泉要紧。济贫的事，慢慢再办不迟。”"},
+    {"name": "仪清", "aliases": [], "identity": "恒山派弟子，老成持重，在水月庵拾剑头察知有人动过手", "mentioned_only": false, "evidence": "仪清拔闩开门，让令狐冲和众人进来。"},
+    {"name": "于嫂", "aliases": [], "identity": "恒山派弟子，率众化缘归来，认出岳灵珊身分", "mentioned_only": false, "evidence": "于嫂说道：“令狐少侠，咱们化……化了不少金银"},
+    {"name": "郑萼", "aliases": [], "identity": "恒山派弟子，述说化缘经过与对岳灵珊手下留情之事", "mentioned_only": false, "evidence": "郑萼上前打门，半天也无人出来。"},
+    {"name": "秦绢", "aliases": [], "identity": "恒山派年轻女弟子，定静师太门下", "mentioned_only": false, "evidence": "过不多时，秦绢在右首的岔路上叫了起来"},
+    {"name": "仪真", "aliases": [], "identity": "恒山派弟子，受令狐冲所托携金创药回福州救林平之", "mentioned_only": false, "evidence": "仪真道：“令狐师兄但有所命，自当遵依。”"},
+    {"name": "仪灵", "aliases": [], "identity": "恒山派弟子，随仪真回福州送药", "mentioned_only": false, "evidence": "仪灵师妹，你陪我同去。"},
+    {"name": "岳灵珊", "aliases": ["小师妹", "岳姑娘"], "identity": "岳不群之女，乘马夜奔向令狐冲索要辟邪剑谱，哭诉华山连遭毒手", "mentioned_only": false, "evidence": "岳灵珊一抖马头，转身而去"},
+    {"name": "岳不群", "aliases": ["岳先生"], "identity": "华山派掌门，令狐冲前师父，被传杀了劳德诺", "mentioned_only": true, "evidence": "本来岳不群对他十分严厉"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻，令狐冲的师娘（即宁中则），曾救令狐冲并被疑吞没袈裟", "mentioned_only": true, "evidence": "但岳夫人和岳灵珊始终顾念旧情"},
+    {"name": "林平之", "aliases": ["林师弟", "小林子"], "identity": "令狐冲同门师弟，被人在背后一剑砍成重伤，昏迷中仍挂念剑谱", "mentioned_only": true, "evidence": "我说若要杀死林平之，何必背后斩他？"},
+    {"name": "劳德诺", "aliases": [], "identity": "华山派弟子，带艺投师，害死陆大有，被传遭杀且面目被剁烂", "mentioned_only": true, "evidence": "劳德诺呢？你怎不去问问他？"},
+    {"name": "陆大有", "aliases": ["六师弟"], "identity": "华山派六师弟，昔年为劳德诺所害", "mentioned_only": true, "evidence": "此人害死陆大有，自己恨之入骨"},
+    {"name": "八师哥", "aliases": ["八师弟"], "identity": "华山派岳不群门下八弟子，遭人杀害灭口（真名本块未出现）", "mentioned_only": true, "evidence": "那你为甚么又害死八师哥？"},
+    {"name": "卜沉", "aliases": ["白头仙翁"], "identity": "嵩山派高手，号白头仙翁，抢袈裟砍伤令狐冲后被其所杀", "mentioned_only": true, "evidence": "一个叫甚么‘白头仙翁’卜沉"},
+    {"name": "沙天江", "aliases": ["秃鹰"], "identity": "嵩山派高手，号秃鹰，与卜沉同抢袈裟后被令狐冲所杀", "mentioned_only": true, "evidence": "一个叫‘秃鹰’沙天江"},
+    {"name": "任我行", "aliases": [], "identity": "被囚梅庄的魔教前教主，曾扬言屠灭华山派，令狐冲疑其已到福州下手", "mentioned_only": true, "evidence": "想起任我行在杭州孤山梅庄所说的话来"},
+    {"name": "定闲", "aliases": [], "identity": "恒山派掌门，被困铸剑谷火场，临危镇定名不虚传", "mentioned_only": false, "evidence": "定闲师太合十回礼，却道：“有人偷袭，小心了。”"},
+    {"name": "定逸", "aliases": [], "identity": "恒山派师太，被困石窑满身血迹仍当门而立神威凛凛", "mentioned_only": false, "evidence": "满身血迹，正是定逸师太，手执长剑"},
+    {"name": "东方不败", "aliases": ["东方教主"], "identity": "日月神教教主，被冒充魔教的嵩山派抬出来胁迫恒山派归降", "mentioned_only": true, "evidence": "东方教主好好劝你们归降投诚"},
+    {"name": "白剥皮", "aliases": [], "identity": "福州财主，被恒山众弟子‘化缘’搜刮一空", "mentioned_only": true, "evidence": "郑萼笑道：“那白剥皮躺在地下，又哭又嚷"}
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "chunk": 16,
+  "characters": [
+    {"name": "刘正风", "aliases": ["刘三爷", "刘师兄", "刘贤弟"], "identity": "衡山派刘三爷，拒杀曲洋，点穴擒费彬求情，终被逼家破", "mentioned_only": false, "evidence": "刘正风不怒反笑，说道：“费师兄，你要血口喷人"},
+    {"name": "费彬", "aliases": ["大嵩阳手", "费师兄", "费师弟", "费贤弟"], "identity": "嵩山派掌门左冷禅的第四师弟，绰号大嵩阳手，主持清洗刘门", "mentioned_only": false, "evidence": "费彬脸上现出微笑，道：“你自己承认，那是再好也没有"},
+    {"name": "定逸", "aliases": ["定逸师太"], "identity": "恒山派师太，为刘正风开脱，与丁勉对掌受伤", "mentioned_only": false, "evidence": "定逸师太大怒，呼的一掌，向狄修击了过去"},
+    {"name": "丁勉", "aliases": ["托塔手", "丁老二", "丁师兄"], "identity": "嵩山派掌门人的二师弟，绰号托塔手，银针射杀向大年", "mentioned_only": false, "evidence": "丁勉左手一扬，嗤的一声轻响，一丝银光电射而出。"},
+    {"name": "陆柏", "aliases": ["仙鹤手", "陆师兄"], "identity": "嵩山派第三把交椅，绰号仙鹤手，下令屠杀刘门", "mentioned_only": false, "evidence": "陆柏细声细语的道：“刘师兄，这话恐怕有些不尽不实了。"},
+    {"name": "曲洋", "aliases": [], "identity": "魔教护法长老，七弦琴高手，刘正风的知交（本块仅被谈及）", "mentioned_only": true, "evidence": "魔教中有一位护法长老，名字叫作曲洋的，不知刘师兄是否相识？"},
+    {"name": "东方不败", "aliases": [], "identity": "魔教教主，有“当世第一高手”之称", "mentioned_only": true, "evidence": "刘师兄和魔教教主东方不败暗中有甚么勾结？"},
+    {"name": "天门道人", "aliases": [], "identity": "泰山派掌门，痛恨魔教，站到左首", "mentioned_only": false, "evidence": "天门道人站起身来，大踏步走到左首"},
+    {"name": "岳不群", "aliases": [], "identity": "华山派掌门，劝刘正风杀曲洋不果，站到左首", "mentioned_only": false, "evidence": "岳不群起身说道：“刘贤弟，你只须点一点头"},
+    {"name": "莫大先生", "aliases": ["潇湘夜雨"], "identity": "衡山派掌门，刘正风的师兄，本块被传唤而未现身", "mentioned_only": true, "evidence": "莫大先生请出来，大家说个明白。"},
+    {"name": "左冷禅", "aliases": ["左盟主", "左师哥"], "identity": "嵩山派掌门，五岳剑派盟主，下令清理刘正风门户（本块称左盟主）", "mentioned_only": true, "evidence": "左盟主言道：刘正风乃衡山派中不可多得的人才"},
+    {"name": "史登达", "aliases": ["史贤侄"], "identity": "嵩山派弟子，持五岳令旗，以剑威逼刘芹", "mentioned_only": false, "evidence": "费彬向史登达道：“举起令旗。”"},
+    {"name": "万大平", "aliases": ["万师弟"], "identity": "嵩山派弟子，一剑劈死刘菁", "mentioned_only": false, "evidence": "万大平提起长剑，一剑劈下，从刘菁右肩直劈至腰。"},
+    {"name": "狄修", "aliases": [], "identity": "嵩山派弟子，奉命刺杀刘正风长子与夫人", "mentioned_only": false, "evidence": "陆柏哼了一声，说道：“狄修，预备着。”"},
+    {"name": "向大年", "aliases": ["大年"], "identity": "刘正风门下大弟子，护师时被丁勉银针射中心脏而死", "mentioned_only": false, "evidence": "向大年护师心切，纵身而上，只听他大叫一声"},
+    {"name": "米为义", "aliases": ["为义"], "identity": "刘正风门下二弟子，拔剑挡在恩师身前誓死", "mentioned_only": false, "evidence": "米为义刷的一声，拔出长剑，说道：“刘门一系，自非五岳剑派之敌"},
+    {"name": "刘菁", "aliases": ["菁儿"], "identity": "刘正风之女，怒骂嵩山派，被万大平劈死", "mentioned_only": false, "evidence": "刘正风的女儿刘菁怒骂：“奸贼，你嵩山派比魔教奸恶万倍！”"},
+    {"name": "刘夫人", "aliases": [], "identity": "刘正风之妻，被狄修刺死", "mentioned_only": false, "evidence": "狄修手起剑落，又是一剑刺入刘夫人背心。"},
+    {"name": "刘芹", "aliases": [], "identity": "刘正风十五岁幼子，吓跪求饶并指斥父亲求活", "mentioned_only": false, "evidence": "刘门徒弟子女已只剩下刘正风最心爱的十五岁幼子刘芹。"},
+    {"name": "刘公子", "aliases": ["刘正风长子"], "identity": "刘正风的长子，被狄修一剑刺入心窝而死", "mentioned_only": false, "evidence": "狄修短剑往前一送，自刘公子的背心直刺入他心窝。"},
+    {"name": "劳德诺", "aliases": [], "identity": "华山派二弟子，随岳不群站到左首", "mentioned_only": false, "evidence": "劳德诺、岳灵珊、陆大有等也都随着过去。"},
+    {"name": "岳灵珊", "aliases": [], "identity": "岳不群之女，华山派弟子，追问大师哥下落", "mentioned_only": false, "evidence": "华山派的岳灵珊忍不住问道：“刘师叔，我大师哥在哪里？"},
+    {"name": "陆大有", "aliases": [], "identity": "华山派六弟子，随师站到左首", "mentioned_only": false, "evidence": "劳德诺、岳灵珊、陆大有等也都随着过去。"},
+    {"name": "令狐冲", "aliases": ["大师哥"], "identity": "华山派大弟子，被传为曲洋救活，众人议论纷纷", "mentioned_only": true, "evidence": "华山派弟子令狐冲为人所伤，命在垂危，是他出手给救活了的。"}
+  ]
+}

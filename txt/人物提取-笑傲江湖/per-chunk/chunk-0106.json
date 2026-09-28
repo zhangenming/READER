@@ -1,0 +1,273 @@
+{
+  "chunk": 106,
+  "characters": [
+    {
+      "name": "令狐冲",
+      "aliases": [],
+      "identity": "本书主角，华山旧居对月小酌，目睹劳德诺被马猴锁缚的下场，终与盈盈自由结缡",
+      "mentioned_only": false,
+      "evidence": "令狐冲骇然问道：“那是甚么缘故？”"
+    },
+    {
+      "name": "盈盈",
+      "aliases": [
+        "任盈盈"
+      ],
+      "identity": "令狐冲之妻，安排劳德诺与马猴锁缚的下场，自嘲终身与大马猴（令狐冲）锁在一起",
+      "mentioned_only": false,
+      "evidence": "盈盈循着猴啼之声，快步奔到对面山坡上。"
+    },
+    {
+      "name": "劳德诺",
+      "aliases": [],
+      "identity": "自废武功后献给任我行辟邪剑谱未果，被盈盈以铁铐锁住双手与两只大马猴同栖华山",
+      "mentioned_only": false,
+      "evidence": "却见群猴之中赫然有一个人，凝目看去，竟是劳德诺。"
+    },
+    {
+      "name": "陆大有",
+      "aliases": [
+        "六师弟"
+      ],
+      "identity": "华山派六弟子，生平爱猴，被劳德诺所害（本块追述）",
+      "mentioned_only": true,
+      "evidence": "令狐冲本欲杀了劳德诺为陆大有报仇"
+    },
+    {
+      "name": "林平之",
+      "aliases": [
+        "林师弟"
+      ],
+      "identity": "为恶更甚于劳德诺（本块言及；后记中列为政治人物之一）",
+      "mentioned_only": true,
+      "evidence": "这人老奸巨猾，为恶远在林师弟之上"
+    },
+    {
+      "name": "任我行",
+      "aliases": [
+        "爹爹"
+      ],
+      "identity": "日月神教教主，盈盈之父，后记中列为政治人物典型（本块追述及后记）",
+      "mentioned_only": true,
+      "evidence": "任我行、东方不败、岳不群、左冷禅这些人，在我设想时主要不是武林高手"
+    },
+    {
+      "name": "东方不败",
+      "aliases": [],
+      "identity": "日月神教前教主，后记中列为政治人物典型",
+      "mentioned_only": true,
+      "evidence": "任我行、东方不败、岳不群、左冷禅这些人，在我设想时主要不是武林高手"
+    },
+    {
+      "name": "岳不群",
+      "aliases": [],
+      "identity": "华山派掌门“君子剑”，后记中列为政治人物典型（南越议员曾以之讥指伪君子）",
+      "mentioned_only": true,
+      "evidence": "任我行、东方不败、岳不群、左冷禅这些人，在我设想时主要不是武林高手"
+    },
+    {
+      "name": "左冷禅",
+      "aliases": [],
+      "identity": "嵩山派掌门，后记中列为政治人物典型（南越议员曾以之讥指建立霸权者）",
+      "mentioned_only": true,
+      "evidence": "任我行、东方不败、岳不群、左冷禅这些人，在我设想时主要不是武林高手"
+    },
+    {
+      "name": "向问天",
+      "aliases": [],
+      "identity": "日月教左使，后记中列为政治人物之一",
+      "mentioned_only": true,
+      "evidence": "林平之、向问天、方证大师、冲虑道人、定闲师太、莫大先生、余沧海等人也是政治人物。"
+    },
+    {
+      "name": "方证",
+      "aliases": [
+        "方证大师"
+      ],
+      "identity": "少林寺方丈，后记中列为政治人物之一",
+      "mentioned_only": true,
+      "evidence": "林平之、向问天、方证大师、冲虑道人、定闲师太、莫大先生、余沧海等人也是政治人物。"
+    },
+    {
+      "name": "冲虚",
+      "aliases": [
+        "冲虚道人",
+        "冲虑道人"
+      ],
+      "identity": "武当派掌门，后记中列为政治人物之一（后记排印讹作“冲虑道人”）",
+      "mentioned_only": true,
+      "evidence": "林平之、向问天、方证大师、冲虑道人、定闲师太、莫大先生、余沧海等人也是政治人物。"
+    },
+    {
+      "name": "定闲",
+      "aliases": [
+        "定闲师太"
+      ],
+      "identity": "恒山派前掌门，后记中列为政治人物之一",
+      "mentioned_only": true,
+      "evidence": "林平之、向问天、方证大师、冲虑道人、定闲师太、莫大先生、余沧海等人也是政治人物。"
+    },
+    {
+      "name": "莫大先生",
+      "aliases": [],
+      "identity": "衡山派掌门，后记中列为政治人物之一",
+      "mentioned_only": true,
+      "evidence": "林平之、向问天、方证大师、冲虑道人、定闲师太、莫大先生、余沧海等人也是政治人物。"
+    },
+    {
+      "name": "余沧海",
+      "aliases": [],
+      "identity": "青城派掌门，后记中列为政治人物之一",
+      "mentioned_only": true,
+      "evidence": "林平之、向问天、方证大师、冲虑道人、定闲师太、莫大先生、余沧海等人也是政治人物。"
+    },
+    {
+      "name": "杨莲亭",
+      "aliases": [],
+      "identity": "日月教权臣，后记中以其与任我行并举说明黑木崖掌权者的威压",
+      "mentioned_only": true,
+      "evidence": "不论是杨莲亭或任我行掌握大权，旁人随便笑一笑都会引来杀身之祸"
+    },
+    {
+      "name": "刘正风",
+      "aliases": [],
+      "identity": "衡山派前辈，追求艺术自由与莫逆之交、欲金盆洗手而不得（后记举例）",
+      "mentioned_only": true,
+      "evidence": "刘正风追求艺术上的自由，重视莫逆于心的友谊，想金盆洗手"
+    },
+    {
+      "name": "梅庄四友",
+      "aliases": [],
+      "identity": "看守任我行的梅庄四庄主（江南四友：黄钟公、黑白子、秃笔翁、丹青生），欲隐姓埋名而不得（后记举例）",
+      "collective": true,
+      "mentioned_only": true,
+      "evidence": "梅庄四友盼望在孤山隐姓埋名，享受琴棋书画的乐趣"
+    },
+    {
+      "name": "郭靖",
+      "aliases": [],
+      "identity": "《射雕英雄传》主人公，后记中以之与令狐冲对比的“知其不可而为之”大侠典型",
+      "mentioned_only": true,
+      "evidence": "对于郭靖那样舍身赴难，知其不可而为之的大侠，在道德上当有更大的肯定。"
+    },
+    {
+      "name": "陶潜",
+      "aliases": [],
+      "identity": "即陶渊明，东晋诗人，后记中以之为令狐冲所效仿的自由隐士典型",
+      "mentioned_only": true,
+      "evidence": "令狐冲不是大侠，是陶潜那样追求自由和个性解放的隐士。"
+    },
+    {
+      "name": "岳灵珊",
+      "aliases": [],
+      "identity": "令狐冲昔日痴恋对象，后记中论其情执束缚令狐冲的自由",
+      "mentioned_only": true,
+      "evidence": "当情意紧缠在岳灵珊身上之时，是不得自由的。"
+    },
+    {
+      "name": "仪琳",
+      "aliases": [],
+      "identity": "恒山派女弟子，后记中言其在片面爱情中令令狐冲个性最少受拘束",
+      "mentioned_only": true,
+      "evidence": "或许，只有在仪琳的片面爱情之中，他的个性才极少受到拘束。"
+    },
+    {
+      "name": "风清扬",
+      "aliases": [],
+      "identity": "华山派剑宗前辈，后记中言其心灰意懒、惭愧懊丧而退隐",
+      "mentioned_only": true,
+      "evidence": "风清扬是心灰意懒、惭愧懊丧而退隐。"
+    },
+    {
+      "name": "孔子",
+      "aliases": [],
+      "identity": "历史人物，后记论隐士时引其“知其不可而为之”及对隐者的评价",
+      "mentioned_only": true,
+      "evidence": "中国的传统观念，是鼓励人“学而优则仕”，学孔子那样“知其不可而为之”"
+    },
+    {
+      "name": "伯夷",
+      "aliases": [],
+      "identity": "《论语》所记逸民，后记中列为不降其志、不辱其身的隐者典型",
+      "mentioned_only": true,
+      "evidence": "像伯夷、叔齐那样，不放弃自己意志，不牺牲自己尊严"
+    },
+    {
+      "name": "叔齐",
+      "aliases": [],
+      "identity": "《论语》所记逸民，与伯夷并举（后记）",
+      "mentioned_only": true,
+      "evidence": "像伯夷、叔齐那样，不放弃自己意志，不牺牲自己尊严"
+    },
+    {
+      "name": "柳下惠",
+      "aliases": [],
+      "identity": "《论语》所记逸民，后记中两度引其降志辱身而言行合乎伦虑的隐者典型",
+      "mentioned_only": true,
+      "evidence": "像柳下惠、少连那样，意志和尊严有所牺牲，但言行合情合理"
+    },
+    {
+      "name": "少连",
+      "aliases": [],
+      "identity": "《论语》所记逸民，与柳下惠并举（后记）",
+      "mentioned_only": true,
+      "evidence": "像柳下惠、少连那样，意志和尊严有所牺牲，但言行合情合理"
+    },
+    {
+      "name": "虞仲",
+      "aliases": [],
+      "identity": "《论语》所记逸民，后记中列为逃世隐居、放肆直言的隐者典型",
+      "mentioned_only": true,
+      "evidence": "像虞仲、夷逸那样，则是逃世隐居，放肆直言，不做坏事，不参与政治"
+    },
+    {
+      "name": "夷逸",
+      "aliases": [],
+      "identity": "《论语》所记逸民，与虞仲并举（后记）",
+      "mentioned_only": true,
+      "evidence": "像虞仲、夷逸那样，则是逃世隐居，放肆直言，不做坏事，不参与政治"
+    },
+    {
+      "name": "朱张",
+      "aliases": [],
+      "identity": "《论语·微子》所记逸民，后记列举隐者时提及",
+      "mentioned_only": true,
+      "evidence": "晨门、楚狂接舆、长沮、桀溺、荷叔齐、虞仲、夷逸、朱张、柳下惠、少连等等"
+    },
+    {
+      "name": "长沮",
+      "aliases": [],
+      "identity": "《论语》所记隐者（耦耕者之一），后记列举隐者时提及",
+      "mentioned_only": true,
+      "evidence": "晨门、楚狂接舆、长沮、桀溺、荷叔齐、虞仲、夷逸、朱张、柳下惠、少连等等"
+    },
+    {
+      "name": "桀溺",
+      "aliases": [],
+      "identity": "《论语》所记隐者（耦耕者之一），后记列举隐者时提及",
+      "mentioned_only": true,
+      "evidence": "晨门、楚狂接舆、长沮、桀溺、荷叔齐、虞仲、夷逸、朱张、柳下惠、少连等等"
+    },
+    {
+      "name": "楚狂接舆",
+      "aliases": [],
+      "identity": "《论语》所记楚国狂士隐者，后记列举隐者时提及",
+      "mentioned_only": true,
+      "evidence": "晨门、楚狂接舆、长沮、桀溺、荷叔齐、虞仲、夷逸、朱张、柳下惠、少连等等"
+    },
+    {
+      "name": "晨门",
+      "aliases": [],
+      "identity": "《论语》所记石门守门的隐者，后记列举隐者时提及",
+      "mentioned_only": true,
+      "evidence": "晨门、楚狂接舆、长沮、桀溺、荷叔齐、虞仲、夷逸、朱张、柳下惠、少连等等"
+    },
+    {
+      "name": "荷叔齐",
+      "aliases": [],
+      "identity": "《论语》所记隐者，原文如此（疑为“荷蓧丈人”与“叔齐”连写之讹），后记列举隐者时提及",
+      "mentioned_only": true,
+      "evidence": "晨门、楚狂接舆、长沮、桀溺、荷叔齐、虞仲、夷逸、朱张、柳下惠、少连等等"
+    }
+  ]
+}

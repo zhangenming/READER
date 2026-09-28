@@ -1,0 +1,26 @@
+{
+  "chunk": 54,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["风二中", "风兄弟"], "identity": "与任老先生比剑后中啸声昏倒，被囚湖底黑牢", "mentioned_only": false, "evidence": "令狐冲躬身说道：“晚辈今日有幸拜见任老前辈"},
+    {"name": "任我行", "aliases": ["任老前辈", "任老先生", "姓任的", "任先生"], "identity": "梅庄湖底地牢被囚的高人，铁板刻字自署“任我行”", "mentioned_only": false, "evidence": "晚辈今日有幸拜见任老前辈，还望多加指教。"},
+    {"name": "黄钟公", "aliases": ["大庄主", "大哥"], "identity": "梅庄大庄主，掌地牢钥匙之一", "mentioned_only": false, "evidence": "黄钟公从怀中取出另一枚钥匙"},
+    {"name": "黑白子", "aliases": ["二庄主"], "identity": "梅庄二庄主，掌地牢钥匙之一", "mentioned_only": false, "evidence": "黑白子走上前去，从怀中取出一枚钥匙"},
+    {"name": "秃笔翁", "aliases": ["三庄主"], "identity": "梅庄三庄主，掌地牢钥匙之一", "mentioned_only": false, "evidence": "然后秃笔翁和丹青生分别各出钥匙"},
+    {"name": "丹青生", "aliases": ["四庄主"], "identity": "梅庄四庄主，掌地牢钥匙之一", "mentioned_only": false, "evidence": "丹青生挨近前来，在他耳畔低声说道"},
+    {"name": "江南四友", "aliases": ["江南四狗"], "identity": "梅庄四庄主合称，奉命看守地牢", "mentioned_only": false, "collective": true, "evidence": "如何为江南四友所擒"},
+    {"name": "风清扬", "aliases": ["风老", "老风", "风老先生"], "identity": "令狐冲剑法所自出的太师叔", "mentioned_only": true, "evidence": "独孤求败如若复生，又或风清扬亲临"},
+    {"name": "独孤求败", "aliases": [], "identity": "独孤九剑创始前辈", "mentioned_only": true, "evidence": "独孤求败如若复生"},
+    {"name": "岳不群", "aliases": [], "identity": "令狐冲的前师父", "mentioned_only": true, "evidence": "只可惜嫁了岳不群，一朵鲜花插在牛粪上了。"},
+    {"name": "宁中则", "aliases": ["华山玉女"], "identity": "令狐冲师娘", "mentioned_only": true, "evidence": "叫作宁中则。这个小姑娘倒也慷慨豪迈"},
+    {"name": "盈盈", "aliases": [], "identity": "令狐冲指望来救的圣姑", "mentioned_only": true, "evidence": "一想到盈盈，精神一振"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "令狐冲思念的小师妹", "mentioned_only": true, "evidence": "一想到岳灵珊，心头蓦地一痛"},
+    {"name": "林平之", "aliases": ["林师弟"], "identity": "岳灵珊另爱的林师弟", "mentioned_only": true, "evidence": "可是岳灵珊另行爱上了林平之"},
+    {"name": "平一指", "aliases": ["平大夫"], "identity": "名医", "mentioned_only": true, "evidence": "平大夫说我已活不了多久"},
+    {"name": "田伯光", "aliases": [], "identity": "令狐冲旧友", "mentioned_only": true, "evidence": "唉，田伯光、桃谷六仙、仪琳师妹……"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "可能随仪琳来救令狐冲的六兄弟", "mentioned_only": true, "collective": true, "evidence": "想起桃谷六仙的缠七夹八"},
+    {"name": "仪琳", "aliases": ["仪琳师妹"], "identity": "恒山派小尼姑，令狐冲挂念的师妹", "mentioned_only": true, "evidence": "想到恒山派的小尼姑仪琳"},
+    {"name": "不戒和尚", "aliases": [], "identity": "仪琳之父，可能被求来救人", "mentioned_only": true, "evidence": "她会求她的父亲不戒和尚设法"},
+    {"name": "老头子", "aliases": [], "identity": "曾奉圣姑之命扬言杀令狐冲者", "mentioned_only": true, "evidence": "她曾叫老头子他们在江湖上扬言"},
+    {"name": "送饭老人", "aliases": [], "identity": "梅庄地牢送饭的哑仆（耳聋、舌被割半截），本块未出现名字", "mentioned_only": false, "evidence": "只见一个满头白发的老者左手提灯，右手拿着木盘"}
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "chunk": 39,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["大师哥", "令狐公子", "令狐爷爷"], "identity": "华山派大师兄，被老头子掳去欲取血救其女", "mentioned_only": false, "collective": false, "evidence": "那肉球人将令狐冲放在椅上，低沉着声音问道"},
+    {"name": "岳不群", "aliases": [], "identity": "华山派掌门，暗中运紫霞神功跟踪探查", "mentioned_only": false, "collective": false, "evidence": "岳不群躺在船舱中，耳听河水拍岸，思潮如涌"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻宁中则", "mentioned_only": false, "collective": false, "evidence": "岳夫人提剑赶到，忙问：“珊儿呢？"},
+    {"name": "岳灵珊", "aliases": ["珊儿"], "identity": "岳不群之女，夜里与林平之岸上相会，被巨汉掳走", "mentioned_only": false, "collective": false, "evidence": "正是女儿岳灵珊，不必听第二人说话"},
+    {"name": "林平之", "aliases": [], "identity": "华山派弟子，与岳灵珊夜谈辟邪剑谱，同被掳走", "mentioned_only": false, "collective": false, "evidence": "另一人自然是林平之了"},
+    {"name": "劳德诺", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "collective": false, "evidence": "劳德诺等几名男弟子拔剑上岸"},
+    {"name": "老头子", "aliases": ["老爷"], "identity": "黄河老祖之一，姓老单名“爷”字“头子”，肉球般矮胖，为救爱女不死炼“续命八丸”", "mentioned_only": false, "collective": false, "evidence": "人家不是叫我老爷，便叫我老头子"},
+    {"name": "祖千秋", "aliases": [], "identity": "黄河老祖之一，偷“续命八丸”骗令狐冲服下以救老不死，赶来向老头子说明真情", "mentioned_only": false, "collective": false, "evidence": "忽听得祖千秋在外面叫道：“老头子，老头子，快开门"},
+    {"name": "不死", "aliases": ["老不死", "不儿", "老姑娘"], "identity": "老头子独女，自娘胎身患怪病，靠令狐冲放血相救", "mentioned_only": false, "collective": false, "evidence": "老头子的女儿芳名‘不死’，岂不作‘老不死’？"},
+    {"name": "平一指", "aliases": ["平大夫", "杀人名医"], "identity": "开封“杀人名医”，本块仅被谈及（杀其岳母全家、开续命八丸药方等事）", "mentioned_only": true, "collective": false, "evidence": "有病难治，便得请教平一指"},
+    {"name": "计无施", "aliases": ["钟馗爷爷"], "identity": "头戴尖帽手持白幡、自号“钟馗爷爷”诱开桃谷四仙的汉子（本块未点名，下章揭示为“夜猫子”计无施）", "mentioned_only": false, "collective": false, "evidence": "只见说话之人头戴尖帽，手持白幡。"},
+    {"name": "白熊", "aliases": [], "identity": "漠北双熊之一：掳走岳灵珊的白肤巨汉（本块未点名，下章揭示为漠北双熊）", "mentioned_only": false, "collective": false, "evidence": "见那巨人一手一个，已抓了林平之和岳灵珊，向前奔出。"},
+    {"name": "黑熊", "aliases": [], "identity": "漠北双熊之一：吃人肉的光头和尚，以血写“五霸冈上，还你的臭女儿”（本块未点名）", "mentioned_only": false, "collective": false, "evidence": "那人竟是个和尚。他头顶鲜血直冒"},
+    {"name": "桃谷六仙", "aliases": ["桃谷六鬼"], "identity": "桃根/桃干/桃枝/桃叶/桃花/桃实六兄弟合称；本块中桃干、桃叶、桃花三仙被白幡汉子引开未单独出场", "mentioned_only": false, "collective": true, "evidence": "桃谷六仙一听之下，如何不怒？"},
+    {"name": "桃根仙", "aliases": [], "identity": "桃谷六仙老大", "mentioned_only": false, "collective": false, "evidence": "桃根仙等怒吼连连，快步急追"},
+    {"name": "桃枝仙", "aliases": [], "identity": "桃谷六仙老三，回护桃实仙时中渔网机关被缚", "mentioned_only": false, "collective": false, "evidence": "飞脚向肉球人踢去，却是桃枝仙"},
+    {"name": "桃实仙", "aliases": [], "identity": "桃谷六仙老六，伤重不能动弹，随桃枝仙被缚", "mentioned_only": false, "collective": false, "evidence": "桃实仙躺着不能动弹，口中大呼小叫"},
+    {"name": "毒不死人", "aliases": ["诸师伯"], "identity": "百药门掌门，姓诸，外号“毒不死人”（本块未现身）", "mentioned_only": true, "collective": false, "evidence": "此人外号‘毒不死人’，据说他下毒的本领高明之极"},
+    {"name": "封不平", "aliases": [], "identity": "华山派剑宗弟子，岳不群疑其邀百药门与自己为难", "mentioned_only": true, "collective": false, "evidence": "百药门是由剑宗封不平等人邀了来和自己过不去"}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "chunk": 34,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["大师哥", "令狐大哥", "令狐贤侄"], "identity": "华山派大弟子，遭师父疑忌，在洛阳纵酒赌博被打", "mentioned_only": false, "evidence": "这中间只令狐冲一人黯然神伤"},
+    {"name": "岳不群", "aliases": ["岳大掌门", "岳老弟"], "identity": "华山派掌门", "mentioned_only": false, "evidence": "岳不群知是金刀无敌王元霸亲自来客店相会"},
+    {"name": "岳夫人", "aliases": ["岳师母"], "identity": "岳不群之妻兼师妹（即宁中则）", "mentioned_only": false, "evidence": "岳夫人摇摇头，说道：“从这里到福建"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "岳不群与岳夫人之女，属意林平之", "mentioned_only": false, "evidence": "岳灵珊大喜，拍手道：“好极，爹爹……"},
+    {"name": "高根明", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "evidence": "高根明见令狐冲兀自躺在泥泞之中"},
+    {"name": "施戴子", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "evidence": "高根明、施戴子等看到梁发身首异处的惨状"},
+    {"name": "梁发", "aliases": [], "identity": "华山派弟子，药王庙之战被斩首", "mentioned_only": true, "evidence": "将梁发的尸首掩埋了"},
+    {"name": "风清扬", "aliases": ["风太师叔"], "identity": "华山派剑宗前辈，传令狐冲剑法", "mentioned_only": true, "evidence": "我若不吐露风太师叔传授剑法的经过"},
+    {"name": "田伯光", "aliases": [], "identity": "采花淫贼，曾受桃谷六仙折磨而不泄风太师叔行踪", "mentioned_only": true, "evidence": "田伯光一个采花淫贼，在身受桃谷六仙种种折磨之时"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "六个怪人兄弟（余四怪），岳夫人惧其报复", "mentioned_only": true, "evidence": "在身受桃谷六仙种种折磨之时", "collective": true},
+    {"name": "桃实仙", "aliases": [], "identity": "桃谷六仙成员，曾被岳夫人刺伤", "mentioned_only": true, "evidence": "岳夫人自刺了桃实仙一剑之后"},
+    {"name": "林平之", "aliases": ["小林子", "平之", "林师弟"], "identity": "华山派弟子，林震南之子，引众人赴洛阳外婆家", "mentioned_only": false, "evidence": "林平之道：“师父、师娘，咱们没几天便入河南省境"},
+    {"name": "封不平", "aliases": [], "identity": "华山派剑宗弃徒，已败于令狐冲", "mentioned_only": true, "evidence": "封不平既然败于大师哥剑底"},
+    {"name": "左冷禅", "aliases": ["左盟主"], "identity": "嵩山派掌门、五岳剑派盟主", "mentioned_only": true, "evidence": "是不是还要到嵩山去跟左盟主评理？"},
+    {"name": "劳德诺", "aliases": ["二师哥", "劳师弟"], "identity": "华山派二弟子，奉命暗中监视令狐冲", "mentioned_only": false, "evidence": "却见劳德诺快步回来"},
+    {"name": "舒奇", "aliases": [], "identity": "华山派年幼弟子，替师父传话", "mentioned_only": false, "evidence": "忽听得小师弟舒奇在房门口轻声说话"},
+    {"name": "王元霸", "aliases": ["金刀无敌", "王老爷子"], "identity": "洛阳金刀门掌门，外号金刀无敌，林平之的外公", "mentioned_only": false, "evidence": "岳不群知是金刀无敌王元霸亲自来客店相会"},
+    {"name": "王伯奋", "aliases": [], "identity": "王元霸长子，林平之的舅父", "mentioned_only": false, "evidence": "王伯奋、王仲强齐声答应，屈膝下拜。"},
+    {"name": "王仲强", "aliases": [], "identity": "王元霸次子，林平之的舅父", "mentioned_only": false, "evidence": "王伯奋、王仲强齐声答应，屈膝下拜。"},
+    {"name": "王家驹", "aliases": [], "identity": "王仲强幼子，林平之表兄", "mentioned_only": false, "evidence": "王仲强的小儿子王家驹兴冲冲的走进房来"},
+    {"name": "王家骏", "aliases": [], "identity": "王仲强长子，林平之表兄", "mentioned_only": false, "evidence": "却是王仲强的长子王家骏。"},
+    {"name": "陈歪嘴", "aliases": [], "identity": "洛阳城中无赖，与令狐冲赌钱殴斗", "mentioned_only": false, "evidence": "令狐冲向身旁一名无赖陈歪嘴道"}
+  ]
+}

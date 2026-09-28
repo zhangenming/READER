@@ -1,0 +1,13 @@
+{
+  "chunk": 23,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["冲儿"], "identity": "华山派大弟子，面壁考校中以剑鞘夺岳夫人长剑，被掌掴警诫", "mentioned_only": false, "evidence": "令狐冲一怔，道：“田伯光到了长安？"},
+    {"name": "岳不群", "aliases": [], "identity": "华山派掌门，讲述气宗剑宗旧事，警令狐冲勿入剑宗邪路", "mentioned_only": false, "evidence": "岳不群微微一笑，道：“田伯光武功了得"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻宁中则，与令狐冲拆招试“宁氏一剑”", "mentioned_only": false, "evidence": "岳夫人笑道：“冲儿，出剑罢！"},
+    {"name": "岳灵珊", "aliases": ["珊儿"], "identity": "岳不群之女，随父上崖观看考校", "mentioned_only": false, "evidence": "岳灵珊向父亲道：“爹，妈这些招数"},
+    {"name": "施戴子", "aliases": [], "identity": "华山派弟子，随上崖观看考校", "mentioned_only": false, "evidence": "当着施戴子和陆大有之面"},
+    {"name": "陆大有", "aliases": ["大有", "六猴儿"], "identity": "华山派六弟子，随上崖观看考校", "mentioned_only": false, "evidence": "施戴子、陆大有、岳灵珊三人只瞧得目为之眩"},
+    {"name": "田伯光", "aliases": ["万里独行"], "identity": "万里独行采花淫贼，携两坛谪仙楼陈酒上思过崖见令狐冲", "mentioned_only": false, "evidence": "声音甚是熟悉，竟然便是“万里独行”田伯光"},
+    {"name": "高根明", "aliases": ["根明"], "identity": "华山派弟子，从长安带来田伯光大案的消息（本块称“根明”）", "mentioned_only": true, "evidence": "根明昨天从长安来，说道田伯光在长安做了好几件大案"}
+  ]
+}

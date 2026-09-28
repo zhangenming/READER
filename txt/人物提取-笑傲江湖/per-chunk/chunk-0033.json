@@ -1,0 +1,21 @@
+{
+  "chunk": 33,
+  "characters": [
+    {"name": "汤英颚", "aliases": ["汤七侠", "汤老英雄"], "identity": "嵩山派第七太保", "mentioned_only": false, "evidence": "汤英颚点头说：“这几句话倒也在理。"},
+    {"name": "岳不群", "aliases": ["君子剑", "岳先生"], "identity": "华山派掌门，被蒙面老者指为伪君子", "mentioned_only": false, "evidence": "这位岳不群先生，有个外号叫作君子剑"},
+    {"name": "林震南", "aliases": ["林总镖头"], "identity": "福威镖局总镖头，已遇害", "mentioned_only": true, "evidence": "总镖头林震南夫妇给人害了"},
+    {"name": "封不平", "aliases": ["封先生"], "identity": "华山派剑宗第一高手，创‘狂风快剑’，败于令狐冲剑下", "mentioned_only": false, "evidence": "丛师弟，你为本派清理门户"},
+    {"name": "丛不弃", "aliases": ["丛师弟"], "identity": "华山派剑宗弟子，封不平师弟，肩胛被令狐冲一剑穿过", "mentioned_only": false, "evidence": "丛不弃，你今日杀我"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻兼师妹（即宁中则），重伤中使‘无双无对，宁氏一剑’", "mentioned_only": false, "evidence": "岳夫人叫道：“且慢！那《辟邪剑谱》到底是在何处？"},
+    {"name": "丁勉", "aliases": ["丁二侠"], "identity": "嵩山派第二太保托塔手", "mentioned_only": false, "evidence": "丁勉道：“华山派掌门人之位，依左盟主说"},
+    {"name": "陆柏", "aliases": ["陆三侠"], "identity": "嵩山派第三太保仙鹤手", "mentioned_only": false, "evidence": "回身向丁勉、陆柏、汤英颚三人拱手道"},
+    {"name": "令狐冲", "aliases": ["令狐少侠", "令狐大侠"], "identity": "华山派大弟子，以独孤九剑败封不平、刺瞎十五蒙面客双眼", "mentioned_only": false, "evidence": "在下令狐冲，是恩师岳先生座下大弟子。"},
+    {"name": "左冷禅", "aliases": ["左盟主"], "identity": "嵩山派掌门、五岳剑派盟主", "mentioned_only": true, "evidence": "请你们拜上左盟主"},
+    {"name": "风清扬", "aliases": [], "identity": "华山派剑宗前辈，传令狐冲独孤九剑", "mentioned_only": true, "evidence": "危急之中，风清扬的一句话突然在脑海中响起"},
+    {"name": "林平之", "aliases": ["林公子"], "identity": "华山派弟子，林震南之子", "mentioned_only": false, "evidence": "一瞥眼间，那男子正是林平之。"},
+    {"name": "岳灵珊", "aliases": ["岳小姐"], "identity": "岳不群与岳夫人之女", "mentioned_only": false, "evidence": "眼光向岳灵珊望去，知道这是临死时最后一眼"},
+    {"name": "梁发", "aliases": [], "identity": "华山派弟子，药王庙之战被斩首", "mentioned_only": true, "evidence": "看到梁发身首异处的惨状"},
+    {"name": "高根明", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "evidence": "高根明、施戴子等看到梁发身首异处的惨状"},
+    {"name": "施戴子", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "evidence": "高根明、施戴子等看到梁发身首异处的惨状"}
+  ]
+}

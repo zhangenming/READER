@@ -1,0 +1,13 @@
+{
+  "chunk": 25,
+  "characters": [
+    {"name": "令狐冲", "aliases": [], "identity": "华山派大弟子，思过崖面壁，得风清扬传授剑理，点倒田伯光", "mentioned_only": false, "evidence": "令狐冲一惊，脸上却不动声色"},
+    {"name": "田伯光", "aliases": ["万里独行"], "identity": "万里独行采花淫贼，与令狐冲赌斗，被点中膻中穴制服", "mentioned_only": false, "evidence": "田伯光捋起衣衫，袒裸胸膛"},
+    {"name": "仪琳", "aliases": [], "identity": "恒山派女弟子，田伯光奉命请令狐冲去见的小师父（本块未出场）", "mentioned_only": true, "evidence": "那日我为了救仪琳师妹，跟他性命相扑"},
+    {"name": "平一指", "aliases": ["杀人名医"], "identity": "“杀人名医”，可能解田伯光死穴奇毒之人（本块仅被提及）", "mentioned_only": true, "evidence": "天下只怕惟有‘杀人名医’平一指一人"},
+    {"name": "风清扬", "aliases": ["风太师叔", "风老前辈"], "identity": "华山派前辈太师叔，隐居思过崖后山，现身点拨令狐冲剑法", "mentioned_only": false, "evidence": "那老者风清扬道：“你起来。”"},
+    {"name": "岳不群", "aliases": [], "identity": "华山派掌门（本块仅被提及），被风清扬讥为拘泥不化", "mentioned_only": true, "evidence": "岳不群那小子，当真是狗屁不通"},
+    {"name": "魔教十长老", "aliases": [], "identity": "指当年被囚死于思过崖后洞、刻下破五岳剑派图形的十名魔教长老", "mentioned_only": true, "evidence": "这十具骸骨，便是魔教十长老了", "collective": true},
+    {"name": "陆大有", "aliases": [], "identity": "华山派六弟子，上崖为令狐冲送饭", "mentioned_only": false, "evidence": "眼见天色已晚，陆大有送饭上崖"}
+  ]
+}

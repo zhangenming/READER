@@ -1,0 +1,21 @@
+{
+  "chunk": 48,
+  "characters": [
+    {"name": "令狐冲", "aliases": [], "identity": "与向问天联手力战正魔两道群豪", "mentioned_only": false, "evidence": "侯人雄喝道：“令狐冲，给我跪下！”"},
+    {"name": "向问天", "aliases": ["向右使"], "identity": "魔教高手，救令狐冲脱险并结伴而逃", "mentioned_only": false, "evidence": "救了令狐冲性命的正是那魔教高手向问天。"},
+    {"name": "侯人雄", "aliases": [], "identity": "青城派弟子，三剑指令狐冲被削断手腕", "mentioned_only": false, "evidence": "却是青城派中侯人雄等三名弟子攻了过来。"},
+    {"name": "乐厚", "aliases": ["大阴阳手", "乐师伯"], "identity": "嵩山派高手，绰号“大阴阳手”，掌力一阴一阳", "mentioned_only": false, "evidence": "那人道：“我是孝感乐厚。”"},
+    {"name": "天乙", "aliases": ["天乙道人"], "identity": "泰山派道人，使“七星落长空”被吓得晕死", "mentioned_only": false, "evidence": "那道人道号天乙，和天门、天松等道人乃是同辈"},
+    {"name": "天门", "aliases": [], "identity": "泰山派道人，与天乙同辈（仅被提及）", "mentioned_only": true, "evidence": "那道人道号天乙，和天门、天松等道人乃是同辈"},
+    {"name": "天松", "aliases": [], "identity": "泰山派道人，与天乙同辈（仅被提及）", "mentioned_only": true, "evidence": "那道人道号天乙，和天门、天松等道人乃是同辈"},
+    {"name": "田伯光", "aliases": [], "identity": "采花大盗，令狐冲的故友", "mentioned_only": true, "evidence": "当日自己学了来对付田伯光"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "六兄弟，曾先后给令狐冲输入真气", "mentioned_only": true, "collective": true, "evidence": "既有桃谷六仙的真气，又有不戒和尚的真气"},
+    {"name": "不戒和尚", "aliases": [], "identity": "曾给令狐冲体内输入真气的和尚", "mentioned_only": true, "evidence": "后来不戒和尚又如何再在自己体内输入真气"},
+    {"name": "方生", "aliases": ["方生大师"], "identity": "少林高僧，曾在少林寺以真气为令狐冲疗伤", "mentioned_only": true, "evidence": "在少林寺中养伤，又得了方生大师的真气"},
+    {"name": "风清扬", "aliases": ["风太师叔"], "identity": "令狐冲剑法的太师叔", "mentioned_only": true, "evidence": "自从风清扬归隐，从未一现于江湖。"},
+    {"name": "王崇古", "aliases": [], "identity": "追兵中人物，被“活盾牌”临死咒骂不讲义气", "mentioned_only": true, "evidence": "王崇古，他妈的你不讲义气"},
+    {"name": "张芙蓉", "aliases": [], "identity": "追兵中以袖箭射杀“活盾牌”的女子", "mentioned_only": true, "evidence": "张芙蓉你这骚狐狸，你……你借刀杀人。"},
+    {"name": "点苍双剑", "aliases": [], "identity": "点苍派两位剑客，被向问天偷袭推落山涧", "mentioned_only": true, "collective": true, "evidence": "说甚么‘点苍双剑，剑气冲天’"},
+    {"name": "姓何的", "aliases": [], "identity": "掷飞锥的暗器高手（本块仅知姓何）", "mentioned_only": true, "evidence": "姓何的，你也来蹚这浑水干甚么？"}
+  ]
+}

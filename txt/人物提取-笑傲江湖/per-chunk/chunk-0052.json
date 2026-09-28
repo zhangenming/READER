@@ -1,0 +1,20 @@
+{
+  "chunk": 52,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["风少侠", "风兄弟", "风二中", "风兄"], "identity": "与黄钟公瑶琴玉箫相斗获胜，坦诚自陈内力全失", "mentioned_only": false, "evidence": "令狐冲放下酒杯，心想不便携剑去见主人"},
+    {"name": "向问天", "aliases": ["童兄", "童大哥"], "identity": "在梅庄设局的同伴", "mentioned_only": false, "evidence": "向问天携着令狐冲的手，步入柳荫深处"},
+    {"name": "黄钟公", "aliases": ["大庄主", "大哥"], "identity": "梅庄大庄主，善琴，“七弦无形剑”败于令狐冲", "mentioned_only": false, "evidence": "我大哥道号黄钟公，风少侠想必早已知闻。"},
+    {"name": "黑白子", "aliases": ["二庄主", "二哥"], "identity": "梅庄二庄主", "mentioned_only": false, "evidence": "黑白子道：“大哥，华山派的风少侠来了。”"},
+    {"name": "秃笔翁", "aliases": ["三庄主", "三哥"], "identity": "梅庄三庄主，向令狐冲荐平一指治病", "mentioned_only": false, "evidence": "秃笔翁道：“你内力尽失，想必是受了重伤。"},
+    {"name": "丹青生", "aliases": ["四庄主", "四太爷"], "identity": "梅庄四庄主，以竹叶青饯令狐冲", "mentioned_only": false, "evidence": "丹青生道：“风兄弟，咱们喝酒。"},
+    {"name": "江南四友", "aliases": [], "identity": "梅庄四兄弟合称，奉命看守地牢囚犯", "mentioned_only": false, "collective": true, "evidence": "令狐冲对“江南四友”颇有亲近之意"},
+    {"name": "张旭", "aliases": [], "identity": "《率意帖》作者", "mentioned_only": true, "evidence": "秃笔翁只是挂念着那幅张旭的《率意帖》"},
+    {"name": "嵇康", "aliases": ["嵇中散"], "identity": "临刑抚琴叹《广陵散》绝的古人", "mentioned_only": true, "evidence": "想到嵇中散临刑时抚琴一曲"},
+    {"name": "曲洋", "aliases": ["曲洋前辈"], "identity": "掘墓得《广陵散》的魔教前辈", "mentioned_only": true, "evidence": "倘若正是曲洋前辈在东汉蔡甚么人的墓中所得的《广陵散》"},
+    {"name": "平一指", "aliases": ["平大夫", "杀人名医"], "identity": "“杀人名医”，已死于五霸冈", "mentioned_only": true, "evidence": "那‘杀人名医’平一指跟我向来交情"},
+    {"name": "方证", "aliases": ["方证大师"], "identity": "少林寺掌门", "mentioned_only": true, "evidence": "你持去见少林寺掌门方证大师"},
+    {"name": "守戒", "aliases": [], "identity": "镇江金山寺大和尚，赠丹青生竹叶青", "mentioned_only": true, "evidence": "寺中大和尚守戒不饮酒，送了一瓶给我。"},
+    {"name": "范宽", "aliases": [], "identity": "北宋画家，《溪山行旅图》作者", "mentioned_only": true, "evidence": "一见面就会伸手来取张旭的书法和范宽的山水"},
+    {"name": "风清扬", "aliases": ["风老先生", "风太师叔"], "identity": "令狐冲冒认的师门长辈（风老先生）", "mentioned_only": true, "evidence": "听说风少侠是华山派前辈风老先生的传人"}
+  ]
+}

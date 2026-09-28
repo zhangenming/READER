@@ -1,0 +1,17 @@
+{
+  "chunk": 45,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐公公", "令狐爷爷"], "identity": "华山派大师兄，以独孤九剑力战方生等少林四僧，护婆婆受伤坠涧", "mentioned_only": false, "collective": false, "evidence": "令狐冲朗声道：“恃强逞暴，叫甚么名门正派？"},
+    {"name": "方生", "aliases": [], "identity": "少林派“方”字辈第一代高僧，与“婆婆”激战，师侄四人丧命仍赠灵药，劝令狐冲赴少林习内功", "mentioned_only": false, "collective": false, "evidence": "方生大师登时脸色大变"},
+    {"name": "辛国梁", "aliases": [], "identity": "少林派弟子，方生师侄，为婆婆所杀", "mentioned_only": false, "collective": false, "evidence": "辛国梁抵挡不住，跳出圈子"},
+    {"name": "易国梓", "aliases": [], "identity": "少林派弟子，辛国梁师弟，扑击婆婆藏身处被杀", "mentioned_only": false, "collective": false, "evidence": "易国梓从灌木丛中又飞身出来，一跃数丈"},
+    {"name": "觉月", "aliases": [], "identity": "少林派僧人，方生师侄，使方便铲，为婆婆所杀", "mentioned_only": false, "collective": false, "evidence": "这僧人法名觉月，这是黄国柏师侄"},
+    {"name": "黄国柏", "aliases": [], "identity": "少林派弟子，方生师侄，使刀，为婆婆所杀", "mentioned_only": false, "collective": false, "evidence": "这僧人法名觉月，这是黄国柏师侄"},
+    {"name": "婆婆", "aliases": ["姑娘"], "identity": "即“婆婆”，涧水倒影中显露真容：十七八岁容貌秀丽的少女；即魔教圣姑任盈盈（真名于本书后文揭示）", "mentioned_only": false, "collective": false, "evidence": "一个妙龄姑娘正抓着自己背心"},
+    {"name": "风清扬", "aliases": ["风前辈"], "identity": "华山派剑宗前辈，“独孤九剑”的授师，方生曾受其大恩", "mentioned_only": true, "collective": false, "evidence": "没想到华山风清扬前辈的剑法，居然世上尚有传人"},
+    {"name": "东方不败", "aliases": ["东方教主"], "identity": "魔教教主，号称当世第一高手，方生昔年曾与之有一面之缘", "mentioned_only": true, "collective": false, "evidence": "他说的是魔教的教主东方不败？"},
+    {"name": "蓝凤凰", "aliases": [], "identity": "云南五仙教（五毒教）教主，婆婆转述其赞令狐冲", "mentioned_only": true, "collective": false, "evidence": "难怪连五毒教蓝凤凰那样的人物，也对你赞不绝口"},
+    {"name": "绿竹翁", "aliases": [], "identity": "洛阳绿竹巷隐士，婆婆在洛阳时冒充其姑姑", "mentioned_only": true, "collective": false, "evidence": "串通了绿竹翁那老头子，要他叫你姑姑"},
+    {"name": "田伯光", "aliases": [], "identity": "采花大盗，令狐冲旧友", "mentioned_only": true, "collective": false, "evidence": "我跟采花大盗田伯光结交，在衡阳妓院中睡觉"}
+  ]
+}

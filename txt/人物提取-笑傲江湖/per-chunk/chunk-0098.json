@@ -1,0 +1,23 @@
+{
+  "chunk": 98,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐掌门", "令狐公子", "令狐大侠"], "identity": "恒山派掌门，被缚灵龟阁，假诵剑谱令七恶自相残杀", "mentioned_only": false, "evidence": "玉灵道人突然叫道：“咦，这不是和尚，是……是令狐掌门令狐冲。”"},
+    {"name": "盈盈", "aliases": ["任大小姐", "圣姑"], "identity": "日月神教教主任我行之女，圣姑", "mentioned_only": false, "evidence": "“滑不留手”游迅道：“任大小姐怎地在这里？"},
+    {"name": "哑婆婆", "aliases": [], "identity": "不戒和尚之妻、仪琳之母，向仪琳谎称令狐冲要娶她", "mentioned_only": false, "evidence": "哑婆婆，你带我来干甚么？"},
+    {"name": "仪琳", "aliases": [], "identity": "恒山派弟子，不戒和尚之女", "mentioned_only": false, "evidence": "正是仪琳的声音。"},
+    {"name": "仇松年", "aliases": [], "identity": "头陀，谋害盈盈的七恶之一，被玉灵道人杀死", "mentioned_only": false, "evidence": "西宝和尚脑浆迸裂，仇松年背上一枝长剑贯胸而出"},
+    {"name": "西宝和尚", "aliases": [], "identity": "七恶之一，被严三星杀死", "mentioned_only": false, "evidence": "西宝和尚道：“上边有令，还是照办的好。”"},
+    {"name": "严三星", "aliases": [], "identity": "“双蛇恶乞”，七恶之一，吸功粘手后被桐柏双奇打死", "mentioned_only": false, "evidence": "听得严三星道：“岳先生说成功之后，将辟邪剑法传给咱们"},
+    {"name": "游迅", "aliases": ["滑不留手"], "identity": "“滑不留手”，七恶之首，杀张夫人灭口，终被盈盈飞剑杀死", "mentioned_only": false, "evidence": "这一生奸猾的“滑不留手”游迅登时毙命。"},
+    {"name": "张夫人", "aliases": [], "identity": "七恶之一，欲放盈盈，被游迅杀死", "mentioned_only": false, "evidence": "张夫人喉头鲜血疾喷出来。"},
+    {"name": "玉灵道人", "aliases": [], "identity": "七恶之一，被桐柏双奇打死", "mentioned_only": false, "evidence": "严三星和玉灵道人登时脑浆迸裂而死。"},
+    {"name": "桐柏双奇", "aliases": [], "identity": "桐柏山双奇，七恶之二，断掌后结为夫妻", "mentioned_only": false, "collective": true, "evidence": "桐柏双奇齐声道：“不错，谁也不能独吞，要瞧便一起瞧。”"},
+    {"name": "周孤桐", "aliases": [], "identity": "桐柏双奇之男，使黄金拐杖", "mentioned_only": false, "evidence": "桐柏双奇男的叫周孤桐，女的叫吴柏英。"},
+    {"name": "吴柏英", "aliases": [], "identity": "桐柏双奇之女，使黄金拐杖", "mentioned_only": false, "evidence": "桐柏双奇男的叫周孤桐，女的叫吴柏英。"},
+    {"name": "岳不群", "aliases": ["岳先生"], "identity": "五岳派掌门，持黑木令骗魔教众人掳恒山弟子", "mentioned_only": true, "evidence": "小人是受了华山岳不群那狗头的欺骗"},
+    {"name": "左冷禅", "aliases": [], "identity": "嵩山派掌门，封禅台被岳不群刺瞎", "mentioned_only": true, "evidence": "岳不群以辟邪剑法在封禅台上刺瞎左冷禅，轰传武林"},
+    {"name": "任我行", "aliases": ["任教主"], "identity": "日月神教教主，盈盈之父", "mentioned_only": true, "evidence": "但一想到任我行，无不惊怖"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "令狐冲的小师妹，已嫁林平之", "mentioned_only": true, "evidence": "令狐大哥只爱他小师妹一人，爱得要命"},
+    {"name": "不戒和尚", "aliases": [], "identity": "仪琳之父（本块仪琳仅以“爹爹”谈及），寻妻天涯", "mentioned_only": true, "evidence": "好像我爹爹那样，自从我妈走了之后"}
+  ]
+}

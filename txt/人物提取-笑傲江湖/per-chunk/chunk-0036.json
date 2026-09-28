@@ -1,0 +1,32 @@
+{
+  "chunk": 36,
+  "characters": [
+    {"name": "绿竹翁", "aliases": ["竹翁", "竹贤侄", "竹侄"], "identity": "洛阳绿竹巷篾匠，隐世高手，教令狐冲学琴并震退王家父子", "mentioned_only": false, "evidence": "绿竹翁取出一张焦尾桐琴，授以音律"},
+    {"name": "令狐冲", "aliases": ["令狐少君", "令狐先生", "令狐兄弟"], "identity": "华山派大弟子，在绿竹巷学琴、倾诉身世", "mentioned_only": false, "evidence": "次日清晨，令狐冲便来小巷竹舍中学琴。"},
+    {"name": "婆婆", "aliases": ["那婆婆", "姑姑"], "identity": "绿竹翁的姑姑，隔帘授琴并为令狐冲搭脉（即圣姑任盈盈，本块未揭名）", "mentioned_only": false, "evidence": "那婆婆当即传了曲谱指法"},
+    {"name": "刘正风", "aliases": ["刘师叔"], "identity": "衡山派高手，与曲洋合撰《笑傲江湖之曲》，已逝世", "mentioned_only": true, "evidence": "刘正风是衡山派中高手"},
+    {"name": "曲洋", "aliases": ["曲长老"], "identity": "魔教长老，刘正风的知音，已逝世", "mentioned_only": true, "evidence": "曲洋却是魔教长老"},
+    {"name": "陆大有", "aliases": ["陆师弟"], "identity": "华山派六弟子，被婆婆指出非令狐冲所杀", "mentioned_only": true, "evidence": "如何自己拒绝而师弟陆大有强自诵读"},
+    {"name": "不戒", "aliases": ["不戒和尚", "不戒大师"], "identity": "仪琳之父，曾替令狐冲治伤注入真气", "mentioned_only": true, "evidence": "桃谷六仙和不戒大师功力深厚"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "六个怪人兄弟，曾以六道真气替令狐冲治伤", "mentioned_only": true, "evidence": "桃谷六仙如何为自己治伤", "collective": true},
+    {"name": "岳灵珊", "aliases": ["小师妹", "岳姑娘"], "identity": "岳不群与岳夫人之女，令狐冲苦恋之人", "mentioned_only": true, "evidence": "想起当日和岳灵珊两小无猜"},
+    {"name": "林平之", "aliases": [], "identity": "华山派弟子，夺走岳灵珊对令狐冲的情意", "mentioned_only": true, "evidence": "后来无端来了个林平之"},
+    {"name": "劳德诺", "aliases": [], "identity": "华山派二弟子，传令明日启程", "mentioned_only": false, "evidence": "劳德诺忽然匆匆过来"},
+    {"name": "岳不群", "aliases": [], "identity": "华山派掌门", "mentioned_only": false, "evidence": "次日岳不群等一行向王元霸父子告别"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻兼师妹（即宁中则）", "mentioned_only": false, "evidence": "岳夫人眼见坐船顺风顺水"},
+    {"name": "王元霸", "aliases": ["王老爷子"], "identity": "洛阳金刀门掌门，外号金刀无敌，林平之的外公", "mentioned_only": false, "evidence": "那金刀王元霸却何以说是武功秘笈？"},
+    {"name": "王伯奋", "aliases": [], "identity": "王元霸长子，林平之的舅父", "mentioned_only": false, "evidence": "这时王伯奋已将两个侄儿关节脱臼处接上。"},
+    {"name": "王仲强", "aliases": [], "identity": "王元霸次子，被绿竹翁震飞数丈", "mentioned_only": false, "evidence": "王仲强见二子吃亏，纵身跃上岸去"},
+    {"name": "王家骏", "aliases": [], "identity": "王仲强长子，林平之表兄，撞绿竹翁落水", "mentioned_only": false, "evidence": "王家骏、王家驹兄弟见他对一个身穿粗布衣衫的老头儿如此恭敬"},
+    {"name": "王家驹", "aliases": [], "identity": "王仲强幼子，林平之表兄，撞绿竹翁落水", "mentioned_only": false, "evidence": "王家骏、王家驹兄弟见他对一个身穿粗布衣衫的老头儿如此恭敬"},
+    {"name": "平一指", "aliases": ["杀人名医", "平老先生"], "identity": "开封名医，立誓医一人杀一人", "mentioned_only": true, "evidence": "‘杀人名医’平一指，那自是大大的有名"},
+    {"name": "华老镖头", "aliases": [], "identity": "开封府武师，岳不群夫妇口中提及", "mentioned_only": true, "evidence": "像华老镖头、海老拳师、豫中三英这些人"},
+    {"name": "海老拳师", "aliases": [], "identity": "开封府武师，岳不群夫妇口中提及", "mentioned_only": true, "evidence": "像华老镖头、海老拳师、豫中三英这些人"},
+    {"name": "豫中三英", "aliases": [], "identity": "开封府三位武林人士的合称，岳不群夫妇口中提及", "mentioned_only": true, "evidence": "像华老镖头、海老拳师、豫中三英这些人", "collective": true},
+    {"name": "左冷禅", "aliases": ["左盟主"], "identity": "嵩山派掌门、五岳剑派盟主", "mentioned_only": true, "evidence": "嵩山派左盟主如何下旗令阻止"},
+    {"name": "莫大先生", "aliases": [], "identity": "衡山派掌门莫大，杀死费彬", "mentioned_only": true, "evidence": "只略去了莫大先生杀死费彬一节。"},
+    {"name": "费彬", "aliases": ["大嵩阳手"], "identity": "嵩山十三太保之一，被莫大先生杀死", "mentioned_only": true, "evidence": "只略去了莫大先生杀死费彬一节。"},
+    {"name": "林震南", "aliases": [], "identity": "福威镖局总镖头，林平之之父，已逝世", "mentioned_only": true, "evidence": "林震南夫妇如何为青城派及木高峰所伤"},
+    {"name": "木高峰", "aliases": ["塞北明驼"], "identity": "恶人，曾擒辱林震南夫妇", "mentioned_only": true, "evidence": "林震南夫妇如何为青城派及木高峰所伤"}
+  ]
+}

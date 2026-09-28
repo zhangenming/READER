@@ -1,0 +1,24 @@
+{
+  "chunk": 62,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["冲儿", "大师哥", "令狐师傅"], "identity": "华山派弃徒，夺回辟邪剑谱反蒙冤，与岳不群夫妇决裂", "mentioned_only": false, "evidence": "便见到岳不群夫妇站在床前，令狐冲大喜"},
+    {"name": "岳不群", "aliases": ["岳先生"], "identity": "华山派掌门，令狐冲之师，指其勾结魔教、杀嵩山派人，欲掌毙之", "mentioned_only": false, "evidence": "岳不群不答，只问：“却是怎么会事？"},
+    {"name": "岳夫人", "aliases": [], "identity": "华山派掌门岳不群之妻（宁中则），令狐冲师娘，回护令狐冲", "mentioned_only": false, "evidence": "岳夫人道：“没事！你……你怎么到了福州？"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "岳不群之女，向令狐冲示警嵩山派寻仇", "mentioned_only": false, "evidence": "岳灵珊道：“大师哥，快……快离开这儿"},
+    {"name": "林平之", "aliases": ["平之"], "identity": "福威镖局少镖头，岳不群弟子，向阳巷老宅佛堂中寻剑谱", "mentioned_only": false, "evidence": "却听得林平之道：“我早翻过啦。"},
+    {"name": "劳德诺", "aliases": [], "identity": "华山派二弟子，通报嵩山派钟镇等来访", "mentioned_only": false, "evidence": "房外一人叫道：“师父、师娘。”却是劳德诺"},
+    {"name": "钟镇", "aliases": ["九曲剑"], "identity": "嵩山派左冷禅师弟，绰号“九曲剑”，与两师弟赴福威镖局寻令狐冲晦气", "mentioned_only": false, "evidence": "说道是嵩山派的钟镇，还有他的两个师弟"},
+    {"name": "邓八公", "aliases": ["神鞭", "邓八婆"], "identity": "嵩山派钟镇师弟，绰号“神鞭”", "mentioned_only": false, "evidence": "神鞭邓八公、锦毛狮高克新三人大剌剌的坐在西首宾位"},
+    {"name": "高克新", "aliases": ["锦毛狮", "癞皮猫"], "identity": "嵩山派钟镇师弟，绰号“锦毛狮”", "mentioned_only": false, "evidence": "高克新喝道：“你是甚么东西？"},
+    {"name": "卜沉", "aliases": ["白头仙翁", "白头妖翁"], "identity": "嵩山派旁枝高手，绰号“白头仙翁”（白发老者），夺袈裟剑谱后为令狐冲所杀", "mentioned_only": false, "evidence": "“白头仙翁”卜沉，“秃鹰”沙天江，这两人可是你杀的？"},
+    {"name": "沙天江", "aliases": ["秃鹰", "秃枭"], "identity": "嵩山派旁枝高手，绰号“秃鹰”（秃头老者），宁死不屈自插匕首身亡", "mentioned_only": false, "evidence": "秃鹰岂是投降之人？"},
+    {"name": "任盈盈", "aliases": ["盈盈", "任小姐", "小姐"], "identity": "日月神教圣姑，任我行之女，曾于五霸冈召集旁门之士为令狐冲治病", "mentioned_only": true, "evidence": "那位任小姐召集江湖上旁门左道之士"},
+    {"name": "任我行", "aliases": ["任教主"], "identity": "日月神教前任教主，其女与令狐冲的干系成为其罪名", "mentioned_only": true, "evidence": "魔教任教主的小姐对你青眼有加"},
+    {"name": "向问天", "aliases": ["向大哥"], "identity": "魔教大魔头，曾与令狐冲并肩杀正教同道", "mentioned_only": true, "evidence": "和魔教那个大魔头向问天勾结在一起"},
+    {"name": "东方不败", "aliases": [], "identity": "日月神教教主，曾将任我行囚于西湖底下", "mentioned_only": true, "evidence": "任教主尚给东方不败囚在西湖底下"},
+    {"name": "封不平", "aliases": [], "identity": "华山派剑宗，夜战中败于令狐冲剑下", "mentioned_only": true, "evidence": "他打败剑宗封不平，刺瞎十五名江湖好手双眼"},
+    {"name": "老头子", "aliases": [], "identity": "黄河老祖之一，日月神教旁门人物（人名即“老头子”），对盈盈极尊崇", "mentioned_only": true, "evidence": "怪不得老头子、祖千秋他们对她如此尊崇"},
+    {"name": "祖千秋", "aliases": [], "identity": "日月神教旁门人物，对盈盈极尊崇", "mentioned_only": true, "evidence": "怪不得老头子、祖千秋他们对她如此尊崇"},
+    {"name": "达摩老祖", "aliases": [], "identity": "佛门武学之祖（传说人物，佛堂画像所绘）", "mentioned_only": true, "evidence": "居中悬着一幅水墨画，画的是达摩老祖背面"}
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "chunk": 10,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐大哥", "令狐兄", "令狐师兄", "令狐师哥"], "identity": "华山派弟子（岳不群大弟子），回雁楼上为救仪琳与田伯光坐着比武", "mentioned_only": false, "evidence": "众人听到这里，对令狐冲这番苦心都不禁赞叹。"},
+    {"name": "仪琳", "aliases": ["小尼姑", "小师妹"], "identity": "恒山派定逸弟子，小尼姑，向众人述说回雁楼之事", "mentioned_only": false, "evidence": "仪琳垂目低眉，道：“是，原来那也是粗话，弟子知道了。”"},
+    {"name": "田伯光", "aliases": ["田兄"], "identity": "采花大盗，回雁楼上与令狐冲约定坐着打", "mentioned_only": false, "evidence": "田伯光挥刀挡开，笑道：“佩服，佩服！好一条救小尼姑脱身的妙计。"},
+    {"name": "定逸", "aliases": ["定逸师太"], "identity": "恒山派师太，仪琳的师父", "mentioned_only": false, "evidence": "定逸怒道：“甚么流氓手段？大丈夫斗智不斗力。"},
+    {"name": "余沧海", "aliases": ["余观主"], "identity": "青城派掌门，矮小道人", "mentioned_only": false, "evidence": "只余沧海哼了一声，道：“这无赖小子，跟田伯光这淫贼去耍流氓手段"},
+    {"name": "刘正风", "aliases": ["刘三爷"], "identity": "衡山派刘三爷，金盆洗手大会主人，居中打圆场", "mentioned_only": false, "evidence": "刘正风怕他二人又起冲突，忙打断话头，问仪琳道"},
+    {"name": "罗人杰", "aliases": ["人杰"], "identity": "青城派弟子，余沧海门下，回雁楼上刺伤令狐冲，反被其刺杀", "mentioned_only": false, "evidence": "另一个便是那恶人罗人杰。"},
+    {"name": "黎师弟", "aliases": ["姓黎的青城派弟子", "黎世兄", "姓黎的恶人"], "identity": "青城派弟子，姓黎（名不详），罗人杰的师弟，同上回雁楼", "mentioned_only": false, "evidence": "罗人杰向他师弟道：“黎师弟，你对付这小尼姑。”"},
+    {"name": "天门道人", "aliases": ["天门"], "identity": "泰山派掌门，五岳剑派高手", "mentioned_only": false, "evidence": "天门道人道：“余观主，这可是你的不对了。"},
+    {"name": "闻先生", "aliases": [], "identity": "刘府金盆洗手会上的老一辈高手", "mentioned_only": true, "evidence": "在天门道人、刘正风、闻先生、何三七等高手眼中"},
+    {"name": "何三七", "aliases": [], "identity": "江湖异人（卖馄饨者），金盆洗手会宾客", "mentioned_only": true, "evidence": "定逸师太、何三七、闻先生、刘正风、劳德诺等都已跃上了屋顶"},
+    {"name": "劳德诺", "aliases": ["劳贤侄"], "identity": "华山派弟子（岳不群门下二弟子），令狐冲师弟", "mentioned_only": false, "evidence": "余沧海目光转向劳德诺，脸色铁青，冷冷的问道"},
+    {"name": "申人俊", "aliases": [], "identity": "青城派弟子，被点穴掷入刘府花厅", "mentioned_only": false, "evidence": "余沧海伸手将一名弟子翻过身来，见是弟子申人俊"},
+    {"name": "吉人通", "aliases": ["吉师弟"], "identity": "青城派弟子，与申人俊焦孟不离", "mentioned_only": false, "evidence": "自是与申人俊焦孟不离的吉人通了。"},
+    {"name": "林平之", "aliases": ["木先生", "木兄弟"], "identity": "福威镖局少镖头，林震南之子；本块贴膏药假扮驼子，冒充木高峰子侄", "mentioned_only": false, "evidence": "便是福威镖局少镖头林平之。"},
+    {"name": "木高峰", "aliases": ["塞北明驼", "木大侠", "木先生"], "identity": "绰号“塞北明驼”的驼子，塞北武林高手，趋炎附势、心狠手辣", "mentioned_only": false, "evidence": "余观主，怎地兴致这么好，欺侮起木高峰的孙子来着？"},
+    {"name": "曲非烟", "aliases": ["绿衫女童"], "identity": "席间出言捉弄青城派的小女童（本块未具名，作“绿衫女童”，即后文之曲非烟）", "mentioned_only": false, "evidence": "只见一个绿衫女童站在席边，一伸手便抓住了她的手臂。"}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "chunk": 41,
+  "characters": [
+    {"name": "岳夫人", "aliases": ["妈"], "identity": "岳不群之妻宁中则", "mentioned_only": false, "collective": false, "evidence": "岳夫人一听，如释重负，微笑道"},
+    {"name": "岳灵珊", "aliases": ["岳姑娘"], "identity": "岳不群之女，哭诉被大个子辱骂恐吓", "mentioned_only": false, "collective": false, "evidence": "岳灵珊忽然大声哭道：“妈，这大个子骂我，呜！呜！”"},
+    {"name": "林平之", "aliases": ["小林子"], "identity": "华山派弟子，讲述和尚嚼食人手", "mentioned_only": false, "collective": false, "evidence": "这时林平之也已得师父解开穴道，走入船舱"},
+    {"name": "岳不群", "aliases": ["岳先生", "岳掌门"], "identity": "华山派掌门，认出掳人者为漠北双熊", "mentioned_only": false, "collective": false, "evidence": "岳不群忽道：“啊，我想起来了。这是‘漠北双熊’。"},
+    {"name": "令狐冲", "aliases": ["令狐大哥"], "identity": "华山派大师兄，被蓝凤凰以水蛭转血之法救治", "mentioned_only": false, "collective": false, "evidence": "令狐冲道：“漠北双雄？”他没听清楚师父前半截的话"},
+    {"name": "漠北双熊", "aliases": [], "identity": "塞外漠北两名吃人巨盗白熊与黑熊的合称", "mentioned_only": false, "collective": true, "evidence": "塞外漠北有两名巨盗，一个叫白熊，一个叫黑熊"},
+    {"name": "白熊", "aliases": ["大个儿"], "identity": "漠北双熊之一，掳走岳灵珊的白肤大个子，吃人肉", "mentioned_only": true, "collective": false, "evidence": "那大个儿皮肤很白，那和尚却皮肤很黑，是不是？"},
+    {"name": "黑熊", "aliases": [], "identity": "漠北双熊之一，吃人肉的黑肤光头和尚", "mentioned_only": true, "collective": false, "evidence": "那大个子跟那和尚当真是吃人肉的，倒不是空言恫吓。"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "桃根/桃干/桃枝/桃叶/桃花/桃实六兄弟合称，借此挑拨岳灵珊与林平之", "mentioned_only": false, "collective": true, "evidence": "桃谷六仙自在华山绝顶与令狐冲结交，便已当他是好朋友"},
+    {"name": "桃根仙", "aliases": [], "identity": "桃谷六仙老大", "mentioned_only": false, "collective": false, "evidence": "桃根仙道：“岳姑娘，你喜欢嫁给这小林子做老婆"},
+    {"name": "桃干仙", "aliases": [], "identity": "桃谷六仙老二", "mentioned_only": false, "collective": false, "evidence": "桃干仙在外舱忽然说道：“天下第一美味，莫过于人肉。”"},
+    {"name": "桃枝仙", "aliases": [], "identity": "桃谷六仙老三", "mentioned_only": false, "collective": false, "evidence": "桃枝仙道：“这多半是漠北双熊的船。”"},
+    {"name": "桃叶仙", "aliases": [], "identity": "桃谷六仙老四", "mentioned_only": false, "collective": false, "evidence": "桃叶仙道：“他倘若没吃，先前为甚么不说"},
+    {"name": "桃花仙", "aliases": [], "identity": "桃谷六仙老五", "mentioned_only": false, "collective": false, "evidence": "桃花仙道：“这就是了。他不声不响，便是默认。”"},
+    {"name": "桃实仙", "aliases": [], "identity": "桃谷六仙老六", "mentioned_only": false, "collective": false, "evidence": "桃实仙道：“岳姑娘，一个人连脚趾在内，也不过二十根。”"},
+    {"name": "蓝凤凰", "aliases": ["蓝教主"], "identity": "云南五仙教（五毒教）教主，苗家女子，以水蛭转血之法为令狐冲疗伤", "mentioned_only": false, "collective": false, "evidence": "我便是蓝凤凰，你不早知道了么？"},
+    {"name": "劳德诺", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "collective": false, "evidence": "但只有劳德诺和施戴子二人退了出去"},
+    {"name": "施戴子", "aliases": [], "identity": "华山派弟子", "mentioned_only": false, "collective": false, "evidence": "但只有劳德诺和施戴子二人退了出去"},
+    {"name": "平一指", "aliases": [], "identity": "开封“杀人名医”，本块被岳不群夫妇提及", "mentioned_only": true, "collective": false, "evidence": "平一指说他已不过百日之命"},
+    {"name": "老头子", "aliases": [], "identity": "黄河老祖之一，其女得令狐冲献血相救", "mentioned_only": true, "collective": false, "evidence": "去给老头子的女儿喝，救那姑娘的性命"}
+  ]
+}
