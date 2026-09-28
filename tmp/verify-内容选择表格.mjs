@@ -1,12 +1,14 @@
 // 校验「阅读内容」弹窗的表格形态与列头排序：
-// 1) 一行一本书、五列各管一个量；行高等宽、不横向溢出、表头吸顶
+// 1) 一行一本书、六列各管一个量；行高等宽、不横向溢出、表头吸顶
 // 2) 表头文字的右缘压在该列数字的右缘上（左对齐的书名列压左缘）
 // 3) 点一次排该列自然序，再点反向；缺值（未统计/无记录）永远钉在尾部
 // 4) 点行、聚焦行按 Enter 都能载入那本书
 // 5) 点过的「列 + 方向」会落盘：刷新后仍是那一列那一向，再点才反向
-// 6) 时间拆成「激活 / 滚动」两列：两列各自对账，且每一行激活 ≥ 滚动
+// 6) 时间拆成「激活 / 滚动 / 总计」三列：三列各自对账，每一行激活 ≥ 滚动、
+//    总计 = 激活 + 滚动，表头合计 = 各行显示值相加
 // 7) 标题下不再报「N 个文本」（和书名合计那一格重复），也不再单列「状态」：
-//    在读哪本靠行底色 + 左侧色条，读没读过靠两格时间有没有数
+//    在读哪本靠行底色 + 左侧色条，读没读过靠时间格有没有数
+// 8) 列宽够而不宽：最坏读数的串量得出余量，书名一格都不许被省略号截断
 // 跑法：node tmp/verify-内容选择表格.mjs
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
@@ -196,6 +198,39 @@ async function 主() {
           .getBoundingClientRect().height,
       ),
       弹窗宽: Math.round(document.querySelector('#内容选择弹窗').getBoundingClientRect().width),
+      列宽: 表头.map((格) => [
+        格.dataset.排序,
+        Math.round(格.getBoundingClientRect().width),
+        Math.round(内容宽(格)),
+      ]),
+      // 书名整行放得下吗：省略号一旦生效，scrollWidth 就会超过 padding 盒
+      书名截断: 行列表
+        .map((行) => {
+          const 格 = 行.children[0];
+          return [格.textContent, 格.scrollWidth - 格.clientWidth];
+        })
+        .filter(([, 溢]) => 溢 > 0),
+      书名最宽: (() => {
+        const 尺 = document.createElement('span');
+        const 算 = getComputedStyle(行列表[0].children[0]);
+        尺.style.cssText =
+          'position:absolute;left:-9999px;white-space:nowrap;font-size:' +
+          算.fontSize + ';font-weight:' + 算.fontWeight + ';font-family:' +
+          算.fontFamily + ';';
+        document.querySelector('#内容选择弹窗').append(尺);
+        let 最宽 = 0;
+        let 最宽名 = '';
+        for (const 行 of 行列表) {
+          尺.textContent = 行.children[0].textContent;
+          const 宽 = Math.ceil(尺.getBoundingClientRect().width);
+          if (宽 > 最宽) {
+            最宽 = 宽;
+            最宽名 = 行.children[0].textContent;
+          }
+        }
+        尺.remove();
+        return [最宽, 最宽名];
+      })(),
       表头文字: 表头.map((格) => 格.querySelector('.内容排序按钮').textContent),
       表头合计: 表头.map((格) => [
         格.dataset.排序,
@@ -207,6 +242,7 @@ async function 主() {
       时间列: 行列表.map((行) => [
         行.children[2].textContent.trim(),
         行.children[3].textContent.trim(),
+        行.children[4].textContent.trim(),
       ]),
       合计对齐: {
         本数左缘: Math.round(文字框(合计格(0)).left),
@@ -217,6 +253,9 @@ async function 主() {
         滚动右缘: Math.round(文字框(合计格(3)).right),
         滚动列右缘: Math.round(内容右缘(表头[3])),
         滚动溢出: Math.round(文字框(合计格(3)).width - 内容宽(表头[3])),
+        总计右缘: Math.round(文字框(合计格(4)).right),
+        总计列右缘: Math.round(内容右缘(表头[4])),
+        总计溢出: Math.round(文字框(合计格(4)).width - 内容宽(表头[4])),
         本数溢出: Math.round(文字框(合计格(0)).width - 内容宽(表头[0])),
         合计底缘: Math.round(合计格(2).getBoundingClientRect().bottom),
         表头底缘: Math.round(表头[2].getBoundingClientRect().bottom),
@@ -240,16 +279,24 @@ async function 主() {
   console.log('几何:', JSON.stringify(几何, null, 2));
   assert.equal(几何.有摘要节点, false, '标题下那行「N 个文本」要撤掉，本数看书名合计');
   assert.ok(几何.标题栏高 >= 44, `撤掉摘要后标题栏塌了：${几何.标题栏高}px`);
-  assert.deepEqual(几何.表头文字, ['书名', '万字', '激活', '滚动', '进度']);
+  assert.deepEqual(几何.表头文字, [
+    '书名',
+    '万字',
+    '激活',
+    '滚动',
+    '总计',
+    '进度',
+  ]);
   assert.deepEqual(几何.排序属性, [
     'ascending',
     'none',
     'none',
     'none',
     'none',
+    'none',
   ]);
   assert.deepEqual(几何.行高, [34], '行高要全部相等');
-  assert.deepEqual(几何.每行格数, [5], '每行要恰好五个格子');
+  assert.deepEqual(几何.每行格数, [6], '每行要恰好六个格子');
   assert.ok(几何.条目数 >= 10, `条目过少：${几何.条目数}`);
   assert.ok(几何.横向溢出 <= 0, `表格横向溢出 ${几何.横向溢出}px`);
   assert.equal(几何.当前行数, 1, '要且只要一行标为当前');
@@ -261,7 +308,7 @@ async function 主() {
     );
   }
 
-  // —— 表头合计：只有书名/激活/滚动三列有，格式「共 X」，口径进悬停 ——
+  // —— 表头合计：只有书名/激活/滚动/总计四列有，格式「共 X」，口径进悬停 ——
   assert.deepEqual(
     几何.表头合计.map(([键, 文本]) => [键, /^共 .+$/.test(文本)]),
     [
@@ -269,9 +316,10 @@ async function 主() {
       ['字数', false],
       ['激活', true],
       ['滚动', true],
+      ['总计', true],
       ['进度', false],
     ],
-    '合计只跟在书名与两列时间的标题下面',
+    '合计只跟在书名与三列时间的标题下面',
   );
   const 本数 = Number(几何.表头合计[0][1].match(/\d+/)[0]);
   assert.equal(
@@ -305,6 +353,14 @@ async function 主() {
   assert.ok(
     Math.abs(几何.合计对齐.滚动右缘 - 几何.合计对齐.滚动列右缘) <= 1,
     '滚动合计的右缘要压在该列数字右缘上',
+  );
+  assert.ok(
+    Math.abs(几何.合计对齐.总计右缘 - 几何.合计对齐.总计列右缘) <= 1,
+    '总计合计的右缘要压在该列数字右缘上',
+  );
+  assert.ok(
+    几何.合计对齐.总计溢出 <= 0,
+    `总计合计撑破了列宽 ${几何.合计对齐.总计溢出}px`,
   );
   assert.ok(
     几何.合计对齐.激活溢出 <= 0,
@@ -392,19 +448,26 @@ async function 主() {
     return { 有值, 缺值个数: 缺值.length };
   }
 
-  // 冷启动的临时 profile 里没有任何阅读记录，两列时间「进度」会全空、排不出顺序。
+  // 冷启动的临时 profile 里没有任何阅读记录，三列时间和「进度」会全空、排不出顺序。
   // 照 App 自己写出的形状造三本「读过一点」的书（不含当前这本，它由 App 自己记账）：
-  // 滚动落在持久化的 文本状态 上，激活落在 前台停留 的按书内存账上（那才是页面真开着的时长）。
+  // 时长只从「段」求和，所以要往两份按书时段账里写 [当日秒起, 当日秒止]，
+  // 进度落在持久化的 文本状态 上。
   const 造好的 = await 求值(`
     const { 持久化键 } = await import('./js/常量.js');
     const { 状态, 本地日期串 } = await import('./js/状态.js');
-    const { 书籍每日前台毫秒 } = await import('./js/前台停留.js');
+    const { 每日滚动时段 } = await import('./js/滚动时段.js');
+    const { 每日可见时段 } = await import('./js/可见时段.js');
     const 行列表 = [...document.querySelectorAll('#内容选择列表 tbody tr')]
       .map((行) => 行.dataset.fileName);
     const 数据 = JSON.parse(localStorage.getItem(持久化键)
       ?? '{"当前文件名":"","文本状态":{}}');
     const 目标 = 行列表.filter((名) => 名 !== 状态.文件名).slice(0, 3);
     const 今天 = 本地日期串(new Date());
+    const 当日 = (账) => {
+      let 按书 = 账.get(今天);
+      if (!按书) 账.set(今天, (按书 = new Map()));
+      return 按书;
+    };
     目标.forEach((名, i) => {
       数据.文本状态[名] = {
         文件名: 名,
@@ -413,8 +476,10 @@ async function 主() {
         行内比例: 0,
         总滚动毫秒: (i + 1) * 3_600_000,
       };
-      // 激活故意排成 7h/6h/5h：和滚动的 1h/2h/3h 正好反序，两列各排各的才验得出来
-      书籍每日前台毫秒.set(名, new Map([[今天, (7 - i) * 3_600_000]]));
+      // 滚动 1h/2h/3h 排在凌晨，激活故意排成反序的 7h/6h/5h 挂在中午之后：
+      // 两段互不相交（激活 = 可见 − 滚动），总计因此恒为 8h，三列各排各的才验得出来。
+      当日(每日滚动时段).set(名, [[600, 600 + (i + 1) * 3600]]);
+      当日(每日可见时段).set(名, [[40_000, 40_000 + (7 - i) * 3600]]);
     });
     localStorage.setItem(持久化键, JSON.stringify(数据));
     return 目标;
@@ -430,10 +495,11 @@ async function 主() {
   // 等字数统计回填（万字列不再是「…」），排序要按真实字数比
   await 等待字数统计();
 
-  // —— 合计对账：表头那个数要等于这一列各行显示值相加；两列时间都要成立 ——
+  // —— 合计对账：表头那个数要等于这一列各行显示值相加；三列时间都要成立 ——
   for (const [列序号, 列名] of [
     [2, '激活'],
     [3, '滚动'],
+    [4, '总计'],
   ]) {
     const 合计对账 = await 求值(`
       const 表头 = [...document.querySelectorAll('#内容选择列表 thead th')];
@@ -459,20 +525,27 @@ async function 主() {
     );
   }
 
-  // —— 两列同一本账：滚动必然发生在页面开着的时候，激活不许小于滚动 ——
+  // —— 三列同一本账：滚动必然发生在页面开着的时候，激活不许小于滚动；
+  //    总计是前两列的和，每行都要能竖着加出来 ——
   const 时间列对账 = await 求值(`
     return [...document.querySelectorAll('#内容选择列表 tbody tr')]
       .map((行) => [
         行.children[2].textContent.trim(),
         行.children[3].textContent.trim(),
+        行.children[4].textContent.trim(),
       ]);
   `);
-  for (const [激活文字, 滚动文字] of 时间列对账) {
+  for (const [激活文字, 滚动文字, 总计文字] of 时间列对账) {
     const 激活 = Number(激活文字.replace('h', '')) || 0;
     const 滚动 = Number(滚动文字.replace('h', '')) || 0;
+    const 总计 = Number(总计文字.replace('h', '')) || 0;
     assert.ok(
       激活 + 0.05 >= 滚动,
       `激活 ${激活文字} 小于滚动 ${滚动文字}，两列不是同一本账`,
+    );
+    assert.ok(
+      Math.abs(总计 - (激活 + 滚动)) <= 0.15,
+      `总计 ${总计文字} 不等于激活 ${激活文字} + 滚动 ${滚动文字}`,
     );
   }
 
@@ -494,12 +567,13 @@ async function 主() {
         文字框(表头[列].querySelector('.内容表头合计')).width - 内容宽(表头[列]),
       );
     return {
-      合计文本: [2, 3].map((列) =>
+      合计文本: [2, 3, 4].map((列) =>
         表头[列].querySelector('.内容表头合计').textContent),
       激活溢出: 溢出(2),
       滚动溢出: 溢出(3),
+      总计溢出: 溢出(4),
       零读数: [...document.querySelectorAll('#内容选择列表 tbody tr')]
-        .flatMap((行) => [行.children[2], 行.children[3]])
+        .flatMap((行) => [行.children[2], 行.children[3], 行.children[4]])
         .filter((格) => 格.textContent.trim() === '0.0h').length,
     };
   `);
@@ -512,7 +586,82 @@ async function 主() {
     宽屏合计.滚动溢出 <= 0,
     `两位数合计撑破滚动列 ${宽屏合计.滚动溢出}px（${宽屏合计.合计文本[1]}）`,
   );
+  assert.ok(
+    宽屏合计.总计溢出 <= 0,
+    `两位数合计撑破总计列 ${宽屏合计.总计溢出}px（${宽屏合计.合计文本[2]}）`,
+  );
   assert.equal(宽屏合计.零读数, 0, '不到半小时的读数要留白，不写 0.0h');
+
+  // —— 列宽够而不宽：每列量一遍它装得下的最坏读数，白给几像素也要看得见 ——
+  // 造数只到 7h，量不到「共 100.0h」那一档，所以最坏读数按格式手写死在这里：
+  // 万字三位小数、时间一位小数带 h、进度三位数带 %，表头标题还要带上排序箭头。
+  const 列宽余量 = await 求值(`
+    const 表头 = [...document.querySelectorAll('#内容选择列表 thead th')];
+    const 内容宽 = (格) => {
+      const 算 = getComputedStyle(格);
+      return 格.getBoundingClientRect().width
+        - parseFloat(算.paddingLeft) - parseFloat(算.paddingRight);
+    };
+    // 每列三档：读数格（13px）、表头标题（含箭头）、表头合计
+    const 最坏读数 = {
+      字数: [['284.3', '格'], ['↓ 万字', '标题']],
+      激活: [['100.0h', '格'], ['共 100.0h', '合计'], ['↓ 激活', '标题']],
+      滚动: [['100.0h', '格'], ['共 100.0h', '合计'], ['↓ 滚动', '标题']],
+      总计: [['100.0h', '格'], ['共 100.0h', '合计'], ['↓ 总计', '标题']],
+      进度: [['100%', '格'], ['↓ 进度', '标题']],
+    };
+    const 取样式源 = (格, 档) =>
+      档 === '格' ? 行首格(表头.indexOf(格))
+      : 档 === '合计' ? 格.querySelector('.内容表头合计') ?? 格
+      : 格.querySelector('.内容排序按钮');
+    const 行首格 = (列) =>
+      document.querySelector('#内容选择列表 tbody tr').children[列];
+    const 尺 = document.createElement('span');
+    document.querySelector('#内容选择弹窗').append(尺);
+    const 量 = (样源, 文) => {
+      const 算 = getComputedStyle(样源);
+      尺.style.cssText =
+        'position:absolute;left:-9999px;white-space:nowrap;font-size:' +
+        算.fontSize + ';font-weight:' + 算.fontWeight + ';font-family:' +
+        算.fontFamily + ';font-variant-numeric:tabular-nums;';
+      尺.textContent = 文;
+      return Math.ceil(尺.getBoundingClientRect().width);
+    };
+    const 结果 = 表头
+      .filter((格) => 最坏读数[格.dataset.排序])
+      .map((格) => {
+        const 可用 = Math.round(内容宽(格));
+        const 读数 = 最坏读数[格.dataset.排序].map(([文, 档]) => [
+          文,
+          量(取样式源(格, 档), 文),
+        ]);
+        const [串, 最宽] = 读数.reduce((甲, 乙) => (乙[1] > 甲[1] ? 乙 : 甲));
+        return [格.dataset.排序, 可用, 最宽, 可用 - 最宽, 串];
+      });
+    尺.remove();
+    return 结果;
+  `);
+  console.log('列宽余量 [列, 内容盒, 最坏读数, 余量, 那一串]:', 列宽余量);
+  for (const [列名, 可用, 最宽, 余量, 串] of 列宽余量) {
+    assert.ok(
+      余量 >= 0,
+      `${列名}列装不下最坏读数「${串}」：${最宽}px > 内容盒 ${可用}px`,
+    );
+    assert.ok(
+      余量 <= 8,
+      `${列名}列白给了 ${余量}px（内容盒 ${可用}px，最坏读数才 ${最宽}px），太宽了`,
+    );
+  }
+  assert.deepEqual(
+    几何.书名截断,
+    [],
+    `书名列把名字截断了：${几何.书名截断.map(([名]) => 名).join('、')}`,
+  );
+  console.log(
+    `书名最宽 ${几何.书名最宽[0]}px：${几何.书名最宽[1]}`,
+    '列宽:',
+    几何.列宽.map(([列, 宽]) => `${列}=${宽}`).join(' '),
+  );
 
   const 万字排序 = await 点表头('字数');
   assert.deepEqual(
@@ -522,6 +671,7 @@ async function 主() {
       ['字数', 'descending'],
       ['激活', 'none'],
       ['滚动', 'none'],
+      ['总计', 'none'],
       ['进度', 'none'],
     ],
     '点万字要按万字降序',
@@ -580,15 +730,31 @@ async function 主() {
     );
   }
 
-  const 进度排序 = await 点表头('进度');
-  assert.equal(进度排序[4][1], 'descending');
+  // 总计是第三本账：首点降序，读过的那几本要整体压在没有记录的空白行前面
+  const 总计排序 = await 点表头('总计');
+  assert.equal(总计排序[4][1], 'descending', '总计首点为降序');
   {
-    const 列 = (await 读列(4)).map(([文字]) => Number(文字.replace('%', '')));
+    const 行列表 = await 读列(4);
+    const { 有值 } = 拆值(行列表);
+    assert.ok(有值.length >= 3, `总计列回填太少：${有值.length}`);
+    断言单调(有值, '总计降序', true);
+    const 首个空白 = 行列表.findIndex(([文字]) => !文字);
+    const 最后有值 = 行列表.findLastIndex(([文字]) => 文字);
+    assert.ok(
+      首个空白 > 最后有值,
+      '总计没记录的书要钉在尾部，不随方向跳到最前',
+    );
+  }
+
+  const 进度排序 = await 点表头('进度');
+  assert.equal(进度排序[5][1], 'descending');
+  {
+    const 列 = (await 读列(5)).map(([文字]) => Number(文字.replace('%', '')));
     const 有值 = 列.filter((数) => Number.isFinite(数) && 数 > 0);
     assert.ok(有值.length >= 3, `有进度的书太少：${有值.length}`);
     断言单调(有值, '进度降序', true);
-    // 没读过的行（两格时间都空白）不许混进有进度的一头
-    const 行列表 = await 读列(4);
+    // 没读过的行（时间格都空白）不许混进有进度的一头
+    const 行列表 = await 读列(5);
     const 首个空白 = 行列表.findIndex(([文字]) => !文字);
     const 最后有值 = 行列表.findLastIndex(([文字]) => 文字);
     assert.ok(首个空白 > 最后有值 || 首个空白 === -1, '空白进度要钉在尾部');
@@ -656,6 +822,7 @@ async function 主() {
       ['字数', 'none'],
       ['激活', 'none'],
       ['滚动', 'none'],
+      ['总计', 'none'],
       ['进度', 'none'],
     ],
     '刷新后表头仍标在书名列的降序上',
@@ -778,7 +945,7 @@ async function 主() {
   await 点表头('字数');
   await 截图('阅读内容-表格-万字降序.png');
 
-  // 窄屏：列压不破容器，书名仍然是最后被挤的那一个
+  // 窄屏：列宽一格都不许被压，装不下就由容器横向滚（书名仍是最后被挤的那一个）
   await 发送('Emulation.setDeviceMetricsOverride', {
     width: 375,
     height: 812,
@@ -807,27 +974,32 @@ async function 主() {
     return {
       弹窗宽: Math.round(document.querySelector('#内容选择弹窗').getBoundingClientRect().width),
       横向溢出: 列表.scrollWidth - 列表.clientWidth,
+      可横滚: getComputedStyle(列表).overflowX === 'auto',
       书名列宽: Math.round(首行.children[0].getBoundingClientRect().width),
-      进度列宽: Math.round(首行.children[4].getBoundingClientRect().width),
+      数字列宽: 表头.slice(1).map((格) =>
+        Math.round(格.getBoundingClientRect().width)),
       行高: Math.round(首行.getBoundingClientRect().height),
-      合计文本: [2, 3].map((列) =>
+      合计文本: [2, 3, 4].map((列) =>
         表头[列].querySelector('.内容表头合计').textContent),
       激活合计溢出: 合计溢出(2),
       滚动合计溢出: 合计溢出(3),
+      总计合计溢出: 合计溢出(4),
     };
   `);
   console.log('窄屏:', 窄屏);
-  assert.ok(窄屏.横向溢出 <= 0, `窄屏表格横向溢出 ${窄屏.横向溢出}px`);
-  assert.ok(窄屏.书名列宽 >= 120, `窄屏书名列只剩 ${窄屏.书名列宽}px`);
   assert.equal(窄屏.行高, 34, '窄屏行高要不变');
-  assert.ok(
-    窄屏.激活合计溢出 <= 0,
-    `窄屏激活合计撑破列宽 ${窄屏.激活合计溢出}px（${窄屏.合计文本[0]}）`,
-  );
-  assert.ok(
-    窄屏.滚动合计溢出 <= 0,
-    `窄屏滚动合计撑破列宽 ${窄屏.滚动合计溢出}px（${窄屏.合计文本[1]}）`,
-  );
+  // ≤620px 有一套自己的列宽（字号也降到 12px），但六列谁也不许被等比压扁
+  assert.deepEqual(窄屏.数字列宽, [46, 50, 50, 50, 40], '窄屏数字列宽要按窄屏那一套');
+  assert.ok(窄屏.书名列宽 >= 160, `窄屏书名列被压到 ${窄屏.书名列宽}px`);
+  assert.ok(窄屏.可横滚, '窄屏容器要能横向滚，而不是把列压扁');
+  console.log(`窄屏要横滚 ${窄屏.横向溢出}px 才看得到末列`);
+  for (const [键, 溢出] of [
+    ['激活合计溢出', 窄屏.激活合计溢出],
+    ['滚动合计溢出', 窄屏.滚动合计溢出],
+    ['总计合计溢出', 窄屏.总计合计溢出],
+  ]) {
+    assert.ok(溢出 <= 0, `窄屏${键}撑破列宽 ${溢出}px（${窄屏.合计文本}）`);
+  }
   await 截图('阅读内容-表格-窄屏.png');
 }
 

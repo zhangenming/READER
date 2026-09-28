@@ -2665,7 +2665,10 @@ dialog,
 }
 
 .内容选择弹窗 {
-  width: min(600px, calc(100vw - 32px));
+  /* 720px 是「最长的书名也整行放得下」量出来的：
+     书名 384 + 左右内边距 22 + 五个数字列 298 + 边框与滚动条。
+     窗口比这还窄时书名照旧省略号收尾，数字列不再跟着挤。 */
+  width: min(720px, calc(100vw - 32px));
   max-height: min(540px, calc(100dvh - 80px));
   margin: auto 32px 48px auto;
   padding: 0;
@@ -2715,7 +2718,8 @@ dialog,
 
 .内容选择列表 {
   min-height: 88px;
-  overflow-y: auto;
+  /* 窄屏（<458px 容器）横向滚，列宽不跟着被压 */
+  overflow: auto;
   scrollbar-color: #8c8c8c transparent;
   scrollbar-width: thin;
 }
@@ -2811,14 +2815,26 @@ dialog,
 }
 
 /* 「阅读内容」表格：一行一本书，五个量各占一列，列头点击排序。
-   列宽写死 + table-layout: fixed，书名吃掉剩余宽度并省略号收尾。
-   宽度挂在 th[data-排序] 上而不是 nth-child：拆一列出来不必重排一遍下标。 */
+   列宽写死 + table-layout: fixed，只有书名列留 auto 吃剩余宽度。
+   宽度挂在 th[data-排序] 上而不是 nth-child：拆一列出来不必重排一遍下标；
+   代价是新列必须在这里补一条宽度——fixed 布局会把剩余宽度平分给所有没写宽度的列，
+   漏一条就同时毁掉两列（「总计」曾因此和书名各占一半）。
+   数字列按最坏读数定宽（tmp/verify-内容选择表格.mjs 会逐列量）：
+   万字 284.3、表头合计 共 100.0h、进度 100%，外加表头标题上那枚排序箭头占的一档。 */
 .内容表格 {
-  --内容列宽-字数: 72px;
-  --内容列宽-激活: 74px;
-  --内容列宽-滚动: 74px;
-  --内容列宽-进度: 58px;
+  --内容列宽-字数: 50px;
+  --内容列宽-激活: 64px;
+  --内容列宽-滚动: 64px;
+  --内容列宽-总计: 64px;
+  --内容列宽-进度: 56px;
+  --内容列宽-书名下限: 160px;
   width: 100%;
+  /* fixed 布局在容器不够宽时会把 deficit 按比例摊给每一列，数字列首当其冲
+     （合计那行先溢出）。所以给整表一个下限：宁可横向滚，也不压列宽。 */
+  min-width: calc(
+    var(--内容列宽-字数) + var(--内容列宽-激活) + var(--内容列宽-滚动) +
+      var(--内容列宽-总计) + var(--内容列宽-进度) + var(--内容列宽-书名下限)
+  );
   border-collapse: collapse;
   table-layout: fixed;
   font-size: 13px;
@@ -2827,7 +2843,7 @@ dialog,
 .内容表格 th,
 .内容表格 td {
   height: 34px;
-  padding: 0 8px;
+  padding: 0 6px;
   border-bottom: 1px solid #e6e6e6;
   white-space: nowrap;
 }
@@ -2837,9 +2853,11 @@ dialog,
   padding-left: 16px;
 }
 
+/* 末列右边留 12px（标题栏右侧也是 14px 这一档）：进度列的宽度照「↓ 进度」定，
+   外沿再留 16px 就是把内边距算进列宽，白宽一截。 */
 .内容表格 th:last-child,
 .内容表格 td:last-child {
-  padding-right: 16px;
+  padding-right: 12px;
 }
 
 .内容表格 th {
@@ -2869,6 +2887,10 @@ dialog,
 
 .内容表格 th[data-排序='滚动'] {
   width: var(--内容列宽-滚动);
+}
+
+.内容表格 th[data-排序='总计'] {
+  width: var(--内容列宽-总计);
 }
 
 .内容表格 th[data-排序='进度'] {
@@ -3764,11 +3786,14 @@ dialog,
     margin: auto 12px 44px auto;
   }
 
-  /* 窄屏放不下这些列：先把列宽和字号压下来，书名仍然是最后被挤的那一个 */
+  /* 窄屏放不下这些列：先把列宽和字号压下来，书名仍然是最后被挤的那一个。
+     压到多少是多少的底线：合计那行（共 17.3h）不许溢出，再压就要挤掉读数；
+     书名不再跟着一起压——它压到 160px 就由容器横向滚（见 .内容表格 的 min-width）。 */
   .内容表格 {
     --内容列宽-字数: 46px;
     --内容列宽-激活: 50px;
     --内容列宽-滚动: 50px;
+    --内容列宽-总计: 50px;
     --内容列宽-进度: 40px;
     font-size: 12px;
   }
