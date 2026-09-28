@@ -1,0 +1,26 @@
+{
+  "chunk": 6,
+  "characters": [
+    {"name": "林平之", "aliases": [], "identity": "福威镖局少镖头，茶馆中偷听得辟邪剑法来历与自家渊源，又愧又奋", "mentioned_only": false, "evidence": "林平之听到这句话，忍不住身子一颤。"},
+    {"name": "陆大有", "aliases": ["六猴儿", "六师哥"], "identity": "华山派六弟子，插科打诨，曾陪大师哥一起挨棍", "mentioned_only": false, "evidence": "陆大有问道：“后来他们抄到了没有？"},
+    {"name": "劳德诺", "aliases": ["二师哥", "二师兄", "德诺"], "identity": "华山派二弟子，带艺投师，奉师命上青城山领责，窥见青城数十弟子夜练辟邪剑法", "mentioned_only": false, "evidence": "林平之心道：“原来你叫劳德诺。你们是华山派，五岳剑派之一。”"},
+    {"name": "岳灵珊", "aliases": ["小师妹", "丑姑娘"], "identity": "华山派小师妹，缠着师父与劳德诺同行，乔装卖酒窥察福威镖局，救林平之出险", "mentioned_only": false, "evidence": "小师妹说：‘林公子所以杀余人彦，是由我身上而起，咱们可不能见死不救。’"},
+    {"name": "令狐冲", "aliases": ["大师哥"], "identity": "华山派大师哥（本块仅称“大师哥”），汉中打青城弟子累及同门受责", "mentioned_only": true, "evidence": "莫非大师哥受了师父责备，心中有气，杀进松风观来啦？"},
+    {"name": "侯人英", "aliases": [], "identity": "青城四秀之一，劳德诺赴青城道歉时接待者之一", "mentioned_only": true, "evidence": "那侯人英倒还罢了，那洪人雄却心怀不忿"},
+    {"name": "洪人雄", "aliases": [], "identity": "青城四秀之一，对劳德诺几番出言讥嘲", "mentioned_only": true, "evidence": "那洪人雄却心怀不忿，几番出言讥嘲，伸手要和我较量"},
+    {"name": "于人豪", "aliases": [], "identity": "青城四秀之一，夜在后殿与方人智对练新学剑招", "mentioned_only": true, "evidence": "另一对是方人智和于人豪。"},
+    {"name": "罗人杰", "aliases": [], "identity": "青城四秀之一（本块首次提及）", "mentioned_only": true, "evidence": "有号称‘青城四秀’的侯人英、洪人雄、于人豪和罗人杰四人在内。"},
+    {"name": "方人智", "aliases": [], "identity": "青城派先锋弟子，最先到福州踹盘子，奉命追踪擒拿林家三口", "mentioned_only": true, "evidence": "最先来的是方人智和于人豪二人。"},
+    {"name": "贾人达", "aliases": [], "identity": "青城派“最不成话”弟子之一，被岳灵珊打得头破血流", "mentioned_only": true, "evidence": "青城派中两个最不成话的余人彦和贾人达，也到我们大宝号来光顾"},
+    {"name": "余人彦", "aliases": [], "identity": "余沧海不成材的小儿子，调戏卖酒少女岳灵珊，被林平之失手杀死", "mentioned_only": true, "evidence": "余沧海那不成材的小儿子余人彦瞎了眼睛，向小师妹动手动脚"},
+    {"name": "余沧海", "aliases": ["余观主"], "identity": "青城派掌门，矮小道人，为报长青子败剑之辱并夺剑谱，亲率弟子攻占福威镖局", "mentioned_only": true, "evidence": "叫我就不敢赤手空拳的去迎战青城派掌门、松风观观主余沧海。"},
+    {"name": "长青子", "aliases": [], "identity": "余沧海之师，青城派前辈，少年时败于林远图辟邪剑下，引为毕生奇耻，三十六岁郁郁而终", "mentioned_only": true, "evidence": "余观主的师父长青子少年之时，曾栽在林远图的辟邪剑下？"},
+    {"name": "林远图", "aliases": ["远图公"], "identity": "林平之曾祖，以七十二路辟邪剑法创办福威镖局，打遍黑道无敌手", "mentioned_only": true, "evidence": "当年林远图以七十二路辟邪剑法开创镖局，当真是打遍黑道无敌手。"},
+    {"name": "林震南", "aliases": [], "identity": "福威镖局总镖头，被青城派掳走（本块仅被谈论）", "mentioned_only": true, "evidence": "武林中朋友们说，林震南手面阔，交朋友够义气"},
+    {"name": "林仲雄", "aliases": [], "identity": "林远图之子、林震南之父，青城派报师仇所要寻访之人（本块首次具名）", "mentioned_only": true, "evidence": "只有去找林远图的儿子林仲雄，但不知如何，直挨到今日才动手。"},
+    {"name": "王元霸", "aliases": [], "identity": "洛阳金刀门高手，华山师门认为林家若得其相助尚可一战", "mentioned_only": true, "evidence": "邀得洛阳金刀王元霸相助，那么还可斗上一斗。"},
+    {"name": "梁发", "aliases": ["三师兄"], "identity": "华山派三弟子，分食馄饨时承问", "mentioned_only": false, "evidence": "梁发问道：“二师哥，你刚才说到余观主占了福威镖局"},
+    {"name": "施戴子", "aliases": ["四师兄"], "identity": "华山派四弟子，屡问青城练剑与剑谱之理（本块一处讹作“旋戴子”）", "mentioned_only": false, "evidence": "四弟子施戴子道：“二师哥，你在松风观中见到他们齐练辟邪剑法"},
+    {"name": "高根明", "aliases": ["五师兄"], "identity": "华山派五弟子，问余沧海亲自出马是否小题大作", "mentioned_only": false, "evidence": "五弟子高根明道：“二师哥，这次余沧海亲自出马"}
+  ]
+}

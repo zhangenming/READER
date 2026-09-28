@@ -1,0 +1,19 @@
+{
+  "chunk": 8,
+  "characters": [
+    {"name": "定逸", "aliases": ["定逸师太"], "identity": "恒山白云庵庵主，命仪琳讲述经过，闻粗言大怒，迁怒打了劳德诺耳光", "mentioned_only": false, "evidence": "定逸师太斜眼道：“恒山定逸横蛮了几十年啦，你今日才知？”"},
+    {"name": "仪琳", "aliases": [], "identity": "定逸高足，美貌小尼姑，奉观音之名立誓，细述被田伯光掳劫与令狐冲舍身相救的经过", "mentioned_only": false, "evidence": "仪琳睁着清亮明澈的双眼，脸上露出诧异的神色"},
+    {"name": "余沧海", "aliases": [], "identity": "青城派掌门，疑令狐冲杀罗人杰留剑挑衅，出手擒拿劳德诺逼问", "mentioned_only": false, "evidence": "余沧海不禁感到得意，心道：“原来令狐冲这恶棍竟是给人杰杀的。"},
+    {"name": "刘正风", "aliases": ["刘三爷", "刘师叔"], "identity": "金盆洗手的主人，点破令狐冲冒名是为了保全仪琳清白，曲意调停", "mentioned_only": false, "evidence": "刘正风微笑道：“定逸师太，令狐冲冒他师弟劳德诺之名，是有道理的。"},
+    {"name": "天门道人", "aliases": [], "identity": "泰山派掌门，闻令狐冲死讯怒气稍息，当场试演扳断剑尖的指力", "mentioned_only": false, "evidence": "天门道人听说令狐冲已死，怒气登时消灭"},
+    {"name": "何三七", "aliases": [], "identity": "雁荡山卖馄饨高手，在花厅同听仪琳述说", "mentioned_only": false, "evidence": "定逸和天门道人、余沧海、何三七、闻先生、刘正风等都“哦”了一声。"},
+    {"name": "闻先生", "aliases": [], "identity": "陕南人，一对判官笔出神入化的点穴打穴高手，黑须书生（名讳书中未详）", "mentioned_only": false, "evidence": "她知这须生姓闻，人人都叫他闻先生"},
+    {"name": "田伯光", "aliases": ["万里独行"], "identity": "采花淫贼，山洞中掳劫仪琳，叙述中与令狐冲刀剑相交（本块未在场，仅仪琳口述）", "mentioned_only": true, "evidence": "那恶人田伯光只是逼我，伸手扯我衣裳。"},
+    {"name": "令狐冲", "aliases": ["令狐大哥"], "identity": "华山派大弟子，在山洞外救仪琳，冒称“劳德诺”以保全其清白声名，身受重伤（本块未在场，仅仪琳口述）", "mentioned_only": true, "evidence": "师父，他就是令狐冲令狐大哥啊。"},
+    {"name": "罗人杰", "aliases": ["罗师兄"], "identity": "青城派弟子，仪琳指认其为杀令狐冲的凶手，尸身停于花厅", "mentioned_only": false, "evidence": "伸手指着罗人杰的尸体。"},
+    {"name": "定闲", "aliases": ["定闲师伯"], "identity": "恒山派掌门，令狐冲谎骂“老胡涂”的对象之一（本块仅提及）", "mentioned_only": true, "evidence": "我说：‘定闲师伯不是我师父。’"},
+    {"name": "定静", "aliases": ["定静师太"], "identity": "恒山派师太，令狐冲谎骂对象之一（本块仅提及）", "mentioned_only": true, "evidence": "他说：‘好，那么我就骂定静师太！’"},
+    {"name": "岳不群", "aliases": ["岳老儿", "岳先生"], "identity": "华山掌门（本块称“岳老儿”“岳先生”，名讳后文揭示）", "mentioned_only": true, "evidence": "我也要跟岳老儿算帐。"},
+    {"name": "劳德诺", "aliases": [], "identity": "华山派二弟子，被令狐冲冒名救美，反遭定逸迁怒掌掴", "mentioned_only": false, "evidence": "清清脆脆的打了劳德诺一个耳括子。"}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "chunk": 4,
+  "characters": [
+    {"name": "林平之", "aliases": ["驼子"], "identity": "福威镖局少镖头，扮作驼子乞食西行，夜探青城派占据的长沙分局，窃走金银玉马赴衡山", "mentioned_only": false, "evidence": "林平之提起长剑，心想：“一剑一个，犹如探囊取物一般。”"},
+    {"name": "岳灵珊", "aliases": ["丑女"], "identity": "乔装丑女的华山派女子（本块未具名，真名后文揭示），救林平之上马后随蒙面老者离去", "mentioned_only": false, "evidence": "那丑女抓着他向门外拖去，到得大树下系马之处"},
+    {"name": "劳德诺", "aliases": ["蒙面老者"], "identity": "蒙面老者，华山派二弟子（本块未具名），连绞方于二人长剑，喝令“别伤他性命”", "mentioned_only": false, "evidence": "那蒙面老者挥剑挡住，叫道：“别伤他性命！”"},
+    {"name": "方人智", "aliases": ["方师哥"], "identity": "青城派弟子，与于人豪押解林震南夫妇，追赶救人的蒙面老者与丑女", "mentioned_only": false, "evidence": "方人智连声喝问：“你……你到底是谁？怎地会使我青城派剑法？”"},
+    {"name": "于人豪", "aliases": ["于师弟"], "identity": "青城派弟子，同押林震南夫妇，惊疑对方会使本派剑法", "mentioned_only": false, "evidence": "于人豪叫道：“你……你……”语音显得甚是惊惶"},
+    {"name": "贾人达", "aliases": ["贾师弟"], "identity": "青城派弟子，头缠血布一跛一拐，咒骂着看押林氏夫妇", "mentioned_only": false, "evidence": "离开两匹马数丈，一跛一拐的走着一人，却是贾人达。"},
+    {"name": "林震南", "aliases": ["总镖头"], "identity": "福威镖局总镖头，与妻子被缚马背押往衡山（本块无行动言语）", "mentioned_only": false, "evidence": "马背上缚的赫然是林震南和王夫人。"},
+    {"name": "王夫人", "aliases": [], "identity": "林震南之妻，同被缚于马背押走", "mentioned_only": false, "evidence": "马背上缚的赫然是林震南和王夫人。"},
+    {"name": "皮师哥", "aliases": [], "identity": "青城派弟子，火烧南昌福威镖局分局，殃及数十家邻舍", "mentioned_only": true, "evidence": "皮师哥他们在南昌一把火烧了龟儿镖局"},
+    {"name": "姓申的", "aliases": ["申师哥"], "identity": "青城派弟子，占据长沙分局，识破棺中藏宝，拟以劫得玉马孝敬师父并作刘正风贺礼", "mentioned_only": false, "evidence": "那姓申的笑道：“礼物我早备下了，你放心"},
+    {"name": "姓吉的", "aliases": ["吉师弟"], "identity": "青城派弟子，与姓申的同占长沙分局，倒挂招牌挂烂裤羞辱福威镖局", "mentioned_only": false, "evidence": "那姓吉的一声惊呼，叫道：“了不起！申师哥神通广大"},
+    {"name": "蒋师哥", "aliases": [], "identity": "青城派弟子，奉派去挑广州分局", "mentioned_only": true, "evidence": "蒋师哥他们去挑广州分局，马师哥他们去挑杭州分局"},
+    {"name": "马师哥", "aliases": [], "identity": "青城派弟子，奉派去挑杭州分局", "mentioned_only": true, "evidence": "蒋师哥他们去挑广州分局，马师哥他们去挑杭州分局"},
+    {"name": "余人彦", "aliases": ["余师弟"], "identity": "余沧海之子，死于福州小酒店，青城弟子谓“余师弟丧命”", "mentioned_only": true, "evidence": "余师弟丧命，师父多半也不会怎么责怪方师哥他们照料不周。"},
+    {"name": "余沧海", "aliases": [], "identity": "青城派掌门，亲自押阵攻打福威镖局总局，并提前率众弟子拆练辟邪剑法", "mentioned_only": true, "evidence": "余沧海还亲自到了福州，怪不得那摧心掌如此厉害。"},
+    {"name": "张镖头", "aliases": ["姓张的镖头"], "identity": "福威镖局长沙分局一局之主，睡房隔壁停棺藏宝", "mentioned_only": true, "evidence": "你想这姓张的镖头是这里一局之主"},
+    {"name": "刘正风", "aliases": ["刘三爷", "刘大爷"], "identity": "衡山派刘三爷，即将金盆洗手，青城派拟备厚礼道贺", "mentioned_only": true, "evidence": "咱们明日去衡山给刘正风道喜，得带些甚么礼物才好？"},
+    {"name": "莫大先生", "aliases": [], "identity": "衡山派掌门，刘正风师兄（本块仅提及）", "mentioned_only": true, "evidence": "号称衡山派第二把高手，只比掌门人莫大先生稍逊一筹。"},
+    {"name": "彭大哥", "aliases": ["姓彭的", "花白胡子"], "identity": "衡山茶馆中的花白胡子江湖汉子，自称非为结交刘正风而来", "mentioned_only": false, "evidence": "那姓彭的花白胡子冷笑道：“结交五岳剑派，你配么？”"},
+    {"name": "王二叔", "aliases": [], "identity": "衡山茶馆中的老者，为年轻人剖析金盆洗手种种缘由", "mentioned_only": false, "evidence": "那王二叔道：“学武的人，一辈子动刀动枪"}
+  ]
+}

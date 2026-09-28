@@ -1,0 +1,27 @@
+{
+  "chunk": 2,
+  "characters": [
+    {"name": "林平之", "aliases": ["平儿", "少镖头"], "identity": "福威镖局少镖头，向父亲坦白杀人始末，镖局上下连遭毒手", "mentioned_only": false, "evidence": "林平之当下便将如何打猎回来在小酒店中喝酒"},
+    {"name": "林震南", "aliases": ["总镖头", "爹爹"], "identity": "福威镖局总镖头，力持镇定查察连环暴毙，护定妻儿", "mentioned_only": false, "evidence": "林震南素来不信鬼神，白二忽然暴毙，那也罢了"},
+    {"name": "王夫人", "aliases": ["娘子", "妈妈", "夫人"], "identity": "林震南之妻，洛阳金刀王元霸之女，性烈如火，抱金刀骂阵", "mentioned_only": false, "evidence": "只见妻子王夫人铁青着脸，道：“你瞧！"},
+    {"name": "陈七", "aliases": [], "identity": "福威镖局趟子手，随林震南父子夜探小酒店，怯懦怕鬼", "mentioned_only": false, "evidence": "只见趟子手陈七气急败坏的奔进来"},
+    {"name": "郑镖头", "aliases": [], "identity": "福威镖局镖头，暴毙于马厩，尸身经林震南细验无伤", "mentioned_only": false, "evidence": "只见郑镖头躺在地下，双手抓住一个马鞍"},
+    {"name": "白二", "aliases": [], "identity": "福威镖局趟子手，前夜暴毙，本块中众人口中谈及", "mentioned_only": true, "evidence": "今儿随你去打猎的，除了郑镖头和白二外"},
+    {"name": "史镖头", "aliases": [], "identity": "福威镖局镖头，尸身被掘出于小酒店菜园，所埋四川人尸首反失踪", "mentioned_only": false, "evidence": "地下掘出来的竟是史镖头的尸身"},
+    {"name": "崔镖头", "aliases": ["老崔"], "identity": "林震南亲信镖师，老成持重，撞开酒店门验查", "mentioned_only": false, "evidence": "崔镖头双掌拍出，喀喇一声，门闩折断"},
+    {"name": "季镖头", "aliases": [], "identity": "林震南亲信镖师，掘出史镖头尸身", "mentioned_only": false, "evidence": "季镖头道：“有个屁用？亏你是吃镖行饭的！”"},
+    {"name": "岳灵珊", "aliases": ["卖酒的姑娘", "那姑娘"], "identity": "乔装卖酒少女的华山派女子（本块未具名，真名后文揭示），随“萨老头”离去，遗下绣红珊瑚的绿纱帕", "mentioned_only": true, "evidence": "你说那卖酒的姑娘相貌甚丑，衣衫质料想来不会华贵"},
+    {"name": "劳德诺", "aliases": ["萨老头", "姓萨的老头"], "identity": "乔装酒店主人“萨老头”的华山派二弟子，老小二人一去无踪，被林震南断定有古怪（本块仅被谈及）", "mentioned_only": true, "evidence": "林震南道：“这姓萨的老头定有古怪。”"},
+    {"name": "王元霸", "aliases": ["金刀无敌"], "identity": "洛阳金刀门掌门，王夫人之父，名头极响", "mentioned_only": true, "evidence": "谁都瞧在她父亲金刀无敌王元霸的脸上让她三分"},
+    {"name": "富镖头", "aliases": [], "identity": "福威镖局镖头，奉派查访遇害，尸首停在大厅", "mentioned_only": false, "evidence": "其中有富镖头、钱镖头、吴镖头。尸首停在大厅上。"},
+    {"name": "钱镖头", "aliases": [], "identity": "福威镖局镖头，同批遇害", "mentioned_only": false, "evidence": "其中有富镖头、钱镖头、吴镖头。尸首停在大厅上。"},
+    {"name": "吴镖头", "aliases": [], "identity": "福威镖局镖头，同批遇害", "mentioned_only": false, "evidence": "其中有富镖头、钱镖头、吴镖头。尸首停在大厅上。"},
+    {"name": "高镖头", "aliases": [], "identity": "福威镖局镖头，为人忠厚，死在街上由街坊抬回", "mentioned_only": false, "evidence": "唉，高镖头为人向来忠厚，想不到也给恶鬼索了命去。"},
+    {"name": "褚镖头", "aliases": ["褚镖师", "褚贤弟"], "identity": "福威镖局镖师，尸身由识途马驮回，林震南抱尸挥泪立誓报仇", "mentioned_only": false, "evidence": "果见马背上横卧着一具死尸，正是褚镖头"},
+    {"name": "狄镖头", "aliases": ["狄兄弟"], "identity": "福威镖局镖头，奉命买棺材请和尚，逃回报讯后毒发气绝", "mentioned_only": false, "evidence": "见是适才奉命去棺材铺三名镖头中的狄镖头"},
+    {"name": "班和尚", "aliases": [], "identity": "福州西城天宁寺和尚，拟请来作法事超度亡魂", "mentioned_only": true, "evidence": "再到西城天宁寺，去请班和尚来作几日法事"},
+    {"name": "黄先生", "aliases": ["黄夫子"], "identity": "福威镖局帐房先生，拟写寿帖邀亲友来镖局", "mentioned_only": false, "evidence": "他走进帐房，向帐房黄先生道：“黄夫子，请你写几张帖子"},
+    {"name": "林福", "aliases": [], "identity": "福威镖局仆人，奉命买棺材，死于东小街转角", "mentioned_only": true, "evidence": "刚才帐房先生叫林福去买棺材"},
+    {"name": "华师傅", "aliases": [], "identity": "福威镖局厨子，几味名菜驰誉福州，出门买菜死于十步之外", "mentioned_only": true, "evidence": "华师傅怎地好端端的也死了？"}
+  ]
+}

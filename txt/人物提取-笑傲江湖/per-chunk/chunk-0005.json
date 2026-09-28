@@ -1,0 +1,20 @@
+{
+  "chunk": 5,
+  "characters": [
+    {"name": "林平之", "aliases": ["驼子"], "identity": "福威镖局少镖头，扮驼子在茶馆偷听，惊见莫大先生神技，又遇乔装的救命恩人", "mentioned_only": false, "evidence": "林平之瞧着七只半截茶杯和从茶杯上削下来的七个瓷圈"},
+    {"name": "王二叔", "aliases": [], "identity": "衡山茶馆老者，续论金盆洗手与急流勇退", "mentioned_only": false, "evidence": "那王二叔道：“学武的人，一辈子动刀动枪"},
+    {"name": "刘正风", "aliases": ["刘三爷"], "identity": "衡山派刘三爷，金盆洗手的主角，本块中众人议论纷纷而本人未出场", "mentioned_only": true, "evidence": "像刘三爷这般广邀宾客，扬言天下，说道从今而后再也不动刀剑了"},
+    {"name": "莫大先生", "aliases": ["潇湘夜雨", "卖唱老者"], "identity": "衡山派掌门，琴中藏剑、剑发琴音，乔装落拓卖唱老者，一剑削断七只茶杯示警", "mentioned_only": false, "evidence": "他自己就是衡山派掌门、‘潇湘夜雨’莫大先生！"},
+    {"name": "劳德诺", "aliases": ["二师哥", "姓萨的老者"], "identity": "华山派二弟子，乔装老者与“小师妹”假扮祖孙卖酒，此际入茶馆与众师弟相会", "mentioned_only": false, "evidence": "打横坐着的是那自称姓萨、冒充少女祖父的老者"},
+    {"name": "岳灵珊", "aliases": ["小师妹", "那少女"], "identity": "华山派小师妹（本块未具名，真名后文揭示），即救过林平之的卖酒丑女", "mentioned_only": false, "evidence": "林平之心中一凛，认得便是救了他性命的那卖酒丑女的声音"},
+    {"name": "陆大有", "aliases": ["六猴儿", "六师哥"], "identity": "华山派六弟子，外号六猴儿，肩头带着偷来的小猴儿", "mentioned_only": false, "evidence": "反不如我老老实实的叫做‘陆大有’，甚么事也没有。"},
+    {"name": "施戴子", "aliases": ["四师哥"], "identity": "华山派四弟子，脚夫打扮，淳朴木讷（本块仅称“四师哥”，名讳后文揭示）", "mentioned_only": false, "evidence": "我不跟你说了，四师哥，只有你是好人，大师哥呢？"},
+    {"name": "高根明", "aliases": ["五师哥"], "identity": "华山派五弟子，手拿算盘做买卖打扮（本块仅称“五师哥”，名讳后文揭示）", "mentioned_only": false, "evidence": "那少女道：“五师哥，你不用激我。"},
+    {"name": "梁发", "aliases": ["高个子"], "identity": "华山派三弟子，身材高高，起初沉默寡言（本块仅称“高个子”，名讳后文揭示）", "mentioned_only": false, "evidence": "那高个子道：“瞧你这副德性，一点也没悔改之心"},
+    {"name": "令狐冲", "aliases": ["大师哥"], "identity": "华山派大师哥（本块仅称“大师哥”，名讳后文揭示），在衡阳与众同门分手，因猴儿酒大醉未至", "mentioned_only": true, "evidence": "我们昨儿跟大师哥在衡阳分手，他叫我们先来。"},
+    {"name": "侯人英", "aliases": [], "identity": "青城四秀之一，去年腊月与洪人雄在汉中被令狐冲踢下楼", "mentioned_only": true, "evidence": "去年腊月里，大师哥在汉中打了青城派的侯人英、洪人雄……"},
+    {"name": "洪人雄", "aliases": [], "identity": "青城四秀之一，同被踢下楼滚落酒楼", "mentioned_only": true, "evidence": "侯人英、洪人雄两个家伙给大师哥踢得连跌七八个筋斗"},
+    {"name": "天门道人", "aliases": ["天门真人"], "identity": "泰山派掌门（本块称“天门真人”），已驾临刘府", "mentioned_only": true, "evidence": "听说泰山派掌门人天门真人亲身驾到，已到了刘府。"},
+    {"name": "余沧海", "aliases": ["余观主"], "identity": "青城派掌门，岳灵珊亲见其出手毒辣，福建、江西、衡山都有其踪迹", "mentioned_only": true, "evidence": "二师哥，那么青城派余观主却又帮谁？"}
+  ]
+}

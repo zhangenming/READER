@@ -1,0 +1,21 @@
+{
+  "chunk": 3,
+  "characters": [
+    {"name": "林平之", "aliases": ["平儿", "少镖头"], "identity": "福威镖局少镖头，随父母弃局南逃，中途被青城派擒获，幸得卖酒丑女救走", "mentioned_only": false, "evidence": "林平之颤声道：“咱们明明埋的是那四川人"},
+    {"name": "林震南", "aliases": ["总镖头"], "identity": "福威镖局总镖头，力战于人豪，见对方会使辟邪剑法而斗志全消被擒", "mentioned_only": false, "evidence": "林震南弯腰察看死尸，过了半晌，道：“身上也没伤痕"},
+    {"name": "王夫人", "aliases": ["娘"], "identity": "林震南之妻，与方人智交战落败被擒，认出摧心掌功夫", "mentioned_only": false, "evidence": "王夫人接口道：“果然是青城派的‘摧心掌’！”"},
+    {"name": "黄先生", "aliases": ["黄夫子"], "identity": "福威镖局帐房先生，劝总镖头勿冒险背尸", "mentioned_only": false, "evidence": "帐房黄先生道：“总……总镖头……去不得"},
+    {"name": "华师傅", "aliases": [], "identity": "福威镖局厨子，冬瓜盅、佛跳墙等驰誉福州，死于后门十步之外", "mentioned_only": true, "evidence": "那华师傅是镖局中的厨子，烹饪功夫着实不差"},
+    {"name": "霍镖头", "aliases": [], "identity": "福威镖局镖头，随众弃局逃走遇害，尸身被剖，心震成八九片，证实青城派摧心掌", "mentioned_only": false, "evidence": "认得是霍镖头，他日间和四名镖头一起乘马逃去"},
+    {"name": "刘镖头", "aliases": [], "identity": "福威镖局浙江/江西分局主事镖头，总局嘱溃散人手往投", "mentioned_only": true, "evidence": "那边刘镖头、易镖头自不会怠慢了各位。"},
+    {"name": "易镖头", "aliases": [], "identity": "福威镖局江西/浙江分局主事镖头，总局嘱溃散人手往投", "mentioned_only": true, "evidence": "那边刘镖头、易镖头自不会怠慢了各位。"},
+    {"name": "于人豪", "aliases": ["于少侠", "于英雄", "于师弟"], "identity": "青城派松风观四大弟子（“英雄豪杰，青城四秀”）之一，以松风剑法加辟邪剑招击败林震南", "mentioned_only": false, "evidence": "这才说道：“我姓于，叫于人豪。”"},
+    {"name": "方人智", "aliases": ["方师哥"], "identity": "青城派弟子，自承也会辟邪剑法，擒住林家三口并编造余人彦死因", "mentioned_only": false, "evidence": "那人道：“不敢，区区在下方人智。”"},
+    {"name": "贾人达", "aliases": ["姓贾汉子", "贾师弟"], "identity": "青城派弟子，武艺平庸人品猥琐，即小酒店动手的姓贾汉子，摔打林平之泄愤", "mentioned_only": false, "evidence": "只听贾人达大声喝彩：“于师弟，好一招‘流星赶月’！”"},
+    {"name": "余人彦", "aliases": ["余师弟"], "identity": "余沧海之子，已在小酒店被林平之杀死；方人智谎称他遭围攻下毒暗算", "mentioned_only": true, "evidence": "林少镖头率领了福威镖局二十四个镖头，突然向我余师弟围攻"},
+    {"name": "余沧海", "aliases": ["余观主"], "identity": "青城派掌门、松风观观主，余人彦之父，此番针对福威镖局的主使（本块仅提及）", "mentioned_only": true, "evidence": "原来此人竟是松风观观主余沧海的亲生爱子"},
+    {"name": "岳灵珊", "aliases": ["卖酒丑女", "那丑女"], "identity": "乔装丑女的华山派女子（本块未具名，真名后文揭示），赶散青城三敌救走林平之", "mentioned_only": false, "evidence": "满脸凹凹凸凸的尽是痘瘢，正是因她而起祸的那卖酒丑女"},
+    {"name": "劳德诺", "aliases": ["蒙面老者", "姓萨的老头"], "identity": "蒙面老者，华山派二弟子（本块未具名），以青城剑法绞飞方于二人长剑，喝令“别伤他性命”", "mentioned_only": false, "evidence": "便知是那丑女的祖父、那姓萨的老头"},
+    {"name": "王元霸", "aliases": ["岳父"], "identity": "王夫人之父，洛阳金刀门高手，林震南拟绕道往投（本块仅称“岳父”）", "mentioned_only": true, "evidence": "岳父交友遍天下，定能给咱们拿个主意。"}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "chunk": 1,
+  "characters": [
+    {"name": "林平之", "aliases": ["平儿", "少镖头", "林公子"], "identity": "福威镖局少镖头，林震南独子，小酒店中失手杀死川人汉子", "mentioned_only": false, "evidence": "五骑马一出城门，少镖头林平之双腿轻轻一挟"},
+    {"name": "林震南", "aliases": ["总镖头", "爹", "爹爹"], "identity": "福威镖局总镖头，林平之之父，善于经营交结", "mentioned_only": false, "evidence": "林震南面色甚愉，问道：“去打猎了？打到了野猪没有？”"},
+    {"name": "王夫人", "aliases": ["夫人", "娘"], "identity": "林震南之妻、林平行之母，洛阳金刀王家之女（本块未具名，仅称“夫人”）", "mentioned_only": false, "evidence": "林震南跟夫人商量，大舅子是六月初的生日"},
+    {"name": "史镖头", "aliases": [], "identity": "福威镖局镖头，陪林平之打猎，江湖阅历丰富", "mentioned_only": false, "evidence": "史镖头道：“少镖头这一鞭，别说野鸡，便大兀鹰也打下来了！”"},
+    {"name": "郑镖头", "aliases": [], "identity": "福威镖局镖头，陪林平之打猎，与姓余汉子交手落败", "mentioned_only": false, "evidence": "郑镖头纵马赶到，笑道：“少镖头，好箭！”"},
+    {"name": "白二", "aliases": [], "identity": "福威镖局趟子手，随同打猎，当晚暴毙于菜园", "mentioned_only": false, "evidence": "只听得趟子手白二在左首林中叫道：“少镖头，快来"},
+    {"name": "陈七", "aliases": [], "identity": "福威镖局趟子手，随同打猎，报告白二死讯", "mentioned_only": false, "evidence": "史、郑两名镖头和趟子手白二、陈七凑少镖头的兴"},
+    {"name": "祝镖头", "aliases": [], "identity": "福威镖局镖头，查验白二尸身", "mentioned_only": false, "evidence": "问站在旁边的祝镖头道：“没伤痕？”"},
+    {"name": "小李", "aliases": [], "identity": "福威镖局趟子手，最先发现白二尸身", "mentioned_only": true, "evidence": "刚才小李上毛厕，见到白二躺在毛厕旁的菜园里"},
+    {"name": "董先生", "aliases": [], "identity": "福威镖局帐房，受命给白二料理丧事", "mentioned_only": true, "evidence": "通知帐房董先生，叫他给白二料理丧事"},
+    {"name": "老蔡", "aliases": [], "identity": "小酒店原主人，三十两银子把店卖给萨老头", "mentioned_only": true, "evidence": "刚好这家酒店的老蔡不想干了，三十两银子卖了给小老儿。"},
+    {"name": "劳德诺", "aliases": ["萨老头"], "identity": "华山派掌门门下二弟子，乔装自称姓萨的白发老人，携“孙女”卖酒窥察福威镖局（本块未具名，真名后文揭示）", "mentioned_only": false, "evidence": "不瞒众位客官说，小老儿姓萨，原是本地人氏"},
+    {"name": "岳灵珊", "aliases": ["宛儿", "青衣少女"], "identity": "华山派掌门之女，乔装萨老头“孙女”宛儿，脸涂痘瘢扮丑卖酒（本块未具名，真名后文揭示）", "mentioned_only": false, "evidence": "那老人道：“是，是，宛儿，打三斤竹叶青。"},
+    {"name": "余人彦", "aliases": ["姓余的", "余兄弟"], "identity": "青城派掌门余沧海之子，在酒店调戏卖酒少女，被林平之失手杀死（本块仅称“姓余的”，真名后文揭示）", "mentioned_only": false, "evidence": "那姓余的扑地而倒，身子抽搐了几下，就此不动了。"},
+    {"name": "贾人达", "aliases": ["姓贾的", "贾老二"], "identity": "青城派弟子，余人彦同伴，见同伴死负伤遁走（本块仅称“姓贾的”，真名后文揭示）", "mentioned_only": false, "evidence": "贾老二，人家在骂街哪，你猜这兔儿爷是在骂谁？"},
+    {"name": "余沧海", "aliases": ["余观主"], "identity": "川西青城派松风观观主，多年来拒收林家厚礼，此次忽收礼并遣四弟子回拜（本块仅提及，真名后文揭示）", "mentioned_only": true, "evidence": "川西青城派松风观余观主，已收了咱们送去的礼物"},
+    {"name": "张镖头", "aliases": [], "identity": "福威镖局湖南分局主事镖头，从湖南送信报告青城派收礼", "mentioned_only": true, "evidence": "刚才张镖头从湖南送了信来"},
+    {"name": "林远图", "aliases": ["远图公", "曾祖"], "identity": "林平之曾祖，福威镖局创办人，七十二路辟邪剑法创始人，威震江湖", "mentioned_only": true, "evidence": "你曾祖远图公创下七十二路辟邪剑法，当年威震江湖"},
+    {"name": "林仲雄", "aliases": ["祖父", "爷爷"], "identity": "林远图之子、林震南之父，家传剑法传至其手威名已衰（本块仅称“祖父”，名讳后文揭示）", "mentioned_only": true, "evidence": "但传到你祖父手里，威名就不及远图公了"},
+    {"name": "金光上人", "aliases": [], "identity": "峨嵋派掌门，住金顶寺，肯接见林家送礼镖头但仍退回礼物", "mentioned_only": true, "evidence": "峨嵋派的金光上人，还肯接见我派去的镖头"},
+    {"name": "诸葛亮", "aliases": ["武侯"], "identity": "三国蜀汉丞相，旁白中用以解释川人缠白布戴孝遗风", "mentioned_only": true, "evidence": "乃是当年诸葛亮逝世，川人为他戴孝，武侯遗爱甚深"},
+    {"name": "小雪龙", "aliases": [], "identity": "林平之的爱马，外婆从洛阳重价觅来的大宛名驹", "nonhuman": true, "mentioned_only": false, "evidence": "我这小雪龙聪明得紧，决不会踏到尖石"}
+  ]
+}

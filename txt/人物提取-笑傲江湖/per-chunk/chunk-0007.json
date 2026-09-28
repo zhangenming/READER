@@ -1,0 +1,27 @@
+{
+  "chunk": 7,
+  "characters": [
+    {"name": "林平之", "aliases": [], "identity": "福威镖局少镖头，乔装混入刘府，窥见青城群弟子而未见父母", "mentioned_only": false, "evidence": "林平之心想：“我就远远的跟着，且看是否能混进刘正风的家里。”"},
+    {"name": "定逸", "aliases": ["定逸师太"], "identity": "恒山白云庵庵主，恒山派掌门定闲之师妹，威名甚盛脾气暴躁，上门索要令狐冲与仪琳", "mentioned_only": false, "evidence": "劳德诺等一见此人，都认得这老尼姑道号定逸，是恒山白云庵庵主"},
+    {"name": "定闲", "aliases": ["定闲师太"], "identity": "恒山派掌门，定逸师姊（本块仅提及）", "mentioned_only": true, "evidence": "是恒山白云庵庵主，恒山派掌门定闲师太的师妹"},
+    {"name": "定静", "aliases": ["定静师太"], "identity": "恒山派定逸的大师姊（本块仅提及）", "mentioned_only": true, "evidence": "平日连大师姊定静、掌门师姊定闲，也都容让她三分"},
+    {"name": "令狐冲", "aliases": ["大师哥", "令狐师兄"], "identity": "华山派掌门大弟子（本块首次具名），被指与田伯光同饮回雁楼、掳走仪琳、杀死罗人杰", "mentioned_only": true, "evidence": "原来他们说了半天的大师哥名叫令狐冲。"},
+    {"name": "岳灵珊", "aliases": ["灵珊", "小师妹"], "identity": "华山派掌门之女（本块首次具名“灵珊”），被定逸掳作人质后于刘府释放", "mentioned_only": false, "evidence": "你是灵珊么？怎地装扮成这副怪相吓人？"},
+    {"name": "劳德诺", "aliases": ["劳二哥"], "identity": "华山派二弟子，代大师哥向定逸赔罪，险遭余沧海毒手", "mentioned_only": false, "evidence": "劳德诺朗声说道：“参见师叔。”"},
+    {"name": "梁发", "aliases": ["梁三哥"], "identity": "华山派三弟子，劝同门镇定莫坠华山威名", "mentioned_only": false, "evidence": "梁发道：“在下华山派梁发。”"},
+    {"name": "仪光", "aliases": [], "identity": "恒山派定逸门下中年尼姑，转述泰山派讯息并代赔碗钱", "mentioned_only": false, "evidence": "仪光，泰山派的人跟你说甚么来？"},
+    {"name": "天松道人", "aliases": ["天松师叔"], "identity": "泰山派好手，回雁楼上被田伯光砍成重伤抬入刘府", "mentioned_only": false, "evidence": "是泰山派的天松道人受了重伤，还有一个是谁？"},
+    {"name": "迟百城", "aliases": ["姓迟的", "迟师侄", "迟贤侄"], "identity": "泰山派天门道人弟子，回雁楼挺剑痛骂淫贼，一招间被田伯光所杀", "mentioned_only": false, "evidence": "当时迟百城贤侄便忍耐不住，拍桌骂道"},
+    {"name": "天门道人", "aliases": ["天门师伯"], "identity": "泰山派掌门，红脸道人，闻令狐冲与淫贼为伍怒不可遏", "mentioned_only": false, "evidence": "那红脸道人是泰山派的掌门天门道人。"},
+    {"name": "天柏", "aliases": ["天柏师叔"], "identity": "泰山派天门师弟，率本门弟子在衡阳搜寻田伯光、令狐冲", "mentioned_only": true, "evidence": "天柏师叔传了讯息来，说道他率领本门弟子"},
+    {"name": "田伯光", "aliases": ["万里独行"], "identity": "万里独行的采花大盗，轻功独步天下，回雁楼杀迟百城伤天松", "mentioned_only": true, "evidence": "这万里独行田伯光贻害江湖，老尼非为天下除此大害不可。"},
+    {"name": "仪琳", "aliases": [], "identity": "定逸门下小尼姑，清秀绝俗，随师赴衡阳途中被田伯光掳去，此际回到刘府", "mentioned_only": false, "evidence": "定逸脸色斗变，喝道：“是仪琳？快给我滚进来！”"},
+    {"name": "刘正风", "aliases": ["刘三爷", "刘师叔"], "identity": "衡山派三爷，金盆洗手的主人，居中调停定逸与余沧海", "mentioned_only": false, "evidence": "犹如财主模样的中年人，正是主人刘正风。"},
+    {"name": "何三七", "aliases": ["何师伯"], "identity": "浙南雁荡山高手，自幼卖馄饨为生，挑馄饨担游行江湖，收账分文不少", "mentioned_only": false, "evidence": "他猜到这卖馄饨的老人是浙南雁荡山高手何三七。"},
+    {"name": "向大年", "aliases": [], "identity": "刘正风弟子，奉师命持灯笼迎接定逸师伯", "mentioned_only": false, "evidence": "晚辈向大年，这是我师弟米为义，向师伯请安。"},
+    {"name": "米为义", "aliases": [], "identity": "刘正风弟子，向大年师弟", "mentioned_only": false, "evidence": "晚辈向大年，这是我师弟米为义，向师伯请安。"},
+    {"name": "余沧海", "aliases": [], "identity": "青城派掌门，在刘府上座，徒儿罗人杰被杀，当场向劳德诺发难", "mentioned_only": false, "evidence": "余沧海“啊”的一声，站了起来，惊道：“是人杰？尸首呢？”"},
+    {"name": "岳不群", "aliases": ["岳师伯"], "identity": "华山派掌门（本块仅称“岳师伯”，名讳后文揭示）", "mentioned_only": true, "evidence": "我师父常日称道华山派岳师伯座下众位师兄英雄了得"},
+    {"name": "罗人杰", "aliases": ["罗师兄"], "identity": "余沧海徒儿，青城四秀之一，被杀后尸身小腹插剑抬入刘府，剑上刻“华山令狐冲”", "mentioned_only": false, "evidence": "这尸首搬到了衡山城里之后，才有人识得，原来是罗人杰罗师兄……"}
+  ]
+}
