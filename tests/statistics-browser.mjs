@@ -99,16 +99,21 @@ const 版式 = await evaluate(`
   const 表 = document.querySelector('.统计时段表');
   if (!表) throw new Error('弹窗里没有 .统计时段表（渲染没跑起来）');
   return {
-    组数: 表.querySelectorAll('.统计时段组标题').length,
     行数: 表.querySelectorAll('.统计时段行').length,
+    日期: [...表.querySelectorAll('.统计时段日期')].map((格) => 格.textContent),
     列头: [...表.querySelectorAll('.统计时段表头名')].map((项) => 项.textContent),
     上表列头: [...document.querySelectorAll('.阅读统计内容 table:not(.统计时段表) thead tr:first-child th')].map((项) => 项.textContent),
     底色: (() => { const s = getComputedStyle(document.querySelector('#阅读统计弹窗'));
       return [s.backgroundColor, s.color]; })(),
   };`);
-assert.deepEqual(版式.列头, ['书籍', '滚动', '激活', '总计'], '下表一天一组、组内按书一行');
+assert.deepEqual(版式.列头, ['日期', '滚动', '激活', '总计'], '下表一天一行，第一列是日期');
 assert.deepEqual(版式.上表列头, ['书籍', '滚动', '激活', '总计', '进度'], '上表同样的三笔账');
-assert.ok(版式.组数 >= 1 && 版式.行数 >= 版式.组数, `真实账本渲染出分组：${JSON.stringify(版式)}`);
+assert.ok(版式.行数 === 版式.日期.length && 版式.日期.length >= 1, `一天一行：${JSON.stringify(版式)}`);
+assert.equal(
+  new Set(版式.日期).size,
+  版式.日期.length,
+  `日期不许重复（当天全部书籍要并到同一条轴）：${版式.日期.join('、')}`,
+);
 assert.deepEqual(版式.底色, ['rgb(255, 255, 255)', 'rgb(0, 0, 0)']);
 await evaluate('document.querySelector("#阅读统计弹窗").close()');
 

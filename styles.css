@@ -537,7 +537,7 @@ body.关键词手势中 .滚动容器 {
   color: var(--次要墨色);
   text-align: center;
 }
-/* —— 时段轴：一天一组、组内一本书一行，所有行共用一条只覆盖有数据范围的时间轴 —— */
+/* —— 时段轴：一天一行、当天全部书籍并到同一条轴上，所有行共用一条只覆盖有数据范围的时间轴 —— */
 .统计时段 {
   /* 灰带色只在这里定义一次：总计带、滚动块的灰底、图例那两枚共用同一档 */
   --灰带色: color-mix(in oklab, var(--墨色) 24%, var(--纸张色));
@@ -678,50 +678,15 @@ body.关键词手势中 .滚动容器 {
 .统计时段块-总计::before {
   content: none;
 }
-/* 一天一组：组标题横跨整行，日期左钉、本书数与当日合计右钉 */
-.统计时段组标题行 th {
-  border-bottom: 0;
-  padding-top: 12px;
-  padding-bottom: 2px;
-  width: auto; /* 组标题占满整行，不参与「首列缩到内容宽」那条规则 */
-}
-.统计时段组标题 {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  color: var(--次要墨色);
-  font-size: 11px;
-  font-weight: 400;
-  text-align: left;
-  white-space: nowrap;
-}
-.统计时段组日期 {
-  color: var(--墨色);
-  font-size: 12px;
-  font-weight: 600;
-}
-.统计时段组注 {
-  margin-left: auto;
-}
-.统计时段组日期完整 {
-  display: none; /* 完整日期在悬停与朗读里给，视觉上只留「今天 / 9月18日」 */
-}
-.统计时段书名,
+/* 日期列就是这一行的名字：一天一行，当天各本书收进悬停提示 */
+.统计时段日期,
 .统计时段滚动格,
 .统计时段激活格,
 .统计时段总计格 {
   white-space: nowrap;
 }
-.统计时段书名 {
-  max-width: 12em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.统计时段书名文本 {
+.统计时段日期 {
   font-size: 12px;
-}
-/* 当前这本书那一行只把书名列点亮，不给整行刷底色（HUD 不许大色块） */
-.统计时段行-当前 .统计时段书名文本 {
   font-weight: 600;
 }
 .统计时段图例 {
@@ -804,10 +769,6 @@ body.关键词手势中 .滚动容器 {
   .统计时段总计格 {
     white-space: normal;
     font-size: 12px;
-  }
-  /* 窄屏书名只留 4em，多出来的宽度让给三列读数与时间轴 */
-  .统计时段书名 {
-    max-width: 4em;
   }
   /* 窄屏放不下三枚对齐槽，撤掉等宽让读数换行，别横向溢出 */
   .统计时段读数 {

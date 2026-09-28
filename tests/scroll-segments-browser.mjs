@@ -145,7 +145,7 @@ assert.ok(打开前.进行中, '可见会话还在进行中（没封口）');
 await evaluate('document.querySelector("#阅读统计按钮").click()');
 assert.ok(await evaluate('return document.querySelector("#阅读统计弹窗").open'));
 const 渲染 = await evaluate(`
-  const { 汇总书籍时间账, 计算时段布局 } = await import('./js/阅读统计.js');
+  const { 汇总书籍时间账, 合并当日账, 计算时段布局 } = await import('./js/阅读统计.js');
   const { 快照时间账 } = await import('./js/统计展示.js');
   const { 状态, 本地日期串 } = await import('./js/状态.js');
   const 此刻 = Date.now();
@@ -153,8 +153,8 @@ const 渲染 = await evaluate(`
   const 今天 = 本地日期串(new Date());
   const 行 = 账.按日.get(今天)?.get(状态.文件名);
   return {
-    组数: document.querySelectorAll('.统计时段组标题').length,
     行数: document.querySelectorAll('.统计时段行').length,
+    日期: [...document.querySelectorAll('.统计时段日期')].map((格) => 格.textContent),
     今天有无行: 账.按日.has(今天),
     带尾: 行 ? Math.max(...行.总计段.map((段) => 段[1])) : null,
     此刻当日秒: (() => { const d = new Date(此刻);
@@ -162,19 +162,28 @@ const 渲染 = await evaluate(`
     恒等式不成立的行: [...账.按日.values()].flatMap((表) =>
       [...表.values()].filter((项) => 项.激活秒 + 项.滚动秒 !== 项.总计秒)),
     书级不成立: [...账.按书.values()].filter((项) => 项.激活秒 + 项.滚动秒 !== 项.总计秒),
+    日级合并后不成立: [...账.按日.values()]
+      .map((表) => 合并当日账([...表.values()]))
+      .filter((项) => 项.激活秒 + 项.滚动秒 !== 项.总计秒),
   };`);
-assert.ok(渲染.今天有无行, '今天这一组里有当前这本书的行');
+assert.ok(渲染.今天有无行, '今天有行（当天全部书籍并成一条轴）');
 assert.ok(
   Math.abs(渲染.带尾 - 渲染.此刻当日秒) <= 3,
   `进行中段要算到打开弹窗的此刻：带尾 ${渲染.带尾}，此刻 ${渲染.此刻当日秒}`,
 );
 assert.deepEqual(渲染.恒等式不成立的行, [], '每天每本书都要满足 激活 + 滚动 = 总计');
 assert.deepEqual(渲染.书级不成立, [], '按书累计同样相加对账');
-assert.ok(渲染.组数 >= 1 && 渲染.行数 >= 渲染.组数, `分组渲染 ${JSON.stringify(渲染)}`);
+assert.deepEqual(渲染.日级合并后不成立, [], '并书成一行后仍然 激活 + 滚动 = 总计');
+assert.equal(
+  new Set(渲染.日期).size,
+  渲染.日期.length,
+  `一天一行，日期不许出现两次：${渲染.日期.join('、')}`,
+);
+assert.ok(渲染.行数 >= 1, `渲染出行 ${JSON.stringify(渲染)}`);
 
 console.log(
-  '✓ 时段账：一次滚动只记一段并按书落盘、旧形状照读、进行中段上轴到此刻、三笔账对账',
-  JSON.stringify({ 段: 记录.今日, 组数: 渲染.组数, 行数: 渲染.行数 }),
+  '✓ 时段账：一次滚动只记一段并按书落盘、旧形状照读、进行中段上轴到此刻、并书成一行仍对账',
+  JSON.stringify({ 段: 记录.今日, 行数: 渲染.行数 }),
 );
 
 // 收尾交给启动器（它负责杀 Chrome 与删 profile），
