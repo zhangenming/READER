@@ -1,0 +1,28 @@
+{
+  "chunk": 87,
+  "characters": [
+    {"name": "岳不群", "aliases": ["岳先生", "君子剑"], "identity": "华山派掌门，绰号“君子剑”", "mentioned_only": false, "evidence": "只听得岳不群纵声长笑"},
+    {"name": "岳灵珊", "aliases": ["珊儿", "岳大小姐", "岳小姐"], "identity": "岳不群之女，连败三派掌门后震断长剑", "mentioned_only": false, "evidence": "说话的正是岳灵珊。"},
+    {"name": "林平之", "aliases": [], "identity": "岳灵珊之夫，岳不群之徒兼女婿", "mentioned_only": true, "evidence": "听得出是丈夫林平之的声音"},
+    {"name": "令狐冲", "aliases": ["大师哥"], "identity": "恒山派掌门，被坠落的长剑钉伤肩胛", "mentioned_only": false, "evidence": "令狐冲向前一扑，长剑竟将他钉在地下。"},
+    {"name": "解帮主", "aliases": ["丐帮帮主", "丐帮解帮主"], "identity": "丐帮帮主（解风），衣衫褴褛", "mentioned_only": false, "evidence": "说话之人衣衫褴褛，正是丐帮解帮主。"},
+    {"name": "左冷禅", "aliases": ["左掌门", "左师伯", "左师兄"], "identity": "嵩山派掌门，五岳剑派盟主", "mentioned_only": false, "evidence": "说话的正是左冷禅。"},
+    {"name": "方证", "aliases": ["方证大师"], "identity": "少林寺方丈", "mentioned_only": true, "evidence": "他与方证、冲虚两人心意相同"},
+    {"name": "冲虚", "aliases": ["冲虚道长"], "identity": "武当派掌门", "mentioned_only": true, "evidence": "他与方证、冲虚两人心意相同"},
+    {"name": "陆柏", "aliases": ["仙鹤手"], "identity": "嵩山派高手，号“仙鹤手”", "mentioned_only": false, "evidence": "嵩山派中一名瘦削老者走了出来，正是“仙鹤手”陆柏"},
+    {"name": "丁勉", "aliases": ["托塔手"], "identity": "嵩山派左冷禅师弟，号“托塔手”", "mentioned_only": false, "evidence": "“托塔手”丁勉大声道"},
+    {"name": "汤英鹗", "aliases": [], "identity": "嵩山派第七太保", "mentioned_only": false, "evidence": "嵩山派第七太保汤英鹗朗声道"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "桃根、桃干、桃枝、桃叶、桃花、桃实六兄弟", "collective": true, "mentioned_only": false, "evidence": "本来桃谷六仙必定会出来胡说八道一番"},
+    {"name": "桃根仙", "aliases": [], "identity": "桃谷六仙成员", "mentioned_only": false, "evidence": "桃根仙等六人面面相觑，一时拿不定主意"},
+    {"name": "盈盈", "aliases": ["任大小姐"], "identity": "日月神教教主任我行之女，乔装救治令狐冲", "mentioned_only": false, "evidence": "盈盈看得分明，心急之下，顾不得掩饰自己身分"},
+    {"name": "仪和", "aliases": [], "identity": "恒山派大师姊", "mentioned_only": false, "evidence": "仪和取出“白云熊胆丸”"},
+    {"name": "仪清", "aliases": [], "identity": "恒山派女弟子（二大弟子之一）", "mentioned_only": false, "evidence": "仪清和郑萼分别以“天香断续胶”搽在他伤口上"},
+    {"name": "郑萼", "aliases": [], "identity": "恒山派女弟子，能言善道", "mentioned_only": false, "evidence": "仪清和郑萼分别以“天香断续胶”搽在他伤口上"},
+    {"name": "仪琳", "aliases": [], "identity": "恒山派定逸座下小尼姑，为令狐冲诵经祈祷", "mentioned_only": false, "evidence": "便知是仪琳又在为自己向观世音祈祷"},
+    {"name": "封不平", "aliases": [], "identity": "华山剑宗好手", "mentioned_only": true, "evidence": "他怂恿封不平、成不忧等剑宗好手上华山明争"},
+    {"name": "成不忧", "aliases": [], "identity": "华山剑宗高手，被桃谷六仙撕成四截", "mentioned_only": true, "evidence": "他怂恿封不平、成不忧等剑宗好手上华山明争"},
+    {"name": "莫大先生", "aliases": [], "identity": "衡山派掌门", "mentioned_only": true, "evidence": "岳灵珊以衡山剑法打败莫大先生"},
+    {"name": "玉磬子", "aliases": [], "identity": "泰山派“玉”字辈耆宿，天门道人的师叔", "mentioned_only": true, "evidence": "但她以泰山剑法力败玉磬子和玉音子"},
+    {"name": "玉音子", "aliases": [], "identity": "泰山派“玉”字辈耆宿，天门道人的师叔", "mentioned_only": true, "evidence": "但她以泰山剑法力败玉磬子和玉音子"}
+  ]
+}

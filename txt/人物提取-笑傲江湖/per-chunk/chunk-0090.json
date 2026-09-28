@@ -1,0 +1,31 @@
+{
+  "chunk": 90,
+  "characters": [
+    {"name": "令狐冲", "aliases": ["令狐兄", "大师哥"], "identity": "恒山派掌门，重伤在车中目睹林平之复仇", "mentioned_only": false, "evidence": "令狐冲原想观看他辟邪剑法的招式"},
+    {"name": "仪和", "aliases": [], "identity": "恒山派大师姊", "mentioned_only": false, "evidence": "仪和道：“我们说过两不相助，只怕不便出手。”"},
+    {"name": "仪清", "aliases": [], "identity": "恒山派女弟子（二大弟子之一）", "mentioned_only": false, "evidence": "仪清忙拉了拉她袖子，劝道"},
+    {"name": "秦绢", "aliases": ["秦师妹"], "identity": "恒山派年少女弟子", "mentioned_only": false, "evidence": "秦绢道：“他二人昨天便跟桃谷六仙一起走了"},
+    {"name": "田伯光", "aliases": [], "identity": "原采花大盗，法名“不可不戒”，隶恒山派，与不戒同行饮酒", "mentioned_only": true, "evidence": "不戒大师呢？田伯光呢？"},
+    {"name": "不戒和尚", "aliases": ["不戒大师"], "identity": "仪琳之父，恒山派僧人，与田伯光同行饮酒", "mentioned_only": true, "evidence": "不戒大师呢？田伯光呢？"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "桃根、桃干、桃枝、桃叶、桃花、桃实六兄弟", "collective": true, "mentioned_only": true, "evidence": "他二人昨天便跟桃谷六仙一起走了"},
+    {"name": "盈盈", "aliases": ["任盈盈", "任姑娘"], "identity": "日月神教教主任我行之女，出手救岳灵珊", "mentioned_only": false, "evidence": "盈盈突然纵身而出，奔到江边"},
+    {"name": "任我行", "aliases": ["任教主"], "identity": "日月神教教主任我行", "mentioned_only": true, "evidence": "我是日月神教任教主之女，任盈盈便是"},
+    {"name": "岳灵珊", "aliases": ["岳姑娘", "小师妹", "岳大小姐", "林夫人"], "identity": "岳不群之女，被木高峰擒获后获救，与林平之决裂", "mentioned_only": false, "evidence": "岳灵珊退得几步，噗的一声，左足踩入了江水之中。"},
+    {"name": "林平之", "aliases": ["平弟", "林师弟"], "identity": "岳不群之婿，以辟邪剑法报父母之仇，被毒水瞎了双眼", "mentioned_only": false, "evidence": "只听得林平之叫道：“我林家的辟邪剑法，你们都看清楚了吗？”"},
+    {"name": "方人智", "aliases": [], "identity": "青城派弟子，被林平之刺死", "mentioned_only": false, "evidence": "方人智，你这恶贼，如此死法，可便宜了你！"},
+    {"name": "贾人达", "aliases": [], "identity": "青城派弟子，被林平之纵马践踏而死", "mentioned_only": false, "evidence": "突然叫道：“你是贾人达！”"},
+    {"name": "于人豪", "aliases": [], "identity": "青城派弟子，“青城四秀”之三，被林平之刺杀", "mentioned_only": false, "evidence": "你叫于人豪，是不是？"},
+    {"name": "侯人英", "aliases": [], "identity": "青城派弟子，“青城四秀”之一", "mentioned_only": false, "evidence": "侯人英、洪人雄、于人豪、罗人杰。"},
+    {"name": "洪人雄", "aliases": [], "identity": "青城派弟子，“青城四秀”之一", "mentioned_only": false, "evidence": "侯人英、洪人雄、于人豪、罗人杰。"},
+    {"name": "罗人杰", "aliases": [], "identity": "青城派弟子，“青城四秀”之一，死于令狐冲剑下", "mentioned_only": true, "evidence": "其中罗人杰已在湘南醉仙楼头为令狐冲所杀"},
+    {"name": "青城四秀", "aliases": ["英雄豪杰，青城四秀", "青城四兽"], "identity": "青城派武功最强的四名弟子：侯人英、洪人雄、于人豪、罗人杰", "collective": true, "mentioned_only": false, "evidence": "“英雄豪杰，青城四秀”，是青城派武功最强的四名弟子"},
+    {"name": "木高峰", "aliases": ["塞北明驼", "木大侠", "驼子", "姓木的"], "identity": "绰号“塞北明驼”的驼子，觊觎林家辟邪剑谱，驼背内藏毒水皮囊", "mentioned_only": false, "evidence": "正是外号“塞北明驼”的木高峰。"},
+    {"name": "刘正风", "aliases": [], "identity": "衡山派莫大先生之师弟，林平之曾在其府中扮驼子", "mentioned_only": true, "evidence": "那日在衡山刘正风家中，二人虽曾相见"},
+    {"name": "林震南", "aliases": [], "identity": "福威镖局总镖头，林平之之父，为夺辟邪剑谱被害", "mentioned_only": true, "evidence": "福威镖局的那个林震南，不就是死在你手下的吗？"},
+    {"name": "岳不群", "aliases": ["君子剑", "岳老儿"], "identity": "华山派掌门、五岳派掌门，被林平之指为夺谱奸谋主使", "mentioned_only": true, "evidence": "那日与岳不群较量内功不胜"},
+    {"name": "吉人通", "aliases": [], "identity": "青城派弟子，被林平之刺杀", "mentioned_only": false, "evidence": "青城派中于人豪、吉人通脸色大变，胸口鲜血狂涌"},
+    {"name": "余沧海", "aliases": ["余矮子", "余观主"], "identity": "青城派掌门，松风观观主，被林平之断臂剜目后身死", "mentioned_only": false, "evidence": "余沧海一跃而起，纵出棚外。"},
+    {"name": "郑萼", "aliases": [], "identity": "恒山派女弟子，能言善道", "mentioned_only": false, "evidence": "郑萼伸手替令狐冲拨开头上柴草。"},
+    {"name": "左冷禅", "aliases": [], "identity": "嵩山派掌门（双目已被刺瞎）", "mentioned_only": true, "evidence": "左冷禅也没给他请柬。"}
+  ]
+}

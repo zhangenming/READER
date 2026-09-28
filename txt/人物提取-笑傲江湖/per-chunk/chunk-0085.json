@@ -1,0 +1,30 @@
+{
+  "chunk": 85,
+  "characters": [
+    {"name": "桃叶仙", "aliases": [], "identity": "桃谷六仙成员", "mentioned_only": false, "evidence": "桃叶仙拖着只剩独脚、全身是血的玉玑子"},
+    {"name": "玉玑子", "aliases": ["玉玑道人"], "identity": "泰山派天门道人的师叔，夺任泰山掌门，被左冷禅砍断双手一足", "mentioned_only": false, "evidence": "玉玑子刷的一声，拔出了长剑"},
+    {"name": "桃花仙", "aliases": [], "identity": "桃谷六仙成员，肩头中剑", "mentioned_only": false, "evidence": "噗的一声响，桃花仙左肩中剑。"},
+    {"name": "天门", "aliases": ["天门道人"], "identity": "泰山派掌门（已死）", "mentioned_only": true, "evidence": "害死了泰山派掌门人天门道人"},
+    {"name": "桃根仙", "aliases": [], "identity": "桃谷六仙成员", "mentioned_only": false, "evidence": "桃根仙、桃枝仙手中各握一只断手"},
+    {"name": "桃干仙", "aliases": [], "identity": "桃谷六仙成员", "mentioned_only": false, "evidence": "桃干仙手中握着一只断脚"},
+    {"name": "桃枝仙", "aliases": [], "identity": "桃谷六仙成员", "mentioned_only": false, "evidence": "桃枝仙道：“咦，左冷禅，你送黄金美女给玉玑子"},
+    {"name": "桃实仙", "aliases": [], "identity": "桃谷六仙成员", "mentioned_only": false, "evidence": "桃实仙早已护持在旁，伸短铁棍架住"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "桃根、桃干、桃枝、桃叶、桃花、桃实六兄弟", "collective": true, "mentioned_only": false, "evidence": "桃谷六仙相互配合得犹如天衣无缝"},
+    {"name": "左冷禅", "aliases": ["左盟主", "左先生"], "identity": "嵩山派掌门，五岳剑派盟主", "mentioned_only": false, "evidence": "看那人时，正是嵩山派掌门左冷禅。"},
+    {"name": "成不忧", "aliases": [], "identity": "华山剑宗高手，被桃谷六仙撕成四截", "mentioned_only": true, "evidence": "华山剑宗高手成不忧撕成四截"},
+    {"name": "令狐冲", "aliases": ["冲哥", "令狐少侠"], "identity": "恒山派掌门", "mentioned_only": false, "evidence": "令狐冲与桃谷六仙相处日久"},
+    {"name": "盈盈", "aliases": [], "identity": "日月神教教主任我行之女，乔装虬髯大汉暗助令狐冲", "mentioned_only": false, "evidence": "正是盈盈的声音。"},
+    {"name": "桃萼仙", "aliases": [], "identity": "令狐冲戏称乔装的盈盈为“桃谷七仙”之第七仙", "mentioned_only": true, "evidence": "哪知道还有一位又聪明、又美丽的七仙女桃萼仙！"},
+    {"name": "岳不群", "aliases": ["岳先生", "君子剑"], "identity": "华山派掌门，绰号“君子剑”", "mentioned_only": false, "evidence": "说话之人正是岳不群。"},
+    {"name": "莫大先生", "aliases": [], "identity": "衡山派掌门", "mentioned_only": true, "evidence": "跟衡山派莫大先生又是好友。"},
+    {"name": "玉音子", "aliases": ["玉音道长"], "identity": "泰山派“玉”字辈耆宿，天门道人的师叔", "mentioned_only": false, "evidence": "泰山派的玉音子怒道"},
+    {"name": "玉磬子", "aliases": [], "identity": "泰山派“玉”字辈耆宿，天门道人的师叔", "mentioned_only": false, "evidence": "正是玉磬子。"},
+    {"name": "岳灵珊", "aliases": ["岳姑娘"], "identity": "岳不群之女，嫁林平之", "mentioned_only": false, "evidence": "正是岳灵珊。她背上负着一柄长剑"},
+    {"name": "林平之", "aliases": ["平儿"], "identity": "岳不群之徒兼女婿", "mentioned_only": false, "evidence": "正是华山派的林平之。"},
+    {"name": "方证", "aliases": ["方证大师"], "identity": "少林寺方丈", "mentioned_only": false, "evidence": "方证道：“善哉，善哉！‘只分高下，不决生死’"},
+    {"name": "丁勉", "aliases": ["托塔手"], "identity": "嵩山派左冷禅师弟，号“托塔手”", "mentioned_only": false, "evidence": "“托塔手”丁勉大声道"},
+    {"name": "冲虚", "aliases": ["冲虚道长"], "identity": "武当派掌门", "mentioned_only": true, "evidence": "最好是请方证大师、冲虚道长、丐帮解帮主"},
+    {"name": "解帮主", "aliases": ["丐帮解帮主"], "identity": "丐帮帮主（解风）", "mentioned_only": true, "evidence": "丐帮解帮主、青城派余观主等几位德高望重的武林前辈出作公证"},
+    {"name": "余沧海", "aliases": ["余观主"], "identity": "青城派掌门，松风观观主", "mentioned_only": true, "evidence": "丐帮解帮主、青城派余观主等几位德高望重的武林前辈出作公证"}
+  ]
+}

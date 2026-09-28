@@ -1,0 +1,30 @@
+{
+  "chunk": 89,
+  "characters": [
+    {"name": "余沧海", "aliases": ["余矮子", "余观主", "余老道"], "identity": "青城派掌门，松风观观主，被林平之怪招所制受辱", "mentioned_only": false, "evidence": "余沧海坐在板凳之上，端起了一杯茶"},
+    {"name": "林平之", "aliases": ["平弟", "林师弟", "姓林的", "姓林的小子"], "identity": "岳不群之婿，习辟邪剑法向余沧海寻仇", "mentioned_only": false, "evidence": "林平之走上两步，说道：“余沧海，你为了觊觎我家剑谱，害死我父母双亲"},
+    {"name": "令狐冲", "aliases": ["大师哥"], "identity": "恒山派掌门，重伤在骡车中观战", "mentioned_only": false, "evidence": "令狐冲眼见余沧海手中长剑的剑尖不住颤动"},
+    {"name": "岳灵珊", "aliases": ["小师妹"], "identity": "岳不群之女，奉父命劝阻林平之杀余沧海", "mentioned_only": false, "evidence": "只听得远处岳灵珊的声音响了起来"},
+    {"name": "仪和", "aliases": [], "identity": "恒山派大师姊", "mentioned_only": false, "evidence": "仪和向岳灵珊冷冷的道"},
+    {"name": "仪清", "aliases": [], "identity": "恒山派女弟子（二大弟子之一）", "mentioned_only": false, "evidence": "仪和师姊，仪清师姊，你们快去救岳姑娘"},
+    {"name": "盈盈", "aliases": ["任大小姐", "任姑娘"], "identity": "日月神教教主任我行之女", "mentioned_only": false, "evidence": "盈盈想要甩脱，但令狐冲抓得很紧。"},
+    {"name": "田伯光", "aliases": [], "identity": "原采花大盗，法名“不可不戒”，隶恒山派", "mentioned_only": false, "evidence": "这时田伯光已砍下树木，做了个担架"},
+    {"name": "不戒和尚", "aliases": ["不戒", "不戒大师"], "identity": "仪琳之父，恒山派僧人", "mentioned_only": false, "evidence": "当下与不戒和尚二人抬起令狐冲"},
+    {"name": "岳不群", "aliases": ["师父", "爹爹"], "identity": "华山派掌门、五岳派掌门", "mentioned_only": false, "evidence": "只见岳不群站在门口，满脸堆笑的相送"},
+    {"name": "岳夫人", "aliases": [], "identity": "岳不群之妻（宁中则）", "mentioned_only": true, "evidence": "岳夫人和岳灵珊却不在其旁。"},
+    {"name": "郑萼", "aliases": [], "identity": "恒山派女弟子，能言善道", "mentioned_only": false, "evidence": "郑萼和秦绢到茶馆中去张罗了热茶来给令狐冲喝"},
+    {"name": "秦绢", "aliases": [], "identity": "恒山派年少女弟子", "mentioned_only": false, "evidence": "秦绢坐在车中正服侍他喝茶"},
+    {"name": "桃根仙", "aliases": [], "identity": "桃谷六仙成员，撕碎余沧海坐骑", "mentioned_only": false, "evidence": "桃根仙、桃干仙、桃枝仙、桃叶仙四人突然间飞身而起"},
+    {"name": "桃干仙", "aliases": [], "identity": "桃谷六仙成员，撕碎余沧海坐骑", "mentioned_only": false, "evidence": "桃根仙、桃干仙、桃枝仙、桃叶仙四人突然间飞身而起"},
+    {"name": "桃枝仙", "aliases": [], "identity": "桃谷六仙成员，撕碎余沧海坐骑", "mentioned_only": false, "evidence": "桃根仙、桃干仙、桃枝仙、桃叶仙四人突然间飞身而起"},
+    {"name": "桃叶仙", "aliases": [], "identity": "桃谷六仙成员，撕碎余沧海坐骑", "mentioned_only": false, "evidence": "桃根仙、桃干仙、桃枝仙、桃叶仙四人突然间飞身而起"},
+    {"name": "桃谷六仙", "aliases": [], "identity": "桃根、桃干、桃枝、桃叶、桃花、桃实六兄弟", "collective": true, "mentioned_only": false, "evidence": "兼之有不戒和尚、盈盈、桃谷六仙、田伯光等好手在内"},
+    {"name": "任我行", "aliases": [], "identity": "日月神教教主任我行（本块中盈盈称“爹爹”）", "mentioned_only": true, "evidence": "我爹爹的武功，后来却显然不及东方不败"},
+    {"name": "东方不败", "aliases": [], "identity": "日月神教前教主，修习《葵花宝典》，已死于黑木崖", "mentioned_only": true, "evidence": "当日在黑木崖上围攻东方不败"},
+    {"name": "风太师叔", "aliases": [], "identity": "风清扬，华山剑宗耆宿，令狐冲的太师叔", "mentioned_only": true, "evidence": "当今之世，能对付得这门剑法的，恐怕只有风太师叔。"},
+    {"name": "侯人英", "aliases": [], "identity": "青城派弟子，“青城四秀”之一，围攻岳灵珊", "mentioned_only": false, "evidence": "令狐冲认得有侯人英和洪人雄两人在内。"},
+    {"name": "洪人雄", "aliases": [], "identity": "青城派弟子，“青城四秀”之一，围攻岳灵珊", "mentioned_only": false, "evidence": "令狐冲认得有侯人英和洪人雄两人在内。"},
+    {"name": "杨莲亭", "aliases": [], "identity": "日月神教总管，东方不败之宠，黑木崖之战被盈盈攻击", "mentioned_only": true, "evidence": "幸亏盈盈转而进攻杨莲亭，分散了东方不败的心神"},
+    {"name": "左冷禅", "aliases": [], "identity": "嵩山派掌门（双目已被岳不群刺瞎）", "mentioned_only": true, "evidence": "恰似岳不群战胜左冷禅时所使的招式"}
+  ]
+}
