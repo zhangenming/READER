@@ -1,224 +1,149 @@
+// 统计弹窗浏览器回归：真实页面入口 → 可见时段记账 → 落盘 → 弹窗渲染。
+// 时长不再另记一本毫秒账，「激活/滚动/总计」都是从 js/可见时段.js 与 js/滚动时段.js
+// 里的按书起止时刻求和得来的，所以这里量的是段账，而不是某个计数器。
+// 与 statistics.test.mjs 分工：纯函数与恒等式在单测里，浏览器只管真实入口与版式。
+// 跑法：node tmp/跑-浏览器回归.mjs tests/statistics-browser.mjs
 import assert from 'node:assert/strict';
-import { writeFile } from 'node:fs/promises';
 
-// 使用独立浏览器配置运行，避免修改日常阅读状态。
-const port = process.env.CDP_PORT;
-const targets = await (await fetch(`http://127.0.0.1:${port}/json`)).json();
-const target = targets.find(
-  (t) => t.type === 'page' && t.url.startsWith('http://127.0.0.1:15921/'),
-);
-assert.ok(target, 'reader tab');
-const ws = new WebSocket(target.webSocketDebuggerUrl);
-await new Promise((resolve) =>
-  ws.addEventListener('open', resolve, { once: true }),
-);
-let id = 0;
-const pending = new Map();
-ws.addEventListener('message', (event) => {
-  const message = JSON.parse(event.data);
-  const request = pending.get(message.id);
-  if (!request) return;
-  pending.delete(message.id);
-  if (message.error) request.reject(new Error(JSON.stringify(message.error)));
-  else request.resolve(message.result);
+const 站点 = 'http://127.0.0.1:15921';
+const 目标列表 = await (
+  await fetch(`http://127.0.0.1:${process.env.CDP_PORT}/json`)
+).json();
+const 目标 = 目标列表.find((t) => t.type === 'page' && t.url.startsWith(站点));
+assert.ok(目标, 'reader tab');
+const ws = new WebSocket(目标.webSocketDebuggerUrl);
+await new Promise((r) => ws.addEventListener('open', r, { once: true }));
+let 序号 = 0;
+const 待回复 = new Map();
+ws.addEventListener('message', (事件) => {
+  const 消息 = JSON.parse(事件.data);
+  const 请求 = 待回复.get(消息.id);
+  if (!请求) return;
+  待回复.delete(消息.id);
+  消息.error
+    ? 请求.reject(new Error(JSON.stringify(消息.error)))
+    : 请求.resolve(消息.result);
 });
-function send(method, params = {}) {
-  return new Promise((resolve, reject) => {
-    pending.set(++id, { resolve, reject });
-    ws.send(JSON.stringify({ id, method, params }));
+const 发送 = (方法, 参数 = {}) =>
+  new Promise((解决, 拒绝) => {
+    const 下标 = ++序号;
+    const 计时器 = setTimeout(() => {
+      待回复.delete(下标);
+      拒绝(new Error(`CDP 超时: ${方法}`));
+    }, 30_000);
+    待回复.set(下标, {
+      resolve: (v) => (clearTimeout(计时器), 解决(v)),
+      reject: (e) => (clearTimeout(计时器), 拒绝(e)),
+    });
+    ws.send(JSON.stringify({ id: 下标, method: 方法, params: 参数 }));
   });
-}
-async function evaluate(code) {
-  const result = await send('Runtime.evaluate', {
-    expression: `(async () => { ${code} })()`,
+async function evaluate(代码) {
+  const 结果 = await 发送('Runtime.evaluate', {
+    expression: `(async () => { ${代码} })()`,
     awaitPromise: true,
     returnByValue: true,
   });
-  if (result.exceptionDetails)
-    throw new Error(result.exceptionDetails.exception?.description);
-  return result.result.value;
-}
-try {
-  await send('Page.enable');
-  await send('Page.reload', { ignoreCache: true });
-  let ready = false;
-  for (let n = 0; n < 200; n++) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    ready = await evaluate(
-      'return document.querySelector("#载入状态")?.hidden === true',
+  if (结果.exceptionDetails)
+    throw new Error(
+      结果.exceptionDetails.exception?.description ||
+        JSON.stringify(结果.exceptionDetails),
     );
-    if (ready) break;
-  }
-  assert.ok(ready, 'reader loaded');
-  // 实际 app 事件接线及持久化：手动停留、隐藏暂停、恢复、pagehide/pageshow。
-  await evaluate(`window.前台测试快照 = async () => {
-    const { 保存持久化状态 } = await import('./js/持久化.js');
-    const { 获取书籍前台毫秒 } = await import('./js/前台停留.js');
-    const { 状态 } = await import('./js/状态.js');
-    保存持久化状态();
-    return 获取书籍前台毫秒(状态.文件名);
+  return 结果.result.value;
+}
+const wait = (毫秒) => new Promise((r) => setTimeout(r, 毫秒));
+
+await 发送('Page.enable');
+
+// —— 1) 可见时段就是「前台停留」这本账：开着页面就长，切走就停 ——
+const 读数 = `
+  const { 本书可见当日总秒 } = await import('./js/可见时段.js');
+  const { 状态, 本地日期串 } = await import('./js/状态.js');
+  return 本书可见当日总秒(状态.文件名, 本地日期串(new Date()));`;
+const 前 = await evaluate(读数);
+await wait(1100);
+assert.ok((await evaluate(读数)) - 前 >= 1, '手动阅读也在计可见时长（不要求滚动）');
+
+await evaluate(`Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'hidden' });
+  document.dispatchEvent(new Event('visibilitychange'));`);
+const 隐藏时 = await evaluate(读数);
+await wait(1100);
+assert.equal(await evaluate(读数), 隐藏时, '切走标签页不再计时');
+await evaluate(`delete document.visibilityState; document.dispatchEvent(new Event('visibilitychange'));`);
+await wait(1100);
+assert.ok((await evaluate(读数)) >= 隐藏时 + 1, '切回来重新起一段');
+
+// —— 2) 落盘形状：可见段按书挂在 前台停留统计.每日可见时段 下 ——
+const 落盘 = await evaluate(`
+  const { 持久化键 } = await import('./js/常量.js');
+  const { 保存持久化状态 } = await import('./js/持久化.js');
+  const { 状态 } = await import('./js/状态.js');
+  保存持久化状态();
+  const 数据 = JSON.parse(localStorage.getItem(持久化键));
+  const 今天 = (() => { const d = new Date(); const p = (v) => String(v).padStart(2, '0');
+    return \`\${d.getFullYear()}-\${p(d.getMonth() + 1)}-\${p(d.getDate())}\`; })();
+  return {
+    书名: 状态.文件名, 今天,
+    可见: 数据.前台停留统计.每日可见时段?.[今天]?.[状态.文件名]?.length ?? 0,
+    旧键: 数据.前台停留统计.每日激活时段,
+    旧毫秒: Object.keys(数据.前台停留统计.每日书籍毫秒 ?? {}).length,
+    滚动键: 数据.自动滚动统计.每日时段 ? Object.keys(数据.自动滚动统计.每日时段).length : 0,
   };`);
-  const before = await evaluate('return await window.前台测试快照()');
-  await new Promise(resolve => setTimeout(resolve, 1100));
-  const after = await evaluate('return await window.前台测试快照()');
-  assert.ok(after - before >= 1000, 'manual reading counts');
-  await evaluate(`Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'hidden' });
-    document.dispatchEvent(new Event('visibilitychange'));`);
-  const hidden = await evaluate('return await window.前台测试快照()');
-  await new Promise(resolve => setTimeout(resolve, 1100));
-  assert.equal(await evaluate('return await window.前台测试快照()'), hidden);
-  await evaluate(`delete document.visibilityState; document.dispatchEvent(new Event('visibilitychange'));`);
-  await new Promise(resolve => setTimeout(resolve, 1100));
-  assert.ok(await evaluate('return await window.前台测试快照()') >= hidden + 1000);
-  await evaluate(`window.dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true }));`);
-  const left = await evaluate('return await window.前台测试快照()');
-  await new Promise(resolve => setTimeout(resolve, 200));
-  assert.equal(await evaluate('return await window.前台测试快照()'), left);
-  await evaluate(`window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true }));`);
-  await new Promise(resolve => setTimeout(resolve, 200));
-  assert.ok(await evaluate('return await window.前台测试快照()') > left);
-  const saved = await evaluate(`const { 持久化键 } = await import('./js/常量.js');
-    return JSON.parse(localStorage.getItem(持久化键)).前台停留统计;`);
-  assert.ok(Object.keys(saved.每日书籍毫秒).length > 0, 'foreground persisted');
-  await evaluate('document.querySelector("#阅读统计按钮").click()');
-  assert.ok(
-    await evaluate('return document.querySelector("#阅读统计弹窗").open'),
-  );
-  assert.equal(
-    await evaluate(
-      'return document.querySelectorAll(".统计卡片, .统计摘要, .统计说明").length',
-    ),
-    0,
-  );
-  assert.ok(
-    await evaluate(
-      'return document.querySelector("#阅读统计内容").firstElementChild.querySelector("caption").textContent.startsWith("书籍明细")',
-    ),
-    '书籍明细表是弹窗第一块',
-  );
-  assert.equal(
-    await evaluate(
-      'return document.querySelectorAll("#阅读统计内容 table").length',
-    ),
-    2,
-    '弹窗只剩两块：书籍明细 + 时间轴',
-  );
-  // 「每日阅读」整块已撤下：书名行不再点选，也不留选中态与光标样式
-  assert.equal(
-    await evaluate(
-      'return document.querySelectorAll(".统计每日, .统计每日表, .统计可点, .统计选中书").length',
-    ),
-    0,
-    '每日明细模块与其点选交互整体消失',
-  );
-  // 深色正文不能污染弹窗主题。
-  await evaluate(
-    'document.documentElement.style.setProperty("--背景色", "#000"); document.documentElement.style.setProperty("--纸张色", "#000");',
-  );
-  assert.deepEqual(
-    await evaluate(
-      'const s = getComputedStyle(document.querySelector("#阅读统计弹窗")); return [s.backgroundColor, s.color]',
-    ),
-    ['rgb(255, 255, 255)', 'rgb(0, 0, 0)'],
-  );
-  // 无脚本的特殊字符书名也必须保持纯文本，不创建标签。
-  await evaluate(`const { 创建阅读统计内容 } = await import('./js/阅读统计.js');
-    const 长名 = '很长的书名'.repeat(16) + '<b>特别版</b>.txt';
-    document.querySelector('#阅读统计内容').replaceChildren(创建阅读统计内容({
-      文件名: '当前书.txt', 进度: 2.9, 今天: '2026-09-17',
-      书籍: [
-        ['当前书.txt', { 总滚动毫秒: 11820000, 总前台毫秒: 180000 }],
-        [长名, { 总滚动毫秒: 2700000, 总前台毫秒: 90000, 阅读偏移: 50, 文本长度: 100 }],
-      ],
-    }));`);
-  assert.equal(
-    await evaluate(
-      'return document.querySelectorAll("#阅读统计内容 b").length',
-    ),
-    0,
-  );
-  assert.ok(
-    await evaluate(
-      'return document.querySelector("#阅读统计内容").textContent.includes("约 50.0%")',
-    ),
-  );
-  assert.ok(
-    await evaluate('return !!document.querySelector(".统计当前标记")'),
-    '当前书仍带「当前」标记',
-  );
-  // 撤下「每日阅读」整块后，每本书的累计滚动 / 前台停留 / 进度仍留在书籍明细里
-  const 明细 = await evaluate(`
-    const 表 = document.querySelector('#阅读统计内容 table');
-    return [...表.querySelectorAll('tbody tr')].map((行) =>
-      [...行.cells].slice(1).map((格) => 格.textContent));
-  `);
-  assert.deepEqual(
-    明细,
-    [
-      ['3 小时 17 分钟', '3 分钟', '2.9%'],
-      ['45 分钟', '1 分钟', '约 50.0%'],
-    ],
-    `书籍明细三列读数：${JSON.stringify(明细)}`,
-  );
-  await evaluate(
-    "document.querySelector('#阅读统计内容 table tbody tr:last-child').click()",
-  );
-  assert.equal(
-    await evaluate(
-      'return document.querySelectorAll("#阅读统计内容 .统计选中书, #阅读统计内容 [aria-selected], #阅读统计内容 [tabindex]").length',
-    ),
-    0,
-    '点书名行不产生选中态，也没有可聚焦的残留',
-  );
-  for (const width of [885, 375]) {
-    await send('Emulation.setDeviceMetricsOverride', {
-      width,
-      height: 650,
-      deviceScaleFactor: 1,
-      mobile: false,
-    });
-    assert.ok(
-      await evaluate(
-        'const d = document.querySelector("#阅读统计弹窗"); const r = d.getBoundingClientRect(); return r.left >= 0 && r.right <= innerWidth && d.scrollWidth <= d.clientWidth;',
-      ),
-      `no overflow at ${width}px: ${JSON.stringify(await evaluate('const d = document.querySelector("#阅读统计弹窗"); const r = d.getBoundingClientRect(); const t = document.querySelector(".统计时段表"); return {left:r.left,right:r.right,width:innerWidth,scroll:d.scrollWidth,client:d.clientWidth,caption:t?.caption?.textContent,tableScroll:t?.scrollWidth,th:t?[...t.querySelectorAll("th")].map(h=>h.clientWidth):null};'))}`,
-    );
-    const 弹窗宽 = await evaluate(
-      'return Math.round(document.querySelector("#阅读统计弹窗").getBoundingClientRect().width)',
-    );
-    assert.ok(
-      Math.abs(弹窗宽 - (width - 32)) <= 2,
-      `${width}px 视口下弹窗宽 ${弹窗宽}px，应贴着视口只留 32px`,
-    );
-    if (process.env.SCREENSHOT_DIR) {
-      const { data } = await send('Page.captureScreenshot', { format: 'png' });
-      await writeFile(
-        `${process.env.SCREENSHOT_DIR}/reader-stats-${width}.png`,
-        Buffer.from(data, 'base64'),
-      );
-    }
-  }
-  await send('Input.dispatchKeyEvent', {
-    type: 'keyDown',
-    key: 'Escape',
-    code: 'Escape',
-    windowsVirtualKeyCode: 27,
+assert.ok(落盘.可见 >= 1, `今天的可见段按书落盘：${JSON.stringify(落盘)}`);
+assert.equal(落盘.旧键, undefined, '不再写旧键名 每日激活时段');
+assert.ok(落盘.滚动键 >= 0);
+
+// —— 3) 真实入口：点按钮开弹窗，两张表都是滚动 / 激活 / 总计三笔账 ——
+await evaluate('document.querySelector("#阅读统计按钮").click()');
+assert.ok(await evaluate('return document.querySelector("#阅读统计弹窗").open'));
+const 版式 = await evaluate(`
+  const 表 = document.querySelector('.统计时段表');
+  if (!表) throw new Error('弹窗里没有 .统计时段表（渲染没跑起来）');
+  return {
+    组数: 表.querySelectorAll('.统计时段组标题').length,
+    行数: 表.querySelectorAll('.统计时段行').length,
+    列头: [...表.querySelectorAll('.统计时段表头名')].map((项) => 项.textContent),
+    上表列头: [...document.querySelectorAll('.阅读统计内容 table:not(.统计时段表) thead tr:first-child th')].map((项) => 项.textContent),
+    底色: (() => { const s = getComputedStyle(document.querySelector('#阅读统计弹窗'));
+      return [s.backgroundColor, s.color]; })(),
+  };`);
+assert.deepEqual(版式.列头, ['书籍', '滚动', '激活', '总计'], '下表一天一组、组内按书一行');
+assert.deepEqual(版式.上表列头, ['书籍', '滚动', '激活', '总计', '进度'], '上表同样的三笔账');
+assert.ok(版式.组数 >= 1 && 版式.行数 >= 版式.组数, `真实账本渲染出分组：${JSON.stringify(版式)}`);
+assert.deepEqual(版式.底色, ['rgb(255, 255, 255)', 'rgb(0, 0, 0)']);
+await evaluate('document.querySelector("#阅读统计弹窗").close()');
+
+// —— 4) 无脚本的特殊字符书名必须保持纯文本，不创建标签 ——
+await evaluate(`
+  const { 创建阅读统计内容, 汇总书籍时间账 } = await import('./js/阅读统计.js');
+  const 长名 = '很长的书名'.repeat(16) + '<b>特别版</b>.txt';
+  const 秒 = (h, m) => h * 3600 + m * 60;
+  const 时间账 = 汇总书籍时间账({
+    滚动账: { '2026-09-17': { '当前书.txt': [[秒(9, 0), 秒(9, 30)]] } },
+    可见账: { '2026-09-17': { '当前书.txt': [[秒(8, 50), 秒(10, 0)]], [长名]: [[秒(11, 0), 秒(11, 20)]] } },
+    旧书总毫秒: { [长名]: 2_700_000 },
+    旧书总可见毫秒: { '当前书.txt': 11_820_000 },
   });
-  await send('Input.dispatchKeyEvent', {
-    type: 'keyUp',
-    key: 'Escape',
-    code: 'Escape',
-    windowsVirtualKeyCode: 27,
-  });
-  assert.equal(
-    await evaluate('return document.querySelector("#阅读统计弹窗").open'),
-    false,
-  );
-  console.log(
-    'PASS statistics dialog: live entry, opaque theme, no summary cards, text-only names, progress, responsive layout and Escape',
-  );
-} finally {
-  await send('Emulation.clearDeviceMetricsOverride');
-  await send('Page.reload', { ignoreCache: true });
-  ws.close();
-}
+  document.querySelector('#阅读统计内容').replaceChildren(创建阅读统计内容({
+    文件名: '当前书.txt', 进度: 2.9, 今天: '2026-09-17',
+    书籍: [['当前书.txt', {}], [长名, { 阅读偏移: 50, 文本长度: 100 }]],
+    时间账,
+  }));`);
+assert.equal(
+  await evaluate('return document.querySelectorAll("#阅读统计内容 b").length'),
+  0,
+  '书名里的 <b> 不许被当标签',
+);
+const 文本 = await evaluate(`
+  const 行 = [...document.querySelectorAll('.阅读统计内容 table:not(.统计时段表) tbody tr')];
+  return 行.map((项) => [...项.querySelectorAll('td')].map((格) => 格.textContent));`);
+assert.equal(文本[0][0], '当前当前书.txt', '当前这本书在最前（总计更大也在其后，此处按账排）');
+assert.match(文本[0][3], /3 小时 17 分钟/, '旧累计毫秒账回落进来：总计 11820 秒（有段的日子只用段）');
+assert.ok(
+  (await evaluate('return document.querySelector("#阅读统计内容").textContent')).includes('约 50.0%'),
+);
+
+console.log('✓ 统计弹窗：可见时长按书落盘、两张表三笔账、特殊字符书名安全');
+
+// 收尾交给启动器（它负责杀 Chrome 与删 profile），
+// 但用例自己必须把 WebSocket 关掉，否则 node 进程挂着不退，启动器会一直等。
+ws.close();

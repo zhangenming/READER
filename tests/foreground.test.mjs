@@ -3,134 +3,125 @@ import { test } from 'node:test';
 
 globalThis.document = { baseURI: 'http://127.0.0.1/', querySelector: () => null };
 const {
-  载入前台停留统计, 更新前台停留计时, 结转前台停留时长,
-  前台停留统计快照, 获取书籍前台毫秒, 获取今日前台毫秒,
+  载入前台停留统计,
+  更新前台停留计时,
+  前台停留统计快照,
+  获取书籍前台毫秒,
 } = await import('../js/前台停留.js');
 const {
-  载入激活时段统计, 获取当日激活时段, 激活时段统计快照,
-} = await import('../js/激活时段.js');
+  载入可见时段统计,
+  获取当日按书可见时段,
+  可见时段统计快照,
+  可见当日总秒,
+} = await import('../js/可见时段.js');
+
 const 起点 = new Date(2026, 8, 17, 12).getTime(); // 当日第 43200 秒
-// 时长与时段共用 更新前台停留计时 这一个入口，测试之间要一起清零才不会互相并段
+
 function 重置会话() {
   载入前台停留统计({});
-  载入激活时段统计({});
+  载入可见时段统计({});
 }
 
-test('foreground counts manual reading, pauses hidden, resumes without double counting', () => {
-  载入前台停留统计({});
+test('a visible session with a book records one span for that book', () => {
+  重置会话();
   更新前台停留计时('甲.txt', true, 起点);
-  结转前台停留时长(起点 + 5000);
-  更新前台停留计时('甲.txt', false, 起点 + 6000);
-  结转前台停留时长(起点 + 60000);
-  assert.equal(获取书籍前台毫秒('甲.txt'), 6000);
-  更新前台停留计时('甲.txt', true, 起点 + 60000);
-  更新前台停留计时('甲.txt', true, 起点 + 61000);
-  结转前台停留时长(起点 + 62000);
-  结转前台停留时长(起点 + 62000);
-  assert.equal(获取书籍前台毫秒('甲.txt'), 8000);
+  assert.deepEqual(可见时段统计快照(起点 + 30000).每日时段, {
+    '2026-09-17': { '甲.txt': [[43200, 43230]] },
+  }, '未封口的进行中段也要进快照');
+  assert.equal(可见当日总秒('2026-09-17', 起点 + 30000), 30);
+  更新前台停留计时('甲.txt', false, 起点 + 30000);
+  assert.deepEqual(获取当日按书可见时段('2026-09-17', '甲.txt'), [[43200, 43230]]);
 });
 
-test('switching books settles the previous book; no book means no counting', () => {
-  载入前台停留统计({});
-  更新前台停留计时('', true, 起点);
-  更新前台停留计时('甲.txt', true, 起点 + 10000);
-  更新前台停留计时('乙.txt', true, 起点 + 12000);
+test('repeat notifications do not reopen or double-count', () => {
+  重置会话();
+  更新前台停留计时('甲.txt', true, 起点);
+  更新前台停留计时('甲.txt', true, 起点 + 5000); // 同书再次通知：同一段，不切断
+  更新前台停留计时('甲.txt', true, 起点 + 9000);
+  更新前台停留计时('甲.txt', false, 起点 + 10000);
+  assert.deepEqual(获取当日按书可见时段('2026-09-17', '甲.txt'), [[43200, 43210]]);
+});
+
+test('switching books splits the span so each book owns its own time', () => {
+  重置会话();
+  更新前台停留计时('甲.txt', true, 起点);
+  更新前台停留计时('乙.txt', true, 起点 + 10000);
   更新前台停留计时('', false, 起点 + 15000);
-  结转前台停留时长(起点 + 30000);
-  assert.equal(获取书籍前台毫秒('甲.txt'), 2000);
-  assert.equal(获取书籍前台毫秒('乙.txt'), 3000);
-  assert.equal(获取今日前台毫秒('2026-09-17'), 5000);
+  assert.deepEqual(获取当日按书可见时段('2026-09-17', '甲.txt'), [[43200, 43210]]);
+  assert.deepEqual(获取当日按书可见时段('2026-09-17', '乙.txt'), [[43210, 43215]]);
+  assert.equal(可见当日总秒('2026-09-17'), 15, '两本书相加仍是这 15 秒，没有重复计时');
 });
 
-test('foreground splits at local midnight and today excludes yesterday', () => {
-  载入前台停留统计({});
-  const 午夜 = new Date(2026, 8, 18).getTime();
-  更新前台停留计时('甲.txt', true, 午夜 - 1000);
-  结转前台停留时长(午夜 + 2000);
-  assert.deepEqual(前台停留统计快照(), {
-    每日书籍毫秒: { '甲.txt': { '2026-09-17': 1000, '2026-09-18': 2000 } },
-  });
-  assert.equal(获取今日前台毫秒('2026-09-18'), 2000);
-  assert.equal(获取书籍前台毫秒('甲.txt'), 3000);
+test('no book or hidden page bills nothing', () => {
+  重置会话();
+  更新前台停留计时('', true, 起点);
+  assert.deepEqual(可见时段统计快照(起点 + 60000).每日时段, {}, '没载入书不算开着页面');
+  更新前台停留计时('甲.txt', false, 起点 + 5000);
+  assert.deepEqual(可见时段统计快照(起点 + 60000).每日时段, {});
 });
 
-test('snapshot restores both books without counting offline time', () => {
-  载入前台停留统计({});
+test('a sub-second flicker leaves no trace', () => {
+  重置会话();
   更新前台停留计时('甲.txt', true, 起点);
-  更新前台停留计时('乙.txt', true, 起点 + 2000);
-  结转前台停留时长(起点 + 5000);
-  const 快照 = JSON.parse(JSON.stringify(前台停留统计快照()));
-  载入前台停留统计({ 前台停留统计: 快照 });
-  结转前台停留时长(起点 + 90000);
-  assert.equal(获取书籍前台毫秒('甲.txt'), 2000);
-  assert.equal(获取书籍前台毫秒('乙.txt'), 3000);
-  更新前台停留计时('乙.txt', true, 起点 + 90000);
-  结转前台停留时长(起点 + 91000);
-  assert.equal(获取书籍前台毫秒('乙.txt'), 4000);
+  更新前台停留计时('甲.txt', false, 起点 + 400);
+  assert.deepEqual(获取当日按书可见时段('2026-09-17', '甲.txt'), []);
 });
 
-test('legacy data starts at zero; malformed entries do not discard valid records', () => {
-  载入前台停留统计({ 文本状态: { '旧书.txt': { 总滚动毫秒: 60000 } } });
-  assert.equal(获取书籍前台毫秒('旧书.txt'), 0);
-  载入前台停留统计({ 前台停留统计: { 每日书籍毫秒: {
-    '甲.txt': { '2026-09-17': 123, '2026-09-16': '123', '2026-09-15': -1, bad: 123 },
-    '乙.txt': [], '丙.txt': null,
-  } } });
-  assert.deepEqual(前台停留统计快照(), {
-    每日书籍毫秒: { '甲.txt': { '2026-09-17': 123 } },
-  });
+test('a real away-gap stays a gap', () => {
+  重置会话();
+  更新前台停留计时('甲.txt', true, 起点);
+  更新前台停留计时('甲.txt', false, 起点 + 5000);
+  更新前台停留计时('甲.txt', true, 起点 + 20000); // 离开 15 秒：是真离开，账上就是两段
+  更新前台停留计时('甲.txt', false, 起点 + 25000);
+  assert.deepEqual(获取当日按书可见时段('2026-09-17', '甲.txt'), [
+    [43200, 43205],
+    [43220, 43225],
+  ]);
+  assert.equal(可见当日总秒('2026-09-17'), 10, '空闲的 15 秒没有被算进阅读时间');
+});
+
+test('segments split at local midnight', () => {
+  重置会话();
+  const 午夜 = new Date(2026, 8, 18).getTime();
+  更新前台停留计时('甲.txt', true, 午夜 - 10000);
+  更新前台停留计时('甲.txt', false, 午夜 + 20000);
+  assert.deepEqual(获取当日按书可见时段('2026-09-17', '甲.txt'), [[86390, 86400]]);
+  assert.deepEqual(获取当日按书可见时段('2026-09-18', '甲.txt'), [[0, 20]]);
 });
 
 test('clock moving backwards never subtracts time', () => {
-  载入前台停留统计({});
+  重置会话();
   更新前台停留计时('甲.txt', true, 起点);
-  结转前台停留时长(起点 - 1000);
-  assert.equal(获取书籍前台毫秒('甲.txt'), 0);
-  结转前台停留时长(起点);
-  assert.equal(获取书籍前台毫秒('甲.txt'), 1000);
+  更新前台停留计时('甲.txt', false, 起点 - 1000);
+  assert.deepEqual(获取当日按书可见时段('2026-09-17', '甲.txt'), []);
 });
 
-test('activation spans the session, not each book', () => {
-  重置会话();
+test('the legacy per-book millisecond ledger still loads and round-trips', () => {
+  载入前台停留统计({
+    前台停留统计: {
+      每日书籍毫秒: {
+        '甲.txt': { '2026-09-17': 123, '2026-09-16': '123', '2026-09-15': -1, bad: 123 },
+        '乙.txt': [],
+        '丙.txt': null,
+      },
+    },
+  });
+  assert.equal(获取书籍前台毫秒('甲.txt'), 123, '坏一天丢一天，不牵连有效记录');
+  // 时段记录出现之前的老日子只能靠这笔账回落；运行期不再新增，但保存时要原样写回
   更新前台停留计时('甲.txt', true, 起点);
-  更新前台停留计时('乙.txt', true, 起点 + 10000); // 中途换书：轴上仍是一段
-  更新前台停留计时('', false, 起点 + 15000);
-  assert.deepEqual(获取当日激活时段('2026-09-17'), [[43200, 43215]]);
-  assert.equal(获取书籍前台毫秒('甲.txt'), 10000, '时长仍按书分账');
-});
-
-test('activation keeps real away-gaps but absorbs a short flicker', () => {
-  重置会话();
-  更新前台停留计时('甲.txt', true, 起点);
-  更新前台停留计时('甲.txt', false, 起点 + 5000);
-  更新前台停留计时('甲.txt', true, 起点 + 20000); // 离开 15 秒：是真离开，不并
-  更新前台停留计时('甲.txt', false, 起点 + 25000);
-  assert.deepEqual(获取当日激活时段('2026-09-17'), [[43200, 43205], [43220, 43225]]);
-  重置会话();
-  更新前台停留计时('甲.txt', true, 起点);
-  更新前台停留计时('甲.txt', false, 起点 + 5000);
-  更新前台停留计时('甲.txt', true, 起点 + 10000); // 5 秒内回来：抖动，抹平成一段
-  更新前台停留计时('甲.txt', false, 起点 + 15000);
-  assert.deepEqual(获取当日激活时段('2026-09-17'), [[43200, 43215]]);
-});
-
-test('activation persists under the foreground stats and survives a reload', () => {
-  重置会话();
-  更新前台停留计时('甲.txt', true, 起点);
-  assert.deepEqual(激活时段统计快照(起点 + 30000).每日时段, {
-    '2026-09-17': [[43200, 43230]],
-  }, '未封口的进行中段也要进快照');
-  更新前台停留计时('甲.txt', false, 起点 + 30000);
+  更新前台停留计时('甲.txt', false, 起点 + 60000);
   assert.deepEqual(前台停留统计快照().每日书籍毫秒, {
-    '甲.txt': { '2026-09-17': 30000 },
+    '甲.txt': { '2026-09-17': 123 },
+  }, '新的可见时长不再写进旧毫秒账');
+});
+
+test('visibility spans load under the legacy activation key too', () => {
+  载入可见时段统计({
+    前台停留统计: { 每日激活时段: { '2026-09-17': { '甲.txt': [[43200, 43230, 1]] } } },
   });
-  载入激活时段统计({
-    前台停留统计: { 每日激活时段: { '2026-09-17': [[43200, 43230, 1]] } },
-  });
-  assert.deepEqual(获取当日激活时段('2026-09-17'), [[43200, 43230]], '旧格式多余一位照样读回');
   assert.deepEqual(
-    前台停留统计快照().每日书籍毫秒,
-    { '甲.txt': { '2026-09-17': 30000 } },
-    '只读时段不动时长账',
+    获取当日按书可见时段('2026-09-17', '甲.txt'),
+    [[43200, 43230]],
+    '旧键名 每日激活时段 读得回，多余的「种类」位丢掉',
   );
 });
