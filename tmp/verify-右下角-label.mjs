@@ -128,7 +128,6 @@ await pause(300);
 await 求值(`
   document.querySelector('#已滚动时间行').hidden = false;
   document.querySelector('#剩余滚动时间行').hidden = false;
-  document.body.classList.add('右下控件显示');
   return true;
 `);
 await pause(400);

@@ -258,7 +258,7 @@ try {
   `);
   assert.equal(弹窗内按键, true, '批量弹窗计入「有弹窗打开」');
 
-  // 面板与入口的视觉留档：把鼠标移到右下角热区，让胶囊与面板显形。
+  // 面板与入口的视觉留档：右下角按钮组常驻显形，鼠标不在角落也要可见。
   await evaluate(`
     const { 状态 } = await import('./js/状态.js');
     状态.关键词面板展开 = true;
@@ -266,15 +266,16 @@ try {
     渲染关键词面板();
     return 1;
   `);
-  await mouse('mouseMoved', 1200, 860);
   await pause(300);
   await screenshot(
     fileURLToPath(new URL('../tmp/批量导入-面板入口.png', import.meta.url)),
   );
   assert.equal(
-    await evaluate('return document.body.classList.contains("右下控件显示")'),
-    true,
-    '右下角控件已显形（截图可用）',
+    await evaluate(`
+      return getComputedStyle(document.querySelector('#关键词面板开关')).opacity;
+    `),
+    '1',
+    '右下角控件常驻显形，无需悬停（截图可用）',
   );
 
   // 刷新后仍在：批量导入的词与正文选词走同一份持久化关键词列表（防抖 120ms，已等过）。

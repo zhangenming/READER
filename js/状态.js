@@ -215,7 +215,6 @@ export const 元素 = {
   关键词指示器: document.querySelector('#关键词指示器'),
   自动滚动按钮: document.querySelector('#自动滚动按钮'),
   当前时间: document.querySelector('#当前时间'),
-  时间信息: document.querySelector('.时间信息'),
   字号控制: document.querySelector('#字号控制'),
   字号值: document.querySelector('#字号值'),
   行距控制: document.querySelector('#行距控制'),

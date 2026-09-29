@@ -134,7 +134,7 @@
      见 js/滚动条.js 放置读数。 */
   --进度指针间距: 6px;
   /* 读数的字号上限：横向一行写「100.0%」，白轴窄于此宽时按 --进度读数除数 等比压小，
-     宁可小到读不出也绝不溢出到正文上（压字不遮文，见 js/时钟遮挡.js 同一取向）。
+     宁可小到读不出也绝不溢出到正文上（压字不遮文，右下角读数同此取向）。
      盒高按这个上限定死，JS 量到的高度才不会被字号/视口变化甩旧。 */
   --进度读数字号: 12px;
   /* 最长串「100.0%」在 12px 下实测占 45.5px（tmp/verify-进度读数-红线之上.mjs 量的真实
@@ -422,14 +422,6 @@ body.关键词手势中 .滚动容器 {
   grid-template-columns: repeat(4, max-content);
   gap: 6px 0;
   pointer-events: none;
-}
-
-/* 正文滚进浮层下方时由 js/时钟遮挡.js 挂 .被正文遮挡。
-   必须用 visibility 而非 display:none：判定依赖对浮层矩形做命中测试，
-   display:none 会把 getBoundingClientRect 归零，浮层一旦隐藏就再也无法
-   在原位探测、自行恢复；visibility 保留几何，且不参与命中测试与绘制。 */
-.时间信息.被正文遮挡 {
-  visibility: hidden;
 }
 
 .时间信息行 {
@@ -1025,25 +1017,6 @@ body.关键词手势中 .滚动容器 {
 .自动滚动按钮:focus-visible {
   outline: 2px solid var(--选中色);
   outline-offset: 1px;
-}
-
-/* ===== 右下角控件：默认隐藏，仅在鼠标靠近 / 触摸 / 聚焦 / 自动滚动时显示 =====
-   时间浮层不在此列：它贴角常驻，但正文滚进其下方时整体隐藏（js/时钟遮挡.js）。
-   按钮组隐藏时 pointer-events:none 不遮挡正文选择。 */
-.自动滚动按钮,
-.关键词面板开关,
-.内容选择按钮 {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 180ms ease;
-}
-
-body.右下控件显示 .自动滚动按钮,
-body.右下控件显示 .关键词面板开关,
-body.右下控件显示 .内容选择按钮,
-body.右下面板展开 .关键词面板开关 {
-  opacity: 1;
-  pointer-events: auto;
 }
 
 .关键词面板 {

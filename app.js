@@ -93,7 +93,6 @@ import {
   关闭滚动会话,
   恢复滚动会话,
   注册自动滚动滚轮监听,
-  注册右下强制显示,
 } from './js/自动滚动.js';
 import {
   关闭字体弹窗,
@@ -203,13 +202,6 @@ import {
   处理高亮移出,
   切换同组高亮,
 } from './js/正文交互.js';
-import {
-  处理右下控件悬停,
-  处理右下控件触摸,
-  设置右下强制显示,
-  设置右下聚焦,
-} from './js/右下控件.js';
-import { 安排刷新时钟遮挡, 刷新时钟遮挡 } from './js/时钟遮挡.js';
 import { 设置白线收紧 } from './js/白线.js';
 
 import { 创建章节索引 } from './js/章节索引.js';
@@ -249,9 +241,6 @@ function 启动() {
     const 现在 = new Date();
     元素.当前时间.dateTime = 现在.toISOString();
     元素.当前时间.textContent = 时间格式器.format(现在);
-    // 每秒兜底一次遮挡判定：载入、字号/行距重排等不走滚动事件的变化，
-    // 最迟 1s 内收敛；滚动路径由 scroll 监听实时驱动。
-    刷新时钟遮挡();
   }
 
   // 重建行索引只负责「建索引 + 提交 + 保持阅读位置」，
@@ -280,7 +269,6 @@ function 启动() {
       const 新排版 = 读取正文排版();
       if (新排版.键 !== 状态.排版键) {
         重建并刷新(新排版);
-        安排刷新时钟遮挡();
         return;
       }
 
@@ -291,7 +279,6 @@ function 启动() {
       } catch (错误) {
         显示文本处理错误(错误);
       }
-      安排刷新时钟遮挡();
     }, 尺寸重排防抖毫秒);
   }
 }
@@ -368,10 +355,6 @@ function 创建文本地址(文件名) {
 }
 
 function 绑定事件() {
-  // 自动滚动的右下控件强制显示经钩子注入（断环：避免「自动滚动 → app」反向依赖）；
-  // 显示状态本体在 js/右下控件.js
-  注册右下强制显示(设置右下强制显示);
-
   const 自动滚动滚轮监听选项 = { capture: true, passive: false };
   let 自动滚动滚轮已绑定 = false;
   注册自动滚动滚轮监听(function 切换自动滚动滚轮监听(启用) {
@@ -427,14 +410,7 @@ function 绑定事件() {
   // 跳转动画在动画滚动开始时停止自动滚动（断环：跳转动画 → 自动滚动 会成环）。
   注册自动滚动停止钩子(停止自动滚动);
 
-  // ===== 右下角控件：默认隐藏，仅在鼠标靠近 / 触摸 / 聚焦 / 自动滚动时显示 =====
-  // 热区判定与显示状态机在 js/右下控件.js；时间浮层贴角常驻，
-  // 但正文滚进其下方时整体隐藏（js/时钟遮挡.js），不遮挡正文。
-
   元素.滚动容器.addEventListener('scroll', 处理滚动, { passive: true });
-  // 时间浮层遮挡判定独立于 处理滚动 的状态机：自动滚动 / 跳转动画期间
-  // 处理滚动 会提前返回，但 scrollTop 变化仍会触发 scroll 事件。
-  元素.滚动容器.addEventListener('scroll', 安排刷新时钟遮挡, { passive: true });
   元素.滚动容器.addEventListener('wheel', 处理手动滚动, { passive: true });
   元素.滚动容器.addEventListener('touchstart', 取消滚动动画, { passive: true });
   元素.滚动容器.addEventListener('touchmove', 处理手动滚动, { passive: true });
@@ -633,23 +609,6 @@ function 绑定事件() {
       保存持久化状态();
     }
   });
-
-  // 右下角控件悬停热区（鼠标 / 触摸）与键盘聚焦时显示
-  window.addEventListener('mousemove', 处理右下控件悬停, { passive: true });
-  window.addEventListener('touchstart', 处理右下控件触摸, { passive: true });
-  for (const 控件 of [
-    元素.自动滚动按钮,
-    元素.关键词面板开关,
-    元素.内容选择按钮,
-    元素.章节目录按钮,
-    元素.阅读统计按钮,
-  ]) {
-    if (!控件) {
-      continue;
-    }
-    控件.addEventListener('focus', () => 设置右下聚焦(true));
-    控件.addEventListener('blur', () => 设置右下聚焦(false));
-  }
 
   // 「关键词手势」：单击/双击/上下拖拽（pointer 统一鼠标/触摸/笔）
   // 单击=下一个 / 双击=上一个 / 向上拖=第一个 / 向下拖=最后一个
