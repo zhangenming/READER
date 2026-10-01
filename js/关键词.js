@@ -270,13 +270,19 @@ export function 删除关键词标记(关键词id) {
   });
 }
 
+/* 挂行时是否给命中块挂「闪现」入场动画：只在点击跳入弹窗、重建列表视图时播一次，
+   滚动追块与悬停恢复共用同一构建函数但不播，避免列表常闪。 */
+let 闪现待播 = false;
+
 // 从当前命中所在批开始，避免靠后的命中一次性创建数千行 DOM。
-export function 渲染查找上下文(关键词, 命中idx = 0) {
+export function 渲染查找上下文(关键词, 命中idx = 0, 播放闪现 = true) {
   const 起点 = Math.floor(Math.max(0, 命中idx) / 上下文分块行数) * 上下文分块行数;
   状态.上下文视图 = { 关键词id: 关键词.id, 起点, 已渲染数: 起点 };
   元素.上下文列表.replaceChildren();
   元素.上下文列表.scrollTop = 0;
+  闪现待播 = 播放闪现;
   追加上下文行块();
+  闪现待播 = false;
 }
 
 function 构建上下文行(关键词, idx, 配色) {
@@ -307,6 +313,9 @@ function 构建上下文行(关键词, idx, 配色) {
   命中.className = '上下文命中';
   命中.textContent = 关键词.文本;
   命中.style.setProperty('--命中背景', 配色.浅色);
+  if (闪现待播) {
+    命中.classList.add('闪现');
+  }
   const 后文 = document.createElement('span');
   后文.className = '上下文后文';
   后文.textContent = 读取上下文片段(命中终点, 命中终点 + 上下文后文字数);
@@ -326,6 +335,18 @@ export function 渲染搭配上下文(关键词, 命中idx列表) {
   状态.上下文视图 = null;
   元素.上下文列表.replaceChildren(片段);
   元素.上下文列表.scrollTop = 0;
+}
+
+// 换当前命中（↑/↓、批内跳转）时单独重放当前命中块的闪现，视线跟着当前行走。
+// 闪现类常驻也只会播一次，重放必须先摘类强制回流再挂回。
+export function 重放当前命中闪现() {
+  const 命中块 = 元素.上下文列表.querySelector('.上下文行.当前 .上下文命中');
+  if (!命中块) {
+    return;
+  }
+  命中块.classList.remove('闪现');
+  void 命中块.offsetWidth;
+  命中块.classList.add('闪现');
 }
 
 export function 追加上下文行块(向前 = false) {

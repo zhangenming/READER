@@ -20,6 +20,7 @@ import {
   渲染查找上下文,
   渲染搭配上下文,
   追加上下文行块,
+  重放当前命中闪现,
 } from './关键词.js';
 import { 更新关键词指示器 } from './指示器.js';
 import { 动画滚动到 } from './跳转动画.js';
@@ -112,7 +113,8 @@ export function 处理搭配悬停(事件) {
     标记对应搭配行();
     渲染搭配上下文(关键词, 统计项.命中idx列表);
   } else {
-    渲染查找上下文(关键词, Math.max(0, 关键词.当前命中idx));
+    // 悬停恢复是瞬态视图，不播入场闪现，避免鼠标扫过搭配列时列表反复闪
+    渲染查找上下文(关键词, Math.max(0, 关键词.当前命中idx), false);
   }
 }
 
@@ -527,6 +529,7 @@ function 临时跳到查找命中(命中idx, 定位正文 = true) {
     else 行.removeAttribute('aria-current');
   }
   元素.上下文列表.querySelector('.当前')?.scrollIntoView({ block: 'nearest' });
+  重放当前命中闪现();
   状态.悬停关键词id = 关键词.id;
   状态.悬停命中idx = 查找临时状态.命中idx;
   渲染可见行(true);
