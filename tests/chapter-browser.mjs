@@ -106,12 +106,17 @@ try {
     await evaluate('return document.querySelector("#章节目录弹窗").open'),
     true,
   );
+  // 虚拟列表：DOM 只挂可见窗口的行，条目完整性看内容层占位总高度（19 × 48px）
   assert.equal(
     await evaluate(
-      'return document.querySelectorAll("#章节目录列表 button").length',
+      'return document.querySelector("#章节目录内容").style.height',
     ),
-    19,
+    `${19 * 48}px`,
   );
+  const 首屏行数 = await evaluate(
+    'return document.querySelectorAll("#章节目录列表 button").length',
+  );
+  assert.ok(首屏行数 >= 1 && 首屏行数 <= 19, `windowed rows: ${首屏行数}`);
   await jump(2);
   assert.equal(
     await evaluate(`${state} ${index} return 读取当前章节().索引`),
@@ -330,24 +335,39 @@ try {
   await resetReload();
   assert.equal(await evaluate(`${state} return 状态.章节列表.length`), 1001);
   await openToc();
-  assert.equal(
+  // 虚拟列表：DOM 行数与总章数解耦（这里必须远小于 1001），
+  // 完整性由内容层占位高度 1001 × 48px 表达。
+  assert.ok(
     await evaluate(
-      'return document.querySelectorAll("#章节目录列表 button").length',
+      'return document.querySelectorAll("#章节目录列表 button").length < 100',
     ),
-    100,
   );
   assert.equal(
     await evaluate(
-      'return document.querySelector("#章节目录页码").textContent',
+      'return document.querySelector("#章节目录内容").style.height',
     ),
-    '1 / 11',
+    `${1001 * 48}px`,
   );
-  await click('#章节下一页');
+  // 滚到底：末章进入渲染窗口；滚回顶：首章回到窗口首行
+  await evaluate(
+    'const 列表 = document.querySelector("#章节目录列表"); 列表.scrollTop = 列表.scrollHeight;',
+  );
+  await pause(120);
+  assert.equal(
+    await evaluate(
+      'return Math.max(...[...document.querySelectorAll("#章节目录列表 button")].map((b) => Number(b.dataset.chapterIndex)))',
+    ),
+    1000,
+  );
+  await evaluate(
+    'const 列表 = document.querySelector("#章节目录列表"); 列表.scrollTop = 0;',
+  );
+  await pause(120);
   assert.equal(
     await evaluate(
       'return document.querySelector("#章节目录列表 button").dataset.chapterIndex',
     ),
-    '100',
+    '0',
   );
   await evaluate(
     'const input=document.querySelector("#章节搜索框");input.value="第999章";input.dispatchEvent(new Event("input",{bubbles:true}));',
@@ -363,12 +383,6 @@ try {
   await openToc();
   assert.equal(
     await evaluate(
-      'return document.querySelector("#章节目录页码").textContent',
-    ),
-    '10 / 11',
-  );
-  assert.equal(
-    await evaluate(
       'return document.querySelector("[aria-current=location]").dataset.chapterIndex',
     ),
     '998',
@@ -382,7 +396,7 @@ try {
     await evaluate(`${state} return 元素.可见内容.children.length < 100`),
   );
   console.log(
-    'PASS 1001-chapter paging, filtering, current-page restore, and bounded DOM',
+    'PASS 1001-chapter virtual list: bounded DOM, window follows scroll, filtered jump and centered current restore',
   );
 
   await click('#关闭章节目录按钮');
@@ -479,8 +493,10 @@ try {
     ).includes('未识别到章节'),
   );
   assert.equal(
-    await evaluate('return document.querySelector("#章节目录分页").hidden'),
-    true,
+    await evaluate(
+      'return document.querySelector("#章节目录内容").children.length',
+    ),
+    1,
   );
   console.log('PASS no-chapter empty state on a one-screen book');
 

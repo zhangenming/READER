@@ -3132,32 +3132,31 @@ dialog,
   overscroll-behavior: contain;
 }
 
+/* 虚拟列表：内容层只负责撑出真实滚动高度，行按 top 绝对定位（行高 48px，
+   与 js/章节目录.js 的 目录行高 保持一致，含 1px 下边框，border-box）。 */
+.章节目录内容 {
+  position: relative;
+}
+
 .章节目录项 {
-  min-height: 48px;
+  position: absolute;
+  right: 0;
+  left: 0;
+  min-height: 0;
+  height: 48px;
   gap: 8px;
 }
 
 .章节目录项名称 {
-  overflow-wrap: anywhere;
+  overflow: hidden;
   font-size: 13px;
   line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .章节目录项[data-chapter-type='分卷'] .章节目录项名称 {
   font-weight: 700;
-}
-
-.章节目录分页 {
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 16px;
-  border-top: 1px solid var(--边线色);
-}
-
-.章节目录分页[hidden] {
-  display: none;
 }
 
 /* ===== 批量导入关键词：面板右上角入口 + 弹窗 ===== */
