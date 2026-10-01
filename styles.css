@@ -3763,27 +3763,42 @@ dialog,
 }
 
 /* 跳入上下文列表（面板“≡”、查找历史、换词）时的一次性闪现：所有命中块
-   从自身向外扩散一圈同色光环，正在看的那处（当前行）再叠一层墨色光环
-   弹两下加重。动画只负责「第一眼钉住关键词」，播完即回到常态样式。
+   从自身向外扩散一圈关键词深色光环；当前行（正在看的那处）整行用关键词色
+   闪烁两拍，命中块再叠墨色光环放大弹两下——第一眼就能钉住那一行那个词。
+   动画只负责「第一眼钉住关键词」，播完即回到常态样式。
    闪现类由 关键词.js 挂行时按需挂上，重放时摘类强制回流再挂回。 */
 .上下文命中.闪现 {
-  animation: 上下文命中闪现 480ms ease-out;
+  animation: 上下文命中闪现 600ms ease-out;
+}
+
+.上下文行.闪现行 {
+  animation: 上下文当前行闪现 700ms ease-in-out 2;
 }
 
 .上下文行.当前 .上下文命中.闪现 {
-  animation: 上下文当前命中闪现 600ms ease-out 2;
+  animation: 上下文当前命中闪现 700ms ease-out 2;
 }
 
 @keyframes 上下文命中闪现 {
   0% {
     box-shadow:
       inset 0 -1px 0 rgb(30 74 122 / 22%),
-      0 0 0 0 var(--命中背景, var(--高亮色));
+      0 0 0 0 var(--命中深色, var(--命中背景, var(--高亮色)));
   }
   100% {
     box-shadow:
       inset 0 -1px 0 rgb(30 74 122 / 22%),
-      0 0 0 8px transparent;
+      0 0 0 12px transparent;
+  }
+}
+
+@keyframes 上下文当前行闪现 {
+  0%,
+  100% {
+    background: #f2f2f2;
+  }
+  45% {
+    background: var(--命中背景, #d9d9d9);
   }
 }
 
@@ -3792,16 +3807,19 @@ dialog,
     transform: scale(1);
     box-shadow:
       inset 0 -1px 0 rgb(30 74 122 / 22%),
-      0 0 0 0 rgb(0 0 0 / 42%);
+      0 0 0 0 rgb(0 0 0 / 55%);
   }
   35% {
-    transform: scale(1.18);
+    transform: scale(1.32);
+    box-shadow:
+      inset 0 -1px 0 rgb(30 74 122 / 22%),
+      0 0 0 5px rgb(0 0 0 / 32%);
   }
   100% {
     transform: scale(1);
     box-shadow:
       inset 0 -1px 0 rgb(30 74 122 / 22%),
-      0 0 0 11px transparent;
+      0 0 0 16px transparent;
   }
 }
 
@@ -3873,8 +3891,9 @@ dialog,
     animation: none;
   }
 
-  /* 命中块闪现同理撤掉：类还挂着，但光环扩散与缩放都不播 */
-  .上下文命中.闪现 {
+  /* 命中块闪现同理撤掉：类还挂着，但光环扩散、整行闪烁与缩放都不播 */
+  .上下文命中.闪现,
+  .上下文行.闪现行 {
     animation: none;
   }
 

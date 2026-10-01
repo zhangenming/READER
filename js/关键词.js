@@ -291,10 +291,8 @@ function 构建上下文行(关键词, idx, 配色) {
   const 行 = document.createElement('button');
   行.type = 'button';
   行.className = '上下文行';
-  行.classList.toggle(
-    '当前',
-    idx === 关键词.当前命中idx,
-  );
+  const 是当前 = idx === 关键词.当前命中idx;
+  行.classList.toggle('当前', 是当前);
   行.dataset.hitIndex = String(idx);
 
   const 序号 = document.createElement('span');
@@ -313,8 +311,13 @@ function 构建上下文行(关键词, idx, 配色) {
   命中.className = '上下文命中';
   命中.textContent = 关键词.文本;
   命中.style.setProperty('--命中背景', 配色.浅色);
+  命中.style.setProperty('--命中深色', 配色.深色);
   if (闪现待播) {
     命中.classList.add('闪现');
+    行.style.setProperty('--命中背景', 配色.浅色);
+    if (是当前) {
+      行.classList.add('闪现行');
+    }
   }
   const 后文 = document.createElement('span');
   后文.className = '上下文后文';
@@ -337,16 +340,19 @@ export function 渲染搭配上下文(关键词, 命中idx列表) {
   元素.上下文列表.scrollTop = 0;
 }
 
-// 换当前命中（↑/↓、批内跳转）时单独重放当前命中块的闪现，视线跟着当前行走。
+// 换当前命中（↑/↓、批内跳转）时单独重放当前行的整行闪烁 + 命中块闪现，视线跟着当前行走。
 // 闪现类常驻也只会播一次，重放必须先摘类强制回流再挂回。
 export function 重放当前命中闪现() {
-  const 命中块 = 元素.上下文列表.querySelector('.上下文行.当前 .上下文命中');
-  if (!命中块) {
+  const 行 = 元素.上下文列表.querySelector('.上下文行.当前');
+  if (!行) {
     return;
   }
-  命中块.classList.remove('闪现');
-  void 命中块.offsetWidth;
-  命中块.classList.add('闪现');
+  const 命中块 = 行.querySelector('.上下文命中');
+  行.classList.remove('闪现行');
+  命中块?.classList.remove('闪现');
+  void 行.offsetWidth;
+  行.classList.add('闪现行');
+  命中块?.classList.add('闪现');
 }
 
 export function 追加上下文行块(向前 = false) {
