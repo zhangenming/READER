@@ -266,7 +266,7 @@ try {
       await evaluate(
         'return document.querySelector("#阅读统计内容").textContent',
       )
-    ).includes('今日自动滚动'),
+    ).includes('书籍明细'),
   );
   const statsTop = await evaluate(`${state} return 元素.滚动容器.scrollTop`);
   await evaluate(
@@ -386,6 +386,64 @@ try {
   );
 
   await click('#关闭章节目录按钮');
+  await pause(160);
+  // 正文标题行点击跳章：与关键词命中跳转同款落点——目标章标题落回被点标题
+  // 的同一屏幕高度，不再顶成第一行；目录跳转（上方用例）仍走置顶，两条路径在此分野。
+  const 标题落点 = await evaluate(`${state}
+    const { 查找偏移所在行 } = await import("./js/排版引擎.js");
+    const 行idx = 查找偏移所在行(状态.章节列表[500].偏移);
+    元素.滚动容器.scrollTop = 行idx * 状态.行高 - 状态.行高 * 2;
+    return 行idx;
+  `);
+  await pause(250);
+  const 被点标题位置 = await evaluate(`${state}
+    const 行元素 = 元素.可见内容.querySelector(
+      '.正文行.章节标题行[data-chapter-index="500"]',
+    );
+    if (!行元素) return null;
+    return (
+      行元素.getBoundingClientRect().top -
+      元素.滚动容器.getBoundingClientRect().top
+    );
+  `);
+  assert.ok(被点标题位置 !== null, 'rendered title row of chapter 500');
+  await evaluate(
+    `${state}
+      元素.可见内容
+        .querySelector('.正文行.章节标题行[data-chapter-index="500"]')
+        .click();`,
+  );
+  let 下一标题位置 = null;
+  for (let n = 0; n < 100 && 下一标题位置 === null; n++) {
+    await pause(50);
+    下一标题位置 = await evaluate(`${state}
+      if (状态.滚动动画目标) return null;
+      const 行元素 = 元素.可见内容.querySelector(
+        '.正文行.章节标题行[data-chapter-index="501"]',
+      );
+      if (!行元素) return null;
+      return (
+        行元素.getBoundingClientRect().top -
+        元素.滚动容器.getBoundingClientRect().top
+      );
+    `);
+  }
+  assert.ok(下一标题位置 !== null, 'next chapter title rendered after click');
+  assert.ok(
+    Math.abs(下一标题位置 - 被点标题位置) < 2,
+    `下一章标题要落回被点标题的屏幕位置：${下一标题位置} vs ${被点标题位置}`,
+  );
+  assert.ok(
+    await evaluate(`${state}
+      const { 查找偏移所在行 } = await import("./js/排版引擎.js");
+      const 期望 = 查找偏移所在行(状态.章节列表[501].偏移) * 状态.行高 - 状态.行高 * 2;
+      return Math.abs(元素.滚动容器.scrollTop - 期望) < 1;
+    `),
+    'scrollTop anchors the next title two rows below the viewport top',
+  );
+  console.log(
+    'PASS in-text title click keeps the clicked screen row for the next chapter',
+  );
   await send('Emulation.setDeviceMetricsOverride', {
     width: 375,
     height: 667,
