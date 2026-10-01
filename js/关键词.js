@@ -294,6 +294,9 @@ function 构建上下文行(关键词, idx, 配色) {
   const 序号 = document.createElement('span');
   序号.className = '上下文序号';
   序号.textContent = String(idx + 1);
+  const 位置百分比 = document.createElement('span');
+  位置百分比.className = '上下文百分比';
+  位置百分比.textContent = `${Math.round((命中起点 / 状态.文本.length) * 100)}%`;
   const 前文 = document.createElement('span');
   前文.className = '上下文前文';
   // 两端各补 LRM：前文用 direction:rtl 实现左侧省略号，段首/段尾的 “ ！” 等中性标点
@@ -308,7 +311,7 @@ function 构建上下文行(关键词, idx, 配色) {
   后文.className = '上下文后文';
   后文.textContent = 读取上下文片段(命中终点, 命中终点 + 上下文后文字数);
 
-  行.append(序号, 前文, 命中, 后文);
+  行.append(序号, 位置百分比, 前文, 命中, 后文);
   return 行;
 }
 
