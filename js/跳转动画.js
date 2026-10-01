@@ -209,7 +209,7 @@ export function 获取元素行位置(字元素) {
   return 查找偏移所在行(文本偏移) * 状态.行高 - 元素.滚动容器.scrollTop;
 }
 
-export function 动画滚动到(目标位置, 边框跳转 = null) {
+export function 动画滚动到(目标位置, 边框跳转 = null, 到位回调 = null) {
   取消滚动动画();
   停止自动滚动钩子();
   const 视口度量 = {
@@ -226,6 +226,7 @@ export function 动画滚动到(目标位置, 边框跳转 = null) {
   if (Math.abs(距离) < 1 && Math.abs(边框横向距离) < 1) {
     元素.滚动容器.scrollTop = 终点;
     渲染可见行(true);
+    到位回调?.();
     return false;
   }
 
@@ -269,6 +270,7 @@ export function 动画滚动到(目标位置, 边框跳转 = null) {
       if (边框动画) {
         播放跳转迸发(边框动画.终点);
       }
+      到位回调?.();
     }
   });
   return Boolean(边框动画);
@@ -320,6 +322,22 @@ export function 动画滚动到(目标位置, 边框跳转 = null) {
     const 横向缩放 = 1 + (动画.终点.宽度 / 动画.起点.宽度 - 1) * 进度;
     元素.跳转边框.style.transform = `translate3d(${左侧}px, ${动画.起点.顶部}px, 0) scaleX(${横向缩放})`;
   }
+}
+
+/* 查找弹窗点行确认进入正文：滚动到位后在落点命中处放一发迸发，标出「落在了哪」。
+   确认时临时关键词已撤销，落点高亮来自来源关键词；来源关键词不在了（直接查找的
+   临时词未保存成标记）或落点行未挂载时无从定位，静默跳过。 */
+export function 播放落点迸发(关键词, 命中idx) {
+  if (!关键词 || !Number.isInteger(命中idx) || 命中idx < 0) {
+    return;
+  }
+  const 字元素 = 元素.可见内容.querySelector(
+    `.字.命中[data-keyword-id="${关键词.id}"][data-hit-index="${命中idx}"]`,
+  );
+  if (!字元素) {
+    return;
+  }
+  播放跳转迸发(获取元素命中边框(字元素));
 }
 
 export function 取消滚动动画() {

@@ -20,10 +20,9 @@ import {
   渲染查找上下文,
   渲染搭配上下文,
   追加上下文行块,
-  重放当前命中闪现,
 } from './关键词.js';
 import { 更新关键词指示器 } from './指示器.js';
-import { 动画滚动到 } from './跳转动画.js';
+import { 动画滚动到, 播放落点迸发 } from './跳转动画.js';
 import { 读取阅读位置, 安排保存持久化状态 } from './持久化.js';
 
 // 查找弹窗 + 词组搭配分析：从 app.js 绑定事件() 闭包拆出。
@@ -113,8 +112,7 @@ export function 处理搭配悬停(事件) {
     标记对应搭配行();
     渲染搭配上下文(关键词, 统计项.命中idx列表);
   } else {
-    // 悬停恢复是瞬态视图，不播入场闪现，避免鼠标扫过搭配列时列表反复闪
-    渲染查找上下文(关键词, Math.max(0, 关键词.当前命中idx), false);
+    渲染查找上下文(关键词, Math.max(0, 关键词.当前命中idx));
   }
 }
 
@@ -153,7 +151,12 @@ export function 处理上下文行点击(事件) {
   const idx = Number(行.dataset.hitIndex);
   if (!Number.isInteger(idx) || idx < 0 || idx >= 关键词.命中位置.length)
     return;
-  临时跳到查找命中(idx);
+  // 滚动到位后在落点命中处放一发迸发，标出「落在了哪」；来源关键词为空
+  // （直接查找的临时词未保存成标记）时落点无常驻高亮，播放函数自行跳过。
+  const 来源关键词id = 查找临时状态.来源关键词id;
+  临时跳到查找命中(idx, true, function 滚动到位() {
+    播放落点迸发(查找关键词(来源关键词id), idx);
+  });
   // 确认进入正文：恢复原关键词状态，但不撤销这次定位，也不保存临时标记。
   const 原状态 = 查找临时状态;
   const 已有关键词 = 查找关键词(原状态.来源关键词id);
@@ -503,7 +506,7 @@ function 移除临时查找关键词() {
   更新查找导航状态(null);
 }
 
-function 临时跳到查找命中(命中idx, 定位正文 = true) {
+function 临时跳到查找命中(命中idx, 定位正文 = true, 到位回调 = null) {
   const 关键词 = 查找关键词(状态.查找临时关键词id);
   if (!关键词 || !查找临时状态) {
     return;
@@ -529,7 +532,6 @@ function 临时跳到查找命中(命中idx, 定位正文 = true) {
     else 行.removeAttribute('aria-current');
   }
   元素.上下文列表.querySelector('.当前')?.scrollIntoView({ block: 'nearest' });
-  重放当前命中闪现();
   状态.悬停关键词id = 关键词.id;
   状态.悬停命中idx = 查找临时状态.命中idx;
   渲染可见行(true);
@@ -538,7 +540,7 @@ function 临时跳到查找命中(命中idx, 定位正文 = true) {
   const 目标位置 =
     行idx * 状态.行高 - (元素.滚动容器.clientHeight - 状态.行高) / 2;
   更新查找导航状态(关键词);
-  if (定位正文) 动画滚动到(目标位置);
+  if (定位正文) 动画滚动到(目标位置, null, 到位回调);
 }
 
 export function 定位查找命中(方向) {
