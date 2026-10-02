@@ -1325,8 +1325,12 @@ body.关键词手势中 .滚动容器 {
       反馈处处一致；底色随 --墨色 混色，纸面变深时墨色翻成浅墨（见 js/字体设置.js
       刷新界面墨色），色带自动由「压暗」改成「提亮」，深浅纸面都看得见
       （与 关键词排序钮:hover 同一个路子）。
-   浓度 12%：原来的 brightness(0.94) 只压暗约 6%，扫过时不细看看不出落在哪行；
-   12% 是那一档的两倍，一眼可辨，又还压得住正文墨色（混色后对比度远在 4.5:1 之上）。
+   浓度：底色取 --墨色 18% 再叠 7% 强调色（合成约 24% 的暖底），是原 brightness(0.94)
+   约 6% 压暗的三四倍，扫过就落在哪行一眼可见；正文墨色压上去后对比度仍在 5:1 上下。
+   光靠色带还不够——相邻段落本就有蓝/粉色带，深浅差异容易被底色吃掉，所以再加一道
+   行缘立柱：右缝里贴着右缘立一根 4px 朱砂红（--强调色，与章节标题行悬停同色语汇），
+   顶满行高，是个不随纸面色漂移的硬标记（右缘最外 1px 被 html::after 的白线压着，
+   实显 3px）。左缘不能放：那一段被 .章节轨道（白轴，z-index 6）盖住。
    z-index: 1 让它盖住字（.字 是 z-index:auto 的定位元素），但仍让位给层级更高的
    命中准星外框与 x/y 徽标（z-index 3），那些标记保持原样不糊。
    滚动期间必须安静：内容从静止的指针下方掠过，:hover 会把掠过的行挨个点亮，
@@ -1340,12 +1344,21 @@ body:not(.行高亮暂停中) .正文行:not(.章节标题行)::after {
   inset: 0;
   z-index: 1;
   background: transparent;
+  /* 立柱常挂、只换颜色：从 none 起步的 box-shadow 不过渡，会硬闪一下 */
+  box-shadow: inset -4px 0 0 0 transparent;
   pointer-events: none;
-  transition: background-color 120ms ease;
+  transition:
+    background-color 120ms ease,
+    box-shadow 120ms ease;
 }
 
 body:not(.行高亮暂停中) .正文行:not(.章节标题行):hover::after {
-  background: color-mix(in srgb, var(--墨色) 12%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--强调色) 7%,
+    color-mix(in srgb, var(--墨色) 18%, transparent)
+  );
+  box-shadow: inset -4px 0 0 0 var(--强调色);
 }
 
 /* 折行句：同一原文行（一句话）因宽度不够被拆成多个显示行时，

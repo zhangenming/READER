@@ -287,7 +287,7 @@ try {
         用旧样式
           ? `let 旧 = document.getElementById('旧样式');
            if (!旧) { 旧 = document.createElement('style'); 旧.id = '旧样式'; document.head.append(旧); }
-           旧.textContent = '.正文行:hover::after{background:transparent!important} body:not(.行高亮暂停中) .正文行:hover{filter:brightness(0.94)!important}';
+           旧.textContent = '.正文行:hover::after{background:transparent!important;box-shadow:none!important} body:not(.行高亮暂停中) .正文行:hover{filter:brightness(0.94)!important}';
            return true;`
           : `document.getElementById('旧样式')?.remove(); return true;`,
       );
@@ -370,8 +370,6 @@ try {
   }
 
   await 拍一组('行悬停-浅纸');
-  await 拍一组('行悬停引文-浅纸', '引文');
-  await 拍一组('行悬停命中-浅纸', '命中');
 
   await 求值(`const 字体 = await import("./js/字体设置.js");
     字体.设置纸面色('#141414', { 静默: true });
