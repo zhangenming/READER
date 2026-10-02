@@ -221,6 +221,7 @@ export const 元素 = {
   行距值: document.querySelector('#行距值'),
   章节目录按钮: document.querySelector('#章节目录按钮'),
   当前章节名: document.querySelector('#当前章节名'),
+  当前章节进度: document.querySelector('#当前章节进度'),
   章节目录弹窗: document.querySelector('#章节目录弹窗'),
   章节目录摘要: document.querySelector('#章节目录摘要'),
   章节目录列表: document.querySelector('#章节目录列表'),

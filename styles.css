@@ -3133,7 +3133,16 @@ dialog,
   white-space: nowrap;
 }
 
-.当前章节名:empty {
+/* 百分比钉在名字右侧，不参与省略号（名字再长也不许把进度吃掉）；
+   数字等宽，5% → 45% → 100% 时胶囊不会左右抖。 */
+.当前章节进度 {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.当前章节名:empty,
+.当前章节进度:empty {
   display: none;
 }
 

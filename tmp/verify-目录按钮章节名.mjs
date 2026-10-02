@@ -1,7 +1,8 @@
 // 一次性验证脚本：右下角「目录」按钮显示当前章节名，只留名字、剥掉章节序号。
 // 覆盖：各种标题形态（第X章/裸序号/卷X/第X部分/Chapter N/中英配对/顿号冒号分隔/序跋）
 // 逐章滚动后按钮上的文字、序号不许残留、旧的章节总数不再出现、长名省略号收尾且全名进 title、
-// 右下三钮不越界、无章节时这一格空掉且不占 flex 间距。
+// 右下三钮不越界、本章百分比（章首 0%、章中按本章中点、书末 100%、不许串成全书进度、
+// 与悬停 title 那笔对账）、无章节时名字和百分比两格都空掉且不占 flex 间距。
 // 自启 server.mjs + headless Chrome（CDP + Fetch 拦截喂 fixture），按 AGENTS.md 清理 reader-* profile。
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
@@ -206,8 +207,11 @@ try {
   const 按钮文字 = () =>
     求值(`${S}
       const 名 = 元素.当前章节名;
+      const 率 = 元素.当前章节进度;
       return { 文字: 名.textContent, 整钮: 元素.章节目录按钮.textContent, 显示: getComputedStyle(名).display,
         截断: 名.scrollWidth > 名.clientWidth + 1,
+        百分比: 率.textContent, 百分比显示: getComputedStyle(率).display,
+        百分比宽: Math.round(率.getBoundingClientRect().width),
         标题: 元素.章节目录按钮.title, 按钮宽: Math.round(元素.章节目录按钮.getBoundingClientRect().width) };`);
 
   async function 滚到章节(索引) {
@@ -215,6 +219,25 @@ try {
       const { 查找偏移所在行 } = await import('./js/排版引擎.js');
       元素.滚动容器.scrollTop = 查找偏移所在行(状态.章节列表[${索引}].偏移) * 状态.行高;`);
     await pause(220);
+  }
+
+  // 滚到某章正文中点，回报「本章中点比例」与「同一位置的全书比例」两种期望值
+  async function 滚到章中(索引) {
+    const 量 = await 求值(`${S}
+      const 起 = 状态.章节列表[${索引}].偏移, 止 = 状态.章节列表[${索引 + 1}].偏移;
+      const 中 = (起 + 止) / 2;
+      let 最佳 = 0, 差 = Infinity;
+      状态.行起点列表.forEach((偏, idx) => {
+        const d = Math.abs(偏 - 中);
+        if (d < 差) { 差 = d; 最佳 = idx; }
+      });
+      const 上限 = 元素.滚动容器.scrollHeight - 元素.滚动容器.clientHeight;
+      if (最佳 * 状态.行高 > 上限) 最佳 = Math.floor(上限 / 状态.行高);
+      元素.滚动容器.scrollTop = 最佳 * 状态.行高;
+      return { 本章: ((状态.行起点列表[最佳] - 起) / (止 - 起) * 100).toFixed(0),
+        全书: (状态.行起点列表[最佳] / 状态.文本.length * 100).toFixed(0) };`);
+    await pause(250);
+    return 量;
   }
 
   // ① 逐章滚动：按钮上就是那一章的名字，序号已剥
@@ -235,6 +258,14 @@ try {
       态.标题.includes((await 求值(`${S} return 状态.章节列表[${索引}].标题;`)).split('\n')[0]),
       失败(`① 悬停 title 应带完整原始标题：${态.标题}`),
     );
+    // 刚落到章首 = 0%，且胶囊上这一笔和悬停里那笔是同一个数
+    assert.match(态.百分比, /^\d+%$/, 失败(`① 百分比应形如 NN%：${态.百分比}`));
+    assert.ok(
+      态.标题.includes(` ${态.百分比}`),
+      失败(`① 按钮百分比「${态.百分比}」要和悬停 title 里那笔对得上：${态.标题}`),
+    );
+    assert.equal(态.百分比, '0%', 失败(`① 刚落到章首应为 0%，实际 ${态.百分比}`));
+    assert.ok(态.百分比宽 > 0, 失败(`① 百分比那一格要有宽度（没被省略号吃掉）`));
   }
   console.log('① 逐章读数:', JSON.stringify(实测, null, 0));
 
@@ -274,12 +305,16 @@ try {
     名.style.display = 'inline-block';
     const 占位宽 = Math.round(元素.章节目录按钮.getBoundingClientRect().width);
     名.style.display = '';
-    const 态 = { 文字: 名.textContent, 显示: getComputedStyle(名).display, 宽, 占位宽 };
+    const 态 = { 文字: 名.textContent, 显示: getComputedStyle(名).display,
+      百分比: 元素.当前章节进度.textContent,
+      百分比显示: getComputedStyle(元素.当前章节进度).display, 宽, 占位宽 };
     状态.章节列表 = 原;
     更新章节进度();
     return 态;`);
   assert.equal(基线宽.文字, '', 失败(`④ 无章节时按钮上不该有文字：${基线宽.文字}`));
   assert.equal(基线宽.显示, 'none', 失败(`④ 空名字格应 display:none，不吃 6px 间距，实际 ${基线宽.显示}`));
+  assert.equal(基线宽.百分比, '', 失败(`④ 无章节时不该有百分比：${基线宽.百分比}`));
+  assert.equal(基线宽.百分比显示, 'none', 失败(`④ 空百分比格也应 display:none，实际 ${基线宽.百分比显示}`));
   assert.equal(
     基线宽.占位宽 - 基线宽.宽,
     6,
@@ -290,11 +325,29 @@ try {
   const 恢复后 = await 按钮文字();
   assert.equal(恢复后.文字, 期望[0], 失败(`④ 恢复章节后读数应回到「${期望[0]}」，实际 ${恢复后.文字}`));
 
+  // ⑤ 百分比是本章节进度，不许串成全书进度；书末最后一章 100%
+  const 章中 = await 滚到章中(1);
+  const 中态 = await 按钮文字();
+  assert.equal(
+    中态.百分比,
+    `${章中.本章}%`,
+    失败(`⑤ 第三章章中应显示本章 ${章中.本章}%，实际 ${中态.百分比}`),
+  );
+  assert.notEqual(中态.百分比, `${章中.全书}%`, 失败(`⑤ ${章中.全书}% 是全书进度，不许串成本章进度`));
+  assert.equal(中态.文字, 期望[1], 失败(`⑤ 章中名字仍应是「${期望[1]}」，实际 ${中态.文字}`));
+  console.log('⑤ 章中读数:', 中态.文字, 中态.百分比, '（串成全书进度会是', `${章中.全书}%）`);
+
+  await 求值(`${S} 元素.滚动容器.scrollTop = 元素.滚动容器.scrollHeight;`);
+  await pause(250);
+  const 书末 = await 按钮文字();
+  assert.equal(书末.百分比, '100%', 失败(`⑤ 滚到书末最后一章应显示 100%，实际 ${书末.百分比}`));
+  assert.equal(书末.文字, 期望[章数 - 1], 失败(`⑤ 书末名字应为「${期望[章数 - 1]}」，实际 ${书末.文字}`));
+
   // 出图：右下角按钮组放大。先覆盖度量再量盒子——覆盖会改变 innerHeight，
   // 按覆盖前的坐标裁只会裁到一片纸面。
   await 发送('Emulation.setDeviceMetricsOverride', { width: 1280, height: 900, deviceScaleFactor: 4, mobile: false });
   await pause(250);
-  await 滚到章节(4);
+  await 滚到章中(4);
   const 盒 = await 求值(`
     const b = document.querySelector('.右下按钮组').getBoundingClientRect();
     return { x: Math.max(0, b.left - 12), y: Math.max(0, b.top - 12), w: b.width + 24, h: b.height + 24 };`);
@@ -310,7 +363,7 @@ try {
   await 发送('Emulation.clearDeviceMetricsOverride');
   console.log('已写入 tmp/目录按钮-章节名.png');
 
-  console.log('\nOK：目录按钮显示当前章节名，12 种标题形态序号剥净、全名进悬停、长名省略号、空态不占位');
+  console.log('\nOK：按钮上「目」图标 + 章节名 + 本章百分比，12 种标题形态序号剥净、长名省略号不吃掉百分比、书末 100%、空态不占位');
   ws.close();
 } finally {
   await 收尾();
