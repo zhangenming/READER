@@ -20,7 +20,7 @@ function 元素替身(选择器) {
     const 属性 = new Map();
     节点.set(选择器, {
       style: {},
-      classList: { add() {}, remove() {}, contains: () => false },
+      classList: { add() {}, remove() {}, contains: () => false, toggle() {} },
       clientWidth: 800,
       clientHeight: 200,
       scrollHeight: 2000,
@@ -122,7 +122,11 @@ test('chapter progress reuses supplied geometry and floating-point scroll positi
   for (let idx = 0; idx < 60; idx++) 更新滚动块位置(度量, 59.6);
   assert.equal(几何读取次数, 0);
   assert.ok(元素.章节目录按钮.title.includes('第二章'));
-  assert.deepEqual(读取当前章节(1800, 1800), { 索引: 1, 进度: 1 });
+  assert.deepEqual(读取当前章节(1800, 1800, 200), { 索引: 1, 进度: 1 });
+  assert.equal(几何读取次数, 0);
+  // 章节和进度都按视口中线：60 + 可视高(200−1−1)/2 = 159 → 落在偏移 150 那行
+  // → 第二章（100~200）的一半。按顶边 60 只到得了偏移 100 那行，报第二章 0%。
+  assert.deepEqual(读取当前章节(60, 1800, 200), { 索引: 1, 进度: 0.5 });
   assert.equal(几何读取次数, 0);
   assert.equal(读取当前章节(60).索引, 1);
   assert.equal(几何读取次数, 2);

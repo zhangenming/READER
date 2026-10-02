@@ -43,8 +43,10 @@ export function 白线高() {
 
 // 正文可视高 = 容器高 − 两条白线。凡「一屏」（翻页步长、快翻距离、密度前瞻窗口）
 // 都用它；用容器高会多算白线那几十像素：翻页会跳过头，末行会整行压在白条下面。
-export function 正文可视高() {
-  return Math.max(0, 元素.滚动容器.clientHeight - 当前.顶 - 当前.底);
+// 容器高可由调用方传入：滚动路径上 更新滚动块位置 已经量过一次，别再读一遍
+// （见 tests/chapter-integration.test.mjs 的「supplied geometry 不许再读 DOM」）。
+export function 正文可视高(容器高度 = 元素.滚动容器.clientHeight) {
+  return Math.max(0, 容器高度 - 当前.顶 - 当前.底);
 }
 
 let 上次日志 = '';
