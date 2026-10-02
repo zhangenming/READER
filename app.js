@@ -711,6 +711,9 @@ function 绑定事件() {
         return;
       }
       状态.正文悬停已暂停 = true;
+      // 行悬停高亮与正文悬停同一条生灭线：滚动一开始就熄掉（CSS 侧
+      // body:not(.行高亮暂停中) .正文行:hover），指针一动由 处理正文指针移动 点回。
+      document.body.classList.add('行高亮暂停中');
       if (状态.悬停关键词id !== null) {
         切换同组高亮(null, null);
       }

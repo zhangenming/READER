@@ -542,6 +542,7 @@ export function 处理正文指针移动(事件) {
     return;
   }
   状态.正文悬停已暂停 = false;
+  document.body.classList.remove('行高亮暂停中');
   处理高亮移入(事件);
 }
 
