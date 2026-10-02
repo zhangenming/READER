@@ -206,7 +206,7 @@ try {
   const 按钮文字 = () =>
     求值(`${S}
       const 名 = 元素.当前章节名;
-      return { 文字: 名.textContent, 显示: getComputedStyle(名).display,
+      return { 文字: 名.textContent, 整钮: 元素.章节目录按钮.textContent, 显示: getComputedStyle(名).display,
         截断: 名.scrollWidth > 名.clientWidth + 1,
         标题: 元素.章节目录按钮.title, 按钮宽: Math.round(元素.章节目录按钮.getBoundingClientRect().width) };`);
 
@@ -238,9 +238,10 @@ try {
   }
   console.log('① 逐章读数:', JSON.stringify(实测, null, 0));
 
-  // ② 旧的「章节总数」不再出现在按钮上（12 会被读成序号）
+  // ② 按钮上只剩「目」图标 + 名字：「目录」二字和旧的章节总数都不许出现
   const 末章 = await 按钮文字();
   assert.ok(!/^\d+$/.test(末章.文字), 失败(`② 按钮上不应再是纯数字计数：${末章.文字}`));
+  assert.ok(!末章.整钮.includes('目录'), 失败(`② 按钮上不该再有「目录」二字：「${末章.整钮}」`));
 
   // ③ 超长名字省略号收尾，且没把整行撑破
   await 滚到章节(10);
@@ -284,6 +285,7 @@ try {
     6,
     失败(`④ 空格子若参与布局会多占一个 6px gap：${基线宽.宽} → ${基线宽.占位宽}`),
   );
+  console.log('④ 空态只剩「目」图标，按钮宽:', 基线宽.宽);
   await 滚到章节(0);
   const 恢复后 = await 按钮文字();
   assert.equal(恢复后.文字, 期望[0], 失败(`④ 恢复章节后读数应回到「${期望[0]}」，实际 ${恢复后.文字}`));
