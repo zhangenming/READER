@@ -3124,6 +3124,19 @@ dialog,
   cursor: default;
 }
 
+/* 按钮上的当前章节名：整条读数只是入口提示，装不下就省略号收尾，
+   全名和本章进度始终在按钮 title 里。空态不吃 flex 间距。 */
+.当前章节名 {
+  max-width: min(16em, 34vw);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.当前章节名:empty {
+  display: none;
+}
+
 .章节目录弹窗 {
   width: min(480px, calc(100vw - 32px));
 }

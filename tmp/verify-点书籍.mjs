@@ -116,7 +116,7 @@ try {
       // 面板开关文案改成四位数，模拟「关键词 1203」的宽度
       const 开关 = document.querySelector('#关键词面板开关');
       开关.textContent = '关键词 1203';
-      document.querySelector('#章节数量').textContent = '217';
+      document.querySelector('#当前章节名').textContent = '欧洲：多元化的国际秩序';
       await new Promise(r => requestAnimationFrame(r));
       const 组 = document.querySelector('.右下按钮组').getBoundingClientRect();
       const b = document.querySelector('#内容选择按钮').getBoundingClientRect();

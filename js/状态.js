@@ -220,7 +220,7 @@ export const 元素 = {
   行距控制: document.querySelector('#行距控制'),
   行距值: document.querySelector('#行距值'),
   章节目录按钮: document.querySelector('#章节目录按钮'),
-  章节数量: document.querySelector('#章节数量'),
+  当前章节名: document.querySelector('#当前章节名'),
   章节目录弹窗: document.querySelector('#章节目录弹窗'),
   章节目录摘要: document.querySelector('#章节目录摘要'),
   章节目录列表: document.querySelector('#章节目录列表'),
