@@ -1,7 +1,7 @@
-// 一次性验证脚本：章节标题行的常驻强调样式（加粗 + 首字前朱砂红短竖条）。
-// 覆盖：① 字重只落在标题行、正文不动；② 标题行里的命中词不被抢色；
-// ③ 竖条几何（3px、不压首字、白轴显形时也没被盖住）；④ 满行长标题加粗后末字不裁；
-// ⑤ 悬停态仍然生效（转朱砂红）；⑥ 深浅两档各出一张图。
+// 一次性验证脚本：章节标题行的常驻强调样式（加粗 700 + 0.6px 描边 + 4px 顶满立柱 + 独占行标题底线）。
+// 覆盖：① 字重/描边只落在标题行、正文不动，折行长标题不画底线、末字不裁；② 标题行里的命中词
+// 不被抢色抢字重（与正文命中词逐项一致）；③ 立柱 4px 顶满行高、与首字留缝、白轴显形时也没被盖住；
+// ⑤ 悬停态仍然生效（转朱砂红 + 下划线）；⑥ 独占一行的标题压底线；⑦ 深浅两档各出一张图。
 // 自启 server.mjs + headless Chrome（CDP + Fetch 拦截喂 fixture），按 AGENTS.md 清理 reader-* profile。
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
@@ -168,13 +168,19 @@ try {
     const 条 = { left: 行盒.left + parseFloat(伪.left), width: parseFloat(伪.width) };
     return {
       标题字重: getComputedStyle(字).fontWeight,
+      标题描边: getComputedStyle(字).webkitTextStrokeWidth,
+      命中描边: 行.querySelector('.字.命中')
+        ? getComputedStyle(行.querySelector('.字.命中')).webkitTextStrokeWidth : '无',
       正文字重: getComputedStyle(净字(正文行)).fontWeight,
+      正文描边: getComputedStyle(净字(正文行)).webkitTextStrokeWidth,
       折行数: 折行,
       条宽: 条.width, 条高: 行盒.height - parseFloat(伪.top) - parseFloat(伪.bottom),
       条底色: 伪.backgroundColor,
       条右缘到首字: +(首字盒.left - 条.left - 条.width).toFixed(1),
       条在行内: 条.left >= 行盒.left && 条.left + 条.width <= 首字盒.left,
       行高: 行盒.height,
+      折行标题有底线: [...document.querySelectorAll('.正文行[data-chapter-index="1"]')]
+        .map((r) => /inset/.test(getComputedStyle(r).boxShadow)),
       末字余量: +(行盒.right - [...行.querySelectorAll('.字')].pop().getBoundingClientRect().right).toFixed(1),
       条心命中: (() => {
         const 点 = document.elementFromPoint(条.left + 条.width / 2, 行盒.top + 行盒.height / 2);
@@ -182,13 +188,19 @@ try {
       })(),
     };`);
   assert.equal(量.标题字重, '700', 失败(`① 标题行字重应为 700，实际 ${量.标题字重}`));
+  assert.equal(量.标题描边, '0.6px', 失败(`① 标题行应有 0.6px 同色描边，实际 ${量.标题描边}`));
   assert.equal(量.正文字重, '100', 失败(`① 正文行字重不该被带走，实际 ${量.正文字重}`));
+  assert.equal(量.正文描边, '0px', 失败(`① 正文行不该有描边，实际 ${量.正文描边}`));
   assert.equal(量.折行数, 2, 失败(`④ 这条长标题应折成 2 行（末字余量才有意义），实际 ${量.折行数}`));
   assert.ok(量.末字余量 > 0, 失败(`④ 加粗后末字越出行盒会被裁，余量 ${量.末字余量}px`));
-  assert.equal(量.条宽, 3, 失败(`③ 竖条应 3px 宽，实际 ${量.条宽}`));
+  assert.deepEqual(
+    量.折行标题有底线, [false, false],
+    失败(`① 折行的长标题不许画底线（会在标题中间切一刀）：${JSON.stringify(量.折行标题有底线)}`),
+  );
+  assert.equal(量.条宽, 4, 失败(`③ 立柱应 4px 宽，实际 ${量.条宽}`));
   assert.ok(
-    量.条高 > 量.行高 * 0.5 && 量.条高 < 量.行高 * 0.95,
-    失败(`③ 竖条高度该在行高的 50%~95% 之间，实际 ${量.条高}/${量.行高}`),
+    Math.abs(量.条高 - 量.行高) < 1,
+    失败(`③ 立柱应顶满行高，实际 ${量.条高}/${量.行高}`),
   );
   assert.ok(量.条在行内, 失败(`③ 竖条要落在行首留白里（不压首字）：${JSON.stringify(量)}`));
   assert.ok(量.条右缘到首字 >= 2, 失败(`③ 竖条与首字之间至少留 2px，实际 ${量.条右缘到首字}`));
@@ -211,7 +223,7 @@ try {
     const 标题普通字 = [...行.querySelectorAll('.字')].find((元) => 元.className === '字');
     const 正文命中字 = [...document.querySelectorAll('.正文行:not(.章节标题行) .字.命中')][0];
     const 取 = (元) => ({ 色: getComputedStyle(元).color, 底: getComputedStyle(元).backgroundColor,
-      重: getComputedStyle(元).fontWeight });
+      重: getComputedStyle(元).fontWeight, 描边: getComputedStyle(元).webkitTextStrokeWidth });
     return { 有: !!标题命中字 && !!正文命中字, 标题命中: 取(标题命中字), 标题普通: 取(标题普通字),
       正文命中: 取(正文命中字), 轴在画: !元素.关键词指示器.hidden };`);
   assert.ok(命中.有, 失败('② 标题行与正文行里都该有命中词'));
@@ -259,7 +271,19 @@ try {
   assert.equal(悬停.字重, '700', 失败(`⑤ 悬停时仍应保持加粗：${悬停.字重}`));
   console.log('⑤ 悬停:', JSON.stringify(悬停));
 
-  // ⑥ 深浅两档各出一张图（指针要先挪开：停在标题上会带着悬停态一起拍进去）
+  // ⑥ 独占一行的标题才画底线（折行的那档已在 ① 里断言不画）
+  await 停在标题(0);
+  const 短标题 = await 求值(`${S}
+    const 行 = document.querySelector('.正文行[data-chapter-index="0"]');
+    return { 有提示: 行.hasAttribute('data-chapter-hint'),
+      底线: getComputedStyle(行).boxShadow,
+      立柱: getComputedStyle(行, '::before').width };`);
+  assert.ok(短标题.有提示, 失败('⑥ 「第一章 俱乐部」应独占一行（带 data-chapter-hint）'));
+  assert.match(短标题.底线, /inset/, 失败(`⑥ 独占一行的标题该压一条底线，实际 ${短标题.底线}`));
+  assert.equal(短标题.立柱, '4px', 失败(`⑥ 立柱该跟着短标题走，实际 ${短标题.立柱}`));
+  console.log('⑥ 独占行标题:', JSON.stringify(短标题));
+
+  // ⑦ 深浅两档各出一张图（指针要先挪开：停在标题上会带着悬停态一起拍进去）
   async function 出图(名) {
     await 停在标题(1);
     await 发送('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 640, y: 700 });
@@ -304,7 +328,7 @@ try {
   await pause(400);
   await 出图('浅');
   console.log('已写入 tmp/章节行醒目-深.png / -浅.png');
-  console.log('\nOK：标题行加粗 700 + 首字前 3px 朱砂红竖条；正文不动、命中词不抢、白轴不盖、末字不裁、悬停照旧');
+  console.log('\nOK：标题行加粗 700 + 0.6px 描边 + 4px 顶满立柱 + 独占行标题底线；正文不动、命中词不抢、白轴不盖、折行标题不切刀、末字不裁、悬停照旧');
   ws.close();
 } finally {
   await 收尾();
