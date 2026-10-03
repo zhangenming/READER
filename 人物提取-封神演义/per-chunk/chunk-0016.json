@@ -1,0 +1,28 @@
+{
+  "chunk": 16,
+  "characters": [
+    {"name": "纣王", "aliases": ["殷受", "纣主", "昏君"], "identity": "商天子，欲会神仙而设鹿台九龙宴，穿比干所献狐皮袍，逼比干剖心", "nonhuman": false, "mentioned_only": false, "evidence": "话说纣王与妲己同坐七香车"},
+    {"name": "妲己", "aliases": ["苏妃"], "identity": "纣王宠妃，轩辕坟狐狸精，夜往坟中约定众妖化仙姬赴鹿台宴，因子孙被烧剥而设计害比干", "nonhuman": false, "mentioned_only": false, "evidence": "三更时分，妲己俟纣王睡熟，将原形出窍，一阵风声"},
+    {"name": "比干", "aliases": ["亚相", "亚相比干", "丞相", "皇叔"], "identity": "商亚相、纣王皇叔，陪群仙宴而识破狐狸妖气，进狐皮袍、被勒逼剖心，出北门坠马死", "nonhuman": false, "mentioned_only": false, "evidence": "传旨：「宣亚相比干。」"},
+    {"name": "侯虎", "aliases": ["崇侯"], "identity": "监造鹿台完工的侯爷（前块作崇侯虎），与比干同受纣王赐宴", "nonhuman": false, "mentioned_only": false, "evidence": "赐比干、侯虎筵席"},
+    {"name": "玉石琵琶精", "aliases": ["琵琶妹子"], "identity": "妲己之妹，妲己为报其雠而献鹿台图", "nonhuman": true, "mentioned_only": true, "evidence": "原是当时妲己要与玉石琵琶精报雠，将此鹿台图献纣王"},
+    {"name": "喜媚", "aliases": ["胡喜媚", "九头雉鸡精", "雉鸡精"], "identity": "妲己结义妹，姓胡名喜媚、在紫霄宫出家的道姑，实为轩辕坟九头雉鸡精，诈称姐姐心疼须玲珑心", "nonhuman": true, "mentioned_only": false, "evidence": "妾有一结识义妹姓胡。名曰喜媚，如今在紫霄宫出家"},
+    {"name": "黄飞虎", "aliases": ["武成王", "黄元帅", "黄将军", "飞虎", "黄总兵"], "identity": "镇守朝歌的武成王，巡督皇城时闻比干言妖精，遣四将跟踪火烧轩辕坟", "nonhuman": false, "mentioned_only": false, "evidence": "原来是武成王黄飞虎巡督皇城"},
+    {"name": "黄明", "aliases": [], "identity": "黄飞虎所命分头哨探的四将之一", "nonhuman": false, "mentioned_only": false, "evidence": "黄飞虎命黄明、周纪、龙环、吴乾：「你四人各带二十名健卒"},
+    {"name": "周纪", "aliases": [], "identity": "黄飞虎部下四将之首，探得道人入轩辕坟石洞并领兵放火烧洞", "nonhuman": false, "mentioned_only": false, "evidence": "南门开了，周纪远远的黑影之中，明明看见"},
+    {"name": "龙环", "aliases": [], "identity": "黄飞虎遣往哨探的四将之一（前块亦作武成王副将）", "nonhuman": false, "mentioned_only": false, "evidence": "命黄明、周纪、龙环、吴乾：「你四人各带二十名健卒"},
+    {"name": "吴乾", "aliases": [], "identity": "黄飞虎遣往哨探的四将之一（前块写作吴贤）", "nonhuman": false, "mentioned_only": false, "evidence": "黄明、周纪、龙环、吴乾：「你四人各带二十名健卒"},
+    {"name": "姜文焕", "aliases": ["东伯侯"], "identity": "分兵攻打野马岭、欲取陈塘关的东伯侯", "nonhuman": false, "mentioned_only": true, "evidence": "东伯侯姜文焕分兵攻打野马岭，要取陈塘关"},
+    {"name": "鲁雄", "aliases": [], "identity": "奉黄总兵令领兵十万把守陈塘关的将官", "nonhuman": false, "mentioned_only": true, "evidence": "黄总兵令鲁雄领兵十万把守去讫"},
+    {"name": "陈青", "aliases": ["奉御官"], "identity": "持第六道御札的奉御官，向比干泄露鹿台新纳胡喜媚、要借玲珑心之事", "nonhuman": false, "mentioned_only": false, "evidence": "持札者乃奉御官陈青"},
+    {"name": "孟氏", "aliases": ["夫人"], "identity": "比干夫人，比干嘱其看顾孩儿微子德", "nonhuman": false, "mentioned_only": false, "evidence": "比干进内，见夫人孟氏曰"},
+    {"name": "微子德", "aliases": [], "identity": "比干之子，比干赴死前嘱孟氏看顾", "nonhuman": false, "mentioned_only": false, "evidence": "你好生看顾孩儿微子德！我死之后，你母子好生守我家训"},
+    {"name": "张元", "aliases": [], "identity": "喜媚口中冀州医士，诈称用玲珑心煎汤可治心疼；纣王传旨宣取而未行", "nonhuman": false, "mentioned_only": true, "evidence": "传旨宣冀州医士张元"},
+    {"name": "姜子牙", "aliases": ["子牙"], "identity": "曾为比干看气色、留符水简帖之人，比干赖其符护五脏出北门", "nonhuman": false, "mentioned_only": true, "evidence": "昔日姜子牙与父王看气色，曾说不利，留一简帖"},
+    {"name": "成汤", "aliases": ["成汤先王"], "identity": "商朝先王，比干拜太庙时哭诉二十八世天下将遭断送", "nonhuman": false, "mentioned_only": true, "evidence": "成汤先王，岂知殷受断送成汤二十八世天下！"},
+    {"name": "费仲", "aliases": [], "identity": "诗中『献媚逢迎』的纣王佞臣", "nonhuman": false, "mentioned_only": true, "evidence": "献媚逢迎费仲枭"}
+  ],
+  "collectives": [
+    {"name": "四将", "refers_to": ["黄明", "周纪", "龙环", "吴乾"]}
+  ]
+}
