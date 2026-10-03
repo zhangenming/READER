@@ -1,0 +1,30 @@
+{
+  "chunk": 3,
+  "characters": [
+    {"name": "崇黑虎", "aliases": ["黑虎", "曹州崇黑虎"], "identity": "崇侯虎之弟，被郑伦所擒后为苏护解围，放苏全忠进城，与长兄绝言后自回曹州", "nonhuman": false, "mentioned_only": false, "evidence": "且说崇黑虎上前言曰"},
+    {"name": "苏护", "aliases": ["冀州侯", "君侯", "护"], "identity": "冀州侯，从姬伯之书许进女朝商，亲保妲己上路，恩州驿提鞭救女", "nonhuman": false, "mentioned_only": false, "evidence": "苏护随进内，对夫人杨氏将「姬伯来书劝我朝王」一节细说一遍"},
+    {"name": "杨氏", "aliases": ["夫人"], "identity": "苏护夫人，妲己、全忠之母，闻进女之议放声大哭，恐女不谙侍君之礼", "nonhuman": false, "mentioned_only": false, "evidence": "对夫人杨氏将「姬伯来书劝我朝王」一节细说一遍"},
+    {"name": "苏全忠", "aliases": ["全忠", "苏公子"], "identity": "苏护长子，被崇黑虎放回，后受父命权镇冀川", "nonhuman": false, "mentioned_only": false, "evidence": "单言苏全忠进了冀州，见了父母，彼此感慰毕"},
+    {"name": "崇侯虎", "aliases": ["侯虎"], "identity": "北伯侯，被崇黑虎当面数落折兵损将、专诱天子近佞臣，羞愧回国具表请罪", "nonhuman": false, "mentioned_only": false, "evidence": "且言崇侯虎愧莫敢言，只得收拾人马"},
+    {"name": "姬昌", "aliases": ["西伯侯", "姬伯", "西伯"], "identity": "西伯侯，前日下书劝苏护进女，本块中为人所议并见于荐举之辞", "nonhuman": false, "mentioned_only": true, "evidence": "西伯侯姬昌好生可恶！今按兵不举"},
+    {"name": "散宜生", "aliases": ["宜生"], "identity": "西伯侯臣下，下书说退兵戈，受苏护管待并金帛先回西岐", "nonhuman": false, "mentioned_only": false, "evidence": "苏护送散宜生回西岐"},
+    {"name": "妲己", "aliases": ["苏娘娘", "苏美人", "小姐", "美人"], "identity": "苏护之女，起程泪下，入朝歌朝见纣王，被封为苏娘娘，居寿仙宫", "nonhuman": false, "mentioned_only": false, "evidence": "令妲己梳粧起程"},
+    {"name": "千年狐狸", "aliases": ["千年狐狸精", "狐狸"], "identity": "在恩州驿吸去妲己魂魄、借体成形代替苏小姐者，入宫后见巨阙木剑惊而成疾", "nonhuman": true, "mentioned_only": false, "evidence": "不知这个回话的乃是千年狐狸，不是妲己"},
+    {"name": "黄飞虎", "aliases": ["武成王", "飞虎"], "identity": "镇国武成王，见苏护进女赎罪文书，差龙环传谕并于金亭馆驿安置", "nonhuman": false, "mentioned_only": false, "evidence": "飞虎见了苏护进女赎罪文书，忙差龙环出城"},
+    {"name": "龙环", "aliases": [], "identity": "黄飞虎所差出城吩咐苏护札营的部属", "nonhuman": false, "mentioned_only": false, "evidence": "忙差龙环出城，吩咐苏护，把人马札在城外"},
+    {"name": "费仲", "aliases": ["中谏大夫", "丞相"], "identity": "纣王宠臣，怨苏护不送礼物，乘机怂恿纣王宣妲己朝见并赦苏护", "nonhuman": false, "mentioned_only": false, "evidence": "当时权臣费仲、尤浑见苏护又不先送礼物"},
+    {"name": "尤浑", "aliases": [], "identity": "纣王宠臣，与费仲同怨苏护不送礼物", "nonhuman": false, "mentioned_only": false, "evidence": "当时权臣费仲、尤浑见苏护又不先送礼物"},
+    {"name": "纣王", "aliases": ["天子", "陛下"], "identity": "商主，初见妲己魂不守舍，赦苏护满门加封国戚，此后终日荒淫不朝", "nonhuman": false, "mentioned_only": false, "evidence": "纣王闻奏，大怒曰：「这匹夫，当日强辞乱政"},
+    {"name": "商容", "aliases": ["首相", "丞相"], "identity": "首相，出班谏赦苏护之罪，又与梅伯、比干同请以诤臣之义劝君", "nonhuman": false, "mentioned_only": false, "evidence": "只见首相商容出班谏曰"},
+    {"name": "梅伯", "aliases": ["上大夫梅伯"], "identity": "上大夫，与商容、比干同议鸣钟请驾，力诤天子荒淫", "nonhuman": false, "mentioned_only": false, "evidence": "内有上大夫梅伯与首相商容、亚相比干言曰"},
+    {"name": "比干", "aliases": ["亚相"], "identity": "亚相比干，与商容同闻梅伯之议，俱抱本上殿", "nonhuman": false, "mentioned_only": false, "evidence": "内有上大夫梅伯与首相商容、亚相比干言曰"},
+    {"name": "闻仲", "aliases": ["太师闻仲"], "identity": "太师，奉敕剿除北海逆命，纣王口中道及", "nonhuman": false, "mentioned_only": true, "evidence": "已令太师闻仲剿除奸党"},
+    {"name": "云中子", "aliases": ["炼气士", "道人"], "identity": "终南山玉柱洞炼气士，识破宫闱妖气，削松枝为剑入朝歌进剑镇妖，不受金银之赐", "nonhuman": false, "mentioned_only": false, "evidence": "话说终南山有一炼气士，名曰云中子"},
+    {"name": "金霞童子", "aliases": ["童儿"], "identity": "云中子洞中童子，取老枯松枝并看守洞门", "nonhuman": true, "mentioned_only": false, "evidence": "忙唤金霞童子：「你与我将老枯松枝取一段来"},
+    {"name": "姜子牙", "aliases": [], "identity": "云中子叹词中预告其合受人间富贵", "nonhuman": false, "mentioned_only": true, "evidence": "四则姜子牙合受人间富贵"},
+    {"name": "杜元铣", "aliases": ["杜太师", "太师", "元铣"], "identity": "执掌司天台之太师，夜观乾象见妖气绕宫，留二十四字于其照墙，具本力谏", "nonhuman": false, "mentioned_only": false, "evidence": "只见太师杜元铣回朝"}
+  ],
+  "collectives": [
+    {"name": "二丞相", "refers_to": ["商容", "比干"]}
+  ]
+}

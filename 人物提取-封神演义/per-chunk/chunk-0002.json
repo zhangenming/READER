@@ -1,0 +1,33 @@
+{
+  "chunk": 2,
+  "characters": [
+    {"name": "苏全忠", "aliases": ["全忠", "长公子"], "identity": "苏护长子，刺死梅武、孙子羽，伤崇应彪，后被崇黑虎以妖术生擒", "nonhuman": false, "mentioned_only": false, "evidence": "早被苏全忠一戟剌梅武于马下"},
+    {"name": "梅武", "aliases": [], "identity": "崇侯虎军中偏将，与苏全忠战二十回合被刺死于马下，侯虎为之损将羞惭", "nonhuman": false, "mentioned_only": false, "evidence": "早被苏全忠一戟剌梅武于马下"},
+    {"name": "苏护", "aliases": ["冀州侯", "苏公", "苏侯", "护"], "identity": "冀州侯，题反诗叛商，夜劫崇侯虎营得胜，后听姬伯之书许进女朝商", "nonhuman": false, "mentioned_only": false, "evidence": "探马报与苏护，护即传令，将号砲点起"},
+    {"name": "赵丙", "aliases": ["副将赵丙"], "identity": "冀州副将，砍死金葵，献策劫营并统右营", "nonhuman": false, "mentioned_only": false, "evidence": "金葵正战，早被赵丙一刀砍于马下"},
+    {"name": "陈季贞", "aliases": [], "identity": "冀州将官，劫营时守右粮道门，先曾统左营", "nonhuman": false, "mentioned_only": false, "evidence": "右粮道门陈季贞杀来"},
+    {"name": "金葵", "aliases": [], "identity": "崇侯虎麾下将官，夜战中被赵丙砍于马下", "nonhuman": false, "mentioned_only": false, "evidence": "金葵正战，早被赵丙一刀砍于马下"},
+    {"name": "黄元济", "aliases": [], "identity": "崇侯虎麾下大将，屡谏侯虎且与苏全忠交战", "nonhuman": false, "mentioned_only": false, "evidence": "旁有大将黄元济谏曰"},
+    {"name": "崇侯虎", "aliases": ["侯虎", "崇侯"], "identity": "北伯侯，奉旨讨冀州，两度败于苏护父子，后得兄弟黑虎之助", "nonhuman": false, "mentioned_only": false, "evidence": "且言崇侯虎恃才妄作，提兵远伐"},
+    {"name": "崇应彪", "aliases": ["应彪"], "identity": "崇侯虎长子，随父征冀州，夜战中被苏全忠刺伤左臂", "nonhuman": false, "mentioned_only": false, "evidence": "只见这崇侯虎长子应彪带领金葵、黄元济杀将来助战"},
+    {"name": "孙子羽", "aliases": ["子羽"], "identity": "崇侯虎部将，催后军赶来，与苏全忠双战被刺死", "nonhuman": false, "mentioned_only": false, "evidence": "只见黄元济、孙子羽催后军赶来"},
+    {"name": "崇黑虎", "aliases": ["黑虎", "曹州侯", "曹州崇黑虎"], "identity": "崇侯虎之兄弟，官拜曹州侯，幼拜截教真人，有红葫芦铁嘴神鹰之术，擒苏全忠后为苏护解围", "nonhuman": false, "mentioned_only": false, "evidence": "此人乃崇侯虎兄弟崇黑虎也，官拜曹州侯"},
+    {"name": "铁嘴神鹰", "aliases": [], "identity": "崇黑虎红葫芦中放出的黑烟所化神鹰，伤苏全忠坐下马眼", "nonhuman": true, "mentioned_only": false, "evidence": "乃是铁嘴神鹰，张开口，劈面来"},
+    {"name": "郑伦", "aliases": ["伦", "督粮官", "郑将军"], "identity": "冀州督粮上将，拜西昆仑度厄真人为师，鼻窍白光吸人魂魄，统三千乌鸦兵擒崇黑虎", "nonhuman": false, "mentioned_only": false, "evidence": "冀州督粮上将郑伦也"},
+    {"name": "度厄真人", "aliases": ["西昆仑度厄真人"], "identity": "西昆仑仙人，郑伦之师，知郑伦封神榜上有名，传其窍中二气吸人魂魄之术并着其下山投冀州", "nonhuman": false, "mentioned_only": false, "evidence": "郑伦也曾拜西昆仑度厄真人为师"},
+    {"name": "姬昌", "aliases": ["西伯侯", "姬伯", "西伯", "昌"], "identity": "西伯侯，按兵不举坐观冀州成败，遣散宜生下一纸之书使苏护进女、各罢兵戈", "nonhuman": false, "mentioned_only": true, "evidence": "吾想西伯侯姬昌自在安然，违避旨意"},
+    {"name": "散宜生", "aliases": ["宜生"], "identity": "西伯侯臣下，素服角带持书入冀州说苏护进女王廷", "nonhuman": false, "mentioned_only": false, "evidence": "卑职散宜生拜见君侯"},
+    {"name": "姜桓楚", "aliases": ["东鲁姜桓楚"], "identity": "东伯侯，天下诸侯有名者之一，郑伦口中道及", "nonhuman": false, "mentioned_only": true, "evidence": "西伯姬昌，东鲁姜桓楚，南伯鄂崇禹"},
+    {"name": "鄂崇禹", "aliases": ["南伯鄂崇禹"], "identity": "南伯侯，天下诸侯有名者之一，郑伦口中道及", "nonhuman": false, "mentioned_only": true, "evidence": "西伯姬昌，东鲁姜桓楚，南伯鄂崇禹"},
+    {"name": "妲己", "aliases": ["小姐"], "identity": "苏护之女，姿貌甚美，被父视为满门遭祸之由，崇黑虎与苏护议其进宫", "nonhuman": false, "mentioned_only": false, "evidence": "只见小姐妲己，盈盈笑脸，微吐朱唇"},
+    {"name": "费仲", "aliases": [], "identity": "纣王宠臣，与尤浑将计就计赦苏护归国，使其自进其女", "nonhuman": false, "mentioned_only": true, "evidence": "逆语惟知费仲良"},
+    {"name": "商容", "aliases": [], "identity": "首相，其直谏为回末诗所称", "nonhuman": false, "mentioned_only": true, "evidence": "忠言不听商容谏"},
+    {"name": "纣王", "aliases": [], "identity": "商主，因求妲己而兴师冀州，回末诗谓其应天意属东周", "nonhuman": false, "mentioned_only": true, "evidence": "岂是纣王求妲己，应知天意属东周"},
+    {"name": "老君", "aliases": [], "identity": "太上老君，戟赞诗中言其炉中炼成兵器", "nonhuman": true, "mentioned_only": true, "evidence": "老君炉裹炼成兵"}
+  ],
+  "collectives": [
+    {"name": "崇侯虎父子", "refers_to": ["崇侯虎", "崇应彪"]},
+    {"name": "费、尤二人", "refers_to": ["费仲", "尤浑"]},
+    {"name": "二侯", "refers_to": ["苏护", "崇黑虎"]}
+  ]
+}

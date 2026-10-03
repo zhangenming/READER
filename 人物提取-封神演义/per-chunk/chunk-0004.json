@@ -1,0 +1,33 @@
+{
+  "chunk": 4,
+  "characters": [
+    {"name": "杜元铣", "aliases": ["杜太师", "太师", "元铣"], "identity": "执掌司天台官，具疏言妖光绕于内殿，被纣王斥为妖言惑众，枭首示众", "nonhuman": false, "mentioned_only": false, "evidence": "具疏臣执掌司天台官杜元铣奏"},
+    {"name": "梅伯", "aliases": ["梅先生", "梅大夫", "上大夫梅伯"], "identity": "上大夫，三朝旧臣，为杜元铣鸣冤面君力诤，被炮烙于九间殿前化为灰烬", "nonhuman": false, "mentioned_only": false, "evidence": "只见一位大夫，身穿大红袍，乃梅伯也"},
+    {"name": "妲己", "aliases": ["苏氏", "苏妲己", "苏美人", "美人"], "identity": "纣王宠妃，进炮烙之刑残害忠良，自请舞歌，怂恿剜姜后一目", "nonhuman": false, "mentioned_only": false, "evidence": "妲己上前跪而奏曰"},
+    {"name": "纣王", "aliases": ["天子", "陛下", "昏君"], "identity": "商主，信妲己之言斩杜元铣、炮烙梅伯，容商容辞官，日迷酒色旬月不朝", "nonhuman": false, "mentioned_only": false, "evidence": "纣王回首问妲己曰：「杜元铣上书，又提妖魅相侵"},
+    {"name": "商容", "aliases": ["首相", "丞相", "老丞相", "商荣"], "identity": "三世老臣首相，苦谏赦杜元铣、梅伯不得，辞官归田，十里长亭受百官饯别", "nonhuman": false, "mentioned_only": false, "evidence": "首相商容曰：「陛下，此事不可！"},
+    {"name": "云中子", "aliases": ["炼气士", "方士"], "identity": "终南山云中子进木剑镇妖之事，见于杜元铣本章与纣王之口", "nonhuman": false, "mentioned_only": true, "evidence": "有终南山云中子见妖气贯于宫闱，特进木剑"},
+    {"name": "黄飞虎", "aliases": ["武成王", "武成王黄飞虎", "黄大人"], "identity": "镇国武成王，饯别商容，闻炮烙梅伯后怒言此刑烙的是纣王江山", "nonhuman": false, "mentioned_only": false, "evidence": "内有微子、箕子、比干对武成王黄飞虎曰"},
+    {"name": "微子", "aliases": [], "identity": "商之宗亲贤王，与箕子、比干同访黄飞虎议炮烙之事（本块长亭名单中与微子启并列，写法存疑）", "nonhuman": false, "mentioned_only": false, "evidence": "当有黄飞虎、比干、微子、箕子、微子启、微子衍各官，俱在十里长亭饯别"},
+    {"name": "箕子", "aliases": [], "identity": "商之宗亲贤王，同饯商容、同议妲己造刑", "nonhuman": false, "mentioned_only": false, "evidence": "当有黄飞虎、比干、微子、箕子、微子启、微子衍各官，俱在十里长亭饯别"},
+    {"name": "微子启", "aliases": [], "identity": "帝乙长子，商之宗亲，列名于长亭饯别与议刑之臣", "nonhuman": false, "mentioned_only": false, "evidence": "当有黄飞虎、比干、微子、箕子、微子启、微子衍各官，俱在十里长亭饯别"},
+    {"name": "微子衍", "aliases": [], "identity": "帝乙次子，列名于长亭饯别之臣", "nonhuman": false, "mentioned_only": false, "evidence": "当有黄飞虎、比干、微子、箕子、微子启、微子衍各官，俱在十里长亭饯别"},
+    {"name": "比干", "aliases": ["亚相"], "identity": "亚相比干，与微子、箕子同访黄飞虎嗟叹炮烙残害忠良", "nonhuman": false, "mentioned_only": false, "evidence": "内有微子、箕子、比干对武成王黄飞虎曰"},
+    {"name": "闻仲", "aliases": ["太师", "闻太师", "闻太帅"], "identity": "太师闻仲北征未回，故朝纲无统，梅伯、微子等屡道及", "nonhuman": false, "mentioned_only": true, "evidence": "今闻太师北征，朝纲无统，百事混淆"},
+    {"name": "尧王", "aliases": ["尧"], "identity": "上古圣王，梅伯引为言听计从、一日一朝之则", "nonhuman": false, "mentioned_only": true, "evidence": "臣闻尧王治天下，应天而顺人"},
+    {"name": "姜皇后", "aliases": ["姜后", "姜氏", "姜娘娘", "皇后", "梓童", "中宫"], "identity": "纣王元配中宫，责妲己蛊惑天子，被诬行刺、拿送西宫勘问", "nonhuman": false, "mentioned_only": false, "evidence": "姜皇后叹曰：「昨闻天子信妲己，造炮烙，残害梅伯"},
+    {"name": "鲧捐", "aliases": ["宫娥", "奴婢"], "identity": "妲己贴身宫婢，敲檀板、传懿旨宣费仲入宫定计害姜后", "nonhuman": false, "mentioned_only": false, "evidence": "美人着宫娥鲧捐轻敲檀板"},
+    {"name": "费仲", "aliases": ["中谏大夫", "费大夫", "奸臣"], "identity": "纣王宠臣，受妲己密旨设谋害姜后，自讨勘问刺客姜环，做成圈套", "nonhuman": false, "mentioned_only": false, "evidence": "宣召中谏大夫费仲到宫"},
+    {"name": "姜环", "aliases": ["刺客"], "identity": "东伯侯姜桓楚家将，身长丈四，受费仲之嘱于分宫楼诈称奉姜后懿旨行刺，招成谋逆", "nonhuman": false, "mentioned_only": false, "evidence": "刺客姓姜名环，乃东伯侯姜桓楚家将"},
+    {"name": "姜桓楚", "aliases": ["东伯侯", "东伯"], "identity": "东伯侯、姜后之父，镇东鲁有雄兵百万，费仲虑其惹祸，敕旨指其与女同谋", "nonhuman": false, "mentioned_only": true, "evidence": "他的父亲乃东伯侯姜桓楚，镇于东鲁"},
+    {"name": "姜文焕", "aliases": [], "identity": "姜桓楚长子，勇贯三军力敌万夫，费仲心中所畏者", "nonhuman": false, "mentioned_only": true, "evidence": "长子姜文焕又勇贯三军，力敌万夫"},
+    {"name": "鲁雄", "aliases": ["总兵"], "identity": "官拜总兵、封神榜上有名之士，宿值殿庭，出班自陈并无奸细", "nonhuman": false, "mentioned_only": false, "evidence": "姓鲁名雄，出班拜伏：「是臣宿殿，并无奸细"},
+    {"name": "杨任", "aliases": ["上大夫杨任"], "identity": "上大夫，谓姜后贞静淑德、必有委曲私通，劝百官不可退朝", "nonhuman": false, "mentioned_only": false, "evidence": "内有上大夫杨任对武成王曰"},
+    {"name": "黄贵妃", "aliases": ["黄妃", "黄娘娘", "西宫黄贵妃"], "identity": "纣王西宫妃、黄飞虎之妹，奉旨勘问姜后，知其冤而力为申辨", "nonhuman": false, "mentioned_only": false, "evidence": "黄贵妃将旨意放在上首，尊其国法"},
+    {"name": "杨贵妃", "aliases": ["馨庆宫杨贵妃", "杨妃"], "identity": "纣王馨庆宫妃，与黄贵妃同在中宫朝贺姜后", "nonhuman": false, "mentioned_only": false, "evidence": "黄贵妃在左，杨贵妃在右，妲己进宫朝拜已毕"},
+    {"name": "殷郊", "aliases": ["太子", "殿下"], "identity": "姜皇后所生、已正位东宫的太子，黄妃为其冤乞怜", "nonhuman": false, "mentioned_only": true, "evidence": "况我生子殷郊，已正东宫"}
+  ],
+  "collectives": [
+    {"name": "二贵妃", "refers_to": ["黄贵妃", "杨贵妃"]}
+  ]
+}
