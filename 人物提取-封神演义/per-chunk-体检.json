@@ -1,0 +1,652 @@
+{
+ "entries": 3006,
+ "distinct": 854,
+ "issues": [
+  "chunk-0002.json alias 不在原文: 苏护 ← 冀州侯",
+  "chunk-0003.json alias 不在原文: 崇黑虎 ← 曹州崇黑虎",
+  "chunk-0003.json alias 不在原文: 千年狐狸 ← 千年狐狸精",
+  "chunk-0003.json alias 不在原文: 费仲 ← 中谏大夫",
+  "chunk-0004.json alias 不在原文: 梅伯 ← 上大夫梅伯",
+  "chunk-0004.json alias 不在原文: 云中子 ← 炼气士",
+  "chunk-0004.json alias 不在原文: 黄飞虎 ← 黄大人",
+  "chunk-0004.json name 不在原文: 闻仲",
+  "chunk-0004.json alias 不在原文: 费仲 ← 奸臣",
+  "chunk-0004.json name 不在原文: 鲁雄",
+  "chunk-0004.json alias 不在原文: 杨贵妃 ← 杨妃",
+  "chunk-0005.json alias 不在原文: 姜皇后 ← 姜氏",
+  "chunk-0005.json alias 不在原文: 黄贵妃 ← 西宫黄贵妃",
+  "chunk-0005.json alias 不在原文: 妲己 ← 苏美人",
+  "chunk-0005.json alias 不在原文: 晁田 ← 晁雷兄弟",
+  "chunk-0005.json alias 不在原文: 殷破败 ← 元戎麾下",
+  "chunk-0006.json alias 不在原文: 黄飞虎 ← 黄将军",
+  "chunk-0006.json alias 不在原文: 杨任 ← 上大夫杨任",
+  "chunk-0006.json alias 不在原文: 鄂崇禹 ← 南伯侯",
+  "chunk-0006.json alias 不在原文: 崇侯虎 ← 北伯侯",
+  "chunk-0012.json name 不在原文: 姜子牙",
+  "chunk-0012.json #22 字段 缺[] 多['note']",
+  "chunk-0013.json name 不在原文: 姜子牙",
+  "chunk-0013.json 合称不在原文: 殷雷二将",
+  "chunk-0013.json 合称不在原文: 四贤八俊",
+  "chunk-0014.json name 不在原文: 姬昌",
+  "chunk-0014.json name 不在原文: 黄飞虎",
+  "chunk-0014.json #26 字段 缺[] 多['note']",
+  "chunk-0014.json 合称不在原文: 殷雷二将",
+  "chunk-0014.json 合称不在原文: 四贤八俊",
+  "chunk-0015.json name 不在原文: 姜子牙",
+  "chunk-0015.json #12 字段 缺[] 多['note']",
+  "chunk-0015.json #15 字段 缺[] 多['note']",
+  "chunk-0015.json name 不在原文: 闻仲",
+  "chunk-0016.json name 不在原文: 崇侯虎",
+  "chunk-0016.json #15 字段 缺[] 多['note']",
+  "chunk-0017.json 合称不在原文: 费尤",
+  "chunk-0017.json 合称不在原文: 四贤八俊",
+  "chunk-0018.json #13 字段 缺[] 多['note']",
+  "chunk-0018.json name 不在原文: 苏护",
+  "chunk-0018.json 合称不在原文: 四贤八俊",
+  "chunk-0019.json name 不在原文: 黄飞豹",
+  "chunk-0019.json name 不在原文: 黄天爵",
+  "chunk-0019.json name 不在原文: 黄天祥",
+  "chunk-0020.json #15 字段 缺[] 多['note']",
+  "chunk-0020.json name 不在原文: 黄飞豹",
+  "chunk-0020.json name 不在原文: 姬发",
+  "chunk-0021.json #4 字段 缺[] 多['note']",
+  "chunk-0021.json name 不在原文: 黄飞彪",
+  "chunk-0021.json name 不在原文: 黄飞豹",
+  "chunk-0021.json name 不在原文: 姜子牙",
+  "chunk-0021.json name 不在原文: 清虚道德真君",
+  "chunk-0021.json name 不在原文: 杜元铣",
+  "chunk-0022.json name 不在原文: 黄飞豹",
+  "chunk-0022.json name 不在原文: 元始天尊",
+  "chunk-0022.json name 不在原文: 姬昌",
+  "chunk-0032.json name 不在原文: 李吉",
+  "chunk-0034.json #21 字段 缺[] 多['note']",
+  "chunk-0036.json #28 字段 缺[] 多['note']",
+  "chunk-0036.json #29 字段 缺[] 多['note']",
+  "chunk-0036.json #30 字段 缺[] 多['note']",
+  "chunk-0036.json #31 字段 缺[] 多['note']",
+  "chunk-0036.json #32 字段 缺[] 多['note']",
+  "chunk-0036.json #34 字段 缺[] 多['note']",
+  "chunk-0036.json #39 字段 缺[] 多['note']",
+  "chunk-0037.json name 不在原文: 苟章",
+  "chunk-0037.json name 不在原文: 毕环",
+  "chunk-0037.json #36 字段 缺[] 多['note']",
+  "chunk-0037.json #39 字段 缺[] 多['note']",
+  "chunk-0037.json #40 字段 缺[] 多['note']",
+  "chunk-0037.json #41 字段 缺[] 多['note']",
+  "chunk-0037.json name 不在原文: 丹朱",
+  "chunk-0037.json evidence 不在原文: 丹朱",
+  "chunk-0037.json #42 字段 缺[] 多['note']",
+  "chunk-0037.json name 不在原文: 商均",
+  "chunk-0037.json evidence 不在原文: 商均",
+  "chunk-0037.json #43 字段 缺[] 多['note']",
+  "chunk-0037.json name 不在原文: 伊尹",
+  "chunk-0037.json evidence 不在原文: 伊尹",
+  "chunk-0037.json #44 字段 缺[] 多['note']",
+  "chunk-0037.json name 不在原文: 尧",
+  "chunk-0037.json evidence 不在原文: 尧",
+  "chunk-0038.json #27 字段 缺[] 多['note']",
+  "chunk-0039.json evidence 不在原文: 黄飞虎",
+  "chunk-0039.json #43 字段 缺[] 多['note']",
+  "chunk-0041.json #51 字段 缺[] 多['note']",
+  "chunk-0041.json #52 字段 缺[] 多['note']",
+  "chunk-0041.json #53 字段 缺[] 多['note']",
+  "chunk-0041.json #54 字段 缺[] 多['note']",
+  "chunk-0042.json #38 字段 缺[] 多['note']",
+  "chunk-0042.json #39 字段 缺[] 多['note']",
+  "chunk-0042.json #44 字段 缺[] 多['note']",
+  "chunk-0042.json #45 字段 缺[] 多['note']",
+  "chunk-0043.json #35 字段 缺[] 多['note']",
+  "chunk-0045.json alias 不在原文: 金吒 ← 金咤",
+  "chunk-0045.json alias 不在原文: 木吒 ← 木咤",
+  "chunk-0045.json #52 字段 缺[] 多['note']",
+  "chunk-0045.json #53 字段 缺[] 多['note']",
+  "chunk-0046.json #17 字段 缺[] 多['note']",
+  "chunk-0046.json #24 字段 缺[] 多['note']",
+  "chunk-0046.json #28 字段 缺[] 多['note']",
+  "chunk-0046.json #29 字段 缺[] 多['note']",
+  "chunk-0046.json #30 字段 缺[] 多['note']",
+  "chunk-0047.json #30 字段 缺[] 多['note']",
+  "chunk-0047.json #31 字段 缺[] 多['note']",
+  "chunk-0047.json #32 字段 缺[] 多['note']",
+  "chunk-0047.json #33 字段 缺[] 多['note']",
+  "chunk-0048.json #25 字段 缺[] 多['note']",
+  "chunk-0048.json #26 字段 缺[] 多['note']",
+  "chunk-0048.json #27 字段 缺[] 多['note']",
+  "chunk-0048.json #29 字段 缺[] 多['note']",
+  "chunk-0048.json #30 字段 缺[] 多['note']",
+  "chunk-0048.json #32 字段 缺[] 多['note']",
+  "chunk-0049.json #51 字段 缺[] 多['note']",
+  "chunk-0049.json #53 字段 缺[] 多['note']",
+  "chunk-0049.json name 不在原文: 金吒",
+  "chunk-0049.json alias 不在原文: 金吒 ← 金咤",
+  "chunk-0049.json name 不在原文: 木吒",
+  "chunk-0049.json alias 不在原文: 木吒 ← 木咤",
+  "chunk-0049.json name 不在原文: 黄飞虎",
+  "chunk-0049.json #58 字段 缺[] 多['note']",
+  "chunk-0050.json name 不在原文: 元始天尊",
+  "chunk-0050.json #9 字段 缺[] 多['note']",
+  "chunk-0050.json name 不在原文: 燃灯道人",
+  "chunk-0050.json #24 字段 缺[] 多['note']",
+  "chunk-0050.json #34 字段 缺[] 多['note']",
+  "chunk-0050.json #36 字段 缺[] 多['note']",
+  "chunk-0050.json #37 字段 缺[] 多['note']",
+  "chunk-0050.json alias 不在原文: 桀 ← 夏桀",
+  "chunk-0050.json #38 字段 缺[] 多['note']",
+  "chunk-0051.json name 不在原文: 元始天尊",
+  "chunk-0051.json #36 字段 缺[] 多['note']",
+  "chunk-0052.json alias 不在原文: 吕岳 ← 吕道长",
+  "chunk-0052.json #36 字段 缺[] 多['note']",
+  "chunk-0053.json #6 字段 缺[] 多['note']",
+  "chunk-0053.json alias 不在原文: 余化龙 ← 余元帅",
+  "chunk-0053.json name 不在原文: 金吒",
+  "chunk-0053.json alias 不在原文: 金吒 ← 金咤",
+  "chunk-0053.json name 不在原文: 木吒",
+  "chunk-0053.json alias 不在原文: 木吒 ← 木咤",
+  "chunk-0053.json alias 不在原文: 老子 ← 太上老君",
+  "chunk-0053.json alias 不在原文: 长耳定光仙 ← 长耳定仙",
+  "chunk-0053.json name 不在原文: 毘卢仙",
+  "chunk-0053.json #54 字段 缺[] 多['note']",
+  "chunk-0053.json #55 字段 缺[] 多['note']",
+  "chunk-0053.json #56 字段 缺[] 多['note']",
+  "chunk-0054.json alias 不在原文: 老子 ← 太上老君",
+  "chunk-0054.json #8 字段 缺[] 多['note']",
+  "chunk-0054.json #12 字段 缺[] 多['note']",
+  "chunk-0054.json name 不在原文: 清虚道德真君",
+  "chunk-0054.json alias 不在原文: 金吒 ← 金咤",
+  "chunk-0054.json alias 不在原文: 木吒 ← 木咤",
+  "chunk-0054.json #47 字段 缺[] 多['note']",
+  "chunk-0054.json #48 字段 缺[] 多['note']",
+  "chunk-0054.json #49 字段 缺[] 多['note']",
+  "chunk-0054.json #50 字段 缺[] 多['note']",
+  "chunk-0054.json #51 字段 缺[] 多['note']",
+  "chunk-0054.json #52 字段 缺[] 多['note']",
+  "chunk-0054.json #53 字段 缺[] 多['note']",
+  "chunk-0054.json #54 字段 缺[] 多['note']",
+  "chunk-0054.json #55 字段 缺[] 多['note']",
+  "chunk-0054.json #56 字段 缺[] 多['note']",
+  "chunk-0054.json #57 字段 缺[] 多['note']",
+  "chunk-0054.json #58 字段 缺[] 多['note']",
+  "chunk-0054.json #59 字段 缺[] 多['note']",
+  "chunk-0054.json #60 字段 缺[] 多['note']",
+  "chunk-0054.json #61 字段 缺[] 多['note']",
+  "chunk-0054.json #62 字段 缺[] 多['note']",
+  "chunk-0054.json #63 字段 缺[] 多['note']",
+  "chunk-0054.json #64 字段 缺[] 多['note']",
+  "chunk-0054.json #65 字段 缺[] 多['note']",
+  "chunk-0054.json #66 字段 缺[] 多['note']",
+  "chunk-0054.json #67 字段 缺[] 多['note']",
+  "chunk-0054.json #68 字段 缺[] 多['note']",
+  "chunk-0054.json #69 字段 缺[] 多['note']",
+  "chunk-0054.json #70 字段 缺[] 多['note']",
+  "chunk-0054.json #71 字段 缺[] 多['note']",
+  "chunk-0054.json #72 字段 缺[] 多['note']",
+  "chunk-0054.json #73 字段 缺[] 多['note']",
+  "chunk-0054.json #74 字段 缺[] 多['note']",
+  "chunk-0054.json #75 字段 缺[] 多['note']",
+  "chunk-0054.json #76 字段 缺[] 多['note']",
+  "chunk-0055.json name 不在原文: 准提道人",
+  "chunk-0055.json #11 字段 缺[] 多['note']"
+ ],
+ "nonhuman_conflicts": {
+  "彩云童儿": {
+   "nonhuman": 1,
+   "human": 1,
+   "chunks": [
+    1,
+    9
+   ]
+  },
+  "妲己": {
+   "nonhuman": 9,
+   "human": 19,
+   "chunks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    10,
+    11,
+    12,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    40,
+    42,
+    50,
+    58,
+    62,
+    63
+   ]
+  },
+  "盘古": {
+   "nonhuman": 1,
+   "human": 2,
+   "chunks": [
+    1,
+    39,
+    54
+   ]
+  },
+  "伏羲": {
+   "nonhuman": 1,
+   "human": 7,
+   "chunks": [
+    1,
+    7,
+    12,
+    15,
+    37,
+    52,
+    53,
+    54
+   ]
+  },
+  "神农": {
+   "nonhuman": 1,
+   "human": 3,
+   "chunks": [
+    1,
+    7,
+    37,
+    53
+   ]
+  },
+  "少昊": {
+   "nonhuman": 1,
+   "human": 2,
+   "chunks": [
+    1,
+    64,
+    66
+   ]
+  },
+  "燧人": {
+   "nonhuman": 1,
+   "human": 4,
+   "chunks": [
+    1,
+    32,
+    41,
+    45,
+    48
+   ]
+  },
+  "老君": {
+   "nonhuman": 1,
+   "human": 7,
+   "chunks": [
+    2,
+    11,
+    21,
+    30,
+    43,
+    45,
+    46,
+    47
+   ]
+  },
+  "云中子": {
+   "nonhuman": 1,
+   "human": 16,
+   "chunks": [
+    3,
+    4,
+    5,
+    6,
+    13,
+    14,
+    26,
+    32,
+    33,
+    40,
+    43,
+    49,
+    51,
+    52,
+    53,
+    54,
+    59
+   ]
+  },
+  "金霞童子": {
+   "nonhuman": 2,
+   "human": 2,
+   "chunks": [
+    3,
+    25,
+    48,
+    59
+   ]
+  },
+  "黄巾力士": {
+   "nonhuman": 12,
+   "human": 4,
+   "chunks": [
+    6,
+    8,
+    11,
+    25,
+    28,
+    31,
+    40,
+    41,
+    42,
+    48,
+    50,
+    53,
+    55,
+    60,
+    64,
+    65
+   ]
+  },
+  "白鹤童子": {
+   "nonhuman": 3,
+   "human": 14,
+   "chunks": [
+    7,
+    8,
+    9,
+    10,
+    22,
+    23,
+    31,
+    32,
+    34,
+    37,
+    40,
+    43,
+    48,
+    49,
+    55,
+    64,
+    65
+   ]
+  },
+  "敖丙": {
+   "nonhuman": 2,
+   "human": 1,
+   "chunks": [
+    8,
+    9,
+    65
+   ]
+  },
+  "昊天上帝": {
+   "nonhuman": 3,
+   "human": 1,
+   "chunks": [
+    9,
+    34,
+    41,
+    43
+   ]
+  },
+  "丘引": {
+   "nonhuman": 3,
+   "human": 3,
+   "chunks": [
+    21,
+    22,
+    46,
+    47,
+    54,
+    65
+   ]
+  },
+  "柏鉴": {
+   "nonhuman": 8,
+   "human": 1,
+   "chunks": [
+    22,
+    23,
+    27,
+    28,
+    32,
+    33,
+    42,
+    64,
+    65
+   ]
+  },
+  "龙须虎": {
+   "nonhuman": 7,
+   "human": 4,
+   "chunks": [
+    23,
+    24,
+    26,
+    32,
+    33,
+    35,
+    36,
+    53,
+    59,
+    60,
+    65
+   ]
+  },
+  "玉鼎真人": {
+   "nonhuman": 2,
+   "human": 14,
+   "chunks": [
+    25,
+    27,
+    28,
+    29,
+    31,
+    34,
+    37,
+    43,
+    48,
+    49,
+    50,
+    52,
+    53,
+    54,
+    59,
+    60
+   ]
+  },
+  "惧留孙": {
+   "nonhuman": 1,
+   "human": 12,
+   "chunks": [
+    27,
+    28,
+    31,
+    33,
+    34,
+    35,
+    43,
+    46,
+    48,
+    49,
+    53,
+    54,
+    57
+   ]
+  },
+  "陆压": {
+   "nonhuman": 1,
+   "human": 6,
+   "chunks": [
+    29,
+    30,
+    31,
+    55,
+    60,
+    61,
+    63
+   ]
+  },
+  "天皇": {
+   "nonhuman": 1,
+   "human": 1,
+   "chunks": [
+    31,
+    48
+   ]
+  },
+  "孔宣": {
+   "nonhuman": 1,
+   "human": 4,
+   "chunks": [
+    33,
+    42,
+    43,
+    44,
+    45
+   ]
+  },
+  "瑶池金母": {
+   "nonhuman": 1,
+   "human": 3,
+   "chunks": [
+    34,
+    41,
+    42,
+    54
+   ]
+  },
+  "后土": {
+   "nonhuman": 1,
+   "human": 2,
+   "chunks": [
+    41,
+    42,
+    43
+   ]
+  },
+  "胡喜妹": {
+   "nonhuman": 1,
+   "human": 2,
+   "chunks": [
+    42,
+    50,
+    58
+   ]
+  },
+  "王贵人": {
+   "nonhuman": 1,
+   "human": 2,
+   "chunks": [
+    42,
+    58,
+    63
+   ]
+  },
+  "虬首仙": {
+   "nonhuman": 1,
+   "human": 2,
+   "chunks": [
+    46,
+    49,
+    53
+   ]
+  },
+  "乌云仙": {
+   "nonhuman": 1,
+   "human": 2,
+   "chunks": [
+    46,
+    49,
+    53
+   ]
+  },
+  "金光仙": {
+   "nonhuman": 1,
+   "human": 2,
+   "chunks": [
+    46,
+    49,
+    53
+   ]
+  },
+  "炎帝": {
+   "nonhuman": 1,
+   "human": 4,
+   "chunks": [
+    48,
+    53,
+    54,
+    64,
+    66
+   ]
+  },
+  "灵牙仙": {
+   "nonhuman": 1,
+   "human": 1,
+   "chunks": [
+    49,
+    53
+   ]
+  },
+  "吴龙": {
+   "nonhuman": 4,
+   "human": 1,
+   "chunks": [
+    57,
+    58,
+    59,
+    60,
+    65
+   ]
+  },
+  "常昊": {
+   "nonhuman": 4,
+   "human": 1,
+   "chunks": [
+    57,
+    58,
+    59,
+    60,
+    65
+   ]
+  },
+  "朱子真": {
+   "nonhuman": 1,
+   "human": 1,
+   "chunks": [
+    60,
+    65
+   ]
+  },
+  "杨显": {
+   "nonhuman": 1,
+   "human": 1,
+   "chunks": [
+    60,
+    65
+   ]
+  },
+  "戴礼": {
+   "nonhuman": 1,
+   "human": 1,
+   "chunks": [
+    60,
+    65
+   ]
+  },
+  "金大升": {
+   "nonhuman": 1,
+   "human": 1,
+   "chunks": [
+    60,
+    65
+   ]
+  }
+ }
+}
