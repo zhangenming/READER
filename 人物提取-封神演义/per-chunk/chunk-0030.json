@@ -1,0 +1,39 @@
+{
+  "chunk": 30,
+  "characters": [
+    {"name": "陆压", "aliases": ["陆压散人", "陆压道者", "陆压老爷", "术士陆压"], "identity": "自称西昆仑闲人、姓陆名压之散人，献钉头七箭书之法，于烈焰阵中以葫芦内宝物斩白礼，断赵公明午时绝命", "nonhuman": false, "mentioned_only": false, "evidence": "姓陆，名压"},
+    {"name": "赵公明", "aliases": ["公明", "金龙如意神"], "identity": "峨嵋山罗浮洞道人，祭金蛟剪闸断燃灯梅花鹿，被西岐拜钉头七箭书昏沉失神，二徒丧命后午时中三箭而死", "nonhuman": false, "mentioned_only": false, "evidence": "赵公明将金蛟剪祭起"},
+    {"name": "燃灯道人", "aliases": ["燃灯"], "identity": "主破十绝阵之道人，梅花鹿被金蛟剪闸两段、借木遁逃回，遣杨戬哪吒报箭书之信，定以武王为福人破红沙阵", "nonhuman": false, "mentioned_only": false, "evidence": "燃灯道人见公明纵虎冲来"},
+    {"name": "子牙", "aliases": ["子牙公", "姜子牙", "师叔"], "identity": "奉陆压之法往岐山筑台扎草人、披发仗剑连拜，箭书被抢后复得，二十一日午时依命三箭射草人", "nonhuman": false, "mentioned_only": false, "evidence": "子牙披发仗剑，脚步罡斗"},
+    {"name": "闻太师", "aliases": ["太师", "闻仲"], "identity": "成汤太师，见赵公明昏睡而疑，亲自拈香搜求八卦察出钉头七箭书，遣二徒暗往岐山抢书，书失徒死而痛哭", "nonhuman": false, "mentioned_only": false, "evidence": "闻太师见公明如此不安"},
+    {"name": "白天君", "aliases": ["白礼"], "identity": "烈焰阵主，乘鹿叫阵、以三首红旛起三火围陆压，被其葫芦白光钉住泥丸宫，「请宝贝转身」斩落首级", "nonhuman": false, "mentioned_only": false, "evidence": "白天君乘鹿大呼于篷下"},
+    {"name": "姚天君", "aliases": ["姚斌"], "identity": "落魂阵主，跨鹿持锏、黑砂洒死方相，与赤精子三度交锋，被阴阳镜一晃撞下台取斩", "nonhuman": false, "mentioned_only": false, "evidence": "姚天君跨鹿持锏，面如黄金"},
+    {"name": "方相", "aliases": [], "identity": "归周之将，应声奉令破落魂阵，身长力大却不知阵中奥妙，被黑砂洒落顷刻而绝", "nonhuman": false, "mentioned_only": false, "evidence": "方相应声而出"},
+    {"name": "赤精子", "aliases": [], "identity": "太华山云霄洞上仙，三进落魂阵，以庆云、八卦紫寿仙衣护身，用阴阳镜破姚斌并取回太极图送还玄都洞", "nonhuman": false, "mentioned_only": false, "evidence": "赤精子暗将阴阳镜望姚斌劈面一愰"},
+    {"name": "王天君", "aliases": ["王变"], "identity": "红水阵主，摔葫芦放红水化去曹宝四肢，与道德真君战不能胜，被五火七禽扇扇成一阵红灰", "nonhuman": false, "mentioned_only": false, "evidence": "王天君认得是曹宝散人"},
+    {"name": "曹宝", "aliases": ["曹道友", "曹兄"], "identity": "五夷山散人，为真命之主提剑破红水阵，被红水粘身、四肢化为血水，只留道服丝绦", "nonhuman": false, "mentioned_only": false, "evidence": "曹宝随后跟来，赶入阵中"},
+    {"name": "道德真君", "aliases": ["真君"], "identity": "青峰山紫阳洞道士，脚踏莲花瓣、顶现庆云任红水翻腾，取五火七禽扇扇死王变，破了红水阵", "nonhuman": false, "mentioned_only": false, "evidence": "道德真君领燃灯命"},
+    {"name": "张天君", "aliases": ["张绍"], "identity": "红沙阵主，报太师红水阵又破，困武王、哪吒、雷震子于阵中，每日洒红沙在武王身上", "nonhuman": false, "mentioned_only": false, "evidence": "红沙阵主张绍大呼曰"},
+    {"name": "武王", "aliases": ["至尊", "贤王"], "identity": "西岐之主，依燃灯之言宽袍受符印亲往破红沙阵，被红沙打中前胸连人带马撞下坑，受困百日之厄", "nonhuman": false, "mentioned_only": false, "evidence": "武王被红沙打中前胸"},
+    {"name": "哪吒", "aliases": [], "identity": "登风火轮使火尖鎗，夜战一鎗刺死姚少司，保武王入红沙阵被红沙连轮打下坑中同受困", "nonhuman": false, "mentioned_only": false, "evidence": "哪吒、雷震子保定武王径入「红沙阵」中"},
+    {"name": "雷震子", "aliases": [], "identity": "云中子门下，保有一顶蟠龙冠之人入阵，欲起风雷翅时被红沙数片打翻下坑", "nonhuman": false, "mentioned_only": false, "evidence": "雷震子见事不好，欲起风雷翅"},
+    {"name": "杨戬", "aliases": [], "identity": "奉燃灯遣往岐山报信，撒土草设谋诓回钉头七箭书，夤夜交兵把陈九公胁下一鎗", "nonhuman": false, "mentioned_only": false, "evidence": "杨戬下马，忙将土草抓一把"},
+    {"name": "陈九公", "aliases": [], "identity": "赵公明门徒，奉太师命与姚少司借土遁暗往岐山抢箭书，归途被杨戬刺死，灵魂往封神台", "nonhuman": false, "mentioned_only": false, "evidence": "杨戬把陈九公胁下一鎗"},
+    {"name": "姚少司", "aliases": [], "identity": "赵公明门徒，同抢钉头七箭书，中途被哪吒奋勇一鎗刺死", "nonhuman": false, "mentioned_only": false, "evidence": "一鎗把姚少司刺死"},
+    {"name": "辛环", "aliases": [], "identity": "黄花山降将，奉太师命打探消息，回报陈九公、姚少司死在中途", "nonhuman": false, "mentioned_only": false, "evidence": "又令辛环去打听消息"},
+    {"name": "邓忠", "aliases": [], "identity": "太师麾下将，巡外营见二徒落地，忙报入中军", "nonhuman": false, "mentioned_only": false, "evidence": "见邓忠巡外营"},
+    {"name": "南宫适", "aliases": [], "identity": "西岐大将，与武吉同奉子牙令往岐山安置，并报哪吒入中军", "nonhuman": false, "mentioned_only": false, "evidence": "又令南宫适、武吉前去安置"},
+    {"name": "武吉", "aliases": [], "identity": "西岐将，随往岐山安置，先后来报杨戬哪吒与陆压到来", "nonhuman": false, "mentioned_only": false, "evidence": "有武吉报入营中"},
+    {"name": "太姬", "aliases": [], "identity": "西岐王后，闻武王陷红沙阵，与太姙二后忙令众兄弟进相府问子牙", "nonhuman": false, "mentioned_only": false, "evidence": "太姬、太姙二后忙令众兄弟进相府来问"},
+    {"name": "太姙", "aliases": [], "identity": "西岐二后之一，与太姬同遣兄弟入相府探武王受困之事", "nonhuman": false, "mentioned_only": false, "evidence": "太姬、太姙二后忙令众兄弟进相府来问"},
+    {"name": "云霄娘娘", "aliases": ["云霄妹子"], "identity": "三仙岛赵公明长妹，公明临终嘱太师以金蛟剪连袍服递她；本块末申公豹往三仙岛报信与她姐妹三人", "nonhuman": false, "mentioned_only": true, "evidence": "云霄妹子！悔不用你之言"},
+    {"name": "申公豹", "aliases": [], "identity": "跨虎往三仙岛，向云霄娘娘姐妹三人报信者", "nonhuman": false, "mentioned_only": false, "evidence": "只说申公豹跨虎往三仙岛来报信与云霄娘娘姐妹三人"},
+    {"name": "老君", "aliases": [], "identity": "陆压歌中言及玄都所拜之主（本块仅于歌句出现）", "nonhuman": false, "mentioned_only": true, "evidence": "不去玄都拜老君"}
+  ],
+  "collectives": [
+    {"name": "邓、辛、张、陶四将", "refers_to": ["邓忠", "辛环", "张节", "陶荣"]},
+    {"name": "四阵主", "refers_to": ["白天君", "姚天君", "王天君", "张天君"]},
+    {"name": "二阵主", "refers_to": ["张天君", "王天君"]},
+    {"name": "武王三人", "refers_to": ["武王", "雷震子", "哪吒"]}
+  ]
+}
