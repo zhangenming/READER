@@ -1,0 +1,469 @@
+{
+  "chunk": 32,
+  "characters": [
+    {
+      "name": "闻太师",
+      "aliases": [
+        "太师",
+        "闻仲",
+        "成汤首相"
+      ],
+      "identity": "商营主帅，十绝阵、黄河阵俱破后兵败西征，绝龙岭被云中子神火柱困死，真灵托梦谏纣王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且说闻太师见十绝阵俱破，只等朝歌救兵"
+    },
+    {
+      "name": "云中子",
+      "aliases": [],
+      "identity": "终南山玉柱洞道人，奉敕炼通天神火柱，在绝龙岭等候并烧死闻太师",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "云中子曰：「奉敕炼通天神火柱，绝龙岭等候闻太师。」"
+    },
+    {
+      "name": "燃灯",
+      "aliases": [
+        "燃灯道人"
+      ],
+      "identity": "代子牙破十阵、吩咐诸仙分路阻闻太师，并以丹药救活武王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且说燃灯在篷上与众道者默坐"
+    },
+    {
+      "name": "南极仙翁",
+      "aliases": [],
+      "identity": "奉元始天尊之命留下破红沙阵，入阵以五火七翎扇扇去红沙，发雷惊出阵中三人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南极仙翁同白鹤童儿至阵前，大呼曰"
+    },
+    {
+      "name": "白鹤童子",
+      "aliases": [
+        "白鹤童儿"
+      ],
+      "identity": "随南极仙翁破阵，用三宝玉如意、玉如意打死张绍",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有白鹤童子将三宝玉如意赴面交还"
+    },
+    {
+      "name": "张绍",
+      "aliases": [
+        "张天君"
+      ],
+      "identity": "红沙阵主，与南极仙翁、白鹤童子交战，被玉如意打翻后手起剑杀之",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "张天君从阵里出来，甚是凶恶，跨鹿提剑，杀奔前来"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "被南极仙翁雷惊后跃出红沙阵，又刺死吉立、邓忠",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "哪吒急来扶武王，武王已是死了"
+    },
+    {
+      "name": "雷震子",
+      "aliases": [],
+      "identity": "奉命背负武王尸骸，后又挥金棍打碎墨麒麟、击杀辛环",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "命雷震子背负武王尸骸，放在篷下"
+    },
+    {
+      "name": "武王",
+      "aliases": [
+        "姬发"
+      ],
+      "identity": "陷红沙阵受百日之灾，尸身由雷震子背出、燃灯灌丹回生，回宫后仍在阵前山上饮酒",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "武王睁眼观看，方知回生"
+    },
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜尚",
+        "相父",
+        "姜公",
+        "姜丞相",
+        "姜相"
+      ],
+      "identity": "西岐丞相，哭武王、写柬帖调三路兵劫营，督前军冲开七层围子",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙催骑入阵，来看武王时，已是死了"
+    },
+    {
+      "name": "广成子",
+      "aliases": [],
+      "identity": "奉燃灯命在桃花岭竖黄旛阻闻太师，祭番天印逼其退走",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只留广成子，你去桃花岭阻闻仲，不许他进佳梦关"
+    },
+    {
+      "name": "赤精子",
+      "aliases": [],
+      "identity": "奉燃灯命在燕山太华山竖旛阻闻太师，取阴阳镜相待",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "又留赤精子，你去燕山阻闻仲，不许他进五关"
+    },
+    {
+      "name": "慈航道人",
+      "aliases": [
+        "慈航"
+      ],
+      "identity": "奉命留西岐，有定风珠定住菡芝仙黑风，战后作辞回山",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "不知慈航道人有定风珠，随取珠将风定住"
+    },
+    {
+      "name": "老子",
+      "aliases": [],
+      "identity": "以中指惊醒阵中众弟子，叹千年功行成画饼，乘牛转出回篷",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "老子用中指一指，地下雷鸣一声"
+    },
+    {
+      "name": "元始天尊",
+      "aliases": [
+        "元始"
+      ],
+      "identity": "命南极仙翁破红沙阵，赐纵地金光法，与老子同回玉虚宫",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "元始天尊曰：「今日诸弟子削了顶上三花，消了胸中五气"
+    },
+    {
+      "name": "金吒",
+      "aliases": [],
+      "identity": "黄河阵中脱厄跃起拜伏，劫营时列左哨",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金吒在左，木吒在右"
+    },
+    {
+      "name": "木吒",
+      "aliases": [],
+      "identity": "黄河阵中脱厄，与金吒、龙须虎冲辕门",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金吒在左，木吒在右"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "阵中惊醒后随众拜伏，领三千人马烧闻太师粮草并变化樵子指路、放哮天犬咬辛环",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "连杨戬、金、木二咤齐齐跃起，拜伏在地"
+    },
+    {
+      "name": "菡芝仙",
+      "aliases": [],
+      "identity": "黄河阵破后退老营报闻太师，助战放黑风，被打神鞭打死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "菡芝仙见破了「黄河阵」，退老营来见闻太师"
+    },
+    {
+      "name": "彩云仙子",
+      "aliases": [],
+      "identity": "黄河阵破后怒气不息，助闻太师战，被哪吒两鎗结果性命",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且说彩云仙子怒气不息"
+    },
+    {
+      "name": "张节",
+      "aliases": [],
+      "identity": "闻太师麾下四将之一（邓辛张陶之张），被黄飞虎一鎗刺于马下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "武成王大战张节，黄飞虎鎗法如神"
+    },
+    {
+      "name": "邓忠",
+      "aliases": [],
+      "identity": "邓辛张陶四将之邓，夜战守左哨，败走后被哪吒以乾坤圈、火尖鎗打死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有邓忠、陶荣大喝曰：「黄飞虎慢来！」"
+    },
+    {
+      "name": "辛环",
+      "aliases": [],
+      "identity": "四将之辛，生肉翅能飞，保闻太师退走，被雷震子一棍打死于空中",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南宫适冲进右营，只见辛环大叫"
+    },
+    {
+      "name": "陶荣",
+      "aliases": [],
+      "identity": "四将之陶，使双锏战左营，被黄天祥一鎗刺于马下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "陶荣显本事，双锏忙轮，二将大战在左营"
+    },
+    {
+      "name": "邓九公",
+      "aliases": [],
+      "identity": "三山关总兵官，被闻太师火牌调往麾下听用（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "又发火牌，调三山关总兵官邓九公往麾下听用"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [],
+      "identity": "西岐战将，齐至篷前听令，夜战冲进右营战辛环",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南宫适等齐至篷前，见姜子牙行礼毕，立于两傍"
+    },
+    {
+      "name": "黄飞虎",
+      "aliases": [
+        "武成王"
+      ],
+      "identity": "西岐武成王，刺死张节，夜杀左营，与邓忠、陶荣困战",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "这壁厢武成王黄飞虎、南宫适、武吉、辛甲四将来迎"
+    },
+    {
+      "name": "武吉",
+      "aliases": [],
+      "identity": "西岐将，奉子牙令把吊着的赵江斩在阵前",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "武吉把赵江斩在阵前"
+    },
+    {
+      "name": "赵江",
+      "aliases": [],
+      "identity": "被擒吊在营中、子牙令武吉斩于阵前的降将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "把吊着的赵江斩了"
+    },
+    {
+      "name": "黄天化",
+      "aliases": [],
+      "identity": "使双银锤攩住闻太师，又以火龙标打下余庆、攒心钉伤辛环",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有黄天化催开玉麒麟，用两柄银锤攩住闻太师"
+    },
+    {
+      "name": "辛甲",
+      "aliases": [],
+      "identity": "西岐将，与辛免等领三千人马大呼散商军之势，又迎右营伏兵",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "辛甲、辛免、太颠、闳夭、祁恭、尹籍领三千人马"
+    },
+    {
+      "name": "辛免",
+      "aliases": [],
+      "identity": "西岐将，领三千人马大呼劝商军归周，并截杀赵升、孙焰红",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "辛甲、辛免、太颠、闳夭、祁恭、尹籍领三千人马"
+    },
+    {
+      "name": "太颠",
+      "aliases": [],
+      "identity": "西岐将，随散宜生传令领兵劝降，又截杀伏兵",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "辛甲、辛免、太颠、闳夭、祁恭、尹籍领三千人马"
+    },
+    {
+      "name": "闳夭",
+      "aliases": [],
+      "identity": "西岐将，随领三千人马劝降商军",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "辛甲、辛免、太颠、闳夭、祁恭、尹籍领三千人马"
+    },
+    {
+      "name": "祁恭",
+      "aliases": [],
+      "identity": "西岐将，与辛甲等领三千人马大呼劝降",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "辛甲、辛免、太颠、闳夭、祁恭、尹籍领三千人马"
+    },
+    {
+      "name": "尹籍",
+      "aliases": [],
+      "identity": "西岐将，与辛甲等领三千人马大呼劝降",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "辛甲、辛免、太颠、闳夭、祁恭、尹籍领三千人马"
+    },
+    {
+      "name": "龙须虎",
+      "aliases": [],
+      "identity": "子牙门人，冲辕门、发石头打乱商军驻札",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金吒、木吒、龙须虎冲辕门"
+    },
+    {
+      "name": "黄天祥",
+      "aliases": [],
+      "identity": "黄飞虎四子之一，年少勇猛，刺死陶荣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄飞虎有四子黄天祥等，年少勇猛，势不可当"
+    },
+    {
+      "name": "余庆",
+      "aliases": [],
+      "identity": "闻太师营中副将，守后营粮草，追黄天化被火龙标打下落马死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有辛环气冲牛斗，余庆怒发冲冠，二将来助太师"
+    },
+    {
+      "name": "吉立",
+      "aliases": [],
+      "identity": "闻太师随征之将，守后营，与邓辛张陶等裹哪吒于垓心，被哪吒刺于马下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吉立、余庆领长箭手守后营粮草"
+    },
+    {
+      "name": "纣王",
+      "aliases": [],
+      "identity": "在鹿台与妲己饮酒，梦闻太师立傍谏劝，醒后问妲己",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "此时纣王正在鹿台与妲己饮酒"
+    },
+    {
+      "name": "妲己",
+      "aliases": [],
+      "identity": "纣王御妻，陪饮鹿台，解闻太师托梦为惊兆",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "此时纣王正在鹿台与妲己饮酒"
+    },
+    {
+      "name": "柏鉴",
+      "aliases": [
+        "清福神祇"
+      ],
+      "identity": "封神台上的清福神，用百灵旛引闻太师之魂安于台内",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "──柏鉴引进其魂，安于台内"
+    },
+    {
+      "name": "李吉",
+      "aliases": [],
+      "identity": "岐山脚下留闻太师一餐饭的老叟，自报姓李名吉",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "老人曰：「小民姓李，名吉。"
+    },
+    {
+      "name": "哮天犬",
+      "aliases": [],
+      "identity": "杨戬暗祭空中咬住辛环腿的神犬",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "不防杨戬暗祭起哮天犬，一口把辛环的腿咬住了"
+    },
+    {
+      "name": "玉麒麟",
+      "aliases": [],
+      "identity": "黄天化坐骑，道德真君之兽，足有风云速如飞电",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "这玉麒麟乃是道德真君坐骑"
+    },
+    {
+      "name": "墨麒麟",
+      "aliases": [],
+      "identity": "闻太师坐下坐骑，被雷震子金棍打为两段",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "太师跨墨麒麟，如烟火而来"
+    },
+    {
+      "name": "逍遥马",
+      "aliases": [],
+      "identity": "武王坐下坐骑，百日被困都已坏了",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "坐下逍遥马，百日都坏了"
+    },
+    {
+      "name": "道德真君",
+      "aliases": [],
+      "identity": "玉麒麟之本主，本块只被提及",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "这玉麒麟乃是道德真君坐骑"
+    },
+    {
+      "name": "燧人",
+      "aliases": [],
+      "identity": "火赞中说火之初出者，只见于诗文",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "燧人初出定位，木里生来无踪"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "邓、辛、张、陶",
+      "refers_to": [
+        "邓忠",
+        "辛环",
+        "张节",
+        "陶荣"
+      ]
+    },
+    {
+      "name": "四贤、八俊",
+      "refers_to": []
+    },
+    {
+      "name": "黄家父子兵",
+      "refers_to": [
+        "黄飞虎",
+        "黄天祥"
+      ]
+    },
+    {
+      "name": "三位娘娘",
+      "refers_to": [
+        "云霄娘娘",
+        "琼霄",
+        "碧霄"
+      ]
+    },
+    {
+      "name": "二位天尊",
+      "refers_to": [
+        "元始天尊",
+        "老子"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,353 @@
+{
+  "chunk": 61,
+  "characters": [
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜尚",
+        "姜元帅",
+        "吕望"
+      ],
+      "identity": "周营元帅，昆仑道德之士，斩白猿、掌众门人与诸侯之兵，进逼朝歌",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说子牙斩了白猿，收了法宝，众门人问曰"
+    },
+    {
+      "name": "陆压",
+      "aliases": [
+        "陆压老师"
+      ],
+      "identity": "昆仑传宝之人，破万仙阵时把飞刀之宝传授与子牙",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "此宝乃在破万仙阵时，蒙陆压老师传授与我"
+    },
+    {
+      "name": "白猿",
+      "aliases": [
+        "巨怪"
+      ],
+      "identity": "化成人形与周兵交战之妖，被子牙以飞刀钉住元神斩之",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "不言子牙斩了白猿，且说殷破败、雷开败回朝歌"
+    },
+    {
+      "name": "余元",
+      "aliases": [],
+      "identity": "此前被飞刀斩首之人，子牙追述其验",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "前次斩余元即此宝也"
+    },
+    {
+      "name": "武王",
+      "aliases": [
+        "周武"
+      ],
+      "identity": "周主，享洪福，诸侯所共扶以伐纣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "乃武王之洪福，故有此宝来克治之耳"
+    },
+    {
+      "name": "殷破败",
+      "aliases": [],
+      "identity": "纣王败将，与雷开逃回朝歌面君陈说梅山七怪覆没",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且说殷破败、雷开败回朝歌，面见纣王"
+    },
+    {
+      "name": "雷开",
+      "aliases": [],
+      "identity": "纣王败将，随殷破败逃回朝歌进言",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且说殷破败、雷开败回朝歌"
+    },
+    {
+      "name": "纣王",
+      "aliases": [
+        "辛纣",
+        "陛下"
+      ],
+      "identity": "殷之天子，守朝歌，张招贤榜、封丁策等三人为上将军",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "纣王着忙，急急设朝，问两班文武曰"
+    },
+    {
+      "name": "飞廉",
+      "aliases": [
+        "中大夫"
+      ],
+      "identity": "纣王驾下中大夫，献策用鲁仁杰并引荐三贤士",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有中大夫飞廉出班奏曰"
+    },
+    {
+      "name": "鲁仁杰",
+      "aliases": [
+        "鲁将军",
+        "总督兵马大将军"
+      ],
+      "identity": "纣王驾下总督兵马大将军，领兵出朝歌与周兵交战",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吾乃纣王驾下总督兵马大将军鲁仁杰是也"
+    },
+    {
+      "name": "金吒",
+      "aliases": [
+        "孙德",
+        "长兄",
+        "道者"
+      ],
+      "identity": "姜元帅帐下将，与弟木吒假扮东海炼气散人诈入游魂关里应外合",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且说金吒、木吒别了子牙，兄弟二人在路商议"
+    },
+    {
+      "name": "木吒",
+      "aliases": [
+        "徐仁",
+        "道弟"
+      ],
+      "identity": "金吒之弟，同诈为云游之士，暗祭吴钩剑斩彻地夫人献关",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "二人吩咐使命：「领人马先去报知姜文焕，我弟兄二人随后就来。」"
+    },
+    {
+      "name": "姜文焕",
+      "aliases": [
+        "东伯侯",
+        "文焕",
+        "贤侯"
+      ],
+      "identity": "一路大诸侯，攻游魂关，斩窦荣后引兵至孟津会合",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "我二人奉姜元帅将令来救东伯侯姜文焕进关"
+    },
+    {
+      "name": "窦荣",
+      "aliases": [
+        "老将军",
+        "窦将军"
+      ],
+      "identity": "游魂关主将，信纳诈降之金吒木吒，被遁龙桩遁住为姜文焕所斩",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "窦荣听说，传令：「请来。」"
+    },
+    {
+      "name": "姚忠",
+      "aliases": [
+        "副将"
+      ],
+      "identity": "窦荣关内副将，厉声谏主将勿信海外术士",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有副将姚忠厉声大呼曰"
+    },
+    {
+      "name": "姬发",
+      "aliases": [],
+      "identity": "周主，被姚忠言下提及为孟津六百诸侯所协助",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "前日闻报，孟津有六百诸侯协助姬发"
+    },
+    {
+      "name": "马兆",
+      "aliases": [
+        "总兵官"
+      ],
+      "identity": "东伯侯麾下总兵官，被金吒遁龙桩擒获囚于关府，城破后获释",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吾乃东伯侯麾下总兵官马兆是也"
+    },
+    {
+      "name": "彻地夫人",
+      "aliases": [
+        "彻地娘子"
+      ],
+      "identity": "窦荣之妻女将，善兵法、疑方士有诈，守城时被木吒吴钩剑斩",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有夫人彻地娘子披挂提刀而出"
+    },
+    {
+      "name": "丁策",
+      "aliases": [
+        "神策上将军"
+      ],
+      "identity": "朝歌城外三十里隐士，应招贤榜受封神策上将军，阵上被哪吒乾坤圈打死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有一人，姓丁，名策，乃是高明隐士"
+    },
+    {
+      "name": "郭宸",
+      "aliases": [
+        "威武上将军"
+      ],
+      "identity": "丁策结盟弟兄，同受威武上将军之封，败走后被杨戬劈于马下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见大门外有人进来，却是结盟弟兄郭宸"
+    },
+    {
+      "name": "董忠",
+      "aliases": [
+        "威武上将军"
+      ],
+      "identity": "自投贤名于飞廉府、荐丁策同佐纣王者，受威武上将军封，被姜文焕刀劈",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "此人姓董，名忠，慌忙而入"
+    },
+    {
+      "name": "成汤",
+      "aliases": [
+        "殷汤"
+      ],
+      "identity": "商之先王，拜伊尹、放桀于南巢而有天下，传六百余年至纣而亡",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "可怜成汤当日如何德业，拜伊尹，放桀于南巢"
+    },
+    {
+      "name": "伊尹",
+      "aliases": [],
+      "identity": "成汤所拜之贤相，丁策诗咏其德业",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "伊尹成汤德业优，南巢放桀冠诸侯"
+    },
+    {
+      "name": "桀",
+      "aliases": [
+        "夏桀"
+      ],
+      "identity": "夏之暴君，为成汤放于南巢",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "至纣之恶，过于夏桀"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "周营战将，登风火轮、使火尖鎗与乾坤圈，打死丁策",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见哪吒登风火轮，提火尖鎗，立于左手"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "周营战将，仗三尖刀白马，阵前杀郭宸",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨戬仗三尖刀，淡黄袍，骑白马，立于右手"
+    },
+    {
+      "name": "雷震子",
+      "aliases": [],
+      "identity": "周营排立之门将之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "雷震子、韦护、金吒、木吒、李靖、南宫适、武吉等一班排立"
+    },
+    {
+      "name": "韦护",
+      "aliases": [],
+      "identity": "周营排立之门将之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "雷震子、韦护、金吒、木吒、李靖、南宫适、武吉等一班排立"
+    },
+    {
+      "name": "李靖",
+      "aliases": [],
+      "identity": "周营排立之门将之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "雷震子、韦护、金吒、木吒、李靖、南宫适、武吉等一班排立"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [],
+      "identity": "周营战将，出马截住郭宸厮杀",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙傍有南宫适冲将过来，与郭宸截住厮杀"
+    },
+    {
+      "name": "武吉",
+      "aliases": [],
+      "identity": "周营战将，走马抵住丁策交锋",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "这壁厢武吉走马抵住交锋"
+    },
+    {
+      "name": "鄂顺",
+      "aliases": [
+        "南伯侯"
+      ],
+      "identity": "一路诸侯南伯侯，飞马直冲过来截杀董忠",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有南伯侯鄂顺飞马直冲过来截杀"
+    },
+    {
+      "name": "四不相",
+      "aliases": [],
+      "identity": "子牙阵前所乘之异兽坐骑",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "子牙在四不相上欠背打躬，问曰：「来者是谁？」"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "梅山七怪",
+      "refers_to": []
+    },
+    {
+      "name": "三山五岳门人",
+      "refers_to": []
+    },
+    {
+      "name": "金、木二咤",
+      "refers_to": [
+        "金吒",
+        "木吒"
+      ]
+    },
+    {
+      "name": "三贤士",
+      "refers_to": [
+        "丁策",
+        "郭宸",
+        "董忠"
+      ]
+    },
+    {
+      "name": "三卿",
+      "refers_to": [
+        "丁策",
+        "郭宸",
+        "董忠"
+      ]
+    }
+  ]
+}

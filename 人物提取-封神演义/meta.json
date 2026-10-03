@@ -1,0 +1,413 @@
+{
+ "book": "封神演义.txt",
+ "book_path": "/Users/zem/AI/READER/txt/封神演义.txt",
+ "book_stem": "封神演义",
+ "kind": "file",
+ "encoding": "utf-8-sig",
+ "files_merged": [
+  "封神演义.txt"
+ ],
+ "total_chars": 612671,
+ "chunk_size": 10000,
+ "overlap": 600,
+ "chunk_count": 66,
+ "candidate_count": 9086,
+ "chunks": [
+  {
+   "file": "chunk-0001.txt",
+   "start": 0,
+   "end": 9892,
+   "pct": 0.0
+  },
+  {
+   "file": "chunk-0002.txt",
+   "start": 9303,
+   "end": 18769,
+   "pct": 0.0152
+  },
+  {
+   "file": "chunk-0003.txt",
+   "start": 18311,
+   "end": 28110,
+   "pct": 0.0299
+  },
+  {
+   "file": "chunk-0004.txt",
+   "start": 28111,
+   "end": 37851,
+   "pct": 0.0459
+  },
+  {
+   "file": "chunk-0005.txt",
+   "start": 37852,
+   "end": 47842,
+   "pct": 0.0618
+  },
+  {
+   "file": "chunk-0006.txt",
+   "start": 47349,
+   "end": 57115,
+   "pct": 0.0773
+  },
+  {
+   "file": "chunk-0007.txt",
+   "start": 57116,
+   "end": 66313,
+   "pct": 0.0932
+  },
+  {
+   "file": "chunk-0008.txt",
+   "start": 65842,
+   "end": 75683,
+   "pct": 0.1075
+  },
+  {
+   "file": "chunk-0009.txt",
+   "start": 75472,
+   "end": 85435,
+   "pct": 0.1232
+  },
+  {
+   "file": "chunk-0010.txt",
+   "start": 84915,
+   "end": 94794,
+   "pct": 0.1386
+  },
+  {
+   "file": "chunk-0011.txt",
+   "start": 94615,
+   "end": 104270,
+   "pct": 0.1544
+  },
+  {
+   "file": "chunk-0012.txt",
+   "start": 103732,
+   "end": 113003,
+   "pct": 0.1693
+  },
+  {
+   "file": "chunk-0013.txt",
+   "start": 112404,
+   "end": 122149,
+   "pct": 0.1835
+  },
+  {
+   "file": "chunk-0014.txt",
+   "start": 121875,
+   "end": 131341,
+   "pct": 0.1989
+  },
+  {
+   "file": "chunk-0015.txt",
+   "start": 131069,
+   "end": 140654,
+   "pct": 0.2139
+  },
+  {
+   "file": "chunk-0016.txt",
+   "start": 140125,
+   "end": 150122,
+   "pct": 0.2287
+  },
+  {
+   "file": "chunk-0017.txt",
+   "start": 149819,
+   "end": 159694,
+   "pct": 0.2445
+  },
+  {
+   "file": "chunk-0018.txt",
+   "start": 159106,
+   "end": 168640,
+   "pct": 0.2597
+  },
+  {
+   "file": "chunk-0019.txt",
+   "start": 168530,
+   "end": 178493,
+   "pct": 0.2751
+  },
+  {
+   "file": "chunk-0020.txt",
+   "start": 178494,
+   "end": 188420,
+   "pct": 0.2913
+  },
+  {
+   "file": "chunk-0021.txt",
+   "start": 188421,
+   "end": 198395,
+   "pct": 0.3075
+  },
+  {
+   "file": "chunk-0022.txt",
+   "start": 197820,
+   "end": 207802,
+   "pct": 0.3229
+  },
+  {
+   "file": "chunk-0023.txt",
+   "start": 207392,
+   "end": 217183,
+   "pct": 0.3385
+  },
+  {
+   "file": "chunk-0024.txt",
+   "start": 216914,
+   "end": 226896,
+   "pct": 0.354
+  },
+  {
+   "file": "chunk-0025.txt",
+   "start": 226855,
+   "end": 236845,
+   "pct": 0.3703
+  },
+  {
+   "file": "chunk-0026.txt",
+   "start": 236543,
+   "end": 245824,
+   "pct": 0.3861
+  },
+  {
+   "file": "chunk-0027.txt",
+   "start": 245311,
+   "end": 255295,
+   "pct": 0.4004
+  },
+  {
+   "file": "chunk-0028.txt",
+   "start": 254697,
+   "end": 264219,
+   "pct": 0.4157
+  },
+  {
+   "file": "chunk-0029.txt",
+   "start": 263660,
+   "end": 273481,
+   "pct": 0.4303
+  },
+  {
+   "file": "chunk-0030.txt",
+   "start": 272989,
+   "end": 282496,
+   "pct": 0.4456
+  },
+  {
+   "file": "chunk-0031.txt",
+   "start": 282317,
+   "end": 292312,
+   "pct": 0.4608
+  },
+  {
+   "file": "chunk-0032.txt",
+   "start": 291995,
+   "end": 301516,
+   "pct": 0.4766
+  },
+  {
+   "file": "chunk-0033.txt",
+   "start": 300936,
+   "end": 310405,
+   "pct": 0.4912
+  },
+  {
+   "file": "chunk-0034.txt",
+   "start": 309848,
+   "end": 318729,
+   "pct": 0.5057
+  },
+  {
+   "file": "chunk-0035.txt",
+   "start": 318182,
+   "end": 328065,
+   "pct": 0.5193
+  },
+  {
+   "file": "chunk-0036.txt",
+   "start": 327518,
+   "end": 337512,
+   "pct": 0.5346
+  },
+  {
+   "file": "chunk-0037.txt",
+   "start": 337117,
+   "end": 346314,
+   "pct": 0.5502
+  },
+  {
+   "file": "chunk-0038.txt",
+   "start": 346294,
+   "end": 355987,
+   "pct": 0.5652
+  },
+  {
+   "file": "chunk-0039.txt",
+   "start": 355390,
+   "end": 365381,
+   "pct": 0.5801
+  },
+  {
+   "file": "chunk-0040.txt",
+   "start": 364791,
+   "end": 374558,
+   "pct": 0.5954
+  },
+  {
+   "file": "chunk-0041.txt",
+   "start": 374538,
+   "end": 384356,
+   "pct": 0.6113
+  },
+  {
+   "file": "chunk-0042.txt",
+   "start": 383848,
+   "end": 393597,
+   "pct": 0.6265
+  },
+  {
+   "file": "chunk-0043.txt",
+   "start": 393006,
+   "end": 403002,
+   "pct": 0.6415
+  },
+  {
+   "file": "chunk-0044.txt",
+   "start": 402505,
+   "end": 412191,
+   "pct": 0.657
+  },
+  {
+   "file": "chunk-0045.txt",
+   "start": 411703,
+   "end": 421681,
+   "pct": 0.672
+  },
+  {
+   "file": "chunk-0046.txt",
+   "start": 421092,
+   "end": 431086,
+   "pct": 0.6873
+  },
+  {
+   "file": "chunk-0047.txt",
+   "start": 430591,
+   "end": 440458,
+   "pct": 0.7028
+  },
+  {
+   "file": "chunk-0048.txt",
+   "start": 439954,
+   "end": 449324,
+   "pct": 0.7181
+  },
+  {
+   "file": "chunk-0049.txt",
+   "start": 448736,
+   "end": 458720,
+   "pct": 0.7324
+  },
+  {
+   "file": "chunk-0050.txt",
+   "start": 458280,
+   "end": 468094,
+   "pct": 0.748
+  },
+  {
+   "file": "chunk-0051.txt",
+   "start": 467592,
+   "end": 477470,
+   "pct": 0.7632
+  },
+  {
+   "file": "chunk-0052.txt",
+   "start": 477362,
+   "end": 487064,
+   "pct": 0.7791
+  },
+  {
+   "file": "chunk-0053.txt",
+   "start": 486471,
+   "end": 496444,
+   "pct": 0.794
+  },
+  {
+   "file": "chunk-0054.txt",
+   "start": 496097,
+   "end": 506073,
+   "pct": 0.8097
+  },
+  {
+   "file": "chunk-0055.txt",
+   "start": 505546,
+   "end": 514794,
+   "pct": 0.8252
+  },
+  {
+   "file": "chunk-0056.txt",
+   "start": 514237,
+   "end": 524013,
+   "pct": 0.8393
+  },
+  {
+   "file": "chunk-0057.txt",
+   "start": 523812,
+   "end": 533547,
+   "pct": 0.855
+  },
+  {
+   "file": "chunk-0058.txt",
+   "start": 533185,
+   "end": 543138,
+   "pct": 0.8703
+  },
+  {
+   "file": "chunk-0059.txt",
+   "start": 542623,
+   "end": 552603,
+   "pct": 0.8857
+  },
+  {
+   "file": "chunk-0060.txt",
+   "start": 552102,
+   "end": 562019,
+   "pct": 0.9011
+  },
+  {
+   "file": "chunk-0061.txt",
+   "start": 561750,
+   "end": 571251,
+   "pct": 0.9169
+  },
+  {
+   "file": "chunk-0062.txt",
+   "start": 570955,
+   "end": 580622,
+   "pct": 0.9319
+  },
+  {
+   "file": "chunk-0063.txt",
+   "start": 580400,
+   "end": 590029,
+   "pct": 0.9473
+  },
+  {
+   "file": "chunk-0064.txt",
+   "start": 589585,
+   "end": 598746,
+   "pct": 0.9623
+  },
+  {
+   "file": "chunk-0065.txt",
+   "start": 598148,
+   "end": 607665,
+   "pct": 0.9763
+  },
+  {
+   "file": "chunk-0066.txt",
+   "start": 607347,
+   "end": 612671,
+   "pct": 0.9913
+  }
+ ]
+}

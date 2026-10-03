@@ -1,0 +1,317 @@
+{
+  "chunk": 9,
+  "characters": [
+    {
+      "name": "李靖",
+      "aliases": [
+        "李总兵",
+        "托塔天王"
+      ],
+      "identity": "陈塘关总兵，哪吒之父，得燃灯道人玲珑塔镇子，后肉身成圣为托塔天王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "是陈塘关李总兵突然上山"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [
+        "三公子",
+        "灵珠子",
+        "公子"
+      ],
+      "identity": "李靖第三子，灵珠子化身，死后翠屏山显圣、莲花化身后追杀李靖",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吾乃乾元山金光洞太乙真人徒弟哪吒是也"
+    },
+    {
+      "name": "太乙真人",
+      "aliases": [
+        "真人"
+      ],
+      "identity": "乾元山金光洞仙人，哪吒之师，以九龙神火罩炼死石矶、以莲花与金丹重生哪吒",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "太乙真人曰：「你这孽障，且在后桃园内，待我出去看。」"
+    },
+    {
+      "name": "石矶娘娘",
+      "aliases": [
+        "石矶"
+      ],
+      "identity": "骷髅山白骨洞顽石成精，收乾坤圈混天绫、追哪吒，被太乙真人三昧真火烧出原形",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "石矶娘娘与太乙真人往来冲突"
+    },
+    {
+      "name": "碧云童儿",
+      "aliases": [],
+      "identity": "石矶娘娘门人，被哪吒震天箭射死（此块仅被谈起）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "是何人射死碧云童儿？"
+    },
+    {
+      "name": "彩云童儿",
+      "aliases": [
+        "彩云童子"
+      ],
+      "identity": "石矶娘娘门人，被哪吒乾坤圈夹颈打伤挣命",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "彩云童儿不曾提防，夹颈一圈"
+    },
+    {
+      "name": "金霞童儿",
+      "aliases": [],
+      "identity": "乾元山金光洞守洞童子，引哪吒见太乙真人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金霞童儿进洞来，启太乙真人曰"
+    },
+    {
+      "name": "敖光",
+      "aliases": [],
+      "identity": "东海龙王，约齐四海龙王奏天庭问李靖夫妇之罪",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "四海龙王敖光、敖顺、敖明、敖吉正看间"
+    },
+    {
+      "name": "敖顺",
+      "aliases": [],
+      "identity": "四海龙王之一，与李靖夫妇对峙后又放了他们",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "四海龙王敖光、敖顺、敖明、敖吉正看间"
+    },
+    {
+      "name": "敖明",
+      "aliases": [],
+      "identity": "四海龙王之一，同至陈塘关拿李靖夫妇",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "四海龙王敖光、敖顺、敖明、敖吉正看间"
+    },
+    {
+      "name": "敖吉",
+      "aliases": [],
+      "identity": "四海龙王之一，同至陈塘关，哪吒死后据其言回旨",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "四海龙王敖光、敖顺、敖明、敖吉正看间"
+    },
+    {
+      "name": "敖丙",
+      "aliases": [],
+      "identity": "敖光三太子，已被哪吒打死（此块仅被哪吒自陈）",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "我打死敖丙、李艮，我当偿命"
+    },
+    {
+      "name": "李艮",
+      "aliases": [],
+      "identity": "被哪吒打死的巡海夜叉（此块仅被提及）",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "我打死敖丙、李艮，我当偿命"
+    },
+    {
+      "name": "殷夫人",
+      "aliases": [
+        "夫人"
+      ],
+      "identity": "李靖元配、哪吒之母，梦哪吒求行宫，暗使人建翠屏山行宫并葬其尸骸",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "殷夫人见哪吒尸骸，用棺木盛了埋葬"
+    },
+    {
+      "name": "姜文焕",
+      "aliases": [
+        "东伯姜文焕"
+      ],
+      "identity": "东伯侯姜桓楚之子，为父报仇调四十万人马战游魂关",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "李靖因东伯姜文焕为父报仇，调四十万人马"
+    },
+    {
+      "name": "窦荣",
+      "aliases": [
+        "荣"
+      ],
+      "identity": "游魂关守将，与姜文焕交战不能取胜",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "游魂关大战窦荣，荣不能取胜"
+    },
+    {
+      "name": "费仲",
+      "aliases": [],
+      "identity": "朝歌权臣，李靖恐其参本诬以假降邪神之罪",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "况我不与费仲、尤浑二人交接"
+    },
+    {
+      "name": "尤浑",
+      "aliases": [],
+      "identity": "朝歌权臣，与李靖不交接（仅被谈及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "况我不与费仲、尤浑二人交接"
+    },
+    {
+      "name": "木吒",
+      "aliases": [
+        "二哥"
+      ],
+      "identity": "李靖次子，九宫山白鹤洞普贤真人徒弟，中途喝哪吒饶父，被金砖打倒",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "来者乃九宫山白鹤洞普贤真人徒弟木吒是也"
+    },
+    {
+      "name": "普贤真人",
+      "aliases": [],
+      "identity": "九宫山白鹤洞仙人，木吒之师（仅被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "乃九宫山白鹤洞普贤真人徒弟木吒是也"
+    },
+    {
+      "name": "文殊广法天尊",
+      "aliases": [
+        "天尊"
+      ],
+      "identity": "五龙山云霄洞仙人，金吒之师，以遁龙桩、扁拐训哪吒，命金吒放了哪吒",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "作歌者乃五龙山云霄洞文殊广法天尊，手执拂尘而来"
+    },
+    {
+      "name": "金吒",
+      "aliases": [],
+      "identity": "李靖长子，文殊广法天尊门下，奉师命取扁拐打哪吒、后又收遁龙桩",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "唤金吒：「把扁取来！」"
+    },
+    {
+      "name": "白云童儿",
+      "aliases": [],
+      "identity": "五龙山云霄洞童子，向天尊报太乙真人在此",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有白云童儿报曰：「太乙真人在此。」"
+    },
+    {
+      "name": "燃灯道人",
+      "aliases": [],
+      "identity": "灵鹫山元觉洞仙人，授李靖玲珑塔使哪吒认父",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "贫道乃灵鹫山元觉洞燃灯道人是也"
+    },
+    {
+      "name": "元始天尊",
+      "aliases": [
+        "天尊",
+        "元始"
+      ],
+      "identity": "昆仑山玉虚宫掌阐教道法之教主，命姜尚下山封神辅周",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说昆仑山玉虚宫掌阐教道法元始天尊"
+    },
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜尚"
+      ],
+      "identity": "玉虚宫元始天尊门下，三十二岁上山、七十二岁奉命下山封神辅周",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙忙至宝殿座前行礼曰：「弟子姜尚拜见。」"
+    },
+    {
+      "name": "南极仙翁",
+      "aliases": [],
+      "identity": "玉虚宫仙翁，劝姜子牙莫违天数下山",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有南极仙翁上前言曰"
+    },
+    {
+      "name": "白鹤童子",
+      "aliases": [],
+      "identity": "玉虚宫童子，奉元始天尊命往桃园请师叔姜尚",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "白鹤童子往桃园中来请子牙"
+    },
+    {
+      "name": "昊天上帝",
+      "aliases": [],
+      "identity": "命仙首十二称臣、因而三教共编封神榜的天帝",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "又因昊天上帝命仙首十二称臣"
+    },
+    {
+      "name": "玉帝",
+      "aliases": [],
+      "identity": "四海龙王奏准其拿哪吒父母的天庭之主",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "四海龙君奏准玉帝，来拿你父母了"
+    },
+    {
+      "name": "天皇氏",
+      "aliases": [],
+      "identity": "赋文中称文殊广法天尊为「天皇氏修仙养道」的上古名氏",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "天皇氏修仙养道"
+    },
+    {
+      "name": "文王",
+      "aliases": [],
+      "identity": "被羑里七年之事所应的周室先君（仅被追述）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "正应文王羑里七载之事"
+    },
+    {
+      "name": "周武",
+      "aliases": [],
+      "identity": "燃灯道人预言将来兴兵、李靖出来立功立业之君",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "待周武兴兵，你再出来立功立业"
+    },
+    {
+      "name": "商纣",
+      "aliases": [],
+      "identity": "失德致天下大乱的商朝天子（燃灯道人口中）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "今商纣失德，天下大乱"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "四海龙王",
+      "refers_to": [
+        "敖光",
+        "敖顺",
+        "敖明",
+        "敖吉"
+      ]
+    }
+  ]
+}

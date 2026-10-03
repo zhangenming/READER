@@ -1,0 +1,31 @@
+{
+  "chunk": 12,
+  "characters": [
+    {"name": "姜子牙", "aliases": ["子牙", "姜尚", "姜老爷"], "identity": "原商都下大夫，直谏获赦后土遁救出逃民，往西岐溪边隐居", "nonhuman": false, "mentioned_only": false, "evidence": "子牙把行囊与众人看守，独自前往张总兵府来。"},
+    {"name": "张凤", "aliases": ["张总兵", "张老爷"], "identity": "临潼关总兵，不肯放逃民出关，把姜尚叉将出去", "nonhuman": false, "mentioned_only": false, "evidence": "张凤听罢大怒，言曰：「汝乃江湖术士，一旦富贵，不思报本于君恩，反以巧言而惑我。"},
+    {"name": "妲己", "aliases": [], "identity": "纣王宠妃，狐狸精本相，挑逗伯邑考不成而害其遭万刃剁尸", "nonhuman": true, "mentioned_only": false, "evidence": "白猿看见上面有个狐狸──不知狐狸乃妲己本相──白猿虽是得道之物，终是个畜类。"},
+    {"name": "崇侯虎", "aliases": [], "identity": "奉命督造鹿台的诸侯，陷虐万民、贪图贿赂", "nonhuman": false, "mentioned_only": true, "evidence": "天子不明，听妲己之言，广施土木之工，兴造鹿台，命崇侯虎督工。"},
+    {"name": "白面猿猴", "aliases": ["白猿"], "identity": "伯邑考进贡的千年得道白猿，善歌识妖，扑抓妲己致其现原形，被纣王打死", "nonhuman": true, "mentioned_only": false, "evidence": "邑考将檀板递与白猿。"},
+    {"name": "伯邑考", "aliases": ["邑考", "考"], "identity": "姬昌长子，带祖遗三宝进朝歌赎父罪，因拒妲己挑逗被害，剁成肉酱", "nonhuman": false, "mentioned_only": false, "evidence": "话说伯邑考要往朝歌为父赎罪。"},
+    {"name": "散宜生", "aliases": ["宜生"], "identity": "西岐上大夫，姬昌的重要谋臣，谏阻伯邑考亲往朝歌", "nonhuman": false, "mentioned_only": false, "evidence": "散宜生接着手本。"},
+    {"name": "太姬", "aliases": [], "identity": "姬昌之妻、伯邑考之母（西岐宫中称太姬）", "nonhuman": false, "mentioned_only": false, "evidence": "随进宫辞母太姬，要往朝歌赎罪。"},
+    {"name": "姬发", "aliases": [], "identity": "姬昌之子、伯邑考之弟，受托掌西岐内事（后为周武王）", "nonhuman": false, "mentioned_only": false, "evidence": "考曰：「内事托与兄弟姬发，外事托付散宜生，军务托付南宫适；"},
+    {"name": "南宫适", "aliases": [], "identity": "西岐大将军，受托掌军务", "nonhuman": false, "mentioned_only": true, "evidence": "考曰：「内事托与兄弟姬发，外事托付散宜生，军务托付南宫适；"},
+    {"name": "姬昌", "aliases": ["西伯侯", "西伯", "姬伯", "昌", "文王"], "identity": "西伯侯，被囚羑里七年，被迫食子肉饼而不动声色", "nonhuman": false, "mentioned_only": false, "evidence": "姬昌闲暇无事，闷抚瑶琴一曲，猛然琴中大弦忽有杀声，西伯惊曰：「此杀声主何怪事？」"},
+    {"name": "韩荣", "aliases": [], "identity": "汜水关总兵，放伯邑考进贡队伍过关", "nonhuman": false, "mentioned_only": false, "evidence": "守关总兵韩荣命开关。"},
+    {"name": "比干", "aliases": ["亚相比干"], "identity": "朝歌亚相（丞相），怜伯邑考孝心，代为转达进贡", "nonhuman": false, "mentioned_only": false, "evidence": "少时，只见一位大臣骑马而至，乃亚相比干也。"},
+    {"name": "纣王", "aliases": ["殷纣"], "identity": "殷商天子，溺于妲己，剁杀伯邑考并赐肉饼试探姬昌", "nonhuman": false, "mentioned_only": false, "evidence": "纣王见邑考悲惨，为父陈冤，极其恳至，知是忠臣孝子之言，不胜感动，乃赐邑考平身。"},
+    {"name": "费仲", "aliases": [], "identity": "纣王嬖臣，谏阻赦放姬昌", "nonhuman": false, "mentioned_only": false, "evidence": "且说使命官回朝复命，纣王在显庆殿与费仲、尤浑弈棋。"},
+    {"name": "尤浑", "aliases": [], "identity": "纣王嬖臣，与费仲并称费尤", "nonhuman": false, "mentioned_only": false, "evidence": "且说使命官回朝复命，纣王在显庆殿与费仲、尤浑弈棋。"},
+    {"name": "亶父", "aliases": ["亶"], "identity": "姬昌（伯邑考家）的始祖，相传尧时官居司农", "nonhuman": false, "mentioned_only": true, "evidence": "想吾始祖亶父在尧为臣，官居司农之职，相传数十世，累代忠良。"},
+    {"name": "轩辕皇帝", "aliases": [], "identity": "上古帝王，破蚩尤遗下七香车（伯邑考进贡之宝）", "nonhuman": false, "mentioned_only": true, "evidence": "乃轩辕皇帝破蚩尤于北海，遗下此车，若人坐上面，不用推引，欲东则东，欲西则西──乃世传之宝也。"},
+    {"name": "蚩尤", "aliases": [], "identity": "上古叛神，为轩辕皇帝破于北海", "nonhuman": false, "mentioned_only": true, "evidence": "乃轩辕皇帝破蚩尤于北海，遗下此车，若人坐上面，不用推引，欲东则东，欲西则西──乃世传之宝也。"},
+    {"name": "尧", "aliases": [], "identity": "上古帝王，亶父曾在其朝为臣", "nonhuman": false, "mentioned_only": true, "evidence": "想吾始祖亶父在尧为臣，官居司农之职，相传数十世，累代忠良。"},
+    {"name": "伏羲", "aliases": [], "identity": "创八卦的上古人皇，姬昌据其八卦演为周易", "nonhuman": false, "mentioned_only": true, "evidence": "将伏羲八卦变为八八六十四卦，重为三百八十四爻，内按阴阳消息之机，周天划度之妙，后为《周易》。"},
+    {"name": "武吉", "aliases": [], "identity": "诗中预言将因灾殃引出姜子牙际会明主的人物", "nonhuman": false, "mentioned_only": true, "evidence": "武吉灾殃为引道，飞熊梦兆主求贤。"},
+    {"name": "嫦娥", "aliases": [], "identity": "月宫仙女，闻白猿歌声侧耳（修辞性提及）", "nonhuman": true, "mentioned_only": true, "note": "存疑", "evidence": "那猿猴只唱得神仙着意，嫦娥侧耳，就把妲己唱得神荡意迷，情飞心逸，如醉如痴，不能检束自己形体，将原形都唱出来了。"}
+  ],
+  "collectives": [
+    {"name": "费尤", "refers_to": ["费仲", "尤浑"]}
+  ]
+}

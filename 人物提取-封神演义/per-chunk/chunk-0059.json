@@ -1,0 +1,305 @@
+{
+  "chunk": 59,
+  "characters": [
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜尚",
+        "姜元帅",
+        "姜帅"
+      ],
+      "identity": "在孟津布八卦阵、借昆仑妙术擒桃柳二鬼的奉天征讨大元帅",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "高明大笑曰：「姜子牙！我知你是昆仑之客"
+    },
+    {
+      "name": "武王",
+      "aliases": [
+        "周王"
+      ],
+      "identity": "劫营时由四贤保驾奔逃、后被寻见的周主",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "武王有四贤保驾奔逃；子牙落荒而走"
+    },
+    {
+      "name": "纣王",
+      "aliases": [],
+      "identity": "遣送邬文化至孟津听用、闻报捷日日纵乐的商天子",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吾乃纣王御前袁元帅麾下威武大将军邬文化是也"
+    },
+    {
+      "name": "高明",
+      "aliases": [],
+      "identity": "棋盘山桃精、目能千里，闯周营被打神鞭打死往封神台",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "祭起打神鞭打将下来，高明、高觉难逃此难，只打得脑浆迸流"
+    },
+    {
+      "name": "高觉",
+      "aliases": [],
+      "identity": "棋盘山柳鬼、耳能千里，与兄同被哪吒打神鞭之难丧命",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "正中高觉顶门上，打得个一派金光，散漫于地"
+    },
+    {
+      "name": "袁洪",
+      "aliases": [
+        "白猿",
+        "袁元帅"
+      ],
+      "identity": "梅山七圣之首、白猿得道，劫孟津周营并打死杨任",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "袁洪乃是白猿得道，变化多端，把元神从头上现出"
+    },
+    {
+      "name": "吴龙",
+      "aliases": [],
+      "identity": "蜈蚣成精、随袁洪守孟津、被杨戬化金鸡啄作数断",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "哪吒祭起神火罩，罩住吴龙；吴龙也化青气走了"
+    },
+    {
+      "name": "常昊",
+      "aliases": [],
+      "identity": "长蛇成精、现大白蛇被杨戬变蜈蚣一剪两断",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "常昊乃是蛇精，狗也不能伤他"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "登风火轮现三头八臂、以九龙神火罩烧走袁洪的周营先锋",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "哪吒早现出三头八臂，祭起乾坤圈"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "往玉泉山、终南山借照妖鉴，识破桃柳鬼根脚并斩蛇蜈二怪",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨戬在傍，见高明、高觉一派妖气，不是正人"
+    },
+    {
+      "name": "杨任",
+      "aliases": [],
+      "identity": "自穿云关归周、未受封爵而被袁洪打中顶门死于孟津的门人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨任正欲取五火扇扇袁洪，不意袁洪顶上白光中元神手举一棍打来"
+    },
+    {
+      "name": "雷震子",
+      "aliases": [],
+      "identity": "奉令打碎轩辕庙泥塑鬼使、放火烧庙的门人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "又令雷震子：「去打碎泥塑鬼使。」"
+    },
+    {
+      "name": "韦护",
+      "aliases": [],
+      "identity": "在空中将一瓶乌鸡黑狗血秽污之物打下压妖气的门人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "韦护在空中将一瓶秽污之物往下打来"
+    },
+    {
+      "name": "李靖",
+      "aliases": [],
+      "identity": "祭黄金塔罩高觉、领三千人马往棋盘山挖绝桃柳根盘的门人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李靖也祭起黄金塔来，把高觉罩在里面，一时也不见了"
+    },
+    {
+      "name": "武吉",
+      "aliases": [],
+      "identity": "与南宫适同出架住高明高觉、又随哪吒在周营布坛的周将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙左右有武吉、南宫适二马齐出，急架忙迎"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [],
+      "identity": "战高觉戟刺摆长旛、又与武吉郑伦同防守武王营寨的周将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙左右有武吉、南宫适二马齐出，急架忙迎"
+    },
+    {
+      "name": "郑伦",
+      "aliases": [],
+      "identity": "运粮回营缴印、闻土行孙已死伤悼的周营督粮官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "忽报：「三运督粮官郑伦来至。」子牙令至帐前"
+    },
+    {
+      "name": "土行孙",
+      "aliases": [],
+      "identity": "郑伦回营时听到已死的周营旧督粮官",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "郑伦听得土行孙已死，着实伤悼"
+    },
+    {
+      "name": "龙须虎",
+      "aliases": [
+        "虾精"
+      ],
+      "identity": "姜元帅第二门徒、用石头打退邬文化后被排扒木打死",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "吾乃姜元帅第二门徒龙须虎是也"
+    },
+    {
+      "name": "邬文化",
+      "aliases": [],
+      "identity": "身高数丈、陆地行舟的揭榜投军大汉，夜劫周营杀死龙须虎",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "朝廷差官送邬文化至孟津营听用"
+    },
+    {
+      "name": "玉鼎真人",
+      "aliases": [],
+      "identity": "玉泉山金霞洞之主、杨戬之师，指出二怪是桃精柳鬼托轩辕庙二鬼之灵",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "童子进洞内，见玉鼎真人，启曰：「师兄杨戬在洞府外求见。」"
+    },
+    {
+      "name": "金霞童子",
+      "aliases": [],
+      "identity": "云中子洞中出洞传报、被杨戬唤作师兄的童子",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "少时，只见金霞童子出来，杨戬上前稽首曰"
+    },
+    {
+      "name": "云中子",
+      "aliases": [],
+      "identity": "终南山玉柱洞之主，将照妖鉴付与杨戬并道破梅山七怪",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "童子进洞对云中子曰：「有杨戬在外面侯见。」"
+    },
+    {
+      "name": "千里眼",
+      "aliases": [],
+      "identity": "棋盘山轩辕庙泥塑鬼使之一，借灵与高明高觉之目",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "庙内有泥塑鬼使，名曰千里眼，顺风耳"
+    },
+    {
+      "name": "顺风耳",
+      "aliases": [],
+      "identity": "棋盘山轩辕庙泥塑鬼使之一，借灵与高明高觉之耳",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "名曰千里眼，顺风耳；二怪托其灵气，目能观看千里"
+    },
+    {
+      "name": "殷破败",
+      "aliases": [],
+      "identity": "袁洪军中劝其退兵固守城都、劫营时为左救应的参军",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "参军殷破败、雷开为左右救应，殷成秀、鲁仁杰为断后"
+    },
+    {
+      "name": "雷开",
+      "aliases": [],
+      "identity": "与殷破败同救应、亲见蛇蜈现形而议退兵的商将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "却说殷破败、雷开与诸将亲自看见今日光景，不觉笑曰"
+    },
+    {
+      "name": "殷成秀",
+      "aliases": [],
+      "identity": "劝鲁仁杰莫说破、劫营时同在后队见机而作的商将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "殷成秀曰：「兄长之言甚善。」"
+    },
+    {
+      "name": "鲁仁杰",
+      "aliases": [],
+      "identity": "断言成汤社稷终属西岐、领令往朝歌催粮的商将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有鲁仁杰出而言曰：「末将愿往。」袁洪许之"
+    },
+    {
+      "name": "东伯侯",
+      "aliases": [],
+      "identity": "子牙在帐中盼其到来方可进兵、时尚未至孟津的诸侯",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "东伯侯还不见来？"
+    },
+    {
+      "name": "四不相",
+      "aliases": [],
+      "identity": "姜子牙所乘、被催开助战的坐骑",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "子牙乘四不相，来至军前"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "梅山七圣",
+      "refers_to": [
+        "袁洪",
+        "吴龙",
+        "常昊"
+      ]
+    },
+    {
+      "name": "梅山七怪",
+      "refers_to": [
+        "袁洪",
+        "吴龙",
+        "常昊"
+      ]
+    },
+    {
+      "name": "神荼、郁垒",
+      "refers_to": [
+        "高明",
+        "高觉"
+      ]
+    },
+    {
+      "name": "桃精柳鬼",
+      "refers_to": [
+        "高明",
+        "高觉"
+      ]
+    },
+    {
+      "name": "三妖",
+      "refers_to": []
+    },
+    {
+      "name": "四贤",
+      "refers_to": []
+    }
+  ]
+}

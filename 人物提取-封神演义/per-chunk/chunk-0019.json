@@ -1,0 +1,36 @@
+{
+  "chunk": 19,
+  "characters": [
+    {"name": "纣王", "aliases": [], "identity": "殷商天子，怒摔黄妃下楼，午门亲战黄飞虎，败进午门", "nonhuman": false, "mentioned_only": false, "evidence": "纣王大怒，借此出气：「好匹夫！焉敢如此欺侮朕躬！」"},
+    {"name": "黄妃", "aliases": ["黄娘娘"], "identity": "纣王西宫妃、黄飞虎之妹，上摘星楼为嫂辨冤、痛打妲己，被纣王摔下楼而死", "nonhuman": false, "mentioned_only": false, "evidence": "黄妃曰：「有甚么祸事？」差官报道：「贾夫人坠了摘星楼，不知何故。」"},
+    {"name": "贾氏", "aliases": ["贾夫人"], "identity": "黄飞虎元配夫人，坠摘星楼而死（本块中被追念）", "nonhuman": false, "mentioned_only": true, "evidence": "差官报道：「贾夫人坠了摘星楼，不知何故。」"},
+    {"name": "妲己", "aliases": ["苏后"], "identity": "纣王宠妃（妖怪），被黄妃拖翻痛打，假意诉冤", "nonhuman": true, "mentioned_only": false, "evidence": "黄妃指妲己骂曰：「贱人！你淫乱深宫，蛊惑天子。"},
+    {"name": "黄滚", "aliases": [], "identity": "黄飞虎之父，镇守界牌关（黄妃哭诉中追述）", "nonhuman": false, "mentioned_only": true, "evidence": "我父黄滚镇守界牌关，训练士卒，日夕劳苦。"},
+    {"name": "黄飞虎", "aliases": ["武成王"], "identity": "武成王，妻死妹亡后为周纪所激反出朝歌，午门战纣王，出西门过孟津", "nonhuman": false, "mentioned_only": false, "evidence": "武成王在内殿同弟黄飞彪、飞豹、黄明、周纪、龙环、吴谦、黄天禄、天爵、天祥三子，元旦良辰欢饮。"},
+    {"name": "黄飞彪", "aliases": ["飞彪"], "identity": "黄飞虎二弟，点千名家将四百车辆装载细软随反", "nonhuman": false, "mentioned_only": false, "evidence": "武成王在内殿同弟黄飞彪、飞豹、黄明、周纪、龙环、吴谦、黄天禄、天爵、天祥三子，元旦良辰欢饮。"},
+    {"name": "黄飞豹", "aliases": ["飞豹"], "identity": "黄飞虎三弟，随同反出朝歌", "nonhuman": false, "mentioned_only": false, "evidence": "武成王在内殿同弟黄飞彪、飞豹、黄明、周纪、龙环、吴谦、黄天禄、天爵、天祥三子，元旦良辰欢饮。"},
+    {"name": "黄明", "aliases": [], "identity": "黄飞虎结义兄弟，首倡反出朝歌、激飞虎下定决心", "nonhuman": false, "mentioned_only": false, "evidence": "黄明曰：「兄长不必踌蹰。纣王失政，大变人伦。"},
+    {"name": "周纪", "aliases": [], "identity": "黄飞虎结义兄弟，以言语激反黄飞虎，请战纣王", "nonhuman": false, "mentioned_only": false, "evidence": "周纪曰：「不瞒兄说，笑的是你。」"},
+    {"name": "龙环", "aliases": [], "identity": "黄飞虎家将，随同反出朝歌、保车辆出西门", "nonhuman": false, "mentioned_only": false, "evidence": "武成王在内殿同弟黄飞彪、飞豹、黄明、周纪、龙环、吴谦、黄天禄、天爵、天祥三子，元旦良辰欢饮。"},
+    {"name": "吴谦", "aliases": [], "identity": "黄飞虎家将，随同反出朝歌（他块文字作吴贤、吴乾）", "nonhuman": false, "mentioned_only": false, "evidence": "武成王在内殿同弟黄飞彪、飞豹、黄明、周纪、龙环、吴谦、黄天禄、天爵、天祥三子，元旦良辰欢饮。"},
+    {"name": "黄天禄", "aliases": ["天禄"], "identity": "黄飞虎长子，十四岁，闻母死放声大哭，随父反出朝歌", "nonhuman": false, "mentioned_only": false, "evidence": "黄天禄──十四岁，天爵──十二岁，天祥──七岁，听得母亲坠楼而亡，放声大哭。"},
+    {"name": "黄天爵", "aliases": ["天爵"], "identity": "黄飞虎次子，十二岁，随父反出朝歌", "nonhuman": false, "mentioned_only": false, "evidence": "黄天禄──十四岁，天爵──十二岁，天祥──七岁，听得母亲坠楼而亡，放声大哭。"},
+    {"name": "黄天祥", "aliases": ["天祥"], "identity": "黄飞虎三子，七岁，随父反出朝歌", "nonhuman": false, "mentioned_only": false, "evidence": "黄天禄──十四岁，天爵──十二岁，天祥──七岁，听得母亲坠楼而亡，放声大哭。"},
+    {"name": "闻仲", "aliases": ["闻太师", "太师"], "identity": "殷商太师，征东海奏凯回朝，力主赦黄飞虎并自领兵追赶", "nonhuman": false, "mentioned_only": false, "evidence": "探事马报进午门曰：「闻太师征东海奏凯回兵。」"},
+    {"name": "徐荣", "aliases": [], "identity": "下大夫，进言黄飞虎也有忤君之罪", "nonhuman": false, "mentioned_only": false, "evidence": "班中闪一员官，乃下大夫徐荣出见。"},
+    {"name": "吉立", "aliases": [], "identity": "闻太师麾下部将，奉令发飞檄传三路总兵堵截", "nonhuman": false, "mentioned_only": false, "evidence": "乃传令吉立、徐庆：「快发飞檄传临潼关、佳梦关、青龙关三路总兵，不可走了反叛；"},
+    {"name": "徐庆", "aliases": [], "identity": "闻太师麾下部将，奉令发飞檄传三路总兵（他块文字作余庆）", "nonhuman": false, "mentioned_only": false, "evidence": "乃传令吉立、徐庆：「快发飞檄传临潼关、佳梦关、青龙关三路总兵，不可走了反叛；"},
+    {"name": "张奎", "aliases": [], "identity": "渑池县镇守主将，利害（黄飞虎避而不穿城）", "nonhuman": false, "mentioned_only": true, "evidence": "──县中镇守主将张奎。黄飞虎知张奎利害，不敢穿城而走，从城外过了渑池，径往临潼关来。"},
+    {"name": "张桂芳", "aliases": [], "identity": "青龙关总兵，奉令回关谨防黄飞虎", "nonhuman": false, "mentioned_only": false, "evidence": "且说闻太师大兵赶至中途，前哨报：「青龙关总兵官张桂芳听令。」"},
+    {"name": "张凤", "aliases": [], "identity": "临潼关总兵，堵截黄飞虎，先失百炼锤，后因萧银反戈被一戟刺死", "nonhuman": false, "mentioned_only": false, "evidence": "又见正中间临潼关总兵官张凤兵来。"},
+    {"name": "清虚道德真君", "aliases": ["真君", "真人"], "identity": "青峰山紫阳洞神仙，见黄家难起，以混元旛移开黄家父子、撒神砂退闻太师兵", "nonhuman": false, "mentioned_only": false, "evidence": "且说青峰山紫阳洞清虚道德真君因神仙犯了杀戒，玉虚宫止讲，待子牙封过神方上昆仑，因此闲游五岳。"},
+    {"name": "萧银", "aliases": [], "identity": "临潼关副将、黄飞虎旧部，报信开关放黄家出关，一戟刺死张凤", "nonhuman": false, "mentioned_only": false, "evidence": "叫：「萧银在那里？」萧银上殿，见张凤曰：「末将听令。」"},
+    {"name": "陈桐", "aliases": [], "identity": "潼关守将、黄飞虎旧部，挟旧恨以火龙标打死黄飞虎、打伤周纪", "nonhuman": false, "mentioned_only": false, "evidence": "潼关守将陈桐有探马报到：「黄飞虎同家将至关，扎住了行营。」"},
+    {"name": "白云童儿", "aliases": [], "identity": "清虚道德真君座下童儿，奉命请师兄黄天化", "nonhuman": false, "mentioned_only": false, "evidence": "道人忙命白云童儿：「请你师兄来。」"},
+    {"name": "黄天化", "aliases": [], "identity": "黄飞虎三岁被带上青峰山之子、清虚道德真君弟子，奉师命下山救父", "nonhuman": false, "mentioned_only": false, "evidence": "黄天化答曰：「师父，弟子父亲是谁？」"},
+    {"name": "五色神牛", "aliases": [], "identity": "黄飞虎的坐骑神牛", "nonhuman": true, "mentioned_only": false, "evidence": "飞虎金装盔甲，上了五色神牛。"}
+  ],
+  "collectives": [
+    {"name": "魔家四将", "refers_to": [], "note": "本块未列成员名；本块亦称『四天王』"}
+  ]
+}

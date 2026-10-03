@@ -1,0 +1,608 @@
+{
+  "chunk": 66,
+  "characters": [
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "相父",
+        "太公",
+        "太公吕望",
+        "吕望",
+        "师尚父",
+        "齐侯"
+      ],
+      "identity": "封神既毕的周相父，与周公旦条议分封仪制，受赐专征伐、就封齐国而齐国大治，薨后公子灶嗣位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "班中有姜子牙出班上殿，俯伏称臣"
+    },
+    {
+      "name": "武王",
+      "aliases": [],
+      "identity": "周之天子，亲至南郊饯李靖等归山，命周公旦唱名策封七十二国，迁都镐京",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "次日早朝，武王登殿"
+    },
+    {
+      "name": "周公旦",
+      "aliases": [
+        "周公",
+        "御弟",
+        "宰周公",
+        "周（姬）公旦"
+      ],
+      "identity": "文王第四子，佐文武成王有大勋劳，为太宰，于金殿唱名策封，留相王室辅成王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "命御弟周公旦于金殿上唱名策封"
+    },
+    {
+      "name": "召公奭",
+      "aliases": [
+        "君奭",
+        "召康",
+        "召公"
+      ],
+      "identity": "周同姓功臣、武王御弟，为周太保，食邑于召，留相天子主陕以西诸侯，奉命迁都镐京",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "系周同姓功臣，曰君奭，佐文、武定天下"
+    },
+    {
+      "name": "李靖",
+      "aliases": [],
+      "identity": "原系山谷野人，太平后与杨戬等奏请归山，拜别武王，肉身成圣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见李靖、杨戬等出班奏曰"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "随李靖出班陛辞归山，后肉身成圣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见李靖、杨戬等出班奏曰"
+    },
+    {
+      "name": "金吒",
+      "aliases": [],
+      "identity": "归山七人之一，肉身成圣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "后来李靖、金吒、木吒、哪吒、杨戬、韦护、雷震子，此七人俱是肉身成圣"
+    },
+    {
+      "name": "木吒",
+      "aliases": [],
+      "identity": "归山七人之一，肉身成圣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "后来李靖、金吒、木吒、哪吒、杨戬、韦护、雷震子，此七人俱是肉身成圣"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "归山七人之一，肉身成圣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "后来李靖、金吒、木吒、哪吒、杨戬、韦护、雷震子，此七人俱是肉身成圣"
+    },
+    {
+      "name": "韦护",
+      "aliases": [],
+      "identity": "归山七人之一，肉身成圣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "后来李靖、金吒、木吒、哪吒、杨戬、韦护、雷震子，此七人俱是肉身成圣"
+    },
+    {
+      "name": "雷震子",
+      "aliases": [],
+      "identity": "归山七人之一，肉身成圣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "后来李靖、金吒、木吒、哪吒、杨戬、韦护、雷震子，此七人俱是肉身成圣"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [],
+      "identity": "功臣，与散宜生、闳夭等各分茅土有差",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "如南宫适、散宜生、闳夭等，各分列茅土有差"
+    },
+    {
+      "name": "散宜生",
+      "aliases": [],
+      "identity": "功臣，各分茅土有差",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "如南宫适、散宜生、闳夭等，各分列茅土有差"
+    },
+    {
+      "name": "闳夭",
+      "aliases": [],
+      "identity": "功臣，各分茅土有差",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "如南宫适、散宜生、闳夭等，各分列茅土有差"
+    },
+    {
+      "name": "宋异人",
+      "aliases": [],
+      "identity": "子牙下山至朝歌时百般恩待他之人，其时夫妇已死、子掌家私，受齐国使臣赍书问问候",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "深蒙宋异人百般恩义，因王事多艰，一向未曾图报"
+    },
+    {
+      "name": "公子灶",
+      "aliases": [],
+      "identity": "子牙薨后嗣位于齐者",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "后子牙薨，公子灶嗣位"
+    },
+    {
+      "name": "小白",
+      "aliases": [],
+      "identity": "齐国嗣位至小白，用管仲为相而伯天下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "至小白，相管仲，伯天下"
+    },
+    {
+      "name": "管仲",
+      "aliases": [],
+      "identity": "小白之相，伯天下，春秋赖之",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "至小白，相管仲，伯天下"
+    },
+    {
+      "name": "康公",
+      "aliases": [],
+      "identity": "齐国后主，至康公方为田氏所灭",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "后至康公，方为田氏所灭"
+    },
+    {
+      "name": "伯禽",
+      "aliases": [],
+      "identity": "周公旦长子，封于曲阜而侯于鲁，以辅周室",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "乃封其长子伯禽于曲阜，地方七百里"
+    },
+    {
+      "name": "伯益",
+      "aliases": [
+        "四岳",
+        "吕侯"
+      ],
+      "identity": "炎帝裔孙，为四岳佐禹平水土有功，赐姓姜氏，齐之远祖",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "系炎帝裔孙伯益为四岳，佐禹平水土有功"
+    },
+    {
+      "name": "毕公高",
+      "aliases": [],
+      "identity": "周同姓功臣，佐文武定天下有大功，封镇魏国",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "系周同姓功臣，曰毕公高，佐文、武定天下"
+    },
+    {
+      "name": "姬叔鲜",
+      "aliases": [],
+      "identity": "武王弟，以监武庚封于管",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "系武王弟，曰姬叔鲜，以监武庚封于管"
+    },
+    {
+      "name": "姬叔度",
+      "aliases": [],
+      "identity": "武王弟，以监武庚而封于蔡",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "系武王弟，曰姬叔度，以监武庚对于蔡"
+    },
+    {
+      "name": "姬叔振铎",
+      "aliases": [],
+      "identity": "武王弟，克商后封于曹",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "系武王弟，曰姬叔振铎。"
+    },
+    {
+      "name": "姬叔武",
+      "aliases": [],
+      "identity": "武王弟，克商后封于郕",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "系武王弟，曰姬叔武。"
+    },
+    {
+      "name": "姬叔处",
+      "aliases": [],
+      "identity": "武王弟，克商后封于霍",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "系武王弟，曰姬叔处。"
+    },
+    {
+      "name": "康叔",
+      "aliases": [],
+      "identity": "武王同母少弟，封为大司寇，食采于康，封于卫",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "食采于康，谓之康叔，封于卫"
+    },
+    {
+      "name": "姬叔绣",
+      "aliases": [],
+      "identity": "武王弟，克商后封于滕",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "系武王弟，曰姬叔绣。"
+    },
+    {
+      "name": "唐叔虞",
+      "aliases": [],
+      "identity": "武王少子，封于唐，后改为晋",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "系武王少子，曰唐叔虞。"
+    },
+    {
+      "name": "泰伯",
+      "aliases": [],
+      "identity": "周太王长子，吴为其后所封",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "系周太王长子泰伯之后。"
+    },
+    {
+      "name": "仲雍",
+      "aliases": [],
+      "identity": "周太王之子，虞为其后所封",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "系周太王子仲雍之后。"
+    },
+    {
+      "name": "章已",
+      "aliases": [],
+      "identity": "泰伯、仲雍之后，为吴君，别封于虞",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "得章已为吴君；别封其为虞"
+    },
+    {
+      "name": "虢仲",
+      "aliases": [],
+      "identity": "王季之子、文王之弟，为文王卿士，武王封之于弘农",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "系王季子虢仲，文王弟也"
+    },
+    {
+      "name": "虢叔",
+      "aliases": [],
+      "identity": "与虢仲同为文王卿士、勋在王室，同谓二虢",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "仲与虢叔为文王卿士，勋在王室"
+    },
+    {
+      "name": "鬻熊",
+      "aliases": [],
+      "identity": "颛帝之裔，为周文武之师，有勤劳王家，封之于荆蛮",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "系颛帝之裔，曰鬻熊。"
+    },
+    {
+      "name": "柏翳",
+      "aliases": [],
+      "identity": "颛帝之裔，先世有功，武王封其裔柏翳于秦",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "封其裔柏翳于秦。"
+    },
+    {
+      "name": "兹与期",
+      "aliases": [],
+      "identity": "少昊之后，武王封其后兹与期于莒地",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "封其后兹与期于莒地。"
+    },
+    {
+      "name": "陆终",
+      "aliases": [],
+      "identity": "邾之所出，其第五子晏安之后",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "系陆终第五子晏安之后。"
+    },
+    {
+      "name": "晏安",
+      "aliases": [],
+      "identity": "陆终第五子，邾国所出之祖",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "系陆终第五子晏安之后。"
+    },
+    {
+      "name": "曹挟",
+      "aliases": [],
+      "identity": "晏安之裔，武王克商封之于邾",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "封其裔曹挟于邾。"
+    },
+    {
+      "name": "奚仲",
+      "aliases": [],
+      "identity": "黄帝之后裔，武王封之于薛",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "封其后裔奚仲于薛。"
+    },
+    {
+      "name": "帝乙",
+      "aliases": [
+        "商王帝乙"
+      ],
+      "identity": "商王，微子启之父",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "系商王帝乙之长庶子曰微子启"
+    },
+    {
+      "name": "微子启",
+      "aliases": [
+        "微子"
+      ],
+      "identity": "帝乙长庶子，因纣王不道抱祭器归周，武王封之于宋",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "武王克商，封微子于宋。"
+    },
+    {
+      "name": "箕子",
+      "aliases": [],
+      "identity": "殷贤臣、商王之裔，不肯臣周，陈洪范九畴而去辽东，武王即其地封之",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "乃殷贤臣，曰箕子，亦商王之裔。"
+    },
+    {
+      "name": "夏禹王",
+      "aliases": [
+        "禹"
+      ],
+      "identity": "夏之开国之君，杞国所奉之祀；伯益曾佐其平水土",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "系夏禹王之后。"
+    },
+    {
+      "name": "东楼公",
+      "aliases": [],
+      "identity": "夏禹苗裔，武王求而封之于杞以奉禹祀",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "得东楼公，封于杞，以奉禹祀"
+    },
+    {
+      "name": "阏父",
+      "aliases": [],
+      "identity": "帝舜裔孙，为武王陶正，能利器用",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "其裔孙阏父作武王陶正，能利器用"
+    },
+    {
+      "name": "大姬",
+      "aliases": [
+        "元女"
+      ],
+      "identity": "武王之元女，下嫁阏父之子满而封诸陈",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "以元女大姬下嫁其子满，而封诸陈"
+    },
+    {
+      "name": "满",
+      "aliases": [],
+      "identity": "阏父之子，娶大姬而受封于陈",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "以元女大姬下嫁其子满，而封诸陈，使奉虞帝祀"
+    },
+    {
+      "name": "帝尧",
+      "aliases": [
+        "尧",
+        "唐帝"
+      ],
+      "identity": "蓟国所出之帝，武王求其后封之于蓟以奉唐帝之祀",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "系帝尧之裔。"
+    },
+    {
+      "name": "舜",
+      "aliases": [
+        "帝舜",
+        "虞帝"
+      ],
+      "identity": "陈国所奉之祖，其裔孙阏父作武王陶正",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "系帝舜之后。"
+    },
+    {
+      "name": "伯夷",
+      "aliases": [],
+      "identity": "尧时四岳伯夷，许国为其后（与首阳山耻食周粟之伯夷同名）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "系尧四岳伯夷之后。"
+    },
+    {
+      "name": "叔许",
+      "aliases": [],
+      "identity": "许国所封之地或所封之裔，原文「封其裔于叔许」（存疑）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "因先世有功，武王克商，封其裔于叔许。"
+    },
+    {
+      "name": "太皞",
+      "aliases": [],
+      "identity": "陈地「太皞之墟」所本之古帝（存疑，原文仅见于地名）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "其地在太皞之墟，即今之陈县是也。"
+    },
+    {
+      "name": "颛帝",
+      "aliases": [],
+      "identity": "楚、秦之远祖（与太公坛上四季正神之颛顼为同一古帝写法）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "系颛帝之裔。"
+    },
+    {
+      "name": "少昊",
+      "aliases": [],
+      "identity": "莒国所出之祖",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "系少昊之后。"
+    },
+    {
+      "name": "炎帝",
+      "aliases": [],
+      "identity": "齐国所出之祖，裔孙为伯益",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "系炎帝裔孙伯益为四岳"
+    },
+    {
+      "name": "黄帝",
+      "aliases": [],
+      "identity": "薛国所出之祖",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "　　　　黄帝之后。"
+    },
+    {
+      "name": "太王",
+      "aliases": [],
+      "identity": "周之先祖，与王季、文王同被追王为天子；泰伯、仲雍皆其子",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "先追王祖考、自太王、王季、文王皆为天子"
+    },
+    {
+      "name": "王季",
+      "aliases": [],
+      "identity": "周之先祖，追王为天子；虢仲之父",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "先追王祖考、自太王、王季、文王皆为天子"
+    },
+    {
+      "name": "文王",
+      "aliases": [],
+      "identity": "追王为天子者，周公旦所佐，虢仲、虢叔为其卿士",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "佐文王、武王、成王有大勋劳于天下"
+    },
+    {
+      "name": "成王",
+      "aliases": [],
+      "identity": "武王崩后即立，周公辅相戡定内难者",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "后武王崩，成王立，周公辅相之"
+    },
+    {
+      "name": "武庚",
+      "aliases": [],
+      "identity": "纣王之子，受封存商祀，由管蔡二叔监守",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "系武王弟，曰姬叔鲜，以监武庚封于管"
+    },
+    {
+      "name": "纣王",
+      "aliases": [
+        "商辛"
+      ],
+      "identity": "不道而亡商，微子因此抱祭器归周；诗谓商辛焚死",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "因纣王不道，微子抱祭器归周"
+    },
+    {
+      "name": "桀",
+      "aliases": [
+        "夏桀"
+      ],
+      "identity": "夏之亡国暴君，与商辛同受吊伐之报",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "夏桀南巢风里烛，商辛焚死浪中花"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "七人",
+      "refers_to": [
+        "李靖",
+        "金吒",
+        "木吒",
+        "哪吒",
+        "杨戬",
+        "韦护",
+        "雷震子"
+      ]
+    },
+    {
+      "name": "二虢",
+      "refers_to": [
+        "虢仲",
+        "虢叔"
+      ]
+    },
+    {
+      "name": "三皇",
+      "refers_to": []
+    },
+    {
+      "name": "五帝",
+      "refers_to": []
+    },
+    {
+      "name": "十乱",
+      "refers_to": []
+    },
+    {
+      "name": "七十二国",
+      "refers_to": []
+    }
+  ]
+}

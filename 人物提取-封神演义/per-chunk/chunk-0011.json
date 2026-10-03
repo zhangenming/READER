@@ -1,0 +1,222 @@
+{
+  "chunk": 11,
+  "characters": [
+    {
+      "name": "姜子牙",
+      "aliases": ["子牙", "姜尚", "飞熊", "姜老爷", "下大夫"],
+      "identity": "商都下大夫、司天监，三昧真火烧出琵琶精原形，谏造鹿台被追拿、借水遁逃，写休书离朝歌往西岐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "内中也有认的是姜子牙"
+    },
+    {
+      "name": "纣王",
+      "aliases": [],
+      "identity": "商朝天子，封姜尚下大夫、准妲己设虿盆造酒池肉林与鹿台，剜杨任二目",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "纣王准行，差承奉宣崇侯虎"
+    },
+    {
+      "name": "比干",
+      "aliases": ["亚相"],
+      "identity": "商朝亚相，奏请验妖、接旨宣姜尚，受子牙留柬帖之报",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "比干慌忙接旨"
+    },
+    {
+      "name": "妲己",
+      "aliases": ["苏坦己", "苏娘娘"],
+      "identity": "纣王宠妃、苏娘娘，为报琵琶精之恨设虿盆、造酒池肉林并献鹿台图样，荐姜尚督工",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且说妲己把玉石琵琶放于摘星楼上"
+    },
+    {
+      "name": "玉石琵琶精",
+      "aliases": ["琵琶精"],
+      "identity": "轩辕坟中玉石琵琶成精，被三昧真火熬出原形、现一面玉石琵琶，五年后返本还元",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "妲己忽然想起玉石琵琶精之恨"
+    },
+    {
+      "name": "姜娘娘",
+      "aliases": ["中宫姜娘娘"],
+      "identity": "中宫姜皇后，已被谋逆赐死，其侍御宫人遭妲己构陷入虿盆",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "原是中宫姜娘娘侍御宫人"
+    },
+    {
+      "name": "胶鬲",
+      "aliases": ["上大夫"],
+      "identity": "商朝上大夫、文书房官，力谏虿盆惨刑、骂纣王后跳摘星楼死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "胶鬲闻言，心中甚是激烈，径进内庭"
+    },
+    {
+      "name": "黄飞虎",
+      "aliases": ["武成王"],
+      "identity": "商朝武成王，因见百姓纳蛇疑其缘故，同众大臣到文书房追问执殿官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄飞虎答曰"
+    },
+    {
+      "name": "微子",
+      "aliases": [],
+      "identity": "商朝老殿下，与黄飞虎、比干等俱至文书房会议纳蛇之事",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见武成王黄飞虎、比干、微子、箕子、杨任、杨修俱至"
+    },
+    {
+      "name": "箕子",
+      "aliases": [],
+      "identity": "商朝老殿下，自陈于天子纳蛇之事一字也不知",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "比干、箕子曰：「我等一字也不知。」"
+    },
+    {
+      "name": "杨任",
+      "aliases": ["上大夫"],
+      "identity": "商朝上大夫，谏鹿台三害、被剜二目而死，被清虚道德真君救活、眼中长手手心现目",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "适有上大夫杨任进午门"
+    },
+    {
+      "name": "杨修",
+      "aliases": [],
+      "identity": "商朝大臣，与黄飞虎、比干、微子、箕子、杨任同至文书房相见",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "比干、微子、箕子、杨任、杨修俱至"
+    },
+    {
+      "name": "清虚道德真君",
+      "aliases": ["真君", "道德真君"],
+      "identity": "青峰山紫阳洞炼气士，救杨任尸骸回山以仙丹活之，使其后辅周",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "贫道是炼气士清虚道德真君"
+    },
+    {
+      "name": "黄巾力士",
+      "aliases": ["力士"],
+      "identity": "奉清虚道德真君法旨、用神风把杨任尸骸摄回紫阳洞的神道",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "命黄巾力士：「可救杨任回山。」"
+    },
+    {
+      "name": "白云童儿",
+      "aliases": [],
+      "identity": "青峰山紫阳洞童子，奉真君命自葫芦取仙丹救杨任",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "命白云童儿，葫芦中取二粒仙丹"
+    },
+    {
+      "name": "崇侯虎",
+      "aliases": [],
+      "identity": "北伯侯，奉旨督造鹿台、仗势虐民三丁抽二，累死者填于台内",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "非崇侯虎不能成功"
+    },
+    {
+      "name": "姜文焕",
+      "aliases": ["东伯侯"],
+      "identity": "东伯侯，雄兵百万欲报父仇，游魂关苦战三年（杨任奏中三害之一）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "一害者东伯侯姜文焕，雄兵百万，欲报父雠"
+    },
+    {
+      "name": "鄂顺",
+      "aliases": ["南伯侯"],
+      "identity": "南伯侯，因父被杀昼夜攻取三山关（杨任奏中二害）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "二害者，南伯侯鄂顺，为陛下无辜杀其父亲"
+    },
+    {
+      "name": "邓九公",
+      "aliases": [],
+      "identity": "守三山关与鄂顺苦战多年的总兵",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "邓九公亦是苦战多年"
+    },
+    {
+      "name": "闻太师",
+      "aliases": [],
+      "identity": "远征北海十有余年未返国的商朝太师（杨任奏中三害之一）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "况闻太师远征北海大敌，十有余年"
+    },
+    {
+      "name": "西伯",
+      "aliases": [],
+      "identity": "被囚羑里的西伯侯姬昌，胶鬲临死谓纣王「终应西伯之言」",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "终应西伯之言！"
+    },
+    {
+      "name": "太子",
+      "aliases": [],
+      "identity": "纣王前番所斩、被风刮去尸骸的太子（仅追述）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "似前番朕斩太子也被风刮去"
+    },
+    {
+      "name": "张凤",
+      "aliases": ["张总兵", "张老爷"],
+      "identity": "临潼关总兵，扣留逃民不放，受姜尚道服拜见为其说人情",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "张凤想：下大夫姜尚来拜"
+    },
+    {
+      "name": "马氏",
+      "aliases": [],
+      "identity": "姜子牙之妻、马洪之女，不肯离朝歌往西岐，接休书归家改节",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "马氏伸手接书，全无半毫顾恋之心"
+    },
+    {
+      "name": "宋异人",
+      "aliases": ["异人"],
+      "identity": "朝歌宋家庄员外、子牙结义仁兄，劝写休书并治酒饯行远送",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有宋异人同妻孙氏来劝子牙曰"
+    },
+    {
+      "name": "孙氏",
+      "aliases": ["嫂嫂"],
+      "identity": "宋异人之妻，同夫劝解子牙夫妻并送别",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有宋异人同妻孙氏来劝子牙曰"
+    },
+    {
+      "name": "老君",
+      "aliases": [],
+      "identity": "赋文中扳倒炼丹炉、以致一块火光连地滚的仙人（比喻烧妖之火）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "好似老君扳倒炼丹炉，一块火光连地滚"
+    }
+  ],
+  "collectives": []
+}

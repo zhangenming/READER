@@ -1,0 +1,366 @@
+{
+  "chunk": 60,
+  "characters": [
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜尚",
+        "姜元帅",
+        "姜公"
+      ],
+      "identity": "诱邬文化进蟠龙岭焚死、用陆压所传法宝斩白猿的周营元帅",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "俱回来见姜子牙，备言前事"
+    },
+    {
+      "name": "武王",
+      "aliases": [],
+      "identity": "与子牙同被邬文化追赶、退入蟠龙岭山口的周主",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙与武王见邬文化追来，拨转坐骑，望西南而逃"
+    },
+    {
+      "name": "纣王",
+      "aliases": [],
+      "identity": "赍袍带表礼奖谕袁洪邬文化、又差官送一贤士至军前的商天子",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "纣王差官赍袍、带、表礼等物奖谕，袁洪、邬文化二将谢恩"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "钻入猪怪腹内擒朱子真、又借山河社稷图擒白猿袁洪的门人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨戬在傍，用照妖宝鉴一照，原来是一个大猪"
+    },
+    {
+      "name": "玉鼎真人",
+      "aliases": [],
+      "identity": "玉泉山金霞洞之主、杨戬之师（本块只被杨戬自报师门时提到）",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "吾乃玉泉山金霞洞玉鼎真人门徒杨戬是也"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "使火尖鎗抵住戴礼、见红珠凶恶闪一鎗败阵的门人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙傍有哪吒登风火轮，使开火尖鎗迎来"
+    },
+    {
+      "name": "韦护",
+      "aliases": [],
+      "identity": "劫成汤大营时与李靖、雷震子冲杀进右营的门人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李靖、韦护、雷震子冲杀进右营"
+    },
+    {
+      "name": "雷震子",
+      "aliases": [],
+      "identity": "黑夜随李靖韦护冲入成汤右营的门人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李靖、韦护、雷震子冲杀进右营"
+    },
+    {
+      "name": "李靖",
+      "aliases": [],
+      "identity": "劫营时冲入成汤右营的门人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李靖、韦护、雷震子冲杀进右营"
+    },
+    {
+      "name": "武吉",
+      "aliases": [],
+      "identity": "与南宫适领二千人马往蟠龙岭埋伏引火之物、叠断山口的周将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说武吉、南宫适望见子牙引邬文化进山"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [
+        "南将军"
+      ],
+      "identity": "辕门遇伏猪、奏知子牙并手斩猪头牛怪的周将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南将军，报与姜元帅得知，此是梅山猪怪"
+    },
+    {
+      "name": "郑伦",
+      "aliases": [],
+      "identity": "骑金睛兽战金大升、被牛黄打伤面部挥为两段的周营上将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吾乃总督五军上将军郑伦是也"
+    },
+    {
+      "name": "邬文化",
+      "aliases": [
+        "邬将军"
+      ],
+      "identity": "夜劫周营立大功的大汉，被诱入蟠龙岭火化灰烬",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说邬文化得了大功，纣王差官赍袍、带、表礼等物奖谕"
+    },
+    {
+      "name": "袁洪",
+      "aliases": [
+        "白猿"
+      ],
+      "identity": "梅山得道白猿，兄弟尽被杨戬灭去，被山河社稷图擒住斩首",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "话说袁洪闻报，知道烧死了邬文化，心中不乐"
+    },
+    {
+      "name": "朱子真",
+      "aliases": [
+        "猪怪"
+      ],
+      "identity": "梅山猪精陀头，一口吃去杨戬，终现原身被南宫适斩头",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "吾亦在梅山地方居住，与元帅相隔不远，姓朱，名子真"
+    },
+    {
+      "name": "杨显",
+      "aliases": [
+        "羊精"
+      ],
+      "identity": "梅山羊精、顶生二角的汤营杰士，被杨戬变猛虎砍为两段",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "末将姓杨，名显，祖居梅山人氏"
+    },
+    {
+      "name": "戴礼",
+      "aliases": [
+        "狗怪"
+      ],
+      "identity": "梅山狗精、袁洪副将，吐红珠伤人被哮天犬咬住斩戮",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "吾乃袁洪副将戴礼是也"
+    },
+    {
+      "name": "金大升",
+      "aliases": [
+        "牛怪"
+      ],
+      "identity": "梅山牛怪，喷出牛黄杀郑伦，被女娲法旨擒住后斩下牛头",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "吾乃袁洪麾下副将金大升是也"
+    },
+    {
+      "name": "余忠",
+      "aliases": [],
+      "identity": "南伯侯麾下不信道术、使狼牙棒的副将，被朱子真咬了半段",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有南伯侯麾下副将余忠──此人不信道术──使狼牙棒"
+    },
+    {
+      "name": "鄂顺",
+      "aliases": [
+        "南伯侯"
+      ],
+      "identity": "领二百诸侯奋勇当先冲入成汤大营的南伯侯",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南伯侯鄂顺领二百诸侯，一齐奋勇当先"
+    },
+    {
+      "name": "崇应鸾",
+      "aliases": [
+        "北伯侯"
+      ],
+      "identity": "劫营时冲杀进成汤左营的北伯侯",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "北伯侯崇应鸾冲杀进左营"
+    },
+    {
+      "name": "东伯侯",
+      "aliases": [],
+      "identity": "子牙等候其人马到来方可进兵、至今未至孟津的诸侯（即姜文焕）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "方今东伯侯人马未至，况有梅山七怪阻住吾师"
+    },
+    {
+      "name": "苏侯",
+      "aliases": [],
+      "identity": "郑伦口中归周、一路督粮有功的旧主（本块只称苏侯）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "自从苏侯归周，一路督粮，有功王室"
+    },
+    {
+      "name": "陆压",
+      "aliases": [
+        "陆压老师"
+      ],
+      "identity": "破万仙阵时把斩白猿之宝传授与子牙的散仙",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "此宝乃在破万仙阵时，蒙陆压老师传授与我，言后有用他处"
+    },
+    {
+      "name": "女娲娘娘",
+      "aliases": [
+        "女娲"
+      ],
+      "identity": "驾青鸾而来、授杨戬伏妖索与山河社稷图以收梅山之怪的娘娘",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "杨戬，吾非别神，乃女娲娘娘是也"
+    },
+    {
+      "name": "青云女童",
+      "aliases": [],
+      "identity": "女娲娘娘驾前奉法旨祭伏妖索牵拿牛怪的女童",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "乃命青云女童：「将此宝去把那业障牵来。」"
+    },
+    {
+      "name": "黄巾力士",
+      "aliases": [],
+      "identity": "奉女娲法旨把金大升穿鼻打锤的力士",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "只见黄巾力士将金大升穿起鼻子来，用铜锤把金大升背脊上打了三匹锤"
+    },
+    {
+      "name": "金吒",
+      "aliases": [],
+      "identity": "回目与诗中设智开周业、智取游魂关的周将",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "金吒设智开周业，彻地多谋弄女红"
+    },
+    {
+      "name": "窦荣",
+      "aliases": [],
+      "identity": "回目中在游魂关枉自逞英风的守关总兵",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "斗柄看看又向东，窦荣枉自逞英风"
+    },
+    {
+      "name": "彻地",
+      "aliases": [],
+      "identity": "回诗中以多谋弄女红相关游魂关归周之事的人物",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "金吒设智开周业，彻地多谋弄女红"
+    },
+    {
+      "name": "金睛兽",
+      "aliases": [],
+      "identity": "郑伦所骑、与金大升独角兽相交的战兽",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "郑伦上了金睛兽，拎降魔杵，出了营门"
+    },
+    {
+      "name": "独角兽",
+      "aliases": [],
+      "identity": "金大升所骑、来得快、后叠断山口的坐骑",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "次日，金大升上了独角兽，提三尖刀，至周营搦战"
+    },
+    {
+      "name": "哮天犬",
+      "aliases": [
+        "仙犬"
+      ],
+      "identity": "杨戬祭在空中、让过红珠咬住戴礼的犬",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "杨戬祭起哮天犬，飞在空中"
+    },
+    {
+      "name": "常昊",
+      "aliases": [],
+      "identity": "袁洪营中被说与吴龙同党、已被灭去的梅山长蛇怪",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "此又是常昊、吴龙一党。"
+    },
+    {
+      "name": "吴龙",
+      "aliases": [],
+      "identity": "袁洪营中被说与常昊同党、已被灭去的梅山蜈蚣怪",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "此又是常昊、吴龙一党。"
+    },
+    {
+      "name": "余元",
+      "aliases": [],
+      "identity": "子牙说到先前曾以此飞刀法宝斩过之人",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "前次斩余元即此宝也"
+    },
+    {
+      "name": "殷破败",
+      "aliases": [],
+      "identity": "劝袁洪大杀一场以树威、又识破梅山之士为妖孽的商营参军",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "殷破败自思：「此又是袁洪等一党妖孽耳！」"
+    },
+    {
+      "name": "雷开",
+      "aliases": [],
+      "identity": "与殷破败同随袁洪守孟津、默然不语的商营将领",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "袁洪在营中与参军殷破败、雷开二将议曰"
+    },
+    {
+      "name": "龙须虎",
+      "aliases": [],
+      "identity": "孟津劫营中被邬文化排扒木绝命的子牙门徒",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "龙须虎被邬文化排扒木绝其性命"
+    },
+    {
+      "name": "四不相",
+      "aliases": [],
+      "identity": "姜子牙诱邬文化时勒转行走的坐骑",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "子牙勒转四不相又走"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "梅山七怪",
+      "refers_to": [
+        "袁洪",
+        "朱子真",
+        "杨显",
+        "戴礼",
+        "金大升"
+      ]
+    }
+  ]
+}

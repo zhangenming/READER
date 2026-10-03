@@ -1,0 +1,352 @@
+{
+  "chunk": 56,
+  "characters": [
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜尚",
+        "姜元帅"
+      ],
+      "identity": "领周兵取临潼关、进军渑池县的元帅，即将封神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "邓昆大呼曰：「姜子牙，今日与你共决雌雄也！」"
+    },
+    {
+      "name": "武王",
+      "aliases": [
+        "周武"
+      ],
+      "identity": "闻知丧了二弟掩面而哭、随大军进关的西周之主",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "武王闻知丧了二弟，掩面而哭"
+    },
+    {
+      "name": "纣王",
+      "aliases": [],
+      "identity": "邓昆、土行孙口中荒淫不道、气数将终的商天子",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "纣王荒淫不道，谅亦不久"
+    },
+    {
+      "name": "邓昆",
+      "aliases": [],
+      "identity": "与芮吉同谋归周、修书令土行孙报知的临潼关协守侯伯",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见邓昆屏退左右，笑谓芮吉曰"
+    },
+    {
+      "name": "芮吉",
+      "aliases": [
+        "芮侯"
+      ],
+      "identity": "一剑砍倒欧阳淳、献临潼关归周的侯伯",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "被芮吉吼一声，一剑砍倒欧阳淳，枭了首级"
+    },
+    {
+      "name": "欧阳淳",
+      "aliases": [],
+      "identity": "不肯负成汤之恩、被二侯杀于殿上的临潼关守将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "我欧阳淳其首可断，其身可碎"
+    },
+    {
+      "name": "卞吉",
+      "aliases": [
+        "卞将军"
+      ],
+      "identity": "失旛后被邓、芮二侯以私通周营之名拿下枭首的临潼关将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "卞吉不及分辨，被左右拿下，推出帅府，即时斩了首级号令"
+    },
+    {
+      "name": "土行孙",
+      "aliases": [],
+      "identity": "以地行之术暗进临潼关、引二侯归周并取符报军的督粮官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吾乃是姜元帅麾下二运督粮军官土行孙是也"
+    },
+    {
+      "name": "黄飞虎",
+      "aliases": [
+        "武成王",
+        "黄将军"
+      ],
+      "identity": "被监放出殿认姨丈邓昆、掠阵助崇黑虎而死于张奎刀下的周将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄飞虎上殿来，见是姨丈邓昆，二人相会大喜"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [],
+      "identity": "应声愿取渑池头功、刀斩王佐的周将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南宫适应声愿往，领令出营，至城下搦战"
+    },
+    {
+      "name": "韦护",
+      "aliases": [],
+      "identity": "旛被收后取回降魔杵的周营门人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "韦护取了降魔杵，又将雷震子黄金棍取了"
+    },
+    {
+      "name": "雷震子",
+      "aliases": [],
+      "identity": "被擒在临潼关监中、其黄金棍被取回周营的周将",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "韦护取了降魔杵，又将雷震子黄金棍取了"
+    },
+    {
+      "name": "黄飞彪",
+      "aliases": [],
+      "identity": "为长兄报仇出战张奎、被一刀挥于马下的黄家将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有黄飞彪愿为长兄报仇，子牙许之"
+    },
+    {
+      "name": "黄飞豹",
+      "aliases": [],
+      "identity": "与黄飞彪同冲出接住邓、芮二侯厮杀的周将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见子牙背后有黄飞彪、黄飞豹二马冲出"
+    },
+    {
+      "name": "武吉",
+      "aliases": [],
+      "identity": "出马接住卞吉大战、不赶其往旛下的周将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "武吉出马，接住大战"
+    },
+    {
+      "name": "赵丙",
+      "aliases": [],
+      "identity": "围战卞吉时被一戟剌中肩窝的周将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "忽然一戟剌中赵丙肩窝，赵丙闪开"
+    },
+    {
+      "name": "张奎",
+      "aliases": [
+        "七杀"
+      ],
+      "identity": "渑池县总兵官，乘独角乌烟兽连斩周将、两度活捉杨戬",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说渑池县总兵官张奎听得周兵来至，忙升帅府坐下"
+    },
+    {
+      "name": "高兰英",
+      "aliases": [],
+      "identity": "张奎夫人，使日月刀、祭太阳金针射住三将眼目并浇血粪斩杨戬",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "与夫人高兰英商议"
+    },
+    {
+      "name": "王佐",
+      "aliases": [],
+      "identity": "渑池县先行官，与南宫适战二三十回被挥为两段",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "乃是王佐、郑桩，上厅来见张奎"
+    },
+    {
+      "name": "郑桩",
+      "aliases": [],
+      "identity": "渑池县先行官，与黄飞虎战二十合被刺于马下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "郑桩出马，与黄飞虎大战二十合"
+    },
+    {
+      "name": "姜文焕",
+      "aliases": [
+        "东伯侯"
+      ],
+      "identity": "差官下书求借救兵、欲取游魂关的东伯侯",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "如今东伯侯姜文焕求借救兵，我这里必定发兵才是"
+    },
+    {
+      "name": "崇黑虎",
+      "aliases": [
+        "北伯侯",
+        "崇君侯",
+        "崇侯"
+      ],
+      "identity": "取了陈塘关来渑池会战、放神鹰而被张奎砍为两段的北伯侯",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "忽报：「北伯侯崇黑虎至辕门求见。」"
+    },
+    {
+      "name": "文聘",
+      "aliases": [],
+      "identity": "随崇黑虎来谒、发马摇叉战张奎而被挥于马下的周营助战将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "崇黑虎同文聘、崔英、蒋雄上帐来，参谒子牙"
+    },
+    {
+      "name": "崔英",
+      "aliases": [],
+      "identity": "与崇黑虎同来助战、八楞锤如流星战张奎的将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "崔英八楞锤一似流星；蒋雄的抓绒绳飞起"
+    },
+    {
+      "name": "蒋雄",
+      "aliases": [],
+      "identity": "与崇黑虎同来助战、使抓绒绳飞起裹住张奎的将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "蒋雄的抓绒绳飞起；一齐上前，把张奎裹在当中"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [
+        "杨督运"
+      ],
+      "identity": "督粮至辕门、被张奎两擒而借血遁斩其马与其母的周营门人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "忽报：「杨戬催粮至辕门等令。」"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "在帐中答杨戬言崇君侯欲见功而未先出战的门人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "哪吒曰：「崇君侯意欲见功，不才先要让他"
+    },
+    {
+      "name": "高继能",
+      "aliases": [],
+      "identity": "往日崇黑虎相助黄飞虎擒斩之人",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔日蒙君侯相助，擒斩高继能"
+    },
+    {
+      "name": "姬叔明",
+      "aliases": [],
+      "identity": "与弟同战张奎、被一刀挥于马下的殿下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "后面姬叔明、姬叔升二殿下走马大呼"
+    },
+    {
+      "name": "姬叔升",
+      "aliases": [],
+      "identity": "见兄落马回马又被张奎一刀两段的殿下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔升见其兄落马，及至回马，又被张奎顺手一刀"
+    },
+    {
+      "name": "老太太",
+      "aliases": [
+        "太太"
+      ],
+      "identity": "张奎之母，在香房被秽污血粪浇头吊下头来",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "老太太正在香房，不知那里秽污血粪把太太浇了一头"
+    },
+    {
+      "name": "独角乌烟兽",
+      "aliases": [
+        "乌烟兽",
+        "黑烟驹"
+      ],
+      "identity": "张奎坐骑，顶上角一拍其快如一阵乌烟",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "名为「独角乌烟兽」，其快如神"
+    },
+    {
+      "name": "金睛兽",
+      "aliases": [],
+      "identity": "崇黑虎坐下坐骑，被一兜跳出圈子",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "崇黑虎催开了金睛兽，举双板斧，飞临阵前"
+    },
+    {
+      "name": "五色神牛",
+      "aliases": [],
+      "identity": "黄飞虎催开助战的坐骑",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "黄飞虎将五色神牛催开，大呼曰：「崇君侯，吾来也！」"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "邓、芮二侯",
+      "refers_to": [
+        "邓昆",
+        "芮吉"
+      ]
+    },
+    {
+      "name": "二位先行官",
+      "refers_to": [
+        "王佐",
+        "郑桩"
+      ]
+    },
+    {
+      "name": "金、木二咤",
+      "refers_to": []
+    },
+    {
+      "name": "二殿下",
+      "refers_to": [
+        "姬叔明",
+        "姬叔升"
+      ]
+    },
+    {
+      "name": "五岳",
+      "refers_to": [
+        "黄飞虎",
+        "崇黑虎",
+        "文聘",
+        "崔英",
+        "蒋雄"
+      ]
+    },
+    {
+      "name": "五将",
+      "refers_to": [
+        "黄飞虎",
+        "崇黑虎",
+        "文聘",
+        "崔英",
+        "蒋雄"
+      ]
+    }
+  ]
+}

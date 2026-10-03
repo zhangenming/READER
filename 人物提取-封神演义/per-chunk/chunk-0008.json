@@ -1,0 +1,224 @@
+{
+  "chunk": 8,
+  "characters": [
+    {
+      "name": "黄飞虎",
+      "aliases": [],
+      "identity": "商朝武成王，在元戎府看边报、发令箭紧守关隘",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄飞虎看报"
+    },
+    {
+      "name": "纣王",
+      "aliases": [],
+      "identity": "商朝天子，囚禁大臣、失政逼反天下诸侯（此块仅被追述）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "忧思纣王失政"
+    },
+    {
+      "name": "姜文焕",
+      "aliases": ["东伯侯"],
+      "identity": "东伯侯，起兵反商，在游魂关大战窦荣",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "见反了东伯侯姜文焕，领四十万人马"
+    },
+    {
+      "name": "鄂顺",
+      "aliases": ["南伯侯"],
+      "identity": "南伯侯，领人马二十万取三山关",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "又反了南伯侯鄂顺"
+    },
+    {
+      "name": "窦荣",
+      "aliases": [],
+      "identity": "游魂关一方与姜文焕交战之将",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "在游魂关大战窦荣"
+    },
+    {
+      "name": "太乙真人",
+      "aliases": ["真人", "师叔"],
+      "identity": "乾元山金光洞仙人，收哪吒为徒、为其取名并授隐身符",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "贫道乃乾元山金光洞太乙真人是也"
+    },
+    {
+      "name": "姜子牙",
+      "aliases": [],
+      "identity": "不久下山斩将封神之人，哪吒为其先行官",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "一则姜子牙该斩将封神"
+    },
+    {
+      "name": "白鹤童子",
+      "aliases": [],
+      "identity": "昆仑山玉虚宫童子，持玉札到乾元山传太乙真人送灵珠子下山",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "白鹤童子持玉札到山"
+    },
+    {
+      "name": "哪吒",
+      "aliases": ["三公子", "灵珠子"],
+      "identity": "陈塘关李靖第三子，灵珠子化身，七岁打死李艮与敖丙、宝德门打敖光",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "哪吒年方七岁，身长六尺"
+    },
+    {
+      "name": "李靖",
+      "aliases": ["靖", "李总兵", "李贤弟"],
+      "identity": "陈塘关总兵，西昆仑度厄真人弟子，金吒、木吒、哪吒之父",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李靖原是道门，怎敢忘本"
+    },
+    {
+      "name": "度厄真人",
+      "aliases": [],
+      "identity": "西昆仑仙人，李靖之师（此块仅被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "拜西昆仑度厄真人为师"
+    },
+    {
+      "name": "殷夫人",
+      "aliases": ["殷氏"],
+      "identity": "李靖元配，怀胎三年零六个月生下哪吒",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "殷夫人后又怀孕在身"
+    },
+    {
+      "name": "金吒",
+      "aliases": [],
+      "identity": "李靖长子，拜五龙山云霄洞文殊广法天尊为师",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "长曰金吒，拜五龙山云霄洞文殊广法天尊为师"
+    },
+    {
+      "name": "木吒",
+      "aliases": [],
+      "identity": "李靖次子，拜九宫山白鹤洞普贤真人为师",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "次曰木吒，拜九宫山白鹤洞普贤真人为师"
+    },
+    {
+      "name": "文殊广法天尊",
+      "aliases": [],
+      "identity": "五龙山云霄洞仙人，金吒之师",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "拜五龙山云霄洞文殊广法天尊为师"
+    },
+    {
+      "name": "普贤真人",
+      "aliases": [],
+      "identity": "九宫山白鹤洞仙人，木吒之师",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "拜九宫山白鹤洞普贤真人为师"
+    },
+    {
+      "name": "敖光",
+      "aliases": ["东海龙君", "龙君"],
+      "identity": "东海龙君，李靖故友，子敖丙被杀后欲上本天庭、在宝德门被哪吒殴打",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "且说东海敖光在水晶宫坐"
+    },
+    {
+      "name": "李艮",
+      "aliases": ["巡海夜叉", "夜叉李艮"],
+      "identity": "东海水晶宫巡海夜叉，灵霄殿御笔点差，被哪吒乾坤圈打死",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "传与巡海夜叉李艮"
+    },
+    {
+      "name": "敖丙",
+      "aliases": ["三太子", "龙王三太子"],
+      "identity": "东海敖光第三子，提画杆戟出战，被哪吒打死并抽龙筋",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "只见龙王三太子敖丙出来"
+    },
+    {
+      "name": "石矶娘娘",
+      "aliases": ["石矶"],
+      "identity": "骷髅山白骨洞万年顽石成灵，因门人被射死擒李靖问罪",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "石矶娘娘听说，走出洞来"
+    },
+    {
+      "name": "碧云童子",
+      "aliases": ["碧云童儿"],
+      "identity": "石矶娘娘门人，携花篮采药时被哪吒震天箭正中咽喉而死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "名曰碧云童子，携花篮采药"
+    },
+    {
+      "name": "彩云童子",
+      "aliases": ["彩云童儿"],
+      "identity": "石矶娘娘门人，见碧云中箭身亡后报与娘娘",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "彩云童子看见碧云中箭而死"
+    },
+    {
+      "name": "金霞童儿",
+      "aliases": ["金霞童子"],
+      "identity": "乾元山金光洞守洞门的童子",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金霞童儿忙启师父"
+    },
+    {
+      "name": "黄巾力士",
+      "aliases": [],
+      "identity": "奉石矶娘娘法旨平空把李靖拎进洞府的神道",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "黄巾力士平空把李靖拿去"
+    },
+    {
+      "name": "轩辕黄帝",
+      "aliases": ["轩辕皇帝"],
+      "identity": "大破蚩尤、传留乾坤弓震天箭为镇陈塘关之宝的上古帝王",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "自从轩辕黄帝大破蚩尤，传留至今"
+    },
+    {
+      "name": "蚩尤",
+      "aliases": [],
+      "identity": "被轩辕黄帝所破者，仅见于叙弓箭来历一句",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "自从轩辕黄帝大破蚩尤"
+    },
+    {
+      "name": "玉帝",
+      "aliases": [],
+      "identity": "天庭之主，敖光欲上本奏准以问李靖之罪",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "明日奏上玉帝"
+    }
+  ],
+  "collectives": [
+    {"name": "四海龙王", "refers_to": ["敖光"]}
+  ]
+}

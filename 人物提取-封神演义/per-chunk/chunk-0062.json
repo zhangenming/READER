@@ -1,0 +1,461 @@
+{
+  "chunk": 62,
+  "characters": [
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜尚",
+        "姜元帅",
+        "扫荡成汤天保大元帅",
+        "天保大元帅"
+      ],
+      "identity": "周营元帅，斩白猿后兵临朝歌，射告示离其军民，历数纣王十罪",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "中军帐上坐姜子牙"
+    },
+    {
+      "name": "纣王",
+      "aliases": [
+        "殷纣王",
+        "殷受"
+      ],
+      "identity": "殷之天子，九间殿前自率御林军出战，力战三路诸侯，被姜文焕鞭伤后背",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "纣王在九间殿听得如此，忙问侍臣"
+    },
+    {
+      "name": "殷破败",
+      "aliases": [
+        "殷老将军",
+        "末将"
+      ],
+      "identity": "纣王大臣，自请往周营说退兵，因骂座被姜文焕手起一刀挥为两段",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有殷破败奏曰"
+    },
+    {
+      "name": "殷成秀",
+      "aliases": [],
+      "identity": "殷破败之子，哭奏父仇、点人马出城搦战，被姜文焕斩得首级",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "殷成秀点人马出城，杀至周营搦战"
+    },
+    {
+      "name": "鲁仁杰",
+      "aliases": [],
+      "identity": "纣王保驾大将，上城守御、随纣王决战，被哪吒乾坤圈打落鞍鞒丧命",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有鲁仁杰出班奏曰"
+    },
+    {
+      "name": "雷鹍",
+      "aliases": [],
+      "identity": "纣王阵前左右翼将之一，随三将杀进重围，被杨戬刀劈",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "雷鹍、雷鹏为左右翼"
+    },
+    {
+      "name": "雷鹏",
+      "aliases": [],
+      "identity": "纣王阵前左右翼将之一，护纣王厮杀，被雷震子一棍结果",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "雷鹍、雷鹏为左右翼"
+    },
+    {
+      "name": "林善",
+      "aliases": [],
+      "identity": "阵上被鲁仁杰以鎗挑之的周营将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "鲁仁杰鎗挑林善"
+    },
+    {
+      "name": "姜文焕",
+      "aliases": [
+        "东伯侯",
+        "文焕",
+        "姜君侯",
+        "东伯姜君侯",
+        "姜皇兄"
+      ],
+      "identity": "东伯侯，斩殷破败、殷成秀，午门战纣王并以鞭打中其后背",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见东伯侯姜文焕带剑上帐，指殷破败大言曰"
+    },
+    {
+      "name": "姜桓楚",
+      "aliases": [],
+      "identity": "姜文焕之父、东伯侯，被纣王醢尸，见于十罪之条与其子口中之仇",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "将东伯侯姜桓楚、南伯侯鄂崇禹，不分皂白，一碎醢其尸"
+    },
+    {
+      "name": "鄂崇禹",
+      "aliases": [],
+      "identity": "南伯侯鄂顺之父，被纣王无故诛戮、身首异处",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "将东伯侯姜桓楚、南伯侯鄂崇禹，不分皂白"
+    },
+    {
+      "name": "鄂顺",
+      "aliases": [
+        "南伯侯"
+      ],
+      "identity": "南伯侯，青鬃马冲出刺纣王，被纣王一刀挥于马下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "你行无道，吾父王未曾犯罪"
+    },
+    {
+      "name": "崇应鸾",
+      "aliases": [
+        "北伯侯"
+      ],
+      "identity": "北伯侯，见东南二侯战纣王，催马助战",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "北伯侯崇应鸾见东、南二侯大战纣王，也把马催开"
+    },
+    {
+      "name": "武王",
+      "aliases": [
+        "姬发",
+        "周武王",
+        "周王发"
+      ],
+      "identity": "周主，四总督诸侯之一，阵前叹君臣抗礼无体统，令子牙解危",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "当中乃武王姬发，四总督诸侯"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "周营战将，登风火轮、祭乾坤圈打下鲁仁杰，与杨戬同喝纣王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "当此时恼了哪吒殿下"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "周营战将，纵马摇刀杀过阵内，刀劈雷鹍、杀郭宸",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨戬刀劈了雷鹍"
+    },
+    {
+      "name": "雷震子",
+      "aliases": [],
+      "identity": "周营战将，一棍结果雷鹏",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "雷震子一棍结果雷鹏"
+    },
+    {
+      "name": "韦护",
+      "aliases": [],
+      "identity": "周营门将，与杨戬、雷震子、金木二咤齐杀至重围",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有杨戬、雷震子、韦护、金、木二咤一齐大叫曰"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [],
+      "identity": "武王部下战将，赞词中称其似猛虎争餐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "武王下南宫适似猛虎争餐"
+    },
+    {
+      "name": "丁策",
+      "aliases": [],
+      "identity": "纣王所封神策上将军，被哪吒乾坤圈打死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "哪吒大战丁策，郭宸也来助战"
+    },
+    {
+      "name": "郭宸",
+      "aliases": [],
+      "identity": "纣王所封威武上将军，落荒后被杨戬一刀劈于马下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "郭宸落荒，被杨戬一刀劈于马下"
+    },
+    {
+      "name": "飞廉",
+      "aliases": [
+        "中大夫"
+      ],
+      "identity": "纣王驾下中大夫，城破后与恶来同奏慰谕",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有中大夫飞廉、恶来奏曰"
+    },
+    {
+      "name": "恶来",
+      "aliases": [],
+      "identity": "纣王臣，城破时随飞廉同殿奏对",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有中大夫飞廉、恶来奏曰"
+    },
+    {
+      "name": "妲己",
+      "aliases": [
+        "妖妃"
+      ],
+      "identity": "纣王宫中之人，与纣王饮宴，其谗言被指为害皇后、立为妖妃之由",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说纣王在宫内，正与妲己饮宴"
+    },
+    {
+      "name": "喜媚",
+      "aliases": [
+        "妖妇"
+      ],
+      "identity": "被纣王夤夜暗纳、同妲己在鹿台宣淫之妖妇",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "今陛下夤夜暗纳妖妇喜媚"
+    },
+    {
+      "name": "姜后",
+      "aliases": [
+        "皇后",
+        "元配"
+      ],
+      "identity": "元配皇后、姜文焕之姐，被纣王剜目烙手死于非命",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "吾姐姐姜后被你剜目烙手，俱死于非命"
+    },
+    {
+      "name": "黄贵妃",
+      "aliases": [
+        "西宫黄贵妃"
+      ],
+      "identity": "西宫贵妃，因直谏被摔下摘星楼死于非命",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "西宫黄贵妃直谏，反遭摔下摘星楼"
+    },
+    {
+      "name": "贾氏",
+      "aliases": [
+        "贞妇"
+      ],
+      "identity": "被纣王诓上摘星楼、以致死节的臣妻",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "诓贾氏上摘星楼，君欺臣妻，致贞妇死节"
+    },
+    {
+      "name": "杜元铣",
+      "aliases": [],
+      "identity": "黄耇大臣之一，被纣王播弃荼毒、炮烙杀戮",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "如杜元铣、梅伯、商容、胶鬲、微子、箕子、比干是也"
+    },
+    {
+      "name": "梅伯",
+      "aliases": [],
+      "identity": "受炮烙之惨毒的老臣之一",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "如杜元铣、梅伯、商容、胶鬲、微子、箕子、比干是也"
+    },
+    {
+      "name": "商容",
+      "aliases": [],
+      "identity": "被纣王囚奴幽辱的大臣之一",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "如杜元铣、梅伯、商容、胶鬲、微子、箕子、比干是也"
+    },
+    {
+      "name": "胶鬲",
+      "aliases": [],
+      "identity": "遭纣王惨毒的贤大臣之一",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "如杜元铣、梅伯、商容、胶鬲、微子、箕子、比干是也"
+    },
+    {
+      "name": "微子",
+      "aliases": [],
+      "identity": "被纣王荼毒囚辱的宗室大臣之一",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "如杜元铣、梅伯、商容、胶鬲、微子、箕子、比干是也"
+    },
+    {
+      "name": "箕子",
+      "aliases": [],
+      "identity": "被纣王囚奴的正士之一",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "如杜元铣、梅伯、商容、胶鬲、微子、箕子、比干是也"
+    },
+    {
+      "name": "比干",
+      "aliases": [],
+      "identity": "被纣王剖心醢戮的大臣之一",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "如杜元铣、梅伯、商容、胶鬲、微子、箕子、比干是也"
+    },
+    {
+      "name": "晁雷",
+      "aliases": [],
+      "identity": "奉纣王命与晁田封赐尚方、往赐太子死之臣",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "命晁雷、晁田封赐尚方，立刻赐死"
+    },
+    {
+      "name": "晁田",
+      "aliases": [],
+      "identity": "与晁雷同奉纣王命赐太子死者",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "命晁雷、晁田封赐尚方，立刻赐死"
+    },
+    {
+      "name": "崇侯虎",
+      "aliases": [],
+      "identity": "纣王所纵、剥削贫民之侯",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "又纵崇侯虎剥削贫民"
+    },
+    {
+      "name": "成汤",
+      "aliases": [
+        "殷汤"
+      ],
+      "identity": "商之先王，以至德承天命伐夏有天下，传六百余年",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔成汤以至德，沐风栉雨，伐夏以有天下"
+    },
+    {
+      "name": "尧帝",
+      "aliases": [],
+      "identity": "上古有天下而让于舜之君，子牙引为天命无常之证",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔尧帝有天下而让于舜"
+    },
+    {
+      "name": "舜",
+      "aliases": [
+        "虞帝"
+      ],
+      "identity": "受尧之让、复让于禹的上古之君",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "虞帝复让于禹"
+    },
+    {
+      "name": "禹",
+      "aliases": [],
+      "identity": "受舜之让、相传至桀的上古之君",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "禹相传至桀而荒怠朝政"
+    },
+    {
+      "name": "桀",
+      "aliases": [],
+      "identity": "夏之亡国暴君，荒怠朝政遂坠夏统，被成汤放逐",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "于是放桀而有天下，传于至今"
+    },
+    {
+      "name": "风后",
+      "aliases": [],
+      "identity": "赞词中与子牙相较的上古臣（仅作比衬）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "运筹帏幄欺风后"
+    },
+    {
+      "name": "老彭",
+      "aliases": [],
+      "identity": "赞词中与子牙相较的上古贤人（仅作比衬）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "燮理阴阳压老彭"
+    },
+    {
+      "name": "逍遥马",
+      "aliases": [],
+      "identity": "纣王（下文又属武王）阵前所乘之马",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "纣王上逍遥马，拎金背刀"
+    },
+    {
+      "name": "董忠",
+      "aliases": [],
+      "identity": "纣王所封威武上将军，被姜文焕走马刀劈于阵前",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说东伯侯走马刀劈董忠，在成汤阵前"
+    },
+    {
+      "name": "四不相",
+      "aliases": [],
+      "identity": "姜子牙阵前所乘之异兽",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "才是姜子牙，乘四不相而出"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "金、木二咤",
+      "refers_to": []
+    },
+    {
+      "name": "三路诸侯",
+      "refers_to": [
+        "姜文焕",
+        "鄂顺",
+        "崇应鸾"
+      ]
+    },
+    {
+      "name": "二侯",
+      "refers_to": [
+        "姜文焕",
+        "鄂顺"
+      ]
+    },
+    {
+      "name": "三将",
+      "refers_to": [
+        "鲁仁杰",
+        "雷鹍",
+        "雷鹏"
+      ]
+    }
+  ]
+}

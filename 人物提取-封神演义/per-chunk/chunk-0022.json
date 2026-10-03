@@ -1,0 +1,43 @@
+{
+  "chunk": 22,
+  "characters": [
+    {"name": "晁雷", "aliases": [], "identity": "商将、晁田之弟，依子牙计回朝歌诓太师发粮后搬取家小归周", "nonhuman": false, "mentioned_only": false, "evidence": "话说晁雷离了西岐，星夜进五关，过渑池，渡黄河，往朝歌，非止一日，进了都城，先至闻太师府来。"},
+    {"name": "闻仲", "aliases": ["闻太师", "太师"], "identity": "殷商太师，被晁雷诓发粮草，遣张桂芳伐西岐", "nonhuman": false, "mentioned_only": false, "evidence": "闻太师沉吟半晌，曰：「前有火牌令箭，韩荣为何不发粮草应付？"},
+    {"name": "南宫适", "aliases": [], "identity": "西岐大将军，战风林被红珠打下、生擒", "nonhuman": false, "mentioned_only": false, "evidence": "只见子牙旗门角下一将，连人带马，如映金赤日玛瑙一般，纵马舞刀，迎敌风林，──乃大将军南宫适；"},
+    {"name": "晁田", "aliases": [], "identity": "商朝佑圣上将军（本块中晁雷向太师追述其战事）", "nonhuman": false, "mentioned_only": true, "evidence": "末将兵至西岐，彼时有南宫适搦战。末将出马，大战三十合，未分胜败，两家鸣金。次日，晁田大战辛甲，辛甲败回。"},
+    {"name": "辛甲", "aliases": [], "identity": "西岐将领，奉令箭参与战守部署", "nonhuman": false, "mentioned_only": false, "evidence": "先令黄飞虎领令箭；哪吒领令箭；又令辛甲、辛免领令箭。"},
+    {"name": "辛免", "aliases": [], "identity": "西岐将领，奉令箭参与战守部署", "nonhuman": false, "mentioned_only": false, "evidence": "先令黄飞虎领令箭；哪吒领令箭；又令辛甲、辛免领令箭。"},
+    {"name": "韩荣", "aliases": [], "identity": "汜水关总兵（本块中晁雷述其不发粮草）", "nonhuman": false, "mentioned_only": true, "evidence": "奈因汜水关韩荣不肯应付粮草，三军慌乱。"},
+    {"name": "吉立", "aliases": [], "identity": "闻太师门徒，荐张桂芳伐西岐", "nonhuman": false, "mentioned_only": false, "evidence": "随问徒弟吉立、余庆：「今令何人可伐西岐？」吉立曰：「老爷欲伐西岐，非青龙关张桂芳不可。」"},
+    {"name": "余庆", "aliases": [], "identity": "闻太师门徒（他块文字作徐庆）", "nonhuman": false, "mentioned_only": false, "evidence": "随问徒弟吉立、余庆：「今令何人可伐西岐？」吉立曰：「老爷欲伐西岐，非青龙关张桂芳不可。」"},
+    {"name": "张桂芳", "aliases": ["桂芳"], "identity": "青龙关总兵，奉诏领十万大军西征，善呼名落马之术，被哪吒乾坤圈打断左臂", "nonhuman": false, "mentioned_only": false, "evidence": "且说闻太师的差官到了青龙关，张桂芳得了太师令箭、火牌。"},
+    {"name": "丘引", "aliases": [], "identity": "商朝神威大将军，交代镇守青龙关", "nonhuman": false, "mentioned_only": false, "evidence": "交代官乃神威大将军丘引。"},
+    {"name": "风林", "aliases": [], "identity": "张桂芳先行官、风后苗裔，蓝脸红发使狼牙棒，吐红珠杀姬叔乾、擒南宫适，被哪吒打伤肩甲", "nonhuman": false, "mentioned_only": false, "evidence": "张桂芳把人马点十万。先行官姓风，名林，乃风后苗裔。"},
+    {"name": "风后", "aliases": [], "identity": "上古贤相、风林的先祖（述风林出身）", "nonhuman": false, "mentioned_only": true, "evidence": "张桂芳把人马点十万。先行官姓风，名林，乃风后苗裔。"},
+    {"name": "姜子牙", "aliases": ["子牙", "姜尚", "子牙公", "姜丞相", "相父"], "identity": "西岐丞相，因桂芳呼名落马之术挂免战牌，上昆仑请援领封神榜", "nonhuman": false, "mentioned_only": false, "evidence": "话说西岐报马报入相府：「张桂芳领十万人马，南门安营。」子牙升殿，聚将共议退兵之策。"},
+    {"name": "黄飞虎", "aliases": ["武成王", "黄将军"], "identity": "开国武成王，向子牙陈说张桂芳呼名落马之术，阵前被叫落马后被众将抢回", "nonhuman": false, "mentioned_only": false, "evidence": "子牙曰：「黄将军，张桂芳用兵如何？」飞虎曰：「丞相下问，末将不得不以实陈。」"},
+    {"name": "姬叔乾", "aliases": [], "identity": "文王第十二子，性如烈火，出战风林被红珠打下、枭首", "nonhuman": false, "mentioned_only": false, "evidence": "内有一将，乃文王殿下姬叔乾也。"},
+    {"name": "姬发", "aliases": ["武王"], "identity": "西岐之主，伤悼弟姬叔乾阵亡", "nonhuman": false, "mentioned_only": false, "evidence": "子牙知姬叔乾阵亡，郁郁不乐。武王知弟死，着实伤悼。"},
+    {"name": "周纪", "aliases": [], "identity": "黄飞虎结义兄弟，出战张桂芳被呼名落马生擒", "nonhuman": false, "mentioned_only": false, "evidence": "只见对阵上一将，乃是周纪，飞马冲来，抡斧直取张桂芳；"},
+    {"name": "黄飞彪", "aliases": ["飞彪"], "identity": "黄飞虎二弟，出阵抢回被叫落马的黄飞虎", "nonhuman": false, "mentioned_only": false, "evidence": "黄飞彪、飞豹二将齐出，把飞虎抢去。"},
+    {"name": "黄飞豹", "aliases": ["飞豹"], "identity": "黄飞虎三弟，出阵抢回黄飞虎", "nonhuman": false, "mentioned_only": false, "evidence": "黄飞彪、飞豹二将齐出，把飞虎抢去。"},
+    {"name": "太乙真人", "aliases": [], "identity": "乾元山金光洞神仙、哪吒之师，遣哪吒下山佐师叔子牙", "nonhuman": false, "mentioned_only": false, "evidence": "且说乾元山金光洞太乙真人坐碧游床运元神，忽然心血来潮，早知其故；"},
+    {"name": "金霞童儿", "aliases": [], "identity": "太乙真人座下童儿，奉命请师兄哪吒", "nonhuman": false, "mentioned_only": false, "evidence": "命金霞童儿：「请你师兄来。」"},
+    {"name": "哪吒", "aliases": ["李哪吒", "灵珠子"], "identity": "太乙真人弟子、莲花化身（灵珠子），破风林法术、打伤张桂芳左臂", "nonhuman": false, "mentioned_only": false, "evidence": "童儿领命，来桃园见哪吒，口称：「师兄，老爷有请。」"},
+    {"name": "白鹤童子", "aliases": ["白鹤童儿"], "identity": "元始天尊座下仙童，传旨请子牙，化白鹤啣走申公豹之首", "nonhuman": false, "mentioned_only": false, "evidence": "在宫前等候多时，只见白鹤童子出来。"},
+    {"name": "元始天尊", "aliases": ["元始"], "identity": "昆仑山玉虚宫掌教、子牙之师，授封神榜并诫其勿应人叫", "nonhuman": false, "mentioned_only": false, "evidence": "元始点首：「正要他来。」"},
+    {"name": "南极仙翁", "aliases": ["仙翁"], "identity": "玉虚宫仙翁、子牙师兄，识破申公豹幻术，遣白鹤童子啣其头相救", "nonhuman": false, "mentioned_only": false, "evidence": "元始曰：「你今上山正好。命南极仙翁取『封神榜』与你。"},
+    {"name": "申公豹", "aliases": ["公豹"], "identity": "子牙师弟，玉虚宫学道四十年，欲阻封神、劝子牙保纣，以头颅幻术惑人，与子牙结仇", "nonhuman": false, "mentioned_only": false, "evidence": "话说子牙一看，原来是师弟申公豹。"},
+    {"name": "白额虎", "aliases": [], "identity": "申公豹的坐骑猛虎", "nonhuman": true, "mentioned_only": false, "evidence": "申公豹惭愧，不敢回言，上了白额虎，指子牙道：「你去！我叫你西岐顷刻成血海，白骨积如山！」"},
+    {"name": "柏鉴", "aliases": [], "identity": "轩辕皇帝总兵官，破蚩尤时被打入海中千年的游魂，奉清虚道德真君符命候子牙超度，领造封神台", "nonhuman": false, "mentioned_only": false, "evidence": "那物曰：「游魂乃轩辕皇帝总兵官柏鉴也。因大破蚩尤，被火器打入海中，千年未能出劫。"},
+    {"name": "轩辕皇帝", "aliases": [], "identity": "上古帝王，柏鉴旧主（柏鉴自述来历）", "nonhuman": false, "mentioned_only": true, "evidence": "那物曰：「游魂乃轩辕皇帝总兵官柏鉴也。因大破蚩尤，被火器打入海中，千年未能出劫。"},
+    {"name": "蚩尤", "aliases": [], "identity": "上古叛神，与轩辕皇帝大战（柏鉴自述来历）", "nonhuman": false, "mentioned_only": true, "evidence": "那物曰：「游魂乃轩辕皇帝总兵官柏鉴也。因大破蚩尤，被火器打入海中，千年未能出劫。"},
+    {"name": "清虚道德真君", "aliases": [], "identity": "青峰山紫阳洞神仙，发符命令柏鉴候子牙超度", "nonhuman": false, "mentioned_only": true, "evidence": "前日清虚道德真君符命，言今日今时，法师经过，使游魂伺候。"},
+    {"name": "武吉", "aliases": [], "identity": "子牙弟子，奉命与哪吒一同守城", "nonhuman": false, "mentioned_only": false, "evidence": "子牙回西岐，至相府。武吉、哪吒迎接，至殿中坐下，就问：「张桂芳可曾来搦战？」武吉回曰：「不曾。」"},
+    {"name": "姬昌", "aliases": ["文王"], "identity": "西周先王（子牙自述文王托孤、立武王）", "nonhuman": false, "mentioned_only": true, "evidence": "我在西岐，身居相位，文王托孤，我立武王，三分天下，周土已得二分，八百诸侯，悦而归周，吾今保武王，灭纣王，正应上天垂象。"},
+    {"name": "纣王", "aliases": [], "identity": "殷商天子（子牙与申公豹争执中言灭纣王）", "nonhuman": false, "mentioned_only": true, "evidence": "我在西岐，身居相位，文王托孤，我立武王，三分天下，周土已得二分，八百诸侯，悦而归周，吾今保武王，灭纣王，正应上天垂象。"}
+  ],
+  "collectives": [
+    {"name": "五路神", "refers_to": [], "note": "五位神祇合称（昔受子牙发落往西岐山伺候），本块未列名"}
+  ]
+}

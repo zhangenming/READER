@@ -1,0 +1,438 @@
+{
+  "chunk": 64,
+  "characters": [
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜元帅",
+        "相父",
+        "姜丞相",
+        "姜某",
+        "姜尚",
+        "姜师叔"
+      ],
+      "identity": "周营元帅、武王相父，葬纣王骸骨、劝武王正位、造坛封神，回西岐受封后往昆仑请玉符金册",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "与我请姜元帅答话"
+    },
+    {
+      "name": "武王",
+      "aliases": [
+        "姬发",
+        "武姬发",
+        "周王",
+        "周武王"
+      ],
+      "identity": "周主，鹿台散财、巨桥发粟，让位不受，于九间殿祝告天地即天子位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "西伯侯西岐武姬发敢昭告于皇天后土神祇曰"
+    },
+    {
+      "name": "纣王",
+      "aliases": [
+        "殷受",
+        "纣天子",
+        "殷纣"
+      ],
+      "identity": "自焚之后，其骸骨由子牙命军士检出、以天子礼葬之",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "须寻纣王骸骨，具衣衾棺椁，以天子之礼葬之"
+    },
+    {
+      "name": "武庚",
+      "aliases": [
+        "纣王之子"
+      ],
+      "identity": "纣王之子，被擒至殿前请斩，武王救之，封世守本土以存商祀",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见后宫擒纣王之子武庚至，子牙命：「推来。」"
+    },
+    {
+      "name": "管叔鲜",
+      "aliases": [
+        "管叔"
+      ],
+      "identity": "武王之弟，与蔡叔度同议监国，奉命留守朝歌",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "遂议管叔鲜、蔡叔度二王监国"
+    },
+    {
+      "name": "蔡叔度",
+      "aliases": [
+        "蔡叔"
+      ],
+      "identity": "武王之弟，与管叔鲜同监守朝歌",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "遂议管叔鲜、蔡叔度二王监国"
+    },
+    {
+      "name": "周公旦",
+      "aliases": [
+        "周公"
+      ],
+      "identity": "造禅台画图样、于天地坛前高捧祝文开读之人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有周公旦自去造台"
+    },
+    {
+      "name": "伯夷",
+      "aliases": [],
+      "identity": "阻周兵于首阳山的道者，责子牙以暴易暴，耻食周粟七日饿死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙忙出辕门观看，却是伯夷、叔齐"
+    },
+    {
+      "name": "叔齐",
+      "aliases": [],
+      "identity": "与伯夷同阻周兵、同作采薇之诗饿于首阳山者",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙忙出辕门观看，却是伯夷、叔齐"
+    },
+    {
+      "name": "散宜生",
+      "aliases": [
+        "宜生",
+        "上大夫"
+      ],
+      "identity": "西岐上大夫，与黄滚同来迎驾，劝武王以爵禄子孙报忠臣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "忽有上大夫散宜生、黄滚前来接驾"
+    },
+    {
+      "name": "黄滚",
+      "aliases": [
+        "黄滚老将军",
+        "老将军"
+      ],
+      "identity": "随驾老将军，至西岐山前接驾，孙儿黄天爵随后",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "忽有上大夫散宜生、黄滚前来接驾"
+    },
+    {
+      "name": "黄天爵",
+      "aliases": [
+        "天爵"
+      ],
+      "identity": "黄滚之孙，随众弟接驾，为武王所见",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "见众弟与黄滚老将军后随孙儿黄天爵"
+    },
+    {
+      "name": "太姜",
+      "aliases": [],
+      "identity": "武王入内庭参见之长辈",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "入内庭，参见太姜，谒太姙，会太姬"
+    },
+    {
+      "name": "太姙",
+      "aliases": [],
+      "identity": "武王入内庭谒见之长辈",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "入内庭，参见太姜，谒太姙，会太姬"
+    },
+    {
+      "name": "太姬",
+      "aliases": [],
+      "identity": "武王入内庭会见之长辈",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "入内庭，参见太姜，谒太姙，会太姬"
+    },
+    {
+      "name": "飞廉",
+      "aliases": [
+        "中大夫"
+      ],
+      "identity": "亡国商臣，献玉符金册归周，与恶连同被封为中大夫",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "外有商臣飞廉、恶来在午门候旨"
+    },
+    {
+      "name": "恶来",
+      "aliases": [
+        "中大夫"
+      ],
+      "identity": "亡国商臣，随飞廉归周求爵禄，同授中大夫",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "外有商臣飞廉、恶来在午门候旨"
+    },
+    {
+      "name": "马氏",
+      "aliases": [],
+      "identity": "子牙前妻，当年弃子牙改嫁张三老，闻知其富贵，追悔悬梁自缢，魂往封神台",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "单说当年马氏笑子牙不能成其大事，竟弃子牙而他适"
+    },
+    {
+      "name": "张三老",
+      "aliases": [
+        "农夫"
+      ],
+      "identity": "乡村田户之人、马氏后夫，卖菜归家道其姜丞相富贵，妻死买棺埋之",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "那日天晚，只见那农夫张三老往城中卖菜来家"
+    },
+    {
+      "name": "元始天尊",
+      "aliases": [
+        "元始",
+        "太上无极混元教主元始天尊",
+        "掌教师尊"
+      ],
+      "identity": "玉虚宫教主，允子牙所请，出敕命封姜尚依劫运资品封八部正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "特命姜尚依劫运之轻重，循资品之高下，封尔等为八部正神"
+    },
+    {
+      "name": "白鹤童子",
+      "aliases": [
+        "白鹤童儿",
+        "童子"
+      ],
+      "identity": "玉虚宫童子，为子牙通报碧游床前，并亲赍符敕降临相府",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "白鹤童子亲赍符敕降临相府"
+    },
+    {
+      "name": "黄巾力士",
+      "aliases": [
+        "力士"
+      ],
+      "identity": "簇拥符敕降临、别子牙回昆仑的神吏",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "黄巾力士与白鹤童子别了子牙回昆仑"
+    },
+    {
+      "name": "柏鉴",
+      "aliases": [
+        "清福神",
+        "清福神柏鉴"
+      ],
+      "identity": "封神台清福神，接子牙入台，奉命在坛下听候",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "有清福神柏鉴来接子牙"
+    },
+    {
+      "name": "武吉",
+      "aliases": [],
+      "identity": "奉子牙令立八卦纸旛、镇压方向与干支旗号之周将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "传令武吉、南宫适：「立八卦纸旛，镇压方向与干支旗号。」"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [],
+      "identity": "与武吉同奉子牙令立旛按五方排列人马",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "传令武吉、南宫适：「立八卦纸旛，镇压方向与干支旗号。」"
+    },
+    {
+      "name": "比干",
+      "aliases": [],
+      "identity": "纣王所杀贤臣，武王为其封墓基",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "释箕子之囚，封比干之基，式商容之闾"
+    },
+    {
+      "name": "微子",
+      "aliases": [],
+      "identity": "虽贤而不能匡救纣君之殷室大臣",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "虽贤如比干、微子，皆不能匡救其君"
+    },
+    {
+      "name": "箕子",
+      "aliases": [],
+      "identity": "被纣王囚禁、武王入朝歌后释其囚",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "释箕子之囚，封比干之基，式商容之闾"
+    },
+    {
+      "name": "商容",
+      "aliases": [],
+      "identity": "武王为其闾里旌表的殷之贤臣",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "释箕子之囚，封比干之基，式商容之闾"
+    },
+    {
+      "name": "文王",
+      "aliases": [
+        "文考"
+      ],
+      "identity": "曾聘子牙归国、祝文中所祭之文考",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "执意八十岁方被文王聘请归国"
+    },
+    {
+      "name": "成汤",
+      "aliases": [],
+      "identity": "商之先王，祝网放桀而有天下，传二十六世至纣",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "成汤祝网德声扬，放桀南巢正大纲"
+    },
+    {
+      "name": "桀",
+      "aliases": [],
+      "identity": "夏之亡国暴君，无道失夏政，被成汤放于南巢",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "至桀无道而失夏政，成汤以至德放桀于南巢"
+    },
+    {
+      "name": "帝尧",
+      "aliases": [],
+      "identity": "以至德克相上帝而膺大位，因子丹朱不肖逊位",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔帝尧以至德克相上帝，得膺大位"
+    },
+    {
+      "name": "舜",
+      "aliases": [
+        "帝舜",
+        "重华"
+      ],
+      "identity": "受尧让而有天下，因子商均不肖举天下让禹",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "群臣举舜。舜以重华之德，以继尧而有天下"
+    },
+    {
+      "name": "丹朱",
+      "aliases": [],
+      "identity": "帝尧之子，不肖，致尧求人逊位",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "后生丹朱不肖，帝求人而逊位，群臣举舜"
+    },
+    {
+      "name": "商均",
+      "aliases": [],
+      "identity": "帝舜之子，不肖，致舜让天下于禹",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "后帝舜生子商均亦不肖，舜乃举天下而让之禹"
+    },
+    {
+      "name": "禹",
+      "aliases": [],
+      "identity": "受舜之让、传十七世至桀之夏祖",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "舜乃举天下而让之禹。禹生启贤明，能承继夏命"
+    },
+    {
+      "name": "启",
+      "aliases": [],
+      "identity": "禹之子，贤明能承夏命",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "禹生启贤明，能承继夏命"
+    },
+    {
+      "name": "太昊",
+      "aliases": [],
+      "identity": "坛上四季正神之一，春日之位",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "春日太昊，夏日炎帝，秋日少昊，冬日颛顼"
+    },
+    {
+      "name": "炎帝",
+      "aliases": [],
+      "identity": "坛上四季正神之一，夏日之位",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "春日太昊，夏日炎帝，秋日少昊，冬日颛顼"
+    },
+    {
+      "name": "少昊",
+      "aliases": [],
+      "identity": "坛上四季正神之一，秋日之位",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "春日太昊，夏日炎帝，秋日少昊，冬日颛顼"
+    },
+    {
+      "name": "颛顼",
+      "aliases": [],
+      "identity": "坛上四季正神之一，冬日之位",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "春日太昊，夏日炎帝，秋日少昊，冬日颛顼"
+    },
+    {
+      "name": "黄帝轩辕",
+      "aliases": [],
+      "identity": "坛上中央之位正神",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "中有黄帝轩辕；坛上罗列笾、豆、簠、簋、金爵、玉斝"
+    },
+    {
+      "name": "姜文焕",
+      "aliases": [
+        "东伯侯",
+        "姜君侯",
+        "文焕"
+      ],
+      "identity": "东伯侯，城破后力主武王正天位，谓天命有道归于至仁",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "东伯侯姜文焕出而言曰"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "三怪",
+      "refers_to": []
+    },
+    {
+      "name": "二叔",
+      "refers_to": [
+        "管叔鲜",
+        "蔡叔度"
+      ]
+    },
+    {
+      "name": "十二元神",
+      "refers_to": []
+    },
+    {
+      "name": "八部正神",
+      "refers_to": []
+    }
+  ]
+}

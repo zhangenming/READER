@@ -1,0 +1,371 @@
+{
+  "chunk": 63,
+  "characters": [
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜尚",
+        "姜元帅"
+      ],
+      "identity": "周营元帅，用五雷正法压妖、设陆压葫芦斩妲己，督军看摘星楼之火",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙在中军用五雷正法镇压邪氛"
+    },
+    {
+      "name": "纣王",
+      "aliases": [
+        "殷受",
+        "受辛",
+        "纣天子"
+      ],
+      "identity": "商之亡国之君，败回午门、与三妃泣别，自焚于摘星楼，一灵入封神台",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说纣王被姜文焕一鞭打伤后背，败回午门"
+    },
+    {
+      "name": "飞廉",
+      "aliases": [
+        "中大夫"
+      ],
+      "identity": "纣王臣，与恶来议弃纣归周、欲盗传国符玺以献武王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且说飞廉谓恶来曰"
+    },
+    {
+      "name": "恶来",
+      "aliases": [],
+      "identity": "纣王臣，与飞廉同谋归周求富贵",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "恶来笑曰：「长兄此言竟不知时务！"
+    },
+    {
+      "name": "妲己",
+      "aliases": [
+        "九尾狐狸精",
+        "狐狸精",
+        "苏护之女"
+      ],
+      "identity": "纣王所立之妃，真身九尾狐狸精，劫周营被擒，军士为其所惑，终被子牙以飞刀斩之",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "有妲己、胡喜媚、王贵人三个前来接驾"
+    },
+    {
+      "name": "胡喜媚",
+      "aliases": [
+        "喜媚",
+        "九头雉鸡精",
+        "雉鸡精"
+      ],
+      "identity": "纣王三妃之一，本九头雉鸡精，劫营被哮天犬咬头、为杨戬所擒斩",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "妲己与胡喜媚等三人俱全装甲胄"
+    },
+    {
+      "name": "王贵人",
+      "aliases": [
+        "玉石琵琶精",
+        "琵琶精"
+      ],
+      "identity": "纣王三妃之一，本玉石琵琶精，劫营被擒，韦护镇压斩之",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "王贵人用一口绣鸾刀"
+    },
+    {
+      "name": "苏妲己",
+      "aliases": [],
+      "identity": "冀州侯苏护亲女，于恩州驿被九尾狐狸迷死、被借窍成形",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "在恩州驿迷死苏妲己，借窍成形"
+    },
+    {
+      "name": "苏护",
+      "aliases": [
+        "冀州侯",
+        "苏侯"
+      ],
+      "identity": "冀州侯，妲己之父",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "妾身系冀州侯苏护之女"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "周营门人，领柬帖擒九头雉鸡精，祭哮天犬、逢女娲得缚妖索，监斩二妖",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨戬纵马，使三尖刀"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "周营门人，闻三妖劫营急登风火轮摇火尖鎗出战",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "哪吒听得，急登风火轮，摇火尖鎗"
+    },
+    {
+      "name": "雷震子",
+      "aliases": [],
+      "identity": "周营门人，领柬帖擒九尾狐狸精，监斩时被妖狐迷惑诸军士，不能举刃",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "雷震子使黄金棍"
+    },
+    {
+      "name": "韦护",
+      "aliases": [
+        "韦谨"
+      ],
+      "identity": "周营门人，领柬帖擒玉石琵琶精并监斩之",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "韦护用降魔杵"
+    },
+    {
+      "name": "李靖",
+      "aliases": [],
+      "identity": "周营门人，劫营之夜摇方天戟迎敌三妖",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李靖摇方天戟"
+    },
+    {
+      "name": "女娲娘娘",
+      "aliases": [
+        "女娲"
+      ],
+      "identity": "空中阻住三妖之路、令碧云童儿缚妖交杨戬解周营的上仙",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "乃是女娲娘娘驾至"
+    },
+    {
+      "name": "碧云童儿",
+      "aliases": [
+        "童儿"
+      ],
+      "identity": "女娲娘娘驾前童子，奉命以缚妖索锁三妖",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吩咐碧云童儿"
+    },
+    {
+      "name": "青鸾",
+      "aliases": [],
+      "identity": "女娲娘娘跨来之禽骑",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "跨青鸾而来，阻住三个妖怪之路"
+    },
+    {
+      "name": "哮天犬",
+      "aliases": [],
+      "identity": "杨戬祭在空中的仙犬，咬落雉鸡一头",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "杨戬取出哮天犬祭在空中"
+    },
+    {
+      "name": "朱升",
+      "aliases": [
+        "封宫官"
+      ],
+      "identity": "纣王封宫官内侍，奉命积柴举火焚摘星楼，随后蹿入火中死节",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "封宫官朱升闻纣王呼唤，慌忙上摘星楼来"
+    },
+    {
+      "name": "赵启",
+      "aliases": [],
+      "identity": "虿盆冤魂，赤身扯住纣王大叫还命",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "又见赵启、梅伯赤身大叫"
+    },
+    {
+      "name": "梅伯",
+      "aliases": [],
+      "identity": "受炮烙之冤魂，与赵启同向纣王索命",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "又见赵启、梅伯赤身大叫"
+    },
+    {
+      "name": "姜娘娘",
+      "aliases": [],
+      "identity": "纣王元后之冤魂，扯住纣王骂其诛妻杀子、断送社稷",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "又见姜娘娘一把扯住纣王"
+    },
+    {
+      "name": "黄娘娘",
+      "aliases": [],
+      "identity": "被摔下摘星楼之死妃冤魂，一身血污扯住纣王呼号",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "又见黄娘娘一身血污，腥气逼人"
+    },
+    {
+      "name": "贾夫人",
+      "aliases": [],
+      "identity": "守贞坠楼之臣妻冤魂，骂昏君受辛并劈面一掌",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "又见贾夫人也上前大骂曰"
+    },
+    {
+      "name": "文王",
+      "aliases": [
+        "姬昌",
+        "西侯"
+      ],
+      "identity": "曾被纣王囚于羑里、由费尤演数之主，诗单道其易数之验",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔日朕曾命费、尤向姬昌演数"
+    },
+    {
+      "name": "费尤",
+      "aliases": [
+        "费、尤"
+      ],
+      "identity": "纣王曾命向姬昌演数之人，诗云其问先天数",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "费尤曾问先天数，烈焰飞烟锁玉楼"
+    },
+    {
+      "name": "陆压",
+      "aliases": [],
+      "identity": "传葫芦飞刀与子牙、以此宝斩妲己之道者",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "取出陆压所赐葫芦，放于案上"
+    },
+    {
+      "name": "武王",
+      "aliases": [
+        "姬发",
+        "周武王"
+      ],
+      "identity": "周主，同子牙看火、不忍目睹纣王自焚而掩面回营",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "同武王、东伯侯、北伯侯共天下诸侯，齐上马出了辕门看火"
+    },
+    {
+      "name": "姜文焕",
+      "aliases": [
+        "东伯侯"
+      ],
+      "identity": "东伯侯，鞭伤纣王后背，城破后同诸侯入九间殿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "被姜文焕这厮鞭伤后背"
+    },
+    {
+      "name": "北伯侯",
+      "aliases": [],
+      "identity": "北伯侯，随武王、子牙出营看摘星楼之火",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "同武王、东伯侯、北伯侯共天下诸侯"
+    },
+    {
+      "name": "成汤",
+      "aliases": [],
+      "identity": "商之先王，以至仁放桀于南巢，子牙引以慰武王",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔成汤以至仁放桀于南巢，救民于水火"
+    },
+    {
+      "name": "桀",
+      "aliases": [],
+      "identity": "夏之暴君，被成汤放于南巢",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "放桀南巢忆昔时，深仁厚泽立根基"
+    },
+    {
+      "name": "鲁仁杰",
+      "aliases": [],
+      "identity": "纣王大将，纣王追叹其阵亡、皆遭此难",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "可惜鲁仁杰、雷鹍兄弟皆遭此难"
+    },
+    {
+      "name": "雷鹍",
+      "aliases": [],
+      "identity": "纣王将，纣王追叹其死节",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "雷鹍兄弟死节。朕静坐自思"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "三妖",
+      "refers_to": [
+        "九尾狐狸精",
+        "九头雉鸡精",
+        "玉石琵琶精"
+      ]
+    },
+    {
+      "name": "三圣",
+      "refers_to": [
+        "杨戬",
+        "雷震子",
+        "韦护"
+      ]
+    },
+    {
+      "name": "七位门人",
+      "refers_to": [
+        "哪吒",
+        "杨戬",
+        "雷震子",
+        "韦护",
+        "李靖"
+      ]
+    },
+    {
+      "name": "金、木二咤",
+      "refers_to": []
+    },
+    {
+      "name": "三卿",
+      "refers_to": [
+        "妲己",
+        "胡喜媚",
+        "王贵人"
+      ]
+    },
+    {
+      "name": "三美人",
+      "refers_to": [
+        "妲己",
+        "胡喜媚",
+        "王贵人"
+      ]
+    },
+    {
+      "name": "三怪",
+      "refers_to": []
+    }
+  ]
+}

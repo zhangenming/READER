@@ -1,0 +1,152 @@
+{
+  "chunk": 10,
+  "characters": [
+    {
+      "name": "元始天尊",
+      "aliases": [
+        "天尊"
+      ],
+      "identity": "昆仑山玉虚宫掌阐教教主，命姜尚下山封神并授八句钤偈",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "一日，元始天尊坐八宝云光座上"
+    },
+    {
+      "name": "白鹤童子",
+      "aliases": [],
+      "identity": "玉虚宫童子，奉天尊命往桃园请师叔姜尚",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "白鹤童子往桃园中来请子牙"
+    },
+    {
+      "name": "南极仙翁",
+      "aliases": [],
+      "identity": "玉虚宫仙翁，劝子牙下山并在麒麟崖送别",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有南极仙翁送子牙，在麒麟崖吩咐曰"
+    },
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜尚",
+        "尚",
+        "飞熊",
+        "姜先生"
+      ],
+      "identity": "东海许州人氏，姓姜名尚字子牙别号飞熊，下山投朝歌宋异人，开命馆、压星收妖、打死琵琶精",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "此人乃东海许州人氏，姓姜，名尚，字子牙，别号飞熊"
+    },
+    {
+      "name": "宋异人",
+      "aliases": [
+        "异人",
+        "宋兄",
+        "宋员外",
+        "宋伯伯"
+      ],
+      "identity": "朝歌宋家庄员外，姜子牙的结义仁兄，为子牙议亲、出资开店开命馆",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "朝歌有一结义仁兄宋异人"
+    },
+    {
+      "name": "孙氏",
+      "aliases": [
+        "大娘",
+        "姆姆"
+      ],
+      "identity": "宋异人之妻，马氏称其姆姆，同往后园看子牙压妖",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "宋异人同妻孙氏来劝"
+    },
+    {
+      "name": "马员外",
+      "aliases": [
+        "马洪"
+      ],
+      "identity": "马家庄员外，马氏之父，受宋异人四锭白金之聘把女儿许与姜子牙",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "马员外大喜，迎出门来"
+    },
+    {
+      "name": "马氏",
+      "aliases": [],
+      "identity": "马洪之女、姜子牙之妻，六十八岁出嫁，屡催子牙做生意、讥他无用",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "其日马氏过门，洞房花烛"
+    },
+    {
+      "name": "刘乾",
+      "aliases": [
+        "刘大",
+        "刘大哥"
+      ],
+      "identity": "朝歌南门卖柴的樵子，姓刘名乾，因起课应验把姜子牙命馆轰传全城",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见那日有一樵子，姓刘名乾"
+    },
+    {
+      "name": "纣王",
+      "aliases": [],
+      "identity": "商朝天子，无道反东南诸侯、半年不雨祈雨禁屠，宣比干并听妲己旨意烧验妖精",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "纣王宣比干见"
+    },
+    {
+      "name": "妲己",
+      "aliases": [],
+      "identity": "宫中妃子，残害生灵；闻比干奏琵琶精事暗报妹妹之仇、出见纣王献验妖之议",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "妲己在后听见比干奏此事，暗暗叫苦"
+    },
+    {
+      "name": "黄飞虎",
+      "aliases": [
+        "武成王"
+      ],
+      "identity": "商朝武成王，因日日操练人马、是日大雨不曾操演（仅被叙述提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "武成王日日操练人马"
+    },
+    {
+      "name": "比干",
+      "aliases": [
+        "亚相",
+        "丞相",
+        "丞相爷"
+      ],
+      "identity": "商朝亚相，南门见众人围闹带姜尚见驾、奏请天子烧验女子",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "乃是亚相比干乘马来到"
+    },
+    {
+      "name": "玉石琵琶精",
+      "aliases": [
+        "琵琶精"
+      ],
+      "identity": "南门外轩辕坟中的妖精，变穿重孝的妇人到子牙命馆算命，被紫石砚打死现形",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "有个玉石琵琶精，往朝歌城来看妲己"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "五路神",
+      "refers_to": []
+    }
+  ]
+}

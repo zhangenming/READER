@@ -1,0 +1,38 @@
+{
+  "chunk": 57,
+  "characters": [
+    {"name": "姜子牙", "aliases": ["子牙", "姜尚", "姜元帅", "子牙公", "相父"], "identity": "督兵取渑池、渡黄河龙舟的周营元帅，主持封神之人", "nonhuman": false, "mentioned_only": false, "evidence": "姜子牙同一穿红袍的在城下探看城池"},
+    {"name": "武王", "aliases": ["大王", "姬发", "西伯"], "identity": "坐龙舟渡黄河、见白鱼入舟吓得面如土色的周主", "nonhuman": false, "mentioned_only": false, "evidence": "武王曰：「相父，此舟为何这样掀播？」"},
+    {"name": "纣王", "aliases": [], "identity": "在鹿台宴乐、张榜招贤并封袁洪为大将的商天子", "nonhuman": false, "mentioned_only": false, "evidence": "只见纣王在鹿台上宴乐"},
+    {"name": "微子", "aliases": ["皇伯"], "identity": "在文书房看渑池告急本、入内庭奏请速发援兵的商室之臣", "nonhuman": false, "mentioned_only": false, "evidence": "那日看本乃是微子"},
+    {"name": "恶来", "aliases": [], "identity": "在显庆殿与天子奕棋的中大夫", "nonhuman": false, "mentioned_only": false, "evidence": "天子在显庆殿与恶来奕棋"},
+    {"name": "飞廉", "aliases": ["中大夫飞廉"], "identity": "谏阻亲征、出榜招贤并在府中接见梅山三杰士的中大夫", "nonhuman": false, "mentioned_only": false, "evidence": "中大夫飞廉奏曰：「陛下不可！"},
+    {"name": "袁洪", "aliases": ["白猿精"], "identity": "梅山七圣之一、白猿精借姓，应招募被纣王封为大将", "nonhuman": true, "mentioned_only": false, "evidence": "袁洪者乃白猿精也"},
+    {"name": "吴龙", "aliases": ["蜈蚣精"], "identity": "梅山七圣之一、蜈蚣精借「吴」为姓，被任为先行", "nonhuman": true, "mentioned_only": false, "evidence": "吴龙者乃蜈蚣精也"},
+    {"name": "常昊", "aliases": ["长蛇精"], "identity": "梅山七圣之一、长蛇精借「常」为姓，被任为先行", "nonhuman": true, "mentioned_only": false, "evidence": "常昊者乃长蛇精也"},
+    {"name": "殷破败", "aliases": [], "identity": "纣王命随袁洪军征伐的参军、参赞", "nonhuman": false, "mentioned_only": true, "evidence": "命殷破败为参军，雷开为五军总督"},
+    {"name": "雷开", "aliases": [], "identity": "纣王所命随军征伐的五军（都）总督", "nonhuman": false, "mentioned_only": true, "evidence": "雷开为五军总督，使殷成秀、雷鹍、雷鹏、鲁仁杰等俱随军征伐"},
+    {"name": "殷成秀", "aliases": [], "identity": "纣王命其随袁洪军征伐的商将", "nonhuman": false, "mentioned_only": true, "evidence": "使殷成秀、雷鹍、雷鹏、鲁仁杰等俱随军征伐"},
+    {"name": "雷鹍", "aliases": [], "identity": "纣王命其随袁洪军征伐的商将", "nonhuman": false, "mentioned_only": true, "evidence": "使殷成秀、雷鹍、雷鹏、鲁仁杰等俱随军征伐"},
+    {"name": "雷鹏", "aliases": [], "identity": "纣王命其随袁洪军征伐的商将", "nonhuman": false, "mentioned_only": true, "evidence": "使殷成秀、雷鹍、雷鹏、鲁仁杰等俱随军征伐"},
+    {"name": "鲁仁杰", "aliases": [], "identity": "自幼多读、知袁洪非大将之才而只得将机就计的商将", "nonhuman": false, "mentioned_only": false, "evidence": "内有鲁仁杰自幼多读，广识英雄"},
+    {"name": "张奎", "aliases": ["七杀", "七杀神"], "identity": "渑池守将，善地行一千五百里，杀土行孙夫妻终被降魔杵打成虀粉", "nonhuman": false, "mentioned_only": false, "evidence": "且说渑池县张奎日夕望朝歌救兵"},
+    {"name": "高兰英", "aliases": ["高氏"], "identity": "张奎夫人，善金钱占卦与太阳神针，城破被哪吒打死", "nonhuman": false, "mentioned_only": false, "evidence": "高兰英曰：「将军今夜何不地行进他营寨，刺杀武王君臣"},
+    {"name": "土行孙", "aliases": ["土将军"], "identity": "善地行千里、往夹龙山取指地成钢符印而被张奎伏斩的周营督运官", "nonhuman": false, "mentioned_only": false, "evidence": "土行孙曰：「元帅可修书一封，待弟子去夹龙山"},
+    {"name": "邓婵玉", "aliases": [], "identity": "土行孙之妻、督粮土将军夫人，用五光石打伤高兰英后为夫报仇死于城下", "nonhuman": false, "mentioned_only": false, "evidence": "有邓婵玉应声曰：「末将愿往。」"},
+    {"name": "杨戬", "aliases": ["杨道兄"], "identity": "哮天犬吓退张奎、在黄河岸边烧符行指地成钢法的周营门人", "nonhuman": false, "mentioned_only": false, "evidence": "杨戬祭起哮天犬来伤张奎"},
+    {"name": "杨任", "aliases": [], "identity": "眼眶里长手、手心眼能观地底，巡督周营并追击张奎至黄河的门人", "nonhuman": false, "mentioned_only": false, "evidence": "这也是天意，恰好是杨任巡外营"},
+    {"name": "韦护", "aliases": [], "identity": "在半空按杨任所指祭降魔杵打死张奎的门人", "nonhuman": false, "mentioned_only": false, "evidence": "韦护祭起降魔杵，把张奎打成虀粉"},
+    {"name": "哪吒", "aliases": [], "identity": "现八臂三首、用九龙神火罩与乾坤圈破渑池杀高兰英的周营先锋", "nonhuman": false, "mentioned_only": false, "evidence": "登风火轮而出，现出八臂三首，来战张奎"},
+    {"name": "雷震子", "aliases": [], "identity": "飞上渑池城斩关落锁、引周兵入城的周营门人", "nonhuman": false, "mentioned_only": false, "evidence": "雷震子又早展开二翅，飞上城来"},
+    {"name": "南宫适", "aliases": [], "identity": "请元帅四面攻打渑池县的周将", "nonhuman": false, "mentioned_only": false, "evidence": "南宫适曰：「这一小县，今损无限大将"},
+    {"name": "惧留孙", "aliases": ["家师"], "identity": "夹龙山飞龙洞之主、土行孙之师，遣门人下书并留指地成钢符印", "nonhuman": true, "mentioned_only": false, "evidence": "道末惧留孙致书于大元帅子牙公麾下"},
+    {"name": "黄将军", "aliases": [], "identity": "被哪吒说到与崇君侯五人一阵而亡的周营大将（即黄飞虎，本块只称黄将军）", "nonhuman": false, "mentioned_only": true, "evidence": "反将黄将军、崇君侯五人一阵而亡"},
+    {"name": "崇君侯", "aliases": [], "identity": "被说到与黄将军同殁于渑池的君侯（即崇黑虎，本块只称崇君侯）", "nonhuman": false, "mentioned_only": true, "evidence": "反将黄将军、崇君侯五人一阵而亡"},
+    {"name": "云霞兽", "aliases": [], "identity": "杨任所骑、能在地面紧追地行之人的坐骑", "nonhuman": true, "mentioned_only": false, "evidence": "杨任骑云霞兽，手心里那两只神光射耀往下看着地"},
+    {"name": "哮天犬", "aliases": [], "identity": "杨戬祭出伤人、逼得张奎即时隐去的神犬", "nonhuman": true, "mentioned_only": false, "evidence": "杨戬祭起哮天犬来伤张奎"}
+  ],
+  "collectives": [
+    {"name": "梅山七圣", "refers_to": ["袁洪", "吴龙", "常昊"]}
+  ]
+}

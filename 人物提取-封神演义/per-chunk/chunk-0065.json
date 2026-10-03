@@ -1,0 +1,3888 @@
+{
+  "chunk": 65,
+  "characters": [
+    {
+      "name": "纣王",
+      "aliases": [
+        "商辛",
+        "天喜星"
+      ],
+      "identity": "自焚后魂赴封神台，点名册中受封天喜星；诗以商辛焚死吊之",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "天喜星　纣王天子"
+    },
+    {
+      "name": "子牙",
+      "aliases": [
+        "姜尚",
+        "尚"
+      ],
+      "identity": "封神台宣读玉虚宫元始天尊诰敕，依封神榜封赠阵亡人仙三百六十五位正神，斩飞廉恶来，率百官回西岐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙宣读敕书毕"
+    },
+    {
+      "name": "柏鉴",
+      "aliases": [
+        "清福神",
+        "清福神柏鉴",
+        "三界首领八部三百六十五位清福正神"
+      ],
+      "identity": "昔为轩辕黄帝大帅征蚩尤、殛死北海之游魂，监封神台，受封为三界首领八部三百六十五位清福正神，榜首第一人",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "有清福神柏鉴来接子牙"
+    },
+    {
+      "name": "武吉",
+      "aliases": [],
+      "identity": "奉子牙令与南宫适同立八卦纸旛、按五方排列三千人马",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "传令武吉、南宫适"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [],
+      "identity": "奉子牙令立旛排众，后又奉命会合朝中大小文武官员至岐山听候发落",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "传令武吉、南宫适"
+    },
+    {
+      "name": "元始天尊",
+      "aliases": [
+        "太上元始",
+        "太上无极混元教主元始天尊",
+        "玉虚宫元始天尊"
+      ],
+      "identity": "玉虚宫教主，出敕命特令姜尚依劫运轻重、资品高下封尔等为八部正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙然后开读玉虚宫元始天尊诰敕"
+    },
+    {
+      "name": "黄巾力士",
+      "aliases": [
+        "力士"
+      ],
+      "identity": "簇拥玉符金敕降临、别子牙回昆仑之神吏",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "黄巾力士与白鹤童子别了子牙回昆仑"
+    },
+    {
+      "name": "白鹤童子",
+      "aliases": [],
+      "identity": "亲赍符敕降临相府之玉虚宫童子",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄巾力士与白鹤童子别了子牙回昆仑"
+    },
+    {
+      "name": "黄天化",
+      "aliases": [
+        "炳灵公",
+        "管领三山正神炳灵公"
+      ],
+      "identity": "以青年尽忠报国、下山首建大功救父，受封管领三山正神炳灵公",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "尔黄天化以青年尽忠报国"
+    },
+    {
+      "name": "黄飞虎",
+      "aliases": [
+        "东岳泰山大齐仁圣大帝",
+        "五岳之首"
+      ],
+      "identity": "遭暴主惨恶逃亡他国，受封五岳之首、东岳泰山大齐仁圣大帝，执掌幽冥地府一十八重地狱",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "乃敕封尔黄飞虎为五岳之首"
+    },
+    {
+      "name": "崇黑虎",
+      "aliases": [
+        "南岳衡山司天昭圣大帝"
+      ],
+      "identity": "有志济民、时逢劫运，受封南岳衡山司天昭圣大帝",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "特敕封尔崇黑虎为南岳衡山司天昭圣大帝"
+    },
+    {
+      "name": "闻聘",
+      "aliases": [
+        "中岳嵩山中天崇圣大帝"
+      ],
+      "identity": "金兰气重协力同心，受封中岳嵩山中天崇圣大帝",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "特敕封尔闻聘为中岳嵩山中天崇圣大帝"
+    },
+    {
+      "name": "崔英",
+      "aliases": [
+        "北岳恒山安天玄圣大帝"
+      ],
+      "identity": "同受五岳之封，为北岳恒山安天玄圣大帝",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "特敕封尔崔英为北岳恒山安天玄圣大帝"
+    },
+    {
+      "name": "蒋雄",
+      "aliases": [
+        "西岳华山金天愿圣大帝"
+      ],
+      "identity": "同受五岳之封，为西岳华山金天愿圣大帝",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "特敕封尔蒋雄为西岳华山金天愿圣大帝"
+    },
+    {
+      "name": "闻仲",
+      "aliases": [
+        "闻太师",
+        "雷祖",
+        "九天应元雷神普化天尊"
+      ],
+      "identity": "辅相两朝、竭忠补衮，受封九天应元雷神普化天尊，督率雷部兴云布雨",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "尔闻仲曾入名山，证修大道"
+    },
+    {
+      "name": "罗宣",
+      "aliases": [
+        "南方三气火德星君",
+        "火星"
+      ],
+      "identity": "昔在火龙岛修行，因一念嗔痴弃七尺，受封南方三气火德星君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "清福神引罗宣等至台下"
+    },
+    {
+      "name": "吕岳",
+      "aliases": [
+        "主掌瘟㾮昊天大帝"
+      ],
+      "identity": "潜修岛屿有成仙了道之机，误听萋菲动干戈，受封主掌瘟㾮昊天大帝",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "清福神引吕岳等至台下"
+    },
+    {
+      "name": "金灵圣母",
+      "aliases": [
+        "斗母正神",
+        "坎宫斗母正神"
+      ],
+      "identity": "道德已全而嗔心未退，受封执掌金阙坐镇斗府，永坐坎宫斗母正神之职",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "清福神引金灵圣母等至台下"
+    },
+    {
+      "name": "殷郊",
+      "aliases": [
+        "值年太岁",
+        "执年岁君太岁",
+        "纣子"
+      ],
+      "identity": "身为纣子痛母后触君父，后又背师致犁锄之祸，受封执年岁君太岁之神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "清福神用旛引殷郊、杨任等至台下"
+    },
+    {
+      "name": "杨任",
+      "aliases": [
+        "甲子太岁"
+      ],
+      "identity": "事纣忠君直谏先遭剜目之苦，归周舍身报国后罹横死之灾，受封甲子太岁之神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "尔杨任事纣，忠君直谏，先遭剜目之苦"
+    },
+    {
+      "name": "赵公明",
+      "aliases": [
+        "金龙如意正一龙虎玄坛真君"
+      ],
+      "identity": "已证三乘根行，深入仙乡而心头火热，受封金龙如意正一龙虎玄坛真君，迎祥纳福",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "清福神用旛引赵公明等至台下"
+    },
+    {
+      "name": "魔礼青",
+      "aliases": [
+        "增长天王",
+        "四大天王"
+      ],
+      "identity": "仗秘授奇珍逆天命，兄弟同时而尽，受封四大天王、掌青光宝剑一口职风",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "清福神用旛引魔礼青兄弟等至台下"
+    },
+    {
+      "name": "郑伦",
+      "aliases": [
+        "哼哈二将"
+      ],
+      "identity": "弃纣归周督粮尽粹，受封镇守西释山门、宣布教化、保护法宝哼哈二将之神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "清福神用旛引郑伦等至台下"
+    },
+    {
+      "name": "陈奇",
+      "aliases": [
+        "哼哈二将"
+      ],
+      "identity": "阻吊民伐罪之师而荩忠节于国，与郑伦同封哼哈二将之神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "尔陈奇阻吊民伐之师"
+    },
+    {
+      "name": "余化龙",
+      "aliases": [
+        "主痘碧霞元君"
+      ],
+      "identity": "拒守孤城、一门死难，受封主痘碧霞元君之神，率领五方痘神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "清福神用旛引余化龙等至坛下"
+    },
+    {
+      "name": "金氏",
+      "aliases": [
+        "卫房圣母元君"
+      ],
+      "identity": "余化龙元配，同承新命受封卫房圣母元君",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "仍敕封尔元配金氏为卫房圣母元君"
+    },
+    {
+      "name": "云霄",
+      "aliases": [
+        "感应随世仙姑",
+        "坑三姑娘",
+        "云霄娘娘"
+      ],
+      "identity": "潜修仙岛，摆黄河阵擒拿正士，受封执掌混元金斗、居金斗转劫之感应随世仙姑",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "清福神用旛引云霄等至台下"
+    },
+    {
+      "name": "琼霄",
+      "aliases": [
+        "感应随世仙姑",
+        "坑三姑娘",
+        "琼霄娘娘"
+      ],
+      "identity": "与云霄同受封为感应随世仙姑正神之位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "引三仙岛云霄、琼霄、碧霄上台受封"
+    },
+    {
+      "name": "碧霄",
+      "aliases": [
+        "感应随世仙姑",
+        "坑三姑娘",
+        "碧霄娘娘"
+      ],
+      "identity": "与云霄同受封为感应随世仙姑正神之位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "引三仙岛云霄、琼霄、碧霄上台受封"
+    },
+    {
+      "name": "申公豹",
+      "aliases": [
+        "分水将军"
+      ],
+      "identity": "身归阐教反助逆拒直，身塞北海，受封执掌东海、为分水将军之职",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "清福神用百灵旛引申公豹至台下"
+    },
+    {
+      "name": "飞廉",
+      "aliases": [
+        "冰消瓦解之神"
+      ],
+      "identity": "归周献玉符金册，被子牙斥为不忠不义之贼斩于辕门，魂封冰消瓦解之神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "尔飞廉、恶来，生前甘心奸佞"
+    },
+    {
+      "name": "恶来",
+      "aliases": [
+        "冰消瓦解之神"
+      ],
+      "identity": "与飞廉同谋归周希图仕周，斩后同封冰消瓦解之神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "尔飞廉、恶来，生前甘心奸佞"
+    },
+    {
+      "name": "轩辕黄帝",
+      "aliases": [],
+      "identity": "柏鉴昔时所事之君，为其大帅征伐蚩尤",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "尔柏鉴昔为轩辕黄帝大帅，征伐蚩尤"
+    },
+    {
+      "name": "蚩尤",
+      "aliases": [],
+      "identity": "轩辕黄帝大帅柏鉴征伐之敌",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "尔柏鉴昔为轩辕黄帝大帅，征伐蚩尤"
+    },
+    {
+      "name": "成汤",
+      "aliases": [
+        "汤"
+      ],
+      "identity": "为飞廉恶来断送之社稷，子牙斥其二贼断送成汤",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "陷害忠良，断送成汤社稷"
+    },
+    {
+      "name": "桀",
+      "aliases": [
+        "夏桀"
+      ],
+      "identity": "商辛、夏桀并受焚死之报，诗吊其忠魂",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "夏桀南巢风里烛，商辛焚死浪中花"
+    },
+    {
+      "name": "武王",
+      "aliases": [
+        "列国诸侯"
+      ],
+      "identity": "回目所谓武王封列国诸侯者，次日早朝登殿受文武朝贺",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "次日早朝，武王登殿"
+    },
+    {
+      "name": "邓忠",
+      "aliases": [
+        "邓天君"
+      ],
+      "identity": "封神台上受封为邓天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "邓天君　讳忠"
+    },
+    {
+      "name": "辛环",
+      "aliases": [
+        "辛天君"
+      ],
+      "identity": "封神台上受封为辛天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "辛天君　讳环"
+    },
+    {
+      "name": "张节",
+      "aliases": [
+        "张天君"
+      ],
+      "identity": "封神台上受封为张天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "张天君　讳节"
+    },
+    {
+      "name": "陶荣",
+      "aliases": [
+        "陶天君"
+      ],
+      "identity": "封神台上受封为陶天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "陶天君　讳荣"
+    },
+    {
+      "name": "庞洪",
+      "aliases": [
+        "庞天君"
+      ],
+      "identity": "封神台上受封为庞天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "庞天君　讳洪"
+    },
+    {
+      "name": "刘甫",
+      "aliases": [
+        "刘天君"
+      ],
+      "identity": "封神台上受封为刘天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "刘天君　讳甫"
+    },
+    {
+      "name": "苟章",
+      "aliases": [
+        "苟天君"
+      ],
+      "identity": "封神台上受封为苟天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "苟天君　讳章"
+    },
+    {
+      "name": "毕环",
+      "aliases": [
+        "毕天君"
+      ],
+      "identity": "封神台上受封为毕天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "毕天君　讳环"
+    },
+    {
+      "name": "秦完",
+      "aliases": [
+        "秦天君"
+      ],
+      "identity": "封神台上受封为秦天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "秦天君　讳完"
+    },
+    {
+      "name": "赵江",
+      "aliases": [
+        "赵天君"
+      ],
+      "identity": "封神台上受封为赵天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "赵天君　讳江"
+    },
+    {
+      "name": "董全",
+      "aliases": [
+        "董天君"
+      ],
+      "identity": "封神台上受封为董天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "董天君　讳全"
+    },
+    {
+      "name": "袁角",
+      "aliases": [
+        "袁天君"
+      ],
+      "identity": "封神台上受封为袁天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "袁天君　讳角"
+    },
+    {
+      "name": "李德",
+      "aliases": [
+        "李天君"
+      ],
+      "identity": "封神台上受封为李天君，隶雷部二十四位天君正神（原注：万仙阵亡）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李天君　讳德（万仙阵亡）"
+    },
+    {
+      "name": "孙良",
+      "aliases": [
+        "孙天君"
+      ],
+      "identity": "封神台上受封为孙天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "孙天君　讳良"
+    },
+    {
+      "name": "柏礼",
+      "aliases": [
+        "柏天君"
+      ],
+      "identity": "封神台上受封为柏天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "柏天君　讳礼"
+    },
+    {
+      "name": "王变",
+      "aliases": [
+        "王天君"
+      ],
+      "identity": "封神台上受封为王天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "王天君　讳变"
+    },
+    {
+      "name": "姚斌",
+      "aliases": [
+        "姚天君"
+      ],
+      "identity": "封神台上受封为姚天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姚天君　讳斌"
+    },
+    {
+      "name": "张绍",
+      "aliases": [
+        "张天君"
+      ],
+      "identity": "封神台上受封为张天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "张天君　讳绍"
+    },
+    {
+      "name": "黄庚",
+      "aliases": [
+        "黄天君"
+      ],
+      "identity": "封神台上受封为黄天君，隶雷部二十四位天君正神（原注：万仙阵亡）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄天君　讳庚（万仙阵亡）"
+    },
+    {
+      "name": "金素",
+      "aliases": [
+        "金天君"
+      ],
+      "identity": "封神台上受封为金天君，隶雷部二十四位天君正神（原注：万仙阵亡）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金天君　讳素（万仙阵亡）"
+    },
+    {
+      "name": "吉立",
+      "aliases": [
+        "吉天君"
+      ],
+      "identity": "封神台上受封为吉天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吉天君　讳立"
+    },
+    {
+      "name": "余庆",
+      "aliases": [
+        "余天君"
+      ],
+      "identity": "封神台上受封为余天君，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "余天君　讳庆"
+    },
+    {
+      "name": "金光圣母",
+      "aliases": [
+        "闪电神"
+      ],
+      "identity": "封神台上受封为闪电神，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "闪电神（即金光圣母）"
+    },
+    {
+      "name": "菡芝仙",
+      "aliases": [
+        "助风神"
+      ],
+      "identity": "封神台上受封为助风神，隶雷部二十四位天君正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "助风神（即菡芝仙）"
+    },
+    {
+      "name": "朱晤",
+      "aliases": [
+        "尾火虎"
+      ],
+      "identity": "封神台上受封为尾火虎，隶火部五位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "尾火虎　朱讳晤"
+    },
+    {
+      "name": "高震",
+      "aliases": [
+        "室火猪"
+      ],
+      "identity": "封神台上受封为室火猪，隶火部五位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "室火猪　高讳震"
+    },
+    {
+      "name": "方贵",
+      "aliases": [
+        "觜火猴"
+      ],
+      "identity": "封神台上受封为觜火猴，隶火部五位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "觜火猴　方讳贵"
+    },
+    {
+      "name": "王蛟",
+      "aliases": [
+        "翼火蛇"
+      ],
+      "identity": "封神台上受封为翼火蛇，隶火部五位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "翼火蛇　王讳蛟"
+    },
+    {
+      "name": "刘环",
+      "aliases": [
+        "接火天君"
+      ],
+      "identity": "封神台上受封为接火天君，隶火部五位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "接火天君　刘讳环"
+    },
+    {
+      "name": "周信",
+      "aliases": [
+        "东方行瘟使者",
+        "十恶星"
+      ],
+      "identity": "封神台上受封为东方行瘟使者，隶瘟部六位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "周　讳信"
+    },
+    {
+      "name": "李奇",
+      "aliases": [
+        "南方行瘟使者"
+      ],
+      "identity": "封神台上受封为南方行瘟使者，隶瘟部六位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李　讳奇"
+    },
+    {
+      "name": "朱天麟",
+      "aliases": [
+        "西方行瘟使者"
+      ],
+      "identity": "封神台上受封为西方行瘟使者，隶瘟部六位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "朱讳天麟"
+    },
+    {
+      "name": "杨文辉",
+      "aliases": [
+        "北方行瘟使者"
+      ],
+      "identity": "封神台上受封为北方行瘟使者，隶瘟部六位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨讳文辉"
+    },
+    {
+      "name": "陈庚",
+      "aliases": [
+        "劝善大师",
+        "岁杀星"
+      ],
+      "identity": "封神台上受封为劝善大师，隶瘟部六位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "陈　讳庚"
+    },
+    {
+      "name": "李平",
+      "aliases": [
+        "和瘟道士"
+      ],
+      "identity": "封神台上受封为和瘟道士，隶瘟部六位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李　讳平"
+    },
+    {
+      "name": "苏护",
+      "aliases": [
+        "东斗星官"
+      ],
+      "identity": "封神台上受封为东斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "东斗星官　苏　讳护"
+    },
+    {
+      "name": "金奎",
+      "aliases": [
+        "东斗星官"
+      ],
+      "identity": "封神台上受封为东斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金　讳奎"
+    },
+    {
+      "name": "姬叔明",
+      "aliases": [
+        "东斗星官"
+      ],
+      "identity": "封神台上受封为东斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬讳叔明"
+    },
+    {
+      "name": "赵丙",
+      "aliases": [
+        "东斗星官"
+      ],
+      "identity": "封神台上受封为东斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "赵　讳丙"
+    },
+    {
+      "name": "黄天禄",
+      "aliases": [
+        "西斗星官"
+      ],
+      "identity": "封神台上受封为西斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "西斗星官　黄讳天禄"
+    },
+    {
+      "name": "龙环",
+      "aliases": [
+        "西斗星官"
+      ],
+      "identity": "封神台上受封为西斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "龙　讳环"
+    },
+    {
+      "name": "孙子羽",
+      "aliases": [
+        "西斗星官"
+      ],
+      "identity": "封神台上受封为西斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "孙讳子羽"
+    },
+    {
+      "name": "胡升",
+      "aliases": [
+        "西斗星官"
+      ],
+      "identity": "封神台上受封为西斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "胡　讳升"
+    },
+    {
+      "name": "胡云鹏",
+      "aliases": [
+        "西斗星官"
+      ],
+      "identity": "封神台上受封为西斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "胡讳云鹏"
+    },
+    {
+      "name": "鲁仁杰",
+      "aliases": [
+        "中斗星官"
+      ],
+      "identity": "封神台上受封为中斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "中斗星官　鲁讳仁杰"
+    },
+    {
+      "name": "晁雷",
+      "aliases": [
+        "中斗星官"
+      ],
+      "identity": "封神台上受封为中斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "晁　讳雷"
+    },
+    {
+      "name": "姬叔升",
+      "aliases": [
+        "中斗星官"
+      ],
+      "identity": "封神台上受封为中斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬讳叔升"
+    },
+    {
+      "name": "姬伯邑考",
+      "aliases": [
+        "中天北极紫微大帝"
+      ],
+      "identity": "封神台上受封为中天北极紫微大帝，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬讳伯邑考"
+    },
+    {
+      "name": "周纪",
+      "aliases": [
+        "南斗星官"
+      ],
+      "identity": "封神台上受封为南斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南斗星官　周　讳纪"
+    },
+    {
+      "name": "胡雷",
+      "aliases": [
+        "南斗星官"
+      ],
+      "identity": "封神台上受封为南斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "胡　讳雷"
+    },
+    {
+      "name": "高贵",
+      "aliases": [
+        "南斗星官"
+      ],
+      "identity": "封神台上受封为南斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "高　讳贵"
+    },
+    {
+      "name": "余成",
+      "aliases": [
+        "南斗星官"
+      ],
+      "identity": "封神台上受封为南斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "余　讳成"
+    },
+    {
+      "name": "孙宝",
+      "aliases": [
+        "南斗星官",
+        "参水猿"
+      ],
+      "identity": "封神台上受封为南斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "孙　讳宝"
+    },
+    {
+      "name": "雷鹍",
+      "aliases": [
+        "南斗星官"
+      ],
+      "identity": "封神台上受封为南斗星官，隶五斗群星吉曜恶煞正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "雷鹍"
+    },
+    {
+      "name": "黄天祥",
+      "aliases": [
+        "北斗星官"
+      ],
+      "identity": "封神台上受封为北斗星官，隶五斗群星吉曜恶煞正神（原注：天罡）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "北斗星官　黄讳天祥（天罡）"
+    },
+    {
+      "name": "比干",
+      "aliases": [
+        "北斗星官"
+      ],
+      "identity": "封神台上受封为北斗星官，隶五斗群星吉曜恶煞正神（原注：文曲）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "比干（文曲）"
+    },
+    {
+      "name": "窦荣",
+      "aliases": [
+        "北斗星官"
+      ],
+      "identity": "封神台上受封为北斗星官，隶五斗群星吉曜恶煞正神（原注：武曲）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "窦　讳荣（武曲）"
+    },
+    {
+      "name": "韩升",
+      "aliases": [
+        "北斗星官"
+      ],
+      "identity": "封神台上受封为北斗星官，隶五斗群星吉曜恶煞正神（原注：左辅）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "韩讳升（左辅）"
+    },
+    {
+      "name": "韩变",
+      "aliases": [
+        "北斗星官"
+      ],
+      "identity": "封神台上受封为北斗星官，隶五斗群星吉曜恶煞正神（原注：右弼）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "韩　讳变（右弼）"
+    },
+    {
+      "name": "苏全忠",
+      "aliases": [
+        "北斗星官"
+      ],
+      "identity": "封神台上受封为北斗星官，隶五斗群星吉曜恶煞正神（原注：破军）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "苏讳全忠（破军）"
+    },
+    {
+      "name": "鄂顺",
+      "aliases": [
+        "北斗星官"
+      ],
+      "identity": "封神台上受封为北斗星官，隶五斗群星吉曜恶煞正神（原注：贪狼）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "鄂　讳顺（贪狼）"
+    },
+    {
+      "name": "郭宸",
+      "aliases": [
+        "北斗星官"
+      ],
+      "identity": "封神台上受封为北斗星官，隶五斗群星吉曜恶煞正神（原注：巨门）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "郭　讳宸（巨门）"
+    },
+    {
+      "name": "董忠",
+      "aliases": [
+        "北斗星官"
+      ],
+      "identity": "封神台上受封为北斗星官，隶五斗群星吉曜恶煞正神（原注：招摇）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "董讳忠（招摇）"
+    },
+    {
+      "name": "邓九公",
+      "aliases": [
+        "青龙星"
+      ],
+      "identity": "封神台上受封为青龙星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "青龙星　邓讳九公"
+    },
+    {
+      "name": "殷成秀",
+      "aliases": [
+        "白虎星"
+      ],
+      "identity": "封神台上受封为白虎星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "白虎星　殷讳成秀"
+    },
+    {
+      "name": "雷鹏",
+      "aliases": [
+        "勾陈星"
+      ],
+      "identity": "封神台上受封为勾陈星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "勾陈星　雷　讳鹏"
+    },
+    {
+      "name": "张山",
+      "aliases": [
+        "滕蛇星"
+      ],
+      "identity": "封神台上受封为滕蛇星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "滕蛇星　张　讳山"
+    },
+    {
+      "name": "马方",
+      "aliases": [
+        "朱雀星"
+      ],
+      "identity": "封神台上受封为朱雀星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "朱雀星　马　讳方"
+    },
+    {
+      "name": "徐坤",
+      "aliases": [
+        "玄武星"
+      ],
+      "identity": "封神台上受封为玄武星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "玄武星　徐　讳坤"
+    },
+    {
+      "name": "徐盖",
+      "aliases": [
+        "太阳星"
+      ],
+      "identity": "封神台上受封为太阳星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "太阳星　徐　讳盖"
+    },
+    {
+      "name": "姜氏",
+      "aliases": [
+        "太阴星"
+      ],
+      "identity": "封神台上受封为太阴星，隶群星列宿（原注：纣后）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "太阴星　姜氏（纣后）"
+    },
+    {
+      "name": "商容",
+      "aliases": [
+        "玉堂星"
+      ],
+      "identity": "封神台上受封为玉堂星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "玉堂星　商　讳容"
+    },
+    {
+      "name": "姬叔乾",
+      "aliases": [
+        "天贵星"
+      ],
+      "identity": "封神台上受封为天贵星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天贵星　姬讳叔乾"
+    },
+    {
+      "name": "洪锦",
+      "aliases": [
+        "龙德星"
+      ],
+      "identity": "封神台上受封为龙德星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "龙德星　洪　讳锦"
+    },
+    {
+      "name": "龙吉公主",
+      "aliases": [
+        "红鸾星"
+      ],
+      "identity": "封神台上受封为红鸾星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "红鸾星　龙吉公主"
+    },
+    {
+      "name": "梅伯",
+      "aliases": [
+        "天德星"
+      ],
+      "identity": "封神台上受封为天德星，隶群星列宿（原注：纣大夫）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天德星　梅　讳伯（纣大夫）"
+    },
+    {
+      "name": "夏招",
+      "aliases": [
+        "月德星"
+      ],
+      "identity": "封神台上受封为月德星，隶群星列宿（原注：纣大夫）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "月德星　夏　讳招（纣大夫）"
+    },
+    {
+      "name": "赵启",
+      "aliases": [
+        "天赦星"
+      ],
+      "identity": "封神台上受封为天赦星，隶群星列宿（原注：纣大夫）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天赦星　赵　讳启（纣大夫）"
+    },
+    {
+      "name": "贾氏",
+      "aliases": [
+        "貌端星"
+      ],
+      "identity": "封神台上受封为貌端星，隶群星列宿（原注：黄飞虎妻）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "貌端星　贾氏（黄飞虎妻）"
+    },
+    {
+      "name": "萧臻",
+      "aliases": [
+        "金府星"
+      ],
+      "identity": "封神台上受封为金府星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金府星　萧　讳臻"
+    },
+    {
+      "name": "邓华",
+      "aliases": [
+        "木府星"
+      ],
+      "identity": "封神台上受封为木府星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "木府星　邓　讳华"
+    },
+    {
+      "name": "余元",
+      "aliases": [
+        "水府星"
+      ],
+      "identity": "封神台上受封为水府星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "水府星　余　讳元"
+    },
+    {
+      "name": "火灵圣母",
+      "aliases": [
+        "火府星"
+      ],
+      "identity": "封神台上受封为火府星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "火府星　火灵圣母"
+    },
+    {
+      "name": "土行孙",
+      "aliases": [
+        "土府星"
+      ],
+      "identity": "封神台上受封为土府星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "土府星　土讳行孙"
+    },
+    {
+      "name": "邓氏婵玉",
+      "aliases": [
+        "六合星"
+      ],
+      "identity": "封神台上受封为六合星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "六合星　邓氏婵玉"
+    },
+    {
+      "name": "杜元铣",
+      "aliases": [
+        "博士星"
+      ],
+      "identity": "封神台上受封为博士星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "博士星　杜讳元铣"
+    },
+    {
+      "name": "邬文化",
+      "aliases": [
+        "力士星"
+      ],
+      "identity": "封神台上受封为力士星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "力士星　邬讳文化"
+    },
+    {
+      "name": "胶鬲",
+      "aliases": [
+        "奏书星"
+      ],
+      "identity": "封神台上受封为奏书星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "奏书星　胶　讳鬲"
+    },
+    {
+      "name": "黄飞彪",
+      "aliases": [
+        "河魁星"
+      ],
+      "identity": "封神台上受封为河魁星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "河魁星　黄讳飞彪"
+    },
+    {
+      "name": "彻地夫人",
+      "aliases": [
+        "月魁星"
+      ],
+      "identity": "封神台上受封为月魁星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "月魁星　彻地夫人"
+    },
+    {
+      "name": "姜桓楚",
+      "aliases": [
+        "帝车星"
+      ],
+      "identity": "封神台上受封为帝车星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "帝车星　姜讳桓楚"
+    },
+    {
+      "name": "黄飞豹",
+      "aliases": [
+        "天嗣星"
+      ],
+      "identity": "封神台上受封为天嗣星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天嗣星　黄讳飞豹"
+    },
+    {
+      "name": "丁策",
+      "aliases": [
+        "帝辂星"
+      ],
+      "identity": "封神台上受封为帝辂星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "帝辂星　丁　讳策"
+    },
+    {
+      "name": "鄂崇禹",
+      "aliases": [
+        "天马星"
+      ],
+      "identity": "封神台上受封为天马星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天马星　鄂讳崇禹"
+    },
+    {
+      "name": "李锦",
+      "aliases": [
+        "皇恩星"
+      ],
+      "identity": "封神台上受封为皇恩星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "皇恩星　李　讳锦"
+    },
+    {
+      "name": "钱保",
+      "aliases": [
+        "天医星"
+      ],
+      "identity": "封神台上受封为天医星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天医星　钱　讳保"
+    },
+    {
+      "name": "黄氏",
+      "aliases": [
+        "地后星"
+      ],
+      "identity": "封神台上受封为地后星，隶群星列宿（原注：纣妃）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地后星　黄氏（纣妃）"
+    },
+    {
+      "name": "姬叔德",
+      "aliases": [
+        "宅龙星"
+      ],
+      "identity": "封神台上受封为宅龙星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "宅龙星　姬讳叔德"
+    },
+    {
+      "name": "黄明",
+      "aliases": [
+        "伏龙星"
+      ],
+      "identity": "封神台上受封为伏龙星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "伏龙星　黄　讳明"
+    },
+    {
+      "name": "雷开",
+      "aliases": [
+        "驿马星"
+      ],
+      "identity": "封神台上受封为驿马星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "驿马星　雷　讳开"
+    },
+    {
+      "name": "魏贲",
+      "aliases": [
+        "黄旛星"
+      ],
+      "identity": "封神台上受封为黄旛星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄旛星　魏　讳贲"
+    },
+    {
+      "name": "吴谦",
+      "aliases": [
+        "豹尾星"
+      ],
+      "identity": "封神台上受封为豹尾星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "豹尾星　吴　讳谦"
+    },
+    {
+      "name": "张桂芳",
+      "aliases": [
+        "丧门星"
+      ],
+      "identity": "封神台上受封为丧门星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "丧门星　张讳桂芳"
+    },
+    {
+      "name": "风林",
+      "aliases": [
+        "吊客星"
+      ],
+      "identity": "封神台上受封为吊客星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吊客星　风　讳林"
+    },
+    {
+      "name": "费仲",
+      "aliases": [
+        "勾绞星"
+      ],
+      "identity": "封神台上受封为勾绞星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "勾绞星　费　讳仲"
+    },
+    {
+      "name": "尤浑",
+      "aliases": [
+        "卷舌星"
+      ],
+      "identity": "封神台上受封为卷舌星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "卷舌星　尤　讳浑"
+    },
+    {
+      "name": "彭遵",
+      "aliases": [
+        "罗睺星"
+      ],
+      "identity": "封神台上受封为罗睺星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "罗睺星　彭　讳遵"
+    },
+    {
+      "name": "王豹",
+      "aliases": [
+        "计都星"
+      ],
+      "identity": "封神台上受封为计都星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "计都星　王　讳豹"
+    },
+    {
+      "name": "姬叔坤",
+      "aliases": [
+        "飞廉星"
+      ],
+      "identity": "封神台上受封为飞廉星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "飞廉星　姬讳叔坤"
+    },
+    {
+      "name": "崇侯虎",
+      "aliases": [
+        "大耗星"
+      ],
+      "identity": "封神台上受封为大耗星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "大耗星　崇讳侯虎"
+    },
+    {
+      "name": "殷破败",
+      "aliases": [
+        "小耗星"
+      ],
+      "identity": "封神台上受封为小耗星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "小耗星　殷讳破败"
+    },
+    {
+      "name": "丘引",
+      "aliases": [
+        "贯索星"
+      ],
+      "identity": "封神台上受封为贯索星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "贯索星　丘　讳引"
+    },
+    {
+      "name": "龙安吉",
+      "aliases": [
+        "栏杆星"
+      ],
+      "identity": "封神台上受封为栏杆星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "栏杆星　龙讳安吉"
+    },
+    {
+      "name": "太鸾",
+      "aliases": [
+        "披头星"
+      ],
+      "identity": "封神台上受封为披头星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "披头星　太　讳鸾"
+    },
+    {
+      "name": "邓秀",
+      "aliases": [
+        "五鬼星"
+      ],
+      "identity": "封神台上受封为五鬼星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "五鬼星　邓　讳秀"
+    },
+    {
+      "name": "赵升",
+      "aliases": [
+        "羊刃星"
+      ],
+      "identity": "封神台上受封为羊刃星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "羊刃星　赵　讳升"
+    },
+    {
+      "name": "孙焰红",
+      "aliases": [
+        "血光星"
+      ],
+      "identity": "封神台上受封为血光星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "血光星　孙讳焰红"
+    },
+    {
+      "name": "方义真",
+      "aliases": [
+        "官符星"
+      ],
+      "identity": "封神台上受封为官符星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "官符星　方讳义真"
+    },
+    {
+      "name": "余化",
+      "aliases": [
+        "孤辰星"
+      ],
+      "identity": "封神台上受封为孤辰星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "孤辰星　余　讳化"
+    },
+    {
+      "name": "季康",
+      "aliases": [
+        "天狗星"
+      ],
+      "identity": "封神台上受封为天狗星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天狗星　季　讳康"
+    },
+    {
+      "name": "王佐",
+      "aliases": [
+        "病符星"
+      ],
+      "identity": "封神台上受封为病符星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "病符星　王　讳佐"
+    },
+    {
+      "name": "张凤",
+      "aliases": [
+        "钻骨星"
+      ],
+      "identity": "封神台上受封为钻骨星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "钻骨星　张　讳凤"
+    },
+    {
+      "name": "卞金龙",
+      "aliases": [
+        "死符星"
+      ],
+      "identity": "封神台上受封为死符星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "死符星　卞讳金龙"
+    },
+    {
+      "name": "柏显忠",
+      "aliases": [
+        "天败星"
+      ],
+      "identity": "封神台上受封为天败星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天败星　柏讳显忠"
+    },
+    {
+      "name": "郑桩",
+      "aliases": [
+        "浮沉星"
+      ],
+      "identity": "封神台上受封为浮沉星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "浮沉星　郑　讳桩"
+    },
+    {
+      "name": "卞吉",
+      "aliases": [
+        "天杀星"
+      ],
+      "identity": "封神台上受封为天杀星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天杀星　卞　讳吉"
+    },
+    {
+      "name": "徐芳",
+      "aliases": [
+        "岁刑星"
+      ],
+      "identity": "封神台上受封为岁刑星，隶群星列宿（原注：穿云总兵）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "岁刑星　徐　讳芳（穿云总兵）"
+    },
+    {
+      "name": "晁田",
+      "aliases": [
+        "岁破星"
+      ],
+      "identity": "封神台上受封为岁破星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "岁破星　晁　讳田"
+    },
+    {
+      "name": "姬叔义",
+      "aliases": [
+        "烛火星"
+      ],
+      "identity": "封神台上受封为烛火星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "烛火星　姬讳叔义"
+    },
+    {
+      "name": "马忠",
+      "aliases": [
+        "血光星"
+      ],
+      "identity": "封神台上受封为血光星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "血光星　马　讳忠"
+    },
+    {
+      "name": "欧阳淳",
+      "aliases": [
+        "亡神星"
+      ],
+      "identity": "封神台上受封为亡神星，隶群星列宿（原注：临潼总兵）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "亡神星　欧阳讳淳（临潼总兵）"
+    },
+    {
+      "name": "王虎",
+      "aliases": [
+        "月破星",
+        "天剑星"
+      ],
+      "identity": "封神台上受封为月破星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "月破星　王　讳虎"
+    },
+    {
+      "name": "石矶娘娘",
+      "aliases": [
+        "月游星"
+      ],
+      "identity": "封神台上受封为月游星，隶群星列宿",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "月游星　石矶娘娘"
+    },
+    {
+      "name": "陈季贞",
+      "aliases": [
+        "死气星"
+      ],
+      "identity": "封神台上受封为死气星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "死气星　陈讳季贞"
+    },
+    {
+      "name": "徐忠",
+      "aliases": [
+        "咸池星"
+      ],
+      "identity": "封神台上受封为咸池星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "咸池星　徐　讳忠"
+    },
+    {
+      "name": "姚忠",
+      "aliases": [
+        "月厌星"
+      ],
+      "identity": "封神台上受封为月厌星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "月厌星　姚　讳忠"
+    },
+    {
+      "name": "陈梧",
+      "aliases": [
+        "月刑星"
+      ],
+      "identity": "封神台上受封为月刑星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "月刑星　陈　讳梧"
+    },
+    {
+      "name": "高继能",
+      "aliases": [
+        "黑杀星"
+      ],
+      "identity": "封神台上受封为黑杀星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黑杀星　高讳继能"
+    },
+    {
+      "name": "张奎",
+      "aliases": [
+        "七杀星"
+      ],
+      "identity": "封神台上受封为七杀星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "七杀星　张　讳奎"
+    },
+    {
+      "name": "殷洪",
+      "aliases": [
+        "五谷星"
+      ],
+      "identity": "封神台上受封为五谷星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "五谷星　殷　讳洪"
+    },
+    {
+      "name": "余忠",
+      "aliases": [
+        "除杀星"
+      ],
+      "identity": "封神台上受封为除杀星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "除杀星　余　讳忠"
+    },
+    {
+      "name": "欧阳天禄",
+      "aliases": [
+        "天刑星"
+      ],
+      "identity": "封神台上受封为天刑星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天刑星　欧阳讳天禄"
+    },
+    {
+      "name": "陈桐",
+      "aliases": [
+        "天罗星"
+      ],
+      "identity": "封神台上受封为天罗星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天罗星　陈　讳桐"
+    },
+    {
+      "name": "姬叔吉",
+      "aliases": [
+        "地网星"
+      ],
+      "identity": "封神台上受封为地网星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地网星　姬讳叔吉"
+    },
+    {
+      "name": "梅武",
+      "aliases": [
+        "天空星"
+      ],
+      "identity": "封神台上受封为天空星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天空星　梅　讳武"
+    },
+    {
+      "name": "敖丙",
+      "aliases": [
+        "华盖星"
+      ],
+      "identity": "封神台上受封为华盖星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "华盖星　敖　讳丙"
+    },
+    {
+      "name": "黄元济",
+      "aliases": [
+        "蚕畜星"
+      ],
+      "identity": "封神台上受封为蚕畜星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "蚕畜星　黄讳元济"
+    },
+    {
+      "name": "高氏兰英",
+      "aliases": [
+        "桃花星"
+      ],
+      "identity": "封神台上受封为桃花星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "桃花星　高氏兰英"
+    },
+    {
+      "name": "马氏",
+      "aliases": [
+        "扫帚星"
+      ],
+      "identity": "封神台上受封为扫帚星，隶群星列宿（原注：子牙妻）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "扫帚星　马氏（子牙妻）"
+    },
+    {
+      "name": "李良",
+      "aliases": [
+        "大祸星"
+      ],
+      "identity": "封神台上受封为大祸星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "大祸星　李　讳良"
+    },
+    {
+      "name": "韩荣",
+      "aliases": [
+        "狼籍星"
+      ],
+      "identity": "封神台上受封为狼籍星，隶群星列宿（原注：汜水总兵）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "狼籍星　韩　讳荣（汜水总兵）"
+    },
+    {
+      "name": "林善",
+      "aliases": [
+        "披麻星"
+      ],
+      "identity": "封神台上受封为披麻星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "披麻星　林　讳善"
+    },
+    {
+      "name": "龙须虎",
+      "aliases": [
+        "九丑星"
+      ],
+      "identity": "封神台上受封为九丑星，隶群星列宿",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "九丑星　龙　须虎"
+    },
+    {
+      "name": "撒坚",
+      "aliases": [
+        "三尸星"
+      ],
+      "identity": "封神台上受封为三尸星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "三尸星　撒　讳坚"
+    },
+    {
+      "name": "撒强",
+      "aliases": [
+        "三尸星"
+      ],
+      "identity": "封神台上受封为三尸星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "三尸星　撒　讳强"
+    },
+    {
+      "name": "撒勇",
+      "aliases": [
+        "三尸星"
+      ],
+      "identity": "封神台上受封为三尸星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "三尸星　撒　讳勇"
+    },
+    {
+      "name": "金成",
+      "aliases": [
+        "阴错星"
+      ],
+      "identity": "封神台上受封为阴错星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "阴错星　金　讳成"
+    },
+    {
+      "name": "马成龙",
+      "aliases": [
+        "阳差星"
+      ],
+      "identity": "封神台上受封为阳差星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "阳差星　马讳成龙"
+    },
+    {
+      "name": "公孙铎",
+      "aliases": [
+        "忍杀星"
+      ],
+      "identity": "封神台上受封为忍杀星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "忍杀星　公孙讳铎"
+    },
+    {
+      "name": "袁洪",
+      "aliases": [
+        "四废星"
+      ],
+      "identity": "封神台上受封为四废星，隶群星列宿",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "四废星　袁　讳洪"
+    },
+    {
+      "name": "孙合",
+      "aliases": [
+        "五穷星"
+      ],
+      "identity": "封神台上受封为五穷星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "五穷星　孙　讳合"
+    },
+    {
+      "name": "梅德",
+      "aliases": [
+        "地空星"
+      ],
+      "identity": "封神台上受封为地空星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地空星　梅　讳德"
+    },
+    {
+      "name": "杨氏",
+      "aliases": [
+        "红艳星"
+      ],
+      "identity": "封神台上受封为红艳星，隶群星列宿（原注：纣妃）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "红艳星　杨氏（纣妃）"
+    },
+    {
+      "name": "武荣",
+      "aliases": [
+        "流霞星"
+      ],
+      "identity": "封神台上受封为流霞星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "流霞星　武　讳荣"
+    },
+    {
+      "name": "朱升",
+      "aliases": [
+        "寡宿星"
+      ],
+      "identity": "封神台上受封为寡宿星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "寡宿星　朱　讳升"
+    },
+    {
+      "name": "金大升",
+      "aliases": [
+        "天瘟星"
+      ],
+      "identity": "封神台上受封为天瘟星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天瘟星　金讳大升"
+    },
+    {
+      "name": "戴礼",
+      "aliases": [
+        "荒芜星"
+      ],
+      "identity": "封神台上受封为荒芜星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "荒芜星　戴　讳礼"
+    },
+    {
+      "name": "姬叔礼",
+      "aliases": [
+        "胎神星"
+      ],
+      "identity": "封神台上受封为胎神星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "胎神星　姬讳叔礼"
+    },
+    {
+      "name": "朱子真",
+      "aliases": [
+        "伏断星"
+      ],
+      "identity": "封神台上受封为伏断星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "伏断星　朱讳子真"
+    },
+    {
+      "name": "杨显",
+      "aliases": [
+        "反吟星"
+      ],
+      "identity": "封神台上受封为反吟星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "反吟星　杨　讳显"
+    },
+    {
+      "name": "姚庶良",
+      "aliases": [
+        "伏吟星"
+      ],
+      "identity": "封神台上受封为伏吟星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "伏吟星　姚讳庶良"
+    },
+    {
+      "name": "常昊",
+      "aliases": [
+        "刀砧星"
+      ],
+      "identity": "封神台上受封为刀砧星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "刀砧星　常　讳昊"
+    },
+    {
+      "name": "房景元",
+      "aliases": [
+        "灭没星"
+      ],
+      "identity": "封神台上受封为灭没星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "灭没星　房讳景元"
+    },
+    {
+      "name": "彭祖寿",
+      "aliases": [
+        "岁厌星"
+      ],
+      "identity": "封神台上受封为岁厌星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "岁厌星　彭讳祖寿"
+    },
+    {
+      "name": "吴龙",
+      "aliases": [
+        "破碎星"
+      ],
+      "identity": "封神台上受封为破碎星，隶群星列宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "破碎星　吴　讳龙"
+    },
+    {
+      "name": "柏林",
+      "aliases": [
+        "角木蛟"
+      ],
+      "identity": "封神台上受封为角木蛟，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "角木蛟　柏　讳林"
+    },
+    {
+      "name": "杨信",
+      "aliases": [
+        "斗木豸"
+      ],
+      "identity": "封神台上受封为斗木豸，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "斗木豸　杨　讳信"
+    },
+    {
+      "name": "李雄",
+      "aliases": [
+        "奎木狼"
+      ],
+      "identity": "封神台上受封为奎木狼，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "奎木狼　李　讳雄"
+    },
+    {
+      "name": "沈庚",
+      "aliases": [
+        "井木犴"
+      ],
+      "identity": "封神台上受封为井木犴，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "井木犴　沈　讳庚"
+    },
+    {
+      "name": "李泓",
+      "aliases": [
+        "牛金牛"
+      ],
+      "identity": "封神台上受封为牛金牛，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "牛金牛　李　讳泓"
+    },
+    {
+      "name": "赵白高",
+      "aliases": [
+        "鬼金羊"
+      ],
+      "identity": "封神台上受封为鬼金羊，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "鬼金羊　赵讳白高"
+    },
+    {
+      "name": "张雄",
+      "aliases": [
+        "娄金狗"
+      ],
+      "identity": "封神台上受封为娄金狗，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "娄金狗　张　讳雄"
+    },
+    {
+      "name": "李道通",
+      "aliases": [
+        "亢金龙"
+      ],
+      "identity": "封神台上受封为亢金龙，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "亢金龙　李讳道通"
+    },
+    {
+      "name": "郑元",
+      "aliases": [
+        "女土蝠"
+      ],
+      "identity": "封神台上受封为女土蝠，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "女土蝠　郑　讳元"
+    },
+    {
+      "name": "宋庚",
+      "aliases": [
+        "胃土雉"
+      ],
+      "identity": "封神台上受封为胃土雉，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "胃土雉　宋　讳庚"
+    },
+    {
+      "name": "吴坤",
+      "aliases": [
+        "柳土獐"
+      ],
+      "identity": "封神台上受封为柳土獐，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "柳土獐　吴　讳坤"
+    },
+    {
+      "name": "高丙",
+      "aliases": [
+        "氏土貉"
+      ],
+      "identity": "封神台上受封为氏土貉，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "氏土貉　高　讳丙"
+    },
+    {
+      "name": "吕能",
+      "aliases": [
+        "星日马"
+      ],
+      "identity": "封神台上受封为星日马，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "星日马　吕　讳能"
+    },
+    {
+      "name": "黄仓",
+      "aliases": [
+        "昂日鸡"
+      ],
+      "identity": "封神台上受封为昂日鸡，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "昂日鸡　黄　讳仓"
+    },
+    {
+      "name": "周宝",
+      "aliases": [
+        "虚日鼠"
+      ],
+      "identity": "封神台上受封为虚日鼠，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "虚日鼠　周　讳宝"
+    },
+    {
+      "name": "姚公伯",
+      "aliases": [
+        "房日兔"
+      ],
+      "identity": "封神台上受封为房日兔，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "房日兔　姚讳公伯"
+    },
+    {
+      "name": "金绳阳",
+      "aliases": [
+        "毕月乌"
+      ],
+      "identity": "封神台上受封为毕月乌，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "毕月乌　金讳绳阳"
+    },
+    {
+      "name": "侯太乙",
+      "aliases": [
+        "危月燕"
+      ],
+      "identity": "封神台上受封为危月燕，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "危月燕　侯讳太乙"
+    },
+    {
+      "name": "苏元",
+      "aliases": [
+        "心月狐"
+      ],
+      "identity": "封神台上受封为心月狐，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "心月狐　苏　讳元"
+    },
+    {
+      "name": "薛定",
+      "aliases": [
+        "张月鹿"
+      ],
+      "identity": "封神台上受封为张月鹿，隶二十八宿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "张月鹿　薛　讳定"
+    },
+    {
+      "name": "高衍",
+      "aliases": [
+        "天魁星"
+      ],
+      "identity": "封神台上受封为天魁星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天魁星　高　讳衍"
+    },
+    {
+      "name": "黄真",
+      "aliases": [
+        "天罡星"
+      ],
+      "identity": "封神台上受封为天罡星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天罡星　黄　讳真"
+    },
+    {
+      "name": "芦昌",
+      "aliases": [
+        "天机星"
+      ],
+      "identity": "封神台上受封为天机星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天机星　芦　讳昌"
+    },
+    {
+      "name": "纪丙",
+      "aliases": [
+        "天闲星"
+      ],
+      "identity": "封神台上受封为天闲星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天闲星　纪　讳丙"
+    },
+    {
+      "name": "姚公孝",
+      "aliases": [
+        "天勇星"
+      ],
+      "identity": "封神台上受封为天勇星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天勇星　姚讳公孝"
+    },
+    {
+      "name": "施桧",
+      "aliases": [
+        "天雄星"
+      ],
+      "identity": "封神台上受封为天雄星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天雄星　施　讳桧"
+    },
+    {
+      "name": "孙乙",
+      "aliases": [
+        "天猛星"
+      ],
+      "identity": "封神台上受封为天猛星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天猛星　孙　讳乙"
+    },
+    {
+      "name": "李豹",
+      "aliases": [
+        "天威星"
+      ],
+      "identity": "封神台上受封为天威星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天威星　李　讳豹"
+    },
+    {
+      "name": "朱义",
+      "aliases": [
+        "天英星"
+      ],
+      "identity": "封神台上受封为天英星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天英星　朱　讳义"
+    },
+    {
+      "name": "陈坎",
+      "aliases": [
+        "天贵星"
+      ],
+      "identity": "封神台上受封为天贵星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天贵星　陈　讳坎"
+    },
+    {
+      "name": "黎仙",
+      "aliases": [
+        "天富星"
+      ],
+      "identity": "封神台上受封为天富星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天富星　黎　讳仙"
+    },
+    {
+      "name": "方保",
+      "aliases": [
+        "天满星"
+      ],
+      "identity": "封神台上受封为天满星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天满星　方　讳保"
+    },
+    {
+      "name": "詹秀",
+      "aliases": [
+        "天孤星"
+      ],
+      "identity": "封神台上受封为天孤星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天孤星　詹　讳秀"
+    },
+    {
+      "name": "李洪仁",
+      "aliases": [
+        "天伤星"
+      ],
+      "identity": "封神台上受封为天伤星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天伤星　李讳洪仁"
+    },
+    {
+      "name": "王龙茂",
+      "aliases": [
+        "天玄星"
+      ],
+      "identity": "封神台上受封为天玄星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天玄星　王讳龙茂"
+    },
+    {
+      "name": "邓玉",
+      "aliases": [
+        "天健星"
+      ],
+      "identity": "封神台上受封为天健星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天健星　邓　讳玉"
+    },
+    {
+      "name": "李新",
+      "aliases": [
+        "天暗星"
+      ],
+      "identity": "封神台上受封为天暗星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天暗星　李　讳新"
+    },
+    {
+      "name": "徐正道",
+      "aliases": [
+        "天祐星"
+      ],
+      "identity": "封神台上受封为天祐星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天祐星　徐讳正道"
+    },
+    {
+      "name": "典通",
+      "aliases": [
+        "天空星"
+      ],
+      "identity": "封神台上受封为天空星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天空星　典　讳通"
+    },
+    {
+      "name": "吴旭",
+      "aliases": [
+        "天速星"
+      ],
+      "identity": "封神台上受封为天速星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天速星　吴　讳旭"
+    },
+    {
+      "name": "吕自成",
+      "aliases": [
+        "天异星"
+      ],
+      "identity": "封神台上受封为天异星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天异星　吕讳自成"
+    },
+    {
+      "name": "任来聘",
+      "aliases": [
+        "天煞星"
+      ],
+      "identity": "封神台上受封为天煞星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天煞星　任讳来聘"
+    },
+    {
+      "name": "龚清",
+      "aliases": [
+        "天微星"
+      ],
+      "identity": "封神台上受封为天微星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天微星　龚　讳清"
+    },
+    {
+      "name": "单百招",
+      "aliases": [
+        "天究星"
+      ],
+      "identity": "封神台上受封为天究星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天究星　单讳百招"
+    },
+    {
+      "name": "高可",
+      "aliases": [
+        "天退星"
+      ],
+      "identity": "封神台上受封为天退星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天退星　高　讳可"
+    },
+    {
+      "name": "戚成",
+      "aliases": [
+        "天寿星"
+      ],
+      "identity": "封神台上受封为天寿星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天寿星　戚　讳成"
+    },
+    {
+      "name": "卜同",
+      "aliases": [
+        "天平星"
+      ],
+      "identity": "封神台上受封为天平星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天平星　卜　讳同"
+    },
+    {
+      "name": "姚公",
+      "aliases": [
+        "天罪星"
+      ],
+      "identity": "封神台上受封为天罪星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天罪星　姚　讳公"
+    },
+    {
+      "name": "唐天正",
+      "aliases": [
+        "天损星"
+      ],
+      "identity": "封神台上受封为天损星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天损星　唐讳天正"
+    },
+    {
+      "name": "申礼",
+      "aliases": [
+        "天败星"
+      ],
+      "identity": "封神台上受封为天败星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天败星　申　讳礼"
+    },
+    {
+      "name": "闻杰",
+      "aliases": [
+        "天牢星"
+      ],
+      "identity": "封神台上受封为天牢星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天牢星　闻　讳杰"
+    },
+    {
+      "name": "张智雄",
+      "aliases": [
+        "天慧星"
+      ],
+      "identity": "封神台上受封为天慧星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天慧星　张讳智雄"
+    },
+    {
+      "name": "毕德",
+      "aliases": [
+        "天暴星"
+      ],
+      "identity": "封神台上受封为天暴星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天暴星　毕　讳德"
+    },
+    {
+      "name": "刘达",
+      "aliases": [
+        "天哭星"
+      ],
+      "identity": "封神台上受封为天哭星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天哭星　刘　讳达"
+    },
+    {
+      "name": "程三益",
+      "aliases": [
+        "天巧星"
+      ],
+      "identity": "封神台上受封为天巧星，隶随斗部天罡星三十六位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天巧星　程讳三益"
+    },
+    {
+      "name": "陈继真",
+      "aliases": [
+        "地魁星"
+      ],
+      "identity": "封神台上受封为地魁星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地魁星　陈讳继真"
+    },
+    {
+      "name": "黄景元",
+      "aliases": [
+        "地煞星"
+      ],
+      "identity": "封神台上受封为地煞星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地煞星　黄讳景元"
+    },
+    {
+      "name": "贾成",
+      "aliases": [
+        "地勇星"
+      ],
+      "identity": "封神台上受封为地勇星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地勇星　贾　讳成"
+    },
+    {
+      "name": "呼百颜",
+      "aliases": [
+        "地杰星"
+      ],
+      "identity": "封神台上受封为地杰星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地杰星　呼讳百颜"
+    },
+    {
+      "name": "鲁修德",
+      "aliases": [
+        "地雄星"
+      ],
+      "identity": "封神台上受封为地雄星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地雄星　鲁讳修德"
+    },
+    {
+      "name": "须成",
+      "aliases": [
+        "地威星"
+      ],
+      "identity": "封神台上受封为地威星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地威星　须　讳成"
+    },
+    {
+      "name": "孙祥",
+      "aliases": [
+        "地英星"
+      ],
+      "identity": "封神台上受封为地英星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地英星　孙　讳祥"
+    },
+    {
+      "name": "王平",
+      "aliases": [
+        "地奇星"
+      ],
+      "identity": "封神台上受封为地奇星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地奇星　王　讳平"
+    },
+    {
+      "name": "柏有患",
+      "aliases": [
+        "地猛星"
+      ],
+      "identity": "封神台上受封为地猛星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地猛星　柏讳有患"
+    },
+    {
+      "name": "革高",
+      "aliases": [
+        "地文星"
+      ],
+      "identity": "封神台上受封为地文星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地文星　革　讳高"
+    },
+    {
+      "name": "考鬲",
+      "aliases": [
+        "地正星"
+      ],
+      "identity": "封神台上受封为地正星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地正星　考　讳鬲"
+    },
+    {
+      "name": "李燧",
+      "aliases": [
+        "地辟星"
+      ],
+      "identity": "封神台上受封为地辟星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地辟星　李　讳燧"
+    },
+    {
+      "name": "刘衡",
+      "aliases": [
+        "地阖星"
+      ],
+      "identity": "封神台上受封为地阖星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地阖星　刘　讳衡"
+    },
+    {
+      "name": "夏祥",
+      "aliases": [
+        "地强星"
+      ],
+      "identity": "封神台上受封为地强星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地强星　夏　讳祥"
+    },
+    {
+      "name": "余惠",
+      "aliases": [
+        "地暗星"
+      ],
+      "identity": "封神台上受封为地暗星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地暗星　余　讳惠"
+    },
+    {
+      "name": "鲍龙",
+      "aliases": [
+        "地辅星"
+      ],
+      "identity": "封神台上受封为地辅星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地辅星　鲍　讳龙"
+    },
+    {
+      "name": "鲁芝",
+      "aliases": [
+        "地会星"
+      ],
+      "identity": "封神台上受封为地会星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地会星　鲁　讳芝"
+    },
+    {
+      "name": "黄丙庆",
+      "aliases": [
+        "地佐星"
+      ],
+      "identity": "封神台上受封为地佐星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地佐星　黄讳丙庆"
+    },
+    {
+      "name": "张奇",
+      "aliases": [
+        "地祐星"
+      ],
+      "identity": "封神台上受封为地祐星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地祐星　张　讳奇"
+    },
+    {
+      "name": "郭巳",
+      "aliases": [
+        "地灵星"
+      ],
+      "identity": "封神台上受封为地灵星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地灵星　郭　讳巳"
+    },
+    {
+      "name": "金南道",
+      "aliases": [
+        "地兽星"
+      ],
+      "identity": "封神台上受封为地兽星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地兽星　金讳南道"
+    },
+    {
+      "name": "陈元",
+      "aliases": [
+        "地微星"
+      ],
+      "identity": "封神台上受封为地微星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地微星　陈　讳元"
+    },
+    {
+      "name": "车坤",
+      "aliases": [
+        "地慧星"
+      ],
+      "identity": "封神台上受封为地慧星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地慧星　车　讳坤"
+    },
+    {
+      "name": "桑成道",
+      "aliases": [
+        "地暴星"
+      ],
+      "identity": "封神台上受封为地暴星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地暴星　桑讳成道"
+    },
+    {
+      "name": "周庚",
+      "aliases": [
+        "地默星"
+      ],
+      "identity": "封神台上受封为地默星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地默星　周　讳庚"
+    },
+    {
+      "name": "齐公",
+      "aliases": [
+        "地猖星"
+      ],
+      "identity": "封神台上受封为地猖星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地猖星　齐　讳公"
+    },
+    {
+      "name": "霍之元",
+      "aliases": [
+        "地狂星"
+      ],
+      "identity": "封神台上受封为地狂星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地狂星　霍讳之元"
+    },
+    {
+      "name": "叶中",
+      "aliases": [
+        "地飞星"
+      ],
+      "identity": "封神台上受封为地飞星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地飞星　叶　讳中"
+    },
+    {
+      "name": "顾宗",
+      "aliases": [
+        "地走星"
+      ],
+      "identity": "封神台上受封为地走星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地走星　顾　讳宗"
+    },
+    {
+      "name": "李昌",
+      "aliases": [
+        "地巧星"
+      ],
+      "identity": "封神台上受封为地巧星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地巧星　李　讳昌"
+    },
+    {
+      "name": "方吉",
+      "aliases": [
+        "地明星"
+      ],
+      "identity": "封神台上受封为地明星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地明星　方　讳吉"
+    },
+    {
+      "name": "徐吉",
+      "aliases": [
+        "地进星"
+      ],
+      "identity": "封神台上受封为地进星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地进星　徐　讳吉"
+    },
+    {
+      "name": "樊焕",
+      "aliases": [
+        "地退星"
+      ],
+      "identity": "封神台上受封为地退星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地退星　樊　讳焕"
+    },
+    {
+      "name": "卓公",
+      "aliases": [
+        "地满星"
+      ],
+      "identity": "封神台上受封为地满星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地满星　卓　讳公"
+    },
+    {
+      "name": "孔成",
+      "aliases": [
+        "地遂星"
+      ],
+      "identity": "封神台上受封为地遂星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地遂星　孔　讳成"
+    },
+    {
+      "name": "姚金秀",
+      "aliases": [
+        "地周星"
+      ],
+      "identity": "封神台上受封为地周星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地周星　姚讳金秀"
+    },
+    {
+      "name": "甯三益",
+      "aliases": [
+        "地隐星"
+      ],
+      "identity": "封神台上受封为地隐星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地隐星　甯讳三益"
+    },
+    {
+      "name": "余知",
+      "aliases": [
+        "地异星"
+      ],
+      "identity": "封神台上受封为地异星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地异星　余　讳知"
+    },
+    {
+      "name": "童贞",
+      "aliases": [
+        "地理星"
+      ],
+      "identity": "封神台上受封为地理星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地理星　童　讳贞"
+    },
+    {
+      "name": "袁鼎相",
+      "aliases": [
+        "地俊星"
+      ],
+      "identity": "封神台上受封为地俊星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地俊星　袁讳鼎相"
+    },
+    {
+      "name": "汪祥",
+      "aliases": [
+        "地乐星"
+      ],
+      "identity": "封神台上受封为地乐星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地乐星　汪　讳祥"
+    },
+    {
+      "name": "耿颜",
+      "aliases": [
+        "地捷星"
+      ],
+      "identity": "封神台上受封为地捷星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地捷星　耿　讳颜"
+    },
+    {
+      "name": "邢三鸾",
+      "aliases": [
+        "地速星"
+      ],
+      "identity": "封神台上受封为地速星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地速星　邢讳三鸾"
+    },
+    {
+      "name": "姜忠",
+      "aliases": [
+        "地镇星"
+      ],
+      "identity": "封神台上受封为地镇星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地镇星　姜　讳忠"
+    },
+    {
+      "name": "孔天兆",
+      "aliases": [
+        "地羁星"
+      ],
+      "identity": "封神台上受封为地羁星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地羁星　孔讳天兆"
+    },
+    {
+      "name": "李跃",
+      "aliases": [
+        "地魔星"
+      ],
+      "identity": "封神台上受封为地魔星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地魔星　李　讳跃"
+    },
+    {
+      "name": "龚倩",
+      "aliases": [
+        "地妖星"
+      ],
+      "identity": "封神台上受封为地妖星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地妖星　龚　讳倩"
+    },
+    {
+      "name": "段清",
+      "aliases": [
+        "地幽星"
+      ],
+      "identity": "封神台上受封为地幽星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地幽星　段　讳清"
+    },
+    {
+      "name": "门道正",
+      "aliases": [
+        "地伏星"
+      ],
+      "identity": "封神台上受封为地伏星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地伏星　门讳道正"
+    },
+    {
+      "name": "祖林",
+      "aliases": [
+        "地僻星"
+      ],
+      "identity": "封神台上受封为地僻星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地僻星　祖　讳林"
+    },
+    {
+      "name": "萧电",
+      "aliases": [
+        "地空星"
+      ],
+      "identity": "封神台上受封为地空星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地空星　萧　讳电"
+    },
+    {
+      "name": "吴四玉",
+      "aliases": [
+        "地孤星"
+      ],
+      "identity": "封神台上受封为地孤星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地孤星　吴讳四玉"
+    },
+    {
+      "name": "匡玉",
+      "aliases": [
+        "地全星"
+      ],
+      "identity": "封神台上受封为地全星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地全星　匡　讳玉"
+    },
+    {
+      "name": "蔡公",
+      "aliases": [
+        "地短星"
+      ],
+      "identity": "封神台上受封为地短星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地短星　蔡　讳公"
+    },
+    {
+      "name": "蓝虎",
+      "aliases": [
+        "地角星"
+      ],
+      "identity": "封神台上受封为地角星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地角星　蓝　讳虎"
+    },
+    {
+      "name": "宋禄",
+      "aliases": [
+        "地囚星"
+      ],
+      "identity": "封神台上受封为地囚星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地囚星　宋　讳禄"
+    },
+    {
+      "name": "关斌",
+      "aliases": [
+        "地藏星"
+      ],
+      "identity": "封神台上受封为地藏星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地藏星　关　讳斌"
+    },
+    {
+      "name": "龙成",
+      "aliases": [
+        "地平星"
+      ],
+      "identity": "封神台上受封为地平星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地平星　龙　讳成"
+    },
+    {
+      "name": "黄乌",
+      "aliases": [
+        "地损星"
+      ],
+      "identity": "封神台上受封为地损星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地损星　黄　讳乌"
+    },
+    {
+      "name": "孔道灵",
+      "aliases": [
+        "地奴星"
+      ],
+      "identity": "封神台上受封为地奴星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地奴星　孔讳道灵"
+    },
+    {
+      "name": "张焕",
+      "aliases": [
+        "地察星"
+      ],
+      "identity": "封神台上受封为地察星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地察星　张　讳焕"
+    },
+    {
+      "name": "李信",
+      "aliases": [
+        "地恶星"
+      ],
+      "identity": "封神台上受封为地恶星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地恶星　李　讳信"
+    },
+    {
+      "name": "徐山",
+      "aliases": [
+        "地魂星"
+      ],
+      "identity": "封神台上受封为地魂星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地魂星　徐　讳山"
+    },
+    {
+      "name": "葛方",
+      "aliases": [
+        "地数星"
+      ],
+      "identity": "封神台上受封为地数星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地数星　葛　讳方"
+    },
+    {
+      "name": "焦龙",
+      "aliases": [
+        "地阴星"
+      ],
+      "identity": "封神台上受封为地阴星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地阴星　焦　讳龙"
+    },
+    {
+      "name": "秦祥",
+      "aliases": [
+        "地刑星"
+      ],
+      "identity": "封神台上受封为地刑星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地刑星　秦　讳祥"
+    },
+    {
+      "name": "武衍公",
+      "aliases": [
+        "地壮星"
+      ],
+      "identity": "封神台上受封为地壮星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地壮星　武讳衍公"
+    },
+    {
+      "name": "范斌",
+      "aliases": [
+        "地劣星"
+      ],
+      "identity": "封神台上受封为地劣星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地劣星　范　讳斌"
+    },
+    {
+      "name": "叶景昌",
+      "aliases": [
+        "地健星"
+      ],
+      "identity": "封神台上受封为地健星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地健星　叶讳景昌"
+    },
+    {
+      "name": "姚烨",
+      "aliases": [
+        "地耗星"
+      ],
+      "identity": "封神台上受封为地耗星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地耗星　姚　讳烨"
+    },
+    {
+      "name": "孙吉",
+      "aliases": [
+        "地贼星"
+      ],
+      "identity": "封神台上受封为地贼星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地贼星　孙　讳吉"
+    },
+    {
+      "name": "陈梦庚",
+      "aliases": [
+        "地狗星"
+      ],
+      "identity": "封神台上受封为地狗星，隶随斗部地煞星七十二位",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "地狗星　陈讳梦庚"
+    },
+    {
+      "name": "崇应彪",
+      "aliases": [],
+      "identity": "封神台上受封，隶随斗部九曜星官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "崇讳应彪"
+    },
+    {
+      "name": "高系平",
+      "aliases": [],
+      "identity": "封神台上受封，隶随斗部九曜星官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "高讳系平"
+    },
+    {
+      "name": "韩鹏",
+      "aliases": [],
+      "identity": "封神台上受封，隶随斗部九曜星官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "韩　讳鹏"
+    },
+    {
+      "name": "李济",
+      "aliases": [],
+      "identity": "封神台上受封，隶随斗部九曜星官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李　讳济"
+    },
+    {
+      "name": "王封",
+      "aliases": [],
+      "identity": "封神台上受封，隶随斗部九曜星官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "王　讳封"
+    },
+    {
+      "name": "刘禁",
+      "aliases": [],
+      "identity": "封神台上受封，隶随斗部九曜星官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "刘　讳禁"
+    },
+    {
+      "name": "王储",
+      "aliases": [],
+      "identity": "封神台上受封，隶随斗部九曜星官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "王　讳储"
+    },
+    {
+      "name": "彭九元",
+      "aliases": [],
+      "identity": "封神台上受封，隶随斗部九曜星官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "彭讳九元"
+    },
+    {
+      "name": "李三益",
+      "aliases": [],
+      "identity": "封神台上受封，隶随斗部九曜星官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李讳三益"
+    },
+    {
+      "name": "鲁雄",
+      "aliases": [
+        "水德星"
+      ],
+      "identity": "封神台上受封为水德星，隶北斗五气水德星君部下（原注：率领水部四位正神）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "水德星　鲁　讳雄（率领水部四位正神）"
+    },
+    {
+      "name": "杨真",
+      "aliases": [
+        "箕水豹"
+      ],
+      "identity": "封神台上受封为箕水豹，隶北斗五气水德星君部下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "箕水豹　杨　讳真"
+    },
+    {
+      "name": "方吉清",
+      "aliases": [
+        "璧水㺄"
+      ],
+      "identity": "封神台上受封为璧水㺄，隶北斗五气水德星君部下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "璧水㺄　方　讳吉清"
+    },
+    {
+      "name": "胡道元",
+      "aliases": [
+        "轸水蚓"
+      ],
+      "identity": "封神台上受封为轸水蚓，隶北斗五气水德星君部下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "轸水蚓　胡　讳道元"
+    },
+    {
+      "name": "温良",
+      "aliases": [
+        "日游神"
+      ],
+      "identity": "封神台上受封为日游神，隶太岁部下值日众星",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "日游神　温　讳良"
+    },
+    {
+      "name": "乔坤",
+      "aliases": [
+        "夜游神"
+      ],
+      "identity": "封神台上受封为夜游神，隶太岁部下值日众星",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "夜游神　乔　讳坤"
+    },
+    {
+      "name": "韩毒龙",
+      "aliases": [
+        "增福神"
+      ],
+      "identity": "封神台上受封为增福神，隶太岁部下值日众星",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "增福神　韩讳毒龙"
+    },
+    {
+      "name": "薛恶虎",
+      "aliases": [
+        "损福神"
+      ],
+      "identity": "封神台上受封为损福神，隶太岁部下值日众星",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "损福神　薛讳恶虎"
+    },
+    {
+      "name": "方弼",
+      "aliases": [
+        "显道神"
+      ],
+      "identity": "封神台上受封为显道神，隶太岁部下值日众星",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "显道神　方　讳弼"
+    },
+    {
+      "name": "方相",
+      "aliases": [
+        "开路神"
+      ],
+      "identity": "封神台上受封为开路神，隶太岁部下值日众星",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "开路神　方　讳相"
+    },
+    {
+      "name": "李丙",
+      "aliases": [
+        "直年神"
+      ],
+      "identity": "封神台上受封为直年神，隶太岁部下值日众星（原注：万仙阵亡）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "直年神　李讳丙（万仙阵亡）"
+    },
+    {
+      "name": "黄承乙",
+      "aliases": [
+        "直月神"
+      ],
+      "identity": "封神台上受封为直月神，隶太岁部下值日众星（原注：万仙阵亡）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "直月神　黄讳承乙（万仙阵亡）"
+    },
+    {
+      "name": "周登",
+      "aliases": [
+        "直日神"
+      ],
+      "identity": "封神台上受封为直日神，隶太岁部下值日众星（原注：万仙阵亡）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "直日神　周讳登（万仙阵亡）"
+    },
+    {
+      "name": "刘洪",
+      "aliases": [
+        "直时神"
+      ],
+      "identity": "封神台上受封为直时神，隶太岁部下值日众星（原注：万仙阵亡）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "直时神　刘　讳洪（万仙阵亡）"
+    },
+    {
+      "name": "王魔",
+      "aliases": [],
+      "identity": "封神台上受封，隶镇守灵霄宝殿四圣大元帅",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "王　讳魔"
+    },
+    {
+      "name": "杨森",
+      "aliases": [],
+      "identity": "封神台上受封，隶镇守灵霄宝殿四圣大元帅",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨　讳森"
+    },
+    {
+      "name": "高体乾",
+      "aliases": [],
+      "identity": "封神台上受封，隶镇守灵霄宝殿四圣大元帅",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "高　讳体乾"
+    },
+    {
+      "name": "李兴霸",
+      "aliases": [],
+      "identity": "封神台上受封，隶镇守灵霄宝殿四圣大元帅",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李　讳兴霸"
+    },
+    {
+      "name": "萧升",
+      "aliases": [
+        "招宝天尊"
+      ],
+      "identity": "封神台上受封为招宝天尊，隶赵公明部下四位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "招宝天尊　萧　讳升"
+    },
+    {
+      "name": "曹宝",
+      "aliases": [
+        "纳珍天尊"
+      ],
+      "identity": "封神台上受封为纳珍天尊，隶赵公明部下四位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "纳珍天尊　曹　讳宝"
+    },
+    {
+      "name": "陈九公",
+      "aliases": [
+        "招财使者"
+      ],
+      "identity": "封神台上受封为招财使者，隶赵公明部下四位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "招财使者　陈讳九公"
+    },
+    {
+      "name": "姚少司",
+      "aliases": [
+        "利市仙官"
+      ],
+      "identity": "封神台上受封为利市仙官，隶赵公明部下四位正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "利市仙官　姚讳少司"
+    },
+    {
+      "name": "魔礼红",
+      "aliases": [
+        "广目天王"
+      ],
+      "identity": "封神台上受封为广目天王，隶四大天王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "广目天王　魔礼红掌碧玉琵瑟一面　职调"
+    },
+    {
+      "name": "魔礼海",
+      "aliases": [
+        "多文天王"
+      ],
+      "identity": "封神台上受封为多文天王，隶四大天王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "多文天王　魔礼海掌管混元珍珠伞　职雨"
+    },
+    {
+      "name": "魔礼寿",
+      "aliases": [
+        "持国天王"
+      ],
+      "identity": "封神台上受封为持国天王，隶四大天王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "持国天王　魔礼寿掌紫金龙花狐貂　职顺"
+    },
+    {
+      "name": "余达",
+      "aliases": [
+        "东方主痘正神"
+      ],
+      "identity": "封神台上受封为东方主痘正神，隶五方主痘正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "东方主痘正神　余　讳达"
+    },
+    {
+      "name": "余兆",
+      "aliases": [
+        "西方主痘正神"
+      ],
+      "identity": "封神台上受封为西方主痘正神，隶五方主痘正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "西方主痘正神　余　讳兆"
+    },
+    {
+      "name": "余光",
+      "aliases": [
+        "南方主痘正神"
+      ],
+      "identity": "封神台上受封为南方主痘正神，隶五方主痘正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南方主痘正神　余　讳光"
+    },
+    {
+      "name": "余先",
+      "aliases": [
+        "北方主痘正神"
+      ],
+      "identity": "封神台上受封为北方主痘正神，隶五方主痘正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "北方主痘正神　余　讳先"
+    },
+    {
+      "name": "余德",
+      "aliases": [
+        "中央主痘正神"
+      ],
+      "identity": "封神台上受封为中央主痘正神，隶五方主痘正神",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "中央主痘正神　余　讳德"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "魔家四将",
+      "refers_to": [
+        "魔礼青",
+        "魔礼红",
+        "魔礼海",
+        "魔礼寿"
+      ]
+    },
+    {
+      "name": "四大天王",
+      "refers_to": [
+        "魔礼青",
+        "魔礼红",
+        "魔礼海",
+        "魔礼寿"
+      ]
+    },
+    {
+      "name": "哼哈二将",
+      "refers_to": [
+        "郑伦",
+        "陈奇"
+      ]
+    },
+    {
+      "name": "坑三姑娘",
+      "refers_to": [
+        "云霄",
+        "琼霄",
+        "碧霄"
+      ]
+    },
+    {
+      "name": "五岳正神",
+      "refers_to": [
+        "黄飞虎",
+        "崇黑虎",
+        "闻聘",
+        "崔英",
+        "蒋雄"
+      ]
+    },
+    {
+      "name": "雷部二十四位天君正神",
+      "refers_to": []
+    },
+    {
+      "name": "火部五位正神",
+      "refers_to": []
+    },
+    {
+      "name": "瘟部六位正神",
+      "refers_to": []
+    },
+    {
+      "name": "五斗群星吉曜恶煞正神",
+      "refers_to": []
+    },
+    {
+      "name": "二十八宿",
+      "refers_to": []
+    },
+    {
+      "name": "随斗部天罡星三十六位",
+      "refers_to": []
+    },
+    {
+      "name": "随斗部地煞星七十二位",
+      "refers_to": []
+    },
+    {
+      "name": "随斗部九曜星官",
+      "refers_to": []
+    },
+    {
+      "name": "太岁部下值日众星",
+      "refers_to": []
+    },
+    {
+      "name": "五方主痘正神",
+      "refers_to": []
+    },
+    {
+      "name": "三姑",
+      "refers_to": [
+        "云霄",
+        "琼霄",
+        "碧霄"
+      ]
+    },
+    {
+      "name": "八部正神",
+      "refers_to": []
+    },
+    {
+      "name": "三百六十五位正神",
+      "refers_to": []
+    },
+    {
+      "name": "群星列宿",
+      "refers_to": []
+    },
+    {
+      "name": "四圣",
+      "refers_to": [
+        "王魔",
+        "杨森",
+        "高体乾",
+        "李兴霸"
+      ]
+    }
+  ]
+}

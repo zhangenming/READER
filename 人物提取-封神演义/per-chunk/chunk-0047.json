@@ -1,0 +1,43 @@
+{
+  "chunk": 47,
+  "characters": [
+    {"name": "丘引", "aliases": [], "identity": "青龙关守将，曲鳝得道修成人体，顶现红珠摄魂，后在万仙阵前被陆压斩杀", "nonhuman": true, "mentioned_only": false, "evidence": "看官：丘引乃曲鳝得道，修成人体，也善左道之术。"},
+    {"name": "黄飞虎", "aliases": ["飞虎", "黄总兵", "黄将军", "武成王"], "identity": "武成王，青龙关一路周军主将，三子丧亡犹自攻关", "nonhuman": false, "mentioned_only": false, "evidence": "话说丘引见黄飞虎，左右分开大小将官，一马当先，大叫：「黄飞虎负国忘恩，无父无君之贼！"},
+    {"name": "黄天祥", "aliases": ["天祥"], "identity": "黄飞虎之子，年方十七的猛将，鎗刺箭射丘引，被红珠擒获枭首风化其尸", "nonhuman": false, "mentioned_only": false, "evidence": "后有黄天祥应曰：「待我来擒此贼。」"},
+    {"name": "高贵", "aliases": [], "identity": "丘引副将，摇斧接黄天祥，被一鎗刺中心窝", "nonhuman": false, "mentioned_only": false, "evidence": "这壁厢有高贵摇斧接住。"},
+    {"name": "孙宝", "aliases": [], "identity": "丘引副将，力敌邓九公，被一刀挥于马下枭首", "nonhuman": false, "mentioned_only": false, "evidence": "傍有丘引副将孙宝、余成两骑马，两口刀，杀奔前来助战。"},
+    {"name": "余成", "aliases": [], "identity": "丘引副将，助战时被邓九公刀劈落马", "nonhuman": false, "mentioned_only": false, "evidence": "傍有丘引副将孙宝、余成两骑马，两口刀，杀奔前来助战。"},
+    {"name": "邓九公", "aliases": ["九公"], "identity": "周营老将，刀劈余成、孙宝，被陈奇黄气擒去斩首号令", "nonhuman": false, "mentioned_only": false, "evidence": "邓九公见二将前来协助，邓九公奋勇走马，刀劈了余成，翻鞍落马。"},
+    {"name": "陈奇", "aliases": [], "identity": "青龙关督粮官，腹内黄气喷人摄魂，领飞虎兵，终被黄飞虎刺死", "nonhuman": false, "mentioned_only": false, "evidence": "忽报：「督粮官陈奇听令。」"},
+    {"name": "太鸾", "aliases": [], "identity": "邓九公佐贰官，为主将报仇出战被陈奇所擒，后获救", "nonhuman": false, "mentioned_only": false, "evidence": "傍有九公佐贰官太鸾大怒曰：「末将不才，愿与主将报仇。」"},
+    {"name": "黄天禄", "aliases": ["天禄"], "identity": "黄飞虎长子，兄弟三人战陈奇，被黄气擒去监禁后获救", "nonhuman": false, "mentioned_only": false, "evidence": "只见傍边走过三子黄天禄、黄天爵、黄天祥应曰：「不肖三人愿往。」"},
+    {"name": "黄天爵", "aliases": ["天爵"], "identity": "黄飞虎之子，被父命押送天祥尸首回西岐", "nonhuman": false, "mentioned_only": false, "evidence": "只见傍边走过三子黄天禄、黄天爵、黄天祥应曰：「不肖三人愿往。」"},
+    {"name": "哪吒", "aliases": [], "identity": "周营先行，乾坤圈打丘引，夜取青龙关", "nonhuman": false, "mentioned_only": false, "evidence": "子牙许之；又点先行官哪吒同往。"},
+    {"name": "武吉", "aliases": [], "identity": "周营将，告知土行孙其岳翁阵亡、夫人出征", "nonhuman": false, "mentioned_only": false, "evidence": "土行孙下殿，不见邓婵玉，问其故。武吉曰：「黄飞虎求救兵，申文言你岳翁阵亡，你夫人去了。」"},
+    {"name": "土行孙", "aliases": [], "identity": "二运官，地行术盗天祥尸首、囹圄放人，棍打丘引落马", "nonhuman": false, "mentioned_only": false, "evidence": "且说土行孙催粮至子牙大营，见元帅回令毕"},
+    {"name": "邓婵玉", "aliases": ["婵玉"], "identity": "邓九公之女，为父报仇，五光石打伤陈奇", "nonhuman": false, "mentioned_only": false, "evidence": "只见邓婵玉哭上帐来：「禀上元帅：末将愿去为父报仇。」"},
+    {"name": "郑伦", "aliases": [], "identity": "三运督粮官，鼻哼白光、领乌鸦兵，与陈奇哼哈相会各擒各回", "nonhuman": false, "mentioned_only": false, "evidence": "忽哨探马报入中军：「有三运督粮官郑伦来辕门等令。」"},
+    {"name": "周纪", "aliases": [], "identity": "周营部将，收天祥尸首，夜战中三路使斧", "nonhuman": false, "mentioned_only": false, "evidence": "把绳子割断，天祥的尸首吊在关外。周纪收去尸首。"},
+    {"name": "黄明", "aliases": [], "identity": "周营部将，夜战中三路使斧助攻丘引", "nonhuman": false, "mentioned_only": false, "evidence": "上三路哪吒的鎗；中三路黄明＼周纪的斧；下三路土行孙的棍；"},
+    {"name": "邓秀", "aliases": [], "identity": "周营部将，夜取青龙关时裹住丘引", "nonhuman": false, "mentioned_only": false, "evidence": "邓秀、赵升、孙焰红把丘引裹在当中。"},
+    {"name": "赵升", "aliases": [], "identity": "周营部将，夜取青龙关时裹住丘引", "nonhuman": false, "mentioned_only": false, "evidence": "邓秀、赵升、孙焰红把丘引裹在当中。"},
+    {"name": "孙焰红", "aliases": [], "identity": "周营部将，夜取青龙关时裹住丘引", "nonhuman": false, "mentioned_only": false, "evidence": "邓秀、赵升、孙焰红把丘引裹在当中。"},
+    {"name": "辛甲", "aliases": [], "identity": "周营军官，奉子牙命往汜水关下战书", "nonhuman": false, "mentioned_only": false, "evidence": "次日，子牙差辛甲先下一封战书。"},
+    {"name": "韩荣", "aliases": [], "identity": "汜水关总兵，批书约战，兵败闭关告急", "nonhuman": false, "mentioned_only": false, "evidence": "话说汜水关韩荣见子牙按兵不动，分兵取佳梦关、青龙二关，速速差人打探。"},
+    {"name": "王虎", "aliases": [], "identity": "韩荣先行，出战被哪吒挑于马下", "nonhuman": false, "mentioned_only": false, "evidence": "傍有先行王虎，走马摇刀，飞奔前来，直奔子牙。"},
+    {"name": "魏贲", "aliases": [], "identity": "周营骁将，见哪吒得胜飞取韩荣", "nonhuman": false, "mentioned_only": false, "evidence": "魏贲见哪吒得胜，把马一磕，摇鎗前来，飞取韩荣。"},
+    {"name": "余化", "aliases": ["七首将军"], "identity": "汜水关七首将军，败回蓬莱山炼化血神刀归来报仇", "nonhuman": false, "mentioned_only": false, "evidence": "忽报：「七首将军余化等令。」"},
+    {"name": "太乙真人", "aliases": [], "identity": "乾元山金光洞仙人，哪吒鎗法传授之师", "nonhuman": false, "mentioned_only": true, "evidence": "哪吒的鎗乃太乙真人传授，有许多机变"},
+    {"name": "姜子牙", "aliases": ["子牙", "姜尚", "姜元帅", "姜丞相"], "identity": "西周元帅，先取二关通粮道，与韩荣会兵", "nonhuman": false, "mentioned_only": false, "evidence": "韩荣大怒曰：「姜子牙，我以你为高明之士，你原来是妖言惑众之人！"},
+    {"name": "武王", "aliases": ["姬发", "周王"], "identity": "西周之主，姬发其名，为将佐欲会孟津立功之主", "nonhuman": false, "mentioned_only": true, "evidence": "黄总兵放声大哭曰：「吾生四子，不能为武王至孟津大会诸侯以立功，今方头一座关隘，先丧吾三子！」"},
+    {"name": "纣王", "aliases": ["商王纣"], "identity": "殷商天子，战书所数淫酗肆虐之君", "nonhuman": false, "mentioned_only": true, "evidence": "今商王纣淫酗肆虐，暴殄下民。"},
+    {"name": "夏桀", "aliases": ["桀"], "identity": "子牙答韩荣时追述的暴虐夏君", "nonhuman": false, "mentioned_only": true, "evidence": "昔夏桀暴虐，成汤伐之，代夏而有天下。", "note": "存疑"},
+    {"name": "成汤", "aliases": [], "identity": "子牙追述伐桀代夏而得天下的商朝开国之君（此处指其本人）", "nonhuman": false, "mentioned_only": true, "evidence": "昔夏桀暴虐，成汤伐之，代夏而有天下。", "note": "存疑"},
+    {"name": "老君", "aliases": [], "identity": "赞黄天祥鎗时举其炉中锻炼之仙（仅入赞喻）", "nonhuman": false, "mentioned_only": true, "evidence": "老君炉里炼，曾敲十万八千锤。", "note": "存疑"},
+    {"name": "金睛兽", "aliases": ["火眼金睛兽"], "identity": "陈奇、郑伦、余化等所骑之兽（坐骑兽类，非一人）", "nonhuman": true, "mentioned_only": false, "evidence": "陈奇领本部飞虎兵，坐火眼金睛兽，提手中荡魔杵，至周营搦战。", "note": "存疑：坐骑兽种，多人共乘"}
+  ],
+  "collectives": [
+    {"name": "哼哈二将", "refers_to": ["郑伦", "陈奇"]},
+    {"name": "三位殿下", "refers_to": ["黄天禄", "黄天爵", "黄天祥"]}
+  ]
+}

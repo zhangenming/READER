@@ -1,0 +1,352 @@
+{
+  "chunk": 7,
+  "characters": [
+    {
+      "name": "姬昌",
+      "aliases": [
+        "昌",
+        "姬伯",
+        "姬伯侯",
+        "西伯侯",
+        "姬贤伯",
+        "贤侯",
+        "姬侯",
+        "西伯",
+        "西方圣人"
+      ],
+      "identity": "西伯侯，镇西岐，演先天数，因直谏被纣王囚于羑里",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且说姬昌一路无词，进五关"
+    },
+    {
+      "name": "姜桓楚",
+      "aliases": [
+        "东伯侯",
+        "桓楚",
+        "姜贤伯"
+      ],
+      "identity": "东伯侯，镇东鲁，姜皇后之父，因谏救女儿被纣王醢尸",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姜桓楚将本章呈上"
+    },
+    {
+      "name": "鄂崇禹",
+      "aliases": [
+        "南伯侯",
+        "崇禹",
+        "鄂贤伯",
+        "鄂伯",
+        "鄂祟禹"
+      ],
+      "identity": "南伯侯，席上责崇侯虎剥民之罪，后随众谏纣王，被枭首",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "鄂崇禹枭首，姜桓楚将巨钉钉其手足"
+    },
+    {
+      "name": "崇侯虎",
+      "aliases": [
+        "北伯侯",
+        "崇贤伯",
+        "侯虎"
+      ],
+      "identity": "北伯侯，结党费仲尤浑、监造摘星楼，被鄂崇禹当面痛斥，独蒙赦免",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "崇侯虎笑容答曰"
+    },
+    {
+      "name": "黄飞虎",
+      "aliases": [
+        "武成王"
+      ],
+      "identity": "商朝武成王，都城中执笏为四侯力谏，后在元戎府看边报",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "殿东头恼了武成王黄飞虎，执笏出班"
+    },
+    {
+      "name": "比干",
+      "aliases": [
+        "亚相",
+        "丞相"
+      ],
+      "identity": "商朝亚相，接本展本、屡为姬昌缓颊，奉旨收二臣之尸",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "亚相比干接本"
+    },
+    {
+      "name": "费仲",
+      "aliases": [],
+      "identity": "纣王宠臣、中谏大夫，设谋陷四侯，又十里长亭套姬昌演数",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "奸臣费仲暗进偏殿见纣王"
+    },
+    {
+      "name": "尤浑",
+      "aliases": [],
+      "identity": "纣王宠臣、中谏大夫，与费仲同党，同姬昌饯行并诘问国家休咎",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "尤浑奏曰"
+    },
+    {
+      "name": "姚福",
+      "aliases": [],
+      "identity": "馆驿中的驿卒，使命官家下的人，酒后失言泄出四大臣明日斩首的机密",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "是姚福亲口说出"
+    },
+    {
+      "name": "姜皇后",
+      "aliases": [
+        "姜娘娘",
+        "姜后"
+      ],
+      "identity": "纣王元配、姜桓楚之女，被妲己构陷屈死西宫，剜目炮烙双手",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "因姜皇后屈死西宫"
+    },
+    {
+      "name": "妲己",
+      "aliases": [
+        "妲己娘娘"
+      ],
+      "identity": "被纣王立为正宫的妃子，构陷姜后、惑乱朝政",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "自立妲己为正宫"
+    },
+    {
+      "name": "纣王",
+      "aliases": [],
+      "identity": "商朝天子，信谗杀妻诛子，醢姜桓楚、枭鄂崇禹，囚姬昌于羑里",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "纣王大喜"
+    },
+    {
+      "name": "鲁雄",
+      "aliases": [],
+      "identity": "奉纣王之命监斩姜桓楚、鄂崇禹的监斩官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "纣王命鲁雄监斩"
+    },
+    {
+      "name": "微子",
+      "aliases": [],
+      "identity": "商朝王族老殿下，与比干等同班力谏、十里长亭为姬昌饯行",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "微子、箕子、比干等俱在此伺候多时"
+    },
+    {
+      "name": "箕子",
+      "aliases": [],
+      "identity": "商朝王族老殿下，随班谏纣王并长亭饯别姬昌",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "微子、箕子、比干等俱在此伺候多时"
+    },
+    {
+      "name": "微子启",
+      "aliases": [],
+      "identity": "王族，与比干、箕子等七人同出班俯伏谏纣王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有亚相比干并微子、箕子、微子启、微子衍、伯夷、叔齐七人同出班俯伏"
+    },
+    {
+      "name": "微子衍",
+      "aliases": [],
+      "identity": "王族，与比干等同班俯伏为四侯求情",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "微子启、微子衍、伯夷、叔齐七人同出班俯伏"
+    },
+    {
+      "name": "伯夷",
+      "aliases": [],
+      "identity": "孤竹君之子一类的老殿下，与比干等七人同出班力谏",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "微子启、微子衍、伯夷、叔齐七人同出班俯伏"
+    },
+    {
+      "name": "叔齐",
+      "aliases": [],
+      "identity": "与伯夷并称的老殿下，七人同出班俯伏为四侯申救",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "微子启、微子衍、伯夷、叔齐七人同出班俯伏"
+    },
+    {
+      "name": "胶鬲",
+      "aliases": [],
+      "identity": "商朝上大夫，与杨任等六位大臣进礼称臣，奏章救二侯",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "胶鬲、杨任等六位大臣进礼称臣"
+    },
+    {
+      "name": "杨任",
+      "aliases": [],
+      "identity": "商朝大臣，上奏称直谏君过者忠臣，请赦姜桓楚、鄂崇禹",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨任奏曰"
+    },
+    {
+      "name": "晁田",
+      "aliases": [
+        "晁将军"
+      ],
+      "identity": "奉纣王旨追赶姬昌的传旨武将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "晁田大呼曰"
+    },
+    {
+      "name": "周纪",
+      "aliases": [],
+      "identity": "黄飞虎府中听差之人，被差去请各位老殿下赴午门",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "周纪去请"
+    },
+    {
+      "name": "姜文焕",
+      "aliases": [
+        "东伯侯"
+      ],
+      "identity": "姜桓楚之子，起兵四十万取游魂关报父仇",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "见反了东伯侯姜文焕，领四十万人马"
+    },
+    {
+      "name": "鄂顺",
+      "aliases": [
+        "南伯侯"
+      ],
+      "identity": "鄂崇禹之子，领人马二十万取三山关",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "又反了南伯侯鄂顺"
+    },
+    {
+      "name": "太乙真人",
+      "aliases": [
+        "真人",
+        "师叔"
+      ],
+      "identity": "乾元山金光洞仙人，奉玉虚宫玉札把灵珠子送下山",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "太乙真人闲坐洞中"
+    },
+    {
+      "name": "白鹤童子",
+      "aliases": [],
+      "identity": "昆仑山玉虚宫童子，持玉札到乾元山传命",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "白鹤童子持玉札到山"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [
+        "灵珠子"
+      ],
+      "identity": "灵珠子化身，将出世于陈塘关作姜子牙先行官（此块仅在回目与预告中出现）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "陈塘关哪吒出世"
+    },
+    {
+      "name": "姜子牙",
+      "aliases": [],
+      "identity": "该斩将封神之人，后来冰冻岐山拿鲁雄、冻死费仲尤浑",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "一则姜子牙该斩将封神"
+    },
+    {
+      "name": "伯邑考",
+      "aliases": [],
+      "identity": "姬昌之子，姬昌嘱其上顺母命、下和弟兄",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "着伯邑考上顺母命，下和弟兄"
+    },
+    {
+      "name": "闻太师",
+      "aliases": [],
+      "identity": "远征北海的商朝太师，朝中祸起时无可在场",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "况闻太师远征北海"
+    },
+    {
+      "name": "伏羲",
+      "aliases": [],
+      "identity": "演成八卦、定人事吉凶的上古圣王，姬昌据其数推演",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "先天神农、伏羲演成八卦"
+    },
+    {
+      "name": "神农",
+      "aliases": [],
+      "identity": "与伏羲同为先天数的源头，被姬昌引为据",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "先天神农、伏羲演成八卦"
+    },
+    {
+      "name": "燧人氏",
+      "aliases": [],
+      "identity": "钻木取火的古圣人，太庙火灾的赋文中叙火之本原",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "此火乃燧人氏出世，刻木钻金"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "四镇诸侯",
+      "refers_to": [
+        "姬昌",
+        "姜桓楚",
+        "鄂崇禹",
+        "崇侯虎"
+      ]
+    },
+    {
+      "name": "七王",
+      "refers_to": [
+        "比干",
+        "微子",
+        "箕子",
+        "微子启",
+        "微子衍",
+        "伯夷",
+        "叔齐"
+      ]
+    },
+    {
+      "name": "费、尤",
+      "refers_to": [
+        "费仲",
+        "尤浑"
+      ]
+    }
+  ]
+}

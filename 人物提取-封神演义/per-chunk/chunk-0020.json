@@ -1,0 +1,29 @@
+{
+  "chunk": 20,
+  "characters": [
+    {"name": "黄天化", "aliases": ["天化"], "identity": "清虚道德真君弟子、黄飞虎之子，收火龙标、以莫耶宝剑斩陈桐，救父后辞归紫阳洞", "nonhuman": false, "mentioned_only": false, "evidence": "天化忙将背上宝剑执在手中，照陈桐只一指。"},
+    {"name": "陈桐", "aliases": [], "identity": "潼关守将、黄飞虎旧部，挟旧恨以火龙标伤人，被黄天化宝剑飞光斩首", "nonhuman": false, "mentioned_only": false, "evidence": "忽报：「陈桐在外请战。」"},
+    {"name": "黄飞虎", "aliases": ["武成王", "黄爷", "黄将军"], "identity": "武成王，反出朝歌途中连闯潼关、穿云关，为全家出五关而战", "nonhuman": false, "mentioned_only": false, "evidence": "飞虎只得上了五色神牛，金装铠甲，出得营来，叫曰：「陈桐，还吾夜来一标之雠！」"},
+    {"name": "清虚道德真君", "aliases": [], "identity": "青峰山紫阳洞神仙，莫耶宝剑的主人、黄天化之师（本块追述）", "nonhuman": false, "mentioned_only": true, "evidence": "话说天化此剑，乃清虚道德真君镇山之宝，名曰：「莫耶宝剑。」"},
+    {"name": "黄明", "aliases": [], "identity": "黄飞虎结义兄弟，随行出关，界牌关用计赚黄滚一同归周", "nonhuman": false, "mentioned_only": false, "evidence": "黄明马上叹曰：「一母之子，有贤愚之分；一树之果，有酸甜之别。"},
+    {"name": "周纪", "aliases": [], "identity": "黄飞虎结义兄弟，随行出潼关、穿云关", "nonhuman": false, "mentioned_only": false, "evidence": "陈桐已死，黄明、周纪众将呐喊一声，斩拴落锁，杀散军兵，出了潼关。"},
+    {"name": "陈梧", "aliases": [], "identity": "穿云关守将、陈桐之兄，假意设宴欲火烧黄家，事泄被黄飞虎挑于马下", "nonhuman": false, "mentioned_only": false, "evidence": "穿云关守将乃陈桐的兄陈梧守把。"},
+    {"name": "贺申", "aliases": [], "identity": "陈梧偏将，献智擒之计（不能力战）", "nonhuman": false, "mentioned_only": false, "evidence": "陈梧听偏将贺申之言，乃曰：「贺将军言虽有理，计将安出？」"},
+    {"name": "贾氏", "aliases": [], "identity": "黄飞虎元配贾氏之魂，显灵报信使黄家免于陈梧火计", "nonhuman": false, "mentioned_only": false, "evidence": "听的有声叫曰：「黄将军，妾身并非妖魔，乃是你元配妻贾氏相随至此。"},
+    {"name": "龙环", "aliases": [], "identity": "黄飞虎家将，斧劈府门破陈梧火计，后战余化被擒", "nonhuman": false, "mentioned_only": false, "evidence": "龙环、吴谦用斧劈开，只见府前堆积柴薪，浑似柴篷塞挤。"},
+    {"name": "吴谦", "aliases": [], "identity": "黄飞虎家将，斧劈府门破陈梧火计，后战余化被擒（他块文字作吴贤、吴乾）", "nonhuman": false, "mentioned_only": false, "evidence": "龙环、吴谦用斧劈开，只见府前堆积柴薪，浑似柴篷塞挤。"},
+    {"name": "黄滚", "aliases": [], "identity": "黄飞虎之父、界牌关总兵，欲解子请罪，被黄明等设咒逼得烧粮弃关一同归周", "nonhuman": false, "mentioned_only": false, "evidence": "却说界牌关黄滚乃是黄飞虎父亲，镇守此关。"},
+    {"name": "韩荣", "aliases": [], "identity": "汜水关总兵，聚将阻截黄家，收监黄家父子", "nonhuman": false, "mentioned_only": false, "evidence": "却说韩荣探马报到：「黄滚同武成王反出界牌，兵至关前扎营。」"},
+    {"name": "余化", "aliases": ["七首将军"], "identity": "韩荣麾下左道之将，人称七首将军，用戮魂旛连擒黄门七将官", "nonhuman": false, "mentioned_only": false, "evidence": "麾下一将余化，此人乃左道，人称他『七首将军』，此人道法通玄，旗开拱手，马到成功。"},
+    {"name": "火眼金睛兽", "aliases": [], "identity": "余化的坐骑神兽", "nonhuman": true, "mentioned_only": false, "evidence": "此人道法通玄，旗开拱手，马到成功。坐下火眼金睛兽，用方天戟，我们一到，料是个个被擒，决难逃脱。"},
+    {"name": "一气仙人", "aliases": [], "identity": "蓬莱岛仙人，戮魂旛的传授者（无具体名号）", "nonhuman": false, "mentioned_only": true, "note": "存疑", "evidence": "此物是蓬莱岛一气仙人传授，乃左道傍门之物。"},
+    {"name": "黄天禄", "aliases": ["天禄"], "identity": "黄飞虎次子（黄滚之孙），枪法如神刺伤余化左腿，仍被戮魂旛擒去", "nonhuman": false, "mentioned_only": false, "evidence": "只见次孙黄天禄欠身曰：「小孙愿为父、叔报雠。」"},
+    {"name": "黄天爵", "aliases": ["天爵"], "identity": "黄飞虎三子（黄滚之孙），随祖跪求韩荣", "nonhuman": false, "mentioned_only": false, "evidence": "只见黄滚缟素跪下，后跪黄天爵、天祥。"},
+    {"name": "黄天祥", "aliases": ["天祥"], "identity": "黄飞虎幼子（黄滚之孙，七岁），随祖跪求韩荣放行", "nonhuman": false, "mentioned_only": false, "evidence": "只见黄滚缟素跪下，后跪黄天爵、天祥。"},
+    {"name": "黄飞彪", "aliases": ["飞彪"], "identity": "黄飞虎二弟，出阵战余化被擒", "nonhuman": false, "mentioned_only": false, "evidence": "黄飞彪、飞豹曰：「孩儿愿为长兄报雠。」"},
+    {"name": "黄飞豹", "aliases": ["飞豹"], "identity": "黄飞虎三弟，出阵战余化被擒", "nonhuman": false, "mentioned_only": false, "evidence": "黄飞彪、飞豹曰：「孩儿愿为长兄报雠。」"},
+    {"name": "哪吒", "aliases": ["灵珠子"], "identity": "乾元山太乙真人弟子（诗中预告其接应黄家、破汜水关）", "nonhuman": false, "mentioned_only": true, "evidence": "不是哪吒相接应，焉得君臣破鹿台。"},
+    {"name": "姬发", "aliases": ["武王"], "identity": "西岐之主武王（黄飞虎欲往投奔借兵）", "nonhuman": false, "mentioned_only": true, "evidence": "老天呵！若是武王肯容纳我等借兵，定伐无道！"}
+  ],
+  "collectives": []
+}
