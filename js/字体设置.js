@@ -538,6 +538,8 @@ export function 设置页面背景色(颜色, 选项 = {}) {
    纸面色一旦调成中灰或深色，深墨字与纸面亮度趋同（中灰纸面下对比度约 1:1），
    文字几乎不可见；这里按纸面色相对亮度分档重算两支墨色：
    中灰纸面换更深的墨、深纸面换浅墨、足够浅的纸面恢复默认。
+   悬停行高亮（styles.css 正文行:hover）同场换挡：深纸下 --悬停底色 换成暗金、
+   --悬停字词色 换回白色（白字不再翻转）。
    字体设置弹窗在自身作用域内钉住了浅色变量，不受这里的覆盖影响。 */
 
 export function 计算相对亮度(十六进制颜色) {
@@ -557,6 +559,8 @@ export function 刷新界面墨色() {
   if (外观.纸面色 === 默认纸面色) {
     根样式.removeProperty('--墨色');
     根样式.removeProperty('--次要墨色');
+    根样式.removeProperty('--悬停底色');
+    根样式.removeProperty('--悬停字词色');
     return;
   }
   const 亮度 = 计算相对亮度(外观.纸面色);
@@ -564,12 +568,20 @@ export function 刷新界面墨色() {
   if (深纸) {
     根样式.setProperty('--墨色', '#f5f3ec');
     根样式.setProperty('--次要墨色', '#cfccc2');
+    // 悬停行随夜换色：亮金带在深纸上是刺眼的一块，换暗金（暖色提亮）；
+    // 白色内置字词在暗金带上本来就清楚，悬停字词色还原成白色、不再翻转。
+    根样式.setProperty('--悬停底色', '#6b4a14');
+    根样式.setProperty('--悬停字词色', 'var(--内置字词颜色)');
   } else if (亮度 < 界面墨色浅纸亮度下限) {
     根样式.setProperty('--墨色', '#1c1812');
     根样式.setProperty('--次要墨色', '#322d24');
+    根样式.removeProperty('--悬停底色');
+    根样式.removeProperty('--悬停字词色');
   } else {
     根样式.removeProperty('--墨色');
     根样式.removeProperty('--次要墨色');
+    根样式.removeProperty('--悬停底色');
+    根样式.removeProperty('--悬停字词色');
   }
 }
 
