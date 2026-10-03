@@ -1,0 +1,496 @@
+{
+  "chunk": 41,
+  "characters": [
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜尚",
+        "子牙公",
+        "相父"
+      ],
+      "identity": "西岐丞相，单骑诱马善、展杏黄旗与打神鞭拒殷郊，又调诸将夜劫辕门",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙展开杏黄旗，便有万道金光，祥云笼罩"
+    },
+    {
+      "name": "燃灯道人",
+      "aliases": [
+        "燃灯"
+      ],
+      "identity": "灵鹫山元觉洞之主，以琉璃收马善灯焰，主持取旗擒殷郊之策并镇中央戊己",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "燃灯袖内取出琉璃望空中祭起，那琉璃望下掉来。"
+    },
+    {
+      "name": "马善",
+      "aliases": [],
+      "identity": "殷郊麾下大将，本为燃灯案前灯焰所化，追姜尚被燃灯以琉璃收去灯焰",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "马善得令，拎鎗上马，出辕门，也不答话，直取子牙。"
+    },
+    {
+      "name": "黄巾力士",
+      "aliases": [],
+      "identity": "燃灯驱使的力士，奉命把灯焰带回灵鹫山",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "燃灯忙令黄巾力士：「可将灯焰带回灵鹫山去。」"
+    },
+    {
+      "name": "广成子",
+      "aliases": [],
+      "identity": "殷郊之师，往玄都、西方借旗，奉命推犁上山，见殷郊之惨不觉落泪",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "广成子借纵地金光法往玄都来，不一时来至八景宫玄都洞。"
+    },
+    {
+      "name": "殷郊",
+      "aliases": [
+        "殿下",
+        "千岁",
+        "殷殿下"
+      ],
+      "identity": "纣王长太子、广成子门人，被申公豹说反后阻子牙拜将，夜战兵败于岐山",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "殷郊大怒，见了雠人，切齿咬牙，大骂"
+    },
+    {
+      "name": "温良",
+      "aliases": [],
+      "identity": "白龙山蓝脸三只眼之将，助殷郊战哪吒，玉环被打碎、中金砖又被杨戬弹子穿肩而死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且说温良走马来助，这壁厢哪吒登开风火轮接住交兵。"
+    },
+    {
+      "name": "张山",
+      "aliases": [],
+      "identity": "商营主将，抢出救走殷郊，夜战中被孙焰红烧伤面、被邓九公一刀劈于马下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有张山、李锦二骑抢出，不知殷郊已借土遁去了。"
+    },
+    {
+      "name": "李锦",
+      "aliases": [],
+      "identity": "商营将官，夜劫营时接住厮杀，被南宫适所斩",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南宫适斩了李锦，也杀到中营来助战。"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "登风火轮战温良，以乾坤圈、金砖打碎白玉环并伤温良后心",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说哪吒祭起一块金砖，正中殷郊的落魂钟上，只打得霞光万道。"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "玉虚门下，以弹子穿温良肩头、报龙吉公主来至，夜战持三尖刀助黄家父子",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨戬急上前欲斩他首级，有张山、李锦二骑抢出"
+    },
+    {
+      "name": "黄天化",
+      "aliases": [],
+      "identity": "使双锤助战、骑玉麒麟，被罗宣五龙轮及殷郊落魂钟两次打下骑",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄天化使开双锤，也来助战"
+    },
+    {
+      "name": "玉麒麟",
+      "aliases": [],
+      "identity": "黄天化的坐骑，先后被五龙轮与落魂钟打下",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "将五龙轮一轮把黄天化打下玉麒麟。"
+    },
+    {
+      "name": "雷震子",
+      "aliases": [],
+      "identity": "展二翅飞起空中使金棍助战，夜战飞空刷棍围殷郊",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "雷震子展开二翅，飞起空中，将金棍刷来"
+    },
+    {
+      "name": "土行孙",
+      "aliases": [],
+      "identity": "西岐将官、邓婵玉之夫，使铁棍杀战，并告知素色云界旗的下落",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "土行孙使动宾铁棍，往下三路也自杀来"
+    },
+    {
+      "name": "邓婵玉",
+      "aliases": [],
+      "identity": "土行孙之妻，在静室听见素色云界旗之事而指点去处",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "土行孙来到内里，对妻子邓婵玉说"
+    },
+    {
+      "name": "韦护",
+      "aliases": [],
+      "identity": "绰步使降魔杵劈头打罗宣，并说出玄都洞、玉虚宫、灵鹫山三盏灯",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "韦护绰步，使降魔杵劈头就打"
+    },
+    {
+      "name": "黄飞虎",
+      "aliases": [],
+      "identity": "西岐上将，领令箭冲张山大辕门，带一支人马点砲杀进辕门",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见黄飞虎带领一支人马，点砲呐喊，杀进辕门"
+    },
+    {
+      "name": "邓九公",
+      "aliases": [
+        "九公"
+      ],
+      "identity": "西岐上将，冲左粮道门；张山被孙焰红烧面子后赶上一刀把张山劈于马下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "邓九公赶上一刀，劈于马下。"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [],
+      "identity": "西岐将官，冲右粮道门，夜战斩李锦",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南宫适冲右粮道门"
+    },
+    {
+      "name": "黄天禄",
+      "aliases": [],
+      "identity": "黄家兄弟，随父兄劫营围住殷郊",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄天禄、黄天爵、黄天祥等一裹而上，将殷郊围在垓心。"
+    },
+    {
+      "name": "黄天爵",
+      "aliases": [],
+      "identity": "黄家兄弟，随父兄劫营围住殷郊",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄天禄、黄天爵、黄天祥等一裹而上，将殷郊围在垓心。"
+    },
+    {
+      "name": "黄天祥",
+      "aliases": [],
+      "identity": "黄家兄弟，随父兄劫营围住殷郊",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄天禄、黄天爵、黄天祥等一裹而上，将殷郊围在垓心。"
+    },
+    {
+      "name": "太鸾",
+      "aliases": [],
+      "identity": "邓九公麾下副将，随冲左营",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见邓九公带领副将太鸾、邓秀、赵升、孙焰红冲杀左营"
+    },
+    {
+      "name": "邓秀",
+      "aliases": [],
+      "identity": "邓九公麾下副将，随冲左营",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见邓九公带领副将太鸾、邓秀、赵升、孙焰红冲杀左营"
+    },
+    {
+      "name": "赵升",
+      "aliases": [],
+      "identity": "邓九公麾下副将，随冲左营",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见邓九公带领副将太鸾、邓秀、赵升、孙焰红冲杀左营"
+    },
+    {
+      "name": "孙焰红",
+      "aliases": [],
+      "identity": "邓九公麾下副将，喷烈火伤张山面",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "不防孙焰红喷出一口烈火，张山面上被火烧伤"
+    },
+    {
+      "name": "辛甲",
+      "aliases": [],
+      "identity": "南宫适所领周将，直杀进右营",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南宫适领辛甲、辛免、太颠、闳夭直杀进右营"
+    },
+    {
+      "name": "辛免",
+      "aliases": [],
+      "identity": "南宫适所领周将，直杀进右营",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南宫适领辛甲、辛免、太颠、闳夭直杀进右营"
+    },
+    {
+      "name": "太颠",
+      "aliases": [],
+      "identity": "南宫适所领周将，直杀进右营",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南宫适领辛甲、辛免、太颠、闳夭直杀进右营"
+    },
+    {
+      "name": "闳夭",
+      "aliases": [],
+      "identity": "南宫适所领周将，直杀进右营",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南宫适领辛甲、辛免、太颠、闳夭直杀进右营"
+    },
+    {
+      "name": "罗宣",
+      "aliases": [
+        "焰中仙"
+      ],
+      "identity": "火龙岛焰中仙，应申公豹之邀助殷郊，现三首六臂火烧西岐，后被李靖宝塔打死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "道人答曰：「贫道乃火龙岛焰中仙罗宣是也；因申公豹相邀，特来助你一臂之力。」"
+    },
+    {
+      "name": "刘环",
+      "aliases": [],
+      "identity": "九龙岛炼气士，与罗宣同来助殷郊，脚踏红焰接火，被龙吉公主二龙剑斩于火内",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "道人曰：「吾乃九龙岛炼气士刘环是也。」"
+    },
+    {
+      "name": "赤烟驹",
+      "aliases": [],
+      "identity": "罗宣的红马坐骑，四蹄生烈焰，后被二龙剑伤后臂自倒",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "赤烟驹自倒，将罗宣撞下火来，借火遁而逃。"
+    },
+    {
+      "name": "哮天犬",
+      "aliases": [],
+      "identity": "杨戬的神犬，此块杨戬正欲放它来伤罗宣",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "杨戬正欲暗放哮天犬来伤罗宣"
+    },
+    {
+      "name": "李靖",
+      "aliases": [],
+      "identity": "燃灯门人、曾为纣之总兵，木吒之父，以按三十三天黄金宝塔打死罗宣后投西岐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "其人答曰：「吾乃李靖是也。"
+    },
+    {
+      "name": "木吒",
+      "aliases": [],
+      "identity": "李靖之子，在相府前见父亲来至而报入",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有木吒看见父亲来至，忙报与子牙"
+    },
+    {
+      "name": "龙吉公主",
+      "aliases": [],
+      "identity": "凤凰山青鸾斗阙、昊天上帝亲生之女，因思凡被贬，灭火斩刘环、收罗宣之宝并佐子牙伐纣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说罗宣正烧西岐，来了凤凰山青鸾斗阙的龙吉公主"
+    },
+    {
+      "name": "碧云童儿",
+      "aliases": [],
+      "identity": "龙吉公主随行童儿，奉命撒雾露乾坤网罩西岐火内",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "忙叫：「碧云童儿，将雾露乾坤网撒开，往西岐火内一罩。」"
+    },
+    {
+      "name": "昊天上帝",
+      "aliases": [],
+      "identity": "龙吉公主之父，此块仅于公主出身中被提及",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "乃是昊天上帝亲生，瑶池金母之女"
+    },
+    {
+      "name": "瑶池金母",
+      "aliases": [
+        "西王母",
+        "金母",
+        "圣母"
+      ],
+      "identity": "龙吉公主之母、聚仙旗之主，南极仙翁上表恳求后降敕赐旗",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "乃是昊天上帝亲生，瑶池金母之女"
+    },
+    {
+      "name": "南极仙翁",
+      "aliases": [],
+      "identity": "玉虚宫仙翁，换朝服执朝笏往瑶池借聚仙旗，回西岐后即别众仙",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说南极仙翁来到瑶池，落下云头，见朱门紧闭，玉佩无声"
+    },
+    {
+      "name": "老子",
+      "aliases": [],
+      "identity": "玄都洞八景宫之主，命玄都大法师把离地焰光旗付与广成子",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "老子曰：「广成子不必着他进来，他来是要离地焰光旗"
+    },
+    {
+      "name": "玄都大法师",
+      "aliases": [],
+      "identity": "玄都洞传旗之人，代老子把离地焰光旗付与广成子",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见玄都大法师出来，广成子上前稽首，口称："
+    },
+    {
+      "name": "接引道人",
+      "aliases": [],
+      "identity": "西方极乐之主，初不肯借青莲宝色旗，经准提道人劝说方付与广成子",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "接引道人曰：「贫道西方乃清净无为，与贵道不同"
+    },
+    {
+      "name": "准提道人",
+      "aliases": [],
+      "identity": "西方道人，以东南气数劝接引道人借出青莲宝色旗",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "后边来了一位道人，乃是准提道人；打了稽首，同坐下。"
+    },
+    {
+      "name": "赤精子",
+      "aliases": [],
+      "identity": "玉虚门下，奉命持离地焰光旗在岐山离地驻札拦殷郊",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "哪吒来报：「赤精子来至。」"
+    },
+    {
+      "name": "文殊广法天尊",
+      "aliases": [],
+      "identity": "玉虚门下，奉命持青莲宝色旗往西岐山震地驻札拦殷郊",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "又报：「文殊广法天尊来至。」"
+    },
+    {
+      "name": "武王",
+      "aliases": [
+        "姬发",
+        "周武王"
+      ],
+      "identity": "西岐之主，各处火起时跪丹墀告天祈哀，又亲往岐山驻札西方之地",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "西方聚仙旗须得武王亲自驻札。"
+    },
+    {
+      "name": "申公豹",
+      "aliases": [],
+      "identity": "说反殷郊并邀罗宣来助，此块只被谈及",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "因申公豹相邀，特来助你一臂之力。"
+    },
+    {
+      "name": "纣王",
+      "aliases": [],
+      "identity": "此块仅在瑶池敕旨与收马善之语中被指为秽德当绝",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "纣王秽德彰闻，应当绝灭"
+    },
+    {
+      "name": "燧人",
+      "aliases": [],
+      "identity": "赞火之词中「燧人钻木」的取火古皇，仅作比喻（存疑）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "说甚么燧人钻木",
+      "note": "存疑"
+    },
+    {
+      "name": "皇天",
+      "aliases": [],
+      "identity": "武王跪祈的上天",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "话说武王听得各处火起，连宫内生烟，武王跪在丹墀，告祈后土、皇天曰：「姬发不道，获罪于天，降此大厄，何累于民？",
+      "note": "存疑"
+    },
+    {
+      "name": "后土",
+      "aliases": [],
+      "identity": "武王跪祈的后土之神",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "话说武王听得各处火起，连宫内生烟，武王跪在丹墀，告祈后土、皇天曰：「姬发不道，获罪于天，降此大厄，何累于民？",
+      "note": "存疑"
+    },
+    {
+      "name": "青鸾",
+      "aliases": [],
+      "identity": "龙吉公主跨乘的青鸾鸟",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "正值罗宣来烧西岐，娘娘就假此好见子牙。遂跨青鸾来至。",
+      "note": "存疑"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "金、木二咤",
+      "refers_to": [
+        "木吒"
+      ]
+    },
+    {
+      "name": "李靖父子三人",
+      "refers_to": [
+        "李靖",
+        "木吒"
+      ]
+    },
+    {
+      "name": "黄家父子",
+      "refers_to": [
+        "黄飞虎",
+        "黄天化",
+        "黄天禄",
+        "黄天爵",
+        "黄天祥"
+      ]
+    }
+  ]
+}

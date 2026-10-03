@@ -1,0 +1,422 @@
+{
+  "chunk": 37,
+  "characters": [
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜尚",
+        "姜公"
+      ],
+      "identity": "西岐丞相，中瘟疫后得丹药而解",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说子牙见黄旛脚下有一道人，穿大红袍服，面如蓝靛，发似朱砂，三目圆睁，骑金眼驼，手提宝剑，大呼曰：「来者可是姜子牙么？」子牙答曰：「然也。」"
+    },
+    {
+      "name": "吕岳",
+      "aliases": [
+        "老师"
+      ],
+      "identity": "九龙岛炼气士，瘟部鼻祖，撒瘟丹困西岐，战败后回九龙岛炼瘟疫伞",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吕岳曰：吾乃九龙岛炼气之士，名为吕岳。"
+    },
+    {
+      "name": "赵公明",
+      "aliases": [],
+      "identity": "峨嵋山仙人，子牙举以为已败之例",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "据道兄所谈，不过如峨嵋山赵公明，三仙岛云霄、琼霄、碧霄之道，一旦俱成画饼，料道兄此来，不过自取杀身之祸耳。"
+    },
+    {
+      "name": "云霄",
+      "aliases": [],
+      "identity": "三仙岛仙人，子牙举以为已败之例",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "据道兄所谈，不过如峨嵋山赵公明，三仙岛云霄、琼霄、碧霄之道，一旦俱成画饼，料道兄此来，不过自取杀身之祸耳。"
+    },
+    {
+      "name": "琼霄",
+      "aliases": [],
+      "identity": "三仙岛仙人，子牙举以为已败之例",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "据道兄所谈，不过如峨嵋山赵公明，三仙岛云霄、琼霄、碧霄之道，一旦俱成画饼，料道兄此来，不过自取杀身之祸耳。"
+    },
+    {
+      "name": "碧霄",
+      "aliases": [],
+      "identity": "三仙岛仙人，子牙举以为已败之例",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "据道兄所谈，不过如峨嵋山赵公明，三仙岛云霄、琼霄、碧霄之道，一旦俱成画饼，料道兄此来，不过自取杀身之祸耳。"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "玉鼎真人门下，西岐将领，奉命往火云洞取丹药，斩周信",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨戬在傍，纵马摇刀飞来，大呼曰：「师叔，弟子来也！」"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [
+        "黄公子"
+      ],
+      "identity": "西岐莲花化身大将，杀李奇",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "哪吒登开风火轮，使开火尖鎗，冲杀过来。"
+    },
+    {
+      "name": "黄天化",
+      "aliases": [
+        "天化"
+      ],
+      "identity": "黄飞虎之子，西岐将领，用火龙镖打伤吕岳",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄天化在旗门脚下，忍不住心头火起：「虽然是苏侯放归吾父子，难道我不如他们？只要成功，顾不得了！」"
+    },
+    {
+      "name": "郑伦",
+      "aliases": [],
+      "identity": "苏护麾下大将，不肯归周，后随吕岳攻城",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且言旗门下郑伦看见黄天化杀将过来：「呀」的一声，几乎坠于兽下，长吁叹曰：「谁知我为纣王擒将立功，原来主将有意归周，反将黄家父子放回去了。」"
+    },
+    {
+      "name": "土行孙",
+      "aliases": [],
+      "identity": "西岐将领，提棍助战吕岳",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "又见黄天化助力，土行孙也提宾铁棍滚将进来。"
+    },
+    {
+      "name": "邓婵玉",
+      "aliases": [],
+      "identity": "土行孙之妻，在辕门观战",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "邓婵玉在辕门下看战。"
+    },
+    {
+      "name": "周信",
+      "aliases": [],
+      "identity": "吕岳门人，东方行瘟使者，攻东门被杨戬斩杀",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "周信领三千往东门杀来；李奇领三千往西门杀来；朱天麟领三千往南门杀来；杨文辉领三千同吕岳往北门杀来。"
+    },
+    {
+      "name": "李奇",
+      "aliases": [],
+      "identity": "吕岳门人，西方行瘟使者，攻西门被哪吒杀死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "周信领三千往东门杀来；李奇领三千往西门杀来；朱天麟领三千往南门杀来；杨文辉领三千同吕岳往北门杀来。"
+    },
+    {
+      "name": "朱天麟",
+      "aliases": [],
+      "identity": "吕岳门人，南方行瘟使者，攻南门被玉鼎真人诛杀",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "周信领三千往东门杀来；李奇领三千往西门杀来；朱天麟领三千往南门杀来；杨文辉领三千同吕岳往北门杀来。"
+    },
+    {
+      "name": "杨文辉",
+      "aliases": [],
+      "identity": "吕岳门人，北方行瘟使者，随师攻北门，败走后被韦护降魔杵打死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "周信领三千往东门杀来；李奇领三千往西门杀来；朱天麟领三千往南门杀来；杨文辉领三千同吕岳往北门杀来。"
+    },
+    {
+      "name": "金毛童子",
+      "aliases": [],
+      "identity": "杨戬门下童子，用金丸打中吕岳肩臂",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "命金毛童子拿金丸在手，拽满扣儿，一金丸正打中吕岳肩臂。"
+    },
+    {
+      "name": "苏护",
+      "aliases": [
+        "苏侯"
+      ],
+      "identity": "冀州侯，征伐西岐而暗欲归周",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "如今西岐有冀州侯苏护征伐。你此去与他合兵一处，我再与你请一高人来，助你成功。"
+    },
+    {
+      "name": "武王",
+      "aliases": [],
+      "identity": "周国之王，中瘟疫命在旦夕，得丹获救",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄龙真人至相府来看子牙，又入内庭看过武王，复出皇城，上了城，玉鼎真人方驾纵地金光法而至。"
+    },
+    {
+      "name": "黄龙真人",
+      "aliases": [],
+      "identity": "阐教仙人，跨鹤来援西岐，北门战吕岳",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "原来是黄龙真人跨鹤而来，落在城上。"
+    },
+    {
+      "name": "玉鼎真人",
+      "aliases": [],
+      "identity": "玉泉山金霞洞仙人，杨戬之师，南门诛朱天麟",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "玉鼎真人曰：「我借金光纵地，故此来迟。今吕岳将此异术治此一郡，众生遭逢大厄。"
+    },
+    {
+      "name": "伏羲",
+      "aliases": [
+        "伏羲皇帝"
+      ],
+      "identity": "火云洞三圣之一，天皇帝主",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "当中一位圣人乃伏羲皇帝，谓左边神农曰：「想吾辈为君，和八卦，定礼乐，并无祸乱。"
+    },
+    {
+      "name": "神农",
+      "aliases": [],
+      "identity": "火云洞三圣之一，取丹药与柴胡草救西岐疫病",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "神农答曰：「皇兄此言有理。」忙起身入后，取了丹药，付与杨戬"
+    },
+    {
+      "name": "申公豹",
+      "aliases": [],
+      "identity": "阐教门人，跨虎说反殷洪助纣伐周",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "道人曰：「吾乃是申公豹也。你如今往那里去？」"
+    },
+    {
+      "name": "韦护",
+      "aliases": [],
+      "identity": "金庭山玉屋洞道行天尊门下，奉师命下山佐子牙，用降魔杵打死杨文辉",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吾非别人，乃金庭山玉屋洞道行天尊门下韦护是也；今奉师命下山，佐师叔子牙，东进五关灭纣。"
+    },
+    {
+      "name": "道行天尊",
+      "aliases": [],
+      "identity": "金庭山玉屋洞仙人，韦护之师",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "吾非别人，乃金庭山玉屋洞道行天尊门下韦护是也；今奉师命下山，佐师叔子牙，东进五关灭纣。"
+    },
+    {
+      "name": "白鹤童子",
+      "aliases": [
+        "白鹤童儿"
+      ],
+      "identity": "玉虚宫童子，持御札通知赤精子姜子牙拜将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见有玉虚宫白鹤童子持札而至。"
+    },
+    {
+      "name": "赤精子",
+      "aliases": [],
+      "identity": "太华山云霄洞仙人，殷洪之师，授宝遣其下山助周",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且言太华山云霄洞赤精子，只因削了顶上三花，潜消胸中五气，闲坐于洞中，保养天元。"
+    },
+    {
+      "name": "殷洪",
+      "aliases": [
+        "殷殿下"
+      ],
+      "identity": "纣王嫡子，赤精子门人，下山助周途中被申公豹说反",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "忽然见门人殷洪在傍，道人曰：「徒弟，你今在此，非是了道成仙之人。"
+    },
+    {
+      "name": "妲己",
+      "aliases": [],
+      "identity": "苏护之女、纣王宠妃，害死殷洪之母，与殷洪有仇",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "弟子虽是纣王亲子，我与妲己有百世之雠。"
+    },
+    {
+      "name": "火灵圣母",
+      "aliases": [],
+      "identity": "佳梦关圣母，有金霞冠（赤精子预言殷洪将过此关）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "倘过佳梦关，有一火灵圣母，他有金霞冠戴在头上，放金霞三四十丈，罩着他一身，他能看得见你，你看不见他。"
+    },
+    {
+      "name": "庞弘",
+      "aliases": [],
+      "identity": "二龙山黄峰岭绿林好汉，被殷洪收服同往西岐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "末将姓庞，名弘；此人姓刘，名甫；此人姓苟，名章；此人姓毕，名环。"
+    },
+    {
+      "name": "刘甫",
+      "aliases": [],
+      "identity": "二龙山黄峰岭绿林好汉，被殷洪收服同往西岐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "末将姓庞，名弘；此人姓刘，名甫；此人姓苟，名章；此人姓毕，名环。"
+    },
+    {
+      "name": "苟章",
+      "aliases": [],
+      "identity": "二龙山黄峰岭绿林好汉，被殷洪收服同往西岐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "末将姓庞，名弘；此人姓刘，名甫；此人姓苟，名章；此人姓毕，名环。"
+    },
+    {
+      "name": "毕环",
+      "aliases": [],
+      "identity": "二龙山黄峰岭绿林好汉，被殷洪收服同往西岐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "末将姓庞，名弘；此人姓刘，名甫；此人姓苟，名章；此人姓毕，名环。"
+    },
+    {
+      "name": "纣王",
+      "aliases": [],
+      "identity": "商朝天子，殷洪之父",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "赤精子曰：「你乃是纣王亲子，你决不肯佐周。」"
+    },
+    {
+      "name": "常桑",
+      "aliases": [],
+      "identity": "神农偈中曾言柴胡玄妙的古贤",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "常桑曾说玄中妙，寒门发表是柴胡。",
+      "note": "存疑"
+    },
+    {
+      "name": "哮天犬",
+      "aliases": [],
+      "identity": "杨戬的神犬，咬住周信助其斩将",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "随将哮天犬祭在空中，把周信夹颈子上一口咬住不放。"
+    },
+    {
+      "name": "金眼驼",
+      "aliases": [],
+      "identity": "吕岳的坐骑",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "吕岳在金眼驼上，现出三头六臂，大显神通。"
+    },
+    {
+      "name": "舜",
+      "aliases": [],
+      "identity": "上古帝王，火云洞赞中「舜巡」所指",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "舜巡、禹祷，玉简金书。",
+      "note": "存疑"
+    },
+    {
+      "name": "禹",
+      "aliases": [],
+      "identity": "上古帝王，火云洞赞中「禹祷」所指",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "舜巡、禹祷，玉简金书。",
+      "note": "存疑"
+    },
+    {
+      "name": "丹朱",
+      "aliases": [],
+      "identity": "尧帝之子，不肖而失天下（苏护引古喻今）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔尧帝之子丹朱不肖，尧崩，天下不归朱而归于舜。",
+      "note": "存疑"
+    },
+    {
+      "name": "商均",
+      "aliases": [],
+      "identity": "舜之子，不肖而失天下（苏护引古喻今）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "舜之子商均亦不肖，舜崩，天下不归商均而归于禹。",
+      "note": "存疑"
+    },
+    {
+      "name": "伊尹",
+      "aliases": [],
+      "identity": "古之贤臣，择主而事不失令名（苏护引古喻今）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "古人有行之不损令名者，伊尹是也。",
+      "note": "存疑"
+    },
+    {
+      "name": "尧",
+      "aliases": [],
+      "identity": "上古帝王（苏护引古喻今）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔尧帝之子丹朱不肖，尧崩，天下不归朱而归于舜。",
+      "note": "存疑"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "三圣",
+      "refers_to": [
+        "伏羲",
+        "神农"
+      ]
+    },
+    {
+      "name": "黄家父子",
+      "refers_to": [
+        "黄飞虎",
+        "黄天化"
+      ]
+    },
+    {
+      "name": "苏侯父子",
+      "refers_to": [
+        "苏护",
+        "苏全忠"
+      ]
+    },
+    {
+      "name": "四将",
+      "refers_to": [
+        "庞弘",
+        "刘甫",
+        "苟章",
+        "毕环"
+      ]
+    }
+  ]
+}

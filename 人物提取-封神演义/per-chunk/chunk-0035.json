@@ -1,0 +1,362 @@
+{
+  "chunk": 35,
+  "characters": [
+    {
+      "name": "散宜生",
+      "aliases": [
+        "散大夫",
+        "宜生"
+      ],
+      "identity": "西岐上大夫，奉姜丞相命两至汤营说合土行孙与邓婵玉婚事",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说散宜生出城，来至汤营，对旗门官曰"
+    },
+    {
+      "name": "邓九公",
+      "aliases": [
+        "九公",
+        "邓元帅"
+      ],
+      "identity": "商元戎，允婚事而用太鸾赚子牙纳聘之计，伏兵不成，败后听女言归顺西岐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且说邓九公与太鸾曰：「适才虽是暂允"
+    },
+    {
+      "name": "太鸾",
+      "aliases": [
+        "先行官太鸾"
+      ],
+      "identity": "正印先行官，献赚子牙于中军击杯为号之伏兵计，事败随九公逃走",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有正印先行官太鸾上前言曰：「元帅乘此机会放他进来"
+    },
+    {
+      "name": "土行孙",
+      "aliases": [],
+      "identity": "被擒归周，奉命入汤营抢邓小姐成亲，说降邓九公",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙命土行孙：「你将邓婵玉带至后房，乘今日好日子，成就你夫妇美事。"
+    },
+    {
+      "name": "惧留孙",
+      "aliases": [],
+      "identity": "土行孙之师，随子牙至汤营行聘，算定其徒与邓女有系足之缘",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "惧留孙亦笑曰：「且看如何来说。」"
+    },
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜丞相",
+        "姜尚"
+      ],
+      "identity": "西岐丞相，定计抢亲、成土行孙婚事，并迎接邓九公归周",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙大笑曰：「邓九公此计，怎么瞒得我过！」"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "土行孙与散宜生口中屡拿有名之士的首阵（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "首阵擒了哪吒，次擒黄天化"
+    },
+    {
+      "name": "黄天化",
+      "aliases": [],
+      "identity": "土行孙口中二次所擒之将（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "首阵擒了哪吒，次擒黄天化"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "奉子牙命变化暗随其身赴汤营",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙命：「杨戬变化，暗随吾身。」"
+    },
+    {
+      "name": "邓婵玉",
+      "aliases": [
+        "婵玉",
+        "邓小姐"
+      ],
+      "identity": "邓九公之女，乳名婵玉幼而丧母，被土行孙以捆仙绳擒去成亲，还来说父归周",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吾只有一女，乳名婵玉，幼而丧母"
+    },
+    {
+      "name": "邓秀",
+      "aliases": [
+        "子邓秀"
+      ],
+      "identity": "邓九公之子，与太鸾在辕门赚众将，败后随父收集残兵",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "又命太鸾与子邓秀在辕门赚住众将"
+    },
+    {
+      "name": "赵升",
+      "aliases": [],
+      "identity": "邓营将官，领一支人马埋伏营左闻砲接应",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "命赵升领一支人马，埋伏营左"
+    },
+    {
+      "name": "孙焰红",
+      "aliases": [],
+      "identity": "邓营将官，领一支人马埋伏营右闻砲接应",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "又命孙焰红领一支人马，埋伏营右"
+    },
+    {
+      "name": "辛甲",
+      "aliases": [],
+      "identity": "西岐将，充作左右应接之人，暗藏信香燃砲发号",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见辛甲暗将信香取出，忙将抬盒内大砲燃着"
+    },
+    {
+      "name": "辛免",
+      "aliases": [],
+      "identity": "西岐将，随应接抢亲并截杀赵升、孙焰红",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "辛甲、辛免、太颠、闳夭、四贤、八俊等充作左右应接之人"
+    },
+    {
+      "name": "太颠",
+      "aliases": [],
+      "identity": "西岐将，充左右应接之人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "辛甲、辛免、太颠、闳夭、四贤、八俊等充作左右应接之人"
+    },
+    {
+      "name": "闳夭",
+      "aliases": [],
+      "identity": "西岐将，充左右应接之人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "辛甲、辛免、太颠、闳夭、四贤、八俊等充作左右应接之人"
+    },
+    {
+      "name": "雷震子",
+      "aliases": [],
+      "identity": "奉命领一支人马抢汤营左哨，杀入中军接应",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "又命雷震子领一支人马，抢他左哨，杀入中军接应"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [],
+      "identity": "奉命领一支人马抢彼右哨",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "再命南宫适领一支人马，抢彼右哨"
+    },
+    {
+      "name": "金吒",
+      "aliases": [],
+      "identity": "与木吒、龙须虎统领大队人马救应抢亲",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金吒、木吒、龙须虎统领大队人马，救应抢亲"
+    },
+    {
+      "name": "木吒",
+      "aliases": [],
+      "identity": "统领大队人马掩杀上来",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金吒、木吒、龙须虎统领大队人马，救应抢亲"
+    },
+    {
+      "name": "龙须虎",
+      "aliases": [],
+      "identity": "随大队人马救应抢亲",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金吒、木吒、龙须虎统领大队人马，救应抢亲"
+    },
+    {
+      "name": "武王",
+      "aliases": [
+        "周王"
+      ],
+      "identity": "西岐之主，邓九公归降后次日朝贺",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "次日，见武王，朝贺毕。"
+    },
+    {
+      "name": "纣王",
+      "aliases": [],
+      "identity": "闻邓九公纳降大怒，升殿议罪，准飞廉之保而敕苏护西征",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "纣王看未完，不觉大怒曰：「邓九公受朕大恩"
+    },
+    {
+      "name": "韩荣",
+      "aliases": [],
+      "identity": "汜水关守将，听得邓九公纳降、将女私配敌国，飞报至朝歌",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "韩荣听得邓九公纳降，将女私配敌国，韩荣飞报至朝歌"
+    },
+    {
+      "name": "张谦",
+      "aliases": [
+        "上大夫张谦"
+      ],
+      "identity": "商上大夫，看本大惊，上楼启奏纣王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有上大夫张谦看本，见此报大惊"
+    },
+    {
+      "name": "飞廉",
+      "aliases": [
+        "中谏大夫飞廉"
+      ],
+      "identity": "商中谏大夫，出班奏请用至亲骨肉之臣征伐，保举冀州侯苏护",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有中谏大夫飞廉出班奏曰"
+    },
+    {
+      "name": "苏护",
+      "aliases": [
+        "苏侯"
+      ],
+      "identity": "冀州侯、纣王国戚，奉敕总督六师伐西岐，本已有意归周",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "要克西岐，非冀州侯苏护不可。一为陛下国戚"
+    },
+    {
+      "name": "全忠",
+      "aliases": [],
+      "identity": "苏护之子，奉父命治酒、夜放黄飞虎父子，并献计修书知会子牙劫营",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "忙令后厅治酒，与子全忠、夫人杨氏共饮"
+    },
+    {
+      "name": "杨氏",
+      "aliases": [
+        "夫人杨氏"
+      ],
+      "identity": "苏护之夫人，闻夫欲带满门良眷归周而大喜",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "与子全忠、夫人杨氏共饮"
+    },
+    {
+      "name": "妲己",
+      "aliases": [],
+      "identity": "苏护之女，被进上朝歌、说其迷惑纣王（本块只在苏护口中提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "我不幸生女妲己，进上朝歌"
+    },
+    {
+      "name": "赵丙",
+      "aliases": [
+        "先行官赵丙"
+      ],
+      "identity": "冀州先行官，随苏护西征，本块只在起兵点名时出现",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "同先行官赵丙、孙子羽、陈光、五军救应使郑伦，即日离了冀州"
+    },
+    {
+      "name": "孙子羽",
+      "aliases": [],
+      "identity": "冀州随征将领，本块只在起兵点名时出现",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "同先行官赵丙、孙子羽、陈光、五军救应使郑伦，即日离了冀州"
+    },
+    {
+      "name": "陈光",
+      "aliases": [],
+      "identity": "冀州随征将领，本块只在起兵点名时出现",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "同先行官赵丙、孙子羽、陈光、五军救应使郑伦，即日离了冀州"
+    },
+    {
+      "name": "郑伦",
+      "aliases": [
+        "五军救应使郑伦"
+      ],
+      "identity": "冀州五军救应使，本块只在起兵点名时出现",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "同先行官赵丙、孙子羽、陈光、五军救应使郑伦，即日离了冀州"
+    },
+    {
+      "name": "姬发",
+      "aliases": [],
+      "identity": "诏书中「肆行不道、抗拒王师」的西岐之主（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "兹西岐姬发肆行不道，抗拒王师，情殊可恨"
+    },
+    {
+      "name": "闻太师",
+      "aliases": [],
+      "identity": "土行孙与邓婵玉口中「屡欲扭转天心」而灭亡的前主帅（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "不过魔家四将、闻太师、十洲三岛仙众皆自取灭亡"
+    },
+    {
+      "name": "申公豹",
+      "aliases": [],
+      "identity": "散宜生与邓九公口中与姜子牙有隙、说土行孙下山并荐于邓营的道人（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "因申公豹与姜子牙有隙，故说土行孙下山，来助元帅征伐西岐"
+    },
+    {
+      "name": "四不相",
+      "aliases": [],
+      "identity": "子牙往汤营下聘时所乘之骑",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "邓九公远远望见子牙乘四不相，带领脚夫一行不上五六十人"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "四贤、八俊",
+      "refers_to": []
+    },
+    {
+      "name": "魔家四将",
+      "refers_to": []
+    },
+    {
+      "name": "十洲三岛仙众",
+      "refers_to": []
+    }
+  ]
+}

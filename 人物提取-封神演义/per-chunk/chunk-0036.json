@@ -1,0 +1,389 @@
+{
+  "chunk": 36,
+  "characters": [
+    {
+      "name": "苏护",
+      "aliases": [
+        "苏侯"
+      ],
+      "identity": "冀州侯、纣王国戚，奉敕西征实欲乘机归周，夜释黄飞虎父子并与郑伦论顺逆",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "苏侯开读旨意毕，心中大喜"
+    },
+    {
+      "name": "苏全忠",
+      "aliases": [
+        "全忠"
+      ],
+      "identity": "苏护之子，奉父命后帐治酒、放黄飞虎父子，献计修书请子牙劫营擒郑伦",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "命苏全忠后帐治酒。一鼓时分，命全忠往后营"
+    },
+    {
+      "name": "杨氏",
+      "aliases": [
+        "夫人杨氏"
+      ],
+      "identity": "苏护之夫人，闻归周之言喜称正合母子之心",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "与子全忠、夫人杨氏共饮"
+    },
+    {
+      "name": "妲己",
+      "aliases": [],
+      "identity": "苏护之女，被父斥为作孽迷惑纣王者（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "我不幸生女妲己，进上朝歌"
+    },
+    {
+      "name": "纣王",
+      "aliases": [],
+      "identity": "被苏护斥为昏君、被郑伦说受莫大之恩的商主（本块只被谈论）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "无端作孽，迷惑纣王，无所不为"
+    },
+    {
+      "name": "武王",
+      "aliases": [
+        "周王"
+      ],
+      "identity": "苏护口中仁德播于天下、三分有二尽归的西周之主（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "今武王仁德播于天下，三分有二尽归于西周"
+    },
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜丞相"
+      ],
+      "identity": "西岐丞相，收诸侯本请武王伐纣，调将敌苏护，又闻三十六路伐西岐之语",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且说子牙在相府，收四万诸侯本，请武王伐纣。"
+    },
+    {
+      "name": "黄飞虎",
+      "aliases": [
+        "武成王"
+      ],
+      "identity": "西岐武成王，先擒赵丙，又被郑伦乌鸦兵擒去，赖苏护夜释回城",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "飞虎领令，上了五色神牛，出得城来，一声砲响，立于辕门"
+    },
+    {
+      "name": "赵丙",
+      "aliases": [],
+      "identity": "冀州先行官，骂黄飞虎造反，二十回合被生擒解相府，立而不跪",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "赵丙领令，上马提方天戟，径出辕门；认得是武成王黄飞虎"
+    },
+    {
+      "name": "郑伦",
+      "aliases": [],
+      "identity": "冀州五军救应使，骑火眼金睛兽、鼻放白光率乌鸦兵擒黄飞虎父子与土行孙，后拜吕岳为师，坚不从苏护归周",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "郑伦上了火眼金睛兽，提了降魔杵，往城下请战"
+    },
+    {
+      "name": "黄天化",
+      "aliases": [
+        "天化"
+      ],
+      "identity": "为探父消息出阵，被郑伦白光落骑绑缚，与父同监后营",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天化领令，上了玉麒麟，出城请战"
+    },
+    {
+      "name": "土行孙",
+      "aliases": [],
+      "identity": "自请出阵探虚实，被郑伦鼻光擒去，绑至辕门将斩时遁土而走",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "土行孙大呼曰：「那匹夫！你看那里？」"
+    },
+    {
+      "name": "邓婵玉",
+      "aliases": [
+        "邓蝉玉",
+        "蝉玉"
+      ],
+      "identity": "掠阵出马的女将，回手五光石打伤郑伦面目（本块两写作邓蝉玉、邓婵玉）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有邓蝉玉上前告曰：「末将父子蒙恩，当得掠阵。」"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "代女将出阵，郑伦三哼不应，以乾坤圈打伤其肩背败回",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "哪吒上了风火轮，出城大呼曰：「来者可是郑伦？」"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "在相府与子牙计议吕岳连日换人之事",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙正在府中，谓杨戬曰：「吾师言三十六路伐西岐，算将来有三十路矣。"
+    },
+    {
+      "name": "金吒",
+      "aliases": [],
+      "identity": "周信下战时欠身愿往，被头疼磬敲得面如金纸、昼夜叫苦",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有金吒欠身而言曰：「弟子愿往。」"
+    },
+    {
+      "name": "木吒",
+      "aliases": [],
+      "identity": "出阵赶李奇，被发躁旛摇得面如白纸、口喷白沫",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有木吒曰：「弟子愿往。」"
+    },
+    {
+      "name": "雷震子",
+      "aliases": [],
+      "identity": "鼓风雷翅战朱天麟，被昏迷剑指落、跌进相府跌倒",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有雷震子曰：「弟子愿往。」"
+    },
+    {
+      "name": "龙须虎",
+      "aliases": [
+        "龙鬃虎"
+      ],
+      "identity": "出城战杨文辉，被散㾮鞭打得失智，发石一路跳打进相府银安殿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "龙鬃虎曰：「吾乃姜子牙门人龙须虎是也。」"
+    },
+    {
+      "name": "吕岳",
+      "aliases": [
+        "吕道人",
+        "吕祖"
+      ],
+      "identity": "九龙岛声名山炼气士，三只眼穿大红袍骑金眼驼，申公豹请来助苏护，带四门人行瘟困西岐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "衲子乃九龙岛声名山炼气士是也，姓吕，名岳；乃申公豹请我来助老将军"
+    },
+    {
+      "name": "周信",
+      "aliases": [],
+      "identity": "吕岳门人，东方行瘟使者，用头疼磬困金吒",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "此位姓周，名信；此位姓李，名奇"
+    },
+    {
+      "name": "李奇",
+      "aliases": [],
+      "identity": "吕岳门人，西方行瘟使者，用法旛（发躁旛）困木吒",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "此位姓李，名奇；此位姓朱，名天麟"
+    },
+    {
+      "name": "朱天麟",
+      "aliases": [],
+      "identity": "吕岳门人，南方行瘟使者，用昏迷剑指落雷震子",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "此位姓朱，名天麟；此位姓杨，名文辉"
+    },
+    {
+      "name": "杨文辉",
+      "aliases": [],
+      "identity": "吕岳门人，北方行瘟使者，用散㾮鞭打倒龙须虎",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "此位姓杨，名文辉。」郑伦也通了名姓"
+    },
+    {
+      "name": "申公豹",
+      "aliases": [],
+      "identity": "请吕岳下山助苏护伐西岐的道人（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "欲待不进营去，恐辜负了申公豹之命"
+    },
+    {
+      "name": "闻太师",
+      "aliases": [],
+      "identity": "苏护口中屡欲扭转天心而遭屠戮的故人（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "只闻太师屡欲扭转天心，故此俱遭屠戮，实生民之难"
+    },
+    {
+      "name": "邓九公",
+      "aliases": [],
+      "identity": "苏护口中舍纣从周的先例（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "邓九公见武王、子牙以德行仁，知其必昌"
+    },
+    {
+      "name": "尧帝",
+      "aliases": [
+        "尧"
+      ],
+      "identity": "苏护说上古顺逆时提到其子不肖、天下归于舜",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔尧帝之子丹朱不肖，尧崩，天下不归朱而归于舜"
+    },
+    {
+      "name": "丹朱",
+      "aliases": [
+        "朱"
+      ],
+      "identity": "尧之子，苏护引为不肖不得天下的例（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔尧帝之子丹朱不肖，尧崩，天下不归朱而归于舜",
+      "note": "存疑"
+    },
+    {
+      "name": "舜",
+      "aliases": [],
+      "identity": "受天下、其子商均不肖的上古之君（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "舜之子商均亦不肖，舜崩，天下不归商均而归于禹",
+      "note": "存疑"
+    },
+    {
+      "name": "商均",
+      "aliases": [],
+      "identity": "舜之子，苏护引为不肖不得天下的例（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "舜之子商均亦不肖，舜崩，天下不归商均而归于禹",
+      "note": "存疑"
+    },
+    {
+      "name": "禹",
+      "aliases": [],
+      "identity": "舜崩后受天下者（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "舜崩，天下不归商均而归于禹",
+      "note": "存疑"
+    },
+    {
+      "name": "伊尹",
+      "aliases": [],
+      "identity": "苏护举为「行之不损令名」的古臣（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "古人有行之不损令名者，伊尹是也",
+      "note": "存疑"
+    },
+    {
+      "name": "火眼金睛兽",
+      "aliases": [
+        "金睛兽"
+      ],
+      "identity": "郑伦坐下之兽，与西岐马骑相交",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "郑伦上了火眼金睛兽，提了降魔杵，往城下请战"
+    },
+    {
+      "name": "金眼驼",
+      "aliases": [],
+      "identity": "吕岳所骑之驼",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "三目圆睁，骑金眼驼，手提宝剑",
+      "note": "存疑"
+    },
+    {
+      "name": "玉麒麟",
+      "aliases": [],
+      "identity": "黄天化出城所骑，被白光震得翻身落骑",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "天化领令，上了玉麒麟，出城请战"
+    },
+    {
+      "name": "五色神牛",
+      "aliases": [
+        "神牛"
+      ],
+      "identity": "黄飞虎出阵所骑之牛",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "飞虎领令，上了五色神牛，出得城来"
+    },
+    {
+      "name": "孙子羽",
+      "aliases": [],
+      "identity": "冀州随征将，起兵时与赵丙、陈光、郑伦同点名",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "同先行官赵丙、孙子羽、陈光、五军救应使郑伦，即日离了冀州"
+    },
+    {
+      "name": "陈光",
+      "aliases": [],
+      "identity": "冀州随征将，起兵时与赵丙、孙子羽、郑伦同点名",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "同先行官赵丙、孙子羽、陈光、五军救应使郑伦，即日离了冀州"
+    },
+    {
+      "name": "尧",
+      "aliases": [],
+      "identity": "上古帝王（苏护引古喻今）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔尧帝之子丹朱不肖，尧崩，天下不归朱而归于舜。",
+      "note": "存疑"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "四个行瘟使者",
+      "refers_to": [
+        "周信",
+        "李奇",
+        "朱天麟",
+        "杨文辉"
+      ]
+    },
+    {
+      "name": "三千乌鸦兵",
+      "refers_to": []
+    },
+    {
+      "name": "黄家父子",
+      "refers_to": [
+        "黄飞虎",
+        "黄天化"
+      ]
+    },
+    {
+      "name": "三教圣人",
+      "refers_to": []
+    }
+  ]
+}

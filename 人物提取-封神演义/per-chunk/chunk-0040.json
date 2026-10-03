@@ -1,0 +1,234 @@
+{
+  "chunk": 40,
+  "characters": [
+    {
+      "name": "姜子牙",
+      "aliases": ["子牙", "姜尚", "姜师叔"],
+      "identity": "西岐丞相，卜卦知难，披发仗剑移北海之水罩住西岐城，被羽翼仙指名辱骂",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "却说子牙得胜进府，与诸门人将佐商议，忽一阵风把簷瓦刮下数片来。"
+    },
+    {
+      "name": "元始天尊",
+      "aliases": ["元始"],
+      "identity": "居昆仑山玉虚宫，洒三光神水于北海水面，命偈谛神护定西岐城",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见昆仑山玉虚宫元始天尊早知详细，用琉璃瓶中，三光神水，洒向北海水面之上"
+    },
+    {
+      "name": "羽翼仙",
+      "aliases": ["大鹏雕", "大鹏"],
+      "identity": "本像乃大鹏金翅雕，替张山扇北海水欲淹西岐，扇干不成，被燃灯收服拜师",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "话说羽翼仙饮至一更时分，命张山收去了酒，出了辕门，现了本像，乃大鹏金翅雕。"
+    },
+    {
+      "name": "燃灯道人",
+      "aliases": ["燃灯"],
+      "identity": "住灵鹫山元觉洞，化作穿黄道人以点心锁住大鹏心肝，命黄巾力士将其吊上松树并收为弟子",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "这道人乃是灵鹫山元觉洞燃灯道人。"
+    },
+    {
+      "name": "黄巾力士",
+      "aliases": [],
+      "identity": "燃灯驱使的力士，奉命把大鹏雕吊在大松树上",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "命黄巾力士：「把这孽障吊在大松树上，只等姜子牙伐了纣，那时再放你不迟！」"
+    },
+    {
+      "name": "张山",
+      "aliases": [],
+      "identity": "商营主将，领兵在西岐住札，为殷郊认明身份并生擒黄天化",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "张山问曰：「启殿下！是成汤那枝宗派？」"
+    },
+    {
+      "name": "李锦",
+      "aliases": [],
+      "identity": "商营将官，劝张山出营去看殷郊真伪",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李锦在傍曰：「只恐是真。"
+    },
+    {
+      "name": "广成子",
+      "aliases": [],
+      "identity": "住九仙山桃源洞，因犯了杀戒在洞静坐；遣殷郊下山并传方天画戟、番天印等宝",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "广成子拍掌笑曰：「奇哉！奇哉！仁君有德，天生异人。」"
+    },
+    {
+      "name": "白鹤童子",
+      "aliases": ["白鹤童儿"],
+      "identity": "玉虚宫童子，奉玉虚符命传谕众门人至西岐山饯别东征",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "忽有白鹤童子奉玉虚符命，言子牙不日金台拜将，命众门人须至西岐山饯别东征。"
+    },
+    {
+      "name": "殷郊",
+      "aliases": ["殿下", "千岁", "殷千岁", "殷殿下", "长殿下"],
+      "identity": "纣王长太子、广成子门人，吃豆后变三头六臂，被申公豹说反后伐西岐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "殷郊在殿后听师父呼唤，忙至前殿，见师父行礼。"
+    },
+    {
+      "name": "白云童儿",
+      "aliases": [],
+      "identity": "广成子洞中童儿，来请变化后的殷郊去见师父",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见白云童儿来前叫曰：「师兄，师父有请。」"
+    },
+    {
+      "name": "温良",
+      "aliases": [],
+      "identity": "白龙山蓝脸大将，面如蓝靛、三只眼、使狼牙棒，与马善同归殷郊",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "那蓝脸的应曰：「末将姓温，名良；那白脸的姓马，名善。」"
+    },
+    {
+      "name": "马善",
+      "aliases": [],
+      "identity": "白脸三只眼之将，白龙山归殷郊；被擒三刀斩不断，照妖鉴照出只是一点灯头儿",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "马善曰：「吾乃大将马善是也。」"
+    },
+    {
+      "name": "申公豹",
+      "aliases": [],
+      "identity": "昆仑门下道人，骑虎而来，以殷洪之死说反殷郊，并再请高人相助",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "道人曰：「吾乃昆仑门下申公豹是也。殿下往那里去？」"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "登风火轮使火尖鎗战殷郊，被番天印打下轮来，又运动三昧真火烧马善",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有哪吒登开风火轮，将火尖鎗直取殷郊。"
+    },
+    {
+      "name": "黄天化",
+      "aliases": [],
+      "identity": "黄飞虎长子，催玉麒麟使银锤战殷郊，被落魂钟摇下鞍鞒遭擒",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄天化见哪吒失机，催开了玉麒麟，使两柄银锤，敌住了殷郊。"
+    },
+    {
+      "name": "黄飞虎",
+      "aliases": ["武成王"],
+      "identity": "西岐武成王、黄天化之父，昔曾救殷郊兄弟，乘五色神牛出战被擒而获释",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄飞虎曰：「吾乃武成王黄飞虎是也。」"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "玉虚门下，鸣金收队、往九仙山探虚实并向云中子借照妖鉴照出马善原形",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨戬在傍见殷郊祭番天印、摇落魂钟，恐伤了子牙，不当稳便，忙鸣金收回队伍。"
+    },
+    {
+      "name": "云中子",
+      "aliases": [],
+      "identity": "住终南山，把照妖鉴借与杨戬以照马善",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "云中子听说，即将宝鉴付与杨戬。"
+    },
+    {
+      "name": "邓九公",
+      "aliases": ["九公"],
+      "identity": "西岐上将，出战生擒马善解入相府",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有邓九公愿往。"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [],
+      "identity": "西岐将官，充监斩官连斩马善三刀不见效",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南宫适为监斩官，推至府前，只见行刑箭出，南宫适手起一刀，犹如削菜一般。"
+    },
+    {
+      "name": "韦护",
+      "aliases": [],
+      "identity": "玉虚门下，祭降魔杵打马善只打得一派金光，并言三处灯火之事",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有韦护祭起降魔杵打将下来，正中马善顶门，只打的一派金光，就地散开。"
+    },
+    {
+      "name": "雷震子",
+      "aliases": [],
+      "identity": "与哪吒、金木二咤、黄天化、韦护同运动三昧真火烧马善",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有哪吒、金、木二咤、雷震子、黄天化、韦护，运动三昧真火焚之。"
+    },
+    {
+      "name": "纣王",
+      "aliases": [],
+      "identity": "殷郊之父，此块只被谈及：荒淫昏虐、诛妻杀子",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "弟子虽是纣王之子，实与妲己为仇。"
+    },
+    {
+      "name": "妲己",
+      "aliases": [],
+      "identity": "殷郊欲擒之以报杀母之仇，此块仅被谈及",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "一则可以捉妲己报杀母之深仇。"
+    },
+    {
+      "name": "殷洪",
+      "aliases": [],
+      "identity": "殷郊之胞弟、二殿下，被说曾用太极图化作飞灰",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "殿下之胞弟殷洪，闻说他也下山助周"
+    },
+    {
+      "name": "武王",
+      "aliases": ["周武"],
+      "identity": "西岐之主，此块仅被谈及：东征、天下诸侯相会孟津共伐无道",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "方今武王东征，天下诸侯相会孟津，共伐无道，正你报仇泄恨之日。"
+    },
+    {
+      "name": "罗宣",
+      "aliases": [],
+      "identity": "此块仅见于第六十四回回目与诗曰：火之精，将焚西岐城",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "不是罗宣能作难，只因西土降仙卿。"
+    }
+  ],
+  "collectives": [
+    {"name": "四偈谛神", "refers_to": []},
+    {"name": "金、木二咤", "refers_to": []},
+    {"name": "黄家父子", "refers_to": ["黄飞虎", "黄天化"]}
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "chunk": 38,
+  "characters": [
+    {"name": "殷洪", "aliases": ["殷殿下", "二殿下", "殷千岁"], "identity": "纣王嫡子、赤精子门人，被申公豹说反后助商伐周，仗阴阳镜擒将", "nonhuman": false, "mentioned_only": false, "evidence": "且说殷洪改了西周号色，打着成汤字号，一日到了西岐，果见苏侯大营扎在城下。"},
+    {"name": "庞弘", "aliases": [], "identity": "二龙山绿林好汉归殷洪麾下，被哪吒乾坤圈打死", "nonhuman": false, "mentioned_only": false, "evidence": "殷洪命庞弘去令苏侯来见。"},
+    {"name": "苏护", "aliases": ["苏侯"], "identity": "冀州侯，与殷洪合兵征伐西岐", "nonhuman": false, "mentioned_only": false, "evidence": "殷洪令苏护合兵一处。"},
+    {"name": "苏全忠", "aliases": [], "identity": "苏护之子，随父在辕门观战", "nonhuman": false, "mentioned_only": false, "evidence": "且说苏侯同子苏全忠在辕门，看殷洪走马来战姜子牙，子牙仗剑来迎。"},
+    {"name": "郑伦", "aliases": [], "identity": "苏护麾下大将，为殷洪左右护卫使", "nonhuman": false, "mentioned_only": false, "evidence": "傍有郑伦启曰：「君侯听禀：当时既有被风刮去之异，此时就有一个不可解之理。"},
+    {"name": "殷郊", "aliases": [], "identity": "殷洪之兄，当年与殷洪同绑绞头桩被风刮去（众人追述）", "nonhuman": false, "mentioned_only": true, "evidence": "当时有殷郊、殷洪绑在绞头桩上，被风刮不见了，那里又有一个二殿下殷洪也？"},
+    {"name": "武王", "aliases": [], "identity": "周国之王，山上与子牙传杯诱马元", "nonhuman": false, "mentioned_only": false, "evidence": "马元抬头观看，见山顶上姜子牙同着武王在马上传杯，两边将校一片大叫：「今夜马元已落圈套，死无葬身之地！」"},
+    {"name": "黄飞虎", "aliases": ["武成王", "飞虎", "黄将军"], "identity": "西岐武成王，殷洪昔日恩人，大战殷洪被阴阳镜所擒后获释", "nonhuman": false, "mentioned_only": false, "evidence": "傍有黄飞虎曰：「当时殷郊、殷洪绑在绞头桩上，被风刮去，想必今日回来。末将认的他，待吾出去，便知真假。」"},
+    {"name": "黄天化", "aliases": ["天化"], "identity": "黄飞虎之子，出战殷洪被阴阳镜所擒后获释", "nonhuman": false, "mentioned_only": false, "evidence": "黄飞虎领令出城，有子黄天化压阵。"},
+    {"name": "黄天禄", "aliases": ["天禄"], "identity": "黄飞虎之子，出城敌住庞弘", "nonhuman": false, "mentioned_only": false, "evidence": "黄天禄、天爵、天祥父子五人齐出城。"},
+    {"name": "黄天爵", "aliases": ["天爵"], "identity": "黄飞虎之子，出城接住刘甫厮杀", "nonhuman": false, "mentioned_only": false, "evidence": "黄天禄、天爵、天祥父子五人齐出城。"},
+    {"name": "黄天祥", "aliases": ["天祥"], "identity": "黄飞虎幼子，年方十四，一鎗伤苟章左腿", "nonhuman": false, "mentioned_only": false, "evidence": "黄天祥年方十四岁，大呼曰：「少待！吾来！」鎗马抢出，大战苟章。"},
+    {"name": "刘甫", "aliases": [], "identity": "二龙山绿林好汉归殷洪麾下，出战黄天爵", "nonhuman": false, "mentioned_only": false, "evidence": "刘甫舞刀飞来；黄天爵也来接住厮杀。"},
+    {"name": "苟章", "aliases": [], "identity": "二龙山绿林好汉归殷洪麾下，被黄天祥鎗伤左腿", "nonhuman": false, "mentioned_only": false, "evidence": "苟章见众将助战，也冲杀过来；"},
+    {"name": "毕环", "aliases": [], "identity": "二龙山绿林好汉归殷洪麾下，被杨戬哮天犬咬伤后杀死", "nonhuman": false, "mentioned_only": false, "evidence": "却说杨戬战毕环，未及数合，杨戬放出哮天犬，将毕环咬了一口，毕环负疼，把头一缩，凑手不及，被杨戬复上一刀，可怜死于非命。"},
+    {"name": "姜子牙", "aliases": ["子牙", "姜尚"], "identity": "西岐丞相，设计诱马元落圈套", "nonhuman": false, "mentioned_only": false, "evidence": "子牙曰：「成汤少嗣，焉能又有殿下提兵？」"},
+    {"name": "杨戬", "aliases": [], "identity": "西岐将领，杀毕环，用奇丹泻马元，识破阴阳镜", "nonhuman": false, "mentioned_only": false, "evidence": "彼时杨戬看见殷洪拿着阴阳镜，慌忙对子牙曰：「师叔快退后！殷洪拿的是阴阳镜。"},
+    {"name": "哪吒", "aliases": [], "identity": "西岐莲花化身大将，打死庞弘", "nonhuman": false, "mentioned_only": false, "evidence": "哪吒登风火轮，摇鎗战住。"},
+    {"name": "邓婵玉", "aliases": ["婵玉"], "identity": "土行孙之妻，用五光石打伤殷洪、马元", "nonhuman": false, "mentioned_only": false, "evidence": "子牙听说，忙命邓婵玉暗助哪吒一石，以襄成功。"},
+    {"name": "土行孙", "aliases": [], "identity": "西岐将领，棍打马元后用地行术遁走", "nonhuman": false, "mentioned_only": false, "evidence": "土行孙大呼曰：「马元少待行恶，吾来也！」"},
+    {"name": "赤精子", "aliases": [], "identity": "太华山云霄洞仙人，殷洪之师，下山责徒不敌而回", "nonhuman": false, "mentioned_only": false, "evidence": "来到高山，收了遁术，径进云霄洞来。赤精子见杨戬进洞，问曰：「杨戬，你到此有何说话？」"},
+    {"name": "马元", "aliases": ["马原", "一气仙"], "identity": "骷髅山白骨洞一气仙，食人心肺，受申公豹之请助殷洪，后被准提道人带往西方", "nonhuman": false, "mentioned_only": false, "evidence": "吾乃骷髅山白骨洞一气仙马原是也；遇申公豹请吾下山助你一臂之力。"},
+    {"name": "申公豹", "aliases": [], "identity": "阐教门人，请马元下山助殷洪", "nonhuman": false, "mentioned_only": true, "evidence": "吾乃骷髅山白骨洞一气仙马原是也；遇申公豹请吾下山助你一臂之力。"},
+    {"name": "武荣", "aliases": [], "identity": "秦州运粮官、猛虎大将军，催粮路过助战，被马元撕开心肺吃掉", "nonhuman": false, "mentioned_only": false, "evidence": "子牙看时，乃秦州运粮官、猛虎大将军武荣。"},
+    {"name": "文殊广法天尊", "aliases": ["广法天尊"], "identity": "玉虚宫门下仙人，奉命来收马元", "nonhuman": false, "mentioned_only": false, "evidence": "忽哪吒来报：「文殊广法天尊驾至。」"},
+    {"name": "准提道人", "aliases": [], "identity": "西方教下圣人，收马元带回西方成正果", "nonhuman": false, "mentioned_only": false, "evidence": "贫道乃西方教下准提道人是也。『封神榜』上无马元名讳；此人根行且重，与吾西方有缘，待贫道把他带上西方，成为正果，亦是道兄慈悲，贫道不二门中之幸也。」"},
+    {"name": "纣王", "aliases": [], "identity": "商朝天子，殷洪之父", "nonhuman": false, "mentioned_only": true, "evidence": "马元笑曰：「殷洪乃纣王亲子，反说他逆天行事。"},
+    {"name": "元始", "aliases": [], "identity": "玉虚宫教主（文殊广法天尊赞中「玉虚宫元始门下」）", "nonhuman": false, "mentioned_only": true, "evidence": "玉虚宫元始门下，十仙首会赴蟠桃。", "note": "存疑"},
+    {"name": "四不相", "aliases": [], "identity": "姜子牙的坐骑", "nonhuman": true, "mentioned_only": false, "evidence": "话说子牙当日申牌时分，骑四不相，单人独骑，在成汤辕门外若探望样子，用剑指东画西。"},
+    {"name": "哮天犬", "aliases": [], "identity": "杨戬的神犬，咬毕环助杨戬杀将", "nonhuman": true, "mentioned_only": false, "evidence": "却说杨戬战毕环，未及数合，杨戬放出哮天犬，将毕环咬了一口，毕环负疼，把头一缩，凑手不及，被杨戬复上一刀，可怜死于非命。"},
+    {"name": "玉麒麟", "aliases": [], "identity": "黄天化的坐骑", "nonhuman": true, "mentioned_only": false, "evidence": "殷洪见黄天化坐的是玉麒麟，知是道德之士，恐被他所算，忙取出镜子，如前一愰。"}
+  ],
+  "collectives": [
+    {"name": "黄家父子", "refers_to": ["黄飞虎", "黄天化", "黄天禄", "黄天爵", "黄天祥"]},
+    {"name": "四将", "refers_to": ["庞弘", "刘甫", "苟章", "毕环"]},
+    {"name": "十仙首", "refers_to": []}
+  ]
+}

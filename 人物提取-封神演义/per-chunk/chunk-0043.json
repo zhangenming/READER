@@ -1,0 +1,977 @@
+{
+  "chunk": 43,
+  "characters": [
+    {
+      "name": "子牙",
+      "aliases": [
+        "姜尚",
+        "姜子牙",
+        "吕望",
+        "姜元帅",
+        "姜丞相",
+        "子牙公",
+        "姜师叔"
+      ],
+      "identity": "拜上大将军、掌帅印剑，率六十万兵东征伐纣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙至岐山，将近将台边"
+    },
+    {
+      "name": "散宜生",
+      "aliases": [
+        "宜生",
+        "上大夫散宜生"
+      ],
+      "identity": "上大夫，引导武王拜将、读祝赞礼，受托任国事",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "且说宜生至十四日，入内庭见武王"
+    },
+    {
+      "name": "武王",
+      "aliases": [
+        "姬发",
+        "发"
+      ],
+      "identity": "西周之主，亲至将台拜姜尚为大将军并随军东征",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "武王曰：「拜将之道，如何行礼？」"
+    },
+    {
+      "name": "辛甲",
+      "aliases": [
+        "军政司辛甲"
+      ],
+      "identity": "军政官，传令点将、执令天子旗请武王上台",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "军政司辛甲启元帅：「放炮竖旗，擂鼓点将。」"
+    },
+    {
+      "name": "周公旦",
+      "aliases": [],
+      "identity": "引子牙上第二层台、读祝文的周室大臣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有周公旦引子牙上第二层台"
+    },
+    {
+      "name": "召公奭",
+      "aliases": [],
+      "identity": "引子牙上第三层台并读祝文的周室大臣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有召公奭引子牙上第三层台"
+    },
+    {
+      "name": "毛公遂",
+      "aliases": [],
+      "identity": "捧武王所赐黄钺白旄为子牙祝赞的周室大臣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "毛公遂捧武王所赐黄钺、白旄，祝曰"
+    },
+    {
+      "name": "纣王",
+      "aliases": [
+        "商王受"
+      ],
+      "identity": "商主，被周讨伐；三十年三月起兵之君，用飞廉奏准调孔宣为将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "纣王大骇：「不意姬发猖獗至此！」"
+    },
+    {
+      "name": "元始天尊",
+      "aliases": [
+        "元始"
+      ],
+      "identity": "子牙之师尊，驾临芦篷饮酒饯别，授子牙四句偈",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说元始天尊驾临，诸弟子伏道迎接"
+    },
+    {
+      "name": "白鹤童子",
+      "aliases": [],
+      "identity": "元始天尊身边取酒的童子",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "命白鹤童子：「取酒来。」"
+    },
+    {
+      "name": "南极仙翁",
+      "aliases": [],
+      "identity": "众仙之一，向子牙奉饯别酒三杯",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南极仙翁也奉子牙饯别酒三杯"
+    },
+    {
+      "name": "金吒",
+      "aliases": [],
+      "identity": "代周出征的玉虚三代弟子，向师文殊广法天尊问前程",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金吒忙向文殊广法天尊问曰"
+    },
+    {
+      "name": "文殊广法天尊",
+      "aliases": [],
+      "identity": "金吒之师，玉虚门下降偈与弟子",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金吒忙向文殊广法天尊问曰：「弟子前去，吉凶如何？」"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "领诸门人迎子牙、任后哨先行，问前程于太乙真人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有哪吒领诸门人来迎接子牙"
+    },
+    {
+      "name": "太乙真人",
+      "aliases": [],
+      "identity": "哪吒之师，以偈答哪吒汜水关之凶吉",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "哪吒也来问太乙真人曰"
+    },
+    {
+      "name": "木吒",
+      "aliases": [],
+      "identity": "下山佐周的玉虚弟子，问归着于普贤真人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "木吒来问普贤真人曰"
+    },
+    {
+      "name": "普贤真人",
+      "aliases": [],
+      "identity": "木吒之师，授偈言进关全仗吴钩剑",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "木吒来问普贤真人曰：「弟子领法旨下山，不知归着如何？」"
+    },
+    {
+      "name": "韦护",
+      "aliases": [],
+      "identity": "捧降魔杵随征，问道行天尊佐姜师叔至孟津有无妨碍",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "韦护也问道行天尊曰"
+    },
+    {
+      "name": "道行天尊",
+      "aliases": [],
+      "identity": "韦护之师，称韦护为全真第一人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "韦护也问道行天尊曰：「弟子佐姜师叔至孟津，可有妨碍？」"
+    },
+    {
+      "name": "雷震子",
+      "aliases": [],
+      "identity": "文王于燕山所得之子，执黄金棍随征，问云中子吉凶",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "雷震子来问云中子曰"
+    },
+    {
+      "name": "云中子",
+      "aliases": [],
+      "identity": "雷震子之师，偈言其可保周家八百年",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "雷震子来问云中子曰：「弟子此去，吉凶如何？」"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "任头运督粮官，问玉鼎真人此行吉凶",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨戬也问玉鼎真人曰"
+    },
+    {
+      "name": "玉鼎真人",
+      "aliases": [],
+      "identity": "杨戬之师，称其修成八九玄中妙",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨戬也问玉鼎真人曰：「弟子此去如何？」"
+    },
+    {
+      "name": "李靖",
+      "aliases": [],
+      "identity": "随征将领，问燃灯道人行程，受言肉身成圣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李靖来问燃灯道人曰"
+    },
+    {
+      "name": "燃灯道人",
+      "aliases": [],
+      "identity": "李靖之师，为其授记久后灵山护法",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "李靖来问燃灯道人曰：「弟子此行，凶吉如何？」"
+    },
+    {
+      "name": "黄天化",
+      "aliases": [],
+      "identity": "头队先行，问前程于清虚道德真君，师言其命运不长",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄天化问清虚道德真君曰：「弟子此行，吉凶何如？」"
+    },
+    {
+      "name": "清虚道德真君",
+      "aliases": [
+        "道德真君"
+      ],
+      "identity": "黄天化之师，知徒弟命短而作偈相诫",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "道德真君一见黄天化命运不长，面带绝气，低首不语"
+    },
+    {
+      "name": "土行孙",
+      "aliases": [],
+      "identity": "任二运督粮官，问惧留孙吉凶，师知其死于张奎之手",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见土行孙也来问惧留孙"
+    },
+    {
+      "name": "惧留孙",
+      "aliases": [],
+      "identity": "土行孙之师，知徒弟凶多吉少而作偈存验",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "惧留孙作罢偈，土行孙谢过师尊"
+    },
+    {
+      "name": "张奎",
+      "aliases": [],
+      "identity": "惧留孙预知土行孙将死于其手之将",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "他还进得关，死于张奎之手"
+    },
+    {
+      "name": "黄帝",
+      "aliases": [],
+      "identity": "宜生举以比况武王拜将之礼的上古帝王（仅喻指）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "大王如黄帝拜风后，方成拜将之礼"
+    },
+    {
+      "name": "风后",
+      "aliases": [],
+      "identity": "与黄帝拜将之典并提的古臣（仅喻指）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "大王如黄帝拜风后，方成拜将之礼"
+    },
+    {
+      "name": "老君",
+      "aliases": [],
+      "identity": "形容元帅袍甲乃其炉中所炼（仅见于甲胄赞语）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "老君炉，曾烧炼，千锤打，万锤颠"
+    },
+    {
+      "name": "昊天上帝",
+      "aliases": [],
+      "identity": "召公奭祝文所告祭之神",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "西岐武王姬发敢昭告昊天上帝，后土神祇曰"
+    },
+    {
+      "name": "后土",
+      "aliases": [],
+      "identity": "祝文与昊天上帝同告祭之神祇",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "敢昭告昊天上帝，后土神祇曰"
+    },
+    {
+      "name": "皇天",
+      "aliases": [],
+      "identity": "周公旦祝文中「皇天震怒，命发诛之」的上天",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "皇天震怒，命发诛之。",
+      "note": "存疑"
+    },
+    {
+      "name": "风伯",
+      "aliases": [],
+      "identity": "周公旦祝文所告祭之神",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "敢昭告日，月，星辰，风伯，雨师，历代圣帝明王之神曰"
+    },
+    {
+      "name": "雨师",
+      "aliases": [],
+      "identity": "周公旦祝文所告祭之神",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "敢昭告日，月，星辰，风伯，雨师，历代圣帝明王之神曰"
+    },
+    {
+      "name": "文王",
+      "aliases": [],
+      "identity": "有九十九子、三十六殿下习武的先王，子牙受其顾聘",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "文王有四乳，二十四妃，生九十九子"
+    },
+    {
+      "name": "黄飞虎",
+      "aliases": [
+        "黄将军"
+      ],
+      "identity": "点将首列之周将，与邓、洪三将操演阵图",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "传令：「令黄飞虎上台。」"
+    },
+    {
+      "name": "黄飞彪",
+      "aliases": [],
+      "identity": "黄家点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄飞虎、黄飞彪、黄飞豹、黄明、周纪"
+    },
+    {
+      "name": "黄飞豹",
+      "aliases": [],
+      "identity": "黄家点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄飞彪、黄飞豹、黄明、周纪、龙环"
+    },
+    {
+      "name": "黄明",
+      "aliases": [],
+      "identity": "黄府点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄飞豹、黄明、周纪、龙环、吴谦"
+    },
+    {
+      "name": "周纪",
+      "aliases": [],
+      "identity": "黄府点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄明、周纪、龙环、吴谦、黄天禄"
+    },
+    {
+      "name": "龙环",
+      "aliases": [],
+      "identity": "黄府点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "周纪、龙环、吴谦、黄天禄、黄天爵"
+    },
+    {
+      "name": "吴谦",
+      "aliases": [],
+      "identity": "黄府点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "龙环、吴谦、黄天禄、黄天爵、黄天祥"
+    },
+    {
+      "name": "黄天禄",
+      "aliases": [],
+      "identity": "黄家诸子点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吴谦、黄天禄、黄天爵、黄天祥、辛免"
+    },
+    {
+      "name": "黄天爵",
+      "aliases": [],
+      "identity": "黄家诸子点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄天禄、黄天爵、黄天祥、辛免、太颠"
+    },
+    {
+      "name": "黄天祥",
+      "aliases": [],
+      "identity": "黄家诸子点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄天爵、黄天祥、辛免、太颠、闳夭"
+    },
+    {
+      "name": "辛免",
+      "aliases": [],
+      "identity": "点将簿所列黄府旧部将官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄天祥、辛免、太颠、闳夭、祁恭"
+    },
+    {
+      "name": "太颠",
+      "aliases": [],
+      "identity": "点将簿所列周臣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "辛免、太颠、闳夭、祁恭、尹勋"
+    },
+    {
+      "name": "闳夭",
+      "aliases": [],
+      "identity": "点将簿所列周臣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "太颠、闳夭、祁恭、尹勋周之四贤、八俊"
+    },
+    {
+      "name": "祁恭",
+      "aliases": [],
+      "identity": "点将簿所列周之贤俊",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "辛免、太颠、闳夭、祁恭、尹勋"
+    },
+    {
+      "name": "尹勋",
+      "aliases": [],
+      "identity": "点将簿所列周之贤俊",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "闳夭、祁恭、尹勋周之四贤、八俊"
+    },
+    {
+      "name": "毕公高",
+      "aliases": [],
+      "identity": "点将所列周室三公之列贤臣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "毛公遂、周公旦、召公奭、毕公高、伯达"
+    },
+    {
+      "name": "伯达",
+      "aliases": [],
+      "identity": "文王诸子点将名单之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "毕公高、伯达、伯适、仲突、仲忽"
+    },
+    {
+      "name": "伯适",
+      "aliases": [],
+      "identity": "文王诸子点将名单之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "伯达、伯适、仲突、仲忽、叔夜"
+    },
+    {
+      "name": "仲突",
+      "aliases": [],
+      "identity": "文王诸子点将名单之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "伯适、仲突、仲忽、叔夜、叔夏"
+    },
+    {
+      "name": "仲忽",
+      "aliases": [],
+      "identity": "文王诸子点将名单之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "仲突、仲忽、叔夜、叔夏、季随"
+    },
+    {
+      "name": "叔夜",
+      "aliases": [],
+      "identity": "文王诸子点将名单之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "仲忽、叔夜、叔夏、季随、季䯄"
+    },
+    {
+      "name": "叔夏",
+      "aliases": [],
+      "identity": "文王诸子点将名单之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "叔夜、叔夏、季随、季䯄、姬叔乾"
+    },
+    {
+      "name": "季随",
+      "aliases": [],
+      "identity": "文王诸子点将名单之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "叔夏、季随、季䯄、姬叔乾"
+    },
+    {
+      "name": "季䯄",
+      "aliases": [],
+      "identity": "文王诸子点将名单之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "季随、季䯄、姬叔乾、姬叔坤"
+    },
+    {
+      "name": "姬叔乾",
+      "aliases": [],
+      "identity": "习武之文王诸子（殿下）之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "季䯄、姬叔乾、姬叔坤、姬叔康"
+    },
+    {
+      "name": "姬叔坤",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔乾、姬叔坤、姬叔康、姬叔正"
+    },
+    {
+      "name": "姬叔康",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔坤、姬叔康、姬叔正、姬叔启"
+    },
+    {
+      "name": "姬叔正",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔康、姬叔正、姬叔启、姬叔伯"
+    },
+    {
+      "name": "姬叔启",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔正、姬叔启、姬叔伯、姬叔元"
+    },
+    {
+      "name": "姬叔伯",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔启、姬叔伯、姬叔元、姬叔忠"
+    },
+    {
+      "name": "姬叔元",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔伯、姬叔元、姬叔忠、姬叔廉"
+    },
+    {
+      "name": "姬叔忠",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔元、姬叔忠、姬叔廉、姬叔德"
+    },
+    {
+      "name": "姬叔廉",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔忠、姬叔廉、姬叔德、姬叔美"
+    },
+    {
+      "name": "姬叔德",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔廉、姬叔德、姬叔美、姬叔奇"
+    },
+    {
+      "name": "姬叔美",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔德、姬叔美、姬叔奇、姬叔顺"
+    },
+    {
+      "name": "姬叔奇",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔美、姬叔奇、姬叔顺、姬叔平"
+    },
+    {
+      "name": "姬叔顺",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔奇、姬叔顺、姬叔平、姬叔广"
+    },
+    {
+      "name": "姬叔平",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔顺、姬叔平、姬叔广、姬叔智"
+    },
+    {
+      "name": "姬叔广",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔平、姬叔广、姬叔智、姬叔勇"
+    },
+    {
+      "name": "姬叔智",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔广、姬叔智、姬叔勇、姬叔敬"
+    },
+    {
+      "name": "姬叔勇",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔智、姬叔勇、姬叔敬、姬叔崇"
+    },
+    {
+      "name": "姬叔敬",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔勇、姬叔敬、姬叔崇、姬叔安"
+    },
+    {
+      "name": "姬叔崇",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔敬、姬叔崇、姬叔安"
+    },
+    {
+      "name": "姬叔安",
+      "aliases": [],
+      "identity": "习武之文王诸子之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "姬叔崇、姬叔安──文王有九十九子"
+    },
+    {
+      "name": "邓九公",
+      "aliases": [
+        "邓将军"
+      ],
+      "identity": "归周降将，与黄飞虎、洪锦同演一字长蛇阵",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "又有归将降佐：邓九公、太鸾、邓秀"
+    },
+    {
+      "name": "太鸾",
+      "aliases": [],
+      "identity": "归将降佐点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "邓九公、太鸾、邓秀、赵升、孙焰红"
+    },
+    {
+      "name": "邓秀",
+      "aliases": [],
+      "identity": "归将降佐点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "太鸾、邓秀、赵升、孙焰红、晁田"
+    },
+    {
+      "name": "赵升",
+      "aliases": [],
+      "identity": "归将降佐点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "邓秀、赵升、孙焰红、晁田、晁雷"
+    },
+    {
+      "name": "孙焰红",
+      "aliases": [],
+      "identity": "归将降佐点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "赵升、孙焰红、晁田、晁雷、洪锦"
+    },
+    {
+      "name": "晁田",
+      "aliases": [],
+      "identity": "归将降佐点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "孙焰红、晁田、晁雷、洪锦、季康"
+    },
+    {
+      "name": "晁雷",
+      "aliases": [],
+      "identity": "归将降佐点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "晁田、晁雷、洪锦、季康、苏护"
+    },
+    {
+      "name": "洪锦",
+      "aliases": [
+        "洪将军"
+      ],
+      "identity": "归周降将，点将后与黄飞虎等同演阵图",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "晁雷、洪锦、季康、苏护、苏全忠"
+    },
+    {
+      "name": "季康",
+      "aliases": [],
+      "identity": "归将降佐点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "洪锦、季康、苏护、苏全忠、赵丙"
+    },
+    {
+      "name": "苏护",
+      "aliases": [],
+      "identity": "归将降佐点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "季康、苏护、苏全忠、赵丙、孙子羽"
+    },
+    {
+      "name": "苏全忠",
+      "aliases": [],
+      "identity": "归将降佐点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "苏护、苏全忠、赵丙、孙子羽"
+    },
+    {
+      "name": "赵丙",
+      "aliases": [],
+      "identity": "归将降佐点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "苏全忠、赵丙、孙子羽"
+    },
+    {
+      "name": "孙子羽",
+      "aliases": [],
+      "identity": "归将降佐点将名单中一员",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "赵丙、孙子羽"
+    },
+    {
+      "name": "龙吉公主",
+      "aliases": [],
+      "identity": "点将所明二女将之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "女将二员：龙吉公主、邓婵玉"
+    },
+    {
+      "name": "邓婵玉",
+      "aliases": [],
+      "identity": "点将所明二女将之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "女将二员：龙吉公主、邓婵玉"
+    },
+    {
+      "name": "黄滚",
+      "aliases": [],
+      "identity": "老将军，被子牙荐为任军国重务、留守西岐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "老将军黄滚历练老成，可任军国重务"
+    },
+    {
+      "name": "太姬",
+      "aliases": [],
+      "identity": "武王之母，嘱孩儿一应依相父指挥",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "武王退朝，入内宫见太姬"
+    },
+    {
+      "name": "伯夷",
+      "aliases": [
+        "夷"
+      ],
+      "identity": "与叔齐同立于首阳山中途叩马谏武王勿伐纣",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见伯夷、叔齐二人，宽衫、博袖、麻履、丝绦，站立中途，阻住大兵"
+    },
+    {
+      "name": "叔齐",
+      "aliases": [
+        "齐"
+      ],
+      "identity": "与伯夷同守臣节、揽辔切谏周兵伐君",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "夷、齐见左右俱有不豫之色，众人挟武王、子牙欲行"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [],
+      "identity": "左哨先行，初战被魏贲生擒放回，后交印随营听用",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有左哨先行南宫适上帐应声曰：「末将愿往。」"
+    },
+    {
+      "name": "魏贲",
+      "aliases": [],
+      "identity": "金鸡岭前擒南宫适、后归周补左哨之将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙逢此将，门徒是魏贲"
+    },
+    {
+      "name": "武吉",
+      "aliases": [],
+      "identity": "拈阄任右哨先行",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南宫适是左哨；武吉是右哨；哪吒是后哨"
+    },
+    {
+      "name": "郑伦",
+      "aliases": [],
+      "identity": "与杨戬、土行孙同拈阄作三军督粮官",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙又令杨戬、土行孙、郑伦各拈一阄，作三军督粮官"
+    },
+    {
+      "name": "张山",
+      "aliases": [],
+      "identity": "前番阵亡之商将，败报传入汜水关与朝歌",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "且说只因张山阵亡，飞报至汜水关"
+    },
+    {
+      "name": "韩荣",
+      "aliases": [],
+      "identity": "汜水关守将，具本上朝歌报子牙金台拜将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "飞报至汜水关，韩荣已知子牙三月十五日金台拜将"
+    },
+    {
+      "name": "微子",
+      "aliases": [],
+      "identity": "商室之臣，看本知张山阵亡后抱本入内庭奏纣王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "那日微子看本，知张山阵亡，洪锦归周"
+    },
+    {
+      "name": "飞廉",
+      "aliases": [],
+      "identity": "中大夫，奏请以善五行道术的孔宣为将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "班中闪出中大夫飞廉，俯伏奏曰"
+    },
+    {
+      "name": "孔宣",
+      "aliases": [],
+      "identity": "三山关守将，奉诏领十万人马阻周兵",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "陛下发诏，须用孔宣为将"
+    },
+    {
+      "name": "四不相",
+      "aliases": [],
+      "identity": "子牙所乘坐骑，阵前与孔宣问话",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "话说子牙在四不相上问曰"
+    },
+    {
+      "name": "玉麒麟",
+      "aliases": [],
+      "identity": "出行营先行官所骑的麒麟坐骑",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "先行官骑的是玉麒麟，纠纠杀气"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "玉虚门下十二弟子",
+      "refers_to": [
+        "文殊广法天尊",
+        "太乙真人",
+        "普贤真人",
+        "道行天尊",
+        "云中子",
+        "玉鼎真人",
+        "燃灯道人",
+        "清虚道德真君",
+        "惧留孙"
+      ]
+    },
+    {
+      "name": "夷齐",
+      "refers_to": [
+        "伯夷",
+        "叔齐"
+      ]
+    },
+    {
+      "name": "周之四贤",
+      "refers_to": []
+    },
+    {
+      "name": "八俊",
+      "refers_to": []
+    },
+    {
+      "name": "三山五岳众道兄",
+      "refers_to": []
+    }
+  ]
+}

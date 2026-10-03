@@ -1,0 +1,451 @@
+{
+  "chunk": 44,
+  "characters": [
+    {
+      "name": "子牙",
+      "aliases": [
+        "姜尚",
+        "姜子牙",
+        "姜元帅"
+      ],
+      "identity": "周营元帅，点将调兵、亲至阵前与孔宣答话",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙问左右：「谁去见此头阵？」"
+    },
+    {
+      "name": "韩荣",
+      "aliases": [],
+      "identity": "汜水关守将，出关接孔宣元帅并报周兵已出西岐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "韩荣至中军打躬：「元帅此行来迟了。」"
+    },
+    {
+      "name": "微子",
+      "aliases": [],
+      "identity": "商臣，看本知张山阵亡、洪锦归周后入内庭奏纣王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "那日微子看本，知张山阵亡，洪锦归周"
+    },
+    {
+      "name": "纣王",
+      "aliases": [
+        "殷纣王"
+      ],
+      "identity": "商主，准飞廉之奏诏孔宣为将阻周兵",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "纣王大骇：「不意姬发猖獗至此！」"
+    },
+    {
+      "name": "武王",
+      "aliases": [
+        "姬发"
+      ],
+      "identity": "周主，崇黑虎至后帐与之见礼",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "进后帐与武王见礼"
+    },
+    {
+      "name": "飞廉",
+      "aliases": [
+        "中大夫飞廉"
+      ],
+      "identity": "商朝中大夫，奏请用善五行道术的孔宣为将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "班中闪出中大夫飞廉，俯伏奏曰"
+    },
+    {
+      "name": "孔宣",
+      "aliases": [],
+      "identity": "三山关总兵，领十万人马阻金鸡岭，有五道光华神光收人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说孔宣人马出关，至金鸡岭"
+    },
+    {
+      "name": "陈庚",
+      "aliases": [],
+      "identity": "孔宣麾下先行官，被黄天化火龙标打下马取首级",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有先行官陈庚出位应曰：「末将愿先见头阵。」"
+    },
+    {
+      "name": "黄天化",
+      "aliases": [
+        "黄公子"
+      ],
+      "identity": "周营头队先行，斩陈庚后夜劫左营被高继能刺死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有先行官黄天化应曰：「愿往。」"
+    },
+    {
+      "name": "孙合",
+      "aliases": [],
+      "identity": "商营出马之将，被武吉回马鎗挑下马取首级",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "次日，又是孙合出马，至周营搦战"
+    },
+    {
+      "name": "武吉",
+      "aliases": [],
+      "identity": "周营右哨先行，用回马鎗杀孙合",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有武吉应曰：「弟子愿往。」"
+    },
+    {
+      "name": "高继能",
+      "aliases": [
+        "继能",
+        "黑杀"
+      ],
+      "identity": "商营五军救应使，蜈蜂袋杀黄天化，终被黄飞虎一鎗刺死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有五军救应使高继能曰：「末将愿往。」"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "周营后哨先行，乾坤圈打伤高继能，劫营时被孔宣白光刷去",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有哪吒忙应声曰：「弟子愿往。」"
+    },
+    {
+      "name": "周信",
+      "aliases": [],
+      "identity": "孔宣派在右营门埋伏之将，被雷震子一棍打死",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "周信，你在右营门埋伏"
+    },
+    {
+      "name": "雷震子",
+      "aliases": [],
+      "identity": "飞空冲开右营杀周信，后被孔宣黄光拏去",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "雷震子飞在空中，冲开右营"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "头运督粮官，用照妖鉴照孔宣本像，祭哮天犬失落",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说子牙头运粮草官杨戬至辕门下马"
+    },
+    {
+      "name": "韦护",
+      "aliases": [],
+      "identity": "助杨戬祭降魔杵，杵落红光中被收，遂隐身旗下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "韦护来助杨戬，忙祭降魔杵打将下来"
+    },
+    {
+      "name": "李靖",
+      "aliases": [],
+      "identity": "摇戟战孔宣，祭玲珑金塔不成，被神光拿去监禁",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙后有李靖大怒，骂曰"
+    },
+    {
+      "name": "金吒",
+      "aliases": [],
+      "identity": "与弟木吒为救父战孔宣，祭遁龙桩失手被拏",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金吒祭遁龙桩，木吒祭吴钩剑"
+    },
+    {
+      "name": "木吒",
+      "aliases": [],
+      "identity": "与兄金吒四口宝剑战孔宣，被神光撒去",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "金吒祭遁龙桩，木吒祭吴钩剑，俱祭在空中"
+    },
+    {
+      "name": "邓九公",
+      "aliases": [],
+      "identity": "周营老将，走马助子牙战孔宣，同被华光撒去",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有邓九公走马来助阵"
+    },
+    {
+      "name": "邓婵玉",
+      "aliases": [],
+      "identity": "以五光石打伤孔宣面门",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙后队恼了邓婵玉，用手把马拎回"
+    },
+    {
+      "name": "龙吉公主",
+      "aliases": [],
+      "identity": "祭鸾飞宝剑从背后砍伤孔宣左臂",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "不防龙吉公主祭起鸾飞宝剑，从孔宣背后砍来"
+    },
+    {
+      "name": "洪锦",
+      "aliases": [],
+      "identity": "归周之将，战孔宣用旗门遁被黄光刷去，后昏睡被监后营",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙后有洪锦走马奔来，大呼"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [],
+      "identity": "周将，劝黄飞虎往崇城请崇黑虎破蜈蜂之术",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南宫适曰：「黄将军不必如此。"
+    },
+    {
+      "name": "黄飞虎",
+      "aliases": [
+        "武成王",
+        "飞虎",
+        "黄将军",
+        "东岳"
+      ],
+      "identity": "痛子黄天化，亲往崇城请崇黑虎，阵上刺死高继能",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "黄飞虎听罢，放声大哭曰"
+    },
+    {
+      "name": "崇黑虎",
+      "aliases": [
+        "黑虎",
+        "崇君侯",
+        "崇侯",
+        "南岳"
+      ],
+      "identity": "崇城主侯，放铁嘴神鹰破蜈蜂，率五岳战孔宣被摄",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "崇黑虎道：「请进来。」"
+    },
+    {
+      "name": "崇应鸾",
+      "aliases": [
+        "世子"
+      ],
+      "identity": "崇黑虎之子，留守操练三军以待起兵",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "着世子崇应鸾操练三军"
+    },
+    {
+      "name": "文聘",
+      "aliases": [
+        "西岳"
+      ],
+      "identity": "飞凤山三将之一，使五股托天叉，同崇黑虎破高继能",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "末将姓文，名聘"
+    },
+    {
+      "name": "崔英",
+      "aliases": [
+        "中岳"
+      ],
+      "identity": "飞凤山三将之一，使八楞熟铜锤，随五岳出征",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "此位姓崔，名英"
+    },
+    {
+      "name": "蒋雄",
+      "aliases": [
+        "北岳"
+      ],
+      "identity": "飞凤山三将之一，使五爪烂银抓，围住高继能",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "此位姓蒋，名雄"
+    },
+    {
+      "name": "张山",
+      "aliases": [],
+      "identity": "前番阵亡之商将，败报经汜水关入朝歌",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "且说只因张山阵亡，飞报至汜水关"
+    },
+    {
+      "name": "准提道人",
+      "aliases": [
+        "准提菩萨"
+      ],
+      "identity": "回目与开卷诗预告的西方道人，将来收孔宣",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "准提道人收孔宣"
+    },
+    {
+      "name": "接引",
+      "aliases": [],
+      "identity": "回前诗所称「西方接引徒」，暗示孔宣归西方之缘",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "总有西方接引徒"
+    },
+    {
+      "name": "帝尧",
+      "aliases": [],
+      "identity": "子牙说天命无常时追述的禅让之君",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔帝尧有子丹朱不肖，让位与舜"
+    },
+    {
+      "name": "丹朱",
+      "aliases": [],
+      "identity": "帝尧不肖之子，故尧让位于舜",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔帝尧有子丹朱不肖，让位与舜"
+    },
+    {
+      "name": "舜帝",
+      "aliases": [
+        "舜"
+      ],
+      "identity": "受尧之位、又因子不肖让位于禹的古帝",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "舜帝有子商均亦不肖，让位与禹"
+    },
+    {
+      "name": "商均",
+      "aliases": [],
+      "identity": "舜之不肖子，故舜让位于禹",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "舜帝有子商均亦不肖，让位与禹"
+    },
+    {
+      "name": "禹",
+      "aliases": [],
+      "identity": "受舜禅、后又让位于益的古君",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "禹有子启贤，能继父志，禹尊禅让，复让与益"
+    },
+    {
+      "name": "启",
+      "aliases": [],
+      "identity": "禹之贤子，天下朝觐讼狱归之",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "禹有子启贤，能继父志"
+    },
+    {
+      "name": "益",
+      "aliases": [],
+      "identity": "禹所禅让之人，天下不归而归启",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "禹尊禅让，复让与益"
+    },
+    {
+      "name": "桀王",
+      "aliases": [
+        "桀"
+      ],
+      "identity": "无道之夏君，为成汤所伐",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "再后传之桀。桀王无道，成汤伐夏而有天下"
+    },
+    {
+      "name": "成汤",
+      "aliases": [],
+      "identity": "伐夏有天下之商祖（本块亦作商朝朝代名）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "桀王无道，成汤伐夏而有天下"
+    },
+    {
+      "name": "玉麒麟",
+      "aliases": [],
+      "identity": "黄天化所骑麒麟坐骑，夜战中蹄竖坠主",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "忙上了玉麒麟出营"
+    },
+    {
+      "name": "五色神牛",
+      "aliases": [],
+      "identity": "黄飞虎的坐骑，上山与过营皆乘之",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "把坐下五色神牛一拎，走上山来"
+    },
+    {
+      "name": "火眼金睛兽",
+      "aliases": [],
+      "identity": "崇黑虎所骑之兽，上岭战高继能",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "话说崇黑虎次日上火眼金睛兽"
+    },
+    {
+      "name": "哮天犬",
+      "aliases": [],
+      "identity": "杨戬祭在空中的神犬，落孔宣神光里失去",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "忙祭起哮天犬在空中"
+    },
+    {
+      "name": "四不相",
+      "aliases": [],
+      "identity": "子牙乘坐之兽，阵前怒战孔宣",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "子牙乘四不相至阵前"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "五岳",
+      "refers_to": [
+        "文聘",
+        "崔英",
+        "蒋雄",
+        "黄飞虎",
+        "崇黑虎"
+      ]
+    },
+    {
+      "name": "金、木二咤",
+      "refers_to": [
+        "金吒",
+        "木吒"
+      ]
+    },
+    {
+      "name": "四天王",
+      "refers_to": []
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "chunk": 34,
+  "characters": [
+    {
+      "name": "土行孙",
+      "aliases": [
+        "土先行"
+      ],
+      "identity": "惧留孙门下善地行者，挂正印先行，擒子牙、杨戬又夜入西岐行刺，两度被擒又脱逃",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说土行孙得胜回营，见邓九公回报：「生擒哪吒。」"
+    },
+    {
+      "name": "邓九公",
+      "aliases": [
+        "邓元帅",
+        "九公"
+      ],
+      "identity": "三山关元戎，酒后失口许以弱女赘土行孙，又用太鸾之计欲赚子牙纳聘",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "土行孙辞邓九公、众将，打点进西岐城"
+    },
+    {
+      "name": "哪吒",
+      "aliases": [],
+      "identity": "被土行孙以捆仙绳生擒，拘于后营，与黄天化相互劝耐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见军卒把哪吒抬来，放在丹墀下"
+    },
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜尚",
+        "相父",
+        "姜丞相",
+        "子牙公"
+      ],
+      "identity": "西岐丞相，被捆仙绳捆下骑，算知土行孙行刺，悬镜备守并放土行孙、遣散宜生作伐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙惊问报马：「如何擒去？」"
+    },
+    {
+      "name": "惧留孙",
+      "aliases": [],
+      "identity": "土行孙之师，被杨戬请下山，以金光法接绳、亲擒其徒，并算出土行孙与邓女系足之缘",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "土行孙盗了惧留孙师父捆仙绳"
+    },
+    {
+      "name": "黄天化",
+      "aliases": [
+        "天化"
+      ],
+      "identity": "出阵骂土行孙，被捆仙绳拿去与哪吒同拘后营",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "天化上了玉麒麟，出城看土行孙"
+    },
+    {
+      "name": "杨戬",
+      "aliases": [],
+      "identity": "看破捆仙绳、哮天犬伤邓女将不成，变化宫妃智擒土行孙，又往夹龙山探问师伯",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "杨戬智擒了土行孙"
+    },
+    {
+      "name": "武王",
+      "aliases": [],
+      "identity": "被子牙请至相府筵宴、安在密室，土行孙所割之头乃变化之人",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "早已惊动武王，亲自进相府来看，问相父安"
+    },
+    {
+      "name": "白鹤童子",
+      "aliases": [
+        "童儿"
+      ],
+      "identity": "奉老爷法牒送符印来解捆仙绳的玉虚童儿",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "原来是白鹤童子，至殿前见子牙，口称：「师叔，老爷法牒，送符印将此绳解去。」"
+    },
+    {
+      "name": "邓婵玉",
+      "aliases": [
+        "婵玉"
+      ],
+      "identity": "邓九公之女，父已许其赘与土行孙，本块只被谈论",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "今邓九公有女邓婵玉，原系邓九公亲许土行孙为妻"
+    },
+    {
+      "name": "太鸾",
+      "aliases": [
+        "正印先行官太鸾"
+      ],
+      "identity": "邓营先行官，献计请子牙亲来纳聘、伏兵击杯为号以擒之",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有正印先行官太鸾上前言曰"
+    },
+    {
+      "name": "申公豹",
+      "aliases": [],
+      "identity": "荐土行孙下山、说其往三山关立功，本块只在土行孙供词中被提及",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "他说是阐教门人申公豹"
+    },
+    {
+      "name": "散宜生",
+      "aliases": [
+        "散大夫",
+        "宜生"
+      ],
+      "identity": "西岐上大夫，奉姜丞相命往汤营为土行孙作伐说亲",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "须得散宜生去走一遭方可"
+    },
+    {
+      "name": "金毛童子",
+      "aliases": [],
+      "identity": "五夷山二童儿，因刀袍拜杨戬为师，先往西岐见姜丞相",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "弟子乃五夷山金毛童子是也"
+    },
+    {
+      "name": "龙吉公主",
+      "aliases": [
+        "公主"
+      ],
+      "identity": "昊天上帝亲女、瑶池金母所生，因蟠桃会失规矩谪贬凤凰山青鸾斗阙，指点杨戬请惧留孙下山",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "吾乃龙吉公主是也"
+    },
+    {
+      "name": "玉鼎真人",
+      "aliases": [],
+      "identity": "玉泉山金霞洞、杨戬之师，本块只被杨戬自报师门时提及",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "弟子乃玉泉山金霞洞玉鼎真人门下杨戬是也"
+    },
+    {
+      "name": "昊天上帝",
+      "aliases": [],
+      "identity": "龙吉公主自述之父，本块只被提及",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "乃昊天上帝亲女，瑶池金母所生"
+    },
+    {
+      "name": "瑶池金母",
+      "aliases": [],
+      "identity": "龙吉公主之母，本块只被提及",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "乃昊天上帝亲女，瑶池金母所生"
+    },
+    {
+      "name": "闻太师",
+      "aliases": [],
+      "identity": "申公豹当初曾荐土行孙往其行营成功（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "他教我往闻太师行营成功"
+    },
+    {
+      "name": "燃灯",
+      "aliases": [
+        "燃灯道兄"
+      ],
+      "identity": "子牙口中昔日助过惧留孙的道兄（本块只被提及）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "以完道兄昔日助燃灯道兄之雅"
+    },
+    {
+      "name": "纣王",
+      "aliases": [],
+      "identity": "回目诗里「无福镇乾坤」的商主",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "总是天机离预料，纣王无福镇乾坤"
+    },
+    {
+      "name": "月老",
+      "aliases": [],
+      "identity": "回目诗中说姻缘所由定的月老",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "两国始终成好合，认由月老定鸾凰",
+      "note": "存疑"
+    },
+    {
+      "name": "哮天犬",
+      "aliases": [],
+      "identity": "杨戬祭在空中欲拿土行孙的神犬，被其遁地躲过",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "杨戬急把哮天犬祭在空中"
+    },
+    {
+      "name": "四不相",
+      "aliases": [],
+      "identity": "子牙独乘去看邓九大营之骑",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "子牙独自乘四不相往成汤辕门前后，观看邓九公的大营"
+    },
+    {
+      "name": "玉麒麟",
+      "aliases": [],
+      "identity": "黄天化出阵所骑",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "天化上了玉麒麟，出城看土行孙"
+    }
+  ],
+  "collectives": []
+}

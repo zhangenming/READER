@@ -1,0 +1,420 @@
+{
+  "chunk": 42,
+  "characters": [
+    {
+      "name": "姜子牙",
+      "aliases": [
+        "子牙",
+        "姜尚",
+        "姜丞相",
+        "相父"
+      ],
+      "identity": "西岐丞相，金台拜将受「扫荡成汤天宝大元帅」之任，展聚仙旗擒殷郊并上斩法纪律牌",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说子牙将「斩法牌」挂于帅府，众将观之，无不敬谨。"
+    },
+    {
+      "name": "燃灯道人",
+      "aliases": [
+        "燃灯"
+      ],
+      "identity": "展杏黄旗挡番天印，用手一合挤殷郊于山中，又命广成子推犁上山",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "燃灯合山，挤住殷郊，四路人马齐上山来。"
+    },
+    {
+      "name": "殷郊",
+      "aliases": [
+        "殿下",
+        "千岁",
+        "殷郊殿下"
+      ],
+      "identity": "纣王长太子，四旗合围无路可走，被犁于岐山，一灵往封神台又回朝歌诉奏父王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见武吉犁了殷郊。"
+    },
+    {
+      "name": "武吉",
+      "aliases": [],
+      "identity": "行犁之人，奉命犁了殷郊",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见武吉犁了殷郊。"
+    },
+    {
+      "name": "柏鉴",
+      "aliases": [],
+      "identity": "清福神祇，用百灵旛引殷郊之魂往封神台",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "清福神祇柏鉴用百灵旛来引殷郊。"
+    },
+    {
+      "name": "文殊广法天尊",
+      "aliases": [],
+      "identity": "展青莲宝色旗现舍利子托住番天印，在岐山拦阻殷郊",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "忽见文殊广法天尊站立前面而言曰"
+    },
+    {
+      "name": "赤精子",
+      "aliases": [],
+      "identity": "展离地焰光旗拦殷郊，言其兄弟俱该如此、乃是天数",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "忽见赤精子大呼曰：「殷郊，你有负师言，难免出口发誓之灾！」"
+    },
+    {
+      "name": "广成子",
+      "aliases": [],
+      "identity": "奉燃灯命推犁上山，见殷郊如此光景不觉落泪",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "燃灯请武王下山，命广成子推犁上山。"
+    },
+    {
+      "name": "武王",
+      "aliases": [
+        "姬发"
+      ],
+      "identity": "西岐之主，跪尘呼千岁为殷郊求情、览姜尚出师表而后准拜将之请",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "武王至山顶上，看见殷郊这等模样，滚鞍下马，跪于尘埃"
+    },
+    {
+      "name": "纣王",
+      "aliases": [
+        "商王受"
+      ],
+      "identity": "在鹿台饮酒、梦见殷郊之魂，览韩荣告急本大怒，准李登之荐敕洪锦专征三山关",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说纣王在鹿台上正饮酒，听得有人来，纣王不觉昏沉，就席而卧。"
+    },
+    {
+      "name": "妲己",
+      "aliases": [],
+      "identity": "在鹿台侍纣王饮酒，以「梦由心作」解其怪梦，属三妖之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "妲己、胡喜妹、王贵人三人共席欠身，忙问曰：「陛下为何口称『怪哉』？」"
+    },
+    {
+      "name": "胡喜妹",
+      "aliases": [],
+      "identity": "鹿台侍宴三妖之一（此块写作「胡喜妹」）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "妲己、胡喜妹、王贵人三人共席欠身，忙问曰：「陛下为何口称『怪哉』？」"
+    },
+    {
+      "name": "王贵人",
+      "aliases": [],
+      "identity": "鹿台侍宴三妖之一",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "妲己、胡喜妹、王贵人三人共席欠身，忙问曰：「陛下为何口称『怪哉』？」"
+    },
+    {
+      "name": "韩荣",
+      "aliases": [],
+      "identity": "汜水关守将，有本进朝歌告急",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见汜水关韩荣有本进朝歌告急。"
+    },
+    {
+      "name": "微子",
+      "aliases": [],
+      "identity": "在文书房看韩荣报本、心下不乐，抱本入内庭呈纣王",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "其本至文书房，微子看本，看见如此，心下十分不乐，将此本抱入内庭。"
+    },
+    {
+      "name": "李登",
+      "aliases": [],
+      "identity": "朝歌中谏大夫，以三路诸侯为癣疥之疾，荐三山关总兵洪锦征西岐",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "班内一臣乃中谏大夫李登，进礼称臣曰"
+    },
+    {
+      "name": "洪锦",
+      "aliases": [
+        "奉天征讨大元戎"
+      ],
+      "identity": "三山关总兵、左道术士出身，善用旗门遁与鲸龙，被龙吉公主擒至西岐并招回季康人马",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "话说洪锦一路行来，兵过岐山。"
+    },
+    {
+      "name": "孔宣",
+      "aliases": [],
+      "identity": "三山关交代官，须待其交代明白洪锦方领兵西行",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "交代官乃是孔宣。"
+    },
+    {
+      "name": "季康",
+      "aliases": [],
+      "identity": "洪锦麾下先行官，左道傍门现犬伤南宫适，得胜回营",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "先行官季康、柏显忠上帐参见。"
+    },
+    {
+      "name": "柏显忠",
+      "aliases": [],
+      "identity": "洪锦麾下先行官，与邓九公战二三十回合被挥于马下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "次日，柏显忠上马，至城下请战。"
+    },
+    {
+      "name": "邓九公",
+      "aliases": [
+        "九公"
+      ],
+      "identity": "西岐大将，斩柏显忠报功，并骂其不降",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "有邓九公应曰：「末将愿往。」"
+    },
+    {
+      "name": "南宫适",
+      "aliases": [],
+      "identity": "西岐将官，出战季康被云中现出之犬咬伤袍甲，后又监斩洪锦",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "南宫适愿往。"
+    },
+    {
+      "name": "黄飞虎",
+      "aliases": [
+        "武成王"
+      ],
+      "identity": "西岐开国武成王，此块列于宝纛旗下",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "宝纛旗下乃开国武成王黄飞虎。"
+    },
+    {
+      "name": "姬叔明",
+      "aliases": [],
+      "identity": "文王第七十二子，赶入洪锦旗门被一刀挥于马下（阵中亦被称「殿下」）",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有姬叔明大呼曰：「不得猖獗！」"
+    },
+    {
+      "name": "文王",
+      "aliases": [],
+      "identity": "姬叔明之父，此块仅于补叙出身时被提及",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "姬叔明乃文王第七十二子"
+    },
+    {
+      "name": "邓婵玉",
+      "aliases": [],
+      "identity": "持五光石在旗门外打伤洪锦面，又受月合老人之托启禀公主",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "傍有邓婵玉走马至军前，大呼：「匹夫！少待恃强！吾来也！」"
+    },
+    {
+      "name": "土行孙",
+      "aliases": [],
+      "identity": "邓婵玉之夫，吩咐妻子切不可进洪锦旗门，并把公主之言报与燃灯、子牙",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "土行孙见人来报，忙对邓婵玉曰：「今日洪锦坐名要你，你切不可进他旗门。」"
+    },
+    {
+      "name": "龙吉公主",
+      "aliases": [],
+      "identity": "瑶池金母之女，识旗门遁、以木遁克土追洪锦至北海，用神䱞与捆龙索擒之，后依月合仙翁之言与洪锦成姻",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "时有龙吉公主听见，忙出净室，问曰：「你二人说甚么？」"
+    },
+    {
+      "name": "瑶池金母",
+      "aliases": [
+        "金母"
+      ],
+      "identity": "龙吉公主之母，此块仅于公主自陈出身时被提及",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "吾乃瑶池金母之女，来助武王伐纣。"
+    },
+    {
+      "name": "月合老人",
+      "aliases": [
+        "月合仙翁"
+      ],
+      "identity": "奉符元仙翁之命亲来为龙吉公主与洪锦作伐，奔至府前叫「刀下留人」",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "贫道乃月合老人也；因符元仙翁曾言龙吉公主与洪锦有俗世姻缘"
+    },
+    {
+      "name": "符元仙翁",
+      "aliases": [],
+      "identity": "曾言龙吉公主与洪锦有绾红丝之约，此块仅被谈及",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "因符元仙翁曾言龙吉公主与洪锦有俗世姻缘，曾绾红丝之约"
+    },
+    {
+      "name": "散宜生",
+      "aliases": [
+        "宜生"
+      ],
+      "identity": "西岐上大夫，奏请武王依相父之言大会孟津，又监造将台、择三月十五日拜将",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "只见上大夫散宜生上前奏曰"
+    },
+    {
+      "name": "辛甲",
+      "aliases": [],
+      "identity": "子牙于三月十三日所立之军政司，先与南宫适往岐山监造将台",
+      "nonhuman": false,
+      "mentioned_only": false,
+      "evidence": "子牙三月十三日立辛甲为军政司"
+    },
+    {
+      "name": "张山",
+      "aliases": [],
+      "identity": "商营主将，此块仅见于韩荣告急本中：奉敕征讨失利、带殷郊绝于岐山",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "见张山奉敕征讨失利，又带着殷郊殿下绝于岐山。"
+    },
+    {
+      "name": "姜文焕",
+      "aliases": [
+        "东伯侯"
+      ],
+      "identity": "东伯侯，被李登目为癣疥之疾，并与南、北伯侯具文书知会伐汤",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "虽东伯侯姜文焕、南伯侯鄂顺、北伯侯崇黑虎，此三路不过癣疥之疾"
+    },
+    {
+      "name": "鄂顺",
+      "aliases": [
+        "南伯侯"
+      ],
+      "identity": "南伯侯，与东、北伯侯同具文书知会，此块仅被谈及",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "前有东伯侯姜文焕、南伯侯鄂顺，北伯侯崇黑虎具文书知会"
+    },
+    {
+      "name": "崇黑虎",
+      "aliases": [
+        "北伯侯"
+      ],
+      "identity": "北伯侯，与东、南伯侯同具文书知会，此块仅被谈及",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "北伯侯崇黑虎具文书知会"
+    },
+    {
+      "name": "嫦娥",
+      "aliases": [],
+      "identity": "赞大风之词中说风刮得嫦娥抱定梭罗树，仅作形容（存疑）",
+      "nonhuman": true,
+      "mentioned_only": true,
+      "evidence": "只刮得嫦娥抱定梭罗树，空中仙子怎腾云。"
+    },
+    {
+      "name": "黄帝",
+      "aliases": [],
+      "identity": "散宜生言拜将之礼时援引的上古帝王，仅作典故（存疑）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔黄帝昔拜风后",
+      "note": "存疑"
+    },
+    {
+      "name": "风后",
+      "aliases": [],
+      "identity": "黄帝所拜之将，散宜生援引为筑台拜将之例，仅作典故（存疑）",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "昔黄帝昔拜风后，须当筑台",
+      "note": "存疑"
+    },
+    {
+      "name": "鲸龙",
+      "aliases": [],
+      "identity": "洪锦丢入海中见水重生、搅海翻波的坐骑异兽，后被神䱞所克",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "此物名曰鲸龙。洪锦脚跨鲸龙，奔入海内而去。"
+    },
+    {
+      "name": "神䱞",
+      "aliases": [],
+      "identity": "龙吉公主离瑶池带来的宝贝，见水现原身浮于海面、善降鲸龙（名为宝而能活动，存疑）",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "此宝名为神䱞；原身浮于海面。"
+    },
+    {
+      "name": "五点桃花驹",
+      "aliases": [],
+      "identity": "子牙拨给龙吉公主收洪锦的坐骑",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "子牙令取五点桃花驹。"
+    },
+    {
+      "name": "黄巾力士",
+      "aliases": [],
+      "identity": "奉龙吉公主法旨、凭空把洪锦拎拿往西岐的力士",
+      "nonhuman": true,
+      "mentioned_only": false,
+      "evidence": "祭起捆龙索，命黄巾力士：「将洪锦速拿往西岐去！」"
+    },
+    {
+      "name": "皇天",
+      "aliases": [],
+      "identity": "拜将礼中所告祭的上天",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "宜生曰：「昔黄帝昔拜风后，须当筑台，拜告皇天、后土、山川、河渎之神，捧毂，推轮，方成拜将之礼。」",
+      "note": "存疑"
+    },
+    {
+      "name": "后土",
+      "aliases": [],
+      "identity": "拜将礼中所告祭的后土之神",
+      "nonhuman": false,
+      "mentioned_only": true,
+      "evidence": "宜生曰：「昔黄帝昔拜风后，须当筑台，拜告皇天、后土、山川、河渎之神，捧毂，推轮，方成拜将之礼。」",
+      "note": "存疑"
+    }
+  ],
+  "collectives": [
+    {
+      "name": "三妖",
+      "refers_to": [
+        "妲己",
+        "胡喜妹",
+        "王贵人"
+      ]
+    }
+  ]
+}
