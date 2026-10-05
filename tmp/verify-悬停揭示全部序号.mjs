@@ -288,7 +288,7 @@ try {
   const 该显示 = 悬停甲.列表.filter((项) => 项.可见);
   assert.ok(
     该显示.every((项) => 项.行放行),
-    失败('② 每一处可见徽标所在行都必须放行溢出，否则上溢的 7px 会被相邻行裁掉'),
+    失败('② 每一处可见徽标所在行都必须放行溢出，否则上溢的 9px 会被相邻行裁掉'),
   );
   assert.ok(
     悬停甲.列表.filter((项) => 项.同组 && !项.悬停 && !项.首处).every((项) => !项.可见),
@@ -301,9 +301,11 @@ try {
       const 样 = getComputedStyle(字, '::after');
       if (样.visibility !== 'visible' || Number(样.opacity) <= 0.5) continue;
       const 盒 = 字.getBoundingClientRect();
-      const 宽 = parseFloat(样.width);
-      // right: -3px —— 徽标右缘比字盒右缘再向外 3px
-      盒列表.push({ 行: Math.round(盒.top), 左: 盒.right + 3 - 宽, 右: 盒.right + 3, 文本: 字.dataset.hitPosition });
+      const 数 = (v) => parseFloat(v) || 0;
+      // ::after 是 content-box：横向要加回 padding 与边框才是实际占宽
+      const 宽 = 数(样.width) + 数(样.paddingLeft) + 数(样.paddingRight) + 数(样.borderLeftWidth) + 数(样.borderRightWidth);
+      const 外 = 数(样.right); // right: -3px —— 徽标右缘比字盒右缘再向外 3px
+      盒列表.push({ 行: Math.round(盒.top), 左: 盒.right + 外 - 宽, 右: 盒.right + 外, 文本: 字.dataset.hitPosition });
     }
     盒列表.sort((a, b) => a.行 - b.行 || a.左 - b.左);
     function 同一行(x, y) {

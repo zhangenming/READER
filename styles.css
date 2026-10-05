@@ -1949,27 +1949,32 @@ body:not(.行高亮暂停中) .正文行:not(.章节标题行):hover {
 }
 
 /* x/y 徽标的样式底座：每个多命中关键词的末字都带 data-hit-position，
-   默认不显示，由下面几条规则按状态放行。 */
+   默认不显示，由下面几条规则按状态放行。
+   落点按「两行墨之间的净空带」钉：30px 字号 / 30px 行高下，上一行墨底到 ~-8px、
+   锚字墨顶到 ~+2.6px，净空只有 10.6px，所以整枚盒（含 1px 边框）收到 11px 高
+   （line-height 9 + 边框 2，纵向不留 padding）并钉在 top: -9px——实测每枚压墨
+   152.8px² → 40.8px²，锚字与左右邻字归零，剩下的全落在上一行底边那 1px。
+   阴影同理往下糊：0 2px 7px 会糊进锚字 9px，收到 0 1px 3px 后只剩 ~3px。 */
 .字.命中[data-hit-position]::after {
   position: absolute;
-  top: -7px;
+  top: -9px;
   right: -3px;
   z-index: 2;
   min-width: 18px;
-  padding: 1px 2px;
+  padding: 0 2px;
   color: #000000;
   font-family: 'Avenir Next', 'PingFang SC', sans-serif;
   font-size: 9px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  line-height: 10px;
+  line-height: 9px;
   text-align: center;
   letter-spacing: 0;
   content: attr(data-hit-position);
   background: #ffffff;
   border: 1px solid #241b15;
   border-radius: 3px;
-  box-shadow: 0 2px 7px rgb(0 0 0 / 42%);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 28%);
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
