@@ -176,25 +176,54 @@ try {
 
   const 报告 = await 求值(`${S}
     const 档列表 = ${JSON.stringify([
-      { 名: 'A 角内 right0 bottom0', css: 'right:0;bottom:0' },
-      { 名: 'B 角内 bottom .12em', css: 'right:0;bottom:0.12em' },
-      { 名: 'C 角内 right .08em bottom .08em', css: 'right:0.08em;bottom:0.08em' },
-      { 名: 'D 挂右 .2em bottom0', css: 'right:-0.2em;bottom:0' },
-      { 名: 'E 挂右 .34em bottom0', css: 'right:-0.34em;bottom:0' },
-      { 名: 'F 挂右 .2em + bottom .12em', css: 'right:-0.2em;bottom:0.12em' },
-      { 名: 'G 收小 .5em 角内', css: 'right:0;bottom:0;font-size:0.5em' },
-      { 名: 'H 收小 .48em 角内 bottom .1em', css: 'right:0;bottom:0.1em;font-size:0.48em' },
-      { 名: 'I 旧法 居中挂右 .58em', css: 'top:50%;bottom:auto;transform:translateY(-50%);right:-0.58em' },
+      { 名: '★成品 .5em lh.75 r-.3 w700', css: 'right:-0.3em;bottom:0;font-size:0.5em;line-height:0.75;font-weight:700' },
+      { 名: '上一版 .58em r-.2 b0', css: 'right:-0.2em;bottom:0' },
+      { 名: '右移 r-.32', css: 'right:-0.32em;bottom:0' },
+      { 名: '右移+下 r-.32 b-.1em', css: 'right:-0.32em;bottom:-0.1em' },
+      { 名: '右移+下沉 lh.75 r-.32', css: 'right:-0.32em;bottom:0;line-height:0.75' },
+      { 名: '收小 .5em lh1 r-.2', css: 'right:-0.2em;bottom:0;font-size:0.5em' },
+      { 名: '收小+右+下 .5em lh.75 r-.3', css: 'right:-0.3em;bottom:0;font-size:0.5em;line-height:0.75' },
+      { 名: '收小+右+下+粗 .5em lh.75 r-.3 w700', css: 'right:-0.3em;bottom:0;font-size:0.5em;line-height:0.75;font-weight:700' },
+      { 名: '收小+右+下+粗 .5em lh.75 r-.34 w700', css: 'right:-0.34em;bottom:0;font-size:0.5em;line-height:0.75;font-weight:700' },
+      { 名: '同上再落一点 .5em lh.75 r-.34 b-.06em w700', css: 'right:-0.34em;bottom:-0.06em;font-size:0.5em;line-height:0.75;font-weight:700' },
+      { 名: '更小 .45em lh.7 r-.3 w700', css: 'right:-0.3em;bottom:0;font-size:0.45em;line-height:0.7;font-weight:700' },
+      { 名: '更小+下探 .45em lh.7 r-.3 b-.1em w700', css: 'right:-0.3em;bottom:-0.1em;font-size:0.45em;line-height:0.7;font-weight:700' },
+      { 名: '换字形✕ .5em lh.75 r-.3', 字: '✕', css: 'right:-0.3em;bottom:0;font-size:0.5em;line-height:0.75' },
+      { 名: '换字形✕ .5em lh.75 r-.3 w700', 字: '✕', css: 'right:-0.3em;bottom:0;font-size:0.5em;line-height:0.75;font-weight:700' },
+      { 名: '换字形✖ .5em lh.75 r-.3', 字: '✖', css: 'right:-0.3em;bottom:0;font-size:0.5em;line-height:0.75' },
     ])};
     const 样式 = document.createElement('style');
     document.head.append(样式);
     const 画 = document.createElement('canvas').getContext('2d');
     const 缓存 = new Map();
+    const 字体串of = (字) => {
+      const 样 = getComputedStyle(字);
+      return 样.fontStyle + ' ' + 样.fontVariant + ' ' + 样.fontWeight + ' ' + 样.fontSize + ' ' + 样.fontFamily;
+    };
+    // 笔画密度：叉号墨盒里有多少不透明像素——「粗一点」的客观代理
+    const 密度 = (文, 字体串) => {
+      画.font = 字体串;
+      const m = 画.measureText(文);
+      const 宽 = Math.max(1, Math.ceil(m.actualBoundingBoxRight + m.actualBoundingBoxLeft));
+      const 高 = Math.max(1, Math.ceil(m.actualBoundingBoxAscent + m.actualBoundingBoxDescent));
+      const c = document.createElement('canvas');
+      c.width = 宽;
+      c.height = 高;
+      const g = c.getContext('2d');
+      g.font = 字体串;
+      g.textBaseline = 'alphabetic';
+      g.fillStyle = '#000';
+      g.fillText(文, m.actualBoundingBoxLeft, m.actualBoundingBoxAscent);
+      const 数据 = g.getImageData(0, 0, 宽, 高).data;
+      let 实 = 0;
+      for (let i = 3; i < 数据.length; i += 4) if (数据[i] > 90) 实++;
+      return 实 / (宽 * 高);
+    };
     const 墨盒 = (字) => {
       const 样 = getComputedStyle(字);
       // 锚字里挂着标记 span，量它的墨只能取自己那段文本
       const 文 = 字.firstChild && 字.firstChild.nodeType === 3 ? 字.firstChild.textContent : 字.textContent;
-      const 字体串 = 样.fontStyle + ' ' + 样.fontVariant + ' ' + 样.fontWeight + ' ' + 样.fontSize + ' ' + 样.fontFamily;
+      const 字体串 = 字体串of(字);
       const 键 = 字体串 + '|' + 文;
       let 墨 = 缓存.get(键);
       if (!墨) {
@@ -208,12 +237,13 @@ try {
           右: m.actualBoundingBoxRight,
           as: fm.fontBoundingBoxAscent,
           de: fm.fontBoundingBoxDescent,
+          密度: 密度(文, 字体串),
         };
         缓存.set(键, 墨);
       }
       const 盒 = 字.getBoundingClientRect();
       const 基线 = 盒.top + (盒.height + 墨.as - 墨.de) / 2;
-      return { 文本: 文, 上: 基线 - 墨.上, 下: 基线 + 墨.下, 左: 盒.left - 墨.左, 右: 盒.left + 墨.右 };
+      return { 文本: 文, 上: 基线 - 墨.上, 下: 基线 + 墨.下, 左: 盒.left - 墨.左, 右: 盒.left + 墨.右, 密度: 墨.密度 };
     };
     const 标记 = document.querySelector('.末处标记');
     const 锚 = 标记.closest('.字');
@@ -226,17 +256,23 @@ try {
     const 取 = (v) => Math.round(v * 10) / 10;
     const 出 = [];
     for (const 档 of 档列表) {
+      标记.textContent = 档.字 || '×';
       样式.textContent = '.字.命中 > .末处标记{' + 档.css + '}';
       const 墨 = 墨盒(标记);
       const 行盒 = 行元素.getBoundingClientRect();
       出.push({
         档: 档.名,
+        字形: 档.字 || '×',
         叉墨: [取(墨.左), 取(墨.上), 取(墨.右), 取(墨.下)],
+        叉墨大小: 取(墨.右 - 墨.左) + 'x' + 取(墨.下 - 墨.上),
+        笔画密度: 取(墨.密度 * 100) / 100,
         挂出锚字: 取(墨.右 - 锚墨.右),
-        越行盒: 取(Math.max(0, 墨.右 - 行盒.right) + Math.max(0, 墨.下 - 行盒.bottom)),
+        裁右: 取(Math.max(0, 墨.右 - 行盒.right)),
+        裁底: 取(Math.max(0, 墨.下 - 行盒.bottom)),
         字号: getComputedStyle(标记).fontSize,
       });
     }
+    标记.textContent = '×';
     // 行尾探针：挑「写满到右缘」的那一行（缝最小），挂上去量每档被 overflow 裁掉多少
     let 行尾字 = null;
     let 行尾缝 = 1e9;
@@ -260,10 +296,12 @@ try {
       行尾字.append(标);
       const 行盒 = 行尾字.closest('.正文行').getBoundingClientRect();
       for (const 档 of 档列表) {
+        标.textContent = 档.字 || '×';
         样式.textContent = '.字.命中 > .末处标记{' + 档.css + '}';
         const 墨 = 墨盒(标);
-        探针.push({ 档: 档.名, 裁掉: Math.round(Math.max(0, 墨.右 - 行盒.right) * 10) / 10 });
+        探针.push({ 档: 档.名, 裁右: Math.round(Math.max(0, 墨.右 - 行盒.right) * 10) / 10 });
       }
+      标.textContent = '×';
       标.remove();
       行尾字.className = 原类;
     }
