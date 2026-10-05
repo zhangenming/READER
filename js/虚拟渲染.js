@@ -499,6 +499,14 @@ export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
             点击命中.命中终点 === 字终点
           ) {
             字元素.dataset.hitPosition = `${点击命中.命中idx + 1}/${点击命中.关键词.命中位置.length}`;
+            // 首次出现那一处 x 恒为 1，徽标只写总数 y 并常驻（顶替原先行首的 ◀）。
+            if (点击命中.命中idx === 0) {
+              字元素.classList.add('首处总数');
+              字元素.dataset.hitTotal = String(
+                点击命中.关键词.命中位置.length,
+              );
+              行元素.classList.add('含首处徽标');
+            }
             字元素.classList.toggle(
               '显示命中位置',
               Boolean(当前项命中 && 状态.当前命中位置计时器),
@@ -511,17 +519,6 @@ export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
           }
           字元素.dataset.keywordId = String(点击命中.关键词.id);
           字元素.dataset.hitIndex = String(点击命中.命中idx);
-          if (
-            点击命中.关键词.命中位置.length > 1 &&
-            点击命中.命中起点 === 字起点 &&
-            点击命中.命中idx === 0
-          ) {
-            const 首处标记 = document.createElement('span');
-            首处标记.className = '首处标记';
-            首处标记.textContent = '◀';
-            首处标记.setAttribute('aria-hidden', 'true');
-            字元素.append(首处标记);
-          }
           if (
             点击命中.关键词.命中位置.length > 1 &&
             点击命中.命中终点 === 字终点 &&
