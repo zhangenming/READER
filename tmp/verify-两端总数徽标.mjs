@@ -1,5 +1,6 @@
-// 实测：首次出现的 ◀ 已撤下，改为常驻「总数」徽标（落点与其他 x/y 徽标同一枚）。
-// 断言：屏内无 .首处标记；首处末字带 首处总数 + data-hit-total，::after 静止即可见且内容只有 y；
+// 实测：首次出现的 ◀ 已撤下，改为常驻「总数」徽标（落点与其他 x/y 徽标同一枚），
+// 末次出现那一处的右上角也挂同一枚（右下角仍是 ×），两枚不许互相叠。
+// 断言：屏内无 .首处标记；首处与末处两端的末字都带 总数徽标 + data-hit-total，::after 静止即可见且内容只有 y；
 // 其余各处仍是 x/y 且静止时隐藏；带常驻徽标的行放行了溢出。
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:net';
@@ -165,7 +166,7 @@ try {
 
   // 把某一处首起徽标滚到屏中部（离顶边至少 4 行），否则常驻徽标溢出到视口外拍不到
   const 滚动 = await 求值(`${S}
-    const 首字 = document.querySelector('.字.命中.首处总数');
+    const 首字 = document.querySelector('.字.命中.总数徽标');
     if (!首字) return null;
     const 行 = 首字.closest('.正文行');
     const 行顶 = 行.getBoundingClientRect().top + 元素.滚动容器.scrollTop;
@@ -180,7 +181,7 @@ try {
       const 盒 = 字.getBoundingClientRect();
       return 盒.top > 0 && 盒.bottom < window.innerHeight && 盒.left > 0;
     };
-    const 首处 = [...document.querySelectorAll('.字.命中.首处总数')].filter(屏内)
+    const 首处 = [...document.querySelectorAll('.字.命中.总数徽标')].filter(屏内)
       .map((字) => ({
         词: 状态.关键词列表.find((w) => String(w.id) === 字.dataset.keywordId)?.文本,
         总数: 字.dataset.hitTotal,
@@ -191,7 +192,7 @@ try {
         行溢出: getComputedStyle(字.closest('.正文行')).overflow,
         徽标盒: (() => { const b = 字.getBoundingClientRect(); return { top: Math.round(b.top), right: Math.round(b.right) }; })(),
       }));
-    const 其余 = [...document.querySelectorAll('.字.命中[data-hit-position]:not(.首处总数)')].filter(屏内)
+    const 其余 = [...document.querySelectorAll('.字.命中[data-hit-position]:not(.总数徽标)')].filter(屏内)
       .filter((字) => !字.classList.contains('当前命中'))
       .map((字) => ({ 内容: 样(字).content, 可见: 样(字).visibility === 'visible' && Number(样(字).opacity) > 0.5 }));
     return {
@@ -208,12 +209,15 @@ try {
     结果.末处叉号文本.every((文) => 文 === '×'),
     `末处标记应是右下角那枚 ×，实得 ${JSON.stringify(结果.末处叉号文本)}`,
   );
-  assert.ok(结果.首处.length > 0, '屏内要有常驻的首处总数徽标');
+  assert.ok(结果.首处.length > 0, '屏内要有常驻的两端总数徽标');
   for (const 项 of 结果.首处) {
     assert.equal(项.内容, `"${项.总数}"`, `${项.词} 首处徽标内容应只有总数 y`);
-    assert.equal(项.命中位置, `1/${项.总数}`, `${项.词} 首处的 x/y 仍是 1/N`);
+    assert.ok(
+      项.命中位置 === `1/${项.总数}` || 项.命中位置 === `${项.总数}/${项.总数}`,
+      `${项.词} 两端那一处的 x/y 应是 1/N 或 N/N，实得 ${项.命中位置}`,
+    );
     assert.ok(项.可见, `${项.词} 首处徽标要静止可见`);
-    assert.match(项.行类, /含首处徽标/, '所在行要带 含首处徽标');
+    assert.match(项.行类, /含总数徽标/, '所在行要带 含总数徽标');
     assert.equal(项.行溢出, 'visible', '所在行要放行溢出，徽标才不被相邻行盖掉');
   }
   for (const 项 of 结果.其余) {
@@ -222,11 +226,51 @@ try {
   }
   console.log('末处 × 数量:', 结果.末处叉号数, '| 关键词:', 结果.关键词账);
 
+  // 末处那一处：右下角是 ×，右上角也要有同一枚总数徽标，且两枚不许互相叠
+  const 末处滚动 = await 求值(`${S}
+    const 词 = 状态.关键词列表.find((w) => w.命中位置.length > 1);
+    const 末偏移 = 词.命中位置[词.命中位置.length - 1];
+    const 行起点 = 状态.行起点列表;
+    let 行 = 0;
+    for (let i = 0; i < 行起点.length; i++) if (行起点[i] <= 末偏移) 行 = i; else break;
+    const 可视 = Math.floor(元素.滚动容器.clientHeight / 状态.行高);
+    元素.滚动容器.scrollTop = Math.max(0, (行 - Math.floor(可视 / 2)) * 状态.行高);
+    return { 词: 词.文本, 词id: 词.id, 总数: 词.命中位置.length };`);
+  await pause(700);
+  const 末处 = await 求值(`${S}
+    const 字 = document.querySelector('.字.命中.末处所在[data-keyword-id="' + ${末处滚动.词id} + '"]');
+    if (!字) return null;
+    const 样 = getComputedStyle(字, '::after');
+    const 数 = (v) => parseFloat(v) || 0;
+    const 盒 = 字.getBoundingClientRect();
+    const 徽高 = 数(样.height) + 数(样.paddingTop) + 数(样.paddingBottom) + 数(样.borderTopWidth) + 数(样.borderBottomWidth);
+    const 叉 = 字.querySelector('.末处标记').getBoundingClientRect();
+    const 行 = 字.closest('.正文行');
+    return {
+      徽标内容: 样.content,
+      徽标可见: 样.visibility === 'visible' && Number(样.opacity) > 0.5,
+      徽标底: Math.round(盒.top + 数(样.top) + 徽高),
+      叉顶: Math.round(叉.top),
+      行类: 行.className,
+    };`);
+  console.log('末处两端:', 末处滚动, 末处);
+  assert.ok(末处, '屏内要有末处那一处');
+  assert.equal(末处.徽标内容, `"${末处滚动.总数}"`, '末处右上角也要常驻显示总数 y');
+  assert.equal(末处.徽标可见, true, '末处那枚徽标静止即可见');
+  assert.match(末处.行类, /含总数徽标/, '末处所在行要放行徽标溢出');
+  assert.ok(
+    末处.徽标底 <= 末处.叉顶,
+    `右上角徽标与右下角 × 不许叠住：徽标底 ${末处.徽标底} vs × 顶 ${末处.叉顶}`,
+  );
+
   // 悬停到首处那一处：徽标仍只报总数（x 恒为 1）
   const 首处字 = await 求值(`${S}
-    const 字 = document.querySelector('.字.命中.首处总数');
+    const 字 = [...document.querySelectorAll('.字.命中.总数徽标')].find((w) => {
+      const b = w.getBoundingClientRect();
+      return b.top > 40 && b.bottom < window.innerHeight - 40;
+    });
     const 盒 = 字.getBoundingClientRect();
-    return { x: 盒.left + 盒.width / 2, y: 盒.top + 盒.height / 2 };`);
+    return { x: 盒.left + 盒.width / 2, y: 盒.top + 盒.height / 2, 内容: getComputedStyle(字, '::after').content };`);
   await 发送('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 1200, y: 960 });
   await pause(60);
   await 发送('Input.dispatchMouseEvent', {
@@ -237,8 +281,8 @@ try {
   await pause(320);
   const 悬停后 = await 求值(`${S}
     const 出 = (字) => { const 样 = getComputedStyle(字, '::after'); return { 内容: 样.content, 可见: 样.visibility === 'visible' && Number(样.opacity) > 0.5 }; };
-    const 首处 = document.querySelector('.字.命中.首处总数');
-    const 其余 = [...document.querySelectorAll('.字.命中[data-hit-position]:not(.首处总数)')].filter((字) => { const 盒 = 字.getBoundingClientRect(); return 盒.top > 0 && 盒.bottom < window.innerHeight; });
+    const 首处 = [...document.querySelectorAll('.字.命中.总数徽标')].find((w) => { const b = w.getBoundingClientRect(); return b.top > 40 && b.bottom < window.innerHeight - 40; });
+    const 其余 = [...document.querySelectorAll('.字.命中[data-hit-position]:not(.总数徽标)')].filter((字) => { const 盒 = 字.getBoundingClientRect(); return 盒.top > 0 && 盒.bottom < window.innerHeight; });
     return { 悬停词: 状态.悬停关键词id, 首处: 出(首处), 其余: 其余.map(出) };`);
   console.log('悬停首处后:', JSON.stringify(悬停后));
   assert.match(悬停后.首处.内容, /^"\d+"$/, '悬停首处时也只报总数');
@@ -247,17 +291,17 @@ try {
 
   const 图 = await 发送('Page.captureScreenshot', { format: 'png' });
   writeFileSync(
-    join(项目根, 'tmp', '首处总数徽标-悬停中.png'),
+    join(项目根, 'tmp', '两端总数徽标-悬停中.png'),
     Buffer.from(图.data, 'base64'),
   );
   await 发送('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 1200, y: 960 });
   await pause(320);
   const 静止图 = await 发送('Page.captureScreenshot', { format: 'png' });
   writeFileSync(
-    join(项目根, 'tmp', '首处总数徽标-静止.png'),
+    join(项目根, 'tmp', '两端总数徽标-静止.png'),
     Buffer.from(静止图.data, 'base64'),
   );
-  console.log('已写入 tmp/首处总数徽标-{静止,悬停中}.png');
+  console.log('已写入 tmp/两端总数徽标-{静止,悬停中}.png');
   ws.close();
 } finally {
   await 收尾();

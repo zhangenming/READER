@@ -498,14 +498,14 @@ export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
             点击命中.关键词.命中位置.length > 1 &&
             点击命中.命中终点 === 字终点
           ) {
-            字元素.dataset.hitPosition = `${点击命中.命中idx + 1}/${点击命中.关键词.命中位置.length}`;
-            // 首次出现那一处 x 恒为 1，徽标只写总数 y 并常驻（顶替原先行首的 ◀）。
-            if (点击命中.命中idx === 0) {
-              字元素.classList.add('首处总数');
-              字元素.dataset.hitTotal = String(
-                点击命中.关键词.命中位置.length,
-              );
-              行元素.classList.add('含首处徽标');
+            const 命中总数 = 点击命中.关键词.命中位置.length;
+            const 是末处 = 点击命中.命中idx === 命中总数 - 1;
+            字元素.dataset.hitPosition = `${点击命中.命中idx + 1}/${命中总数}`;
+            // 首末两端常驻只报总数 y：首处 x 恒为 1；读到末处的人不会滚回书头看总数，两端各给一枚才用得上。
+            if (点击命中.命中idx === 0 || 是末处) {
+              字元素.classList.add('总数徽标');
+              字元素.dataset.hitTotal = String(命中总数);
+              行元素.classList.add('含总数徽标');
             }
             字元素.classList.toggle(
               '显示命中位置',
@@ -516,23 +516,19 @@ export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
             if (状态.悬停关键词id !== null && !是悬停关键词) {
               行元素.classList.add('含悬停徽标');
             }
+            if (是末处) {
+              const 末处标记 = document.createElement('span');
+              末处标记.className = '末处标记';
+              末处标记.textContent = '×';
+              末处标记.setAttribute('aria-hidden', 'true');
+              // 引文里的 .字 带 isolation:isolate，标记的 z-index 会被关在本字层叠上下文里，
+              // 后一个字的字形就压到 × 上（对角打点实测 14 个点只赢 8 个）。抬整枚锚字才出得来。
+              字元素.classList.add('末处所在');
+              字元素.append(末处标记);
+            }
           }
           字元素.dataset.keywordId = String(点击命中.关键词.id);
           字元素.dataset.hitIndex = String(点击命中.命中idx);
-          if (
-            点击命中.关键词.命中位置.length > 1 &&
-            点击命中.命中终点 === 字终点 &&
-            点击命中.命中idx === 点击命中.关键词.命中位置.length - 1
-          ) {
-            const 末处标记 = document.createElement('span');
-            末处标记.className = '末处标记';
-            末处标记.textContent = '×';
-            末处标记.setAttribute('aria-hidden', 'true');
-            // 引文里的 .字 带 isolation:isolate，标记的 z-index 会被关在本字层叠上下文里，
-            // 后一个字的字形就压到 × 上（对角打点实测 14 个点只赢 8 个）。抬整枚锚字才出得来。
-            字元素.classList.add('末处所在');
-            字元素.append(末处标记);
-          }
           字元素.style.setProperty('--命中背景', 主配色.浅色);
           字元素.style.setProperty('--命中当前色', 主配色.深色);
         }
