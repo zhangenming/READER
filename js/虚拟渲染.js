@@ -526,7 +526,7 @@ export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
           ) {
             const 末处标记 = document.createElement('span');
             末处标记.className = '末处标记';
-            末处标记.textContent = '▶';
+            末处标记.textContent = '×';
             末处标记.setAttribute('aria-hidden', 'true');
             字元素.append(末处标记);
           }

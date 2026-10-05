@@ -195,14 +195,19 @@ try {
       .filter((字) => !字.classList.contains('当前命中'))
       .map((字) => ({ 内容: 样(字).content, 可见: 样(字).visibility === 'visible' && Number(样(字).opacity) > 0.5 }));
     return {
-      三角数: document.querySelectorAll('.首处标记').length,
-      末处三角数: document.querySelectorAll('.末处标记').length,
+      首处三角数: document.querySelectorAll('.首处标记').length,
+      末处叉号数: document.querySelectorAll('.末处标记').length,
+      末处叉号文本: [...document.querySelectorAll('.末处标记')].map((标) => 标.textContent),
       首处, 其余,
       关键词账: 状态.关键词列表.map((w) => w.文本 + '×' + w.命中位置.length).join(' / '),
     };`);
   console.log(JSON.stringify(结果, null, 2));
 
-  assert.equal(结果.三角数, 0, '屏内不应再有 ◀ 首处标记');
+  assert.equal(结果.首处三角数, 0, '屏内不应再有 ◀ 首处标记');
+  assert.ok(
+    结果.末处叉号文本.every((文) => 文 === '×'),
+    `末处标记应是右下角那枚 ×，实得 ${JSON.stringify(结果.末处叉号文本)}`,
+  );
   assert.ok(结果.首处.length > 0, '屏内要有常驻的首处总数徽标');
   for (const 项 of 结果.首处) {
     assert.equal(项.内容, `"${项.总数}"`, `${项.词} 首处徽标内容应只有总数 y`);
@@ -215,7 +220,7 @@ try {
     assert.match(项.内容, /^"\d+\/\d+"$/, `其余各处仍是 x/y，实得 ${项.内容}`);
     assert.equal(项.可见, false, `静止时其余 x/y 不该露出（${项.内容}）`);
   }
-  console.log('末处 ▶ 数量:', 结果.末处三角数, '| 关键词:', 结果.关键词账);
+  console.log('末处 × 数量:', 结果.末处叉号数, '| 关键词:', 结果.关键词账);
 
   // 悬停到首处那一处：徽标仍只报总数（x 恒为 1）
   const 首处字 = await 求值(`${S}
