@@ -528,6 +528,9 @@ export function 渲染可见行(强制渲染 = false, 视口高度 = null) {
             末处标记.className = '末处标记';
             末处标记.textContent = '×';
             末处标记.setAttribute('aria-hidden', 'true');
+            // 引文里的 .字 带 isolation:isolate，标记的 z-index 会被关在本字层叠上下文里，
+            // 后一个字的字形就压到 × 上（对角打点实测 14 个点只赢 8 个）。抬整枚锚字才出得来。
+            字元素.classList.add('末处所在');
             字元素.append(末处标记);
           }
           字元素.style.setProperty('--命中背景', 主配色.浅色);
